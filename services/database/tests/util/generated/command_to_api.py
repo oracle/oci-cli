@@ -342,6 +342,7 @@ SDK_client_map = {
     "db.modify_pluggable_database_management": "oci.database.DatabaseClient.modify_pluggable_database_management",
     "db.mount_dbnode_snapshot": "oci.database.DatabaseClient.mount_dbnode_snapshot",
     "db.move_execution_action_member": "oci.database.DatabaseClient.move_execution_action_member",
+    "db.refresh_data_guard_health_status": "oci.database.DatabaseClient.refresh_data_guard_health_status",
     "db.refresh_pluggable_database": "oci.database.DatabaseClient.refresh_pluggable_database",
     "db.register_autonomous_database_data_safe": "oci.database.DatabaseClient.register_autonomous_database_data_safe",
     "db.register_cloud_vm_cluster_pkcs": "oci.database.DatabaseClient.register_cloud_vm_cluster_pkcs",

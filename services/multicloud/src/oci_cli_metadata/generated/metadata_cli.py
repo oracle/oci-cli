@@ -46,12 +46,15 @@ metadata_root_group.add_command(external_location_mapping_metadatum_summary_coll
 metadata_root_group.add_command(external_locations_metadatum_collection_group)
 
 
-@external_locations_metadatum_collection_group.command(name=cli_util.override('metadata.list_external_location_details_metadata.command_name', 'list-external-location-details-metadata'), help=u"""List externalLocationDetail metadata from OCI to Cloud  Service Provider for regions, Availability Zones, and Cluster Placement Group ID. examples:   application-json: |     [       {           \"externalLocation\": {             \"cspRegion\": \"East US\",             \"cspPhysicalAz\": \"az1-xyz\",             \"cspPhysicalAzDisplayName\": \"(US) East US 2\",             \"cspLogicalAz\": \"az1\",             \"serviceName\": \"ORACLEDBATAZURE\",             \"cspZoneKeyReferenceId\": {               \"keyName\": \"AzureSubscriptionId or AwsAccountId, GcpProjectName\",               \"keyValue\": \"azure-subscriptionId-1 or aws-account-id-1, gcp-project-id-1\"             }           },           \"ociPhysicalAd\": \"ad1-xyb\",           \"ociLogicalAd\": \"ad2\",           \"ociRegion\": \"us-ashburn-1\",           \"cpgId\": \"cpg-1\"       },         {           \"externalLocation\": {             \"cspRegion\": \"East US\",             \"cspPhysicalAz\": \"az2-abc\",             \"cspPhysicalAzDisplayName\": \"(US) East US 2\",             \"cspLogicalAz\": \"az2\",             \"serviceName\": \"ORACLEDBATAZURE\",             \"cspZoneKeyReferenceId\": {               \"keyName\": \"AzureSubscriptionId or AwsAccountId, GcpProjectName\",               \"keyValue\": \"azure-subscriptionId-2 or aws-account-id-2, gcp-project-id-2\"             }           },           \"ociPhysicalAd\": \"ad2-xby\",           \"ociLogicalAd\": \"ad1\",           \"ociRegion\": \"us-ashburn-1\",           \"cpgId\": \"cpg-2\"         },         {           \"externalLocation\": {             \"cspRegion\": \"East US\",             \"cspPhysicalAz\": \"az3-abz\",             \"cspPhysicalAzDisplayName\": \"(US) East US 2\",             \"cspLogicalAz\": \"az3\",             \"serviceName\": \"ORACLEDBATAZURE\",             \"cspZoneKeyReferenceId\": {               \"keyName\": \"AzureSubscriptionId or AwsAccountId, GcpProjectName\",               \"keyValue\": \"azure-subscriptionId-3 or aws-account-id-3, gcp-project-id-3\"             }           },           \"ociPhysicalAd\": \"ad3-cde\",           \"ociLogicalAd\": \"ad3\",           \"ociRegion\": \"us-ashburn-1\",           \"cpgId\": \"cpg-3\"         },         {           \"externalLocation\": {             \"cspRegion\": \"East US 2\",             \"cspPhysicalAz\": \"az1-def\",             \"cspPhysicalAzDisplayName\": \"(US) East US 2\",             \"cspLogicalAz\": \"az1\",             \"serviceName\": \"ORACLEDBATAZURE\",             \"cspZoneKeyReferenceId\": {               \"keyName\": \"AzureSubscriptionId or AwsAccountId, GcpProjectName\",               \"keyValue\": \"azure-subscriptionId-4 or aws-account-id-4, gcp-project-id-4\"             }           },           \"ociPhysicalAd\": \"ad1-bce\",           \"ociLogicalAd\": \"ad2\",           \"ociRegion\": \"us-ashburn-1\",           \"cpgId\": \"cpg-4\"         },         {           \"externalLocation\": {             \"cspRegion\": \"East US 2\",             \"cspPhysicalAz\": \"az2-uvw\",             \"cspPhysicalAzDisplayName\": \"(US) East US 2\",             \"cspLogicalAz\": \"az2\",             \"serviceName\": \"ORACLEDBATAZURE\",             \"cspZoneKeyReferenceId\": {               \"keyName\": \"AzureSubscriptionId or AwsAccountId, GcpProjectName\",               \"keyValue\": \"azure-subscriptionId-3 or aws-account-id-3, gcp-project-id-3\"             }           },           \"ociPhysicalAd\": \"ad2-ftc\",           \"ociLogicalAd\": \"ad1\",           \"ociRegion\": \"us-ashburn-1\",           \"cpgId\": \"cpg-5\"         },         {           \"externalLocation\": {             \"cspRegion\": \"East US 2\",             \"cspPhysicalAz\": \"az3-uvw\",             \"cspPhysicalAzDisplayName\": \"(US) East US 2\",             \"cspLogicalAz\": \"az3\",             \"serviceName\": \"ORACLEDBATAZURE\",             \"cspZoneKeyReferenceId\": {               \"keyName\": \"AzureSubscriptionId or AwsAccountId, GcpProjectName\",               \"keyValue\": \"azure-subscriptionId-3 or aws-account-id-3, gcp-project-id-3\"             }           },           \"ociPhysicalAd\": \"ad3-stc\",           \"ociLogicalAd\": \"ad3\",           \"ociRegion\": \"us-ashburn-1\",           \"cpgId\": \"cpg-6\"         }       ] \n[Command Reference](listExternalLocationDetailsMetadata)""")
-@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription in which to list resources.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
-@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name values from [ORACLEDBATAZURE, ORACLEDBATGOOGLE, ORACLEDBATAWS]""")
+@external_locations_metadatum_collection_group.command(name=cli_util.override('metadata.list_external_location_details_metadata.command_name', 'list-external-location-details-metadata'), help=u"""List externalLocationDetail metadata from OCI to Cloud  Service Provider for regions, Availability Zones, and Cluster Placement Group ID. \n[Command Reference](listExternalLocationDetailsMetadata)""")
+@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
+@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
 @cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["dbsystem"]), help=u"""The resource type query (i.e. dbsystem, instance etc.)""")
-@cli_util.option('--linked-compartment-id', help=u"""The [OCID] of the compartment in which linked to Resource.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the Multicloud base compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
+@cli_util.option('--linked-compartment-id', help=u"""The [OCID] of the compartment linked to the resource.""")
+@cli_util.option('--external-location', help=u"""The Cloud Service Provider region.""")
+@cli_util.option('--logical-zone', help=u"""OCI Logical AD to filter the response.""")
+@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the Cluster Placement Group.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -63,7 +66,7 @@ metadata_root_group.add_command(external_locations_metadatum_collection_group)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'multicloud', 'class': 'ExternalLocationsMetadatumCollection'})
 @cli_util.wrap_exceptions
-def list_external_location_details_metadata(ctx, from_json, all_pages, page_size, subscription_id, compartment_id, subscription_service_name, entity_type, linked_compartment_id, limit, page, sort_order, sort_by):
+def list_external_location_details_metadata(ctx, from_json, all_pages, page_size, subscription_id, subscription_service_name, entity_type, compartment_id, linked_compartment_id, external_location, logical_zone, cluster_placement_group_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -71,8 +74,16 @@ def list_external_location_details_metadata(ctx, from_json, all_pages, page_size
     kwargs = {}
     if entity_type is not None:
         kwargs['entity_type'] = entity_type
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if linked_compartment_id is not None:
         kwargs['linked_compartment_id'] = linked_compartment_id
+    if external_location is not None:
+        kwargs['external_location'] = external_location
+    if logical_zone is not None:
+        kwargs['logical_zone'] = logical_zone
+    if cluster_placement_group_id is not None:
+        kwargs['cluster_placement_group_id'] = cluster_placement_group_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -90,7 +101,6 @@ def list_external_location_details_metadata(ctx, from_json, all_pages, page_size
         result = cli_util.list_call_get_all_results(
             client.list_external_location_details_metadata,
             subscription_id=subscription_id,
-            compartment_id=compartment_id,
             subscription_service_name=subscription_service_name,
             **kwargs
         )
@@ -100,24 +110,22 @@ def list_external_location_details_metadata(ctx, from_json, all_pages, page_size
             limit,
             page_size,
             subscription_id=subscription_id,
-            compartment_id=compartment_id,
             subscription_service_name=subscription_service_name,
             **kwargs
         )
     else:
         result = client.list_external_location_details_metadata(
             subscription_id=subscription_id,
-            compartment_id=compartment_id,
             subscription_service_name=subscription_service_name,
             **kwargs
         )
     cli_util.render_response(result, ctx)
 
 
-@external_location_mapping_metadatum_summary_collection_group.command(name=cli_util.override('metadata.list_external_location_mapping_metadata.command_name', 'list-external-location-mapping-metadata'), help=u"""List externalLocation metadata from OCI to the Cloud Service Provider for regions, Physical Availability Zones. examples:   application-json: |     [       {         \"externalLocation\": {           \"cspRegion\": \"eastus\",           \"cspPhysicalAz\": \"eastus-az1\",           \"cspPhysicalAzDisplayName\": \"(US) East US 1\",           \"serviceName\": \"ORACLEDBATAZURE\"         },         \"ociPhysicalAd\": \"iad-ad-1\",         \"ociLogicalAd\": \"ad1\",         \"ociRegion\": \"us-ashburn-1\"     },       {         \"externalLocation\": {           \"cspRegion\": \"eastus\",           \"cspPhysicalAz\": \"eastus-az1\",           \"cspPhysicalAzDisplayName\": \"(US) East US 1\",           \"serviceName\": \"ORACLEDBATAZURE\"         },         \"ociPhysicalAd\": \"iad-ad-1\",         \"ociLogicalAd\": \"ad1\",         \"ociRegion\": \"us-ashburn-1\"       },       {         \"externalLocation\": {           \"cspRegion\": \"eastus2\",           \"cspPhysicalAz\": \"eastus2-az3\",           \"cspPhysicalAzDisplayName\": \"(US) East US 1\",           \"serviceName\": \"ORACLEDBATAZURE\"         },         \"ociPhysicalAd\": \"iad-ad-2\",         \"ociLogicalAd\": \"ad1\",         \"ociRegion\": \"us-ashburn-1\"       },       {         \"externalLocation\": {           \"cspRegion\": \"eastus\",           \"cspPhysicalAz\": \"eastus-az3\"           \"cspPhysicalAzDisplayName\": \"(US) East US 1\",           \"serviceName\": \"ORACLEDBATAZURE\"         },         \"ociPhysicalAd\": \"iad-ad-333\",         \"ociLogicalAd\": \"ad1\",         \"ociRegion\": \"us-ashburn-1\"       }     ] \n[Command Reference](listExternalLocationMappingMetadata)""")
-@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), multiple=True, help=u"""The subscription type values from [ORACLEDBATAZURE, ORACLEDBATGOOGLE, ORACLEDBATAWS]""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription in which to list resources.""")
+@external_location_mapping_metadatum_summary_collection_group.command(name=cli_util.override('metadata.list_external_location_mapping_metadata.command_name', 'list-external-location-mapping-metadata'), help=u"""List externalLocation metadata from OCI to the Cloud Service Provider for regions, Physical Availability Zones. \n[Command Reference](listExternalLocationMappingMetadata)""")
+@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), multiple=True, help=u"""The subscription type of the Cloud Service Provider.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Multicloud base compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
+@cli_util.option('--subscription-id', help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -175,10 +183,10 @@ def list_external_location_mapping_metadata(ctx, from_json, all_pages, page_size
     cli_util.render_response(result, ctx)
 
 
-@external_location_summaries_metadatum_summary_collection_group.command(name=cli_util.override('metadata.list_external_location_summaries_metadata.command_name', 'list-external-location-summaries-metadata'), help=u"""List externalLocationSummary metadata from OCI Region to the Cloud Service Provider region across all regions. examples:   application-json: |     [       {           \"externalLocation\": {             \"cspRegion\": \"East US\"           },           \"ociRegion\": \"us-ashburn-1\"       },         {           \"externalLocation\": {             \"cspRegion\": \"East US 2\"           },           \"ociRegion\": \"us-ashburn-1\"         },         {           \"externalLocation\": {             \"cspRegion\": \"Germany West Central\"           },           \"ociRegion\": \"eu-frankfurt-1\",         }       ] \n[Command Reference](listExternalLocationSummariesMetadata)""")
-@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name values from [ORACLEDBATAZURE, ORACLEDBATGOOGLE, ORACLEDBATAWS]""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription in which to list resources.""")
+@external_location_summaries_metadatum_summary_collection_group.command(name=cli_util.override('metadata.list_external_location_summaries_metadata.command_name', 'list-external-location-summaries-metadata'), help=u"""List externalLocationSummary metadata from OCI Region to the Cloud Service Provider region across all regions. \n[Command Reference](listExternalLocationSummariesMetadata)""")
+@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Multicloud base compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
+@cli_util.option('--subscription-id', help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
 @cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["dbsystem"]), help=u"""The resource type query (i.e. dbsystem, instance etc.)""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")

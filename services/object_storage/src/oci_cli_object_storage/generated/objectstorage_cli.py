@@ -151,6 +151,43 @@ def abort_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_n
     cli_util.render_response(result, ctx)
 
 
+@object_group.command(name=cli_util.override('os.batch_delete_objects.command_name', 'batch-delete'), help=u"""Deletes a batch of objects. \n[Command Reference](batchDeleteObjects)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
+@cli_util.option('--objects', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the objects to delete.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-skip-deleted-result', type=click.BOOL, help=u"""Specifies whether to skip the details of successfully deleted objects in the response. If specified true then only the details of failed deletes will be available in the response. Defaults to false.""")
+@json_skeleton_utils.get_cli_json_input_option({'objects': {'module': 'object_storage', 'class': 'list[BatchDeleteObjectIdentifier]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'objects': {'module': 'object_storage', 'class': 'list[BatchDeleteObjectIdentifier]'}}, output_type={'module': 'object_storage', 'class': 'BatchDeleteObjectsResult'})
+@cli_util.wrap_exceptions
+def batch_delete_objects(ctx, from_json, namespace_name, bucket_name, objects, is_skip_deleted_result):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
+        raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['objects'] = cli_util.parse_json_parameter("objects", objects)
+
+    if is_skip_deleted_result is not None:
+        _details['isSkipDeletedResult'] = is_skip_deleted_result
+
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
+    result = client.batch_delete_objects(
+        namespace_name=namespace_name,
+        bucket_name=bucket_name,
+        batch_delete_objects_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @work_request_group.command(name=cli_util.override('os.cancel_work_request.command_name', 'cancel'), help=u"""Cancels a work request. \n[Command Reference](cancelWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.confirm_delete_option

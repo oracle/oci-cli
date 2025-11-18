@@ -44,7 +44,13 @@ It relies on both the Oracle Azure Connector and the Oracle Azure Blob Container
 
 <b>Google Key Rings Resource:</b>&nbsp;&nbsp;The Google Key Rings Resource is used to register and manage Google Cloud Key Rings within Oracle Cloud Infrastructure (OCI) for use with services such as Oracle Exadata Database Service on Dedicated Infrastructure.
 
-<b>Google Key Resource:</b>&nbsp;&nbsp;The Google Key Resource is used to register and manage a Google Cloud Key within Oracle Cloud Infrastructure (OCI) under an associated Google Key Ring."""), short_help=cli_util.override('multi_cloud_resource_discovery.multi_cloud_resource_discovery_root_group.short_help', """Oracle Database MultiCloud Data Plane Integration"""))
+<b>Google Key Resource:</b>&nbsp;&nbsp;The Google Key Resource is used to register and manage a Google Cloud Key within Oracle Cloud Infrastructure (OCI) under an associated Google Key Ring.
+<br>
+
+<b>AWS</b>:<br>
+<b>Oracle AWS Connector Resource:</b>&nbsp;&nbsp;The Oracle AWS Connector Resource is used to install the AWS Identity Connector on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+
+<b>Google AWS Key Resource:</b>&nbsp;&nbsp;The Oracle AWS Key Resource is used to register and manage a AWS Key within Oracle Cloud Infrastructure (OCI)."""), short_help=cli_util.override('multi_cloud_resource_discovery.multi_cloud_resource_discovery_root_group.short_help', """Oracle Database MultiCloud Data Plane Integration"""))
 @cli_util.help_option_group
 def multi_cloud_resource_discovery_root_group():
     pass
@@ -312,7 +318,7 @@ def get_multi_cloud_resource_discovery(ctx, from_json, multi_cloud_resource_disc
 @cli_util.option('--multi-cloud-resource-discovery-id', help=u"""The [OCID] of the Multicloud Discovery resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "UPDATING", "CANCELING", "CANCELED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources that match the specified lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--oracle-db-azure-connector-id', help=u"""A filter to return Oracle DB Azure Azure Identity Connector resources.""")
-@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["VAULTS", "STORAGE", "GCP_KEY_RINGS"]), help=u"""The type of Multicloud Resource.""")
+@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["VAULTS", "STORAGE", "GCP_KEY_RINGS", "AWS_KEYS"]), help=u"""The type of Multicloud Resource.""")
 @cli_util.option('--resources-filter', multiple=True, help=u"""Specifies the type(s) of resources to discover in the target cloud provider.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")

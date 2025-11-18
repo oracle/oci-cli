@@ -565,6 +565,8 @@ generative-ai, imported-model, create-imported-model-object-storage-object
 identity-domains, social-identity-provider, search
 generative-ai, imported-model, create-from-huggingface
 generative-ai, imported-model, create-from-objectstorage
+bastion, bastion, create
+bastion, bastion, update
 dif, stack, add
 dif, stack, create
 dif, stack, deploy-artifacts

@@ -4717,13 +4717,12 @@ def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the new Vault service key to assign to protect the specified volume. This key has to be a valid Vault service key, and policies must exist to allow the user and the Block Volume service to access this key. If you specify the same OCID as the previous key's OCID, the Block Volume service will use it to regenerate a volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--opc-parent-resource-principal-token-url', help=u"""The endpoint that will be used to get the resource principal token of the parent resource.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeKmsKey'})
 @cli_util.wrap_exceptions
-def update_volume_kms_key(ctx, from_json, volume_id, kms_key_id, if_match, opc_parent_resource_principal_token_url):
+def update_volume_kms_key(ctx, from_json, volume_id, kms_key_id, if_match):
 
     if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
@@ -4731,8 +4730,6 @@ def update_volume_kms_key(ctx, from_json, volume_id, kms_key_id, if_match, opc_p
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    if opc_parent_resource_principal_token_url is not None:
-        kwargs['opc_parent_resource_principal_token_url'] = opc_parent_resource_principal_token_url
 
     _details = {}
 

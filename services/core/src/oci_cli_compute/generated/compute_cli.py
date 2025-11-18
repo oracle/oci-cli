@@ -11652,7 +11652,7 @@ def update_compute_gpu_memory_cluster(ctx, from_json, force, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
-@compute_gpu_memory_fabric_group.command(name=cli_util.override('compute.update_compute_gpu_memory_fabric.command_name', 'update'), help=u"""Customer can update displayName, tags and for compute GPU memory fabric record \n[Command Reference](updateComputeGpuMemoryFabric)""")
+@compute_gpu_memory_fabric_group.command(name=cli_util.override('compute.update_compute_gpu_memory_fabric.command_name', 'update'), help=u"""Customer can update displayName, tags and  desired firmware bundle, recycle level for compute GPU memory fabric record \n[Command Reference](updateComputeGpuMemoryFabric)""")
 @cli_util.option('--compute-gpu-memory-fabric-id', required=True, help=u"""The OCID of the compute GPU memory fabric.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -11661,23 +11661,24 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--memory-fabric-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "OCCUPIED", "PROVISIONING", "DEGRADED", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'memory-fabric-preferences': {'module': 'core', 'class': 'MemoryFabricPreferencesDescriptor'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryFabric'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'memory-fabric-preferences': {'module': 'core', 'class': 'MemoryFabricPreferencesDescriptor'}}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryFabric'})
 @cli_util.wrap_exceptions
-def update_compute_gpu_memory_fabric(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_gpu_memory_fabric_id, defined_tags, freeform_tags, display_name, if_match):
+def update_compute_gpu_memory_fabric(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_gpu_memory_fabric_id, defined_tags, freeform_tags, display_name, memory_fabric_preferences, if_match):
 
     if isinstance(compute_gpu_memory_fabric_id, six.string_types) and len(compute_gpu_memory_fabric_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-gpu-memory-fabric-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or memory_fabric_preferences:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and memory-fabric-preferences will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -11695,6 +11696,9 @@ def update_compute_gpu_memory_fabric(ctx, from_json, force, wait_for_state, max_
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if memory_fabric_preferences is not None:
+        _details['memoryFabricPreferences'] = cli_util.parse_json_parameter("memory_fabric_preferences", memory_fabric_preferences)
 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.update_compute_gpu_memory_fabric(

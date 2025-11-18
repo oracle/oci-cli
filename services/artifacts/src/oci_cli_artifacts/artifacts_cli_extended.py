@@ -741,6 +741,17 @@ def upload_signature_metadata(ctx, artifacts_client, compartment_id, image_id, k
 
 
 # Build the KmsCryptoClient based on the vault extension OCID in the keyId
+# OCI public endpoint is not available for KMS endpoint for the regions below
+# https://confluence.oraclecorp.com/confluence/display/KMS/KMS+Vault+Endpoints+FAQ#KMSVaultEndpointsFAQ-Whichendpointsuse.oci
+regions_without_oci = [
+    'us-ashburn-1', 'us-phoenix-1', 'us-seattle-1', 'eu-frankfurt-1', 'uk-london-1',
+    'ap-melbourne-1', 'ap-mumbai-1', 'ap-osaka-1', 'ap-seoul-1', 'ap-sydney-1',
+    'ap-tokyo-1', 'eu-amsterdam-1', 'eu-zurich-1', 'ca-montreal-1', 'ca-toronto-1',
+    'me-jeddah-1', 'sa-saopaulo-1', 'us-luke-1', 'us-langley-1', 'us-gov-ashburn-1',
+    'us-gov-chicago-1', 'us-gov-phoenix-1', 'uk-gov-london-1', 'us-seattle-1'
+]
+
+
 def build_vault_crypto_client(ctx, key_id, region):
     split_list = re.split("ocid1\\.key\\.([\\w-]+)\\.([\\w-]+)\\.([\\w-]+)\\.([\\w]){60}", key_id)
     if len(split_list) < 4:
@@ -749,7 +760,10 @@ def build_vault_crypto_client(ctx, key_id, region):
     realm = oci.regions.REGION_REALMS.get(region)
     second_level_domain = oci.regions.REALMS[realm]
     # region example: us-phoenix-1
-    crypto_endpoint = "https://" + vault_ext + "-crypto.kms." + region + "." + second_level_domain
+    if region in regions_without_oci:
+        crypto_endpoint = f"https://{vault_ext}-crypto.kms.{region}.{second_level_domain}"
+    else:
+        crypto_endpoint = f"https://{vault_ext}-crypto.kms.{region}.oci.{second_level_domain}"
     ctx.obj['endpoint'] = crypto_endpoint
 
     # Build kms_crypto client

@@ -6,6 +6,137 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.71.0 - 2025-11-18
+--------------------
+Added
+~~~~~
+* Api-Gateway Service
+ 
+  * Support for IPv6 and Reserved IPs for API Gateway service
+
+    * ``oci api-gateway gateway create --ip-mode``
+    * ``oci api-gateway gateway create --ipv4-address-configuration``
+    * ``oci api-gateway gateway create --ipv6-address-configuration``
+
+* Core Service
+
+  * Support for Firmware Pinning in the Compute GPU Memory Fabric service
+
+    * ``oci compute compute-gpu-memory-fabric update --memory-fabric-preferences``
+    * ``oci compute compute-gpu-memory-fabric get``
+    * ``oci compute compute-gpu-memory-fabric list``
+
+* Bastion Service
+
+  * Support for security attribute in bastion service
+
+    * ``oci bastion``
+
+* Database Service
+
+  * Add new command to check DG Health Status in the Database service
+
+    * ``oci db database refresh-dataguard-health --database-id, -? | -h | --help``
+
+  * DG creation with AWS, changing encryption key location to AWS, and two new apis to register/unregister pkcs
+
+    * ``oci db data-guard-association create-data-guard-association-aws-encryption-key-details``
+    * ``oci db database change-encryption-key-location-aws-encryption-key-details``
+    * ``oci db cloud-vm-cluster register-cloud-vm-cluster-pkcs``
+    * ``oci db cloud-vm-cluster unregister-cloud-vm-cluster-pkcs``
+
+* DbMulticloud service
+
+  * Support for the AWS dbmulticloud service (``oci dbmulticloud``)
+
+    * ``oci dbmulticloud oracle-db-aws-identity-connector``
+    * ``oci dbmulticloud oracle-db-aws-key``
+
+* MultiCloud Service
+
+  * Added multicloudsubscriptions and omHub/multicloudResources APIs.
+
+    * ``oci multicloud multicloud-resources multicloud-resource-collection list-multicloud-resources``
+    * ``oci multicloud multicloudsubscriptions multicloud-subscription-collection list-multicloud-subscriptions``
+
+* Generative AI Inference Service
+
+  * Support for new GenericChatRequest parameters in Generative AI inference service
+
+    * ``oci generative-ai-inference chat-result chat-generic-chat-request --chat-request-service-tier``
+
+* Email Service
+
+  * Support for Self Serve IP Pool API in Email Delivery service
+
+    * ``oci email email-ip-pool remove``
+    * ``oci email email-ip-pool get``
+    * ``oci email email-ip-pool delete``
+    * ``oci email email-ip-pool-collection list-email-ip-pools``
+    * ``oci email email-ip-pool change-compartment``
+    * ``oci email email-outbound-ip-collection list-email-outbound-ips``
+
+* Iot Service
+
+  * Added optional parameters in digital twin instance command
+
+  * ``oci iot digital-twin-instance update --digital-twin-model-spec-uri --digital-twin-model-id``
+    
+* Object Storage Service
+
+  * Support for Object Batch Delete in Object Storage
+
+    * ``oci os object batch-delete --bucket-name, --objects --is-skip-deleted-result --namespace-name``
+
+* Golden Gate Service
+
+  * Support for enabling pause operation for ZeroETL pipelines in the GoldenGate service.
+
+    * ``oci goldengate pipeline pause --pipeline-id``
+  
+  * Support for shared connections for ZeroETL pipelines in the GoldenGate service
+
+    * ``oci goldengate pipeline create-zero-etl-pipeline --subnet-id``
+    * ``oci goldengate pipeline update-zero-etl-pipeline --subnet-id``
+
+* Service Catalog Service
+
+  * Support for new service catalog access control on marketplace in ServiceCatalog service
+
+    * ``oci service-catalog application-summary list-all-applications``
+    * ``oci service-catalog configuration get``
+
+  * Added optional parameter for these commands
+
+    * ``oci service-catalog service-catalog create --status``
+    * ``oci service-catalog service-catalog list --status``
+
+  * [BREAKING] Added new required parameter for mentioned command
+    
+    * ``oci service-catalog service-catalog update --status``
+
+* Data Catalog Service
+
+  * Support for ZPR in DCAT Service
+
+    * ``oci data-catalog catalog-private-endpoint update --security-attributes``
+    * ``oci data-catalog catalog-private-endpoint create --security-attributes``
+
+* Opensearch Service
+
+  * Support for bring your own certificate in OCI Search Service with OpenSearch service
+
+    * ``oci opensearch cluster create --certificate-config``
+    * ``oci opensearch cluster update --certificate-config``
+
+Changed
+~~~~~~~
+* Service Catalog Service
+
+  * [BREAKING] Moved optional parameter to required parameter for this command
+
+    * ``oci service-catalog private-application create-with-stack-package --package-details-zip-file-base64-encoded``
+
 3.70.1 - 2025-11-11
 --------------------
 Fixed

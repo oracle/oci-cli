@@ -102,15 +102,16 @@ def change_bastion_compartment(ctx, from_json, bastion_id, compartment_id, if_ma
 @cli_util.option('--dns-proxy-status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED"]), help=u"""The desired dns proxy status of the bastion.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'static-jump-host-ip-addresses': {'module': 'bastion', 'class': 'list[string]'}, 'client-cidr-block-allow-list': {'module': 'bastion', 'class': 'list[string]'}, 'freeform-tags': {'module': 'bastion', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'static-jump-host-ip-addresses': {'module': 'bastion', 'class': 'list[string]'}, 'client-cidr-block-allow-list': {'module': 'bastion', 'class': 'list[string]'}, 'freeform-tags': {'module': 'bastion', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'static-jump-host-ip-addresses': {'module': 'bastion', 'class': 'list[string]'}, 'client-cidr-block-allow-list': {'module': 'bastion', 'class': 'list[string]'}, 'freeform-tags': {'module': 'bastion', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'bastion', 'class': 'Bastion'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'static-jump-host-ip-addresses': {'module': 'bastion', 'class': 'list[string]'}, 'client-cidr-block-allow-list': {'module': 'bastion', 'class': 'list[string]'}, 'freeform-tags': {'module': 'bastion', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'bastion', 'class': 'Bastion'})
 @cli_util.wrap_exceptions
-def create_bastion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_type, compartment_id, target_subnet_id, name, phone_book_entry, static_jump_host_ip_addresses, client_cidr_block_allow_list, max_session_ttl_in_seconds, dns_proxy_status, freeform_tags, defined_tags):
+def create_bastion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_type, compartment_id, target_subnet_id, name, phone_book_entry, static_jump_host_ip_addresses, client_cidr_block_allow_list, max_session_ttl_in_seconds, dns_proxy_status, freeform_tags, defined_tags, security_attributes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -143,6 +144,9 @@ def create_bastion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('bastion', 'bastion', ctx)
     result = client.create_bastion(
@@ -947,23 +951,24 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 @cli_util.option('--client-cidr-block-allow-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of address ranges in CIDR notation that you want to allow to connect to sessions hosted by this bastion.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'static-jump-host-ip-addresses': {'module': 'bastion', 'class': 'list[string]'}, 'client-cidr-block-allow-list': {'module': 'bastion', 'class': 'list[string]'}, 'freeform-tags': {'module': 'bastion', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'static-jump-host-ip-addresses': {'module': 'bastion', 'class': 'list[string]'}, 'client-cidr-block-allow-list': {'module': 'bastion', 'class': 'list[string]'}, 'freeform-tags': {'module': 'bastion', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'static-jump-host-ip-addresses': {'module': 'bastion', 'class': 'list[string]'}, 'client-cidr-block-allow-list': {'module': 'bastion', 'class': 'list[string]'}, 'freeform-tags': {'module': 'bastion', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'static-jump-host-ip-addresses': {'module': 'bastion', 'class': 'list[string]'}, 'client-cidr-block-allow-list': {'module': 'bastion', 'class': 'list[string]'}, 'freeform-tags': {'module': 'bastion', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_bastion(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_id, max_session_ttl_in_seconds, static_jump_host_ip_addresses, client_cidr_block_allow_list, freeform_tags, defined_tags, if_match):
+def update_bastion(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_id, max_session_ttl_in_seconds, static_jump_host_ip_addresses, client_cidr_block_allow_list, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(bastion_id, six.string_types) and len(bastion_id.strip()) == 0:
         raise click.UsageError('Parameter --bastion-id cannot be whitespace or empty string')
     if not force:
-        if static_jump_host_ip_addresses or client_cidr_block_allow_list or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to static-jump-host-ip-addresses and client-cidr-block-allow-list and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if static_jump_host_ip_addresses or client_cidr_block_allow_list or freeform_tags or defined_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to static-jump-host-ip-addresses and client-cidr-block-allow-list and freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -987,6 +992,9 @@ def update_bastion(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('bastion', 'bastion', ctx)
     result = client.update_bastion(

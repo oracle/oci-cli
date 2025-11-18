@@ -11,7 +11,6 @@ import tempfile
 import shutil
 import unittest.mock as mock
 import click
-import pytest
 from conftest import runner
 
 REGION = 'us-phoenix-1'
@@ -113,7 +112,6 @@ def test_auth_security_token_with_no_config():
         os.environ['OCI_CLI_CONFIG_FILE'] = 'internal_resources/config'
 
 
-@pytest.mark.skip('To unblock DEXREQ master')
 def test_auth_security_token_with_expired_session():
     try:
         # create a temporary config file path that will be treated as the default config containing an expired session profile
@@ -125,7 +123,7 @@ def test_auth_security_token_with_expired_session():
 
         profile_name = 'TESTSESSION'
         expired_test_jwt_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPQ0kgVGVzdCBKV1QgVG9rZW4iLCJpYXQiOjE1MzkxMTAzOTAsImV4cCI6MTYwMzAzNTE5MCwiYXVkIjoid3d3Lm9yYWNsZWNsb3VkLmNvbSIsInN1YiI6Im9jaWQxLnVzZXIub2MxLi5hYWFhYWFhYTR2eGZvdnd5Z3R5amxxY3ptbjZqdTNrb3JrdGlkemxrNmF1dzZjNHRnc3h4eHh4eHh4eHgiLCJ0ZW5hbnQiOiJ0ZXN0X3RlbmFuY3kifQ.D6siip7uDVm7-aNFbwYyVx4U-eGPGWAtXX0Hl_Q0BC8'
-        valid_test_jwt_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPQ0kgVGVzdCBKV1QgVG9rZW4iLCJpYXQiOjE1MzkxMTAzOTAsImV4cCI6MTc2MDAzNTE5MCwiYXVkIjoid3d3Lm9yYWNsZWNsb3VkLmNvbSIsInN1YiI6Im9jaWQxLnVzZXIub2MxLi5hYWFhYWFhYTR2eGZvdnd5Z3R5amxxY3ptbjZqdTNrb3JrdGlkemxrNmF1dzZjNHRnc3h4eHh4eHh4eHgiLCJ0ZW5hbnQiOiJ0ZXN0X3RlbmFuY3kifQ.i9PP_5up4UAgFx7usppp_okaFDRpmzF0YECDsfN-gjU'
+        valid_test_jwt_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPQ0kgVGVzdCBKV1QgVG9rZW4iLCJpYXQiOjE3Mjg5MDQwMDAsImV4cCI6MjA0NjcwNDAwMCwiYXVkIjoid3d3Lm9yYWNsZWNsb3VkLmNvbSIsInN1YiI6Im9jaWQxLnVzZXIub2MxLi5hYWFhYWFhYTR2eGZvdnd5Z3R5amxxY3ptbjZqdTNrb3JrdGlkemxrNmF1dzZjNHRnc3h4eHh4eHh4eHgiLCJ0ZW5hbnQiOiJ0ZXN0X3RlbmFuY3kifQ.TKfC5moywkmjo-R5oNMePCc5yKuf1PS4DyY2K-ET9hY'
         test_private_key = [
             '-----BEGIN RSA PRIVATE KEY-----\n',
             'MIIEogIBAAKCAQBhXBjW6xVhhnPI8vlcJ/P/yhy4NWzRWcyw0mnB986dEit2n9O8\n',

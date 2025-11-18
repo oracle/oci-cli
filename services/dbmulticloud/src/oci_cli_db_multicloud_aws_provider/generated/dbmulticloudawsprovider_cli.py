@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.dbmulticloud.src.oci_cli_dbmulticloud.generated import dbmulticloud_service_cli
 
 
-@click.command(cli_util.override('db_multicloud_gcp_provider.db_multicloud_gcp_provider_root_group.command_name', 'db-multicloud-gcp-provider'), cls=CommandGroupWithAlias, help=cli_util.override('db_multicloud_gcp_provider.db_multicloud_gcp_provider_root_group.help', """<b>Microsoft Azure:</b> <br>
+@click.command(cli_util.override('db_multicloud_aws_provider.db_multicloud_aws_provider_root_group.command_name', 'db-multicloud-aws-provider'), cls=CommandGroupWithAlias, help=cli_util.override('db_multicloud_aws_provider.db_multicloud_aws_provider_root_group.help', """<b>Microsoft Azure:</b> <br>
 <b>Oracle Azure Connector Resource:</b>:&nbsp;&nbsp;The Oracle Azure Connector Resource is used to install the Azure Arc Server on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
  The supported method to install the Azure Arc Server (Azure Identity) on the Exadata VM cluster:
 <ul>
@@ -50,39 +50,32 @@ It relies on both the Oracle Azure Connector and the Oracle Azure Blob Container
 <b>AWS</b>:<br>
 <b>Oracle AWS Connector Resource:</b>&nbsp;&nbsp;The Oracle AWS Connector Resource is used to install the AWS Identity Connector on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
 
-<b>Google AWS Key Resource:</b>&nbsp;&nbsp;The Oracle AWS Key Resource is used to register and manage a AWS Key within Oracle Cloud Infrastructure (OCI)."""), short_help=cli_util.override('db_multicloud_gcp_provider.db_multicloud_gcp_provider_root_group.short_help', """Oracle Database MultiCloud Data Plane Integration"""))
+<b>Google AWS Key Resource:</b>&nbsp;&nbsp;The Oracle AWS Key Resource is used to register and manage a AWS Key within Oracle Cloud Infrastructure (OCI)."""), short_help=cli_util.override('db_multicloud_aws_provider.db_multicloud_aws_provider_root_group.short_help', """Oracle Database MultiCloud Data Plane Integration"""))
 @cli_util.help_option_group
-def db_multicloud_gcp_provider_root_group():
+def db_multicloud_aws_provider_root_group():
     pass
 
 
-@click.command(cli_util.override('db_multicloud_gcp_provider.oracle_db_gcp_identity_connector_group.command_name', 'oracle-db-gcp-identity-connector'), cls=CommandGroupWithAlias, help="""This resource is used to create and manage a GCP Identity Connector for Oracle Database running on Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D). The Identity Connector enables secure communication between Oracle Cloud and Google Cloud services.""")
+@click.command(cli_util.override('db_multicloud_aws_provider.oracle_db_aws_identity_connector_group.command_name', 'oracle-db-aws-identity-connector'), cls=CommandGroupWithAlias, help="""Oracle DB AWS Connector resource object.""")
 @cli_util.help_option_group
-def oracle_db_gcp_identity_connector_group():
+def oracle_db_aws_identity_connector_group():
     pass
 
 
-@click.command(cli_util.override('db_multicloud_gcp_provider.oracle_db_gcp_key_ring_group.command_name', 'oracle-db-gcp-key-ring'), cls=CommandGroupWithAlias, help="""Oracle DB GCP Key Ring resource object.""")
+@click.command(cli_util.override('db_multicloud_aws_provider.oracle_db_aws_key_group.command_name', 'oracle-db-aws-key'), cls=CommandGroupWithAlias, help="""Oracle DB AWS Key Resource object.""")
 @cli_util.help_option_group
-def oracle_db_gcp_key_ring_group():
+def oracle_db_aws_key_group():
     pass
 
 
-@click.command(cli_util.override('db_multicloud_gcp_provider.oracle_db_gcp_key_group.command_name', 'oracle-db-gcp-key'), cls=CommandGroupWithAlias, help="""Oracle DB Google Cloud Key resource.""")
-@cli_util.help_option_group
-def oracle_db_gcp_key_group():
-    pass
+dbmulticloud_service_cli.dbmulticloud_service_group.add_command(db_multicloud_aws_provider_root_group)
+db_multicloud_aws_provider_root_group.add_command(oracle_db_aws_identity_connector_group)
+db_multicloud_aws_provider_root_group.add_command(oracle_db_aws_key_group)
 
 
-dbmulticloud_service_cli.dbmulticloud_service_group.add_command(db_multicloud_gcp_provider_root_group)
-db_multicloud_gcp_provider_root_group.add_command(oracle_db_gcp_identity_connector_group)
-db_multicloud_gcp_provider_root_group.add_command(oracle_db_gcp_key_ring_group)
-db_multicloud_gcp_provider_root_group.add_command(oracle_db_gcp_key_group)
-
-
-@oracle_db_gcp_identity_connector_group.command(name=cli_util.override('db_multicloud_gcp_provider.change_oracle_db_gcp_identity_connector_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle DB GCP Identity Connector resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbGcpIdentityConnectorCompartment)""")
-@cli_util.option('--oracle-db-gcp-identity-connector-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Identity Configuration Resource.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the Oracle DB GCP Identity Connector resource.""")
+@oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.change_oracle_db_aws_identity_connector_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle DB AWS Identity Connector resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAwsIdentityConnectorCompartment)""")
+@cli_util.option('--oracle-db-aws-identity-connector-id', required=True, help=u"""The [OCID]  of the Oracle DB AWS Identity Connector resource.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Oracle DB AWS Identity Connector resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -92,10 +85,10 @@ db_multicloud_gcp_provider_root_group.add_command(oracle_db_gcp_key_group)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_oracle_db_gcp_identity_connector_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_gcp_identity_connector_id, compartment_id, if_match):
+def change_oracle_db_aws_identity_connector_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_identity_connector_id, compartment_id, if_match):
 
-    if isinstance(oracle_db_gcp_identity_connector_id, six.string_types) and len(oracle_db_gcp_identity_connector_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-identity-connector-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_identity_connector_id, six.string_types) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-identity-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -107,10 +100,10 @@ def change_oracle_db_gcp_identity_connector_compartment(ctx, from_json, wait_for
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.change_oracle_db_gcp_identity_connector_compartment(
-        oracle_db_gcp_identity_connector_id=oracle_db_gcp_identity_connector_id,
-        change_oracle_db_gcp_identity_connector_compartment_details=_details,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.change_oracle_db_aws_identity_connector_compartment(
+        oracle_db_aws_identity_connector_id=oracle_db_aws_identity_connector_id,
+        change_oracle_db_aws_identity_connector_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -143,9 +136,9 @@ def change_oracle_db_gcp_identity_connector_compartment(ctx, from_json, wait_for
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_key_ring_group.command(name=cli_util.override('db_multicloud_gcp_provider.change_oracle_db_gcp_key_ring_compartment.command_name', 'change-compartment'), help=u"""Moves the GCP Key Ring resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbGcpKeyRingCompartment)""")
-@cli_util.option('--oracle-db-gcp-key-ring-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Key-Ring resource.""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID] where the Oracle DB GCP Key Ring resource resides.""")
+@oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.change_oracle_db_aws_key_compartment.command_name', 'change-compartment'), help=u"""Moves the AWS Key resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAwsKeyCompartment)""")
+@cli_util.option('--oracle-db-aws-key-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key resource.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Oracle DB AWS Key resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -155,10 +148,10 @@ def change_oracle_db_gcp_identity_connector_compartment(ctx, from_json, wait_for
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_oracle_db_gcp_key_ring_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_gcp_key_ring_id, compartment_id, if_match):
+def change_oracle_db_aws_key_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, compartment_id, if_match):
 
-    if isinstance(oracle_db_gcp_key_ring_id, six.string_types) and len(oracle_db_gcp_key_ring_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-key-ring-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -170,10 +163,10 @@ def change_oracle_db_gcp_key_ring_compartment(ctx, from_json, wait_for_state, ma
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.change_oracle_db_gcp_key_ring_compartment(
-        oracle_db_gcp_key_ring_id=oracle_db_gcp_key_ring_id,
-        change_oracle_db_gcp_key_ring_compartment_details=_details,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.change_oracle_db_aws_key_compartment(
+        oracle_db_aws_key_id=oracle_db_aws_key_id,
+        change_oracle_db_aws_key_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -206,16 +199,16 @@ def change_oracle_db_gcp_key_ring_compartment(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_identity_connector_group.command(name=cli_util.override('db_multicloud_gcp_provider.create_oracle_db_gcp_identity_connector.command_name', 'create'), help=u"""Creates Oracle DB GCP Identity Connector resource. \n[Command Reference](createOracleDbGcpIdentityConnector)""")
-@cli_util.option('--display-name', required=True, help=u"""Oracle DB Google GCP Identity Connector resource name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the Oracle DB GCP Identity Connector resource.""")
-@cli_util.option('--issuer-url', required=True, help=u"""OIDC token issuer Url""")
-@cli_util.option('--project-id', required=True, help=u"""Project id of the customer project.""")
-@cli_util.option('--resource-id', required=True, help=u"""The [OCID] of the GCP VM Cluster resource.""")
-@cli_util.option('--gcp-location', required=True, help=u"""GCP Location.""")
-@cli_util.option('--gcp-workload-identity-pool-id', required=True, help=u"""The ID of the cloud GCP Workload Identity Pool.""")
-@cli_util.option('--gcp-workload-identity-provider-id', required=True, help=u"""The ID of the GCP Workload Identity Provider.""")
-@cli_util.option('--gcp-resource-service-agent-id', required=True, help=u"""The ID of the GCP resource service agent.""")
+@oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.create_oracle_db_aws_identity_connector.command_name', 'create'), help=u"""Creates Oracle DB AWS Identity Connector resource. \n[Command Reference](createOracleDbAwsIdentityConnector)""")
+@cli_util.option('--display-name', required=True, help=u"""Oracle DB Google AWS Identity Connector resource name.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Oracle DB AWS Identity Connector resource.""")
+@cli_util.option('--resource-id', required=True, help=u"""The [OCID] of the AWS VM Cluster resource.""")
+@cli_util.option('--oidc-scope', required=True, help=u"""OCI IAM Domain scope for issuer URL.""")
+@cli_util.option('--issuer-url', required=True, help=u"""OIDC token issuer Url.""")
+@cli_util.option('--service-role-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Service role details and respective Amazon resource nam of Role.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-location', required=True, help=u"""AWS resource location.""")
+@cli_util.option('--aws-sts-private-endpoint', help=u"""Private endpoint of AWS Security Token Service.""")
+@cli_util.option('--aws-account-id', help=u"""AWS Account ID.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -225,12 +218,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'service-role-details': {'module': 'dbmulticloud', 'class': 'list[ServiceRoleDetail]'}, 'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbGcpIdentityConnector'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-role-details': {'module': 'dbmulticloud', 'class': 'list[ServiceRoleDetail]'}, 'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsIdentityConnector'})
 @cli_util.wrap_exceptions
-def create_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, issuer_url, project_id, resource_id, gcp_location, gcp_workload_identity_pool_id, gcp_workload_identity_provider_id, gcp_resource_service_agent_id, freeform_tags, defined_tags):
+def create_oracle_db_aws_identity_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, resource_id, oidc_scope, issuer_url, service_role_details, aws_location, aws_sts_private_endpoint, aws_account_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -238,13 +231,17 @@ def create_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max_
     _details = {}
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
-    _details['issuerUrl'] = issuer_url
-    _details['projectId'] = project_id
     _details['resourceId'] = resource_id
-    _details['gcpLocation'] = gcp_location
-    _details['gcpWorkloadIdentityPoolId'] = gcp_workload_identity_pool_id
-    _details['gcpWorkloadIdentityProviderId'] = gcp_workload_identity_provider_id
-    _details['gcpResourceServiceAgentId'] = gcp_resource_service_agent_id
+    _details['oidcScope'] = oidc_scope
+    _details['issuerUrl'] = issuer_url
+    _details['serviceRoleDetails'] = cli_util.parse_json_parameter("service_role_details", service_role_details)
+    _details['awsLocation'] = aws_location
+
+    if aws_sts_private_endpoint is not None:
+        _details['awsStsPrivateEndpoint'] = aws_sts_private_endpoint
+
+    if aws_account_id is not None:
+        _details['awsAccountId'] = aws_account_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -252,9 +249,9 @@ def create_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max_
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.create_oracle_db_gcp_identity_connector(
-        create_oracle_db_gcp_identity_connector_details=_details,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.create_oracle_db_aws_identity_connector(
+        create_oracle_db_aws_identity_connector_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -287,14 +284,16 @@ def create_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max_
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_key_ring_group.command(name=cli_util.override('db_multicloud_gcp_provider.create_oracle_db_gcp_key_ring.command_name', 'create'), help=u"""Creates DB GCP Key Rings based on the provided information and retrieves the associated keys. \n[Command Reference](createOracleDbGcpKeyRing)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] where the Oracle DB GCP Key Ring resource resides.""")
-@cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of the compartment where the Oracle DB GCP Identity Connector resource resides.""")
-@cli_util.option('--display-name', required=True, help=u"""Display name of DB GCP Key Ring resource.""")
-@cli_util.option('--gcp-key-ring-id', help=u"""GCP Key Ring ID.""")
-@cli_util.option('--type', help=u"""Oracle DB GCP Key Ring resource Type.""")
-@cli_util.option('--location', help=u"""Location of the GCP Key Ring resource.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Oracle DB GCP Key Ring resource's properties.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.create_oracle_db_aws_key.command_name', 'create'), help=u"""Create DB AWS Key resource. \n[Command Reference](createOracleDbAwsKey)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Oracle DB AWS Key resource.""")
+@cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Connector resource.""")
+@cli_util.option('--display-name', required=True, help=u"""Oracle DB AWS Key resource name.""")
+@cli_util.option('--aws-key-arn', help=u"""Amazon resource name of AWS Key.""")
+@cli_util.option('--aws-account-id', help=u"""AWS Account ID.""")
+@cli_util.option('--type', help=u"""AWS Key resource type.""")
+@cli_util.option('--location', help=u"""AWS Key resource Location.""")
+@cli_util.option('--is-aws-key-enabled', type=click.BOOL, help=u"""The Oracle AWS Key resource is enabled or disabled at AWS.""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""AWS Key resource's properties.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -308,9 +307,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbGcpKeyRing'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsKey'})
 @cli_util.wrap_exceptions
-def create_oracle_db_gcp_key_ring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, oracle_db_connector_id, display_name, gcp_key_ring_id, type, location, properties, freeform_tags, defined_tags, if_match):
+def create_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, oracle_db_connector_id, display_name, aws_key_arn, aws_account_id, type, location, is_aws_key_enabled, properties, freeform_tags, defined_tags, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -322,14 +321,20 @@ def create_oracle_db_gcp_key_ring(ctx, from_json, wait_for_state, max_wait_secon
     _details['oracleDbConnectorId'] = oracle_db_connector_id
     _details['displayName'] = display_name
 
-    if gcp_key_ring_id is not None:
-        _details['gcpKeyRingId'] = gcp_key_ring_id
+    if aws_key_arn is not None:
+        _details['awsKeyArn'] = aws_key_arn
+
+    if aws_account_id is not None:
+        _details['awsAccountId'] = aws_account_id
 
     if type is not None:
         _details['type'] = type
 
     if location is not None:
         _details['location'] = location
+
+    if is_aws_key_enabled is not None:
+        _details['isAwsKeyEnabled'] = is_aws_key_enabled
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -340,9 +345,9 @@ def create_oracle_db_gcp_key_ring(ctx, from_json, wait_for_state, max_wait_secon
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.create_oracle_db_gcp_key_ring(
-        create_oracle_db_gcp_key_ring_details=_details,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.create_oracle_db_aws_key(
+        create_oracle_db_aws_key_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -375,8 +380,8 @@ def create_oracle_db_gcp_key_ring(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_identity_connector_group.command(name=cli_util.override('db_multicloud_gcp_provider.delete_oracle_db_gcp_identity_connector.command_name', 'delete'), help=u"""Deletes the Oracle DB GCP Identity Connector resource and removes the associated connector from the database resource. \n[Command Reference](deleteOracleDbGcpIdentityConnector)""")
-@cli_util.option('--oracle-db-gcp-identity-connector-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Identity Configuration Resource.""")
+@oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.delete_oracle_db_aws_identity_connector.command_name', 'delete'), help=u"""Deletes a Oracle DB AWS Identity Connector resource. \n[Command Reference](deleteOracleDbAwsIdentityConnector)""")
+@cli_util.option('--oracle-db-aws-identity-connector-id', required=True, help=u"""The [OCID]  of the Oracle DB AWS Identity Connector resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -387,18 +392,18 @@ def create_oracle_db_gcp_key_ring(ctx, from_json, wait_for_state, max_wait_secon
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_gcp_identity_connector_id, if_match):
+def delete_oracle_db_aws_identity_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_identity_connector_id, if_match):
 
-    if isinstance(oracle_db_gcp_identity_connector_id, six.string_types) and len(oracle_db_gcp_identity_connector_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-identity-connector-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_identity_connector_id, six.string_types) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-identity-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.delete_oracle_db_gcp_identity_connector(
-        oracle_db_gcp_identity_connector_id=oracle_db_gcp_identity_connector_id,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.delete_oracle_db_aws_identity_connector(
+        oracle_db_aws_identity_connector_id=oracle_db_aws_identity_connector_id,
         **kwargs
     )
     if wait_for_state:
@@ -431,8 +436,8 @@ def delete_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max_
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_key_ring_group.command(name=cli_util.override('db_multicloud_gcp_provider.delete_oracle_db_gcp_key_ring.command_name', 'delete'), help=u"""Deletes the GCP Key Ring and its associated metadata. \n[Command Reference](deleteOracleDbGcpKeyRing)""")
-@cli_util.option('--oracle-db-gcp-key-ring-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Key-Ring resource.""")
+@oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.delete_oracle_db_aws_key.command_name', 'delete'), help=u"""Delete AWS Key resource. \n[Command Reference](deleteOracleDbAwsKey)""")
+@cli_util.option('--oracle-db-aws-key-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -443,18 +448,18 @@ def delete_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_oracle_db_gcp_key_ring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_gcp_key_ring_id, if_match):
+def delete_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, if_match):
 
-    if isinstance(oracle_db_gcp_key_ring_id, six.string_types) and len(oracle_db_gcp_key_ring_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-key-ring-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.delete_oracle_db_gcp_key_ring(
-        oracle_db_gcp_key_ring_id=oracle_db_gcp_key_ring_id,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.delete_oracle_db_aws_key(
+        oracle_db_aws_key_id=oracle_db_aws_key_id,
         **kwargs
     )
     if wait_for_state:
@@ -487,64 +492,42 @@ def delete_oracle_db_gcp_key_ring(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_identity_connector_group.command(name=cli_util.override('db_multicloud_gcp_provider.get_oracle_db_gcp_identity_connector.command_name', 'get'), help=u"""Retrieves the Oracle DB GCP Identity Connector for a specified resource [OCID]. \n[Command Reference](getOracleDbGcpIdentityConnector)""")
-@cli_util.option('--oracle-db-gcp-identity-connector-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Identity Configuration Resource.""")
+@oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.get_oracle_db_aws_identity_connector.command_name', 'get'), help=u"""Retrieves detailed information about a Oracle DB AWS Identity Connector resource by specifying its unique resource [OCID]. \n[Command Reference](getOracleDbAwsIdentityConnector)""")
+@cli_util.option('--oracle-db-aws-identity-connector-id', required=True, help=u"""The [OCID]  of the Oracle DB AWS Identity Connector resource.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbGcpIdentityConnector'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsIdentityConnector'})
 @cli_util.wrap_exceptions
-def get_oracle_db_gcp_identity_connector(ctx, from_json, oracle_db_gcp_identity_connector_id):
+def get_oracle_db_aws_identity_connector(ctx, from_json, oracle_db_aws_identity_connector_id):
 
-    if isinstance(oracle_db_gcp_identity_connector_id, six.string_types) and len(oracle_db_gcp_identity_connector_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-identity-connector-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_identity_connector_id, six.string_types) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-identity-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.get_oracle_db_gcp_identity_connector(
-        oracle_db_gcp_identity_connector_id=oracle_db_gcp_identity_connector_id,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.get_oracle_db_aws_identity_connector(
+        oracle_db_aws_identity_connector_id=oracle_db_aws_identity_connector_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_key_group.command(name=cli_util.override('db_multicloud_gcp_provider.get_oracle_db_gcp_key.command_name', 'get'), help=u"""Retrieves Oracle DB Google Cloud Key details using a specific resource [OCID]. \n[Command Reference](getOracleDbGcpKey)""")
-@cli_util.option('--oracle-db-gcp-key-id', required=True, help=u"""The [OCID] of the Oracle DB Google Cloud Key resource.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbGcpKey'})
-@cli_util.wrap_exceptions
-def get_oracle_db_gcp_key(ctx, from_json, oracle_db_gcp_key_id):
-
-    if isinstance(oracle_db_gcp_key_id, six.string_types) and len(oracle_db_gcp_key_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-key-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.get_oracle_db_gcp_key(
-        oracle_db_gcp_key_id=oracle_db_gcp_key_id,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@oracle_db_gcp_key_ring_group.command(name=cli_util.override('db_multicloud_gcp_provider.get_oracle_db_gcp_key_ring.command_name', 'get'), help=u"""Retrieves the Oracle GCP Key Ring details using a specific Container resource [OCID]. \n[Command Reference](getOracleDbGcpKeyRing)""")
-@cli_util.option('--oracle-db-gcp-key-ring-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Key-Ring resource.""")
+@oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.get_oracle_db_aws_key.command_name', 'get'), help=u"""Retrieves detailed information about a Oracle AWS Key resource by specifying its unique resource [OCID]. \n[Command Reference](getOracleDbAwsKey)""")
+@cli_util.option('--oracle-db-aws-key-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbGcpKeyRing'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsKey'})
 @cli_util.wrap_exceptions
-def get_oracle_db_gcp_key_ring(ctx, from_json, oracle_db_gcp_key_ring_id, limit, page, sort_order):
+def get_oracle_db_aws_key(ctx, from_json, oracle_db_aws_key_id, limit, page, sort_order):
 
-    if isinstance(oracle_db_gcp_key_ring_id, six.string_types) and len(oracle_db_gcp_key_ring_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-key-ring-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
 
     kwargs = {}
     if limit is not None:
@@ -554,19 +537,19 @@ def get_oracle_db_gcp_key_ring(ctx, from_json, oracle_db_gcp_key_ring_id, limit,
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.get_oracle_db_gcp_key_ring(
-        oracle_db_gcp_key_ring_id=oracle_db_gcp_key_ring_id,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.get_oracle_db_aws_key(
+        oracle_db_aws_key_id=oracle_db_aws_key_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_identity_connector_group.command(name=cli_util.override('db_multicloud_gcp_provider.list_oracle_db_gcp_identity_connectors.command_name', 'list'), help=u"""Lists all Oracle DB GCP Identity Connectors based on the specified filters. \n[Command Reference](listOracleDbGcpIdentityConnectors)""")
+@oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.list_oracle_db_aws_identity_connectors.command_name', 'list'), help=u"""Lists all Oracle DB AWS Identity Connectors based on the specified filters. \n[Command Reference](listOracleDbAwsIdentityConnectors)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
-@cli_util.option('--display-name', help=u"""A filter to return Oracle DB GCP Identity Connector resources that match the specified display name.""")
+@cli_util.option('--display-name', help=u"""A filter to return Oracle DB AWS Identity Connector Resource that match the given display name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--resource-id', help=u"""A filter to return Oracle DB Identity Connector resource that match the given resource [OCID].""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the specified lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -576,9 +559,9 @@ def get_oracle_db_gcp_key_ring(ctx, from_json, oracle_db_gcp_key_ring_id, limit,
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbGcpIdentityConnectorSummaryCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsIdentityConnectorSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_oracle_db_gcp_identity_connectors(ctx, from_json, all_pages, page_size, compartment_id, display_name, resource_id, lifecycle_state, limit, page, sort_order, sort_by):
+def list_oracle_db_aws_identity_connectors(ctx, from_json, all_pages, page_size, compartment_id, display_name, lifecycle_state, resource_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -586,10 +569,10 @@ def list_oracle_db_gcp_identity_connectors(ctx, from_json, all_pages, page_size,
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     if resource_id is not None:
         kwargs['resource_id'] = resource_id
-    if lifecycle_state is not None:
-        kwargs['lifecycle_state'] = lifecycle_state
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -599,38 +582,38 @@ def list_oracle_db_gcp_identity_connectors(ctx, from_json, all_pages, page_size,
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
 
         result = cli_util.list_call_get_all_results(
-            client.list_oracle_db_gcp_identity_connectors,
+            client.list_oracle_db_aws_identity_connectors,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
         result = cli_util.list_call_get_up_to_limit(
-            client.list_oracle_db_gcp_identity_connectors,
+            client.list_oracle_db_aws_identity_connectors,
             limit,
             page_size,
             compartment_id=compartment_id,
             **kwargs
         )
     else:
-        result = client.list_oracle_db_gcp_identity_connectors(
+        result = client.list_oracle_db_aws_identity_connectors(
             compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_key_ring_group.command(name=cli_util.override('db_multicloud_gcp_provider.list_oracle_db_gcp_key_rings.command_name', 'list'), help=u"""Lists the all DB GCP Key Rings based on filters. \n[Command Reference](listOracleDbGcpKeyRings)""")
+@oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.list_oracle_db_aws_keys.command_name', 'list'), help=u"""Lists all DB AWS Keys based on the specified filters. \n[Command Reference](listOracleDbAwsKeys)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
-@cli_util.option('--display-name', help=u"""A filter to return Oracle DB GCP Key Ring resources that match the specified display name.""")
-@cli_util.option('--oracle-db-gcp-key-ring-id', help=u"""A filter to return Oracle DB GCP Key Rings.""")
+@cli_util.option('--display-name', help=u"""A filter to return Oracle DB AWS Key Resource that match the given display name.""")
+@cli_util.option('--oracle-db-aws-key-id', help=u"""A filter to return Oracle DB AWS Identity Connector Resource that match the given OCID](/Content/General/Concepts/identifiers.htm) of the Oracle DB AWS Key resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
-@cli_util.option('--oracle-db-gcp-connector-id', help=u"""A filter to return Oracle DB GCP Identity Connector resources that match the specified resource [OCID].""")
+@cli_util.option('--oracle-db-aws-connector-id', help=u"""A filter to return Oracle DB AWS Identity Connector resources that match the specified [OCID] of the Oracle DB AWS Identity Connector resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -640,9 +623,9 @@ def list_oracle_db_gcp_identity_connectors(ctx, from_json, all_pages, page_size,
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbGcpKeyRingSummaryCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsKeySummaryCollection'})
 @cli_util.wrap_exceptions
-def list_oracle_db_gcp_key_rings(ctx, from_json, all_pages, page_size, compartment_id, display_name, oracle_db_gcp_key_ring_id, lifecycle_state, oracle_db_gcp_connector_id, limit, page, sort_order, sort_by):
+def list_oracle_db_aws_keys(ctx, from_json, all_pages, page_size, compartment_id, display_name, oracle_db_aws_key_id, lifecycle_state, oracle_db_aws_connector_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -650,12 +633,12 @@ def list_oracle_db_gcp_key_rings(ctx, from_json, all_pages, page_size, compartme
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
-    if oracle_db_gcp_key_ring_id is not None:
-        kwargs['oracle_db_gcp_key_ring_id'] = oracle_db_gcp_key_ring_id
+    if oracle_db_aws_key_id is not None:
+        kwargs['oracle_db_aws_key_id'] = oracle_db_aws_key_id
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    if oracle_db_gcp_connector_id is not None:
-        kwargs['oracle_db_gcp_connector_id'] = oracle_db_gcp_connector_id
+    if oracle_db_aws_connector_id is not None:
+        kwargs['oracle_db_aws_connector_id'] = oracle_db_aws_connector_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -665,100 +648,34 @@ def list_oracle_db_gcp_key_rings(ctx, from_json, all_pages, page_size, compartme
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
 
         result = cli_util.list_call_get_all_results(
-            client.list_oracle_db_gcp_key_rings,
+            client.list_oracle_db_aws_keys,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
         result = cli_util.list_call_get_up_to_limit(
-            client.list_oracle_db_gcp_key_rings,
+            client.list_oracle_db_aws_keys,
             limit,
             page_size,
             compartment_id=compartment_id,
             **kwargs
         )
     else:
-        result = client.list_oracle_db_gcp_key_rings(
+        result = client.list_oracle_db_aws_keys(
             compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_key_group.command(name=cli_util.override('db_multicloud_gcp_provider.list_oracle_db_gcp_keys.command_name', 'list'), help=u"""Lists all Oracle DB Google Cloud Keys based on the specified filters. \n[Command Reference](listOracleDbGcpKeys)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
-@cli_util.option('--display-name', help=u"""A filter to return Oracle DB Google Cloud Key resources that match the specified display name.""")
-@cli_util.option('--oracle-db-gcp-key-ring-id', help=u"""A filter to return Oracle DB GCP Key Rings.""")
-@cli_util.option('--oracle-db-gcp-key-id', help=u"""A filter to return Oracle DB Google Cloud Key resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the specified lifecycle state. The state value is case-insensitive.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified, default is timeCreated.""")
-@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbGcpKeySummaryCollection'})
-@cli_util.wrap_exceptions
-def list_oracle_db_gcp_keys(ctx, from_json, all_pages, page_size, compartment_id, display_name, oracle_db_gcp_key_ring_id, oracle_db_gcp_key_id, lifecycle_state, limit, page, sort_order, sort_by):
-
-    if all_pages and limit:
-        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
-    kwargs = {}
-    if display_name is not None:
-        kwargs['display_name'] = display_name
-    if oracle_db_gcp_key_ring_id is not None:
-        kwargs['oracle_db_gcp_key_ring_id'] = oracle_db_gcp_key_ring_id
-    if oracle_db_gcp_key_id is not None:
-        kwargs['oracle_db_gcp_key_id'] = oracle_db_gcp_key_id
-    if lifecycle_state is not None:
-        kwargs['lifecycle_state'] = lifecycle_state
-    if limit is not None:
-        kwargs['limit'] = limit
-    if page is not None:
-        kwargs['page'] = page
-    if sort_order is not None:
-        kwargs['sort_order'] = sort_order
-    if sort_by is not None:
-        kwargs['sort_by'] = sort_by
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    if all_pages:
-        if page_size:
-            kwargs['limit'] = page_size
-
-        result = cli_util.list_call_get_all_results(
-            client.list_oracle_db_gcp_keys,
-            compartment_id=compartment_id,
-            **kwargs
-        )
-    elif limit is not None:
-        result = cli_util.list_call_get_up_to_limit(
-            client.list_oracle_db_gcp_keys,
-            limit,
-            page_size,
-            compartment_id=compartment_id,
-            **kwargs
-        )
-    else:
-        result = client.list_oracle_db_gcp_keys(
-            compartment_id=compartment_id,
-            **kwargs
-        )
-    cli_util.render_response(result, ctx)
-
-
-@oracle_db_gcp_identity_connector_group.command(name=cli_util.override('db_multicloud_gcp_provider.refresh_oracle_db_gcp_identity_connector.command_name', 'refresh'), help=u"""Refreshes the Oracle DB GCP Connector resource. \n[Command Reference](refreshOracleDbGcpIdentityConnector)""")
-@cli_util.option('--oracle-db-gcp-identity-connector-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Identity Configuration Resource.""")
+@oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.refresh_oracle_db_aws_identity_connector.command_name', 'refresh'), help=u"""Refreshes the Oracle DB AWS Connector resource. \n[Command Reference](refreshOracleDbAwsIdentityConnector)""")
+@cli_util.option('--oracle-db-aws-identity-connector-id', required=True, help=u"""The [OCID]  of the Oracle DB AWS Identity Connector resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -768,18 +685,18 @@ def list_oracle_db_gcp_keys(ctx, from_json, all_pages, page_size, compartment_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def refresh_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_gcp_identity_connector_id, if_match):
+def refresh_oracle_db_aws_identity_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_identity_connector_id, if_match):
 
-    if isinstance(oracle_db_gcp_identity_connector_id, six.string_types) and len(oracle_db_gcp_identity_connector_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-identity-connector-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_identity_connector_id, six.string_types) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-identity-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.refresh_oracle_db_gcp_identity_connector(
-        oracle_db_gcp_identity_connector_id=oracle_db_gcp_identity_connector_id,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.refresh_oracle_db_aws_identity_connector(
+        oracle_db_aws_identity_connector_id=oracle_db_aws_identity_connector_id,
         **kwargs
     )
     if wait_for_state:
@@ -812,9 +729,9 @@ def refresh_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_key_ring_group.command(name=cli_util.override('db_multicloud_gcp_provider.refresh_oracle_db_gcp_key_ring.command_name', 'refresh'), help=u"""Refreshes Oracle GCP Key Ring details from the backend. \n[Command Reference](refreshOracleDbGcpKeyRing)""")
-@cli_util.option('--oracle-db-gcp-key-ring-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Key-Ring resource.""")
-@cli_util.option('--oracle-db-gcp-connector-id', help=u"""The [OCID] of the Oracle DB GCP Connector resource.""")
+@oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.refresh_oracle_db_aws_key.command_name', 'refresh'), help=u"""Refreshes Oracle AWS Key resource. \n[Command Reference](refreshOracleDbAwsKey)""")
+@cli_util.option('--oracle-db-aws-key-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key resource.""")
+@cli_util.option('--oracle-db-aws-connector-id', help=u"""The [OCID] of the Oracle DB AWS Connector resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -824,10 +741,10 @@ def refresh_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def refresh_oracle_db_gcp_key_ring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_gcp_key_ring_id, oracle_db_gcp_connector_id, if_match):
+def refresh_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, oracle_db_aws_connector_id, if_match):
 
-    if isinstance(oracle_db_gcp_key_ring_id, six.string_types) and len(oracle_db_gcp_key_ring_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-key-ring-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -836,13 +753,13 @@ def refresh_oracle_db_gcp_key_ring(ctx, from_json, wait_for_state, max_wait_seco
 
     _details = {}
 
-    if oracle_db_gcp_connector_id is not None:
-        _details['oracleDbGcpConnectorId'] = oracle_db_gcp_connector_id
+    if oracle_db_aws_connector_id is not None:
+        _details['oracleDbAwsConnectorId'] = oracle_db_aws_connector_id
 
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.refresh_oracle_db_gcp_key_ring(
-        oracle_db_gcp_key_ring_id=oracle_db_gcp_key_ring_id,
-        refresh_oracle_db_gcp_key_ring_details=_details,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.refresh_oracle_db_aws_key(
+        oracle_db_aws_key_id=oracle_db_aws_key_id,
+        refresh_oracle_db_aws_key_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -875,16 +792,18 @@ def refresh_oracle_db_gcp_key_ring(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_identity_connector_group.command(name=cli_util.override('db_multicloud_gcp_provider.update_oracle_db_gcp_identity_connector.command_name', 'update'), help=u"""Modifies the existing Oracle DB GCP Identity Connector resource for a given [OCID]. \n[Command Reference](updateOracleDbGcpIdentityConnector)""")
-@cli_util.option('--oracle-db-gcp-identity-connector-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Identity Configuration Resource.""")
-@cli_util.option('--display-name', help=u"""Oracle DB Google GCP Identity Connector resource name.""")
-@cli_util.option('--issuer-url', help=u"""OIDC token issuer Url""")
-@cli_util.option('--project-id', help=u"""Project ID of the customer project.""")
-@cli_util.option('--resource-id', help=u"""The [OCID] of the GCP VM Cluster resource.""")
-@cli_util.option('--gcp-location', help=u"""GCP Location.""")
-@cli_util.option('--gcp-workload-identity-pool-id', help=u"""The ID of the cloud GCP Workload Identity Pool.""")
-@cli_util.option('--gcp-workload-identity-provider-id', help=u"""The ID of the GCP Workload Identity Provider.""")
-@cli_util.option('--gcp-resource-service-agent-id', help=u"""The ID of the GCP resource service agent.""")
+@oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.update_oracle_db_aws_identity_connector.command_name', 'update'), help=u"""Modifies the existing Oracle DB AWS Identity Connector resource for a given [OCID]. \n[Command Reference](updateOracleDbAwsIdentityConnector)""")
+@cli_util.option('--oracle-db-aws-identity-connector-id', required=True, help=u"""The [OCID]  of the Oracle DB AWS Identity Connector resource.""")
+@cli_util.option('--display-name', help=u"""Oracle DB Google AWS Identity Connector resource name.""")
+@cli_util.option('--resource-id', help=u"""The [OCID] of the AWS VM Cluster resource.""")
+@cli_util.option('--oidc-scope', help=u"""IAM Domain scope for issuer URL.""")
+@cli_util.option('--issuer-url', help=u"""OIDC token issuer Url.""")
+@cli_util.option('--service-role-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Service role details and respective Amazon resource nam of Role.
+
+This option is a JSON list with items of type ServiceRoleDetail.  For documentation on ServiceRoleDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/dbmulticloudawsprovider/20240501/datatypes/ServiceRoleDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-location', help=u"""AWS resource Location.""")
+@cli_util.option('--aws-sts-private-endpoint', help=u"""Private endpoint of AWS Security Token Service.""")
+@cli_util.option('--aws-account-id', help=u"""AWS Account ID.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -896,18 +815,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'service-role-details': {'module': 'dbmulticloud', 'class': 'list[ServiceRoleDetail]'}, 'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-role-details': {'module': 'dbmulticloud', 'class': 'list[ServiceRoleDetail]'}, 'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_oracle_db_gcp_identity_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_gcp_identity_connector_id, display_name, issuer_url, project_id, resource_id, gcp_location, gcp_workload_identity_pool_id, gcp_workload_identity_provider_id, gcp_resource_service_agent_id, freeform_tags, defined_tags, if_match):
+def update_oracle_db_aws_identity_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_identity_connector_id, display_name, resource_id, oidc_scope, issuer_url, service_role_details, aws_location, aws_sts_private_endpoint, aws_account_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oracle_db_gcp_identity_connector_id, six.string_types) and len(oracle_db_gcp_identity_connector_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-identity-connector-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_identity_connector_id, six.string_types) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-identity-connector-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if service_role_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to service-role-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -919,27 +838,27 @@ def update_oracle_db_gcp_identity_connector(ctx, from_json, force, wait_for_stat
 
     if display_name is not None:
         _details['displayName'] = display_name
-
-    if issuer_url is not None:
-        _details['issuerUrl'] = issuer_url
-
-    if project_id is not None:
-        _details['projectId'] = project_id
 
     if resource_id is not None:
         _details['resourceId'] = resource_id
 
-    if gcp_location is not None:
-        _details['gcpLocation'] = gcp_location
+    if oidc_scope is not None:
+        _details['oidcScope'] = oidc_scope
 
-    if gcp_workload_identity_pool_id is not None:
-        _details['gcpWorkloadIdentityPoolId'] = gcp_workload_identity_pool_id
+    if issuer_url is not None:
+        _details['issuerUrl'] = issuer_url
 
-    if gcp_workload_identity_provider_id is not None:
-        _details['gcpWorkloadIdentityProviderId'] = gcp_workload_identity_provider_id
+    if service_role_details is not None:
+        _details['serviceRoleDetails'] = cli_util.parse_json_parameter("service_role_details", service_role_details)
 
-    if gcp_resource_service_agent_id is not None:
-        _details['gcpResourceServiceAgentId'] = gcp_resource_service_agent_id
+    if aws_location is not None:
+        _details['awsLocation'] = aws_location
+
+    if aws_sts_private_endpoint is not None:
+        _details['awsStsPrivateEndpoint'] = aws_sts_private_endpoint
+
+    if aws_account_id is not None:
+        _details['awsAccountId'] = aws_account_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -947,10 +866,10 @@ def update_oracle_db_gcp_identity_connector(ctx, from_json, force, wait_for_stat
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.update_oracle_db_gcp_identity_connector(
-        oracle_db_gcp_identity_connector_id=oracle_db_gcp_identity_connector_id,
-        update_oracle_db_gcp_identity_connector_details=_details,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.update_oracle_db_aws_identity_connector(
+        oracle_db_aws_identity_connector_id=oracle_db_aws_identity_connector_id,
+        update_oracle_db_aws_identity_connector_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -983,9 +902,9 @@ def update_oracle_db_gcp_identity_connector(ctx, from_json, force, wait_for_stat
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_gcp_key_ring_group.command(name=cli_util.override('db_multicloud_gcp_provider.update_oracle_db_gcp_key_ring.command_name', 'update'), help=u"""Modifies the existing Oracle GCP Key Ring Details for a given [OCID]. \n[Command Reference](updateOracleDbGcpKeyRing)""")
-@cli_util.option('--oracle-db-gcp-key-ring-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Key-Ring resource.""")
-@cli_util.option('--display-name', help=u"""Display name of DB GCP Key Ring resource.""")
+@oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.update_oracle_db_aws_key.command_name', 'update'), help=u"""Modifies the existing Oracle AWS Key Details for a given [OCID]. \n[Command Reference](updateOracleDbAwsKey)""")
+@cli_util.option('--oracle-db-aws-key-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key resource.""")
+@cli_util.option('--display-name', help=u"""Oracle DB AWS Key resource name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1002,10 +921,10 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_oracle_db_gcp_key_ring(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_gcp_key_ring_id, display_name, freeform_tags, defined_tags, if_match):
+def update_oracle_db_aws_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oracle_db_gcp_key_ring_id, six.string_types) and len(oracle_db_gcp_key_ring_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-gcp-key-ring-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
@@ -1027,10 +946,10 @@ def update_oracle_db_gcp_key_ring(ctx, from_json, force, wait_for_state, max_wai
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('dbmulticloud', 'db_multicloud_gcp_provider', ctx)
-    result = client.update_oracle_db_gcp_key_ring(
-        oracle_db_gcp_key_ring_id=oracle_db_gcp_key_ring_id,
-        update_oracle_db_gcp_key_ring_details=_details,
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.update_oracle_db_aws_key(
+        oracle_db_aws_key_id=oracle_db_aws_key_id,
+        update_oracle_db_aws_key_details=_details,
         **kwargs
     )
     if wait_for_state:

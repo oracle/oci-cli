@@ -4339,3 +4339,6 @@ def delete_pluggable_database_snapshot_extended(ctx, **kwargs):
     kwargs['pluggable_database_snapshot_id'] = kwargs['pdb_snapshot_id']
     kwargs.pop('pdb_snapshot_id')
     ctx.invoke(database_cli.delete_pluggable_database_snapshot, **kwargs)
+
+# oci db database refresh-data-guard-health-status -> oci db database refresh-dataguard-health
+cli_util.rename_command(database_cli, database_cli.database_group, database_cli.refresh_data_guard_health_status, "refresh-dataguard-health")
