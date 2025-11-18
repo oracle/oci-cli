@@ -142,3 +142,5 @@ class TestCliUtil(unittest.TestCase):
 
         subtype = cli_util.get_possible_subtype_based_on_payload(oci.core.models.InstanceConfigurationInstanceDetails, 'core', payload)
         assert subtype.__class__.__name__ == 'ComputeInstanceDetails'
+
+#dummy
