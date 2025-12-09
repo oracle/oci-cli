@@ -41,7 +41,8 @@ def create_vcr(**kwargs):
     vcr_to_use = vcr.VCR(
         serializer='yaml',
         cassette_library_dir=location,
-        record_mode=vcr_mode
+        record_mode=vcr_mode,
+        decode_compressed_response=True
     )
 
     # by default, only match keys in JSON request bodies

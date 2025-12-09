@@ -297,6 +297,7 @@ SDK_client_map = {
     "db.list_db_systems": "oci.database.DatabaseClient.list_db_systems",
     "db.list_db_versions": "oci.database.DatabaseClient.list_db_versions",
     "db.list_dbnode_snapshots": "oci.database.DatabaseClient.list_dbnode_snapshots",
+    "db.list_estimate_cost_savings": "oci.database.DatabaseClient.list_estimate_cost_savings",
     "db.list_exadata_infrastructures": "oci.database.DatabaseClient.list_exadata_infrastructures",
     "db.list_exadb_vm_cluster_update_history_entries": "oci.database.DatabaseClient.list_exadb_vm_cluster_update_history_entries",
     "db.list_exadb_vm_cluster_updates": "oci.database.DatabaseClient.list_exadb_vm_cluster_updates",

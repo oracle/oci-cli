@@ -4340,5 +4340,10 @@ def delete_pluggable_database_snapshot_extended(ctx, **kwargs):
     kwargs.pop('pdb_snapshot_id')
     ctx.invoke(database_cli.delete_pluggable_database_snapshot, **kwargs)
 
+
 # oci db database refresh-data-guard-health-status -> oci db database refresh-dataguard-health
 cli_util.rename_command(database_cli, database_cli.database_group, database_cli.refresh_data_guard_health_status, "refresh-dataguard-health")
+
+
+# oci db autonomous-database list-estimate-cost-savings -> oci db autonomous-database list-elastic-pool-cost-savings
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.list_estimate_cost_savings, "list-elastic-pool-cost-savings")

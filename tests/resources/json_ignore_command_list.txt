@@ -571,3 +571,4 @@ dif, stack, add
 dif, stack, create
 dif, stack, deploy-artifacts
 dif, stack, update
+db, autonomous-database, list-elastic-pool-cost-savings

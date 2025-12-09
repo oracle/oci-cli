@@ -15,6 +15,15 @@ from oci._vendor.urllib3 import connectionpool
 
 import unittest.mock as mock
 
+try:
+    # Python 3.8+
+    from importlib.metadata import version as pkg_version
+except ImportError:
+    # Python 3.6/3.7 need backported package:
+    from importlib_metadata import version as pkg_version
+
+from packaging import version
+
 # Save the original types for our vendored version of requests and urllib3 so we can reset/unmock them later
 _OCIVendoredVerifiedHTTPSConnection = connectionpool.VerifiedHTTPSConnection
 _cpoolOCIVendoredHTTPConnection = connectionpool.HTTPConnection
@@ -41,10 +50,20 @@ def _revised_vcr_reset_patchers():
 
 
 def _oci_vendored(self):
+    if version.parse(pkg_version("vcrpy")) > version.parse("4.3.0"):
+        return self._urllib3_patchers(connectionpool, stubs=stubs, conn=None)
     return self._urllib3_patchers(connectionpool, stubs)
 
 
 def _revised_cassette_patcher_builder_build(self):
+    if version.parse(pkg_version("vcrpy")) > version.parse("4.3.0"):
+        return itertools.chain(
+            self._oci_vendored(), self._httplib(), self._requests(), self._boto3(), self._urllib3(),
+            self._httplib2(), self._tornado(), self._aiohttp(),
+            self._build_patchers_from_mock_triples(
+                self._cassette.custom_patches
+            ),
+        )
     return itertools.chain(
         self._oci_vendored(), self._httplib(), self._requests(), self._boto3(), self._urllib3(),
         self._httplib2(), self._boto(), self._tornado(), self._aiohttp(),

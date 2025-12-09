@@ -454,8 +454,9 @@ http://user:pass@proxy.example.org:3128/ (if your proxy requires a username and 
 
 For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCUMENTATION}.''')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
+@click.option('--enable-propagation', is_flag=False, type=click.Choice(choices=['True', 'False']), help='Enable propagation of opc-request-id')
 @click.pass_context
-def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, enable_dual_stack, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, proxy, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
+def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, enable_dual_stack, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, proxy, debug, cli_auto_prompt, connection_timeout, read_timeout, enable_propagation, help):
 
     click.exceptions.UsageError.show = cli_util.update_click_help_message
     if max_retries and no_retry:
@@ -489,6 +490,7 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
         'profile': profile,
         'cli_rc_file': cli_rc_file,
         'request_id': request_id,
+        'enable_propagation': enable_propagation,
         'region': region,
         'endpoint': endpoint,
         'realm_specific_endpoint': realm_specific_endpoint,
