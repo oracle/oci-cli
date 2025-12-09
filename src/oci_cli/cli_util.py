@@ -47,6 +47,8 @@ from oci import exceptions, config, Response
 from oci.retry import RetryStrategyBuilder, retry_checkers
 from oci._vendor import requests
 
+from oci.util import INSTANCE_PRINCIPAL_AUTHENTICATION_TYPE_VALUE_NAME, RESOURCE_PRINCIPAL_AUTHENTICATION_TYPE
+
 from oci_cli.version import __version__
 
 from oci_cli import string_utils
@@ -577,6 +579,21 @@ def build_client(spec_name, service_name, ctx):
             client_config['pass_phrase'] = prompt_for_passphrase()
             client = client_class(client_config, **kwargs)
 
+        propagtion_enabled_flag = get_propagation_provided_from_env()
+        logger.debug("Check if Propagation Enabled: " + str(propagtion_enabled_flag))
+        os.environ[cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR] = str(propagtion_enabled_flag)
+        if 'enable_propagation' in ctx.obj and ctx.obj['enable_propagation'] is not None and ctx.obj['enable_propagation'] == str(False):
+            logger.debug("Check if Propagation Enabled False " + ctx.obj['enable_propagation'] + " : " + str(get_bool_env_var(os.environ.get(cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR))))
+            os.environ[cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR] = str(False)
+            enable_or_disable_propagation_provided_by_user(str(False))
+            client.base_client.use_default_opc_request_id()
+        elif ('enable_propagation' in ctx.obj and ctx.obj['enable_propagation'] is not None and ctx.obj['enable_propagation'] == str(True)) or get_bool_env_var(os.environ.get(cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR)):
+            logger.debug("Check if Propagation Enabled True")
+            os.environ[cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR] = str(True)
+            enable_or_disable_propagation_provided_by_user(str(True))
+            client.base_client.use_custom_opc_request_id(ctx.obj['request_id'])
+        logger.debug("Is Propagation Enabled: " + str(os.environ.get(cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR)))
+
         if ctx.obj['endpoint']:
             client.base_client.endpoint = ctx.obj['endpoint']
 
@@ -614,6 +631,17 @@ def build_client(spec_name, service_name, ctx):
         sys.exit(str(bad_key))
 
 
+def get_bool_env_var(envVar: str, default=False) -> bool:
+    if envVar is None:
+        return False
+    envVar = str(envVar).strip().lower()
+    if envVar == 'true':
+        return True
+    elif envVar == 'false':
+        return False
+    return default
+
+
 def prompt_for_passphrase():
     return getpass.getpass('Private key passphrase:')
 
@@ -637,7 +665,12 @@ def build_config(command_args):
             if command_args['debug']:
                 logger.debug("Config File: %s", client_config.keys())
         except (exceptions.ProfileNotFound, exceptions.InvalidKeyFilePath) as e:
-            sys.exit("ERROR: " + str(e))
+            if command_args['auth'] in [INSTANCE_PRINCIPAL_AUTHENTICATION_TYPE_VALUE_NAME,
+                                        RESOURCE_PRINCIPAL_AUTHENTICATION_TYPE]:
+                # For instance/resource principal, just fallback to empty config
+                client_config = build_empty_config()
+            else:
+                sys.exit("ERROR: " + str(e))
     if file_check:
         FilePermissionChecker.warn_on_invalid_file_permissions(config._get_config_path_with_fallback(command_args['config_file']))
 
@@ -1849,6 +1882,37 @@ def parse_boolean(obj):
         return obj
 
     return str(obj).lower() in DEFAULT_FILE_CONVERT_PARAM_TRUTHY_VALUES
+
+
+def enable_or_disable_propagation_provided_by_user(envVar: bool):
+    """
+    if enable or disable propagation flag as provided by user it will save the value in
+    environment varibale and in text file for next calls.
+    """
+    file_location = os.path.expandvars(os.path.expanduser(cli_constants.ENABLE_PROPAGATION_LOCATION))
+    content = f"PROPAGATION_ENABLED:{envVar}"
+    try:
+        with open(file_location, 'w') as file:
+            file.write(content)
+    except PermissionError:
+        print("Permission denied. Please check the file's permissions.")
+    except Exception as exc_info:
+        print("Error occurred while writing to file {path}: {exception}".format(path=file_location, exception=str(exc_info)))
+
+
+def get_propagation_provided_from_env():
+    """
+    if enable or disable propagation flag as provided by user it will save the value in
+    environment varibale and in text file for next calls.
+    """
+    file_location = os.path.expandvars(os.path.expanduser(cli_constants.ENABLE_PROPAGATION_LOCATION))
+    content = ""
+    if os.path.exists(file_location):
+        with open(file_location, 'r') as file:
+            content = file.read()
+        segments = content.strip().split(':')
+        if len(segments) > 1:
+            return segments[1].strip()
 
 
 def handle_required_param(ctx, param, value):

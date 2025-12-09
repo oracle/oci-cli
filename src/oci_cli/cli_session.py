@@ -38,6 +38,7 @@ def session_group():
 @session_group.command('authenticate', help="""Creates a CLI session using a browser based login flow. --region is a [required] argument""")
 @click.option('--region', help=','.join(oci.regions.REGIONS))
 @click.option('--tenancy-name', help='Name of the tenancy')
+@click.option('--identity-provider-name', help='Name of the IdP (Identity Provider)')
 @click.option('--no-browser', is_flag=True, help="""Triggers user authentication without requiring interactive browser login""")
 @cli_util.option('--public-key-file-path', type=click.Path(), help="""Full path of the public key PEM file that corresponds to the RSA key pair used for signing requests""")
 @click.option('--session-expiration-in-minutes', default=cli_constants.OCI_CLI_UPST_TOKEN_MAX_TTL, help="""User session expiration in minutes to which the requested user principal session token (UPST) is bounded. Valid values are from 5 to 60 for all realms. If not provided, a default value of 60 minutes if set.""")
@@ -48,7 +49,7 @@ def session_group():
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
-def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_passphrase, no_browser, public_key_file_path, session_expiration_in_minutes, token_location):
+def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_passphrase, no_browser, public_key_file_path, session_expiration_in_minutes, token_location, identity_provider_name):
     region = ctx.obj['region']
     if region is None:
         region = cli_setup.prompt_for_region()
@@ -104,7 +105,7 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_p
         user_session = cli_setup_bootstrap.UserSession(user_ocid, tenancy_ocid, region, token, public_key, private_key, fingerprint)
     else:
         # create a user session through the browser login flow
-        user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name)
+        user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name, identity_provider_name)
 
     # persist the session to a config (including the token value)
     profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, use_passphrase=use_passphrase, persist_token=True, session_auth=True, persist_only_public_key=persist_only_public_key)

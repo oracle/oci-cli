@@ -26045,6 +26045,61 @@ def list_dbnode_snapshots(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
+@autonomous_database_group.command(name=cli_util.override('db.list_estimate_cost_savings.command_name', 'list-estimate-cost-savings'), help=u"""Gets the estimate cost savings of the Autonomous AI Database. \n[Command Reference](listEstimateCostSavings)""")
+@cli_util.option('--is-cpu-autoscale', required=True, type=click.BOOL, help=u"""If provided as true, cost estimate with cpu autoscaling.""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'EstimateCostSavingsSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_estimate_cost_savings(ctx, from_json, all_pages, page_size, is_cpu_autoscale, autonomous_database_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_estimate_cost_savings,
+            is_cpu_autoscale=is_cpu_autoscale,
+            autonomous_database_id=autonomous_database_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_estimate_cost_savings,
+            limit,
+            page_size,
+            is_cpu_autoscale=is_cpu_autoscale,
+            autonomous_database_id=autonomous_database_id,
+            **kwargs
+        )
+    else:
+        result = client.list_estimate_cost_savings(
+            is_cpu_autoscale=is_cpu_autoscale,
+            autonomous_database_id=autonomous_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @exadata_infrastructure_group.command(name=cli_util.override('db.list_exadata_infrastructures.command_name', 'list'), help=u"""Lists the Exadata infrastructure resources in the specified compartment. Applies to Exadata Cloud@Customer instances only. To list the Exadata Cloud Service infrastructure resources in a compartment, use the  [ListCloudExadataInfrastructures] operation. \n[Command Reference](listExadataInfrastructures)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")

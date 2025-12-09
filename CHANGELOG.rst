@@ -6,6 +6,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.71.1 - 2025-12-09
+--------------------
+Added
+~~~~~
+* Support for GPT OSS model DAC Creation in Generative AI inference service
+
+  * ``oci generative-ai dedicated-ai-cluster create --unit-shape``
+
+* Support for list-elastic-pool-cost-savings in the Autonomous Database API of the Database Service
+
+  * ``oci db autonomous-database list-elastic-pool-cost-savings --autonomous-database-id``
+
+* Support for providing identity provider name during session token based authentication
+
+  * ``oci session authenticate --identity-provider-name``
+
+* Support for distributed tracing via opc-request-id
+
+  * ``oci --enable-propagation``
+
+Fixed
+~~~~~
+* Fixed a spelling error in the --severity option of for below command
+
+  * ``oci support incident create --severity``
+
+Security
+~~~~~~~~
+* Updated requests dependency to `>= 2.32.4` for python version `>3.7` per: https://www.cve.org/CVERecord?id=CVE-2024-47081
+* Updated urllib3 dependency to `2.5.0` for python version `>=3.10` per: https://www.cve.org/CVERecord?id=CVE-2025-50181
+* Updated urllib3 dependency to `1.26.19` for python version `<3.10` per: https://www.cve.org/CVERecord?id=CVE-2024-37891
+
 3.71.0 - 2025-11-18
 --------------------
 Added

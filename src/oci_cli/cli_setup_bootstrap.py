@@ -109,7 +109,7 @@ def bootstrap_oci_cli(ctx, profile_name, config_location):
 """.format(config_file=config_location, profile=profile_name))
 
 
-def create_user_session(region='', tenancy_name=None):
+def create_user_session(region='', tenancy_name=None, identity_provider_name=None):
     if region == '':
         region = cli_setup.prompt_for_region()
 
@@ -152,6 +152,9 @@ def create_user_session(region='', tenancy_name=None):
 
     if tenancy_name:
         query['tenant'] = tenancy_name
+
+    if identity_provider_name:
+        query['provider'] = identity_provider_name
 
     if region in regions.REGIONS_SHORT_NAMES:
         region = regions.REGIONS_SHORT_NAMES[region]

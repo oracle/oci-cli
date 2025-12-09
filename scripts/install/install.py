@@ -601,11 +601,11 @@ def verify_install_dir_exec_path_conflict(install_dir, exec_path):
 
 def install_native_dependencies_for_ubuntu():
     ubuntu_version = get_ubuntu_version()
-    if ubuntu_version is None or ubuntu_version != "20.04":
+    if ubuntu_version not in ("20.04", "22.04"):
         return
     print_status('Installing native dependencies for Ubuntu.')
     is_python3 = sys.version_info[0] == 3
-    python_dep = 'python3-dev' if is_python3 else 'python-dev'
+    python_dep = 'python-dev-is-python3' if is_python3 else 'python-dev'
     dep_list = ['libssl-dev', 'libffi-dev', python_dep, 'build-essential']
     # This is required because if script is run through root user sudo_cmd value will be empty quote and command subprocess.check_call(['', 'apt-get', '--assume-yes', 'install']) will not work.
     if sudo_cmd == "":

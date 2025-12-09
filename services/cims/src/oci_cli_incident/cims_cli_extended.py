@@ -34,7 +34,7 @@ cli_util.rename_command(incident_cli, incident_group, incident_cli.update_incide
                                      help=u"""This API enables the customer to Create an Incident""")
 @cli_util.option('--csi', required=True, help=u'''Customer Support Identifier''')
 @cli_util.option('--severity', required=True,
-                 type=custom_types.CliCaseInsensitiveChoice(["LOW", "MEDIUM", "HGIH", "HIGHEST"]),
+                 type=custom_types.CliCaseInsensitiveChoice(["LOW", "MEDIUM", "HIGH", "HIGHEST"]),
                  help=u"""States severity level of incident. Acceptable values are LOW, MEDIUM, HIGH, HIGHEST.  Please note for HIGHEST: Oracle Support requires a 24x7 contact be provided so additional information can be requested as needed 24x7.)""")
 @cli_util.option('--title', required=True,
                  help=u"""Title for the SR.  Should be a high level description of issue.  eg:  Cannot connect to instance""")
