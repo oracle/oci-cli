@@ -103,6 +103,11 @@ service_mapping = {
         "Bastion",
         "Identity & Security"
     ],
+    "batch": [
+        "batch",
+        "Batch",
+        "Others"
+    ],
     "bds": [
         "bds",
         "Big Data Service",

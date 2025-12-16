@@ -6,6 +6,57 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.71.2 - 2025-12-16
+--------------------
+Added
+~~~~~
+* Support for MappedAttributes API in IdentityDomains service
+
+  * ``oci identity-domains mapped-attribute get``
+  * ``oci identity-domains mapped-attribute list``
+  * ``oci identity-domains mapped-attribute patch``
+  * ``oci identity-domains mapped-attribute put``
+  * ``oci identity-domains mapped-attribute search``
+
+* Support for OCI Batch Service
+
+  * ``oci batch``
+
+* Support for Oracle Integration Cloud (OIC) Resource as member in OCI Full Stack Disaster Recovery Service
+
+  * ``oci disaster-recovery dr-plan update plan-groups objectStorageScriptLocation``
+  * ``oci disaster-recovery dr-protection-group create --members [complex type]``
+
+* Support for model explorer feature for model-deployments in the Data Science service
+
+  * ``oci data-science ml-app-instance-view list --ml-application-instance-id``
+
+* Support for additional features by new CP Public APIs of REDWOOD MIGRATION in Oracle Integration Cloud (OIC)
+
+  * ``oci integration integration-instance convert-instance --conversion-type, --integration-instance-id , -? | -h | --help``
+  * ``oci integration integration-instance disable-process-automation --integration-instance-id, -? | -h | --help``
+
+* Support for adding ability to Create ACLs for Oracle Integration Cloud (OIC) Design Time
+
+  * ``oci integration integration-instance network_endpoint_details_runtime , -? | -h | --help``
+  * ``oci integration integration-instance network_endpoint_details_design_time , -? | -h | --help``
+
+* Support for Firmware Pinning using Host Groups and IPv6 support in the Compute Service
+
+  * ``oci compute compute-host apply-host-configuration --compute-host-id``
+  * ``oci compute compute-host check-host-configuration --compute-host-id``
+  * ``oci compute firmware-bundle get --firmware-bundle-id``
+  * ``oci compute firmware-bundle list --platform``
+  * ``oci compute shape list --shape``
+
+* Support for offline installation package on OL10 and Ubuntu 22.04.
+
+Fixed
+~~~~~
+* `Github Issue #1010 <https://github.com/oracle/oci-cli/issues/1010>`_ for Logging
+* `Github Issue #1011 <https://github.com/oracle/oci-cli/issues/1011>`_ for Logging
+* `Fixed instance principal authentication command: oci iam compartment list, to also include the root compartments`
+
 3.71.1 - 2025-12-09
 --------------------
 Added

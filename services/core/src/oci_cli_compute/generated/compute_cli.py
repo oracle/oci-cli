@@ -168,6 +168,12 @@ def compute_host_group():
     pass
 
 
+@click.command(cli_util.override('compute.firmware_bundle_group.command_name', 'firmware-bundle'), cls=CommandGroupWithAlias, help="""A collection of pinned component firmware versions organized by platform.""")
+@cli_util.help_option_group
+def firmware_bundle_group():
+    pass
+
+
 @click.command(cli_util.override('compute.shape_group.command_name', 'shape'), cls=CommandGroupWithAlias, help="""A compute instance shape that can be used in [LaunchInstance]. For more information, see [Overview of the Compute Service] and [Compute Shapes].""")
 @cli_util.help_option_group
 def shape_group():
@@ -284,6 +290,12 @@ def dedicated_vm_host_shape_group():
     pass
 
 
+@click.command(cli_util.override('compute.firmware_bundles_collection_group.command_name', 'firmware-bundles-collection'), cls=CommandGroupWithAlias, help="""Results of a firmwareBundles search. Contains FirmwareBundleSummary items.""")
+@cli_util.help_option_group
+def firmware_bundles_collection_group():
+    pass
+
+
 @click.command(cli_util.override('compute.app_catalog_listing_resource_version_agreements_group.command_name', 'app-catalog-listing-resource-version-agreements'), cls=CommandGroupWithAlias, help="""Agreements for a listing resource version.""")
 @cli_util.help_option_group
 def app_catalog_listing_resource_version_agreements_group():
@@ -325,6 +337,7 @@ compute_root_group.add_command(dedicated_vm_host_group)
 compute_root_group.add_command(image_group)
 compute_root_group.add_command(instance_maintenance_reboot_group)
 compute_root_group.add_command(compute_host_group)
+compute_root_group.add_command(firmware_bundle_group)
 compute_root_group.add_command(shape_group)
 compute_root_group.add_command(compute_host_group_group)
 compute_root_group.add_command(compute_image_capability_schema_group)
@@ -342,6 +355,7 @@ compute_root_group.add_command(compute_global_image_capability_schema_version_gr
 compute_root_group.add_command(dedicated_vm_host_instance_shape_group)
 compute_root_group.add_command(boot_volume_group)
 compute_root_group.add_command(dedicated_vm_host_shape_group)
+compute_root_group.add_command(firmware_bundles_collection_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_agreements_group)
 compute_root_group.add_command(device_group)
 compute_root_group.add_command(console_history_group)
@@ -412,6 +426,57 @@ def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_n
         add_image_shape_compatibility_entry_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@compute_host_group.command(name=cli_util.override('compute.apply_host_configuration.command_name', 'apply-host-configuration'), help=u"""Triggers the asynchronous process that applies the host's target configuration \n[Command Reference](applyHostConfiguration)""")
+@cli_util.option('--compute-host-id', required=True, help=u"""The [OCID] of the compute host.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "OCCUPIED", "PROVISIONING", "REPAIR", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeHost'})
+@cli_util.wrap_exceptions
+def apply_host_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, if_match):
+
+    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.apply_host_configuration(
+        compute_host_id=compute_host_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_host') and callable(getattr(client, 'get_compute_host')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_host(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1582,6 +1647,57 @@ def change_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_host_group.command(name=cli_util.override('compute.check_host_configuration.command_name', 'check-host-configuration'), help=u"""Marks the host to be checked for conformance to its target configuration \n[Command Reference](checkHostConfiguration)""")
+@cli_util.option('--compute-host-id', required=True, help=u"""The [OCID] of the compute host.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "OCCUPIED", "PROVISIONING", "REPAIR", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeHost'})
+@cli_util.wrap_exceptions
+def check_host_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, if_match):
+
+    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.check_host_configuration(
+        compute_host_id=compute_host_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_host') and callable(getattr(client, 'get_compute_host')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_host(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -4331,6 +4447,28 @@ def get_dedicated_vm_host(ctx, from_json, dedicated_vm_host_id):
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_dedicated_vm_host(
         dedicated_vm_host_id=dedicated_vm_host_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@firmware_bundle_group.command(name=cli_util.override('compute.get_firmware_bundle.command_name', 'get'), help=u"""Returns the Firmware Bundle matching the provided firmwareBundleId. \n[Command Reference](getFirmwareBundle)""")
+@cli_util.option('--firmware-bundle-id', required=True, help=u"""Unique identifier for the firmware bundle.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'FirmwareBundle'})
+@cli_util.wrap_exceptions
+def get_firmware_bundle(ctx, from_json, firmware_bundle_id):
+
+    if isinstance(firmware_bundle_id, six.string_types) and len(firmware_bundle_id.strip()) == 0:
+        raise click.UsageError('Parameter --firmware-bundle-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_firmware_bundle(
+        firmware_bundle_id=firmware_bundle_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -10513,6 +10651,65 @@ def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
+@firmware_bundles_collection_group.command(name=cli_util.override('compute.list_firmware_bundles.command_name', 'list-firmware-bundles'), help=u"""Gets a list of all Firmware Bundles in a compartment for specified platform. Can filter results to include only the default (recommended) Firmware Bundle for the given platform. \n[Command Reference](listFirmwareBundles)""")
+@cli_util.option('--platform', required=True, help=u"""platform name""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--is-default-bundle', type=click.BOOL, help=u"""If true, return only the default firmware bundle for a given platform. Default is false.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--lifecycle-state', help=u"""A filter to return only resources that match the given lifecycle state name exactly.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'FirmwareBundlesCollection'})
+@cli_util.wrap_exceptions
+def list_firmware_bundles(ctx, from_json, all_pages, page_size, platform, compartment_id, is_default_bundle, limit, page, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if is_default_bundle is not None:
+        kwargs['is_default_bundle'] = is_default_bundle
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_firmware_bundles,
+            platform=platform,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_firmware_bundles,
+            limit,
+            page_size,
+            platform=platform,
+            **kwargs
+        )
+    else:
+        result = client.list_firmware_bundles(
+            platform=platform,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @image_shape_compatibility_entry_group.command(name=cli_util.override('compute.list_image_shape_compatibility_entries.command_name', 'list'), help=u"""Lists the compatible shapes for the specified image. \n[Command Reference](listImageShapeCompatibilityEntries)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -10931,6 +11128,7 @@ Example: `Uocm:PHX-AD-1`""")
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--image-id', help=u"""The [OCID] of an image.""")
+@cli_util.option('--shape', help=u"""Shape name.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -10938,7 +11136,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Shape]'})
 @cli_util.wrap_exceptions
-def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, image_id):
+def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, image_id, shape):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -10952,6 +11150,8 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availabili
         kwargs['page'] = page
     if image_id is not None:
         kwargs['image_id'] = image_id
+    if shape is not None:
+        kwargs['shape'] = shape
     client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:

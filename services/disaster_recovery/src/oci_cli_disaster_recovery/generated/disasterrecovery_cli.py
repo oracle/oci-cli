@@ -2928,7 +2928,7 @@ def update_dr_plan(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.
 
 Example: `ocid1.drplanexecution.oc1..uniqueID`""")
-@cli_util.option('--display-name', help=u"""The display name of the DR plan execution to update.
+@cli_util.option('--display-name', help=u"""The display name of the DR protection group to update.
 
 Example: `EBS IAD Group`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
