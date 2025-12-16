@@ -8772,6 +8772,7 @@ def list_ml_application_implementations(ctx, from_json, all_pages, page_size, co
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--ml-application-id', help=u"""unique MlApplication identifier""")
 @cli_util.option('--ml-application-implementation-id', help=u"""unique MlApplicationImplementation identifier""")
+@cli_util.option('--ml-application-instance-id', help=u"""unique MlApplicationInstance identifier""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "NEEDS_ATTENTION", "FAILED"]), help=u"""A filter to return only resources matching the given lifecycleState.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
@@ -8788,7 +8789,7 @@ See [List Pagination].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'MlApplicationInstanceViewCollection'})
 @cli_util.wrap_exceptions
-def list_ml_application_instance_views(ctx, from_json, all_pages, page_size, compartment_id, display_name, ml_application_id, ml_application_implementation_id, lifecycle_state, limit, page, sort_order, sort_by):
+def list_ml_application_instance_views(ctx, from_json, all_pages, page_size, compartment_id, display_name, ml_application_id, ml_application_implementation_id, ml_application_instance_id, lifecycle_state, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -8800,6 +8801,8 @@ def list_ml_application_instance_views(ctx, from_json, all_pages, page_size, com
         kwargs['ml_application_id'] = ml_application_id
     if ml_application_implementation_id is not None:
         kwargs['ml_application_implementation_id'] = ml_application_implementation_id
+    if ml_application_instance_id is not None:
+        kwargs['ml_application_instance_id'] = ml_application_instance_id
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if limit is not None:

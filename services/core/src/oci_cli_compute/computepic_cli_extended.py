@@ -148,3 +148,12 @@ compute_cli.instance_group.commands.pop(compute_cli.launch_instance_amd_milan_bm
 
 # Remove launch-instance-generic-bm-launch-instance-platform-config from oci compute instance
 compute_cli.instance_group.commands.pop(compute_cli.launch_instance_generic_bm_launch_instance_platform_config.name)
+
+
+# oci compute firmware-bundles-collection list-firmware-bundles -> oci compute firmware-bundles-collection list
+cli_util.rename_command(compute_cli, compute_cli.firmware_bundles_collection_group, compute_cli.list_firmware_bundles, "list")
+
+
+# Move commands under 'oci compute firmware-bundles-collection' -> 'oci compute firmware-bundle'
+compute_cli.compute_root_group.commands.pop(compute_cli.firmware_bundles_collection_group.name)
+compute_cli.firmware_bundle_group.add_command(compute_cli.list_firmware_bundles)

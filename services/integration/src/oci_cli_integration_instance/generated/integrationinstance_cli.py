@@ -52,6 +52,67 @@ integration_root_group.add_command(work_request_log_entry_group)
 integration_root_group.add_command(work_request_group)
 
 
+@integration_instance_group.command(name=cli_util.override('integration.add_log_analytics_log_group.command_name', 'add'), help=u"""Add LogGroup with specified ocid for Integration Instance to enable sending OIC Activity Stream to OCI Logging Analytics. \n[Command Reference](addLogAnalyticsLogGroup)""")
+@cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
+@cli_util.option('--log-group-id', required=True, help=u"""Log Group ocid.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def add_log_analytics_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, log_group_id, if_match):
+
+    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['logGroupId'] = log_group_id
+
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
+    result = client.add_log_analytics_log_group(
+        integration_instance_id=integration_instance_id,
+        add_log_analytics_log_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @integration_instance_group.command(name=cli_util.override('integration.add_oracle_managed_custom_endpoint.command_name', 'add'), help=u"""Enable Oracle Managed Custom Endpoint for given integration instance. \n[Command Reference](addOracleManagedCustomEndpoint)""")
 @cli_util.option('--hostname', required=True, help=u"""Oracle managed custom hostname""")
 @cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
@@ -254,16 +315,18 @@ def change_integration_instance_network_endpoint(ctx, from_json, wait_for_state,
 @cli_util.option('--network-endpoint-details-allowlisted-http-vcns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Virtual Cloud Networks allowed to access this network endpoint.
 
 This option is a JSON list with items of type VirtualCloudNetwork.  For documentation on VirtualCloudNetwork please see our API reference: https://docs.cloud.oracle.com/api/#/en/integrationinstance/20190131/datatypes/VirtualCloudNetwork.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details-runtime', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details-design-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-endpoint-details-is-integration-vcn-allowlisted', type=click.BOOL, help=u"""The Integration service's VCN is allow-listed to allow integrations to call back into other integrations""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}, 'network-endpoint-details-runtime': {'module': 'integration', 'class': 'ComponentAllowListDetails'}, 'network-endpoint-details-design-time': {'module': 'integration', 'class': 'ComponentAllowListDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}, 'network-endpoint-details-runtime': {'module': 'integration', 'class': 'ComponentAllowListDetails'}, 'network-endpoint-details-design-time': {'module': 'integration', 'class': 'ComponentAllowListDetails'}})
 @cli_util.wrap_exceptions
-def change_integration_instance_network_endpoint_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match, network_endpoint_details_allowlisted_http_ips, network_endpoint_details_allowlisted_http_vcns, network_endpoint_details_is_integration_vcn_allowlisted):
+def change_integration_instance_network_endpoint_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match, network_endpoint_details_allowlisted_http_ips, network_endpoint_details_allowlisted_http_vcns, network_endpoint_details_runtime, network_endpoint_details_design_time, network_endpoint_details_is_integration_vcn_allowlisted):
 
     if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
@@ -281,6 +344,12 @@ def change_integration_instance_network_endpoint_public_endpoint_details(ctx, fr
 
     if network_endpoint_details_allowlisted_http_vcns is not None:
         _details['networkEndpointDetails']['allowlistedHttpVcns'] = cli_util.parse_json_parameter("network_endpoint_details_allowlisted_http_vcns", network_endpoint_details_allowlisted_http_vcns)
+
+    if network_endpoint_details_runtime is not None:
+        _details['networkEndpointDetails']['runtime'] = cli_util.parse_json_parameter("network_endpoint_details_runtime", network_endpoint_details_runtime)
+
+    if network_endpoint_details_design_time is not None:
+        _details['networkEndpointDetails']['designTime'] = cli_util.parse_json_parameter("network_endpoint_details_design_time", network_endpoint_details_design_time)
 
     if network_endpoint_details_is_integration_vcn_allowlisted is not None:
         _details['networkEndpointDetails']['isIntegrationVcnAllowlisted'] = network_endpoint_details_is_integration_vcn_allowlisted
@@ -391,6 +460,7 @@ def change_private_endpoint_outbound_connection(ctx, from_json, wait_for_state, 
 @cli_util.option('--private-endpoint-outbound-connection-subnet-id', required=True, help=u"""Customer Private Network VCN Subnet OCID. This is a required argument.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--private-endpoint-outbound-connection-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""One or more Network security group Ids. This is an optional argument.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-endpoint-outbound-connection-is-all-outbound-traffic-private', type=click.BOOL, help=u"""Indicates if all traffic should go through configured outbound connection""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -399,7 +469,7 @@ def change_private_endpoint_outbound_connection(ctx, from_json, wait_for_state, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'private-endpoint-outbound-connection-nsg-ids': {'module': 'integration', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def change_private_endpoint_outbound_connection_private_endpoint_outbound_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, private_endpoint_outbound_connection_subnet_id, if_match, private_endpoint_outbound_connection_nsg_ids):
+def change_private_endpoint_outbound_connection_private_endpoint_outbound_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, private_endpoint_outbound_connection_subnet_id, if_match, private_endpoint_outbound_connection_nsg_ids, private_endpoint_outbound_connection_is_all_outbound_traffic_private):
 
     if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
@@ -415,6 +485,9 @@ def change_private_endpoint_outbound_connection_private_endpoint_outbound_connec
 
     if private_endpoint_outbound_connection_nsg_ids is not None:
         _details['privateEndpointOutboundConnection']['nsgIds'] = cli_util.parse_json_parameter("private_endpoint_outbound_connection_nsg_ids", private_endpoint_outbound_connection_nsg_ids)
+
+    if private_endpoint_outbound_connection_is_all_outbound_traffic_private is not None:
+        _details['privateEndpointOutboundConnection']['isAllOutboundTrafficPrivate'] = private_endpoint_outbound_connection_is_all_outbound_traffic_private
 
     _details['privateEndpointOutboundConnection']['outboundConnectionType'] = 'PRIVATE_ENDPOINT'
 
@@ -484,6 +557,67 @@ def change_private_endpoint_outbound_connection_none_outbound_connection(ctx, fr
     result = client.change_private_endpoint_outbound_connection(
         integration_instance_id=integration_instance_id,
         change_private_endpoint_outbound_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@integration_instance_group.command(name=cli_util.override('integration.convert_instance.command_name', 'convert-instance'), help=u"""Integration instance identified by ID will be migrated to a new Disaster Recovery enabled integration instance. If a given Integration instance has certain features enabled which are not supported for conversion/migration it will not be accepted for conversion. \n[Command Reference](convertInstance)""")
+@cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
+@cli_util.option('--conversion-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DISASTER_RECOVERY"]), help=u"""Convert given instance to specified DR instance""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def convert_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, conversion_type, if_match):
+
+    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['conversionType'] = conversion_type
+
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
+    result = client.convert_instance(
+        integration_instance_id=integration_instance_id,
+        convert_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -659,16 +793,18 @@ This option is a JSON list with items of type CreateCustomEndpointDetails.  For 
 @cli_util.option('--network-endpoint-details-allowlisted-http-vcns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Virtual Cloud Networks allowed to access this network endpoint.
 
 This option is a JSON list with items of type VirtualCloudNetwork.  For documentation on VirtualCloudNetwork please see our API reference: https://docs.cloud.oracle.com/api/#/en/integrationinstance/20190131/datatypes/VirtualCloudNetwork.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details-runtime', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details-design-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-endpoint-details-is-integration-vcn-allowlisted', type=click.BOOL, help=u"""The Integration service's VCN is allow-listed to allow integrations to call back into other integrations""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}, 'network-endpoint-details-runtime': {'module': 'integration', 'class': 'ComponentAllowListDetails'}, 'network-endpoint-details-design-time': {'module': 'integration', 'class': 'ComponentAllowListDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}, 'network-endpoint-details-runtime': {'module': 'integration', 'class': 'ComponentAllowListDetails'}, 'network-endpoint-details-design-time': {'module': 'integration', 'class': 'ComponentAllowListDetails'}})
 @cli_util.wrap_exceptions
-def create_integration_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, security_attributes, idcs_at, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, is_file_server_enabled, is_disaster_recovery_enabled, shape, domain_id, network_endpoint_details_allowlisted_http_ips, network_endpoint_details_allowlisted_http_vcns, network_endpoint_details_is_integration_vcn_allowlisted):
+def create_integration_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, security_attributes, idcs_at, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, is_file_server_enabled, is_disaster_recovery_enabled, shape, domain_id, network_endpoint_details_allowlisted_http_ips, network_endpoint_details_allowlisted_http_vcns, network_endpoint_details_runtime, network_endpoint_details_design_time, network_endpoint_details_is_integration_vcn_allowlisted):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -722,6 +858,12 @@ def create_integration_instance_public_endpoint_details(ctx, from_json, wait_for
 
     if network_endpoint_details_allowlisted_http_vcns is not None:
         _details['networkEndpointDetails']['allowlistedHttpVcns'] = cli_util.parse_json_parameter("network_endpoint_details_allowlisted_http_vcns", network_endpoint_details_allowlisted_http_vcns)
+
+    if network_endpoint_details_runtime is not None:
+        _details['networkEndpointDetails']['runtime'] = cli_util.parse_json_parameter("network_endpoint_details_runtime", network_endpoint_details_runtime)
+
+    if network_endpoint_details_design_time is not None:
+        _details['networkEndpointDetails']['designTime'] = cli_util.parse_json_parameter("network_endpoint_details_design_time", network_endpoint_details_design_time)
 
     if network_endpoint_details_is_integration_vcn_allowlisted is not None:
         _details['networkEndpointDetails']['isIntegrationVcnAllowlisted'] = network_endpoint_details_is_integration_vcn_allowlisted
@@ -808,6 +950,61 @@ def delete_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@integration_instance_group.command(name=cli_util.override('integration.disable_process_automation.command_name', 'disable-process-automation'), help=u"""Disable Process Automation for given Integration Instance \n[Command Reference](disableProcessAutomation)""")
+@cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_process_automation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
+
+    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
+    result = client.disable_process_automation(
+        integration_instance_id=integration_instance_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 sys.exit(2)
             except Exception:
@@ -1254,6 +1451,61 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@integration_instance_group.command(name=cli_util.override('integration.remove_log_analytics_log_group.command_name', 'remove'), help=u"""Removes Log Analytics logGroup, if enabled for given integrationInstance. Since only single LogGroup can be enabled for integration instance, no additional details are required to be includes in the request. \n[Command Reference](removeLogAnalyticsLogGroup)""")
+@cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_log_analytics_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
+
+    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
+    result = client.remove_log_analytics_log_group(
+        integration_instance_id=integration_instance_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

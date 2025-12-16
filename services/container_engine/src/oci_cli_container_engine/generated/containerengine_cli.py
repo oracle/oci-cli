@@ -636,6 +636,7 @@ def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_stat
 @cli_util.option('--display-name', required=True, help=u"""Display name of the virtual node pool. This is a non-unique value.""")
 @cli_util.option('--size', required=True, type=click.INT, help=u"""The number of Virtual Nodes that should be in the Virtual Node Pool. The placement configurations determine where these virtual nodes are placed.""")
 @cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of placement configurations which determines where Virtual Nodes will be provisioned across as it relates to the subnet and availability domains. The size attribute determines how many we evenly spread across these placement configurations""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pod-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The pod configuration for pods run on virtual nodes of this virtual node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-virtual-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Initial labels that will be added to the Kubernetes Virtual Node object when it registers.
 
 This option is a JSON list with items of type InitialVirtualNodeLabel.  For documentation on InitialVirtualNodeLabel please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/InitialVirtualNodeLabel.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -643,7 +644,6 @@ This option is a JSON list with items of type InitialVirtualNodeLabel.  For docu
 
 This option is a JSON list with items of type Taint.  For documentation on Taint please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/Taint.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of network security group id's applied to the Virtual Node VNIC.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--pod-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The pod configuration for pods run on virtual nodes of this virtual node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--virtual-node-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -655,7 +655,7 @@ This option is a JSON list with items of type Taint.  For documentation on Taint
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-virtual-node-labels': {'module': 'container_engine', 'class': 'list[InitialVirtualNodeLabel]'}, 'taints': {'module': 'container_engine', 'class': 'list[Taint]'}, 'placement-configurations': {'module': 'container_engine', 'class': 'list[PlacementConfiguration]'}, 'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'pod-configuration': {'module': 'container_engine', 'class': 'PodConfiguration'}, 'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'}, 'virtual-node-tags': {'module': 'container_engine', 'class': 'VirtualNodeTags'}})
 @cli_util.wrap_exceptions
-def create_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, display_name, size, placement_configurations, initial_virtual_node_labels, taints, nsg_ids, pod_configuration, freeform_tags, defined_tags, virtual_node_tags):
+def create_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, display_name, size, placement_configurations, pod_configuration, initial_virtual_node_labels, taints, nsg_ids, freeform_tags, defined_tags, virtual_node_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -666,6 +666,7 @@ def create_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, w
     _details['displayName'] = display_name
     _details['size'] = size
     _details['placementConfigurations'] = cli_util.parse_json_parameter("placement_configurations", placement_configurations)
+    _details['podConfiguration'] = cli_util.parse_json_parameter("pod_configuration", pod_configuration)
 
     if initial_virtual_node_labels is not None:
         _details['initialVirtualNodeLabels'] = cli_util.parse_json_parameter("initial_virtual_node_labels", initial_virtual_node_labels)
@@ -675,9 +676,6 @@ def create_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
-
-    if pod_configuration is not None:
-        _details['podConfiguration'] = cli_util.parse_json_parameter("pod_configuration", pod_configuration)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

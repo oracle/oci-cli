@@ -572,3 +572,5 @@ dif, stack, create
 dif, stack, deploy-artifacts
 dif, stack, update
 db, autonomous-database, list-elastic-pool-cost-savings
+identity-domains, mapped-attribute, put
+identity-domains, mapped-attribute, search

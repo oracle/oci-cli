@@ -407,6 +407,8 @@ def create_config_and_signer_based_on_click_context(ctx):
             else:
                 logger.debug("auth: delegation_token")
         signer = get_instance_principal_signer(ctx, client_config)
+        if signer._tenancy_id:
+            client_config['tenancy'] = signer._tenancy_id
     elif session_token_auth:
         if ctx.obj['debug']:
             logger.debug("auth: session_token")
@@ -580,19 +582,15 @@ def build_client(spec_name, service_name, ctx):
             client = client_class(client_config, **kwargs)
 
         propagtion_enabled_flag = get_propagation_provided_from_env()
-        logger.debug("Check if Propagation Enabled: " + str(propagtion_enabled_flag))
         os.environ[cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR] = str(propagtion_enabled_flag)
         if 'enable_propagation' in ctx.obj and ctx.obj['enable_propagation'] is not None and ctx.obj['enable_propagation'] == str(False):
-            logger.debug("Check if Propagation Enabled False " + ctx.obj['enable_propagation'] + " : " + str(get_bool_env_var(os.environ.get(cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR))))
             os.environ[cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR] = str(False)
             enable_or_disable_propagation_provided_by_user(str(False))
             client.base_client.use_default_opc_request_id()
         elif ('enable_propagation' in ctx.obj and ctx.obj['enable_propagation'] is not None and ctx.obj['enable_propagation'] == str(True)) or get_bool_env_var(os.environ.get(cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR)):
-            logger.debug("Check if Propagation Enabled True")
             os.environ[cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR] = str(True)
             enable_or_disable_propagation_provided_by_user(str(True))
             client.base_client.use_custom_opc_request_id(ctx.obj['request_id'])
-        logger.debug("Is Propagation Enabled: " + str(os.environ.get(cli_constants.OCI_CLI_ENABLEPROPAGATION_ENV_VAR)))
 
         if ctx.obj['endpoint']:
             client.base_client.endpoint = ctx.obj['endpoint']
