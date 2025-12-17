@@ -407,8 +407,6 @@ def create_config_and_signer_based_on_click_context(ctx):
             else:
                 logger.debug("auth: delegation_token")
         signer = get_instance_principal_signer(ctx, client_config)
-        if signer._tenancy_id:
-            client_config['tenancy'] = signer._tenancy_id
     elif session_token_auth:
         if ctx.obj['debug']:
             logger.debug("auth: session_token")
