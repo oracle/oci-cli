@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.71.3 - 2025-12-17
+--------------------
+Fixed
+~~~~~
+* `Github Issue #1013 <https://github.com/oracle/oci-cli/issues/1013>`_ for instance principal auth
+
 3.71.2 - 2025-12-16
 --------------------
 Added
