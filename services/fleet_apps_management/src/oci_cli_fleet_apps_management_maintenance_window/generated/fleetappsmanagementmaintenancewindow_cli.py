@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -136,7 +135,7 @@ def create_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, if_match):
 
-    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+    if isinstance(maintenance_window_id, str) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -187,7 +186,7 @@ def delete_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def get_maintenance_window(ctx, from_json, maintenance_window_id):
 
-    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+    if isinstance(maintenance_window_id, str) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -290,7 +289,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_maintenance_window(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, display_name, description, is_outage, time_schedule_start, duration, is_recurring, recurrences, freeform_tags, defined_tags, if_match):
 
-    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+    if isinstance(maintenance_window_id, str) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

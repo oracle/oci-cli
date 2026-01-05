@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -229,7 +228,7 @@ def create_zpr_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_zpr_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, zpr_policy_id, if_match, opc_dry_run):
 
-    if isinstance(zpr_policy_id, six.string_types) and len(zpr_policy_id.strip()) == 0:
+    if isinstance(zpr_policy_id, str) and len(zpr_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --zpr-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -302,7 +301,7 @@ def get_configuration(ctx, from_json, compartment_id):
 @cli_util.wrap_exceptions
 def get_zpr_configuration_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -324,7 +323,7 @@ def get_zpr_configuration_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def get_zpr_policy(ctx, from_json, zpr_policy_id):
 
-    if isinstance(zpr_policy_id, six.string_types) and len(zpr_policy_id.strip()) == 0:
+    if isinstance(zpr_policy_id, str) and len(zpr_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --zpr-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -346,7 +345,7 @@ def get_zpr_policy(ctx, from_json, zpr_policy_id):
 @cli_util.wrap_exceptions
 def get_zpr_policy_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -377,7 +376,7 @@ def list_zpr_configuration_work_request_errors(ctx, from_json, all_pages, page_s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -434,7 +433,7 @@ def list_zpr_configuration_work_request_logs(ctx, from_json, all_pages, page_siz
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -615,7 +614,7 @@ def list_zpr_policy_work_request_errors(ctx, from_json, all_pages, page_size, wo
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -672,7 +671,7 @@ def list_zpr_policy_work_request_logs(ctx, from_json, all_pages, page_size, work
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -796,7 +795,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_zpr_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, zpr_policy_id, description, statements, freeform_tags, defined_tags, if_match, opc_dry_run):
 
-    if isinstance(zpr_policy_id, six.string_types) and len(zpr_policy_id.strip()) == 0:
+    if isinstance(zpr_policy_id, str) and len(zpr_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --zpr-policy-id cannot be whitespace or empty string')
     if not force:
         if statements or freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -87,7 +86,7 @@ gdd_root_group.add_command(work_request_group)
 @cli_util.wrap_exceptions
 def change_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, private_endpoint_id, if_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -148,7 +147,7 @@ def change_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def change_sharded_database_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, sharded_database_id, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -210,7 +209,7 @@ def change_sharded_database_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def configure_sharded_database_gsms(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, old_gsm_names, is_latest_gsm_image, sharded_database_id, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -272,7 +271,7 @@ def configure_sharded_database_gsms(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def configure_sharding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, is_rebalance_required, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -577,7 +576,7 @@ def create_sharded_database_create_dedicated_sharded_database(ctx, from_json, wa
 @cli_util.wrap_exceptions
 def delete_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, if_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -633,7 +632,7 @@ def delete_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -686,7 +685,7 @@ def delete_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def download_gsm_certificate_signing_request(ctx, from_json, file, sharded_database_id, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -733,7 +732,7 @@ def download_gsm_certificate_signing_request(ctx, from_json, file, sharded_datab
 @cli_util.wrap_exceptions
 def fetch_connection_string(ctx, from_json, sharded_database_id, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -805,7 +804,7 @@ def fetch_shardable_cloud_autonomous_vm_clusters(ctx, from_json, compartment_id,
 @cli_util.wrap_exceptions
 def generate_gsm_certificate_signing_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, if_match, ca_bundle_id):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -861,7 +860,7 @@ def generate_gsm_certificate_signing_request(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def generate_wallet(ctx, from_json, file, sharded_database_id, password, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -913,7 +912,7 @@ def generate_wallet(ctx, from_json, file, sharded_database_id, password, if_matc
 @cli_util.wrap_exceptions
 def get_private_endpoint(ctx, from_json, private_endpoint_id, if_none_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -939,7 +938,7 @@ def get_private_endpoint(ctx, from_json, private_endpoint_id, if_none_match):
 @cli_util.wrap_exceptions
 def get_sharded_database(ctx, from_json, sharded_database_id, metadata, if_none_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -965,7 +964,7 @@ def get_sharded_database(ctx, from_json, sharded_database_id, metadata, if_none_
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1116,7 +1115,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1173,7 +1172,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1291,7 +1290,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, items, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1436,7 +1435,7 @@ def prevalidate_sharded_database_prevalidate_create_payload(ctx, from_json, comp
 @cli_util.wrap_exceptions
 def reinstate_proxy_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, if_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1491,7 +1490,7 @@ def reinstate_proxy_instance(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def start_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1546,7 +1545,7 @@ def start_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def stop_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1607,7 +1606,7 @@ def stop_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, display_name, description, nsg_ids, freeform_tags, defined_tags, if_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if nsg_ids or freeform_tags or defined_tags:
@@ -1685,7 +1684,7 @@ def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_sharded_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1754,7 +1753,7 @@ def update_sharded_database(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def upload_signed_certificate_and_generate_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, ca_signed_certificate, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1817,7 +1816,7 @@ def upload_signed_certificate_and_generate_wallet(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def validate_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, is_surrogate, resource_name, is_primary, if_match):
 
-    if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
+    if isinstance(sharded_database_id, str) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -44,7 +43,7 @@ invoice_service_root_group.add_command(invoice_group)
 @cli_util.wrap_exceptions
 def download_pdf_content(ctx, from_json, file, osp_home_region, compartment_id, internal_invoice_id):
 
-    if isinstance(internal_invoice_id, six.string_types) and len(internal_invoice_id.strip()) == 0:
+    if isinstance(internal_invoice_id, str) and len(internal_invoice_id.strip()) == 0:
         raise click.UsageError('Parameter --internal-invoice-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -92,7 +91,7 @@ def download_pdf_content(ctx, from_json, file, osp_home_region, compartment_id, 
 @cli_util.wrap_exceptions
 def get_invoice(ctx, from_json, osp_home_region, compartment_id, internal_invoice_id):
 
-    if isinstance(internal_invoice_id, six.string_types) and len(internal_invoice_id.strip()) == 0:
+    if isinstance(internal_invoice_id, str) and len(internal_invoice_id.strip()) == 0:
         raise click.UsageError('Parameter --internal-invoice-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -125,7 +124,7 @@ def list_invoice_lines(ctx, from_json, all_pages, page_size, osp_home_region, co
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(internal_invoice_id, six.string_types) and len(internal_invoice_id.strip()) == 0:
+    if isinstance(internal_invoice_id, str) and len(internal_invoice_id.strip()) == 0:
         raise click.UsageError('Parameter --internal-invoice-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -263,7 +262,7 @@ def list_invoices(ctx, from_json, all_pages, page_size, osp_home_region, compart
 @cli_util.wrap_exceptions
 def pay_invoice(ctx, from_json, osp_home_region, internal_invoice_id, compartment_id, email, language_code, return_url, if_match):
 
-    if isinstance(internal_invoice_id, six.string_types) and len(internal_invoice_id.strip()) == 0:
+    if isinstance(internal_invoice_id, str) and len(internal_invoice_id.strip()) == 0:
         raise click.UsageError('Parameter --internal-invoice-id cannot be whitespace or empty string')
 
     kwargs = {}

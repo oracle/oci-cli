@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -92,7 +91,7 @@ api_gateway_service_cli.api_gateway_service_group.add_command(sdk_group)
 @cli_util.wrap_exceptions
 def add_api_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, type, message, if_match):
 
-    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+    if isinstance(api_id, str) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -153,7 +152,7 @@ def add_api_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def add_certificate_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, type, message, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -214,7 +213,7 @@ def add_certificate_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def add_sdk_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sdk_id, type, message, if_match):
 
-    if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
+    if isinstance(sdk_id, str) and len(sdk_id.strip()) == 0:
         raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -275,7 +274,7 @@ def add_sdk_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def change_api_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+    if isinstance(api_id, str) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -338,7 +337,7 @@ def change_api_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def change_certificate_compartment(ctx, from_json, certificate_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -632,7 +631,7 @@ def create_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, if_match, is_lock_override):
 
-    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+    if isinstance(api_id, str) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -693,7 +692,7 @@ def delete_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, if_match, is_lock_override):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -754,7 +753,7 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sdk_id, if_match, is_lock_override):
 
-    if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
+    if isinstance(sdk_id, str) and len(sdk_id.strip()) == 0:
         raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -809,7 +808,7 @@ def delete_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def get_api(ctx, from_json, api_id):
 
-    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+    if isinstance(api_id, str) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -834,7 +833,7 @@ def get_api(ctx, from_json, api_id):
 @cli_util.wrap_exceptions
 def get_api_content(ctx, from_json, file, api_id, if_match, range):
 
-    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+    if isinstance(api_id, str) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -883,7 +882,7 @@ def get_api_content(ctx, from_json, file, api_id, if_match, range):
 @cli_util.wrap_exceptions
 def get_api_deployment_specification(ctx, from_json, api_id, if_match):
 
-    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+    if isinstance(api_id, str) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -908,7 +907,7 @@ def get_api_deployment_specification(ctx, from_json, api_id, if_match):
 @cli_util.wrap_exceptions
 def get_api_validations(ctx, from_json, api_id, if_match):
 
-    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+    if isinstance(api_id, str) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -932,7 +931,7 @@ def get_api_validations(ctx, from_json, api_id, if_match):
 @cli_util.wrap_exceptions
 def get_certificate(ctx, from_json, certificate_id):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -954,7 +953,7 @@ def get_certificate(ctx, from_json, certificate_id):
 @cli_util.wrap_exceptions
 def get_sdk(ctx, from_json, sdk_id):
 
-    if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
+    if isinstance(sdk_id, str) and len(sdk_id.strip()) == 0:
         raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1234,7 +1233,7 @@ def list_sdks(ctx, from_json, all_pages, page_size, sdk_id, display_name, lifecy
 @cli_util.wrap_exceptions
 def remove_api_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, type, if_match):
 
-    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+    if isinstance(api_id, str) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1291,7 +1290,7 @@ def remove_api_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def remove_certificate_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, type, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1348,7 +1347,7 @@ def remove_certificate_lock(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def remove_sdk_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sdk_id, type, if_match):
 
-    if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
+    if isinstance(sdk_id, str) and len(sdk_id.strip()) == 0:
         raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1416,7 +1415,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_api(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, display_name, freeform_tags, defined_tags, content, if_match, is_lock_override):
 
-    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+    if isinstance(api_id, str) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1506,7 +1505,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, display_name, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1590,7 +1589,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_sdk(ctx, from_json, force, sdk_id, display_name, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
+    if isinstance(sdk_id, str) and len(sdk_id.strip()) == 0:
         raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

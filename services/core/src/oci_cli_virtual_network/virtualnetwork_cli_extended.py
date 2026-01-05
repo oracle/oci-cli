@@ -5,7 +5,6 @@
 from __future__ import print_function
 import click
 import sys
-import six  # noqa: F401
 
 from services.core.src.oci_cli_virtual_network.generated import virtualnetwork_cli
 
@@ -132,7 +131,7 @@ def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name
     def _pre_strip(string):
         if string is None:
             return ""
-        elif isinstance(string, six.string_types):
+        elif isinstance(string, str):
             return string.strip()
         else:
             raise click.UsageError('Unexpected format for string  {} '.format(string))
@@ -527,7 +526,7 @@ virtual_circuit_bandwidth_shape_group.add_command(virtualnetwork_cli.list_fast_c
 def swap_nsg_id_value(kwargs):
     nsg_id = kwargs.pop('nsg_id')
     kwargs['network_security_group_id'] = nsg_id
-    if isinstance(nsg_id, six.string_types) and len(nsg_id.strip()) == 0:
+    if isinstance(nsg_id, str) and len(nsg_id.strip()) == 0:
         raise click.UsageError('Parameter --nsg-id cannot be whitespace or empty string')
     return kwargs
 

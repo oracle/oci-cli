@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -66,7 +65,7 @@ data_labeling_service_root_group.add_command(annotation_format_group)
 @cli_util.wrap_exceptions
 def add_dataset_labels(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, label_set, if_match):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -129,7 +128,7 @@ def add_dataset_labels(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def change_dataset_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, compartment_id, if_match):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -651,7 +650,7 @@ def create_dataset_text_dataset_format_details(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def delete_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, if_match):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -707,7 +706,7 @@ def delete_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def generate_dataset_records(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, limit, if_match):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -765,7 +764,7 @@ def generate_dataset_records(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def get_dataset(ctx, from_json, dataset_id):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -787,7 +786,7 @@ def get_dataset(ctx, from_json, dataset_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -815,7 +814,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def import_pre_annotated_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, import_format, import_metadata_path, if_match):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -884,7 +883,7 @@ def import_pre_annotated_data(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def import_pre_annotated_data_object_storage_import_metadata_path(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, import_metadata_path_namespace, import_metadata_path_bucket, import_metadata_path_path, import_format, if_match):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1072,7 +1071,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1123,7 +1122,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1223,7 +1222,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def remove_dataset_labels(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, label_set, if_match):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1287,7 +1286,7 @@ def remove_dataset_labels(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def rename_dataset_labels(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, source_label_set, target_label_set, if_match):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1356,7 +1355,7 @@ def rename_dataset_labels(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def snapshot_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, are_annotations_included, are_unannotated_records_included, export_details, export_format, if_match):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1427,7 +1426,7 @@ def snapshot_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def update_dataset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, display_name, description, labeling_instructions, freeform_tags, defined_tags, if_match):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

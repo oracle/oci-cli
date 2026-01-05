@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -116,7 +115,7 @@ fleet_apps_management_admin_root_group.add_command(compliance_policy_group)
 @cli_util.wrap_exceptions
 def change_platform_configuration_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, compartment_id, if_match):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -177,7 +176,7 @@ def change_platform_configuration_compartment(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def change_property_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, property_id, compartment_id, if_match):
 
-    if isinstance(property_id, six.string_types) and len(property_id.strip()) == 0:
+    if isinstance(property_id, str) and len(property_id.strip()) == 0:
         raise click.UsageError('Parameter --property-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1314,7 +1313,7 @@ def create_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def delete_compliance_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compliance_policy_rule_id, if_match):
 
-    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+    if isinstance(compliance_policy_rule_id, str) and len(compliance_policy_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1370,7 +1369,7 @@ def delete_compliance_policy_rule(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, onboarding_id, if_match):
 
-    if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
+    if isinstance(onboarding_id, str) and len(onboarding_id.strip()) == 0:
         raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1426,7 +1425,7 @@ def delete_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_platform_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, if_match):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1482,7 +1481,7 @@ def delete_platform_configuration(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, property_id, if_match):
 
-    if isinstance(property_id, six.string_types) and len(property_id.strip()) == 0:
+    if isinstance(property_id, str) and len(property_id.strip()) == 0:
         raise click.UsageError('Parameter --property-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1543,7 +1542,7 @@ def delete_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def enable_latest_policy(ctx, from_json, onboarding_id, can_latest_fams_policies_be_enabled, if_match):
 
-    if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
+    if isinstance(onboarding_id, str) and len(onboarding_id.strip()) == 0:
         raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1574,7 +1573,7 @@ def enable_latest_policy(ctx, from_json, onboarding_id, can_latest_fams_policies
 @cli_util.wrap_exceptions
 def get_compliance_policy(ctx, from_json, compliance_policy_id):
 
-    if isinstance(compliance_policy_id, six.string_types) and len(compliance_policy_id.strip()) == 0:
+    if isinstance(compliance_policy_id, str) and len(compliance_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --compliance-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1596,7 +1595,7 @@ def get_compliance_policy(ctx, from_json, compliance_policy_id):
 @cli_util.wrap_exceptions
 def get_compliance_policy_rule(ctx, from_json, compliance_policy_rule_id):
 
-    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+    if isinstance(compliance_policy_rule_id, str) and len(compliance_policy_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1618,7 +1617,7 @@ def get_compliance_policy_rule(ctx, from_json, compliance_policy_rule_id):
 @cli_util.wrap_exceptions
 def get_onboarding(ctx, from_json, onboarding_id):
 
-    if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
+    if isinstance(onboarding_id, str) and len(onboarding_id.strip()) == 0:
         raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1640,7 +1639,7 @@ def get_onboarding(ctx, from_json, onboarding_id):
 @cli_util.wrap_exceptions
 def get_platform_configuration(ctx, from_json, platform_configuration_id):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1662,7 +1661,7 @@ def get_platform_configuration(ctx, from_json, platform_configuration_id):
 @cli_util.wrap_exceptions
 def get_property(ctx, from_json, property_id):
 
-    if isinstance(property_id, six.string_types) and len(property_id.strip()) == 0:
+    if isinstance(property_id, str) and len(property_id.strip()) == 0:
         raise click.UsageError('Parameter --property-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2071,7 +2070,7 @@ def list_properties(ctx, from_json, all_pages, page_size, compartment_id, lifecy
 @cli_util.wrap_exceptions
 def manage_settings(ctx, from_json, onboarding_id, discovery_frequency, if_match):
 
-    if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
+    if isinstance(onboarding_id, str) and len(onboarding_id.strip()) == 0:
         raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2114,7 +2113,7 @@ def manage_settings(ctx, from_json, onboarding_id, discovery_frequency, if_match
 @cli_util.wrap_exceptions
 def update_compliance_policy_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compliance_policy_rule_id, product_version, patch_type_id, severity, patch_selection, grace_period, freeform_tags, defined_tags, if_match):
 
-    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+    if isinstance(compliance_policy_rule_id, str) and len(compliance_policy_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
     if not force:
         if product_version or patch_type_id or severity or patch_selection or freeform_tags or defined_tags:
@@ -2206,7 +2205,7 @@ def update_compliance_policy_rule(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def update_compliance_policy_rule_patch_level_selection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compliance_policy_rule_id, patch_selection_patch_level, product_version, patch_type_id, severity, grace_period, freeform_tags, defined_tags, if_match):
 
-    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+    if isinstance(compliance_policy_rule_id, str) and len(compliance_policy_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
     if not force:
         if product_version or patch_type_id or severity or freeform_tags or defined_tags:
@@ -2299,7 +2298,7 @@ def update_compliance_policy_rule_patch_level_selection_details(ctx, from_json, 
 @cli_util.wrap_exceptions
 def update_compliance_policy_rule_patch_release_date_selection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compliance_policy_rule_id, patch_selection_days_since_release, product_version, patch_type_id, severity, grace_period, freeform_tags, defined_tags, if_match):
 
-    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+    if isinstance(compliance_policy_rule_id, str) and len(compliance_policy_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
     if not force:
         if product_version or patch_type_id or severity or freeform_tags or defined_tags:
@@ -2392,7 +2391,7 @@ def update_compliance_policy_rule_patch_release_date_selection_details(ctx, from
 @cli_util.wrap_exceptions
 def update_compliance_policy_rule_patch_name_selection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compliance_policy_rule_id, patch_selection_patch_name, product_version, patch_type_id, severity, grace_period, freeform_tags, defined_tags, if_match):
 
-    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+    if isinstance(compliance_policy_rule_id, str) and len(compliance_policy_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
     if not force:
         if product_version or patch_type_id or severity or freeform_tags or defined_tags:
@@ -2482,7 +2481,7 @@ def update_compliance_policy_rule_patch_name_selection_details(ctx, from_json, f
 @cli_util.wrap_exceptions
 def update_onboarding(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, onboarding_id, is_fams_tag_enabled, is_cost_tracking_tag_enabled, freeform_tags, defined_tags, if_match):
 
-    if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
+    if isinstance(onboarding_id, str) and len(onboarding_id.strip()) == 0:
         raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2565,7 +2564,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_platform_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, config_category_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
     if not force:
         if config_category_details or freeform_tags or defined_tags:
@@ -2652,7 +2651,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_platform_configuration_product_stack_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_products, display_name, description, freeform_tags, defined_tags, if_match, config_category_details_sub_category_details):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2741,7 +2740,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_platform_configuration_environment_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2826,7 +2825,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_platform_configuration_credential_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2911,7 +2910,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_platform_configuration_patch_type_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2996,7 +2995,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_platform_configuration_lifecycle_operation_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3092,7 +3091,7 @@ This option is a JSON list with items of type ConfigAssociationDetails.  For doc
 @cli_util.wrap_exceptions
 def update_platform_configuration_product_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_versions, display_name, description, freeform_tags, defined_tags, if_match, config_category_details_credentials, config_category_details_components, config_category_details_compatible_products, config_category_details_patch_types):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3194,7 +3193,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_platform_configuration_self_hosted_instance_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_instance_id, display_name, description, freeform_tags, defined_tags, if_match, config_category_details_instance_name):
 
-    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+    if isinstance(platform_configuration_id, str) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3285,7 +3284,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_property(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, property_id, display_name, selection, value_type, values, freeform_tags, defined_tags, if_match):
 
-    if isinstance(property_id, six.string_types) and len(property_id.strip()) == 0:
+    if isinstance(property_id, str) and len(property_id.strip()) == 0:
         raise click.UsageError('Parameter --property-id cannot be whitespace or empty string')
     if not force:
         if values or freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -104,7 +103,7 @@ recovery_root_group.add_command(work_request_log_entry_collection_group)
 @cli_util.wrap_exceptions
 def cancel_protected_database_deletion(ctx, from_json, protected_database_id, if_match):
 
-    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+    if isinstance(protected_database_id, str) and len(protected_database_id.strip()) == 0:
         raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -133,7 +132,7 @@ def cancel_protected_database_deletion(ctx, from_json, protected_database_id, if
 @cli_util.wrap_exceptions
 def change_protected_database_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protected_database_id, compartment_id, if_match):
 
-    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+    if isinstance(protected_database_id, str) and len(protected_database_id.strip()) == 0:
         raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -195,7 +194,7 @@ def change_protected_database_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_protected_database_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protected_database_id, subscription_id, is_default, if_match):
 
-    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+    if isinstance(protected_database_id, str) and len(protected_database_id.strip()) == 0:
         raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -261,7 +260,7 @@ def change_protected_database_subscription(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def change_protection_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protection_policy_id, compartment_id, if_match):
 
-    if isinstance(protection_policy_id, six.string_types) and len(protection_policy_id.strip()) == 0:
+    if isinstance(protection_policy_id, str) and len(protection_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --protection-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -322,7 +321,7 @@ def change_protection_policy_compartment(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def change_recovery_service_subnet_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, recovery_service_subnet_id, compartment_id, if_match):
 
-    if isinstance(recovery_service_subnet_id, six.string_types) and len(recovery_service_subnet_id.strip()) == 0:
+    if isinstance(recovery_service_subnet_id, str) and len(recovery_service_subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --recovery-service-subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -648,7 +647,7 @@ def create_recovery_service_subnet(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protected_database_id, deletion_schedule, if_match):
 
-    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+    if isinstance(protected_database_id, str) and len(protected_database_id.strip()) == 0:
         raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -706,7 +705,7 @@ def delete_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protection_policy_id, if_match):
 
-    if isinstance(protection_policy_id, six.string_types) and len(protection_policy_id.strip()) == 0:
+    if isinstance(protection_policy_id, str) and len(protection_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --protection-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -762,7 +761,7 @@ def delete_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_recovery_service_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, recovery_service_subnet_id, if_match):
 
-    if isinstance(recovery_service_subnet_id, six.string_types) and len(recovery_service_subnet_id.strip()) == 0:
+    if isinstance(recovery_service_subnet_id, str) and len(recovery_service_subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --recovery-service-subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -816,7 +815,7 @@ def delete_recovery_service_subnet(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def fetch_protected_database_configuration(ctx, from_json, file, protected_database_id, configuration_type, if_match):
 
-    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+    if isinstance(protected_database_id, str) and len(protected_database_id.strip()) == 0:
         raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -869,7 +868,7 @@ def fetch_protected_database_configuration(ctx, from_json, file, protected_datab
 @cli_util.wrap_exceptions
 def get_protected_database(ctx, from_json, protected_database_id):
 
-    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+    if isinstance(protected_database_id, str) and len(protected_database_id.strip()) == 0:
         raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -891,7 +890,7 @@ def get_protected_database(ctx, from_json, protected_database_id):
 @cli_util.wrap_exceptions
 def get_protection_policy(ctx, from_json, protection_policy_id):
 
-    if isinstance(protection_policy_id, six.string_types) and len(protection_policy_id.strip()) == 0:
+    if isinstance(protection_policy_id, str) and len(protection_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --protection-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -913,7 +912,7 @@ def get_protection_policy(ctx, from_json, protection_policy_id):
 @cli_util.wrap_exceptions
 def get_recovery_service_subnet(ctx, from_json, recovery_service_subnet_id):
 
-    if isinstance(recovery_service_subnet_id, six.string_types) and len(recovery_service_subnet_id.strip()) == 0:
+    if isinstance(recovery_service_subnet_id, str) and len(recovery_service_subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --recovery-service-subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -935,7 +934,7 @@ def get_recovery_service_subnet(ctx, from_json, recovery_service_subnet_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1167,7 +1166,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1224,7 +1223,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1340,7 +1339,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def schedule_protected_database_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protected_database_id, deletion_schedule, if_match):
 
-    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+    if isinstance(protected_database_id, str) and len(protected_database_id.strip()) == 0:
         raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1414,7 +1413,7 @@ This option is a JSON list with items of type RecoveryServiceSubnetInput.  For d
 @cli_util.wrap_exceptions
 def update_protected_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, protected_database_id, display_name, database_size, database_size_in_gbs, password, protection_policy_id, recovery_service_subnets, is_redo_logs_shipped, freeform_tags, defined_tags, if_match):
 
-    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+    if isinstance(protected_database_id, str) and len(protected_database_id.strip()) == 0:
         raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
     if not force:
         if recovery_service_subnets or freeform_tags or defined_tags:
@@ -1512,7 +1511,7 @@ def update_protected_database(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_protection_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, protection_policy_id, display_name, backup_retention_period_in_days, policy_locked_date_time, freeform_tags, defined_tags, if_match):
 
-    if isinstance(protection_policy_id, six.string_types) and len(protection_policy_id.strip()) == 0:
+    if isinstance(protection_policy_id, str) and len(protection_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --protection-policy-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1596,7 +1595,7 @@ def update_protection_policy(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_recovery_service_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, recovery_service_subnet_id, display_name, subnets, nsg_ids, freeform_tags, defined_tags, if_match):
 
-    if isinstance(recovery_service_subnet_id, six.string_types) and len(recovery_service_subnet_id.strip()) == 0:
+    if isinstance(recovery_service_subnet_id, str) and len(recovery_service_subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --recovery-service-subnet-id cannot be whitespace or empty string')
     if not force:
         if subnets or nsg_ids or freeform_tags or defined_tags:

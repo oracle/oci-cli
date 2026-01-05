@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -73,7 +72,7 @@ After you send your request, the connector's state is temporarily UPDATING. When
 @cli_util.wrap_exceptions
 def activate_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, if_match):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -131,7 +130,7 @@ When provided, If-Match is checked against ETag values of the resource. \n[Comma
 @cli_util.wrap_exceptions
 def change_service_connector_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, compartment_id, if_match):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1166,7 +1165,7 @@ After you send your request, the connector's state is temporarily UPDATING and a
 @cli_util.wrap_exceptions
 def deactivate_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, if_match):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1224,7 +1223,7 @@ After you send your request, the connector's state is temporarily DELETING and a
 @cli_util.wrap_exceptions
 def delete_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, if_match):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1275,7 +1274,7 @@ def delete_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def get_service_connector(ctx, from_json, service_connector_id):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1297,7 +1296,7 @@ def get_service_connector(ctx, from_json, service_connector_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1390,7 +1389,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1441,7 +1440,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1549,7 +1548,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.wrap_exceptions
 def update_service_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, display_name, description, source, tasks, target, freeform_tags, defined_tags, if_match):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if source or tasks or target or freeform_tags or defined_tags:
@@ -1645,7 +1644,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.wrap_exceptions
 def update_service_connector_logging_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, source_log_sources, display_name, description, tasks, target, freeform_tags, defined_tags, if_match):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if tasks or target or freeform_tags or defined_tags:
@@ -1742,7 +1741,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.wrap_exceptions
 def update_service_connector_monitoring_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, source_monitoring_sources, display_name, description, tasks, target, freeform_tags, defined_tags, if_match):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if tasks or target or freeform_tags or defined_tags:
@@ -1840,7 +1839,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.wrap_exceptions
 def update_service_connector_streaming_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, source_stream_id, display_name, description, tasks, target, freeform_tags, defined_tags, if_match, source_cursor):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if tasks or target or freeform_tags or defined_tags:
@@ -1941,7 +1940,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.wrap_exceptions
 def update_service_connector_plugin_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, source_plugin_name, source_config_map, display_name, description, tasks, target, freeform_tags, defined_tags, if_match):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if tasks or target or freeform_tags or defined_tags:
@@ -2040,7 +2039,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.wrap_exceptions
 def update_service_connector_notifications_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, target_topic_id, display_name, description, source, tasks, freeform_tags, defined_tags, if_match, target_enable_formatted_messaging):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if source or tasks or freeform_tags or defined_tags:
@@ -2144,7 +2143,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.wrap_exceptions
 def update_service_connector_object_storage_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, target_bucket_name, display_name, description, source, tasks, freeform_tags, defined_tags, if_match, target_namespace, target_object_name_prefix, target_batch_rollover_size_in_mbs, target_batch_rollover_time_in_ms):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if source or tasks or freeform_tags or defined_tags:
@@ -2258,7 +2257,7 @@ This option is a JSON list with items of type DimensionDetails.  For documentati
 @cli_util.wrap_exceptions
 def update_service_connector_monitoring_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, target_compartment_id, target_metric_namespace, target_metric, display_name, description, source, tasks, freeform_tags, defined_tags, if_match, target_dimensions):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if source or tasks or freeform_tags or defined_tags:
@@ -2363,7 +2362,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.wrap_exceptions
 def update_service_connector_functions_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, target_function_id, display_name, description, source, tasks, freeform_tags, defined_tags, if_match, target_batch_size_in_kbs, target_batch_size_in_num, target_batch_time_in_sec):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if source or tasks or freeform_tags or defined_tags:
@@ -2470,7 +2469,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.wrap_exceptions
 def update_service_connector_logging_analytics_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, target_log_group_id, display_name, description, source, tasks, freeform_tags, defined_tags, if_match, target_log_source_identifier):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if source or tasks or freeform_tags or defined_tags:
@@ -2570,7 +2569,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.wrap_exceptions
 def update_service_connector_streaming_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, target_stream_id, display_name, description, source, tasks, freeform_tags, defined_tags, if_match):
 
-    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+    if isinstance(service_connector_id, str) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
     if not force:
         if source or tasks or freeform_tags or defined_tags:

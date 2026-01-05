@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -46,7 +45,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Comma
 @cli_util.wrap_exceptions
 def change_topic_compartment(ctx, from_json, topic_id, compartment_id, if_match):
 
-    if isinstance(topic_id, six.string_types) and len(topic_id.strip()) == 0:
+    if isinstance(topic_id, str) and len(topic_id.strip()) == 0:
         raise click.UsageError('Parameter --topic-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -128,7 +127,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Comma
 @cli_util.wrap_exceptions
 def delete_topic(ctx, from_json, topic_id, if_match):
 
-    if isinstance(topic_id, six.string_types) and len(topic_id.strip()) == 0:
+    if isinstance(topic_id, str) and len(topic_id.strip()) == 0:
         raise click.UsageError('Parameter --topic-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -154,7 +153,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 120.""")
 @cli_util.wrap_exceptions
 def get_topic(ctx, from_json, topic_id):
 
-    if isinstance(topic_id, six.string_types) and len(topic_id.strip()) == 0:
+    if isinstance(topic_id, str) and len(topic_id.strip()) == 0:
         raise click.UsageError('Parameter --topic-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -252,7 +251,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_topic(ctx, from_json, force, topic_id, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(topic_id, six.string_types) and len(topic_id.strip()) == 0:
+    if isinstance(topic_id, str) and len(topic_id.strip()) == 0:
         raise click.UsageError('Parameter --topic-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

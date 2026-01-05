@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -144,7 +143,7 @@ fleet_apps_management_runbooks_root_group.add_command(runbook_export_group)
 @cli_util.wrap_exceptions
 def change_runbook_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, runbook_id, compartment_id, if_match):
 
-    if isinstance(runbook_id, six.string_types) and len(runbook_id.strip()) == 0:
+    if isinstance(runbook_id, str) and len(runbook_id.strip()) == 0:
         raise click.UsageError('Parameter --runbook-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -205,7 +204,7 @@ def change_runbook_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def change_task_record_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, task_record_id, compartment_id, if_match):
 
-    if isinstance(task_record_id, six.string_types) and len(task_record_id.strip()) == 0:
+    if isinstance(task_record_id, str) and len(task_record_id.strip()) == 0:
         raise click.UsageError('Parameter --task-record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -497,7 +496,7 @@ def create_task_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_runbook(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, runbook_id, if_match):
 
-    if isinstance(runbook_id, six.string_types) and len(runbook_id.strip()) == 0:
+    if isinstance(runbook_id, str) and len(runbook_id.strip()) == 0:
         raise click.UsageError('Parameter --runbook-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -553,7 +552,7 @@ def delete_runbook(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_runbook_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, runbook_version_id, if_match):
 
-    if isinstance(runbook_version_id, six.string_types) and len(runbook_version_id.strip()) == 0:
+    if isinstance(runbook_version_id, str) and len(runbook_version_id.strip()) == 0:
         raise click.UsageError('Parameter --runbook-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -609,7 +608,7 @@ def delete_runbook_version(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_task_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, task_record_id, if_match):
 
-    if isinstance(task_record_id, six.string_types) and len(task_record_id.strip()) == 0:
+    if isinstance(task_record_id, str) and len(task_record_id.strip()) == 0:
         raise click.UsageError('Parameter --task-record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1224,7 +1223,7 @@ def find_runbook_import_dependency_transfer_runbook_par_url_content_details(ctx,
 @cli_util.wrap_exceptions
 def get_runbook(ctx, from_json, runbook_id):
 
-    if isinstance(runbook_id, six.string_types) and len(runbook_id.strip()) == 0:
+    if isinstance(runbook_id, str) and len(runbook_id.strip()) == 0:
         raise click.UsageError('Parameter --runbook-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1300,7 +1299,7 @@ def get_runbook_import(ctx, from_json, runbook_id, import_id):
 @cli_util.wrap_exceptions
 def get_runbook_version(ctx, from_json, runbook_version_id):
 
-    if isinstance(runbook_version_id, six.string_types) and len(runbook_version_id.strip()) == 0:
+    if isinstance(runbook_version_id, str) and len(runbook_version_id.strip()) == 0:
         raise click.UsageError('Parameter --runbook-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1322,7 +1321,7 @@ def get_runbook_version(ctx, from_json, runbook_version_id):
 @cli_util.wrap_exceptions
 def get_task_record(ctx, from_json, task_record_id):
 
-    if isinstance(task_record_id, six.string_types) and len(task_record_id.strip()) == 0:
+    if isinstance(task_record_id, str) and len(task_record_id.strip()) == 0:
         raise click.UsageError('Parameter --task-record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1992,7 +1991,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_runbook(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, runbook_id, display_name, description, is_sudo_access_needed, operation, os_type, platform, is_default, estimated_time, freeform_tags, defined_tags, if_match):
 
-    if isinstance(runbook_id, six.string_types) and len(runbook_id.strip()) == 0:
+    if isinstance(runbook_id, str) and len(runbook_id.strip()) == 0:
         raise click.UsageError('Parameter --runbook-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2094,7 +2093,7 @@ This option is a JSON list with items of type Group.  For documentation on Group
 @cli_util.wrap_exceptions
 def update_runbook_version(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, runbook_version_id, tasks, groups, execution_workflow_details, rollback_workflow_details, if_match):
 
-    if isinstance(runbook_version_id, six.string_types) and len(runbook_version_id.strip()) == 0:
+    if isinstance(runbook_version_id, str) and len(runbook_version_id.strip()) == 0:
         raise click.UsageError('Parameter --runbook-version-id cannot be whitespace or empty string')
     if not force:
         if tasks or groups or execution_workflow_details or rollback_workflow_details:
@@ -2177,7 +2176,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_task_record(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, task_record_id, display_name, description, details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(task_record_id, six.string_types) and len(task_record_id.strip()) == 0:
+    if isinstance(task_record_id, str) and len(task_record_id.strip()) == 0:
         raise click.UsageError('Parameter --task-record-id cannot be whitespace or empty string')
     if not force:
         if details or freeform_tags or defined_tags:

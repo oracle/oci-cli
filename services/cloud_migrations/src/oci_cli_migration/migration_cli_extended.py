@@ -4,7 +4,6 @@
 
 
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 import click  # noqa: F401
 import json  # noqa: F401
@@ -161,7 +160,7 @@ def create_target_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 def update_target_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_asset_id,
                         type, is_excluded_from_execution, if_match, preferred_shape_type, block_volumes_performance,
                         ms_license, user_spec):
-    if isinstance(target_asset_id, six.string_types) and len(target_asset_id.strip()) == 0:
+    if isinstance(target_asset_id, str) and len(target_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --target-asset-id cannot be whitespace or empty string')
 
     if not force:

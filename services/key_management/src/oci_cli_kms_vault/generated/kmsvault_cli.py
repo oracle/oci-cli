@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -54,7 +53,7 @@ kms_vault_root_group.add_command(vault_group)
 @cli_util.wrap_exceptions
 def backup_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vault_id, if_match, backup_location, is_include_keys):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -119,7 +118,7 @@ def backup_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def backup_vault_backup_location_bucket(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vault_id, backup_location_namespace, backup_location_bucket_name, backup_location_object_name, if_match, is_include_keys):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -185,7 +184,7 @@ def backup_vault_backup_location_bucket(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def backup_vault_backup_location_uri(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vault_id, backup_location_uri, if_match, is_include_keys):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -249,7 +248,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 @cli_util.wrap_exceptions
 def cancel_vault_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vault_id, if_match):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -302,7 +301,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 @cli_util.wrap_exceptions
 def change_vault_compartment(ctx, from_json, vault_id, compartment_id, if_match):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -405,7 +404,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 @cli_util.wrap_exceptions
 def create_vault_replica(ctx, from_json, vault_id, replica_region, replica_vault_metadata, if_match):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -445,7 +444,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 @cli_util.wrap_exceptions
 def create_vault_replica_replica_external_vault_metadata(ctx, from_json, vault_id, replica_region, replica_vault_metadata_private_endpoint_id, replica_vault_metadata_idcs_account_name_url, if_match):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -483,7 +482,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 @cli_util.wrap_exceptions
 def delete_vault_replica(ctx, from_json, vault_id, replica_region, if_match):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -514,7 +513,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 @cli_util.wrap_exceptions
 def get_vault(ctx, from_json, vault_id):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -536,7 +535,7 @@ def get_vault(ctx, from_json, vault_id):
 @cli_util.wrap_exceptions
 def get_vault_usage(ctx, from_json, vault_id):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -570,7 +569,7 @@ def list_vault_replicas(ctx, from_json, all_pages, page_size, vault_id, if_match
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -813,7 +812,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 @cli_util.wrap_exceptions
 def schedule_vault_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vault_id, time_of_deletion, if_match):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -877,7 +876,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 @cli_util.wrap_exceptions
 def update_vault(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vault_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+    if isinstance(vault_id, str) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:

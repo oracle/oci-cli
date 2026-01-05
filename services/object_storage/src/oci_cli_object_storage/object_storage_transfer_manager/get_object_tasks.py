@@ -13,7 +13,6 @@ from oci._vendor.urllib3.exceptions import (
 import heapq
 import oci
 import os
-import six
 import threading
 import random
 import time
@@ -131,7 +130,7 @@ class GetObjectMultipartTask(WorkPoolTask):
         else:
             self.part_size = self.DEFAULT_MULTIPART_DOWNLOAD_SIZE
 
-        if isinstance(destination_file_handle, six.string_types):
+        if isinstance(destination_file_handle, str):
             # If it's a string, treat it like a file path. Also, since we open the file of our own volition, close it after we're
             # done. To constrast, if someone provided us something we assume is a file (or file-like) then don't auto-close because
             # they may want to do something with it after we've done our work
@@ -281,7 +280,7 @@ class GetObjectRangeTask(WorkPoolTask):
         self.add_pending_write_lock = add_pending_write_lock
         self.retry_count = 0 if isinstance(self.object_storage_client.retry_strategy, oci.retry.NoneRetryStrategy) else DEFAULT_RETRY_COUNT
         self.destination_file_handle = destination_file_handle
-        self.downloaded_data = six.BytesIO()
+        self.downloaded_data = io.BytesIO()
 
         if 'chunk_written_callback' in self.kwargs:
             self.chunk_written_callback = self.kwargs['chunk_written_callback']
@@ -315,7 +314,7 @@ class GetObjectRangeTask(WorkPoolTask):
             )
 
     def _get_object(self):
-        downloaded_data = six.BytesIO()
+        downloaded_data = io.BytesIO()
         get_object_response = _make_retrying_get_call(self.object_storage_client, **self.kwargs)
         total_size = 0
         for chunk in get_object_response.data.raw.stream(None, decode_content=False):

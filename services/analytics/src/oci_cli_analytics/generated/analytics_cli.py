@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -66,7 +65,7 @@ analytics_root_group.add_command(work_request_group)
 @cli_util.wrap_exceptions
 def change_analytics_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, compartment_id, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -127,7 +126,7 @@ def change_analytics_instance_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_analytics_instance_network_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, network_endpoint_details, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -190,7 +189,7 @@ def change_analytics_instance_network_endpoint(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def change_analytics_instance_network_endpoint_private_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, network_endpoint_details_vcn_id, network_endpoint_details_subnet_id, if_match, network_endpoint_details_network_security_group_ids):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -262,7 +261,7 @@ This option is a JSON list with items of type VirtualCloudNetwork.  For document
 @cli_util.wrap_exceptions
 def change_analytics_instance_network_endpoint_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, if_match, network_endpoint_details_whitelisted_ips, network_endpoint_details_whitelisted_vcns, network_endpoint_details_whitelisted_services):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -687,7 +686,7 @@ This option is a JSON list with items of type PrivateSourceScanHost.  For docume
 @cli_util.wrap_exceptions
 def create_private_access_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, display_name, vcn_id, subnet_id, private_source_dns_zones, private_source_scan_hosts, network_security_group_ids):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -759,7 +758,7 @@ def create_private_access_channel(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def create_vanity_url(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, hosts, private_key, public_certificate, ca_certificate, description, passphrase):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -827,7 +826,7 @@ def create_vanity_url(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -884,10 +883,10 @@ def delete_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_private_access_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_access_channel_key, analytics_instance_id, if_match):
 
-    if isinstance(private_access_channel_key, six.string_types) and len(private_access_channel_key.strip()) == 0:
+    if isinstance(private_access_channel_key, str) and len(private_access_channel_key.strip()) == 0:
         raise click.UsageError('Parameter --private-access-channel-key cannot be whitespace or empty string')
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -945,10 +944,10 @@ def delete_private_access_channel(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_vanity_url(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, vanity_url_key, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
-    if isinstance(vanity_url_key, six.string_types) and len(vanity_url_key.strip()) == 0:
+    if isinstance(vanity_url_key, str) and len(vanity_url_key.strip()) == 0:
         raise click.UsageError('Parameter --vanity-url-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1002,7 +1001,7 @@ def delete_vanity_url(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1026,7 +1025,7 @@ def delete_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def get_analytics_instance(ctx, from_json, analytics_instance_id):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1049,10 +1048,10 @@ def get_analytics_instance(ctx, from_json, analytics_instance_id):
 @cli_util.wrap_exceptions
 def get_private_access_channel(ctx, from_json, private_access_channel_key, analytics_instance_id):
 
-    if isinstance(private_access_channel_key, six.string_types) and len(private_access_channel_key.strip()) == 0:
+    if isinstance(private_access_channel_key, str) and len(private_access_channel_key.strip()) == 0:
         raise click.UsageError('Parameter --private-access-channel-key cannot be whitespace or empty string')
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1075,7 +1074,7 @@ def get_private_access_channel(ctx, from_json, private_access_channel_key, analy
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1174,7 +1173,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1227,7 +1226,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1341,7 +1340,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.wrap_exceptions
 def scale_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, capacity, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1402,7 +1401,7 @@ def scale_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def set_feature_bundle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, feature_bundle, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1465,7 +1464,7 @@ def set_feature_bundle(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def set_kms_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, kms_key_id, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1525,7 +1524,7 @@ def set_kms_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def start_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1580,7 +1579,7 @@ def start_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def stop_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1646,7 +1645,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_analytics_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, description, email_notification, license_type, defined_tags, freeform_tags, update_channel, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -1735,10 +1734,10 @@ This option is a JSON list with items of type PrivateSourceScanHost.  For docume
 @cli_util.wrap_exceptions
 def update_private_access_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_access_channel_key, analytics_instance_id, display_name, vcn_id, subnet_id, private_source_dns_zones, private_source_scan_hosts, network_security_group_ids, if_match):
 
-    if isinstance(private_access_channel_key, six.string_types) and len(private_access_channel_key.strip()) == 0:
+    if isinstance(private_access_channel_key, str) and len(private_access_channel_key.strip()) == 0:
         raise click.UsageError('Parameter --private-access-channel-key cannot be whitespace or empty string')
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
     if not force:
         if private_source_dns_zones or private_source_scan_hosts or network_security_group_ids:
@@ -1825,10 +1824,10 @@ def update_private_access_channel(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def update_vanity_url(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, vanity_url_key, private_key, public_certificate, ca_certificate, passphrase, if_match):
 
-    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+    if isinstance(analytics_instance_id, str) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
 
-    if isinstance(vanity_url_key, six.string_types) and len(vanity_url_key.strip()) == 0:
+    if isinstance(vanity_url_key, str) and len(vanity_url_key.strip()) == 0:
         raise click.UsageError('Parameter --vanity-url-key cannot be whitespace or empty string')
 
     kwargs = {}

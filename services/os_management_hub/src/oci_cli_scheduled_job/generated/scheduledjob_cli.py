@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -44,7 +43,7 @@ scheduled_job_root_group.add_command(scheduled_job_group)
 @cli_util.wrap_exceptions
 def change_scheduled_job_compartment(ctx, from_json, scheduled_job_id, compartment_id, if_match):
 
-    if isinstance(scheduled_job_id, six.string_types) and len(scheduled_job_id.strip()) == 0:
+    if isinstance(scheduled_job_id, str) and len(scheduled_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -191,7 +190,7 @@ def create_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduled_job_id, if_match):
 
-    if isinstance(scheduled_job_id, six.string_types) and len(scheduled_job_id.strip()) == 0:
+    if isinstance(scheduled_job_id, str) and len(scheduled_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -250,7 +249,7 @@ def delete_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def get_scheduled_job(ctx, from_json, scheduled_job_id):
 
-    if isinstance(scheduled_job_id, six.string_types) and len(scheduled_job_id.strip()) == 0:
+    if isinstance(scheduled_job_id, str) and len(scheduled_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -385,7 +384,7 @@ def list_scheduled_jobs(ctx, from_json, all_pages, page_size, compartment_id, di
 @cli_util.wrap_exceptions
 def run_scheduled_job_now(ctx, from_json, scheduled_job_id, if_match):
 
-    if isinstance(scheduled_job_id, six.string_types) and len(scheduled_job_id.strip()) == 0:
+    if isinstance(scheduled_job_id, str) and len(scheduled_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -425,7 +424,7 @@ This option is a JSON list with items of type ScheduledJobOperation.  For docume
 @cli_util.wrap_exceptions
 def update_scheduled_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduled_job_id, display_name, description, schedule_type, time_next_execution, recurring_rule, operations, freeform_tags, defined_tags, retry_intervals, if_match):
 
-    if isinstance(scheduled_job_id, six.string_types) and len(scheduled_job_id.strip()) == 0:
+    if isinstance(scheduled_job_id, str) and len(scheduled_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-job-id cannot be whitespace or empty string')
     if not force:
         if operations or freeform_tags or defined_tags or retry_intervals:

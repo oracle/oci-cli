@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -56,7 +55,7 @@ gateway_root_group.add_command(gateway_group)
 @cli_util.wrap_exceptions
 def add_gateway_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, type, message, if_match):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
+    if isinstance(gateway_id, str) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -117,7 +116,7 @@ def add_gateway_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def change_gateway_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
+    if isinstance(gateway_id, str) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -552,7 +551,7 @@ def create_gateway_no_cache(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, if_match, is_lock_override):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
+    if isinstance(gateway_id, str) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -607,7 +606,7 @@ def delete_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def get_gateway(ctx, from_json, gateway_id):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
+    if isinstance(gateway_id, str) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -701,7 +700,7 @@ def list_gateways(ctx, from_json, all_pages, page_size, compartment_id, certific
 @cli_util.wrap_exceptions
 def remove_gateway_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, type, if_match):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
+    if isinstance(gateway_id, str) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -774,7 +773,7 @@ This option is a JSON list with items of type CaBundle.  For documentation on Ca
 @cli_util.wrap_exceptions
 def update_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, display_name, network_security_group_ids, certificate_id, response_cache_details, freeform_tags, defined_tags, ca_bundles, if_match, is_lock_override):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
+    if isinstance(gateway_id, str) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
     if not force:
         if network_security_group_ids or response_cache_details or freeform_tags or defined_tags or ca_bundles:
@@ -886,7 +885,7 @@ This option is a JSON list with items of type CaBundle.  For documentation on Ca
 @cli_util.wrap_exceptions
 def update_gateway_external_resp_cache(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, response_cache_details_servers, response_cache_details_authentication_secret_id, response_cache_details_authentication_secret_version_number, display_name, network_security_group_ids, certificate_id, freeform_tags, defined_tags, ca_bundles, if_match, is_lock_override, response_cache_details_is_ssl_enabled, response_cache_details_is_ssl_verify_disabled, response_cache_details_connect_timeout_in_ms, response_cache_details_read_timeout_in_ms, response_cache_details_send_timeout_in_ms):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
+    if isinstance(gateway_id, str) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
     if not force:
         if network_security_group_ids or freeform_tags or defined_tags or ca_bundles:
@@ -1008,7 +1007,7 @@ This option is a JSON list with items of type CaBundle.  For documentation on Ca
 @cli_util.wrap_exceptions
 def update_gateway_no_cache(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, display_name, network_security_group_ids, certificate_id, freeform_tags, defined_tags, ca_bundles, if_match, is_lock_override):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
+    if isinstance(gateway_id, str) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
     if not force:
         if network_security_group_ids or freeform_tags or defined_tags or ca_bundles:

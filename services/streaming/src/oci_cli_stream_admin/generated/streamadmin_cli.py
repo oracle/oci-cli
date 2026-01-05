@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -57,7 +56,7 @@ stream_admin_root_group.add_command(connect_harness_group)
 @cli_util.wrap_exceptions
 def change_connect_harness_compartment(ctx, from_json, connect_harness_id, compartment_id, if_match):
 
-    if isinstance(connect_harness_id, six.string_types) and len(connect_harness_id.strip()) == 0:
+    if isinstance(connect_harness_id, str) and len(connect_harness_id.strip()) == 0:
         raise click.UsageError('Parameter --connect-harness-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -88,7 +87,7 @@ def change_connect_harness_compartment(ctx, from_json, connect_harness_id, compa
 @cli_util.wrap_exceptions
 def change_stream_compartment(ctx, from_json, stream_id, compartment_id, if_match):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -119,7 +118,7 @@ def change_stream_compartment(ctx, from_json, stream_id, compartment_id, if_matc
 @cli_util.wrap_exceptions
 def change_stream_pool_compartment(ctx, from_json, stream_pool_id, compartment_id, if_match):
 
-    if isinstance(stream_pool_id, six.string_types) and len(stream_pool_id.strip()) == 0:
+    if isinstance(stream_pool_id, str) and len(stream_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -378,7 +377,7 @@ def create_stream_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_connect_harness(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connect_harness_id, if_match):
 
-    if isinstance(connect_harness_id, six.string_types) and len(connect_harness_id.strip()) == 0:
+    if isinstance(connect_harness_id, str) and len(connect_harness_id.strip()) == 0:
         raise click.UsageError('Parameter --connect-harness-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -442,7 +441,7 @@ def delete_connect_harness(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_id, if_match):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -506,7 +505,7 @@ def delete_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_stream_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_pool_id, if_match):
 
-    if isinstance(stream_pool_id, six.string_types) and len(stream_pool_id.strip()) == 0:
+    if isinstance(stream_pool_id, str) and len(stream_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -565,7 +564,7 @@ def delete_stream_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def get_connect_harness(ctx, from_json, connect_harness_id):
 
-    if isinstance(connect_harness_id, six.string_types) and len(connect_harness_id.strip()) == 0:
+    if isinstance(connect_harness_id, str) and len(connect_harness_id.strip()) == 0:
         raise click.UsageError('Parameter --connect-harness-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -587,7 +586,7 @@ def get_connect_harness(ctx, from_json, connect_harness_id):
 @cli_util.wrap_exceptions
 def get_stream(ctx, from_json, stream_id):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -609,7 +608,7 @@ def get_stream(ctx, from_json, stream_id):
 @cli_util.wrap_exceptions
 def get_stream_pool(ctx, from_json, stream_pool_id):
 
-    if isinstance(stream_pool_id, six.string_types) and len(stream_pool_id.strip()) == 0:
+    if isinstance(stream_pool_id, str) and len(stream_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -833,7 +832,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_connect_harness(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connect_harness_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(connect_harness_id, six.string_types) and len(connect_harness_id.strip()) == 0:
+    if isinstance(connect_harness_id, str) and len(connect_harness_id.strip()) == 0:
         raise click.UsageError('Parameter --connect-harness-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -906,7 +905,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_stream(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_id, stream_pool_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -987,7 +986,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_stream_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_pool_id, name, kafka_settings, custom_encryption_key_details, freeform_tags, security_attributes, defined_tags, if_match):
 
-    if isinstance(stream_pool_id, six.string_types) and len(stream_pool_id.strip()) == 0:
+    if isinstance(stream_pool_id, str) and len(stream_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-pool-id cannot be whitespace or empty string')
     if not force:
         if kafka_settings or custom_encryption_key_details or freeform_tags or security_attributes or defined_tags:

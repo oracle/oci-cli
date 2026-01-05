@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -84,7 +83,7 @@ nosql_root_group.add_command(table_group)
 @cli_util.wrap_exceptions
 def change_table_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, table_name_or_id, to_compartment_id, from_compartment_id, if_match):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -150,7 +149,7 @@ def change_table_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def create_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, table_name_or_id, name, keys, compartment_id, is_if_not_exists):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -219,7 +218,7 @@ def create_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def create_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, table_name_or_id, region_parameterconflict, compartment_id, max_read_units, max_write_units, if_match):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -365,10 +364,10 @@ def create_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, table_name_or_id, index_name, compartment_id, is_if_exists, if_match):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(index_name, six.string_types) and len(index_name.strip()) == 0:
+    if isinstance(index_name, str) and len(index_name.strip()) == 0:
         raise click.UsageError('Parameter --index-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -431,10 +430,10 @@ def delete_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, table_name_or_id, region_parameterconflict, compartment_id, if_match):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(region_parameterconflict, six.string_types) and len(region_parameterconflict.strip()) == 0:
+    if isinstance(region_parameterconflict, str) and len(region_parameterconflict.strip()) == 0:
         raise click.UsageError('Parameter --region-parameterconflict cannot be whitespace or empty string')
 
     kwargs = {}
@@ -494,7 +493,7 @@ def delete_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_row(ctx, from_json, table_name_or_id, key, compartment_id, is_get_return_row, timeout_in_ms, if_match):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -532,7 +531,7 @@ def delete_row(ctx, from_json, table_name_or_id, key, compartment_id, is_get_ret
 @cli_util.wrap_exceptions
 def delete_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, table_name_or_id, compartment_id, is_if_exists, if_match):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -592,7 +591,7 @@ def delete_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_work_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -664,10 +663,10 @@ def get_configuration(ctx, from_json, compartment_id):
 @cli_util.wrap_exceptions
 def get_index(ctx, from_json, table_name_or_id, index_name, compartment_id):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(index_name, six.string_types) and len(index_name.strip()) == 0:
+    if isinstance(index_name, str) and len(index_name.strip()) == 0:
         raise click.UsageError('Parameter --index-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -696,7 +695,7 @@ def get_index(ctx, from_json, table_name_or_id, index_name, compartment_id):
 @cli_util.wrap_exceptions
 def get_row(ctx, from_json, table_name_or_id, key, compartment_id, consistency, timeout_in_ms):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -726,7 +725,7 @@ def get_row(ctx, from_json, table_name_or_id, key, compartment_id, consistency, 
 @cli_util.wrap_exceptions
 def get_table(ctx, from_json, table_name_or_id, compartment_id):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -750,7 +749,7 @@ def get_table(ctx, from_json, table_name_or_id, compartment_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -784,7 +783,7 @@ def list_indexes(ctx, from_json, all_pages, page_size, table_name_or_id, compart
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -848,7 +847,7 @@ def list_table_usage(ctx, from_json, all_pages, page_size, table_name_or_id, com
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -965,7 +964,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1016,7 +1015,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1460,7 +1459,7 @@ def update_configuration_update_hosted_configuration_details(ctx, from_json, for
 @cli_util.wrap_exceptions
 def update_row(ctx, from_json, force, table_name_or_id, value, compartment_id, option, is_get_return_row, timeout_in_ms, ttl, is_ttl_use_table_default, identity_cache_size, is_exact_match, if_match):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
     if not force:
         if value:
@@ -1527,7 +1526,7 @@ def update_row(ctx, from_json, force, table_name_or_id, value, compartment_id, o
 @cli_util.wrap_exceptions
 def update_table(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, table_name_or_id, compartment_id, ddl_statement, table_limits, freeform_tags, defined_tags, if_match):
 
-    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+    if isinstance(table_name_or_id, str) and len(table_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
     if not force:
         if table_limits or freeform_tags or defined_tags:

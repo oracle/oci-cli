@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -70,7 +69,7 @@ bastion_root_group.add_command(work_request_group)
 @cli_util.wrap_exceptions
 def change_bastion_compartment(ctx, from_json, bastion_id, compartment_id, if_match):
 
-    if isinstance(bastion_id, six.string_types) and len(bastion_id.strip()) == 0:
+    if isinstance(bastion_id, str) and len(bastion_id.strip()) == 0:
         raise click.UsageError('Parameter --bastion-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -504,7 +503,7 @@ def create_session_create_port_forwarding_session_target_resource_details(ctx, f
 @cli_util.wrap_exceptions
 def delete_bastion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_id, if_match):
 
-    if isinstance(bastion_id, six.string_types) and len(bastion_id.strip()) == 0:
+    if isinstance(bastion_id, str) and len(bastion_id.strip()) == 0:
         raise click.UsageError('Parameter --bastion-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -560,7 +559,7 @@ def delete_bastion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, session_id, if_match):
 
-    if isinstance(session_id, six.string_types) and len(session_id.strip()) == 0:
+    if isinstance(session_id, str) and len(session_id.strip()) == 0:
         raise click.UsageError('Parameter --session-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -611,7 +610,7 @@ def delete_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def get_bastion(ctx, from_json, bastion_id):
 
-    if isinstance(bastion_id, six.string_types) and len(bastion_id.strip()) == 0:
+    if isinstance(bastion_id, str) and len(bastion_id.strip()) == 0:
         raise click.UsageError('Parameter --bastion-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -633,7 +632,7 @@ def get_bastion(ctx, from_json, bastion_id):
 @cli_util.wrap_exceptions
 def get_session(ctx, from_json, session_id):
 
-    if isinstance(session_id, six.string_types) and len(session_id.strip()) == 0:
+    if isinstance(session_id, str) and len(session_id.strip()) == 0:
         raise click.UsageError('Parameter --session-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -655,7 +654,7 @@ def get_session(ctx, from_json, session_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -810,7 +809,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -861,7 +860,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -964,7 +963,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 @cli_util.wrap_exceptions
 def update_bastion(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_id, max_session_ttl_in_seconds, static_jump_host_ip_addresses, client_cidr_block_allow_list, freeform_tags, defined_tags, security_attributes, if_match):
 
-    if isinstance(bastion_id, six.string_types) and len(bastion_id.strip()) == 0:
+    if isinstance(bastion_id, str) and len(bastion_id.strip()) == 0:
         raise click.UsageError('Parameter --bastion-id cannot be whitespace or empty string')
     if not force:
         if static_jump_host_ip_addresses or client_cidr_block_allow_list or freeform_tags or defined_tags or security_attributes:
@@ -1046,7 +1045,7 @@ def update_bastion(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def update_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, session_id, display_name, if_match):
 
-    if isinstance(session_id, six.string_types) and len(session_id.strip()) == 0:
+    if isinstance(session_id, str) and len(session_id.strip()) == 0:
         raise click.UsageError('Parameter --session-id cannot be whitespace or empty string')
 
     kwargs = {}

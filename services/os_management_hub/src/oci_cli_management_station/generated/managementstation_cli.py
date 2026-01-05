@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -51,7 +50,7 @@ management_station_root_group.add_command(management_station_group)
 @cli_util.wrap_exceptions
 def change_management_station_compartment(ctx, from_json, management_station_id, compartment_id, if_match):
 
-    if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
+    if isinstance(management_station_id, str) and len(management_station_id.strip()) == 0:
         raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -158,7 +157,7 @@ def create_management_station(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_management_station(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_station_id, if_match):
 
-    if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
+    if isinstance(management_station_id, str) and len(management_station_id.strip()) == 0:
         raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -217,7 +216,7 @@ def delete_management_station(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def get_management_station(ctx, from_json, management_station_id):
 
-    if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
+    if isinstance(management_station_id, str) and len(management_station_id.strip()) == 0:
         raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -333,7 +332,7 @@ def list_mirrors(ctx, from_json, all_pages, page_size, management_station_id, di
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
+    if isinstance(management_station_id, str) and len(management_station_id.strip()) == 0:
         raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -391,7 +390,7 @@ def list_mirrors(ctx, from_json, all_pages, page_size, management_station_id, di
 @cli_util.wrap_exceptions
 def refresh_management_station_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_station_id, if_match):
 
-    if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
+    if isinstance(management_station_id, str) and len(management_station_id.strip()) == 0:
         raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -447,7 +446,7 @@ def refresh_management_station_config(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def synchronize_mirrors(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_station_id, software_source_list, if_match):
 
-    if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
+    if isinstance(management_station_id, str) and len(management_station_id.strip()) == 0:
         raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -508,10 +507,10 @@ def synchronize_mirrors(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def synchronize_single_mirrors(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_station_id, mirror_id, if_match):
 
-    if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
+    if isinstance(management_station_id, str) and len(management_station_id.strip()) == 0:
         raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
 
-    if isinstance(mirror_id, six.string_types) and len(mirror_id.strip()) == 0:
+    if isinstance(mirror_id, str) and len(mirror_id.strip()) == 0:
         raise click.UsageError('Parameter --mirror-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -576,7 +575,7 @@ def synchronize_single_mirrors(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_management_station(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_station_id, display_name, description, hostname, is_auto_config_enabled, proxy_parameterconflict, mirror, freeform_tags, defined_tags, if_match):
 
-    if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
+    if isinstance(management_station_id, str) and len(management_station_id.strip()) == 0:
         raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
     if not force:
         if proxy_parameterconflict or mirror or freeform_tags or defined_tags:

@@ -9,7 +9,6 @@ from oci_cli import cli_util  # noqa: F401
 from oci_cli import custom_types  # noqa: F401
 from oci_cli import json_skeleton_utils  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
-import six
 
 # oci devops deploy-artifact deploy-artifact-summary list-deploy-artifacts -> oci devops deploy-artifact deploy-artifact-summary list
 cli_util.rename_command(devops_cli, devops_cli.deploy_artifact_summary_group, devops_cli.list_deploy_artifacts, "list")
@@ -1435,7 +1434,7 @@ devops_cli.repository_group.add_command(devops_cli.summarize_repository_analytic
 @cli_util.wrap_exceptions
 def summarize_repository_analytics(ctx, from_json, repository_id, repository_metrics, start_time, author_email, aggregation_duration, end_time, group_by, limit, page):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1487,7 +1486,7 @@ def summarize_repository_analytics(ctx, from_json, repository_id, repository_met
 @cli_util.wrap_exceptions
 def summarize_project_repository_analytics(ctx, from_json, project_id, repository_metrics, start_time, author_email, aggregation_duration, end_time, group_by, limit, page):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}

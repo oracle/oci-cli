@@ -2,7 +2,6 @@
 # Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
 
 import click
-import six
 
 from oci_cli import cli_util, json_skeleton_utils, cli_constants
 from services.model_deployment.src.oci_cli_model_deployment.generated import modeldeployment_cli
@@ -19,7 +18,7 @@ from services.model_deployment.src.oci_cli_model_deployment.generated import mod
 @cli_util.wrap_exceptions
 def predict_extended(ctx, from_json, model_deployment_id, request_body):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
 
     parsed_request_body = ''
@@ -49,7 +48,7 @@ def predict_extended(ctx, from_json, model_deployment_id, request_body):
 @cli_util.wrap_exceptions
 def predict_with_response_stream_extended(ctx, from_json, file, model_deployment_id, request_body):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
 
     parsed_request_body = ''

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -46,7 +45,7 @@ redis_identity_root_group.add_command(create_identity_token_details_group)
 @cli_util.wrap_exceptions
 def create_identity_token(ctx, from_json, public_key, redis_user, redis_cluster_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
+    if isinstance(redis_cluster_id, str) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}

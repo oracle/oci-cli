@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -48,7 +47,7 @@ vault_root_group.add_command(secret_group)
 @cli_util.wrap_exceptions
 def cancel_secret_deletion(ctx, from_json, secret_id, if_match):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -73,7 +72,7 @@ def cancel_secret_deletion(ctx, from_json, secret_id, if_match):
 @cli_util.wrap_exceptions
 def cancel_secret_rotation(ctx, from_json, secret_id, if_match):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -99,10 +98,10 @@ def cancel_secret_rotation(ctx, from_json, secret_id, if_match):
 @cli_util.wrap_exceptions
 def cancel_secret_version_deletion(ctx, from_json, secret_id, secret_version_number, if_match):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
-    if isinstance(secret_version_number, six.string_types) and len(secret_version_number.strip()) == 0:
+    if isinstance(secret_version_number, str) and len(secret_version_number.strip()) == 0:
         raise click.UsageError('Parameter --secret-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -131,7 +130,7 @@ When provided, if-match is checked against the ETag values of the secret. \n[Com
 @cli_util.wrap_exceptions
 def change_secret_compartment(ctx, from_json, secret_id, compartment_id, if_match):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -685,7 +684,7 @@ def create_secret_bytes_generation_context(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def get_secret(ctx, from_json, secret_id):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -708,10 +707,10 @@ def get_secret(ctx, from_json, secret_id):
 @cli_util.wrap_exceptions
 def get_secret_version(ctx, from_json, secret_id, secret_version_number):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
-    if isinstance(secret_version_number, six.string_types) and len(secret_version_number.strip()) == 0:
+    if isinstance(secret_version_number, str) and len(secret_version_number.strip()) == 0:
         raise click.UsageError('Parameter --secret-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -743,7 +742,7 @@ def list_secret_versions(ctx, from_json, all_pages, page_size, secret_id, limit,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -858,7 +857,7 @@ def list_secrets(ctx, from_json, all_pages, page_size, compartment_id, name, lim
 @cli_util.wrap_exceptions
 def rotate_secret(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, if_match):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -919,7 +918,7 @@ def rotate_secret(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def schedule_secret_deletion(ctx, from_json, secret_id, time_of_deletion, if_match):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -953,10 +952,10 @@ def schedule_secret_deletion(ctx, from_json, secret_id, time_of_deletion, if_mat
 @cli_util.wrap_exceptions
 def schedule_secret_version_deletion(ctx, from_json, secret_id, secret_version_number, time_of_deletion, if_match):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
-    if isinstance(secret_version_number, six.string_types) and len(secret_version_number.strip()) == 0:
+    if isinstance(secret_version_number, str) and len(secret_version_number.strip()) == 0:
         raise click.UsageError('Parameter --secret-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1008,7 +1007,7 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.wrap_exceptions
 def update_secret(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, secret_generation_context, enable_auto_generation, if_match):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or metadata or secret_content or replication_config or rotation_config or secret_rules or secret_generation_context:
@@ -1118,7 +1117,7 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.wrap_exceptions
 def update_secret_base64_secret_content_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, current_version_number, defined_tags, description, freeform_tags, metadata, replication_config, rotation_config, secret_rules, secret_generation_context, enable_auto_generation, if_match, secret_content_name, secret_content_stage, secret_content_content):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or metadata or replication_config or rotation_config or secret_rules or secret_generation_context:
@@ -1237,7 +1236,7 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.wrap_exceptions
 def update_secret_passphrase_generation_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, secret_generation_context_generation_template, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, enable_auto_generation, if_match, secret_generation_context_secret_template, secret_generation_context_passphrase_length):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or metadata or secret_content or replication_config or rotation_config or secret_rules:
@@ -1353,7 +1352,7 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.wrap_exceptions
 def update_secret_ssh_key_generation_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, secret_generation_context_generation_template, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, enable_auto_generation, if_match, secret_generation_context_secret_template):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or metadata or secret_content or replication_config or rotation_config or secret_rules:
@@ -1466,7 +1465,7 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.wrap_exceptions
 def update_secret_bytes_generation_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, secret_generation_context_generation_template, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, enable_auto_generation, if_match, secret_generation_context_secret_template):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or metadata or secret_content or replication_config or rotation_config or secret_rules:

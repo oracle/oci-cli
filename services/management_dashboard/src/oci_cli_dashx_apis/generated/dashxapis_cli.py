@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -59,7 +58,7 @@ management_dashboard_root_group.add_command(management_dashboard_group)
 @cli_util.wrap_exceptions
 def change_management_dashboards_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_dashboard_id, compartment_id, if_match):
 
-    if isinstance(management_dashboard_id, six.string_types) and len(management_dashboard_id.strip()) == 0:
+    if isinstance(management_dashboard_id, str) and len(management_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --management-dashboard-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -116,7 +115,7 @@ def change_management_dashboards_compartment(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def change_management_saved_searches_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_saved_search_id, compartment_id, if_match):
 
-    if isinstance(management_saved_search_id, six.string_types) and len(management_saved_search_id.strip()) == 0:
+    if isinstance(management_saved_search_id, str) and len(management_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --management-saved-search-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -379,7 +378,7 @@ def create_management_saved_search(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_management_dashboard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_dashboard_id, if_match):
 
-    if isinstance(management_dashboard_id, six.string_types) and len(management_dashboard_id.strip()) == 0:
+    if isinstance(management_dashboard_id, str) and len(management_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --management-dashboard-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -443,7 +442,7 @@ def delete_management_dashboard(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_management_saved_search(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_saved_search_id, if_match):
 
-    if isinstance(management_saved_search_id, six.string_types) and len(management_saved_search_id.strip()) == 0:
+    if isinstance(management_saved_search_id, str) and len(management_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --management-saved-search-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -503,7 +502,7 @@ def delete_management_saved_search(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def export_dashboard(ctx, from_json, export_dashboard_id, export_tags):
 
-    if isinstance(export_dashboard_id, six.string_types) and len(export_dashboard_id.strip()) == 0:
+    if isinstance(export_dashboard_id, str) and len(export_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --export-dashboard-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -527,7 +526,7 @@ def export_dashboard(ctx, from_json, export_dashboard_id, export_tags):
 @cli_util.wrap_exceptions
 def get_management_dashboard(ctx, from_json, management_dashboard_id):
 
-    if isinstance(management_dashboard_id, six.string_types) and len(management_dashboard_id.strip()) == 0:
+    if isinstance(management_dashboard_id, str) and len(management_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --management-dashboard-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -549,7 +548,7 @@ def get_management_dashboard(ctx, from_json, management_dashboard_id):
 @cli_util.wrap_exceptions
 def get_management_saved_search(ctx, from_json, management_saved_search_id):
 
-    if isinstance(management_saved_search_id, six.string_types) and len(management_saved_search_id.strip()) == 0:
+    if isinstance(management_saved_search_id, str) and len(management_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --management-saved-search-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -571,7 +570,7 @@ def get_management_saved_search(ctx, from_json, management_saved_search_id):
 @cli_util.wrap_exceptions
 def get_oob_management_dashboard(ctx, from_json, management_dashboard_id):
 
-    if isinstance(management_dashboard_id, six.string_types) and len(management_dashboard_id.strip()) == 0:
+    if isinstance(management_dashboard_id, str) and len(management_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --management-dashboard-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -593,7 +592,7 @@ def get_oob_management_dashboard(ctx, from_json, management_dashboard_id):
 @cli_util.wrap_exceptions
 def get_oob_management_saved_search(ctx, from_json, management_saved_search_id):
 
-    if isinstance(management_saved_search_id, six.string_types) and len(management_saved_search_id.strip()) == 0:
+    if isinstance(management_saved_search_id, str) and len(management_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --management-saved-search-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -915,7 +914,7 @@ This option is a JSON list with items of type ManagementDashboardTileDetails.  F
 @cli_util.wrap_exceptions
 def update_management_dashboard(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_dashboard_id, provider_id, provider_name, provider_version, tiles, display_name, description, compartment_id, is_oob_dashboard, is_show_in_home, metadata_version, is_show_description, screen_image, nls, ui_config, data_config, type, is_favorite, parameters_config, features_config, drilldown_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(management_dashboard_id, six.string_types) and len(management_dashboard_id.strip()) == 0:
+    if isinstance(management_dashboard_id, str) and len(management_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --management-dashboard-id cannot be whitespace or empty string')
     if not force:
         if tiles or nls or ui_config or data_config or parameters_config or features_config or drilldown_config or freeform_tags or defined_tags:
@@ -1061,7 +1060,7 @@ def update_management_dashboard(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_management_saved_search(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_saved_search_id, display_name, provider_id, provider_version, provider_name, compartment_id, is_oob_saved_search, description, nls, type, ui_config, data_config, screen_image, metadata_version, widget_template, widget_vm, parameters_config, features_config, drilldown_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(management_saved_search_id, six.string_types) and len(management_saved_search_id.strip()) == 0:
+    if isinstance(management_saved_search_id, str) and len(management_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --management-saved-search-id cannot be whitespace or empty string')
     if not force:
         if nls or ui_config or data_config or parameters_config or features_config or drilldown_config or freeform_tags or defined_tags:

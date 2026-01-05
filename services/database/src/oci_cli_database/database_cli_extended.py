@@ -6,7 +6,6 @@ import sys
 import click
 import json
 import oci
-import six  # noqa: F401
 
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
@@ -3344,10 +3343,10 @@ def modify_pluggable_database_management_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def failover_data_guard_association_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+    if isinstance(data_guard_association_id, str) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3397,10 +3396,10 @@ def failover_data_guard_association_extended(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def reinstate_data_guard_association_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+    if isinstance(data_guard_association_id, str) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3450,10 +3449,10 @@ def reinstate_data_guard_association_extended(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def switchover_data_guard_association_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+    if isinstance(data_guard_association_id, str) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3503,10 +3502,10 @@ def switchover_data_guard_association_extended(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, protection_mode, transport_type, is_active_data_guard_enabled, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+    if isinstance(data_guard_association_id, str) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3567,7 +3566,7 @@ def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_autonomous_database_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, must_delete_associated_long_term_backups, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -142,7 +141,7 @@ database_migration_root_group.add_command(job_output_summary_group)
 @cli_util.wrap_exceptions
 def abort_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -191,7 +190,7 @@ def abort_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 @cli_util.wrap_exceptions
 def add_migration_objects(ctx, from_json, migration_id, database_combination, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -223,7 +222,7 @@ def add_migration_objects(ctx, from_json, migration_id, database_combination, if
 @cli_util.wrap_exceptions
 def add_migration_objects_my_sql_migration_object_collection(ctx, from_json, migration_id, items, bulk_include_exclude_data, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -260,7 +259,7 @@ def add_migration_objects_my_sql_migration_object_collection(ctx, from_json, mig
 @cli_util.wrap_exceptions
 def add_migration_objects_oracle_migration_object_collection(ctx, from_json, migration_id, items, bulk_include_exclude_data, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -296,7 +295,7 @@ def add_migration_objects_oracle_migration_object_collection(ctx, from_json, mig
 @cli_util.wrap_exceptions
 def change_connection_compartment(ctx, from_json, connection_id, compartment_id, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -327,7 +326,7 @@ def change_connection_compartment(ctx, from_json, connection_id, compartment_id,
 @cli_util.wrap_exceptions
 def change_migration_compartment(ctx, from_json, migration_id, compartment_id, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -367,7 +366,7 @@ def change_migration_compartment(ctx, from_json, migration_id, compartment_id, i
 @cli_util.wrap_exceptions
 def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, database_combination, source_database_connection_id, target_database_connection_id, display_name, compartment_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -449,7 +448,7 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, source_database_connection_id, target_database_connection_id, display_name, compartment_id, freeform_tags, defined_tags, source_container_database_connection_id, source_standby_database_connection_id, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -536,7 +535,7 @@ def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def clone_migration_my_sql_clone_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, source_database_connection_id, target_database_connection_id, display_name, compartment_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -614,7 +613,7 @@ def clone_migration_my_sql_clone_migration_details(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def collect_traces(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, bucket_name, namespace, object_name_prefix, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -673,7 +672,7 @@ def collect_traces(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def connection_diagnostics(ctx, from_json, connection_id, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1375,7 +1374,7 @@ def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def create_parameter_file_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, kind, content, description, name, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1443,7 +1442,7 @@ def create_parameter_file_version(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1499,7 +1498,7 @@ def delete_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1563,7 +1562,7 @@ def delete_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1620,10 +1619,10 @@ def delete_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_parameter_file_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, parameter_file_name, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
-    if isinstance(parameter_file_name, six.string_types) and len(parameter_file_name.strip()) == 0:
+    if isinstance(parameter_file_name, str) and len(parameter_file_name.strip()) == 0:
         raise click.UsageError('Parameter --parameter-file-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1679,7 +1678,7 @@ def delete_parameter_file_version(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def evaluate_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1730,7 +1729,7 @@ def evaluate_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def get_advisor_report(ctx, from_json, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1752,7 +1751,7 @@ def get_advisor_report(ctx, from_json, job_id):
 @cli_util.wrap_exceptions
 def get_connection(ctx, from_json, connection_id):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1774,7 +1773,7 @@ def get_connection(ctx, from_json, connection_id):
 @cli_util.wrap_exceptions
 def get_job(ctx, from_json, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1797,7 +1796,7 @@ def get_job(ctx, from_json, job_id):
 @cli_util.wrap_exceptions
 def get_job_output_content(ctx, from_json, file, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1842,7 +1841,7 @@ def get_job_output_content(ctx, from_json, file, job_id):
 @cli_util.wrap_exceptions
 def get_migration(ctx, from_json, migration_id, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1867,10 +1866,10 @@ def get_migration(ctx, from_json, migration_id, if_match):
 @cli_util.wrap_exceptions
 def get_parameter_file_version(ctx, from_json, parameter_file_name, job_id):
 
-    if isinstance(parameter_file_name, six.string_types) and len(parameter_file_name.strip()) == 0:
+    if isinstance(parameter_file_name, str) and len(parameter_file_name.strip()) == 0:
         raise click.UsageError('Parameter --parameter-file-name cannot be whitespace or empty string')
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1893,7 +1892,7 @@ def get_parameter_file_version(ctx, from_json, parameter_file_name, job_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2000,7 +1999,7 @@ def list_excluded_objects(ctx, from_json, all_pages, page_size, job_id, limit, p
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2069,7 +2068,7 @@ def list_job_outputs(ctx, from_json, all_pages, page_size, job_id, limit, page):
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2235,7 +2234,7 @@ def list_migration_objects(ctx, from_json, all_pages, page_size, migration_id, i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2410,7 +2409,7 @@ def list_parameter_file_versions(ctx, from_json, all_pages, page_size, job_id, n
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2469,7 +2468,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2526,7 +2525,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2639,10 +2638,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.wrap_exceptions
 def make_current_parameter_file_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, parameter_file_name, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
-    if isinstance(parameter_file_name, six.string_types) and len(parameter_file_name.strip()) == 0:
+    if isinstance(parameter_file_name, str) and len(parameter_file_name.strip()) == 0:
         raise click.UsageError('Parameter --parameter-file-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2692,7 +2691,7 @@ def make_current_parameter_file_version(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def remove_migration_objects(ctx, from_json, migration_id, database_combination, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2724,7 +2723,7 @@ def remove_migration_objects(ctx, from_json, migration_id, database_combination,
 @cli_util.wrap_exceptions
 def remove_migration_objects_my_sql_migration_object_collection(ctx, from_json, migration_id, items, bulk_include_exclude_data, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2761,7 +2760,7 @@ def remove_migration_objects_my_sql_migration_object_collection(ctx, from_json, 
 @cli_util.wrap_exceptions
 def remove_migration_objects_oracle_migration_object_collection(ctx, from_json, migration_id, items, bulk_include_exclude_data, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2800,7 +2799,7 @@ def remove_migration_objects_oracle_migration_object_collection(ctx, from_json, 
 @cli_util.wrap_exceptions
 def resume_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, if_match, wait_after):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2854,7 +2853,7 @@ def resume_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def retrieve_supported_phases(ctx, from_json, migration_id):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2881,7 +2880,7 @@ def retrieve_supported_phases(ctx, from_json, migration_id):
 @cli_util.wrap_exceptions
 def start_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, if_match, wait_after):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2943,7 +2942,7 @@ def start_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def suspend_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3008,7 +3007,7 @@ def suspend_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, connection_type, display_name, description, freeform_tags, defined_tags, vault_id, key_id, subnet_id, nsg_ids, username, password, replication_username, replication_password, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids:
@@ -3130,7 +3129,7 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_connection_update_oracle_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, subnet_id, nsg_ids, username, password, replication_username, replication_password, connection_string, wallet, database_id, ssh_host, ssh_key, ssh_user, ssh_sudo_location, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids:
@@ -3278,7 +3277,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.wrap_exceptions
 def update_connection_update_mysql_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, subnet_id, nsg_ids, username, password, replication_username, replication_password, host, port, database_name, security_protocol, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, additional_attributes, db_system_id, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or additional_attributes:
@@ -3416,7 +3415,7 @@ def update_connection_update_mysql_connection_details(ctx, from_json, force, wai
 @cli_util.wrap_exceptions
 def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3493,7 +3492,7 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, database_combination, description, type, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3591,7 +3590,7 @@ def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_migration_update_my_sql_migration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, description, type, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or data_transfer_medium_details or initial_load_settings or advisor_settings or hub_details or ggs_details:
@@ -3710,7 +3709,7 @@ This option is a JSON list with items of type MigrationParameterDetails.  For do
 @cli_util.wrap_exceptions
 def update_migration_update_oracle_migration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, description, type, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, source_standby_database_connection_id, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or data_transfer_medium_details or initial_load_settings or advisor_settings or hub_details or ggs_details or advanced_parameters:

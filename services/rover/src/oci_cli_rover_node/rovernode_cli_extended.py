@@ -5,7 +5,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 import json
 from oci_cli import cli_util
@@ -378,7 +377,7 @@ def create_rover_node_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def show_rover_node_extended(ctx, **kwargs):
 
-    if isinstance(kwargs['node_id'], six.string_types) and len(kwargs['node_id'].strip()) == 0:
+    if isinstance(kwargs['node_id'], str) and len(kwargs['node_id'].strip()) == 0:
         raise click.UsageError('Parameter --node-id cannot be whitespace or empty string')
 
     result = get_rover_node_helper(ctx, kwargs['node_id'])
@@ -443,7 +442,7 @@ def request_rover_node(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def delete_rover_node_extended(ctx, **kwargs):
 
-    if isinstance(kwargs['node_id'], six.string_types) and len(kwargs['node_id'].strip()) == 0:
+    if isinstance(kwargs['node_id'], str) and len(kwargs['node_id'].strip()) == 0:
         raise click.UsageError('Parameter --node-id cannot be whitespace or empty string')
 
     kwargs_request = {}
@@ -575,7 +574,7 @@ def list_workload(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def change_rover_node_compartment(ctx, **kwargs):
 
-    if isinstance(kwargs['node_id'], six.string_types) and len(kwargs['node_id'].strip()) == 0:
+    if isinstance(kwargs['node_id'], str) and len(kwargs['node_id'].strip()) == 0:
         raise click.UsageError('Parameter --node-id cannot be whitespace or empty string')
     kwargs.update({'rover_node_id': kwargs['node_id']})
     kwargs.pop('node_id')
@@ -618,7 +617,7 @@ def set_secrets_rover_node(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def get_rover_node_encryption_key_extended(ctx, **kwargs):
 
-    if isinstance(kwargs['node_id'], six.string_types) and len(kwargs['node_id'].strip()) == 0:
+    if isinstance(kwargs['node_id'], str) and len(kwargs['node_id'].strip()) == 0:
         raise click.UsageError('Parameter --node-id cannot be whitespace or empty string')
     kwargs.update({'rover_node_id': kwargs['node_id']})
     kwargs.pop('node_id')
@@ -636,10 +635,10 @@ def get_rover_node_certificate_extended(ctx, **kwargs):
     rover_node_id = kwargs['node_id']
     output_file_path = kwargs['output_file_path']
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --node-id cannot be whitespace or empty string')
 
-    if isinstance(output_file_path, six.string_types) and len(output_file_path.strip()) == 0:
+    if isinstance(output_file_path, str) and len(output_file_path.strip()) == 0:
         raise click.UsageError('Parameter --output-file-path cannot be whitespace or empty string')
 
     kwargs = {}
@@ -666,7 +665,7 @@ def get_rover_node_certificate_extended(ctx, **kwargs):
 def setup_identity_extended(ctx, **kwargs):
     rover_node_id = kwargs['node_id']
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --node-id cannot be whitespace or empty string')
 
     kwargs_show = {

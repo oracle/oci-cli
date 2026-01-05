@@ -15,7 +15,6 @@ from cryptography.hazmat.backends import default_backend
 from io import StringIO
 import os
 import os.path
-import six
 import stat
 import subprocess
 import sys
@@ -639,17 +638,6 @@ class TestSetup(unittest.TestCase):
 
     @util.log_test
     def subtest_autocomplete_deny_bash_rc_access(self):
-        if oci_cli.cli_util.is_windows() and six.PY2:
-            print(
-                """
-                Skipping subtest_autocomplete_deny_bash_rc_access on Windows without Python 3 as the CliRunner click offers for testing seems to use a StringIO
-                to back stdout, which throws an error when sys.stdout.encoding is called since there is no encoding attribute on a StringIO.
-
-                Running manually on Windows with and without Python 3 both work, just this case breaks.
-                """
-            )
-            return
-
         # fully testing the command would edit the machine's bash_profile / bash_rc
         # this test rejects the prompt to edit the bash_profile but provides a basic smoke test for the command
         result = self.invoke(

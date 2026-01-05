@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -335,7 +334,7 @@ def create_channel_create_channel_target_from_db_system_details(ctx, from_json, 
 @cli_util.wrap_exceptions
 def delete_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, if_match):
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -389,7 +388,7 @@ def delete_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def get_channel(ctx, from_json, channel_id, if_none_match):
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -486,7 +485,7 @@ def list_channels(ctx, from_json, all_pages, page_size, compartment_id, db_syste
 @cli_util.wrap_exceptions
 def reset_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, if_match):
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -543,7 +542,7 @@ def reset_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def resume_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, if_match):
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -608,7 +607,7 @@ def resume_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def update_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, source, target, display_name, is_enabled, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if source or target or freeform_tags or defined_tags:
@@ -708,7 +707,7 @@ def update_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def update_channel_update_channel_source_from_mysql_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, target, display_name, is_enabled, description, freeform_tags, defined_tags, if_match, source_hostname, source_port, source_username, source_password, source_ssl_mode, source_ssl_ca_certificate, source_anonymous_transactions_handling):
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if target or freeform_tags or defined_tags:
@@ -829,7 +828,7 @@ This option is a JSON list with items of type ChannelFilter.  For documentation 
 @cli_util.wrap_exceptions
 def update_channel_update_channel_target_from_db_system_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, source, display_name, is_enabled, description, freeform_tags, defined_tags, if_match, target_channel_name, target_applier_username, target_filters, target_tables_without_primary_key_handling, target_delay_in_seconds):
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if source or freeform_tags or defined_tags:

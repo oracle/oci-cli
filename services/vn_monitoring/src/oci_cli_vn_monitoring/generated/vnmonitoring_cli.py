@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -85,7 +84,7 @@ vn_monitoring_root_group.add_command(path_analyzer_test_group)
 @cli_util.wrap_exceptions
 def change_path_analyzer_test_compartment(ctx, from_json, path_analyzer_test_id, compartment_id, if_match):
 
-    if isinstance(path_analyzer_test_id, six.string_types) and len(path_analyzer_test_id.strip()) == 0:
+    if isinstance(path_analyzer_test_id, str) and len(path_analyzer_test_id.strip()) == 0:
         raise click.UsageError('Parameter --path-analyzer-test-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -194,7 +193,7 @@ def create_path_analyzer_test(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_path_analyzer_test(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, path_analyzer_test_id, if_match):
 
-    if isinstance(path_analyzer_test_id, six.string_types) and len(path_analyzer_test_id.strip()) == 0:
+    if isinstance(path_analyzer_test_id, str) and len(path_analyzer_test_id.strip()) == 0:
         raise click.UsageError('Parameter --path-analyzer-test-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -445,7 +444,7 @@ def get_path_analysis_persisted_get_path_analysis_details(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def get_path_analyzer_test(ctx, from_json, path_analyzer_test_id):
 
-    if isinstance(path_analyzer_test_id, six.string_types) and len(path_analyzer_test_id.strip()) == 0:
+    if isinstance(path_analyzer_test_id, str) and len(path_analyzer_test_id.strip()) == 0:
         raise click.UsageError('Parameter --path-analyzer-test-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -467,7 +466,7 @@ def get_path_analyzer_test(ctx, from_json, path_analyzer_test_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -564,7 +563,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -623,7 +622,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -681,7 +680,7 @@ def list_work_request_results(ctx, from_json, all_pages, page_size, work_request
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -805,7 +804,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def update_path_analyzer_test(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, path_analyzer_test_id, display_name, protocol, source_endpoint, destination_endpoint, protocol_parameters, query_options, freeform_tags, defined_tags, if_match):
 
-    if isinstance(path_analyzer_test_id, six.string_types) and len(path_analyzer_test_id.strip()) == 0:
+    if isinstance(path_analyzer_test_id, str) and len(path_analyzer_test_id.strip()) == 0:
         raise click.UsageError('Parameter --path-analyzer-test-id cannot be whitespace or empty string')
     if not force:
         if source_endpoint or destination_endpoint or protocol_parameters or query_options or freeform_tags or defined_tags:

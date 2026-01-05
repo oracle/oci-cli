@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -73,10 +72,10 @@ limits_service_cli.limits_service_group.add_command(resource_availability_group)
 @cli_util.wrap_exceptions
 def get_resource_availability(ctx, from_json, service_name, limit_name, compartment_id, availability_domain, subscription_id, external_location):
 
-    if isinstance(service_name, six.string_types) and len(service_name.strip()) == 0:
+    if isinstance(service_name, str) and len(service_name.strip()) == 0:
         raise click.UsageError('Parameter --service-name cannot be whitespace or empty string')
 
-    if isinstance(limit_name, six.string_types) and len(limit_name.strip()) == 0:
+    if isinstance(limit_name, str) and len(limit_name.strip()) == 0:
         raise click.UsageError('Parameter --limit-name cannot be whitespace or empty string')
 
     kwargs = {}

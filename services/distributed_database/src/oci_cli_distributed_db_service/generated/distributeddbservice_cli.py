@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -54,7 +53,7 @@ distributed_db_service_root_group.add_command(distributed_database_group)
 @cli_util.wrap_exceptions
 def add_distributed_database_gds_control_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, public_ssh_key, subnet_id, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -118,7 +117,7 @@ def add_distributed_database_gds_control_node(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def change_distributed_database_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, distributed_database_id, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -179,7 +178,7 @@ def change_distributed_database_compartment(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def change_distributed_db_backup_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, db_backup_config, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -241,7 +240,7 @@ def change_distributed_db_backup_config(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def configure_distributed_database_gsms(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, old_gsm_names, is_latest_gsm_image, distributed_database_id, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -303,7 +302,7 @@ def configure_distributed_database_gsms(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def configure_distributed_database_sharding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, is_rebalance_required, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -476,7 +475,7 @@ def create_distributed_database(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_distributed_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -529,7 +528,7 @@ def delete_distributed_database(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def download_distributed_database_gsm_certificate_signing_request(ctx, from_json, file, distributed_database_id, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -580,7 +579,7 @@ def download_distributed_database_gsm_certificate_signing_request(ctx, from_json
 @cli_util.wrap_exceptions
 def generate_distributed_database_gsm_certificate_signing_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, ca_bundle_id, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -635,7 +634,7 @@ def generate_distributed_database_gsm_certificate_signing_request(ctx, from_json
 @cli_util.wrap_exceptions
 def generate_distributed_database_wallet(ctx, from_json, file, distributed_database_id, password, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -688,7 +687,7 @@ def generate_distributed_database_wallet(ctx, from_json, file, distributed_datab
 @cli_util.wrap_exceptions
 def get_distributed_database(ctx, from_json, distributed_database_id, metadata, if_none_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -787,7 +786,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_distributed_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, items, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -849,7 +848,7 @@ def patch_distributed_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def rotate_distributed_database_passwords(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -904,7 +903,7 @@ def rotate_distributed_database_passwords(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def start_distributed_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -959,7 +958,7 @@ def start_distributed_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def stop_distributed_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1018,7 +1017,7 @@ def stop_distributed_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def update_distributed_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1087,7 +1086,7 @@ def update_distributed_database(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def upload_distributed_database_signed_certificate_and_generate_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, ca_signed_certificate, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1150,7 +1149,7 @@ def upload_distributed_database_signed_certificate_and_generate_wallet(ctx, from
 @cli_util.wrap_exceptions
 def validate_distributed_database_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_id, is_surrogate, resource_name, shard_group, if_match):
 
-    if isinstance(distributed_database_id, six.string_types) and len(distributed_database_id.strip()) == 0:
+    if isinstance(distributed_database_id, str) and len(distributed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-id cannot be whitespace or empty string')
 
     kwargs = {}

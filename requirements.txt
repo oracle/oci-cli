@@ -32,7 +32,6 @@ pytz>=2016.10
 requests==2.27.0; python_version == '3.6'
 requests==2.31.0; python_version == '3.7'
 requests>=2.32.4; python_version > '3.7'
-six>=1.15.0
 sphinx==3.3.0; python_version < '3.13'
 sphinx==6.2.1; python_version == '3.13'
 sphinx-rtd-theme==0.4.3

@@ -19,7 +19,6 @@ import os
 import os.path
 import pytz
 import re
-import six
 import stat
 import subprocess
 import sys
@@ -770,7 +769,7 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
             output_memory('total memory usage before printing: ')
 
         if ctx.obj['output'] == "json":
-            if ctx.obj['raw_output'] and isinstance(display_data, six.string_types):
+            if ctx.obj['raw_output'] and isinstance(display_data, str):
                 print(display_data)
             else:
                 start_format = timer()
@@ -825,7 +824,7 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
 def print_table(data):
     table_data = []
 
-    if isinstance(data, six.string_types):
+    if isinstance(data, str):
         # if data is just a raw string, hard code the column header to 'Column1'
         table_data.append(['Column1'])
         table_data.append([data])
@@ -834,7 +833,7 @@ def print_table(data):
             click.echo("Command returned empty list, no table to display.")
             return
 
-        if isinstance(data[0], six.string_types):
+        if isinstance(data[0], str):
             # handle strings so they dont get handled as a list below
             table_data = [["Column1"]]
             for row in data:
@@ -892,7 +891,7 @@ def to_dict(obj):
           key only.
     """
     # Shortcut strings so they don't count as Iterables
-    if isinstance(obj, six.string_types):
+    if isinstance(obj, str):
         return obj
     elif isinstance(obj, (datetime.datetime, datetime.time)):
         # always use UTC
@@ -906,7 +905,7 @@ def to_dict(obj):
         # datetime.date doesn't have a timezone
         return obj.isoformat()
     elif isinstance(obj, abc.Mapping):
-        return {k: to_dict(v) for k, v in six.iteritems(obj)}
+        return {k: to_dict(v) for k, v in obj.items()}
     elif isinstance(obj, abc.Iterable):
         return [to_dict(v) for v in obj]
     # Not a string, datetime, dict, list, or model - return directly
@@ -915,7 +914,7 @@ def to_dict(obj):
 
     # Collect attrs from obj according to swagger_types into a dict
     as_dict = {}
-    for key in six.iterkeys(obj.swagger_types):
+    for key in obj.swagger_types.keys():
         value = getattr(obj, key, missing_attr)
         if value is not missing_attr:
             key = key.replace("_", "-")
@@ -1028,7 +1027,7 @@ def parse_json_parameter(parameter_name, parameter_value, default=None, camelize
 
     # Can't parse something which isn't a string, so just return it as-is. We'd hit this flow if we had already
     # pre-parsed the data, such as when we provide the input via --from-json, since that already parses out the JSON
-    if not isinstance(parameter_value, six.string_types):
+    if not isinstance(parameter_value, str):
         return parameter_value
 
     # Try to load from a file first. If we couldn't (e.g. because the parameter didn't specify a file) then
@@ -1073,7 +1072,7 @@ def parse_json_parameter(parameter_name, parameter_value, default=None, camelize
 #    - parameter_name can be used to look up the type from the metadata of (complex) types against each command. This metadata is decorated via
 #      @json_skeleton_utils.json_skeleton_generation_handler on each command
 def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_parameter_type=None):
-    if isinstance(original_obj, six.string_types):
+    if isinstance(original_obj, str):
         return original_obj
 
     if not isinstance(original_obj, abc.Mapping) and not isinstance(original_obj, abc.Iterable):
@@ -1100,7 +1099,7 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
                 camelize_keys = False
 
         new_dict = {}
-        for key, value in six.iteritems(original_obj):
+        for key, value in original_obj.items():
 
             camelized_key = string_utils.camelize(key)
 
@@ -1204,7 +1203,7 @@ def get_possible_subtype_based_on_payload(declared_type, module, payload):
     if hasattr(declared_type, 'get_subtype'):
         # get_subtype method checks the discriminator field on the input object to determine which type it is
         # it expects the keys to be camelized so thus we are passing in camelized_top_level_keys instead of just original_obj
-        camelized_top_level_keys = {string_utils.camelize(key): value for key, value in six.iteritems(payload)}
+        camelized_top_level_keys = {string_utils.camelize(key): value for key, value in payload.items()}
         subtype_name_of_input_data = declared_type.get_subtype(camelized_top_level_keys)
         subtype_of_input_data = getattr(getattr(getattr(oci, module), 'models'), subtype_name_of_input_data)
         return subtype_of_input_data()
@@ -1255,7 +1254,7 @@ def collect_commands(command):
     if not hasattr(command, "commands"):
         yield command
     else:
-        for _, subcommand in six.iteritems(command.commands):
+        for _, subcommand in command.commands.items():
             for descendent in collect_commands(subcommand):
                 descendent.parent = subcommand
                 yield descendent
@@ -1264,7 +1263,7 @@ def collect_commands(command):
 def filter_object_headers(headers, whitelist):
     """Filter headers based on the whitelist."""
     whitelist = [x.lower() for x in whitelist]
-    return {h.lower(): v for h, v in six.iteritems(headers) if h.lower() in whitelist}
+    return {h.lower(): v for h, v in headers.items() if h.lower() in whitelist}
 
 
 def help_callback(ctx, param, value):
@@ -1336,7 +1335,7 @@ def serialize_key(private_key=None, public_key=None, passphrase=None):
 
     if private_key:
         if passphrase:
-            if isinstance(passphrase, six.string_types):
+            if isinstance(passphrase, str):
                 passphrase = passphrase.encode("ascii")
             encryption_algorithm = serialization.BestAvailableEncryption(passphrase)
         else:
@@ -1382,7 +1381,7 @@ def copy_params_from_generated_command(generated_command, params_to_exclude=[], 
 
 def load_file_contents(path):
     file_contents = None
-    if isinstance(path, six.string_types):
+    if isinstance(path, str):
         for prefix, function_spec in FILE_LOAD_PREFIX_MAP.items():
             # Case insenstive prefix check
             if path.lower().startswith(prefix):
@@ -1626,7 +1625,7 @@ def convert_value_from_param_type(value, param_type, param_takes_multiple):
         return value
 
     # Expansion only really makes sense for strings
-    if isinstance(value, six.string_types):
+    if isinstance(value, str):
         expanded_value = os.path.expandvars(value)
     else:
         expanded_value = value
@@ -1657,7 +1656,7 @@ def convert_value_from_param_type_accepting_multiple(value, param_type):
 
     # Since our splitting into multiples relies on a string split, we can't do anything if it's
     # not a string
-    if not isinstance(value, six.string_types):
+    if not isinstance(value, str):
         if isinstance(value, abc.Iterable):
             return value
         else:
@@ -1791,7 +1790,7 @@ def get_spec_name_from_command_name(command_name, link_replacements={}, generate
     if command_name not in update_list_of_command_names_to_spec_names:
         # first check if we override the codegen root command name to something else in cli_util
         GROUP_NAME_OVERRIDE_SUFFIX = '_root_group.command_name'
-        for key, value in six.iteritems(OVERRIDES):
+        for key, value in OVERRIDES.items():
             if key.endswith(GROUP_NAME_OVERRIDE_SUFFIX):
                 if value == command_name:
                     # all command names from the codegen will have '-' instead of '_' so

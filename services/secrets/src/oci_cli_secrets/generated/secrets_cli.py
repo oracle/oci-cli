@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -50,7 +49,7 @@ secrets_root_group.add_command(secret_bundle_group)
 @cli_util.wrap_exceptions
 def get_secret_bundle(ctx, from_json, secret_id, version_number, secret_version_name, stage):
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -117,7 +116,7 @@ def list_secret_bundle_versions(ctx, from_json, all_pages, page_size, secret_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
+    if isinstance(secret_id, str) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
 
     kwargs = {}

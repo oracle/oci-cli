@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -63,7 +62,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def create_alert_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, budget_id, type, threshold, threshold_type, display_name, description, recipients, message, freeform_tags, defined_tags):
 
-    if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
+    if isinstance(budget_id, str) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -237,10 +236,10 @@ def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_alert_rule(ctx, from_json, budget_id, alert_rule_id, if_match):
 
-    if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
+    if isinstance(budget_id, str) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
 
-    if isinstance(alert_rule_id, six.string_types) and len(alert_rule_id.strip()) == 0:
+    if isinstance(alert_rule_id, str) and len(alert_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -270,7 +269,7 @@ def delete_alert_rule(ctx, from_json, budget_id, alert_rule_id, if_match):
 @cli_util.wrap_exceptions
 def delete_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, budget_id, if_match):
 
-    if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
+    if isinstance(budget_id, str) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -330,10 +329,10 @@ def delete_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def get_alert_rule(ctx, from_json, budget_id, alert_rule_id):
 
-    if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
+    if isinstance(budget_id, str) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
 
-    if isinstance(alert_rule_id, six.string_types) and len(alert_rule_id.strip()) == 0:
+    if isinstance(alert_rule_id, str) and len(alert_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -356,7 +355,7 @@ def get_alert_rule(ctx, from_json, budget_id, alert_rule_id):
 @cli_util.wrap_exceptions
 def get_budget(ctx, from_json, budget_id):
 
-    if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
+    if isinstance(budget_id, str) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -391,7 +390,7 @@ def list_alert_rules(ctx, from_json, all_pages, page_size, budget_id, limit, pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
+    if isinstance(budget_id, str) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -533,10 +532,10 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_alert_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, budget_id, alert_rule_id, display_name, type, threshold, threshold_type, recipients, description, message, freeform_tags, defined_tags, if_match):
 
-    if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
+    if isinstance(budget_id, str) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
 
-    if isinstance(alert_rule_id, six.string_types) and len(alert_rule_id.strip()) == 0:
+    if isinstance(alert_rule_id, str) and len(alert_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-rule-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -638,7 +637,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_budget(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, budget_id, display_name, description, amount, budget_processing_period_start_offset, processing_period_type, start_date, end_date, reset_period, freeform_tags, defined_tags, if_match):
 
-    if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
+    if isinstance(budget_id, str) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

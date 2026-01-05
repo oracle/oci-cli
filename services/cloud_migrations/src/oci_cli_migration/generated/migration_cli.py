@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -133,7 +132,7 @@ cloud_migrations_root_group.add_command(available_shapes_collection_group)
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -162,7 +161,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_migration_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, compartment_id, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -223,7 +222,7 @@ def change_migration_compartment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def change_migration_plan_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_plan_id, compartment_id, if_match):
 
-    if isinstance(migration_plan_id, six.string_types) and len(migration_plan_id.strip()) == 0:
+    if isinstance(migration_plan_id, str) and len(migration_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -284,7 +283,7 @@ def change_migration_plan_compartment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def change_replication_schedule_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_schedule_id, compartment_id, if_match):
 
-    if isinstance(replication_schedule_id, six.string_types) and len(replication_schedule_id.strip()) == 0:
+    if isinstance(replication_schedule_id, str) and len(replication_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -757,7 +756,7 @@ def create_target_asset_create_vm_target_asset_details(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def delete_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -813,7 +812,7 @@ def delete_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_migration_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_asset_id, if_match):
 
-    if isinstance(migration_asset_id, six.string_types) and len(migration_asset_id.strip()) == 0:
+    if isinstance(migration_asset_id, str) and len(migration_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -869,7 +868,7 @@ def delete_migration_asset(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_migration_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_plan_id, if_match):
 
-    if isinstance(migration_plan_id, six.string_types) and len(migration_plan_id.strip()) == 0:
+    if isinstance(migration_plan_id, str) and len(migration_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -925,7 +924,7 @@ def delete_migration_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_replication_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_schedule_id, if_match):
 
-    if isinstance(replication_schedule_id, six.string_types) and len(replication_schedule_id.strip()) == 0:
+    if isinstance(replication_schedule_id, str) and len(replication_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -981,7 +980,7 @@ def delete_replication_schedule(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_target_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_asset_id, if_match):
 
-    if isinstance(target_asset_id, six.string_types) and len(target_asset_id.strip()) == 0:
+    if isinstance(target_asset_id, str) and len(target_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --target-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1036,7 +1035,7 @@ def delete_target_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def execute_migration_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_plan_id, if_match):
 
-    if isinstance(migration_plan_id, six.string_types) and len(migration_plan_id.strip()) == 0:
+    if isinstance(migration_plan_id, str) and len(migration_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1088,7 +1087,7 @@ def execute_migration_plan(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def export_migration_plan(ctx, from_json, file, migration_plan_id):
 
-    if isinstance(migration_plan_id, six.string_types) and len(migration_plan_id.strip()) == 0:
+    if isinstance(migration_plan_id, str) and len(migration_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1132,7 +1131,7 @@ def export_migration_plan(ctx, from_json, file, migration_plan_id):
 @cli_util.wrap_exceptions
 def get_migration(ctx, from_json, migration_id):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1154,7 +1153,7 @@ def get_migration(ctx, from_json, migration_id):
 @cli_util.wrap_exceptions
 def get_migration_asset(ctx, from_json, migration_asset_id):
 
-    if isinstance(migration_asset_id, six.string_types) and len(migration_asset_id.strip()) == 0:
+    if isinstance(migration_asset_id, str) and len(migration_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1176,7 +1175,7 @@ def get_migration_asset(ctx, from_json, migration_asset_id):
 @cli_util.wrap_exceptions
 def get_migration_plan(ctx, from_json, migration_plan_id):
 
-    if isinstance(migration_plan_id, six.string_types) and len(migration_plan_id.strip()) == 0:
+    if isinstance(migration_plan_id, str) and len(migration_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1198,7 +1197,7 @@ def get_migration_plan(ctx, from_json, migration_plan_id):
 @cli_util.wrap_exceptions
 def get_replication_progress(ctx, from_json, migration_asset_id):
 
-    if isinstance(migration_asset_id, six.string_types) and len(migration_asset_id.strip()) == 0:
+    if isinstance(migration_asset_id, str) and len(migration_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1220,7 +1219,7 @@ def get_replication_progress(ctx, from_json, migration_asset_id):
 @cli_util.wrap_exceptions
 def get_replication_schedule(ctx, from_json, replication_schedule_id):
 
-    if isinstance(replication_schedule_id, six.string_types) and len(replication_schedule_id.strip()) == 0:
+    if isinstance(replication_schedule_id, str) and len(replication_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1242,7 +1241,7 @@ def get_replication_schedule(ctx, from_json, replication_schedule_id):
 @cli_util.wrap_exceptions
 def get_target_asset(ctx, from_json, target_asset_id):
 
-    if isinstance(target_asset_id, six.string_types) and len(target_asset_id.strip()) == 0:
+    if isinstance(target_asset_id, str) and len(target_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --target-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1264,7 +1263,7 @@ def get_target_asset(ctx, from_json, target_asset_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1291,7 +1290,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def import_migration_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_plan_id, import_migration_plan_details, if_match):
 
-    if isinstance(migration_plan_id, six.string_types) and len(migration_plan_id.strip()) == 0:
+    if isinstance(migration_plan_id, str) and len(migration_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1362,7 +1361,7 @@ def list_available_shapes(ctx, from_json, all_pages, page_size, migration_plan_i
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
-    if isinstance(migration_plan_id, six.string_types) and len(migration_plan_id.strip()) == 0:
+    if isinstance(migration_plan_id, str) and len(migration_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1740,7 +1739,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1797,7 +1796,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1914,7 +1913,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def refresh_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1969,7 +1968,7 @@ def refresh_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def refresh_migration_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_asset_id, if_match):
 
-    if isinstance(migration_asset_id, six.string_types) and len(migration_asset_id.strip()) == 0:
+    if isinstance(migration_asset_id, str) and len(migration_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2024,7 +2023,7 @@ def refresh_migration_asset(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def refresh_migration_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_plan_id, if_match):
 
-    if isinstance(migration_plan_id, six.string_types) and len(migration_plan_id.strip()) == 0:
+    if isinstance(migration_plan_id, str) and len(migration_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2079,7 +2078,7 @@ def refresh_migration_plan(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def start_asset_replication(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_asset_id, if_match):
 
-    if isinstance(migration_asset_id, six.string_types) and len(migration_asset_id.strip()) == 0:
+    if isinstance(migration_asset_id, str) and len(migration_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2134,7 +2133,7 @@ def start_asset_replication(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def start_migration_replication(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2195,7 +2194,7 @@ def start_migration_replication(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, display_name, replication_schedule_id, is_completed, freeform_tags, defined_tags, if_match):
 
-    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+    if isinstance(migration_id, str) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2273,7 +2272,7 @@ def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_migration_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_asset_id, display_name, replication_schedule_id, depends_on, if_match):
 
-    if isinstance(migration_asset_id, six.string_types) and len(migration_asset_id.strip()) == 0:
+    if isinstance(migration_asset_id, str) and len(migration_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-asset-id cannot be whitespace or empty string')
     if not force:
         if depends_on:
@@ -2351,7 +2350,7 @@ This option is a JSON list with items of type TargetEnvironment.  For documentat
 @cli_util.wrap_exceptions
 def update_migration_plan(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_plan_id, display_name, strategies, target_environments, freeform_tags, defined_tags, if_match):
 
-    if isinstance(migration_plan_id, six.string_types) and len(migration_plan_id.strip()) == 0:
+    if isinstance(migration_plan_id, str) and len(migration_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-plan-id cannot be whitespace or empty string')
     if not force:
         if strategies or target_environments or freeform_tags or defined_tags:
@@ -2434,7 +2433,7 @@ def update_migration_plan(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_replication_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_schedule_id, display_name, execution_recurrences, freeform_tags, defined_tags, if_match):
 
-    if isinstance(replication_schedule_id, six.string_types) and len(replication_schedule_id.strip()) == 0:
+    if isinstance(replication_schedule_id, str) and len(replication_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-schedule-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2511,7 +2510,7 @@ def update_replication_schedule(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_target_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_asset_id, type, is_excluded_from_execution, if_match):
 
-    if isinstance(target_asset_id, six.string_types) and len(target_asset_id.strip()) == 0:
+    if isinstance(target_asset_id, str) and len(target_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --target-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2580,7 +2579,7 @@ def update_target_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def update_target_asset_update_vm_target_asset_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_asset_id, is_excluded_from_execution, preferred_shape_type, block_volumes_performance, ms_license, user_spec, if_match):
 
-    if isinstance(target_asset_id, six.string_types) and len(target_asset_id.strip()) == 0:
+    if isinstance(target_asset_id, str) and len(target_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --target-asset-id cannot be whitespace or empty string')
     if not force:
         if user_spec:

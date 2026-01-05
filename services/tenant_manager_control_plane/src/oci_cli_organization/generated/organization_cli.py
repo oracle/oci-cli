@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -57,7 +56,7 @@ organization_root_group.add_command(child_tenancy_group)
 @cli_util.wrap_exceptions
 def approve_organization_tenancy_for_transfer(ctx, from_json, compartment_id, organization_tenancy_id, if_match):
 
-    if isinstance(organization_tenancy_id, six.string_types) and len(organization_tenancy_id.strip()) == 0:
+    if isinstance(organization_tenancy_id, str) and len(organization_tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-tenancy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -158,7 +157,7 @@ def create_child_tenancy(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_organization_tenancy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, organization_tenancy_id, if_match):
 
-    if isinstance(organization_tenancy_id, six.string_types) and len(organization_tenancy_id.strip()) == 0:
+    if isinstance(organization_tenancy_id, str) and len(organization_tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-tenancy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -209,7 +208,7 @@ def delete_organization_tenancy(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def get_organization(ctx, from_json, organization_id):
 
-    if isinstance(organization_id, six.string_types) and len(organization_id.strip()) == 0:
+    if isinstance(organization_id, str) and len(organization_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -232,10 +231,10 @@ def get_organization(ctx, from_json, organization_id):
 @cli_util.wrap_exceptions
 def get_organization_tenancy(ctx, from_json, organization_id, tenancy_id):
 
-    if isinstance(organization_id, six.string_types) and len(organization_id.strip()) == 0:
+    if isinstance(organization_id, str) and len(organization_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-id cannot be whitespace or empty string')
 
-    if isinstance(tenancy_id, six.string_types) and len(tenancy_id.strip()) == 0:
+    if isinstance(tenancy_id, str) and len(tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -265,7 +264,7 @@ def list_organization_tenancies(ctx, from_json, all_pages, page_size, organizati
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(organization_id, six.string_types) and len(organization_id.strip()) == 0:
+    if isinstance(organization_id, str) and len(organization_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -361,7 +360,7 @@ def list_organizations(ctx, from_json, all_pages, page_size, compartment_id, pag
 @cli_util.wrap_exceptions
 def restore_organization_tenancy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, organization_tenancy_id, if_match):
 
-    if isinstance(organization_tenancy_id, six.string_types) and len(organization_tenancy_id.strip()) == 0:
+    if isinstance(organization_tenancy_id, str) and len(organization_tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-tenancy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -414,7 +413,7 @@ def restore_organization_tenancy(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def unapprove_organization_tenancy_for_transfer(ctx, from_json, compartment_id, organization_tenancy_id, if_match):
 
-    if isinstance(organization_tenancy_id, six.string_types) and len(organization_tenancy_id.strip()) == 0:
+    if isinstance(organization_tenancy_id, str) and len(organization_tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-tenancy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -444,7 +443,7 @@ def unapprove_organization_tenancy_for_transfer(ctx, from_json, compartment_id, 
 @cli_util.wrap_exceptions
 def update_organization(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, organization_id, default_ucm_subscription_id, if_match):
 
-    if isinstance(organization_id, six.string_types) and len(organization_id.strip()) == 0:
+    if isinstance(organization_id, str) and len(organization_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-id cannot be whitespace or empty string')
 
     kwargs = {}

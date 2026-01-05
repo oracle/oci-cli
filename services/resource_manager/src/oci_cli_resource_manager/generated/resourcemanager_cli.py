@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -133,7 +132,7 @@ resource_manager_root_group.add_command(job_output_summary_group)
 @cli_util.wrap_exceptions
 def cancel_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, if_match, is_forced):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -196,7 +195,7 @@ def cancel_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def change_configuration_source_provider_compartment(ctx, from_json, configuration_source_provider_id, compartment_id, if_match):
 
-    if isinstance(configuration_source_provider_id, six.string_types) and len(configuration_source_provider_id.strip()) == 0:
+    if isinstance(configuration_source_provider_id, str) and len(configuration_source_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-source-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -227,7 +226,7 @@ def change_configuration_source_provider_compartment(ctx, from_json, configurati
 @cli_util.wrap_exceptions
 def change_private_endpoint_compartment(ctx, from_json, private_endpoint_id, compartment_id, if_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -261,7 +260,7 @@ def change_private_endpoint_compartment(ctx, from_json, private_endpoint_id, com
 @cli_util.wrap_exceptions
 def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, compartment_id, if_match):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -319,7 +318,7 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def change_template_compartment(ctx, from_json, template_id, compartment_id, if_match):
 
-    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+    if isinstance(template_id, str) and len(template_id.strip()) == 0:
         raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2392,7 +2391,7 @@ def create_template_create_template_zip_upload_config_source_details(ctx, from_j
 @cli_util.wrap_exceptions
 def delete_configuration_source_provider(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_source_provider_id, if_match):
 
-    if isinstance(configuration_source_provider_id, six.string_types) and len(configuration_source_provider_id.strip()) == 0:
+    if isinstance(configuration_source_provider_id, str) and len(configuration_source_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-source-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2456,7 +2455,7 @@ def delete_configuration_source_provider(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def delete_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, if_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2512,7 +2511,7 @@ def delete_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, if_match):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2576,7 +2575,7 @@ def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, template_id, if_match):
 
-    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+    if isinstance(template_id, str) and len(template_id.strip()) == 0:
         raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2641,7 +2640,7 @@ def delete_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def detect_stack_drift(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, if_match, resource_addresses, is_provider_upgrade_required):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2702,7 +2701,7 @@ def detect_stack_drift(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def get_configuration_source_provider(ctx, from_json, configuration_source_provider_id):
 
-    if isinstance(configuration_source_provider_id, six.string_types) and len(configuration_source_provider_id.strip()) == 0:
+    if isinstance(configuration_source_provider_id, str) and len(configuration_source_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-source-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2724,7 +2723,7 @@ def get_configuration_source_provider(ctx, from_json, configuration_source_provi
 @cli_util.wrap_exceptions
 def get_job(ctx, from_json, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2746,7 +2745,7 @@ def get_job(ctx, from_json, job_id):
 @cli_util.wrap_exceptions
 def get_job_detailed_log_content(ctx, from_json, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2775,7 +2774,7 @@ def get_job_detailed_log_content(ctx, from_json, job_id):
 @cli_util.wrap_exceptions
 def get_job_logs(ctx, from_json, job_id, type, level_greater_than_or_equal_to, sort_order, limit, page, timestamp_greater_than_or_equal_to, timestamp_less_than_or_equal_to):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2811,7 +2810,7 @@ def get_job_logs(ctx, from_json, job_id, type, level_greater_than_or_equal_to, s
 @cli_util.wrap_exceptions
 def get_job_logs_content(ctx, from_json, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2834,7 +2833,7 @@ def get_job_logs_content(ctx, from_json, job_id):
 @cli_util.wrap_exceptions
 def get_job_tf_config(ctx, from_json, file, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2880,7 +2879,7 @@ def get_job_tf_config(ctx, from_json, file, job_id):
 @cli_util.wrap_exceptions
 def get_job_tf_plan(ctx, from_json, file, job_id, tf_plan_format):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2927,7 +2926,7 @@ def get_job_tf_plan(ctx, from_json, file, job_id, tf_plan_format):
 @cli_util.wrap_exceptions
 def get_job_tf_state(ctx, from_json, file, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2971,7 +2970,7 @@ def get_job_tf_state(ctx, from_json, file, job_id):
 @cli_util.wrap_exceptions
 def get_private_endpoint(ctx, from_json, private_endpoint_id):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2994,7 +2993,7 @@ def get_private_endpoint(ctx, from_json, private_endpoint_id):
 @cli_util.wrap_exceptions
 def get_reachable_ip(ctx, from_json, private_ip, private_endpoint_id):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3017,7 +3016,7 @@ def get_reachable_ip(ctx, from_json, private_ip, private_endpoint_id):
 @cli_util.wrap_exceptions
 def get_stack(ctx, from_json, stack_id):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3040,7 +3039,7 @@ def get_stack(ctx, from_json, stack_id):
 @cli_util.wrap_exceptions
 def get_stack_tf_config(ctx, from_json, file, stack_id):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3085,7 +3084,7 @@ def get_stack_tf_config(ctx, from_json, file, stack_id):
 @cli_util.wrap_exceptions
 def get_stack_tf_state(ctx, from_json, file, stack_id):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3129,7 +3128,7 @@ def get_stack_tf_state(ctx, from_json, file, stack_id):
 @cli_util.wrap_exceptions
 def get_template(ctx, from_json, template_id):
 
-    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+    if isinstance(template_id, str) and len(template_id.strip()) == 0:
         raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3152,7 +3151,7 @@ def get_template(ctx, from_json, template_id):
 @cli_util.wrap_exceptions
 def get_template_logo(ctx, from_json, file, template_id):
 
-    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+    if isinstance(template_id, str) and len(template_id.strip()) == 0:
         raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3197,7 +3196,7 @@ def get_template_logo(ctx, from_json, file, template_id):
 @cli_util.wrap_exceptions
 def get_template_tf_config(ctx, from_json, file, template_id):
 
-    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+    if isinstance(template_id, str) and len(template_id.strip()) == 0:
         raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3241,7 +3240,7 @@ def get_template_tf_config(ctx, from_json, file, template_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3334,7 +3333,7 @@ def list_job_associated_resources(ctx, from_json, all_pages, page_size, job_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3390,7 +3389,7 @@ def list_job_outputs(ctx, from_json, all_pages, page_size, job_id, compartment_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3595,7 +3594,7 @@ def list_stack_associated_resources(ctx, from_json, all_pages, page_size, stack_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3652,7 +3651,7 @@ def list_stack_resource_drift_details(ctx, from_json, all_pages, page_size, stac
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3872,7 +3871,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3929,7 +3928,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4039,7 +4038,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.wrap_exceptions
 def update_configuration_source_provider(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_source_provider_id, display_name, description, config_source_provider_type, private_server_config_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(configuration_source_provider_id, six.string_types) and len(configuration_source_provider_id.strip()) == 0:
+    if isinstance(configuration_source_provider_id, str) and len(configuration_source_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-source-provider-id cannot be whitespace or empty string')
     if not force:
         if private_server_config_details or freeform_tags or defined_tags:
@@ -4125,7 +4124,7 @@ def update_configuration_source_provider(ctx, from_json, force, wait_for_state, 
 @cli_util.wrap_exceptions
 def update_configuration_source_provider_update_bitbucket_cloud_username_app_password_configuration_source_provider_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_source_provider_id, display_name, description, private_server_config_details, freeform_tags, defined_tags, api_endpoint, username, secret_id, if_match):
 
-    if isinstance(configuration_source_provider_id, six.string_types) and len(configuration_source_provider_id.strip()) == 0:
+    if isinstance(configuration_source_provider_id, str) and len(configuration_source_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-source-provider-id cannot be whitespace or empty string')
     if not force:
         if private_server_config_details or freeform_tags or defined_tags:
@@ -4218,7 +4217,7 @@ def update_configuration_source_provider_update_bitbucket_cloud_username_app_pas
 @cli_util.wrap_exceptions
 def update_configuration_source_provider_update_bitbucket_server_access_token_configuration_source_provider_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_source_provider_id, display_name, description, private_server_config_details, freeform_tags, defined_tags, secret_id, api_endpoint, if_match):
 
-    if isinstance(configuration_source_provider_id, six.string_types) and len(configuration_source_provider_id.strip()) == 0:
+    if isinstance(configuration_source_provider_id, str) and len(configuration_source_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-source-provider-id cannot be whitespace or empty string')
     if not force:
         if private_server_config_details or freeform_tags or defined_tags:
@@ -4308,7 +4307,7 @@ def update_configuration_source_provider_update_bitbucket_server_access_token_co
 @cli_util.wrap_exceptions
 def update_configuration_source_provider_update_gitlab_access_token_configuration_source_provider_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_source_provider_id, display_name, description, private_server_config_details, freeform_tags, defined_tags, api_endpoint, access_token, if_match):
 
-    if isinstance(configuration_source_provider_id, six.string_types) and len(configuration_source_provider_id.strip()) == 0:
+    if isinstance(configuration_source_provider_id, str) and len(configuration_source_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-source-provider-id cannot be whitespace or empty string')
     if not force:
         if private_server_config_details or freeform_tags or defined_tags:
@@ -4398,7 +4397,7 @@ def update_configuration_source_provider_update_gitlab_access_token_configuratio
 @cli_util.wrap_exceptions
 def update_configuration_source_provider_update_github_access_token_configuration_source_provider_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_source_provider_id, display_name, description, private_server_config_details, freeform_tags, defined_tags, api_endpoint, access_token, if_match):
 
-    if isinstance(configuration_source_provider_id, six.string_types) and len(configuration_source_provider_id.strip()) == 0:
+    if isinstance(configuration_source_provider_id, str) and len(configuration_source_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-source-provider-id cannot be whitespace or empty string')
     if not force:
         if private_server_config_details or freeform_tags or defined_tags:
@@ -4484,7 +4483,7 @@ def update_configuration_source_provider_update_github_access_token_configuratio
 @cli_util.wrap_exceptions
 def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4565,7 +4564,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, display_name, description, vcn_id, subnet_id, dns_zones, nsg_id_list, is_used_with_configuration_source_provider, freeform_tags, defined_tags, security_attributes, if_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if dns_zones or nsg_id_list or freeform_tags or defined_tags or security_attributes:
@@ -4668,7 +4667,7 @@ def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, description, config_source, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
         if config_source or custom_terraform_provider or variables or freeform_tags or defined_tags:
@@ -4768,7 +4767,7 @@ def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def update_stack_update_bitbucket_cloud_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, config_source_configuration_source_provider_id, display_name, description, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_repository_url, config_source_branch_name, config_source_workspace_id):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
         if custom_terraform_provider or variables or freeform_tags or defined_tags:
@@ -4882,7 +4881,7 @@ def update_stack_update_bitbucket_cloud_config_source_details(ctx, from_json, fo
 @cli_util.wrap_exceptions
 def update_stack_update_bitbucket_server_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, config_source_configuration_source_provider_id, display_name, description, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_repository_url, config_source_branch_name, config_source_project_id, config_source_repository_id):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
         if custom_terraform_provider or variables or freeform_tags or defined_tags:
@@ -4997,7 +4996,7 @@ def update_stack_update_bitbucket_server_config_source_details(ctx, from_json, f
 @cli_util.wrap_exceptions
 def update_stack_update_git_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, config_source_configuration_source_provider_id, display_name, description, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_repository_url, config_source_branch_name):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
         if custom_terraform_provider or variables or freeform_tags or defined_tags:
@@ -5106,7 +5105,7 @@ def update_stack_update_git_config_source_details(ctx, from_json, force, wait_fo
 @cli_util.wrap_exceptions
 def update_stack_update_object_storage_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, description, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_region, config_source_namespace, config_source_bucket_name):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
         if custom_terraform_provider or variables or freeform_tags or defined_tags:
@@ -5215,7 +5214,7 @@ def update_stack_update_object_storage_config_source_details(ctx, from_json, for
 @cli_util.wrap_exceptions
 def update_stack_update_zip_upload_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, description, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_zip_file_base64_encoded):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
         if custom_terraform_provider or variables or freeform_tags or defined_tags:
@@ -5320,7 +5319,7 @@ def update_stack_update_zip_upload_config_source_details(ctx, from_json, force, 
 @cli_util.wrap_exceptions
 def update_stack_update_dev_ops_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, config_source_project_id, config_source_repository_id, display_name, description, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_branch_name):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
         if custom_terraform_provider or variables or freeform_tags or defined_tags:
@@ -5422,7 +5421,7 @@ def update_stack_update_dev_ops_config_source_details(ctx, from_json, force, wai
 @cli_util.wrap_exceptions
 def update_template(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, template_id, display_name, description, long_description, logo_file_base64_encoded, template_config_source, freeform_tags, defined_tags, if_match):
 
-    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+    if isinstance(template_id, str) and len(template_id.strip()) == 0:
         raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
     if not force:
         if template_config_source or freeform_tags or defined_tags:
@@ -5510,7 +5509,7 @@ def update_template(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def update_template_update_template_zip_upload_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, template_id, display_name, description, long_description, logo_file_base64_encoded, freeform_tags, defined_tags, if_match, template_config_source_zip_file_base64_encoded):
 
-    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+    if isinstance(template_id, str) and len(template_id.strip()) == 0:
         raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

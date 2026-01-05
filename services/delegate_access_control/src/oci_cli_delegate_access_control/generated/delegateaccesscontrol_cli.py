@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -97,7 +96,7 @@ delegate_access_control_service_cli.delegate_access_control_service_group.add_co
 @cli_util.wrap_exceptions
 def approve_delegated_resource_access_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, delegated_resource_access_request_id, approver_comment, additional_message, time_approved_for_access, if_match):
 
-    if isinstance(delegated_resource_access_request_id, six.string_types) and len(delegated_resource_access_request_id.strip()) == 0:
+    if isinstance(delegated_resource_access_request_id, str) and len(delegated_resource_access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --delegated-resource-access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -166,7 +165,7 @@ def approve_delegated_resource_access_request(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def change_delegation_control_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, delegation_control_id, compartment_id, if_match):
 
-    if isinstance(delegation_control_id, six.string_types) and len(delegation_control_id.strip()) == 0:
+    if isinstance(delegation_control_id, str) and len(delegation_control_id.strip()) == 0:
         raise click.UsageError('Parameter --delegation-control-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -229,7 +228,7 @@ def change_delegation_control_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_delegation_subscription_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, delegation_subscription_id, compartment_id, if_match):
 
-    if isinstance(delegation_subscription_id, six.string_types) and len(delegation_subscription_id.strip()) == 0:
+    if isinstance(delegation_subscription_id, str) and len(delegation_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --delegation-subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -467,7 +466,7 @@ def create_delegation_subscription(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_delegation_control(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, delegation_control_id, description, if_match):
 
-    if isinstance(delegation_control_id, six.string_types) and len(delegation_control_id.strip()) == 0:
+    if isinstance(delegation_control_id, str) and len(delegation_control_id.strip()) == 0:
         raise click.UsageError('Parameter --delegation-control-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -525,7 +524,7 @@ def delete_delegation_control(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_delegation_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, delegation_subscription_id, if_match):
 
-    if isinstance(delegation_subscription_id, six.string_types) and len(delegation_subscription_id.strip()) == 0:
+    if isinstance(delegation_subscription_id, str) and len(delegation_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --delegation-subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -576,7 +575,7 @@ def delete_delegation_subscription(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def get_delegated_resource_access_request(ctx, from_json, delegated_resource_access_request_id):
 
-    if isinstance(delegated_resource_access_request_id, six.string_types) and len(delegated_resource_access_request_id.strip()) == 0:
+    if isinstance(delegated_resource_access_request_id, str) and len(delegated_resource_access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --delegated-resource-access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -599,7 +598,7 @@ def get_delegated_resource_access_request(ctx, from_json, delegated_resource_acc
 @cli_util.wrap_exceptions
 def get_delegated_resource_access_request_audit_log_report(ctx, from_json, delegated_resource_access_request_id, is_process_tree_enabled):
 
-    if isinstance(delegated_resource_access_request_id, six.string_types) and len(delegated_resource_access_request_id.strip()) == 0:
+    if isinstance(delegated_resource_access_request_id, str) and len(delegated_resource_access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --delegated-resource-access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -623,7 +622,7 @@ def get_delegated_resource_access_request_audit_log_report(ctx, from_json, deleg
 @cli_util.wrap_exceptions
 def get_delegation_control(ctx, from_json, delegation_control_id):
 
-    if isinstance(delegation_control_id, six.string_types) and len(delegation_control_id.strip()) == 0:
+    if isinstance(delegation_control_id, str) and len(delegation_control_id.strip()) == 0:
         raise click.UsageError('Parameter --delegation-control-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -645,7 +644,7 @@ def get_delegation_control(ctx, from_json, delegation_control_id):
 @cli_util.wrap_exceptions
 def get_delegation_subscription(ctx, from_json, delegation_subscription_id):
 
-    if isinstance(delegation_subscription_id, six.string_types) and len(delegation_subscription_id.strip()) == 0:
+    if isinstance(delegation_subscription_id, str) and len(delegation_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --delegation-subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -667,7 +666,7 @@ def get_delegation_subscription(ctx, from_json, delegation_subscription_id):
 @cli_util.wrap_exceptions
 def get_service_provider(ctx, from_json, service_provider_id):
 
-    if isinstance(service_provider_id, six.string_types) and len(service_provider_id.strip()) == 0:
+    if isinstance(service_provider_id, str) and len(service_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --service-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -689,7 +688,7 @@ def get_service_provider(ctx, from_json, service_provider_id):
 @cli_util.wrap_exceptions
 def get_service_provider_action(ctx, from_json, service_provider_action_id):
 
-    if isinstance(service_provider_action_id, six.string_types) and len(service_provider_action_id.strip()) == 0:
+    if isinstance(service_provider_action_id, str) and len(service_provider_action_id.strip()) == 0:
         raise click.UsageError('Parameter --service-provider-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -720,7 +719,7 @@ def list_delegated_resource_access_request_histories(ctx, from_json, all_pages, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(delegated_resource_access_request_id, six.string_types) and len(delegated_resource_access_request_id.strip()) == 0:
+    if isinstance(delegated_resource_access_request_id, str) and len(delegated_resource_access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --delegated-resource-access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -847,7 +846,7 @@ def list_delegation_control_resources(ctx, from_json, all_pages, page_size, dele
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(delegation_control_id, six.string_types) and len(delegation_control_id.strip()) == 0:
+    if isinstance(delegation_control_id, str) and len(delegation_control_id.strip()) == 0:
         raise click.UsageError('Parameter --delegation-control-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1090,7 +1089,7 @@ def list_service_provider_interactions(ctx, from_json, all_pages, page_size, del
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(delegated_resource_access_request_id, six.string_types) and len(delegated_resource_access_request_id.strip()) == 0:
+    if isinstance(delegated_resource_access_request_id, str) and len(delegated_resource_access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --delegated-resource-access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1205,7 +1204,7 @@ def list_service_providers(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.wrap_exceptions
 def reject_delegated_resource_access_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, delegated_resource_access_request_id, approver_comment, if_match):
 
-    if isinstance(delegated_resource_access_request_id, six.string_types) and len(delegated_resource_access_request_id.strip()) == 0:
+    if isinstance(delegated_resource_access_request_id, str) and len(delegated_resource_access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --delegated-resource-access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1268,7 +1267,7 @@ def reject_delegated_resource_access_request(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def revoke_delegated_resource_access_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, delegated_resource_access_request_id, approver_comment, if_match):
 
-    if isinstance(delegated_resource_access_request_id, six.string_types) and len(delegated_resource_access_request_id.strip()) == 0:
+    if isinstance(delegated_resource_access_request_id, str) and len(delegated_resource_access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --delegated-resource-access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1328,7 +1327,7 @@ def revoke_delegated_resource_access_request(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def service_provider_interaction_request(ctx, from_json, delegated_resource_access_request_id, more_info_details, if_match):
 
-    if isinstance(delegated_resource_access_request_id, six.string_types) and len(delegated_resource_access_request_id.strip()) == 0:
+    if isinstance(delegated_resource_access_request_id, str) and len(delegated_resource_access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --delegated-resource-access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1379,7 +1378,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_delegation_control(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, delegation_control_id, display_name, description, num_approvals_required, delegation_subscription_ids, is_auto_approve_during_maintenance, resource_ids, pre_approved_service_provider_action_names, notification_topic_id, notification_message_format, freeform_tags, defined_tags, if_match):
 
-    if isinstance(delegation_control_id, six.string_types) and len(delegation_control_id.strip()) == 0:
+    if isinstance(delegation_control_id, str) and len(delegation_control_id.strip()) == 0:
         raise click.UsageError('Parameter --delegation-control-id cannot be whitespace or empty string')
     if not force:
         if delegation_subscription_ids or resource_ids or pre_approved_service_provider_action_names or freeform_tags or defined_tags:
@@ -1483,7 +1482,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_delegation_subscription(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, delegation_subscription_id, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(delegation_subscription_id, six.string_types) and len(delegation_subscription_id.strip()) == 0:
+    if isinstance(delegation_subscription_id, str) and len(delegation_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --delegation-subscription-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

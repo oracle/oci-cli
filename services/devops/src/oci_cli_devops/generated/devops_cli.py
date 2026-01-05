@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -327,7 +326,7 @@ devops_root_group.add_command(repository_ref_group)
 @cli_util.wrap_exceptions
 def approve_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, deploy_stage_id, action, reason, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -388,7 +387,7 @@ def approve_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def cancel_build_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, reason, build_run_id, if_match):
 
-    if isinstance(build_run_id, six.string_types) and len(build_run_id.strip()) == 0:
+    if isinstance(build_run_id, str) and len(build_run_id.strip()) == 0:
         raise click.UsageError('Parameter --build-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -445,7 +444,7 @@ def cancel_build_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def cancel_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, reason, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -501,7 +500,7 @@ def cancel_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def cancel_scheduled_cascading_project_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -557,7 +556,7 @@ def cancel_scheduled_cascading_project_deletion(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def change_project_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4581,7 +4580,7 @@ def create_deployment_create_single_deploy_stage_redeployment_details(ctx, from_
 @cli_util.wrap_exceptions
 def create_or_update_git_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, ref_type, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4644,7 +4643,7 @@ def create_or_update_git_ref(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def create_or_update_git_ref_create_or_update_git_branch_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, commit_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4709,7 +4708,7 @@ def create_or_update_git_ref_create_or_update_git_branch_details(ctx, from_json,
 @cli_util.wrap_exceptions
 def create_or_update_git_ref_create_or_update_git_tag_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, object_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4771,7 +4770,7 @@ def create_or_update_git_ref_create_or_update_git_tag_details(ctx, from_json, wa
 @cli_util.wrap_exceptions
 def create_or_update_protected_branch(ctx, from_json, repository_id, branch_name, protection_levels, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4957,7 +4956,7 @@ def create_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def create_pull_request_attachment(ctx, from_json, pull_request_id, content_disposition, create_pull_request_attachment_body):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4991,7 +4990,7 @@ def create_pull_request_attachment(ctx, from_json, pull_request_id, content_disp
 @cli_util.wrap_exceptions
 def create_pull_request_comment(ctx, from_json, pull_request_id, data, parent_id, file_path, commit_id, file_type, line_number):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5722,7 +5721,7 @@ def create_trigger_create_bitbucket_server_trigger_details(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def decline_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5774,7 +5773,7 @@ def decline_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_build_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, if_match):
 
-    if isinstance(build_pipeline_id, six.string_types) and len(build_pipeline_id.strip()) == 0:
+    if isinstance(build_pipeline_id, str) and len(build_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5830,7 +5829,7 @@ def delete_build_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_build_pipeline_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, if_match):
 
-    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+    if isinstance(build_pipeline_stage_id, str) and len(build_pipeline_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5886,7 +5885,7 @@ def delete_build_pipeline_stage(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5942,7 +5941,7 @@ def delete_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_deploy_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_id, if_match):
 
-    if isinstance(deploy_artifact_id, six.string_types) and len(deploy_artifact_id.strip()) == 0:
+    if isinstance(deploy_artifact_id, str) and len(deploy_artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-artifact-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5998,7 +5997,7 @@ def delete_deploy_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_deploy_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_environment_id, if_match):
 
-    if isinstance(deploy_environment_id, six.string_types) and len(deploy_environment_id.strip()) == 0:
+    if isinstance(deploy_environment_id, str) and len(deploy_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6054,7 +6053,7 @@ def delete_deploy_environment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_deploy_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_pipeline_id, if_match):
 
-    if isinstance(deploy_pipeline_id, six.string_types) and len(deploy_pipeline_id.strip()) == 0:
+    if isinstance(deploy_pipeline_id, str) and len(deploy_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6110,7 +6109,7 @@ def delete_deploy_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_deploy_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6166,7 +6165,7 @@ def delete_deploy_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_git_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6227,7 +6226,7 @@ def delete_git_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6280,7 +6279,7 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_project_repository_settings(ctx, from_json, project_id, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6306,7 +6305,7 @@ def delete_project_repository_settings(ctx, from_json, project_id, if_match):
 @cli_util.wrap_exceptions
 def delete_protected_branch(ctx, from_json, repository_id, branch_name, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6340,7 +6339,7 @@ def delete_protected_branch(ctx, from_json, repository_id, branch_name, if_match
 @cli_util.wrap_exceptions
 def delete_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6402,10 +6401,10 @@ def delete_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_pull_request_attachment(ctx, from_json, pull_request_id, attachment_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+    if isinstance(attachment_id, str) and len(attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6433,10 +6432,10 @@ def delete_pull_request_attachment(ctx, from_json, pull_request_id, attachment_i
 @cli_util.wrap_exceptions
 def delete_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+    if isinstance(comment_id, str) and len(comment_id.strip()) == 0:
         raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6467,10 +6466,10 @@ def delete_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_
 @cli_util.wrap_exceptions
 def delete_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(ref_name, six.string_types) and len(ref_name.strip()) == 0:
+    if isinstance(ref_name, str) and len(ref_name.strip()) == 0:
         raise click.UsageError('Parameter --ref-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6527,7 +6526,7 @@ def delete_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6580,7 +6579,7 @@ def delete_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_repository_settings(ctx, from_json, repository_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6609,7 +6608,7 @@ def delete_repository_settings(ctx, from_json, repository_id, if_match):
 @cli_util.wrap_exceptions
 def delete_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, if_match):
 
-    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+    if isinstance(trigger_id, str) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6660,7 +6659,7 @@ def delete_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def get_build_pipeline(ctx, from_json, build_pipeline_id):
 
-    if isinstance(build_pipeline_id, six.string_types) and len(build_pipeline_id.strip()) == 0:
+    if isinstance(build_pipeline_id, str) and len(build_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6682,7 +6681,7 @@ def get_build_pipeline(ctx, from_json, build_pipeline_id):
 @cli_util.wrap_exceptions
 def get_build_pipeline_stage(ctx, from_json, build_pipeline_stage_id):
 
-    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+    if isinstance(build_pipeline_stage_id, str) and len(build_pipeline_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6704,7 +6703,7 @@ def get_build_pipeline_stage(ctx, from_json, build_pipeline_stage_id):
 @cli_util.wrap_exceptions
 def get_build_run(ctx, from_json, build_run_id):
 
-    if isinstance(build_run_id, six.string_types) and len(build_run_id.strip()) == 0:
+    if isinstance(build_run_id, str) and len(build_run_id.strip()) == 0:
         raise click.UsageError('Parameter --build-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6727,10 +6726,10 @@ def get_build_run(ctx, from_json, build_run_id):
 @cli_util.wrap_exceptions
 def get_commit(ctx, from_json, repository_id, commit_id):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(commit_id, six.string_types) and len(commit_id.strip()) == 0:
+    if isinstance(commit_id, str) and len(commit_id.strip()) == 0:
         raise click.UsageError('Parameter --commit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6757,7 +6756,7 @@ def get_commit(ctx, from_json, repository_id, commit_id):
 @cli_util.wrap_exceptions
 def get_commit_diff(ctx, from_json, repository_id, target_version, base_version, target_repository_id, is_comparison_from_merge_base):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6786,7 +6785,7 @@ def get_commit_diff(ctx, from_json, repository_id, target_version, base_version,
 @cli_util.wrap_exceptions
 def get_connection(ctx, from_json, connection_id):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6808,7 +6807,7 @@ def get_connection(ctx, from_json, connection_id):
 @cli_util.wrap_exceptions
 def get_deploy_artifact(ctx, from_json, deploy_artifact_id):
 
-    if isinstance(deploy_artifact_id, six.string_types) and len(deploy_artifact_id.strip()) == 0:
+    if isinstance(deploy_artifact_id, str) and len(deploy_artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-artifact-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6830,7 +6829,7 @@ def get_deploy_artifact(ctx, from_json, deploy_artifact_id):
 @cli_util.wrap_exceptions
 def get_deploy_environment(ctx, from_json, deploy_environment_id):
 
-    if isinstance(deploy_environment_id, six.string_types) and len(deploy_environment_id.strip()) == 0:
+    if isinstance(deploy_environment_id, str) and len(deploy_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6852,7 +6851,7 @@ def get_deploy_environment(ctx, from_json, deploy_environment_id):
 @cli_util.wrap_exceptions
 def get_deploy_pipeline(ctx, from_json, deploy_pipeline_id):
 
-    if isinstance(deploy_pipeline_id, six.string_types) and len(deploy_pipeline_id.strip()) == 0:
+    if isinstance(deploy_pipeline_id, str) and len(deploy_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6874,7 +6873,7 @@ def get_deploy_pipeline(ctx, from_json, deploy_pipeline_id):
 @cli_util.wrap_exceptions
 def get_deploy_stage(ctx, from_json, deploy_stage_id):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6896,7 +6895,7 @@ def get_deploy_stage(ctx, from_json, deploy_stage_id):
 @cli_util.wrap_exceptions
 def get_deployment(ctx, from_json, deployment_id):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6922,10 +6921,10 @@ def get_deployment(ctx, from_json, deployment_id):
 @cli_util.wrap_exceptions
 def get_file_diff(ctx, from_json, repository_id, file_path, base_version, target_version, is_comparison_from_merge_base):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(file_path, six.string_types) and len(file_path.strip()) == 0:
+    if isinstance(file_path, str) and len(file_path.strip()) == 0:
         raise click.UsageError('Parameter --file-path cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6953,10 +6952,10 @@ def get_file_diff(ctx, from_json, repository_id, file_path, base_version, target
 @cli_util.wrap_exceptions
 def get_mirror_record(ctx, from_json, repository_id, mirror_record_type):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(mirror_record_type, six.string_types) and len(mirror_record_type.strip()) == 0:
+    if isinstance(mirror_record_type, str) and len(mirror_record_type.strip()) == 0:
         raise click.UsageError('Parameter --mirror-record-type cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6981,7 +6980,7 @@ def get_mirror_record(ctx, from_json, repository_id, mirror_record_type):
 @cli_util.wrap_exceptions
 def get_object(ctx, from_json, repository_id, file_path, ref_name):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7010,10 +7009,10 @@ def get_object(ctx, from_json, repository_id, file_path, ref_name):
 @cli_util.wrap_exceptions
 def get_object_content(ctx, from_json, file, repository_id, sha, file_path):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(sha, six.string_types) and len(sha.strip()) == 0:
+    if isinstance(sha, str) and len(sha.strip()) == 0:
         raise click.UsageError('Parameter --sha cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7060,7 +7059,7 @@ def get_object_content(ctx, from_json, file, repository_id, sha, file_path):
 @cli_util.wrap_exceptions
 def get_project(ctx, from_json, project_id):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7083,10 +7082,10 @@ def get_project(ctx, from_json, project_id):
 @cli_util.wrap_exceptions
 def get_project_notification_preference(ctx, from_json, project_id, principal_id):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
-    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+    if isinstance(principal_id, str) and len(principal_id.strip()) == 0:
         raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7109,7 +7108,7 @@ def get_project_notification_preference(ctx, from_json, project_id, principal_id
 @cli_util.wrap_exceptions
 def get_project_repository_settings(ctx, from_json, project_id):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7131,7 +7130,7 @@ def get_project_repository_settings(ctx, from_json, project_id):
 @cli_util.wrap_exceptions
 def get_pull_request(ctx, from_json, pull_request_id):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7154,10 +7153,10 @@ def get_pull_request(ctx, from_json, pull_request_id):
 @cli_util.wrap_exceptions
 def get_pull_request_attachment(ctx, from_json, pull_request_id, attachment_id):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+    if isinstance(attachment_id, str) and len(attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7182,10 +7181,10 @@ def get_pull_request_attachment(ctx, from_json, pull_request_id, attachment_id):
 @cli_util.wrap_exceptions
 def get_pull_request_attachment_content(ctx, from_json, file, pull_request_id, attachment_id):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+    if isinstance(attachment_id, str) and len(attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7230,7 +7229,7 @@ def get_pull_request_attachment_content(ctx, from_json, file, pull_request_id, a
 @cli_util.wrap_exceptions
 def get_pull_request_change_summary_metrics(ctx, from_json, pull_request_id):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7253,10 +7252,10 @@ def get_pull_request_change_summary_metrics(ctx, from_json, pull_request_id):
 @cli_util.wrap_exceptions
 def get_pull_request_comment(ctx, from_json, pull_request_id, comment_id):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+    if isinstance(comment_id, str) and len(comment_id.strip()) == 0:
         raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7280,10 +7279,10 @@ def get_pull_request_comment(ctx, from_json, pull_request_id, comment_id):
 @cli_util.wrap_exceptions
 def get_pull_request_notification_preference(ctx, from_json, pull_request_id, principal_id):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+    if isinstance(principal_id, str) and len(principal_id.strip()) == 0:
         raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7307,10 +7306,10 @@ def get_pull_request_notification_preference(ctx, from_json, pull_request_id, pr
 @cli_util.wrap_exceptions
 def get_ref(ctx, from_json, repository_id, ref_name):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(ref_name, six.string_types) and len(ref_name.strip()) == 0:
+    if isinstance(ref_name, str) and len(ref_name.strip()) == 0:
         raise click.UsageError('Parameter --ref-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7337,7 +7336,7 @@ def get_ref(ctx, from_json, repository_id, ref_name):
 @cli_util.wrap_exceptions
 def get_repo_file_diff(ctx, from_json, repository_id, base_version, target_version, file_path, is_comparison_from_merge_base):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7369,7 +7368,7 @@ def get_repo_file_diff(ctx, from_json, repository_id, base_version, target_versi
 @cli_util.wrap_exceptions
 def get_repo_file_lines(ctx, from_json, repository_id, revision, file_path, start_line_number, limit):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7399,7 +7398,7 @@ def get_repo_file_lines(ctx, from_json, repository_id, revision, file_path, star
 @cli_util.wrap_exceptions
 def get_repository(ctx, from_json, repository_id, fields):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7426,7 +7425,7 @@ def get_repository(ctx, from_json, repository_id, fields):
 @cli_util.wrap_exceptions
 def get_repository_archive_content(ctx, from_json, file, repository_id, ref_name, format):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7478,10 +7477,10 @@ def get_repository_archive_content(ctx, from_json, file, repository_id, ref_name
 @cli_util.wrap_exceptions
 def get_repository_file_lines(ctx, from_json, repository_id, file_path, revision, start_line_number, limit):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(file_path, six.string_types) and len(file_path.strip()) == 0:
+    if isinstance(file_path, str) and len(file_path.strip()) == 0:
         raise click.UsageError('Parameter --file-path cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7510,10 +7509,10 @@ def get_repository_file_lines(ctx, from_json, repository_id, file_path, revision
 @cli_util.wrap_exceptions
 def get_repository_notification_preference(ctx, from_json, repository_id, principal_id):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+    if isinstance(principal_id, str) and len(principal_id.strip()) == 0:
         raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7536,7 +7535,7 @@ def get_repository_notification_preference(ctx, from_json, repository_id, princi
 @cli_util.wrap_exceptions
 def get_repository_settings(ctx, from_json, repository_id):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7558,7 +7557,7 @@ def get_repository_settings(ctx, from_json, repository_id):
 @cli_util.wrap_exceptions
 def get_trigger(ctx, from_json, trigger_id):
 
-    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+    if isinstance(trigger_id, str) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7580,7 +7579,7 @@ def get_trigger(ctx, from_json, trigger_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7604,10 +7603,10 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def like_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+    if isinstance(comment_id, str) and len(comment_id.strip()) == 0:
         raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7641,7 +7640,7 @@ def list_authors(ctx, from_json, all_pages, page_size, repository_id, ref_name, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7831,7 +7830,7 @@ def list_build_run_snapshots(ctx, from_json, all_pages, page_size, pull_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7964,7 +7963,7 @@ def list_commit_diffs(ctx, from_json, all_pages, page_size, repository_id, base_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8032,7 +8031,7 @@ def list_commits(ctx, from_json, all_pages, page_size, repository_id, ref_name, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8495,7 +8494,7 @@ def list_deployments(ctx, from_json, all_pages, page_size, deploy_pipeline_id, i
 @cli_util.wrap_exceptions
 def list_fork_sync_statuses(ctx, from_json, all_pages, repository_id, branch_name_query_param, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8528,7 +8527,7 @@ def list_mirror_records(ctx, from_json, all_pages, page_size, repository_id, lim
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8587,7 +8586,7 @@ def list_paths(ctx, from_json, all_pages, page_size, repository_id, ref, paths_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8652,7 +8651,7 @@ def list_project_commit_analytics_authors(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8773,7 +8772,7 @@ def list_protected_branches(ctx, from_json, all_pages, page_size, repository_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8832,7 +8831,7 @@ def list_pull_request_activities(ctx, from_json, all_pages, page_size, pull_requ
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8891,7 +8890,7 @@ def list_pull_request_attachments(ctx, from_json, all_pages, page_size, pull_req
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8951,7 +8950,7 @@ def list_pull_request_authors(ctx, from_json, all_pages, page_size, repository_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9010,7 +9009,7 @@ def list_pull_request_comments(ctx, from_json, all_pages, page_size, pull_reques
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9073,7 +9072,7 @@ def list_pull_request_commits(ctx, from_json, all_pages, page_size, pull_request
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9125,7 +9124,7 @@ def list_pull_request_file_changes(ctx, from_json, all_pages, page_size, pull_re
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9266,7 +9265,7 @@ def list_refs(ctx, from_json, all_pages, page_size, repository_id, ref_type, com
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9394,7 +9393,7 @@ def list_repository_commit_analytics_authors(ctx, from_json, all_pages, page_siz
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9516,7 +9515,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9573,7 +9572,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9692,7 +9691,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def merge_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, action_type, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9755,7 +9754,7 @@ def merge_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def merge_pull_request_execute_merge_pull_request_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, commit_message, merge_strategy, post_merge_action, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9821,7 +9820,7 @@ def merge_pull_request_execute_merge_pull_request_details(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def merge_pull_request_validate_merge_pull_request_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9882,7 +9881,7 @@ def merge_pull_request_validate_merge_pull_request_details(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def mirror_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9937,7 +9936,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_pull_request(ctx, from_json, pull_request_id, items, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9974,10 +9973,10 @@ def patch_pull_request(ctx, from_json, pull_request_id, items, if_match):
 @cli_util.wrap_exceptions
 def put_repository_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, ref_type, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(ref_name, six.string_types) and len(ref_name.strip()) == 0:
+    if isinstance(ref_name, str) and len(ref_name.strip()) == 0:
         raise click.UsageError('Parameter --ref-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10040,10 +10039,10 @@ def put_repository_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def put_repository_ref_put_repository_tag_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, object_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(ref_name, six.string_types) and len(ref_name.strip()) == 0:
+    if isinstance(ref_name, str) and len(ref_name.strip()) == 0:
         raise click.UsageError('Parameter --ref-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10108,10 +10107,10 @@ def put_repository_ref_put_repository_tag_details(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def put_repository_ref_put_repository_branch_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, commit_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(ref_name, six.string_types) and len(ref_name.strip()) == 0:
+    if isinstance(ref_name, str) and len(ref_name.strip()) == 0:
         raise click.UsageError('Parameter --ref-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10174,7 +10173,7 @@ def put_repository_ref_put_repository_branch_details(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def reopen_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10223,10 +10222,10 @@ def reopen_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def reopen_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+    if isinstance(comment_id, str) and len(comment_id.strip()) == 0:
         raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10253,10 +10252,10 @@ def reopen_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_
 @cli_util.wrap_exceptions
 def resolve_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+    if isinstance(comment_id, str) and len(comment_id.strip()) == 0:
         raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10286,7 +10285,7 @@ def resolve_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if
 @cli_util.wrap_exceptions
 def review_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, action, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10342,7 +10341,7 @@ def review_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def schedule_cascading_project_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10401,7 +10400,7 @@ def schedule_cascading_project_deletion(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def summarize_project_repository_analytics(ctx, from_json, project_id, repository_metrics, start_time, author_email, aggregation_duration, end_time, group_by, limit, page):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10453,7 +10452,7 @@ def summarize_project_repository_analytics(ctx, from_json, project_id, repositor
 @cli_util.wrap_exceptions
 def summarize_repository_analytics(ctx, from_json, repository_id, repository_metrics, start_time, author_email, aggregation_duration, end_time, group_by, limit, page):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10504,7 +10503,7 @@ def summarize_repository_analytics(ctx, from_json, repository_id, repository_met
 @cli_util.wrap_exceptions
 def sync_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, sync_merge_strategy, source_branch, destination_branch, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10783,10 +10782,10 @@ def trigger_deployment_dry_run_create_single_deploy_stage_redeployment_details(c
 @cli_util.wrap_exceptions
 def unlike_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+    if isinstance(comment_id, str) and len(comment_id.strip()) == 0:
         raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10814,7 +10813,7 @@ def unlike_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_
 @cli_util.wrap_exceptions
 def unsubscribe_pull_request(ctx, from_json, file, pull_request_id, token, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10871,7 +10870,7 @@ def unsubscribe_pull_request(ctx, from_json, file, pull_request_id, token, if_ma
 @cli_util.wrap_exceptions
 def update_build_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, description, display_name, build_pipeline_parameters, freeform_tags, defined_tags, if_match):
 
-    if isinstance(build_pipeline_id, six.string_types) and len(build_pipeline_id.strip()) == 0:
+    if isinstance(build_pipeline_id, str) and len(build_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-id cannot be whitespace or empty string')
     if not force:
         if build_pipeline_parameters or freeform_tags or defined_tags:
@@ -10956,7 +10955,7 @@ def update_build_pipeline(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_build_pipeline_stage(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, build_pipeline_stage_type, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, if_match):
 
-    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+    if isinstance(build_pipeline_stage_id, str) and len(build_pipeline_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
     if not force:
         if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags:
@@ -11042,7 +11041,7 @@ def update_build_pipeline_stage(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_build_pipeline_stage_update_wait_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, wait_criteria, if_match):
 
-    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+    if isinstance(build_pipeline_stage_id, str) and len(build_pipeline_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
     if not force:
         if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags or wait_criteria:
@@ -11138,7 +11137,7 @@ def update_build_pipeline_stage_update_wait_stage_details(ctx, from_json, force,
 @cli_util.wrap_exceptions
 def update_build_pipeline_stage_update_build_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, image, build_spec_file, stage_execution_timeout_in_seconds, build_source_collection, primary_build_source, build_runner_shape_config, private_access_config, if_match):
 
-    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+    if isinstance(build_pipeline_stage_id, str) and len(build_pipeline_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
     if not force:
         if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags or build_source_collection or build_runner_shape_config or private_access_config:
@@ -11247,7 +11246,7 @@ def update_build_pipeline_stage_update_build_stage_details(ctx, from_json, force
 @cli_util.wrap_exceptions
 def update_build_pipeline_stage_update_trigger_deployment_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, deploy_pipeline_id, is_pass_all_parameters_enabled, if_match):
 
-    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+    if isinstance(build_pipeline_stage_id, str) and len(build_pipeline_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
     if not force:
         if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags:
@@ -11340,7 +11339,7 @@ def update_build_pipeline_stage_update_trigger_deployment_stage_details(ctx, fro
 @cli_util.wrap_exceptions
 def update_build_pipeline_stage_update_deliver_artifact_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, deliver_artifact_collection, if_match):
 
-    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+    if isinstance(build_pipeline_stage_id, str) and len(build_pipeline_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
     if not force:
         if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags or deliver_artifact_collection:
@@ -11427,7 +11426,7 @@ def update_build_pipeline_stage_update_deliver_artifact_stage_details(ctx, from_
 @cli_util.wrap_exceptions
 def update_build_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_run_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(build_run_id, six.string_types) and len(build_run_id.strip()) == 0:
+    if isinstance(build_run_id, str) and len(build_run_id.strip()) == 0:
         raise click.UsageError('Parameter --build-run-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -11501,7 +11500,7 @@ def update_build_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, connection_type, description, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -11583,7 +11582,7 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_connection_update_github_access_token_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, access_token, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -11670,7 +11669,7 @@ def update_connection_update_github_access_token_connection_details(ctx, from_js
 @cli_util.wrap_exceptions
 def update_connection_update_vbs_access_token_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, access_token, base_url, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -11761,7 +11760,7 @@ def update_connection_update_vbs_access_token_connection_details(ctx, from_json,
 @cli_util.wrap_exceptions
 def update_connection_update_bitbucket_server_access_token_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, access_token, base_url, tls_verify_config, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or tls_verify_config:
@@ -11853,7 +11852,7 @@ def update_connection_update_bitbucket_server_access_token_connection_details(ct
 @cli_util.wrap_exceptions
 def update_connection_update_gitlab_access_token_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, access_token, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -11940,7 +11939,7 @@ def update_connection_update_gitlab_access_token_connection_details(ctx, from_js
 @cli_util.wrap_exceptions
 def update_connection_update_bitbucket_cloud_app_password_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, username, app_password, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12031,7 +12030,7 @@ def update_connection_update_bitbucket_cloud_app_password_connection_details(ctx
 @cli_util.wrap_exceptions
 def update_connection_update_gitlab_server_access_token_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, access_token, base_url, tls_verify_config, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or tls_verify_config:
@@ -12125,7 +12124,7 @@ def update_connection_update_gitlab_server_access_token_connection_details(ctx, 
 @cli_util.wrap_exceptions
 def update_deploy_artifact(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_id, description, display_name, deploy_artifact_type, deploy_artifact_source, argument_substitution_mode, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deploy_artifact_id, six.string_types) and len(deploy_artifact_id.strip()) == 0:
+    if isinstance(deploy_artifact_id, str) and len(deploy_artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-artifact-id cannot be whitespace or empty string')
     if not force:
         if deploy_artifact_source or freeform_tags or defined_tags:
@@ -12219,7 +12218,7 @@ def update_deploy_artifact(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def update_deploy_artifact_generic_deploy_artifact_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_id, deploy_artifact_source_repository_id, deploy_artifact_source_deploy_artifact_path, deploy_artifact_source_deploy_artifact_version, description, display_name, deploy_artifact_type, argument_substitution_mode, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deploy_artifact_id, six.string_types) and len(deploy_artifact_id.strip()) == 0:
+    if isinstance(deploy_artifact_id, str) and len(deploy_artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12316,7 +12315,7 @@ def update_deploy_artifact_generic_deploy_artifact_source(ctx, from_json, force,
 @cli_util.wrap_exceptions
 def update_deploy_artifact_helm_repository_deploy_artifact_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_id, deploy_artifact_source_chart_url, deploy_artifact_source_deploy_artifact_version, description, display_name, deploy_artifact_type, argument_substitution_mode, freeform_tags, defined_tags, if_match, deploy_artifact_source_helm_verification_key_source):
 
-    if isinstance(deploy_artifact_id, six.string_types) and len(deploy_artifact_id.strip()) == 0:
+    if isinstance(deploy_artifact_id, str) and len(deploy_artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12414,7 +12413,7 @@ def update_deploy_artifact_helm_repository_deploy_artifact_source(ctx, from_json
 @cli_util.wrap_exceptions
 def update_deploy_artifact_ocir_deploy_artifact_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_id, deploy_artifact_source_image_uri, description, display_name, deploy_artifact_type, argument_substitution_mode, freeform_tags, defined_tags, if_match, deploy_artifact_source_image_digest):
 
-    if isinstance(deploy_artifact_id, six.string_types) and len(deploy_artifact_id.strip()) == 0:
+    if isinstance(deploy_artifact_id, str) and len(deploy_artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12511,7 +12510,7 @@ def update_deploy_artifact_ocir_deploy_artifact_source(ctx, from_json, force, wa
 @cli_util.wrap_exceptions
 def update_deploy_artifact_helm_command_spec_artifact_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_id, deploy_artifact_source_base64_encoded_content, deploy_artifact_source_helm_artifact_source_type, description, display_name, deploy_artifact_type, argument_substitution_mode, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deploy_artifact_id, six.string_types) and len(deploy_artifact_id.strip()) == 0:
+    if isinstance(deploy_artifact_id, str) and len(deploy_artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12605,7 +12604,7 @@ def update_deploy_artifact_helm_command_spec_artifact_source(ctx, from_json, for
 @cli_util.wrap_exceptions
 def update_deploy_artifact_inline_deploy_artifact_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_id, deploy_artifact_source_base64_encoded_content, description, display_name, deploy_artifact_type, argument_substitution_mode, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deploy_artifact_id, six.string_types) and len(deploy_artifact_id.strip()) == 0:
+    if isinstance(deploy_artifact_id, str) and len(deploy_artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12696,7 +12695,7 @@ def update_deploy_artifact_inline_deploy_artifact_source(ctx, from_json, force, 
 @cli_util.wrap_exceptions
 def update_deploy_environment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_environment_id, deploy_environment_type, description, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deploy_environment_id, six.string_types) and len(deploy_environment_id.strip()) == 0:
+    if isinstance(deploy_environment_id, str) and len(deploy_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-environment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12778,7 +12777,7 @@ def update_deploy_environment(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_deploy_environment_update_function_deploy_environment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_environment_id, description, display_name, freeform_tags, defined_tags, function_id, if_match):
 
-    if isinstance(deploy_environment_id, six.string_types) and len(deploy_environment_id.strip()) == 0:
+    if isinstance(deploy_environment_id, str) and len(deploy_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-environment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12864,7 +12863,7 @@ def update_deploy_environment_update_function_deploy_environment_details(ctx, fr
 @cli_util.wrap_exceptions
 def update_deploy_environment_update_compute_instance_group_deploy_environment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_environment_id, description, display_name, freeform_tags, defined_tags, compute_instance_group_selectors, if_match):
 
-    if isinstance(deploy_environment_id, six.string_types) and len(deploy_environment_id.strip()) == 0:
+    if isinstance(deploy_environment_id, str) and len(deploy_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-environment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or compute_instance_group_selectors:
@@ -12951,7 +12950,7 @@ def update_deploy_environment_update_compute_instance_group_deploy_environment_d
 @cli_util.wrap_exceptions
 def update_deploy_environment_update_oke_cluster_deploy_environment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_environment_id, description, display_name, freeform_tags, defined_tags, cluster_id, network_channel, if_match):
 
-    if isinstance(deploy_environment_id, six.string_types) and len(deploy_environment_id.strip()) == 0:
+    if isinstance(deploy_environment_id, str) and len(deploy_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-environment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or network_channel:
@@ -13040,7 +13039,7 @@ def update_deploy_environment_update_oke_cluster_deploy_environment_details(ctx,
 @cli_util.wrap_exceptions
 def update_deploy_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_pipeline_id, description, display_name, deploy_pipeline_parameters, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deploy_pipeline_id, six.string_types) and len(deploy_pipeline_id.strip()) == 0:
+    if isinstance(deploy_pipeline_id, str) and len(deploy_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-pipeline-id cannot be whitespace or empty string')
     if not force:
         if deploy_pipeline_parameters or freeform_tags or defined_tags:
@@ -13125,7 +13124,7 @@ def update_deploy_pipeline(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def update_deploy_stage(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, deploy_stage_type, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags:
@@ -13211,7 +13210,7 @@ def update_deploy_stage(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_oke_canary_traffic_shift_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, rollout_policy, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or rollout_policy:
@@ -13301,7 +13300,7 @@ def update_deploy_stage_update_oke_canary_traffic_shift_deploy_stage_details(ctx
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_oke_canary_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, kubernetes_manifest_deploy_artifact_ids, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or kubernetes_manifest_deploy_artifact_ids:
@@ -13412,7 +13411,7 @@ def update_deploy_stage_update_oke_canary_deploy_stage_details(ctx, from_json, f
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_oke_helm_chart_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, oke_cluster_deploy_environment_id, helm_chart_deploy_artifact_id, values_artifact_ids, release_name, is_uninstall_on_stage_delete, helm_command_artifact_ids, purpose, namespace, timeout_in_seconds, rollback_policy, set_values, set_string, are_hooks_enabled, should_reuse_values, should_reset_values, is_force_enabled, should_cleanup_on_fail, max_history, should_skip_crds, should_skip_render_subchart_notes, should_not_wait, is_debug_enabled, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or values_artifact_ids or helm_command_artifact_ids or rollback_policy or set_values or set_string:
@@ -13571,7 +13570,7 @@ def update_deploy_stage_update_oke_helm_chart_deploy_stage_details(ctx, from_jso
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_compute_instance_group_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, compute_instance_group_deploy_environment_id, deployment_spec_deploy_artifact_id, deploy_artifact_ids, rollout_policy, rollback_policy, failure_policy, load_balancer_config, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or deploy_artifact_ids or rollout_policy or rollback_policy or failure_policy or load_balancer_config:
@@ -13679,7 +13678,7 @@ def update_deploy_stage_update_compute_instance_group_deploy_stage_details(ctx, 
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_oke_canary_approval_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, approval_policy, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or approval_policy:
@@ -13771,7 +13770,7 @@ def update_deploy_stage_update_oke_canary_approval_deploy_stage_details(ctx, fro
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_shell_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, container_config, command_spec_deploy_artifact_id, timeout_in_seconds, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or container_config:
@@ -13870,7 +13869,7 @@ def update_deploy_stage_update_shell_deploy_stage_details(ctx, from_json, force,
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_oke_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, oke_cluster_deploy_environment_id, kubernetes_manifest_deploy_artifact_ids, namespace, rollback_policy, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or kubernetes_manifest_deploy_artifact_ids or rollback_policy:
@@ -13969,7 +13968,7 @@ def update_deploy_stage_update_oke_deploy_stage_details(ctx, from_json, force, w
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_compute_instance_group_canary_approval_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, approval_policy, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or approval_policy:
@@ -14064,7 +14063,7 @@ def update_deploy_stage_update_compute_instance_group_canary_approval_deploy_sta
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_load_balancer_traffic_shift_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, blue_backend_ips, green_backend_ips, traffic_shift_target, rollout_policy, load_balancer_config, rollback_policy, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or blue_backend_ips or green_backend_ips or rollout_policy or load_balancer_config or rollback_policy:
@@ -14169,7 +14168,7 @@ def update_deploy_stage_update_load_balancer_traffic_shift_deploy_stage_details(
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_oke_blue_green_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, kubernetes_manifest_deploy_artifact_ids, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or kubernetes_manifest_deploy_artifact_ids:
@@ -14259,7 +14258,7 @@ def update_deploy_stage_update_oke_blue_green_deploy_stage_details(ctx, from_jso
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_wait_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, wait_criteria, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or wait_criteria:
@@ -14348,7 +14347,7 @@ def update_deploy_stage_update_wait_deploy_stage_details(ctx, from_json, force, 
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_oke_blue_green_traffic_shift_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags:
@@ -14435,7 +14434,7 @@ def update_deploy_stage_update_oke_blue_green_traffic_shift_deploy_stage_details
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_manual_approval_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, approval_policy, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or approval_policy:
@@ -14529,7 +14528,7 @@ def update_deploy_stage_update_manual_approval_deploy_stage_details(ctx, from_js
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_compute_instance_group_blue_green_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, deployment_spec_deploy_artifact_id, deploy_artifact_ids, rollout_policy, failure_policy, test_load_balancer_config, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or deploy_artifact_ids or rollout_policy or failure_policy or test_load_balancer_config:
@@ -14634,7 +14633,7 @@ def update_deploy_stage_update_compute_instance_group_blue_green_deploy_stage_de
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_compute_instance_group_canary_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, deployment_spec_deploy_artifact_id, deploy_artifact_ids, rollout_policy, test_load_balancer_config, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or deploy_artifact_ids or rollout_policy or test_load_balancer_config:
@@ -14737,7 +14736,7 @@ def update_deploy_stage_update_compute_instance_group_canary_deploy_stage_detail
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_function_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, function_deploy_environment_id, docker_image_deploy_artifact_id, config, max_memory_in_mbs, function_timeout_in_seconds, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or config:
@@ -14838,7 +14837,7 @@ def update_deploy_stage_update_function_deploy_stage_details(ctx, from_json, for
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_compute_instance_group_blue_green_traffic_shift_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags:
@@ -14925,7 +14924,7 @@ def update_deploy_stage_update_compute_instance_group_blue_green_traffic_shift_d
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_compute_instance_group_canary_traffic_shift_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, rollout_policy, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags or rollout_policy:
@@ -15018,7 +15017,7 @@ def update_deploy_stage_update_compute_instance_group_canary_traffic_shift_deplo
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_invoke_function_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, function_deploy_environment_id, deploy_artifact_id, is_async, is_validation_enabled, if_match):
 
-    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+    if isinstance(deploy_stage_id, str) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
         if deploy_stage_predecessor_collection or freeform_tags or defined_tags:
@@ -15115,7 +15114,7 @@ def update_deploy_stage_update_invoke_function_deploy_stage_details(ctx, from_js
 @cli_util.wrap_exceptions
 def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, deployment_type, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15188,7 +15187,7 @@ def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_deployment_update_single_deploy_stage_deployment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15262,7 +15261,7 @@ def update_deployment_update_single_deploy_stage_deployment_details(ctx, from_js
 @cli_util.wrap_exceptions
 def update_deployment_update_deploy_pipeline_redeployment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15336,7 +15335,7 @@ def update_deployment_update_deploy_pipeline_redeployment_details(ctx, from_json
 @cli_util.wrap_exceptions
 def update_deployment_update_deploy_pipeline_deployment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15410,7 +15409,7 @@ def update_deployment_update_deploy_pipeline_deployment_details(ctx, from_json, 
 @cli_util.wrap_exceptions
 def update_deployment_update_single_deploy_stage_redeployment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15485,7 +15484,7 @@ def update_deployment_update_single_deploy_stage_redeployment_details(ctx, from_
 @cli_util.wrap_exceptions
 def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, description, notification_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
     if not force:
         if notification_config or freeform_tags or defined_tags:
@@ -15559,10 +15558,10 @@ def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def update_project_notification_preference(ctx, from_json, notification_preference, project_id, principal_id, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
-    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+    if isinstance(principal_id, str) and len(principal_id.strip()) == 0:
         raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15596,7 +15595,7 @@ def update_project_notification_preference(ctx, from_json, notification_preferen
 @cli_util.wrap_exceptions
 def update_project_repository_settings(ctx, from_json, force, project_id, merge_settings, approval_rules, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
     if not force:
         if merge_settings or approval_rules:
@@ -15647,7 +15646,7 @@ This option is a JSON list with items of type UpdateReviewerDetails.  For docume
 @cli_util.wrap_exceptions
 def update_pull_request(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, display_name, description, destination_branch, reviewers, freeform_tags, defined_tags, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
     if not force:
         if reviewers or freeform_tags or defined_tags:
@@ -15727,10 +15726,10 @@ def update_pull_request(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_pull_request_comment(ctx, from_json, pull_request_id, comment_id, data, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+    if isinstance(comment_id, str) and len(comment_id.strip()) == 0:
         raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15765,10 +15764,10 @@ def update_pull_request_comment(ctx, from_json, pull_request_id, comment_id, dat
 @cli_util.wrap_exceptions
 def update_pull_request_notification_preference(ctx, from_json, notification_preference, pull_request_id, principal_id, if_match):
 
-    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+    if isinstance(pull_request_id, str) and len(pull_request_id.strip()) == 0:
         raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
 
-    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+    if isinstance(principal_id, str) and len(principal_id.strip()) == 0:
         raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15810,7 +15809,7 @@ def update_pull_request_notification_preference(ctx, from_json, notification_pre
 @cli_util.wrap_exceptions
 def update_repository(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, name, description, default_branch, repository_type, mirror_repository_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
     if not force:
         if mirror_repository_config or freeform_tags or defined_tags:
@@ -15893,10 +15892,10 @@ def update_repository(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_repository_notification_preference(ctx, from_json, notification_preference, repository_id, principal_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+    if isinstance(principal_id, str) and len(principal_id.strip()) == 0:
         raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15931,7 +15930,7 @@ def update_repository_notification_preference(ctx, from_json, notification_prefe
 @cli_util.wrap_exceptions
 def update_repository_settings(ctx, from_json, force, repository_id, merge_checks, merge_settings, approval_rules, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
     if not force:
         if merge_checks or merge_settings or approval_rules:
@@ -15985,7 +15984,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @cli_util.wrap_exceptions
 def update_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, trigger_source, display_name, description, actions, freeform_tags, defined_tags, if_match):
 
-    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+    if isinstance(trigger_id, str) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
     if not force:
         if actions or freeform_tags or defined_tags:
@@ -16072,7 +16071,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @cli_util.wrap_exceptions
 def update_trigger_update_bitbucket_server_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, if_match):
 
-    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+    if isinstance(trigger_id, str) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
     if not force:
         if actions or freeform_tags or defined_tags:
@@ -16161,7 +16160,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @cli_util.wrap_exceptions
 def update_trigger_update_vbs_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, connection_id, if_match):
 
-    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+    if isinstance(trigger_id, str) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
     if not force:
         if actions or freeform_tags or defined_tags:
@@ -16252,7 +16251,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @cli_util.wrap_exceptions
 def update_trigger_update_gitlab_server_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, if_match):
 
-    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+    if isinstance(trigger_id, str) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
     if not force:
         if actions or freeform_tags or defined_tags:
@@ -16341,7 +16340,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @cli_util.wrap_exceptions
 def update_trigger_update_devops_code_repository_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, repository_id, if_match):
 
-    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+    if isinstance(trigger_id, str) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
     if not force:
         if actions or freeform_tags or defined_tags:
@@ -16433,7 +16432,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @cli_util.wrap_exceptions
 def update_trigger_update_github_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, connection_id, if_match):
 
-    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+    if isinstance(trigger_id, str) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
     if not force:
         if actions or freeform_tags or defined_tags:
@@ -16525,7 +16524,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @cli_util.wrap_exceptions
 def update_trigger_update_gitlab_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, connection_id, if_match):
 
-    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+    if isinstance(trigger_id, str) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
     if not force:
         if actions or freeform_tags or defined_tags:
@@ -16617,7 +16616,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @cli_util.wrap_exceptions
 def update_trigger_update_bitbucket_cloud_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, connection_id, if_match):
 
-    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+    if isinstance(trigger_id, str) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
     if not force:
         if actions or freeform_tags or defined_tags:
@@ -16700,7 +16699,7 @@ def update_trigger_update_bitbucket_cloud_trigger_details(ctx, from_json, force,
 @cli_util.wrap_exceptions
 def validate_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -78,7 +77,7 @@ oracle_db_azure_key_root_group.add_command(oracle_db_azure_key_group)
 @cli_util.wrap_exceptions
 def get_oracle_db_azure_key(ctx, from_json, oracle_db_azure_key_id, limit, page, sort_order):
 
-    if isinstance(oracle_db_azure_key_id, six.string_types) and len(oracle_db_azure_key_id.strip()) == 0:
+    if isinstance(oracle_db_azure_key_id, str) and len(oracle_db_azure_key_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-key-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -55,7 +54,7 @@ sql_tuning_root_group.add_command(sql_tuning_set_group)
 @cli_util.wrap_exceptions
 def clone_sql_tuning_task(ctx, from_json, managed_database_id, task_name, original_task_id, task_description, credential_details, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -99,7 +98,7 @@ def clone_sql_tuning_task(ctx, from_json, managed_database_id, task_name, origin
 @cli_util.wrap_exceptions
 def clone_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, credential_details_username, credential_details_role, credential_details_password_secret_id, task_description, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -146,7 +145,7 @@ def clone_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_js
 @cli_util.wrap_exceptions
 def clone_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, credential_details_username, credential_details_role, credential_details_password, task_description, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -193,7 +192,7 @@ def clone_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_
 @cli_util.wrap_exceptions
 def clone_sql_tuning_task_database_secret_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, database_credential_password_secret_id, task_description, credential_details, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -242,7 +241,7 @@ def clone_sql_tuning_task_database_secret_credential_details(ctx, from_json, man
 @cli_util.wrap_exceptions
 def clone_sql_tuning_task_database_named_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, database_credential_named_credential_id, task_description, credential_details):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -287,7 +286,7 @@ def clone_sql_tuning_task_database_named_credential_details(ctx, from_json, mana
 @cli_util.wrap_exceptions
 def clone_sql_tuning_task_database_password_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, database_credential_password, task_description, credential_details, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -337,7 +336,7 @@ def clone_sql_tuning_task_database_password_credential_details(ctx, from_json, m
 @cli_util.wrap_exceptions
 def create_sql_tuning_set(ctx, from_json, managed_database_id, name, credential_details, database_credential, owner, description, show_sql_only):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -387,7 +386,7 @@ def create_sql_tuning_set(ctx, from_json, managed_database_id, name, credential_
 @cli_util.wrap_exceptions
 def create_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, name, credential_details_username, credential_details_role, credential_details_password, database_credential, owner, description, show_sql_only):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -440,7 +439,7 @@ def create_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, 
 @cli_util.wrap_exceptions
 def create_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, name, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, owner, description, show_sql_only):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -493,7 +492,7 @@ def create_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, fr
 @cli_util.wrap_exceptions
 def create_sql_tuning_set_database_secret_credential_details(ctx, from_json, managed_database_id, name, database_credential_password_secret_id, credential_details, owner, description, show_sql_only, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -548,7 +547,7 @@ def create_sql_tuning_set_database_secret_credential_details(ctx, from_json, man
 @cli_util.wrap_exceptions
 def create_sql_tuning_set_database_named_credential_details(ctx, from_json, managed_database_id, name, database_credential_named_credential_id, credential_details, owner, description, show_sql_only):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -599,7 +598,7 @@ def create_sql_tuning_set_database_named_credential_details(ctx, from_json, mana
 @cli_util.wrap_exceptions
 def create_sql_tuning_set_database_password_credential_details(ctx, from_json, managed_database_id, name, database_credential_password, credential_details, owner, description, show_sql_only, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -654,10 +653,10 @@ def create_sql_tuning_set_database_password_credential_details(ctx, from_json, m
 @cli_util.wrap_exceptions
 def drop_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details, database_credential, owner, show_sql_only):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -705,10 +704,10 @@ def drop_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, 
 @cli_util.wrap_exceptions
 def drop_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_password, database_credential, owner, show_sql_only):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -759,10 +758,10 @@ def drop_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, fr
 @cli_util.wrap_exceptions
 def drop_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, owner, show_sql_only):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -813,10 +812,10 @@ def drop_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from
 @cli_util.wrap_exceptions
 def drop_sql_tuning_set_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_password_secret_id, credential_details, owner, show_sql_only, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -869,10 +868,10 @@ def drop_sql_tuning_set_database_secret_credential_details(ctx, from_json, manag
 @cli_util.wrap_exceptions
 def drop_sql_tuning_set_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_named_credential_id, credential_details, owner, show_sql_only):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -921,10 +920,10 @@ def drop_sql_tuning_set_database_named_credential_details(ctx, from_json, manage
 @cli_util.wrap_exceptions
 def drop_sql_tuning_set_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_password, credential_details, owner, show_sql_only, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -974,7 +973,7 @@ def drop_sql_tuning_set_database_password_credential_details(ctx, from_json, man
 @cli_util.wrap_exceptions
 def drop_sql_tuning_task(ctx, from_json, managed_database_id, task_id, credential_details, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1012,7 +1011,7 @@ def drop_sql_tuning_task(ctx, from_json, managed_database_id, task_id, credentia
 @cli_util.wrap_exceptions
 def drop_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_id, credential_details_username, credential_details_role, credential_details_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1053,7 +1052,7 @@ def drop_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_jso
 @cli_util.wrap_exceptions
 def drop_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_id, credential_details_username, credential_details_role, credential_details_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1094,7 +1093,7 @@ def drop_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_j
 @cli_util.wrap_exceptions
 def drop_sql_tuning_task_database_secret_credential_details(ctx, from_json, managed_database_id, task_id, database_credential_password_secret_id, credential_details, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1137,7 +1136,7 @@ def drop_sql_tuning_task_database_secret_credential_details(ctx, from_json, mana
 @cli_util.wrap_exceptions
 def drop_sql_tuning_task_database_named_credential_details(ctx, from_json, managed_database_id, task_id, database_credential_named_credential_id, credential_details):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1176,7 +1175,7 @@ def drop_sql_tuning_task_database_named_credential_details(ctx, from_json, manag
 @cli_util.wrap_exceptions
 def drop_sql_tuning_task_database_password_credential_details(ctx, from_json, managed_database_id, task_id, database_credential_password, credential_details, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1223,10 +1222,10 @@ def drop_sql_tuning_task_database_password_credential_details(ctx, from_json, ma
 @cli_util.wrap_exceptions
 def drop_sqls_in_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details, database_credential, show_sql_only, owner, basic_filter):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1278,10 +1277,10 @@ def drop_sqls_in_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_
 @cli_util.wrap_exceptions
 def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_password, database_credential, show_sql_only, owner, basic_filter):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1336,10 +1335,10 @@ def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_password_credential_details
 @cli_util.wrap_exceptions
 def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, show_sql_only, owner, basic_filter):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1394,10 +1393,10 @@ def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(c
 @cli_util.wrap_exceptions
 def drop_sqls_in_sql_tuning_set_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_password_secret_id, credential_details, show_sql_only, owner, basic_filter, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1454,10 +1453,10 @@ def drop_sqls_in_sql_tuning_set_database_secret_credential_details(ctx, from_jso
 @cli_util.wrap_exceptions
 def drop_sqls_in_sql_tuning_set_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_named_credential_id, credential_details, show_sql_only, owner, basic_filter):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1510,10 +1509,10 @@ def drop_sqls_in_sql_tuning_set_database_named_credential_details(ctx, from_json
 @cli_util.wrap_exceptions
 def drop_sqls_in_sql_tuning_set_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_password, credential_details, show_sql_only, owner, basic_filter, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1575,10 +1574,10 @@ def drop_sqls_in_sql_tuning_set_database_password_credential_details(ctx, from_j
 @cli_util.wrap_exceptions
 def fetch_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, credential_details, database_credential, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1648,10 +1647,10 @@ def fetch_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id,
 @cli_util.wrap_exceptions
 def fetch_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, credential_details_username, credential_details_role, credential_details_password, database_credential, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1724,10 +1723,10 @@ def fetch_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, f
 @cli_util.wrap_exceptions
 def fetch_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1800,10 +1799,10 @@ def fetch_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, fro
 @cli_util.wrap_exceptions
 def fetch_sql_tuning_set_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, database_credential_password_secret_id, credential_details, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1878,10 +1877,10 @@ def fetch_sql_tuning_set_database_secret_credential_details(ctx, from_json, mana
 @cli_util.wrap_exceptions
 def fetch_sql_tuning_set_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, database_credential_named_credential_id, credential_details, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1952,10 +1951,10 @@ def fetch_sql_tuning_set_database_named_credential_details(ctx, from_json, manag
 @cli_util.wrap_exceptions
 def fetch_sql_tuning_set_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, database_credential_password, credential_details, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2022,10 +2021,10 @@ def fetch_sql_tuning_set_database_password_credential_details(ctx, from_json, ma
 @cli_util.wrap_exceptions
 def get_execution_plan_stats_comparision(ctx, from_json, managed_database_id, sql_tuning_advisor_task_id, sql_object_id, execution_id, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_advisor_task_id, six.string_types) and len(sql_tuning_advisor_task_id.strip()) == 0:
+    if isinstance(sql_tuning_advisor_task_id, str) and len(sql_tuning_advisor_task_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-advisor-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2056,10 +2055,10 @@ def get_execution_plan_stats_comparision(ctx, from_json, managed_database_id, sq
 @cli_util.wrap_exceptions
 def get_sql_execution_plan(ctx, from_json, managed_database_id, sql_tuning_advisor_task_id, sql_object_id, attribute, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_advisor_task_id, six.string_types) and len(sql_tuning_advisor_task_id.strip()) == 0:
+    if isinstance(sql_tuning_advisor_task_id, str) and len(sql_tuning_advisor_task_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-advisor-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2093,10 +2092,10 @@ def get_sql_execution_plan(ctx, from_json, managed_database_id, sql_tuning_advis
 @cli_util.wrap_exceptions
 def get_sql_tuning_advisor_task_summary_report(ctx, from_json, managed_database_id, sql_tuning_advisor_task_id, search_period, time_greater_than_or_equal_to, time_less_than_or_equal_to, begin_exec_id_greater_than_or_equal_to, end_exec_id_less_than_or_equal_to, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_advisor_task_id, six.string_types) and len(sql_tuning_advisor_task_id.strip()) == 0:
+    if isinstance(sql_tuning_advisor_task_id, str) and len(sql_tuning_advisor_task_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-advisor-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2148,10 +2147,10 @@ def list_sql_tuning_advisor_task_findings(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_advisor_task_id, six.string_types) and len(sql_tuning_advisor_task_id.strip()) == 0:
+    if isinstance(sql_tuning_advisor_task_id, str) and len(sql_tuning_advisor_task_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-advisor-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2229,10 +2228,10 @@ def list_sql_tuning_advisor_task_recommendations(ctx, from_json, all_pages, page
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_advisor_task_id, six.string_types) and len(sql_tuning_advisor_task_id.strip()) == 0:
+    if isinstance(sql_tuning_advisor_task_id, str) and len(sql_tuning_advisor_task_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-advisor-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2305,7 +2304,7 @@ def list_sql_tuning_advisor_tasks(ctx, from_json, all_pages, page_size, managed_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2375,7 +2374,7 @@ def list_sql_tuning_sets(ctx, from_json, all_pages, page_size, managed_database_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2457,10 +2456,10 @@ def list_sql_tuning_sets(ctx, from_json, all_pages, page_size, managed_database_
 @cli_util.wrap_exceptions
 def load_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, credential_details, database_credential, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2594,10 +2593,10 @@ def load_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, 
 @cli_util.wrap_exceptions
 def load_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, credential_details_username, credential_details_role, credential_details_password, database_credential, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2734,10 +2733,10 @@ def load_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, fr
 @cli_util.wrap_exceptions
 def load_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2874,10 +2873,10 @@ def load_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from
 @cli_util.wrap_exceptions
 def load_sql_tuning_set_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, database_credential_password_secret_id, credential_details, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3016,10 +3015,10 @@ def load_sql_tuning_set_database_secret_credential_details(ctx, from_json, manag
 @cli_util.wrap_exceptions
 def load_sql_tuning_set_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, database_credential_named_credential_id, credential_details, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3154,10 +3153,10 @@ def load_sql_tuning_set_database_named_credential_details(ctx, from_json, manage
 @cli_util.wrap_exceptions
 def load_sql_tuning_set_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, database_credential_password, credential_details, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3293,10 +3292,10 @@ def load_sql_tuning_set_database_password_credential_details(ctx, from_json, man
 @cli_util.wrap_exceptions
 def save_sql_tuning_set_as(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, credential_details, database_credential, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3416,10 +3415,10 @@ def save_sql_tuning_set_as(ctx, from_json, managed_database_id, sql_tuning_set_i
 @cli_util.wrap_exceptions
 def save_sql_tuning_set_as_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, credential_details_username, credential_details_role, credential_details_password, database_credential, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3542,10 +3541,10 @@ def save_sql_tuning_set_as_sql_tuning_set_admin_password_credential_details(ctx,
 @cli_util.wrap_exceptions
 def save_sql_tuning_set_as_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3668,10 +3667,10 @@ def save_sql_tuning_set_as_sql_tuning_set_admin_secret_credential_details(ctx, f
 @cli_util.wrap_exceptions
 def save_sql_tuning_set_as_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, database_credential_password_secret_id, credential_details, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3796,10 +3795,10 @@ def save_sql_tuning_set_as_database_secret_credential_details(ctx, from_json, ma
 @cli_util.wrap_exceptions
 def save_sql_tuning_set_as_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, database_credential_named_credential_id, credential_details, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3920,10 +3919,10 @@ def save_sql_tuning_set_as_database_named_credential_details(ctx, from_json, man
 @cli_util.wrap_exceptions
 def save_sql_tuning_set_as_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, database_credential_password, credential_details, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4036,7 +4035,7 @@ This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For docum
 @cli_util.wrap_exceptions
 def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, task_description, credential_details, database_credential, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4104,7 +4103,7 @@ This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For docum
 @cli_util.wrap_exceptions
 def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, credential_details_username, credential_details_role, credential_details_password_secret_id, task_description, database_credential, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4175,7 +4174,7 @@ This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For docum
 @cli_util.wrap_exceptions
 def start_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, credential_details_username, credential_details_role, credential_details_password, task_description, database_credential, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4246,7 +4245,7 @@ This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For docum
 @cli_util.wrap_exceptions
 def start_sql_tuning_task_database_secret_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, database_credential_password_secret_id, task_description, credential_details, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4319,7 +4318,7 @@ This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For docum
 @cli_util.wrap_exceptions
 def start_sql_tuning_task_database_named_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, database_credential_named_credential_id, task_description, credential_details, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4388,7 +4387,7 @@ This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For docum
 @cli_util.wrap_exceptions
 def start_sql_tuning_task_database_password_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, database_credential_password, task_description, credential_details, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4454,10 +4453,10 @@ def start_sql_tuning_task_database_password_credential_details(ctx, from_json, m
 @cli_util.wrap_exceptions
 def validate_basic_filter(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, credential_details, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4501,10 +4500,10 @@ def validate_basic_filter(ctx, from_json, managed_database_id, sql_tuning_set_id
 @cli_util.wrap_exceptions
 def validate_basic_filter_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, credential_details_username, credential_details_role, credential_details_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4551,10 +4550,10 @@ def validate_basic_filter_sql_tuning_set_admin_password_credential_details(ctx, 
 @cli_util.wrap_exceptions
 def validate_basic_filter_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, credential_details_username, credential_details_role, credential_details_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4601,10 +4600,10 @@ def validate_basic_filter_sql_tuning_set_admin_secret_credential_details(ctx, fr
 @cli_util.wrap_exceptions
 def validate_basic_filter_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, database_credential_password_secret_id, credential_details, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4653,10 +4652,10 @@ def validate_basic_filter_database_secret_credential_details(ctx, from_json, man
 @cli_util.wrap_exceptions
 def validate_basic_filter_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, database_credential_named_credential_id, credential_details):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4701,10 +4700,10 @@ def validate_basic_filter_database_named_credential_details(ctx, from_json, mana
 @cli_util.wrap_exceptions
 def validate_basic_filter_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, database_credential_password, credential_details, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+    if isinstance(sql_tuning_set_id, str) and len(sql_tuning_set_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -46,7 +45,7 @@ link_root_group.add_command(link_group)
 @cli_util.wrap_exceptions
 def delete_link(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, link_id, if_match):
 
-    if isinstance(link_id, six.string_types) and len(link_id.strip()) == 0:
+    if isinstance(link_id, str) and len(link_id.strip()) == 0:
         raise click.UsageError('Parameter --link-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -97,7 +96,7 @@ def delete_link(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def get_link(ctx, from_json, link_id):
 
-    if isinstance(link_id, six.string_types) and len(link_id.strip()) == 0:
+    if isinstance(link_id, str) and len(link_id.strip()) == 0:
         raise click.UsageError('Parameter --link-id cannot be whitespace or empty string')
 
     kwargs = {}

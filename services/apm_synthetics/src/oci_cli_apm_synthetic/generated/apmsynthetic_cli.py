@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -126,7 +125,7 @@ apm_synthetics_root_group.add_command(public_vantage_point_collection_group)
 @cli_util.wrap_exceptions
 def aggregate_network_data(ctx, from_json, apm_domain_id, monitor_id, vantage_point_execution_times):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1642,7 +1641,7 @@ def create_script(ctx, from_json, apm_domain_id, display_name, content_type, con
 @cli_util.wrap_exceptions
 def create_worker(ctx, from_json, apm_domain_id, on_premise_vantage_point_id, name, version_parameterconflict, resource_principal_token_public_key, configuration_details, worker_type, status, priority, freeform_tags, defined_tags):
 
-    if isinstance(on_premise_vantage_point_id, six.string_types) and len(on_premise_vantage_point_id.strip()) == 0:
+    if isinstance(on_premise_vantage_point_id, str) and len(on_premise_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --on-premise-vantage-point-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1693,7 +1692,7 @@ def create_worker(ctx, from_json, apm_domain_id, on_premise_vantage_point_id, na
 @cli_util.wrap_exceptions
 def delete_dedicated_vantage_point(ctx, from_json, apm_domain_id, dedicated_vantage_point_id, if_match):
 
-    if isinstance(dedicated_vantage_point_id, six.string_types) and len(dedicated_vantage_point_id.strip()) == 0:
+    if isinstance(dedicated_vantage_point_id, str) and len(dedicated_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-vantage-point-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1721,7 +1720,7 @@ def delete_dedicated_vantage_point(ctx, from_json, apm_domain_id, dedicated_vant
 @cli_util.wrap_exceptions
 def delete_monitor(ctx, from_json, apm_domain_id, monitor_id, if_match):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1749,7 +1748,7 @@ def delete_monitor(ctx, from_json, apm_domain_id, monitor_id, if_match):
 @cli_util.wrap_exceptions
 def delete_on_premise_vantage_point(ctx, from_json, apm_domain_id, on_premise_vantage_point_id, if_match):
 
-    if isinstance(on_premise_vantage_point_id, six.string_types) and len(on_premise_vantage_point_id.strip()) == 0:
+    if isinstance(on_premise_vantage_point_id, str) and len(on_premise_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --on-premise-vantage-point-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1777,7 +1776,7 @@ def delete_on_premise_vantage_point(ctx, from_json, apm_domain_id, on_premise_va
 @cli_util.wrap_exceptions
 def delete_script(ctx, from_json, apm_domain_id, script_id, if_match):
 
-    if isinstance(script_id, six.string_types) and len(script_id.strip()) == 0:
+    if isinstance(script_id, str) and len(script_id.strip()) == 0:
         raise click.UsageError('Parameter --script-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1806,10 +1805,10 @@ def delete_script(ctx, from_json, apm_domain_id, script_id, if_match):
 @cli_util.wrap_exceptions
 def delete_worker(ctx, from_json, apm_domain_id, on_premise_vantage_point_id, worker_id, if_match):
 
-    if isinstance(on_premise_vantage_point_id, six.string_types) and len(on_premise_vantage_point_id.strip()) == 0:
+    if isinstance(on_premise_vantage_point_id, str) and len(on_premise_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --on-premise-vantage-point-id cannot be whitespace or empty string')
 
-    if isinstance(worker_id, six.string_types) and len(worker_id.strip()) == 0:
+    if isinstance(worker_id, str) and len(worker_id.strip()) == 0:
         raise click.UsageError('Parameter --worker-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1836,7 +1835,7 @@ def delete_worker(ctx, from_json, apm_domain_id, on_premise_vantage_point_id, wo
 @cli_util.wrap_exceptions
 def get_dedicated_vantage_point(ctx, from_json, apm_domain_id, dedicated_vantage_point_id):
 
-    if isinstance(dedicated_vantage_point_id, six.string_types) and len(dedicated_vantage_point_id.strip()) == 0:
+    if isinstance(dedicated_vantage_point_id, str) and len(dedicated_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-vantage-point-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1860,7 +1859,7 @@ def get_dedicated_vantage_point(ctx, from_json, apm_domain_id, dedicated_vantage
 @cli_util.wrap_exceptions
 def get_monitor(ctx, from_json, apm_domain_id, monitor_id):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1888,10 +1887,10 @@ def get_monitor(ctx, from_json, apm_domain_id, monitor_id):
 @cli_util.wrap_exceptions
 def get_monitor_result(ctx, from_json, apm_domain_id, monitor_id, vantage_point, result_type, result_content_type, execution_time):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
 
-    if isinstance(execution_time, six.string_types) and len(execution_time.strip()) == 0:
+    if isinstance(execution_time, str) and len(execution_time.strip()) == 0:
         raise click.UsageError('Parameter --execution-time cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1919,7 +1918,7 @@ def get_monitor_result(ctx, from_json, apm_domain_id, monitor_id, vantage_point,
 @cli_util.wrap_exceptions
 def get_on_premise_vantage_point(ctx, from_json, apm_domain_id, on_premise_vantage_point_id):
 
-    if isinstance(on_premise_vantage_point_id, six.string_types) and len(on_premise_vantage_point_id.strip()) == 0:
+    if isinstance(on_premise_vantage_point_id, str) and len(on_premise_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --on-premise-vantage-point-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1943,7 +1942,7 @@ def get_on_premise_vantage_point(ctx, from_json, apm_domain_id, on_premise_vanta
 @cli_util.wrap_exceptions
 def get_script(ctx, from_json, apm_domain_id, script_id):
 
-    if isinstance(script_id, six.string_types) and len(script_id.strip()) == 0:
+    if isinstance(script_id, str) and len(script_id.strip()) == 0:
         raise click.UsageError('Parameter --script-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1968,10 +1967,10 @@ def get_script(ctx, from_json, apm_domain_id, script_id):
 @cli_util.wrap_exceptions
 def get_worker(ctx, from_json, apm_domain_id, on_premise_vantage_point_id, worker_id):
 
-    if isinstance(on_premise_vantage_point_id, six.string_types) and len(on_premise_vantage_point_id.strip()) == 0:
+    if isinstance(on_premise_vantage_point_id, str) and len(on_premise_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --on-premise-vantage-point-id cannot be whitespace or empty string')
 
-    if isinstance(worker_id, six.string_types) and len(worker_id.strip()) == 0:
+    if isinstance(worker_id, str) and len(worker_id.strip()) == 0:
         raise click.UsageError('Parameter --worker-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2339,7 +2338,7 @@ def list_workers(ctx, from_json, all_pages, page_size, apm_domain_id, on_premise
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(on_premise_vantage_point_id, six.string_types) and len(on_premise_vantage_point_id.strip()) == 0:
+    if isinstance(on_premise_vantage_point_id, str) and len(on_premise_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --on-premise-vantage-point-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2406,7 +2405,7 @@ def list_workers(ctx, from_json, all_pages, page_size, apm_domain_id, on_premise
 @cli_util.wrap_exceptions
 def update_dedicated_vantage_point(ctx, from_json, force, apm_domain_id, dedicated_vantage_point_id, status, dvp_stack_details, region_parameterconflict, freeform_tags, defined_tags, if_match):
 
-    if isinstance(dedicated_vantage_point_id, six.string_types) and len(dedicated_vantage_point_id.strip()) == 0:
+    if isinstance(dedicated_vantage_point_id, str) and len(dedicated_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-vantage-point-id cannot be whitespace or empty string')
     if not force:
         if dvp_stack_details or freeform_tags or defined_tags:
@@ -2464,7 +2463,7 @@ def update_dedicated_vantage_point(ctx, from_json, force, apm_domain_id, dedicat
 @cli_util.wrap_exceptions
 def update_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, force, apm_domain_id, dedicated_vantage_point_id, dvp_stack_details_dvp_version, dvp_stack_details_dvp_stack_id, dvp_stack_details_dvp_stream_id, status, region_parameterconflict, freeform_tags, defined_tags, if_match):
 
-    if isinstance(dedicated_vantage_point_id, six.string_types) and len(dedicated_vantage_point_id.strip()) == 0:
+    if isinstance(dedicated_vantage_point_id, str) and len(dedicated_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-vantage-point-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2538,7 +2537,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.wrap_exceptions
 def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, configuration, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or configuration or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -2658,7 +2657,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.wrap_exceptions
 def update_monitor_ftp_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_ftp_protocol, configuration_ftp_request_type, configuration_is_active_mode, configuration_ftp_basic_authentication_details, configuration_download_size_limit_in_bytes, configuration_upload_file_size_in_bytes, configuration_network_configuration, configuration_verify_response_codes, configuration_verify_response_content):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -2804,7 +2803,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.wrap_exceptions
 def update_monitor_dns_sec_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_record_type, configuration_verify_response_content):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -2930,7 +2929,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.wrap_exceptions
 def update_monitor_dns_trace_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_record_type, configuration_protocol, configuration_verify_response_content):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -3063,7 +3062,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.wrap_exceptions
 def update_monitor_sql_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_database_type, configuration_query, configuration_database_authentication_details, configuration_database_role, configuration_database_connection_type, configuration_connection_string, configuration_database_wallet_details):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -3204,7 +3203,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.wrap_exceptions
 def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_req_authentication_scheme, configuration_verify_response_codes, configuration_network_configuration):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -3336,7 +3335,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.wrap_exceptions
 def update_monitor_dns_server_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_record_type, configuration_name_server, configuration_network_configuration, configuration_protocol, configuration_verify_response_content, configuration_is_query_recursive):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -3474,7 +3473,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.wrap_exceptions
 def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_is_certificate_validation_enabled, configuration_is_default_snapshot_enabled, configuration_network_configuration):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -3616,7 +3615,7 @@ This option is a JSON list with items of type RequestQueryParam.  For documentat
 @cli_util.wrap_exceptions
 def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_is_redirection_enabled, configuration_is_certificate_validation_enabled, configuration_request_method, configuration_req_authentication_scheme, configuration_req_authentication_details, configuration_client_certificate_details, configuration_request_headers, configuration_request_query_params, configuration_request_post_body, configuration_verify_response_content, configuration_verify_response_codes, configuration_network_configuration):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -3776,7 +3775,7 @@ This option is a JSON list with items of type VerifyText.  For documentation on 
 @cli_util.wrap_exceptions
 def update_monitor_browser_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_is_certificate_validation_enabled, configuration_is_default_snapshot_enabled, configuration_verify_texts, configuration_verify_response_codes, configuration_network_configuration):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -3909,7 +3908,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.wrap_exceptions
 def update_monitor_network_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, configuration_network_configuration, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, is_i_pv6, if_match, configuration_is_failure_retried, configuration_dns_configuration):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
@@ -4009,7 +4008,7 @@ def update_monitor_network_monitor_configuration(ctx, from_json, force, apm_doma
 @cli_util.wrap_exceptions
 def update_on_premise_vantage_point(ctx, from_json, force, apm_domain_id, on_premise_vantage_point_id, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(on_premise_vantage_point_id, six.string_types) and len(on_premise_vantage_point_id.strip()) == 0:
+    if isinstance(on_premise_vantage_point_id, str) and len(on_premise_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --on-premise-vantage-point-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4063,7 +4062,7 @@ This option is a JSON list with items of type ScriptParameter.  For documentatio
 @cli_util.wrap_exceptions
 def update_script(ctx, from_json, force, apm_domain_id, script_id, display_name, content_type, content, content_file_name, parameters, freeform_tags, defined_tags, if_match):
 
-    if isinstance(script_id, six.string_types) and len(script_id.strip()) == 0:
+    if isinstance(script_id, str) and len(script_id.strip()) == 0:
         raise click.UsageError('Parameter --script-id cannot be whitespace or empty string')
     if not force:
         if parameters or freeform_tags or defined_tags:
@@ -4126,10 +4125,10 @@ def update_script(ctx, from_json, force, apm_domain_id, script_id, display_name,
 @cli_util.wrap_exceptions
 def update_worker(ctx, from_json, force, apm_domain_id, on_premise_vantage_point_id, worker_id, configuration_details, status, priority, freeform_tags, defined_tags, if_match):
 
-    if isinstance(on_premise_vantage_point_id, six.string_types) and len(on_premise_vantage_point_id.strip()) == 0:
+    if isinstance(on_premise_vantage_point_id, str) and len(on_premise_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --on-premise-vantage-point-id cannot be whitespace or empty string')
 
-    if isinstance(worker_id, six.string_types) and len(worker_id.strip()) == 0:
+    if isinstance(worker_id, str) and len(worker_id.strip()) == 0:
         raise click.UsageError('Parameter --worker-id cannot be whitespace or empty string')
     if not force:
         if configuration_details or freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -89,7 +88,7 @@ Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_type
 @cli_util.wrap_exceptions
 def change_oracle_db_azure_vault_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_azure_vault_id, compartment_id, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(oracle_db_azure_vault_id, six.string_types) and len(oracle_db_azure_vault_id.strip()) == 0:
+    if isinstance(oracle_db_azure_vault_id, str) and len(oracle_db_azure_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -253,7 +252,7 @@ def create_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_azure_vault_id, if_match):
 
-    if isinstance(oracle_db_azure_vault_id, six.string_types) and len(oracle_db_azure_vault_id.strip()) == 0:
+    if isinstance(oracle_db_azure_vault_id, str) and len(oracle_db_azure_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -307,7 +306,7 @@ def delete_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def get_oracle_db_azure_vault(ctx, from_json, oracle_db_azure_vault_id, limit, page, sort_order):
 
-    if isinstance(oracle_db_azure_vault_id, six.string_types) and len(oracle_db_azure_vault_id.strip()) == 0:
+    if isinstance(oracle_db_azure_vault_id, str) and len(oracle_db_azure_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -409,7 +408,7 @@ def list_oracle_db_azure_vaults(ctx, from_json, all_pages, page_size, compartmen
 @cli_util.wrap_exceptions
 def refresh_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_azure_vault_id, oracle_db_azure_connector_id, if_match):
 
-    if isinstance(oracle_db_azure_vault_id, six.string_types) and len(oracle_db_azure_vault_id.strip()) == 0:
+    if isinstance(oracle_db_azure_vault_id, str) and len(oracle_db_azure_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -486,7 +485,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_oracle_db_azure_vault(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_azure_vault_id, compartment_id, oracle_db_connector_id, display_name, oracle_db_azure_resource_group, azure_vault_id, type, location, properties, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oracle_db_azure_vault_id, six.string_types) and len(oracle_db_azure_vault_id.strip()) == 0:
+    if isinstance(oracle_db_azure_vault_id, str) and len(oracle_db_azure_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-vault-id cannot be whitespace or empty string')
     if not force:
         if properties or freeform_tags or defined_tags:

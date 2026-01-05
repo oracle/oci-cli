@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -142,7 +141,7 @@ generative_ai_root_group.add_command(imported_model_group)
 @cli_util.wrap_exceptions
 def change_dedicated_ai_cluster_compartment(ctx, from_json, dedicated_ai_cluster_id, compartment_id, if_match):
 
-    if isinstance(dedicated_ai_cluster_id, six.string_types) and len(dedicated_ai_cluster_id.strip()) == 0:
+    if isinstance(dedicated_ai_cluster_id, str) and len(dedicated_ai_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-ai-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -173,7 +172,7 @@ def change_dedicated_ai_cluster_compartment(ctx, from_json, dedicated_ai_cluster
 @cli_util.wrap_exceptions
 def change_endpoint_compartment(ctx, from_json, endpoint_id, compartment_id, if_match):
 
-    if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
+    if isinstance(endpoint_id, str) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -296,7 +295,7 @@ def change_imported_model_compartment(ctx, from_json, imported_model_id, compart
 @cli_util.wrap_exceptions
 def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -965,7 +964,7 @@ You can only delete clusters without attached resources. Before you delete a hos
 @cli_util.wrap_exceptions
 def delete_dedicated_ai_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dedicated_ai_cluster_id, if_match):
 
-    if isinstance(dedicated_ai_cluster_id, six.string_types) and len(dedicated_ai_cluster_id.strip()) == 0:
+    if isinstance(dedicated_ai_cluster_id, str) and len(dedicated_ai_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-ai-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1021,7 +1020,7 @@ def delete_dedicated_ai_cluster(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, endpoint_id, if_match):
 
-    if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
+    if isinstance(endpoint_id, str) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1189,7 +1188,7 @@ def delete_imported_model(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1240,7 +1239,7 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def get_dedicated_ai_cluster(ctx, from_json, dedicated_ai_cluster_id):
 
-    if isinstance(dedicated_ai_cluster_id, six.string_types) and len(dedicated_ai_cluster_id.strip()) == 0:
+    if isinstance(dedicated_ai_cluster_id, str) and len(dedicated_ai_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-ai-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1262,7 +1261,7 @@ def get_dedicated_ai_cluster(ctx, from_json, dedicated_ai_cluster_id):
 @cli_util.wrap_exceptions
 def get_endpoint(ctx, from_json, endpoint_id):
 
-    if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
+    if isinstance(endpoint_id, str) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1328,7 +1327,7 @@ def get_imported_model(ctx, from_json, imported_model_id):
 @cli_util.wrap_exceptions
 def get_model(ctx, from_json, model_id):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1350,7 +1349,7 @@ def get_model(ctx, from_json, model_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1711,7 +1710,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1768,7 +1767,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1893,7 +1892,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_dedicated_ai_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dedicated_ai_cluster_id, display_name, description, unit_count, freeform_tags, defined_tags, if_match):
 
-    if isinstance(dedicated_ai_cluster_id, six.string_types) and len(dedicated_ai_cluster_id.strip()) == 0:
+    if isinstance(dedicated_ai_cluster_id, str) and len(dedicated_ai_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-ai-cluster-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1982,7 +1981,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, endpoint_id, display_name, description, generative_ai_private_endpoint_id, content_moderation_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
+    if isinstance(endpoint_id, str) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
     if not force:
         if content_moderation_config or freeform_tags or defined_tags:
@@ -2258,7 +2257,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, vendor, version_parameterconflict, freeform_tags, defined_tags, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

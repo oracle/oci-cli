@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -325,7 +324,7 @@ data_integration_root_group.add_command(runtime_pipeline_group)
 @cli_util.wrap_exceptions
 def change_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, compartment_id, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -387,10 +386,10 @@ def change_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def change_dis_application_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, dis_application_id, compartment_id, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(dis_application_id, six.string_types) and len(dis_application_id.strip()) == 0:
+    if isinstance(dis_application_id, str) and len(dis_application_id.strip()) == 0:
         raise click.UsageError('Parameter --dis-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -463,7 +462,7 @@ def change_dis_application_compartment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, name, identifier, key, model_version, model_type, description, object_status, display_name, freeform_tags, defined_tags, lifecycle_state, source_application_info, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -550,10 +549,10 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def create_application_detailed_description(ctx, from_json, workspace_id, application_key, logo, detailed_description):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -598,7 +597,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection(ctx, from_json, workspace_id, name, identifier, model_type, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -664,7 +663,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_oracle_siebel(ctx, from_json, workspace_id, name, identifier, username, password, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -733,7 +732,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_amazon_s3(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, access_key, secret_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -804,7 +803,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_bicc(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password_secret, default_external_storage):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -880,7 +879,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_atp(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, tns_alias, tns_names, username, password, password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -963,7 +962,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_hdfs(ctx, from_json, workspace_id, name, identifier, hdfs_principal, data_node_principal, name_node_principal, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, realm, key_distribution_center, key_tab_content):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1040,7 +1039,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_my_sql_heat_wave(ctx, from_json, workspace_id, name, identifier, username, password, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1110,7 +1109,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_rest_basic_auth(ctx, from_json, workspace_id, name, identifier, username, password_secret, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, auth_header):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1180,7 +1179,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_oracle(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1254,7 +1253,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_oracle_people_soft(ctx, from_json, workspace_id, name, identifier, username, password, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1324,7 +1323,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_oracle_ebs(ctx, from_json, workspace_id, name, identifier, username, password, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1394,7 +1393,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_my_sql(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1468,7 +1467,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_jdbc(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1541,7 +1540,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_bip(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1614,7 +1613,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_o_auth2(ctx, from_json, workspace_id, name, identifier, access_token_url, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, client_id, client_secret, scope, grant_type):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1694,7 +1693,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_adwc(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, tns_alias, tns_names, username, password, password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1771,7 +1770,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_rest_no_auth(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1837,7 +1836,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_object_storage(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, credential_file_content, user_id, finger_print, pass_phrase):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1911,7 +1910,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_create_connection_from_lake(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1965,7 +1964,7 @@ def create_connection_create_connection_from_lake(ctx, from_json, workspace_id, 
 @cli_util.wrap_exceptions
 def create_connection_validation(ctx, from_json, workspace_id, data_asset, connection, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2016,7 +2015,7 @@ def create_connection_validation(ctx, from_json, workspace_id, data_asset, conne
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_hdfs(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_host, data_asset_port, data_asset_protocol, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_validate_certificate):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2096,7 +2095,7 @@ def create_connection_validation_create_data_asset_from_hdfs(ctx, from_json, wor
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_lake(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_lake_id, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_metastore_id, data_asset_lake_proxy_endpoint):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2177,7 +2176,7 @@ def create_connection_validation_create_data_asset_from_lake(ctx, from_json, wor
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_my_sql_heat_wave(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_host, data_asset_port, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_name):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2254,7 +2253,7 @@ def create_connection_validation_create_data_asset_from_my_sql_heat_wave(ctx, fr
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_amazon_s3(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_region, data_asset_default_connection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2332,7 +2331,7 @@ def create_connection_validation_create_data_asset_from_amazon_s3(ctx, from_json
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_rest(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_base_url, data_asset_manifest_file_content, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2412,7 +2411,7 @@ def create_connection_validation_create_data_asset_from_rest(ctx, from_json, wor
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_oracle_siebel(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_host, data_asset_port, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_name, data_asset_driver_class, data_asset_sid, data_asset_wallet_secret, data_asset_wallet_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2503,7 +2502,7 @@ def create_connection_validation_create_data_asset_from_oracle_siebel(ctx, from_
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_jdbc(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_host, data_asset_port, data_asset_data_asset_type, data_asset_default_connection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2588,7 +2587,7 @@ def create_connection_validation_create_data_asset_from_jdbc(ctx, from_json, wor
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_my_sql(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_host, data_asset_port, data_asset_service_name, data_asset_default_connection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2678,7 +2677,7 @@ def create_connection_validation_create_data_asset_from_my_sql(ctx, from_json, w
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_oracle(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_host, data_asset_port, data_asset_service_name, data_asset_driver_class, data_asset_sid, data_asset_credential_file_content, data_asset_wallet_secret, data_asset_wallet_password_secret, data_asset_default_connection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2787,7 +2786,7 @@ def create_connection_validation_create_data_asset_from_oracle(ctx, from_json, w
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_adwc(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_name, data_asset_driver_class, data_asset_credential_file_content, data_asset_wallet_secret, data_asset_wallet_password_secret, data_asset_region_id, data_asset_tenancy_id, data_asset_compartment_id, data_asset_autonomous_db_id, data_asset_default_connection, data_asset_staging_data_asset, data_asset_staging_connection, data_asset_bucket_schema):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2903,7 +2902,7 @@ def create_connection_validation_create_data_asset_from_adwc(ctx, from_json, wor
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_oracle_ebs(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_host, data_asset_port, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_name, data_asset_driver_class, data_asset_sid, data_asset_wallet_secret, data_asset_wallet_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2998,7 +2997,7 @@ def create_connection_validation_create_data_asset_from_oracle_ebs(ctx, from_jso
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_oracle_people_soft(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_host, data_asset_port, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_name, data_asset_driver_class, data_asset_sid, data_asset_wallet_secret, data_asset_wallet_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3090,7 +3089,7 @@ def create_connection_validation_create_data_asset_from_oracle_people_soft(ctx, 
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_fusion_app(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_url, data_asset_default_connection, data_asset_staging_data_asset, data_asset_staging_connection, data_asset_bucket_schema):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3187,7 +3186,7 @@ def create_connection_validation_create_data_asset_from_fusion_app(ctx, from_jso
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_atp(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_name, data_asset_driver_class, data_asset_credential_file_content, data_asset_wallet_secret, data_asset_wallet_password_secret, data_asset_region_id, data_asset_tenancy_id, data_asset_compartment_id, data_asset_autonomous_db_id, data_asset_default_connection, data_asset_staging_data_asset, data_asset_staging_connection, data_asset_bucket_schema):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3300,7 +3299,7 @@ def create_connection_validation_create_data_asset_from_atp(ctx, from_json, work
 @cli_util.wrap_exceptions
 def create_connection_validation_create_data_asset_from_object_storage(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_oci_region, data_asset_url, data_asset_tenancy_id, data_asset_namespace, data_asset_default_connection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3389,7 +3388,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_oracle_siebel(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_username, connection_password, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3467,7 +3466,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_amazon_s3(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_access_key, connection_secret_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3547,7 +3546,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_bicc(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password_secret, connection_default_external_storage):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3632,7 +3631,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_atp(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_tns_alias, connection_tns_names, connection_username, connection_password, connection_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3724,7 +3723,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_hdfs(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_hdfs_principal, connection_data_node_principal, connection_name_node_principal, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_realm, connection_key_distribution_center, connection_key_tab_content):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3810,7 +3809,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_my_sql_heat_wave(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_username, connection_password, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3889,7 +3888,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_rest_basic_auth(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_username, connection_password_secret, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_auth_header):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3968,7 +3967,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_oracle(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4051,7 +4050,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_oracle_people_soft(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_username, connection_password, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4130,7 +4129,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_oracle_ebs(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_username, connection_password, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4209,7 +4208,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_my_sql(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4292,7 +4291,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_jdbc(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4374,7 +4373,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_bip(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4456,7 +4455,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_o_auth2(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_access_token_url, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_client_id, connection_client_secret, connection_scope, connection_grant_type):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4545,7 +4544,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_adwc(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_tns_alias, connection_tns_names, connection_username, connection_password, connection_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4631,7 +4630,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_rest_no_auth(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4706,7 +4705,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_object_storage(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_credential_file_content, connection_user_id, connection_finger_print, connection_pass_phrase):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4789,7 +4788,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_connection_validation_create_connection_from_lake(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4853,7 +4852,7 @@ def create_connection_validation_create_connection_from_lake(ctx, from_json, wor
 @cli_util.wrap_exceptions
 def create_copy_object_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, source_workspace_id, object_keys, copy_conflict_resolution):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4919,7 +4918,7 @@ def create_copy_object_request(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def create_data_asset(ctx, from_json, workspace_id, model_type, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4983,7 +4982,7 @@ def create_data_asset(ctx, from_json, workspace_id, model_type, name, identifier
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_hdfs(ctx, from_json, workspace_id, name, identifier, host, port, protocol, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, validate_certificate):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5054,7 +5053,7 @@ def create_data_asset_create_data_asset_from_hdfs(ctx, from_json, workspace_id, 
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_lake(ctx, from_json, workspace_id, name, identifier, lake_id, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, metastore_id, lake_proxy_endpoint):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5126,7 +5125,7 @@ def create_data_asset_create_data_asset_from_lake(ctx, from_json, workspace_id, 
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_my_sql_heat_wave(ctx, from_json, workspace_id, name, identifier, host, port, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_name):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5194,7 +5193,7 @@ def create_data_asset_create_data_asset_from_my_sql_heat_wave(ctx, from_json, wo
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_amazon_s3(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, region_parameterconflict, default_connection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5263,7 +5262,7 @@ def create_data_asset_create_data_asset_from_amazon_s3(ctx, from_json, workspace
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_rest(ctx, from_json, workspace_id, name, identifier, base_url, manifest_file_content, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5334,7 +5333,7 @@ def create_data_asset_create_data_asset_from_rest(ctx, from_json, workspace_id, 
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_oracle_siebel(ctx, from_json, workspace_id, name, identifier, host, port, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5416,7 +5415,7 @@ def create_data_asset_create_data_asset_from_oracle_siebel(ctx, from_json, works
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_jdbc(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, host, port, data_asset_type, default_connection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5492,7 +5491,7 @@ def create_data_asset_create_data_asset_from_jdbc(ctx, from_json, workspace_id, 
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_my_sql(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, host, port, service_name, default_connection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5573,7 +5572,7 @@ def create_data_asset_create_data_asset_from_my_sql(ctx, from_json, workspace_id
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_oracle(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, host, port, service_name, driver_class, sid, credential_file_content, wallet_secret, wallet_password_secret, default_connection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5673,7 +5672,7 @@ def create_data_asset_create_data_asset_from_oracle(ctx, from_json, workspace_id
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_adwc(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_name, driver_class, credential_file_content, wallet_secret, wallet_password_secret, region_id, tenancy_id, compartment_id, autonomous_db_id, default_connection, staging_data_asset, staging_connection, bucket_schema):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5780,7 +5779,7 @@ def create_data_asset_create_data_asset_from_adwc(ctx, from_json, workspace_id, 
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_oracle_ebs(ctx, from_json, workspace_id, name, identifier, host, port, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5866,7 +5865,7 @@ def create_data_asset_create_data_asset_from_oracle_ebs(ctx, from_json, workspac
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_oracle_people_soft(ctx, from_json, workspace_id, name, identifier, host, port, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5949,7 +5948,7 @@ def create_data_asset_create_data_asset_from_oracle_people_soft(ctx, from_json, 
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_fusion_app(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_url, default_connection, staging_data_asset, staging_connection, bucket_schema):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6037,7 +6036,7 @@ def create_data_asset_create_data_asset_from_fusion_app(ctx, from_json, workspac
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_atp(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_name, driver_class, credential_file_content, wallet_secret, wallet_password_secret, region_id, tenancy_id, compartment_id, autonomous_db_id, default_connection, staging_data_asset, staging_connection, bucket_schema):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6141,7 +6140,7 @@ def create_data_asset_create_data_asset_from_atp(ctx, from_json, workspace_id, n
 @cli_util.wrap_exceptions
 def create_data_asset_create_data_asset_from_object_storage(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, oci_region, url, tenancy_id, namespace, default_connection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6222,7 +6221,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_data_flow(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, nodes, parameters, description, flow_config_values, object_status):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6299,7 +6298,7 @@ This option is a JSON dictionary of type dict(str, FieldMapWrapper).  For docume
 @cli_util.wrap_exceptions
 def create_data_flow_validation(ctx, from_json, workspace_id, key, model_type, model_version, parent_ref, name, identifier, object_version, nodes, parameters, description, flow_config_values, object_status, metadata, key_map, typed_object_map, target_field_map_summary):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6390,7 +6389,7 @@ def create_data_flow_validation(ctx, from_json, workspace_id, key, model_type, m
 @cli_util.wrap_exceptions
 def create_dis_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, name, identifier, compartment_id, key, model_version, model_type, description, object_status, display_name, freeform_tags, defined_tags, lifecycle_state, source_application_info, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6480,10 +6479,10 @@ def create_dis_application(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def create_dis_application_detailed_description(ctx, from_json, workspace_id, application_key, logo, detailed_description):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6520,13 +6519,13 @@ def create_dis_application_detailed_description(ctx, from_json, workspace_id, ap
 @cli_util.wrap_exceptions
 def create_entity_shape(ctx, from_json, workspace_id, connection_key, schema_resource_name, model_type, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
-    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+    if isinstance(schema_resource_name, str) and len(schema_resource_name.strip()) == 0:
         raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6578,13 +6577,13 @@ This option is a JSON list with items of type ForeignKey.  For documentation on 
 @cli_util.wrap_exceptions
 def create_entity_shape_create_entity_shape_from_object(ctx, from_json, workspace_id, connection_key, schema_resource_name, name, key, parent_ref, description, external_key, shape, shape_id, entity_type, other_type_label, unique_keys, foreign_keys, resource_name, data_format, identifier, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
-    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+    if isinstance(schema_resource_name, str) and len(schema_resource_name.strip()) == 0:
         raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6681,13 +6680,13 @@ This option is a JSON list with items of type ForeignKey.  For documentation on 
 @cli_util.wrap_exceptions
 def create_entity_shape_create_entity_shape_from_sql(ctx, from_json, workspace_id, connection_key, schema_resource_name, key, model_version, parent_ref, name, description, object_version, external_key, shape, shape_id, entity_type, other_type_label, unique_keys, foreign_keys, resource_name, data_format, object_status, identifier, sql_query, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
-    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+    if isinstance(schema_resource_name, str) and len(schema_resource_name.strip()) == 0:
         raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6798,13 +6797,13 @@ This option is a JSON list with items of type ForeignKey.  For documentation on 
 @cli_util.wrap_exceptions
 def create_entity_shape_create_entity_shape_from_file(ctx, from_json, workspace_id, connection_key, schema_resource_name, key, model_version, parent_ref, name, description, object_version, external_key, shape, shape_id, types, entity_type, other_type_label, unique_keys, foreign_keys, resource_name, data_format, object_status, identifier, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
-    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+    if isinstance(schema_resource_name, str) and len(schema_resource_name.strip()) == 0:
         raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6901,7 +6900,7 @@ def create_entity_shape_create_entity_shape_from_file(ctx, from_json, workspace_
 @cli_util.wrap_exceptions
 def create_export_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, bucket_name, file_name, object_storage_tenancy_id, object_storage_region, is_object_overwrite_enabled, object_keys, are_references_included, filters):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6983,10 +6982,10 @@ def create_export_request(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def create_external_publication(ctx, from_json, workspace_id, task_key, application_compartment_id, display_name, application_id, description, resource_configuration, configuration_details):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7029,10 +7028,10 @@ def create_external_publication(ctx, from_json, workspace_id, task_key, applicat
 @cli_util.wrap_exceptions
 def create_external_publication_validation(ctx, from_json, workspace_id, task_key, key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7070,7 +7069,7 @@ def create_external_publication_validation(ctx, from_json, workspace_id, task_ke
 @cli_util.wrap_exceptions
 def create_folder(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, description, category_name, object_status):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7122,7 +7121,7 @@ def create_folder(ctx, from_json, workspace_id, name, identifier, registry_metad
 @cli_util.wrap_exceptions
 def create_function_library(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, description, category_name, object_status):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7176,7 +7175,7 @@ def create_function_library(ctx, from_json, workspace_id, name, identifier, regi
 @cli_util.wrap_exceptions
 def create_import_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, bucket_name, file_name, object_storage_tenancy_id, object_storage_region, object_key_for_import, are_data_asset_references_included, import_conflict_resolution):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7256,10 +7255,10 @@ def create_import_request(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def create_patch(ctx, from_json, workspace_id, application_key, name, identifier, patch_type, object_keys, key, model_version, description, object_status, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7325,7 +7324,7 @@ This option is a JSON list with items of type Variable.  For documentation on Va
 @cli_util.wrap_exceptions
 def create_pipeline(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, model_type, object_version, object_status, nodes, parameters, flow_config_values, variables):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7407,7 +7406,7 @@ This option is a JSON list with items of type Variable.  For documentation on Va
 @cli_util.wrap_exceptions
 def create_pipeline_validation(ctx, from_json, workspace_id, key, model_version, parent_ref, name, description, model_type, object_version, object_status, identifier, nodes, parameters, flow_config_values, variables, metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7482,7 +7481,7 @@ def create_pipeline_validation(ctx, from_json, workspace_id, key, model_version,
 @cli_util.wrap_exceptions
 def create_project(ctx, from_json, workspace_id, name, identifier, model_version, description, object_status, key, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7537,10 +7536,10 @@ def create_project(ctx, from_json, workspace_id, name, identifier, model_version
 @cli_util.wrap_exceptions
 def create_schedule(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, description, object_version, object_status, frequency_details, timezone, is_daylight_adjustment_enabled, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7611,10 +7610,10 @@ def create_schedule(ctx, from_json, workspace_id, application_key, name, identif
 @cli_util.wrap_exceptions
 def create_schedule_monthly_frequency_details(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, description, object_version, object_status, timezone, is_daylight_adjustment_enabled, registry_metadata, frequency_details_frequency, frequency_details_interval, frequency_details_time, frequency_details_days):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7695,10 +7694,10 @@ def create_schedule_monthly_frequency_details(ctx, from_json, workspace_id, appl
 @cli_util.wrap_exceptions
 def create_schedule_custom_frequency_details(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, description, object_version, object_status, timezone, is_daylight_adjustment_enabled, registry_metadata, frequency_details_frequency, frequency_details_custom_expression):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7774,10 +7773,10 @@ def create_schedule_custom_frequency_details(ctx, from_json, workspace_id, appli
 @cli_util.wrap_exceptions
 def create_schedule_daily_frequency_details(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, description, object_version, object_status, timezone, is_daylight_adjustment_enabled, registry_metadata, frequency_details_frequency, frequency_details_interval, frequency_details_time):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7856,10 +7855,10 @@ def create_schedule_daily_frequency_details(ctx, from_json, workspace_id, applic
 @cli_util.wrap_exceptions
 def create_schedule_weekly_frequency_details(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, description, object_version, object_status, timezone, is_daylight_adjustment_enabled, registry_metadata, frequency_details_frequency, frequency_details_time, frequency_details_days):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7940,10 +7939,10 @@ def create_schedule_weekly_frequency_details(ctx, from_json, workspace_id, appli
 @cli_util.wrap_exceptions
 def create_schedule_monthly_rule_frequency_details(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, description, object_version, object_status, timezone, is_daylight_adjustment_enabled, registry_metadata, frequency_details_frequency, frequency_details_week_of_month, frequency_details_interval, frequency_details_time, frequency_details_day_of_week):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8028,10 +8027,10 @@ def create_schedule_monthly_rule_frequency_details(ctx, from_json, workspace_id,
 @cli_util.wrap_exceptions
 def create_schedule_hourly_frequency_details(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, description, object_version, object_status, timezone, is_daylight_adjustment_enabled, registry_metadata, frequency_details_frequency, frequency_details_interval, frequency_details_time):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8117,7 +8116,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_task(ctx, from_json, workspace_id, model_type, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8201,7 +8200,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_task_create_task_from_integration_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, data_flow):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8292,7 +8291,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_task_create_task_from_data_loader_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, data_flow, conditional_composite_field_map, is_single_load, parallel_load_limit):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8389,7 +8388,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_task_create_task_from_pipeline_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, pipeline):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8479,7 +8478,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_task_create_task_from_oci_dataflow_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, dataflow_application, driver_shape_details, executor_shape_details):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8575,7 +8574,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_task_create_task_from_sql_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, script, sql_script_type, operation):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8683,7 +8682,7 @@ This option is a JSON list with items of type TypedExpression.  For documentatio
 @cli_util.wrap_exceptions
 def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, auth_details, auth_config, endpoint_parameterconflict, method_type, headers, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config, poll_rest_call_config, typed_expressions):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8799,10 +8798,10 @@ def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, i
 @cli_util.wrap_exceptions
 def create_task_run(ctx, from_json, workspace_id, application_key, key, model_type, model_version, name, description, config_provider, identifier, task_schedule_key, ref_task_run_id, re_run_type, step_id, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8888,10 +8887,10 @@ def create_task_run(ctx, from_json, workspace_id, application_key, key, model_ty
 @cli_util.wrap_exceptions
 def create_task_schedule(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, parent_ref, description, object_version, object_status, schedule_ref, config_provider_delegate, is_enabled, number_of_retries, retry_delay, retry_delay_unit, start_time_millis, end_time_millis, is_concurrent_allowed, is_backfill_enabled, auth_mode, expected_duration, expected_duration_unit, registry_metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9001,7 +9000,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_task_validation(ctx, from_json, workspace_id, model_type, key, model_version, parent_ref, name, description, object_version, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, metadata):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9093,7 +9092,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_task_validation_create_task_validation_from_data_loader_task(ctx, from_json, workspace_id, key, model_version, parent_ref, name, description, object_version, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, metadata, data_flow):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9187,7 +9186,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_task_validation_create_task_validation_from_pipeline_task(ctx, from_json, workspace_id, key, model_version, parent_ref, name, description, object_version, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, metadata, pipeline):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9281,7 +9280,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def create_task_validation_create_task_validation_from_integration_task(ctx, from_json, workspace_id, key, model_version, parent_ref, name, description, object_version, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, metadata, data_flow):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9366,7 +9365,7 @@ This option is a JSON list with items of type FunctionSignature.  For documentat
 @cli_util.wrap_exceptions
 def create_user_defined_function(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, signatures, expr, description, object_status):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9431,7 +9430,7 @@ This option is a JSON list with items of type FunctionSignature.  For documentat
 @cli_util.wrap_exceptions
 def create_user_defined_function_validation(ctx, from_json, workspace_id, key, model_type, model_version, parent_ref, name, identifier, object_version, signatures, expr, description, object_status, metadata, key_map):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9614,10 +9613,10 @@ def create_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_application(ctx, from_json, workspace_id, application_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9645,10 +9644,10 @@ def delete_application(ctx, from_json, workspace_id, application_key, if_match):
 @cli_util.wrap_exceptions
 def delete_application_detailed_description(ctx, from_json, workspace_id, application_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9676,10 +9675,10 @@ def delete_application_detailed_description(ctx, from_json, workspace_id, applic
 @cli_util.wrap_exceptions
 def delete_connection(ctx, from_json, workspace_id, connection_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9707,10 +9706,10 @@ def delete_connection(ctx, from_json, workspace_id, connection_key, if_match):
 @cli_util.wrap_exceptions
 def delete_connection_validation(ctx, from_json, workspace_id, connection_validation_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_validation_key, six.string_types) and len(connection_validation_key.strip()) == 0:
+    if isinstance(connection_validation_key, str) and len(connection_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9738,10 +9737,10 @@ def delete_connection_validation(ctx, from_json, workspace_id, connection_valida
 @cli_util.wrap_exceptions
 def delete_copy_object_request(ctx, from_json, workspace_id, copy_object_request_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(copy_object_request_key, six.string_types) and len(copy_object_request_key.strip()) == 0:
+    if isinstance(copy_object_request_key, str) and len(copy_object_request_key.strip()) == 0:
         raise click.UsageError('Parameter --copy-object-request-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9769,10 +9768,10 @@ def delete_copy_object_request(ctx, from_json, workspace_id, copy_object_request
 @cli_util.wrap_exceptions
 def delete_data_asset(ctx, from_json, workspace_id, data_asset_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9800,10 +9799,10 @@ def delete_data_asset(ctx, from_json, workspace_id, data_asset_key, if_match):
 @cli_util.wrap_exceptions
 def delete_data_flow(ctx, from_json, workspace_id, data_flow_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_flow_key, six.string_types) and len(data_flow_key.strip()) == 0:
+    if isinstance(data_flow_key, str) and len(data_flow_key.strip()) == 0:
         raise click.UsageError('Parameter --data-flow-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9831,10 +9830,10 @@ def delete_data_flow(ctx, from_json, workspace_id, data_flow_key, if_match):
 @cli_util.wrap_exceptions
 def delete_data_flow_validation(ctx, from_json, workspace_id, data_flow_validation_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_flow_validation_key, six.string_types) and len(data_flow_validation_key.strip()) == 0:
+    if isinstance(data_flow_validation_key, str) and len(data_flow_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --data-flow-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9862,10 +9861,10 @@ def delete_data_flow_validation(ctx, from_json, workspace_id, data_flow_validati
 @cli_util.wrap_exceptions
 def delete_dis_application(ctx, from_json, workspace_id, dis_application_id, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(dis_application_id, six.string_types) and len(dis_application_id.strip()) == 0:
+    if isinstance(dis_application_id, str) and len(dis_application_id.strip()) == 0:
         raise click.UsageError('Parameter --dis-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9893,10 +9892,10 @@ def delete_dis_application(ctx, from_json, workspace_id, dis_application_id, if_
 @cli_util.wrap_exceptions
 def delete_dis_application_detailed_description(ctx, from_json, workspace_id, application_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9924,10 +9923,10 @@ def delete_dis_application_detailed_description(ctx, from_json, workspace_id, ap
 @cli_util.wrap_exceptions
 def delete_export_request(ctx, from_json, workspace_id, export_request_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(export_request_key, six.string_types) and len(export_request_key.strip()) == 0:
+    if isinstance(export_request_key, str) and len(export_request_key.strip()) == 0:
         raise click.UsageError('Parameter --export-request-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9956,13 +9955,13 @@ def delete_export_request(ctx, from_json, workspace_id, export_request_key, if_m
 @cli_util.wrap_exceptions
 def delete_external_publication(ctx, from_json, workspace_id, task_key, external_publications_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
-    if isinstance(external_publications_key, six.string_types) and len(external_publications_key.strip()) == 0:
+    if isinstance(external_publications_key, str) and len(external_publications_key.strip()) == 0:
         raise click.UsageError('Parameter --external-publications-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9992,13 +9991,13 @@ def delete_external_publication(ctx, from_json, workspace_id, task_key, external
 @cli_util.wrap_exceptions
 def delete_external_publication_validation(ctx, from_json, workspace_id, task_key, external_publication_validation_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
-    if isinstance(external_publication_validation_key, six.string_types) and len(external_publication_validation_key.strip()) == 0:
+    if isinstance(external_publication_validation_key, str) and len(external_publication_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --external-publication-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10027,10 +10026,10 @@ def delete_external_publication_validation(ctx, from_json, workspace_id, task_ke
 @cli_util.wrap_exceptions
 def delete_folder(ctx, from_json, workspace_id, folder_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
+    if isinstance(folder_key, str) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10058,10 +10057,10 @@ def delete_folder(ctx, from_json, workspace_id, folder_key, if_match):
 @cli_util.wrap_exceptions
 def delete_function_library(ctx, from_json, workspace_id, function_library_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(function_library_key, six.string_types) and len(function_library_key.strip()) == 0:
+    if isinstance(function_library_key, str) and len(function_library_key.strip()) == 0:
         raise click.UsageError('Parameter --function-library-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10089,10 +10088,10 @@ def delete_function_library(ctx, from_json, workspace_id, function_library_key, 
 @cli_util.wrap_exceptions
 def delete_import_request(ctx, from_json, import_request_key, workspace_id, if_match):
 
-    if isinstance(import_request_key, six.string_types) and len(import_request_key.strip()) == 0:
+    if isinstance(import_request_key, str) and len(import_request_key.strip()) == 0:
         raise click.UsageError('Parameter --import-request-key cannot be whitespace or empty string')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10121,13 +10120,13 @@ def delete_import_request(ctx, from_json, import_request_key, workspace_id, if_m
 @cli_util.wrap_exceptions
 def delete_patch(ctx, from_json, workspace_id, application_key, patch_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(patch_key, six.string_types) and len(patch_key.strip()) == 0:
+    if isinstance(patch_key, str) and len(patch_key.strip()) == 0:
         raise click.UsageError('Parameter --patch-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10156,10 +10155,10 @@ def delete_patch(ctx, from_json, workspace_id, application_key, patch_key, if_ma
 @cli_util.wrap_exceptions
 def delete_pipeline(ctx, from_json, workspace_id, pipeline_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(pipeline_key, six.string_types) and len(pipeline_key.strip()) == 0:
+    if isinstance(pipeline_key, str) and len(pipeline_key.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10187,10 +10186,10 @@ def delete_pipeline(ctx, from_json, workspace_id, pipeline_key, if_match):
 @cli_util.wrap_exceptions
 def delete_pipeline_validation(ctx, from_json, workspace_id, pipeline_validation_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(pipeline_validation_key, six.string_types) and len(pipeline_validation_key.strip()) == 0:
+    if isinstance(pipeline_validation_key, str) and len(pipeline_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10218,10 +10217,10 @@ def delete_pipeline_validation(ctx, from_json, workspace_id, pipeline_validation
 @cli_util.wrap_exceptions
 def delete_project(ctx, from_json, workspace_id, project_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(project_key, six.string_types) and len(project_key.strip()) == 0:
+    if isinstance(project_key, str) and len(project_key.strip()) == 0:
         raise click.UsageError('Parameter --project-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10250,13 +10249,13 @@ def delete_project(ctx, from_json, workspace_id, project_key, if_match):
 @cli_util.wrap_exceptions
 def delete_schedule(ctx, from_json, workspace_id, application_key, schedule_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+    if isinstance(schedule_key, str) and len(schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10285,10 +10284,10 @@ def delete_schedule(ctx, from_json, workspace_id, application_key, schedule_key,
 @cli_util.wrap_exceptions
 def delete_task(ctx, from_json, workspace_id, task_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10317,13 +10316,13 @@ def delete_task(ctx, from_json, workspace_id, task_key, if_match):
 @cli_util.wrap_exceptions
 def delete_task_run(ctx, from_json, workspace_id, application_key, task_run_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(task_run_key, six.string_types) and len(task_run_key.strip()) == 0:
+    if isinstance(task_run_key, str) and len(task_run_key.strip()) == 0:
         raise click.UsageError('Parameter --task-run-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10353,13 +10352,13 @@ def delete_task_run(ctx, from_json, workspace_id, application_key, task_run_key,
 @cli_util.wrap_exceptions
 def delete_task_schedule(ctx, from_json, workspace_id, application_key, task_schedule_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(task_schedule_key, six.string_types) and len(task_schedule_key.strip()) == 0:
+    if isinstance(task_schedule_key, str) and len(task_schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --task-schedule-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10388,10 +10387,10 @@ def delete_task_schedule(ctx, from_json, workspace_id, application_key, task_sch
 @cli_util.wrap_exceptions
 def delete_task_validation(ctx, from_json, workspace_id, task_validation_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_validation_key, six.string_types) and len(task_validation_key.strip()) == 0:
+    if isinstance(task_validation_key, str) and len(task_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --task-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10419,10 +10418,10 @@ def delete_task_validation(ctx, from_json, workspace_id, task_validation_key, if
 @cli_util.wrap_exceptions
 def delete_user_defined_function(ctx, from_json, workspace_id, user_defined_function_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(user_defined_function_key, six.string_types) and len(user_defined_function_key.strip()) == 0:
+    if isinstance(user_defined_function_key, str) and len(user_defined_function_key.strip()) == 0:
         raise click.UsageError('Parameter --user-defined-function-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10450,10 +10449,10 @@ def delete_user_defined_function(ctx, from_json, workspace_id, user_defined_func
 @cli_util.wrap_exceptions
 def delete_user_defined_function_validation(ctx, from_json, workspace_id, user_defined_function_validation_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(user_defined_function_validation_key, six.string_types) and len(user_defined_function_validation_key.strip()) == 0:
+    if isinstance(user_defined_function_validation_key, str) and len(user_defined_function_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --user-defined-function-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10485,7 +10484,7 @@ def delete_user_defined_function_validation(ctx, from_json, workspace_id, user_d
 @cli_util.wrap_exceptions
 def delete_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, quiesce_timeout, is_force_operation, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10541,10 +10540,10 @@ def delete_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def get_application(ctx, from_json, workspace_id, application_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10568,10 +10567,10 @@ def get_application(ctx, from_json, workspace_id, application_key):
 @cli_util.wrap_exceptions
 def get_application_detailed_description(ctx, from_json, workspace_id, application_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10596,10 +10595,10 @@ def get_application_detailed_description(ctx, from_json, workspace_id, applicati
 @cli_util.wrap_exceptions
 def get_composite_state(ctx, from_json, workspace_id, application_key, aggregator_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10624,10 +10623,10 @@ def get_composite_state(ctx, from_json, workspace_id, application_key, aggregato
 @cli_util.wrap_exceptions
 def get_connection(ctx, from_json, workspace_id, connection_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10651,10 +10650,10 @@ def get_connection(ctx, from_json, workspace_id, connection_key):
 @cli_util.wrap_exceptions
 def get_connection_validation(ctx, from_json, workspace_id, connection_validation_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_validation_key, six.string_types) and len(connection_validation_key.strip()) == 0:
+    if isinstance(connection_validation_key, str) and len(connection_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10678,10 +10677,10 @@ def get_connection_validation(ctx, from_json, workspace_id, connection_validatio
 @cli_util.wrap_exceptions
 def get_copy_object_request(ctx, from_json, workspace_id, copy_object_request_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(copy_object_request_key, six.string_types) and len(copy_object_request_key.strip()) == 0:
+    if isinstance(copy_object_request_key, str) and len(copy_object_request_key.strip()) == 0:
         raise click.UsageError('Parameter --copy-object-request-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10705,10 +10704,10 @@ def get_copy_object_request(ctx, from_json, workspace_id, copy_object_request_ke
 @cli_util.wrap_exceptions
 def get_count_statistic(ctx, from_json, workspace_id, count_statistic_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(count_statistic_key, six.string_types) and len(count_statistic_key.strip()) == 0:
+    if isinstance(count_statistic_key, str) and len(count_statistic_key.strip()) == 0:
         raise click.UsageError('Parameter --count-statistic-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10732,10 +10731,10 @@ def get_count_statistic(ctx, from_json, workspace_id, count_statistic_key):
 @cli_util.wrap_exceptions
 def get_data_asset(ctx, from_json, workspace_id, data_asset_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10761,16 +10760,16 @@ def get_data_asset(ctx, from_json, workspace_id, data_asset_key):
 @cli_util.wrap_exceptions
 def get_data_entity(ctx, from_json, workspace_id, connection_key, schema_resource_name, data_entity_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
-    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+    if isinstance(schema_resource_name, str) and len(schema_resource_name.strip()) == 0:
         raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
 
-    if isinstance(data_entity_key, six.string_types) and len(data_entity_key.strip()) == 0:
+    if isinstance(data_entity_key, str) and len(data_entity_key.strip()) == 0:
         raise click.UsageError('Parameter --data-entity-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10797,10 +10796,10 @@ def get_data_entity(ctx, from_json, workspace_id, connection_key, schema_resourc
 @cli_util.wrap_exceptions
 def get_data_flow(ctx, from_json, workspace_id, data_flow_key, expand_references):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_flow_key, six.string_types) and len(data_flow_key.strip()) == 0:
+    if isinstance(data_flow_key, str) and len(data_flow_key.strip()) == 0:
         raise click.UsageError('Parameter --data-flow-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10826,10 +10825,10 @@ def get_data_flow(ctx, from_json, workspace_id, data_flow_key, expand_references
 @cli_util.wrap_exceptions
 def get_data_flow_validation(ctx, from_json, workspace_id, data_flow_validation_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_flow_validation_key, six.string_types) and len(data_flow_validation_key.strip()) == 0:
+    if isinstance(data_flow_validation_key, str) and len(data_flow_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --data-flow-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10854,13 +10853,13 @@ def get_data_flow_validation(ctx, from_json, workspace_id, data_flow_validation_
 @cli_util.wrap_exceptions
 def get_dependent_object(ctx, from_json, workspace_id, application_key, dependent_object_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(dependent_object_key, six.string_types) and len(dependent_object_key.strip()) == 0:
+    if isinstance(dependent_object_key, str) and len(dependent_object_key.strip()) == 0:
         raise click.UsageError('Parameter --dependent-object-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10885,10 +10884,10 @@ def get_dependent_object(ctx, from_json, workspace_id, application_key, dependen
 @cli_util.wrap_exceptions
 def get_dis_application(ctx, from_json, workspace_id, dis_application_id):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(dis_application_id, six.string_types) and len(dis_application_id.strip()) == 0:
+    if isinstance(dis_application_id, str) and len(dis_application_id.strip()) == 0:
         raise click.UsageError('Parameter --dis-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10912,10 +10911,10 @@ def get_dis_application(ctx, from_json, workspace_id, dis_application_id):
 @cli_util.wrap_exceptions
 def get_dis_application_detailed_description(ctx, from_json, workspace_id, application_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10939,10 +10938,10 @@ def get_dis_application_detailed_description(ctx, from_json, workspace_id, appli
 @cli_util.wrap_exceptions
 def get_export_request(ctx, from_json, workspace_id, export_request_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(export_request_key, six.string_types) and len(export_request_key.strip()) == 0:
+    if isinstance(export_request_key, str) and len(export_request_key.strip()) == 0:
         raise click.UsageError('Parameter --export-request-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10967,13 +10966,13 @@ def get_export_request(ctx, from_json, workspace_id, export_request_key):
 @cli_util.wrap_exceptions
 def get_external_publication(ctx, from_json, workspace_id, task_key, external_publications_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
-    if isinstance(external_publications_key, six.string_types) and len(external_publications_key.strip()) == 0:
+    if isinstance(external_publications_key, str) and len(external_publications_key.strip()) == 0:
         raise click.UsageError('Parameter --external-publications-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10999,13 +10998,13 @@ def get_external_publication(ctx, from_json, workspace_id, task_key, external_pu
 @cli_util.wrap_exceptions
 def get_external_publication_validation(ctx, from_json, workspace_id, task_key, external_publication_validation_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
-    if isinstance(external_publication_validation_key, six.string_types) and len(external_publication_validation_key.strip()) == 0:
+    if isinstance(external_publication_validation_key, str) and len(external_publication_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --external-publication-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11031,10 +11030,10 @@ def get_external_publication_validation(ctx, from_json, workspace_id, task_key, 
 @cli_util.wrap_exceptions
 def get_folder(ctx, from_json, workspace_id, folder_key, projection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
+    if isinstance(folder_key, str) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11061,10 +11060,10 @@ def get_folder(ctx, from_json, workspace_id, folder_key, projection):
 @cli_util.wrap_exceptions
 def get_function_library(ctx, from_json, workspace_id, function_library_key, projection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(function_library_key, six.string_types) and len(function_library_key.strip()) == 0:
+    if isinstance(function_library_key, str) and len(function_library_key.strip()) == 0:
         raise click.UsageError('Parameter --function-library-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11092,10 +11091,10 @@ def get_function_library(ctx, from_json, workspace_id, function_library_key, pro
 @cli_util.wrap_exceptions
 def get_import_request(ctx, from_json, workspace_id, import_request_key, limit, page):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(import_request_key, six.string_types) and len(import_request_key.strip()) == 0:
+    if isinstance(import_request_key, str) and len(import_request_key.strip()) == 0:
         raise click.UsageError('Parameter --import-request-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11124,13 +11123,13 @@ def get_import_request(ctx, from_json, workspace_id, import_request_key, limit, 
 @cli_util.wrap_exceptions
 def get_patch(ctx, from_json, workspace_id, application_key, patch_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(patch_key, six.string_types) and len(patch_key.strip()) == 0:
+    if isinstance(patch_key, str) and len(patch_key.strip()) == 0:
         raise click.UsageError('Parameter --patch-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11156,10 +11155,10 @@ def get_patch(ctx, from_json, workspace_id, application_key, patch_key):
 @cli_util.wrap_exceptions
 def get_pipeline(ctx, from_json, workspace_id, pipeline_key, expand_references):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(pipeline_key, six.string_types) and len(pipeline_key.strip()) == 0:
+    if isinstance(pipeline_key, str) and len(pipeline_key.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11185,10 +11184,10 @@ def get_pipeline(ctx, from_json, workspace_id, pipeline_key, expand_references):
 @cli_util.wrap_exceptions
 def get_pipeline_validation(ctx, from_json, workspace_id, pipeline_validation_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(pipeline_validation_key, six.string_types) and len(pipeline_validation_key.strip()) == 0:
+    if isinstance(pipeline_validation_key, str) and len(pipeline_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11213,10 +11212,10 @@ def get_pipeline_validation(ctx, from_json, workspace_id, pipeline_validation_ke
 @cli_util.wrap_exceptions
 def get_project(ctx, from_json, workspace_id, project_key, projection):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(project_key, six.string_types) and len(project_key.strip()) == 0:
+    if isinstance(project_key, str) and len(project_key.strip()) == 0:
         raise click.UsageError('Parameter --project-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11244,13 +11243,13 @@ def get_project(ctx, from_json, workspace_id, project_key, projection):
 @cli_util.wrap_exceptions
 def get_published_object(ctx, from_json, workspace_id, application_key, published_object_key, expand_references):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(published_object_key, six.string_types) and len(published_object_key.strip()) == 0:
+    if isinstance(published_object_key, str) and len(published_object_key.strip()) == 0:
         raise click.UsageError('Parameter --published-object-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11278,13 +11277,13 @@ def get_published_object(ctx, from_json, workspace_id, application_key, publishe
 @cli_util.wrap_exceptions
 def get_reference(ctx, from_json, workspace_id, application_key, reference_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(reference_key, six.string_types) and len(reference_key.strip()) == 0:
+    if isinstance(reference_key, str) and len(reference_key.strip()) == 0:
         raise click.UsageError('Parameter --reference-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11311,16 +11310,16 @@ def get_reference(ctx, from_json, workspace_id, application_key, reference_key):
 @cli_util.wrap_exceptions
 def get_runtime_operator(ctx, from_json, workspace_id, application_key, runtime_pipeline_key, runtime_operator_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(runtime_pipeline_key, six.string_types) and len(runtime_pipeline_key.strip()) == 0:
+    if isinstance(runtime_pipeline_key, str) and len(runtime_pipeline_key.strip()) == 0:
         raise click.UsageError('Parameter --runtime-pipeline-key cannot be whitespace or empty string')
 
-    if isinstance(runtime_operator_key, six.string_types) and len(runtime_operator_key.strip()) == 0:
+    if isinstance(runtime_operator_key, str) and len(runtime_operator_key.strip()) == 0:
         raise click.UsageError('Parameter --runtime-operator-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11348,13 +11347,13 @@ def get_runtime_operator(ctx, from_json, workspace_id, application_key, runtime_
 @cli_util.wrap_exceptions
 def get_runtime_pipeline(ctx, from_json, workspace_id, application_key, runtime_pipeline_key, expand_references):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(runtime_pipeline_key, six.string_types) and len(runtime_pipeline_key.strip()) == 0:
+    if isinstance(runtime_pipeline_key, str) and len(runtime_pipeline_key.strip()) == 0:
         raise click.UsageError('Parameter --runtime-pipeline-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11382,13 +11381,13 @@ def get_runtime_pipeline(ctx, from_json, workspace_id, application_key, runtime_
 @cli_util.wrap_exceptions
 def get_schedule(ctx, from_json, workspace_id, application_key, schedule_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+    if isinstance(schedule_key, str) and len(schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11414,13 +11413,13 @@ def get_schedule(ctx, from_json, workspace_id, application_key, schedule_key):
 @cli_util.wrap_exceptions
 def get_schema(ctx, from_json, workspace_id, connection_key, schema_resource_name):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
-    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+    if isinstance(schema_resource_name, str) and len(schema_resource_name.strip()) == 0:
         raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11446,10 +11445,10 @@ def get_schema(ctx, from_json, workspace_id, connection_key, schema_resource_nam
 @cli_util.wrap_exceptions
 def get_task(ctx, from_json, workspace_id, task_key, expand_references):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11476,13 +11475,13 @@ def get_task(ctx, from_json, workspace_id, task_key, expand_references):
 @cli_util.wrap_exceptions
 def get_task_run(ctx, from_json, workspace_id, application_key, task_run_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(task_run_key, six.string_types) and len(task_run_key.strip()) == 0:
+    if isinstance(task_run_key, str) and len(task_run_key.strip()) == 0:
         raise click.UsageError('Parameter --task-run-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11508,13 +11507,13 @@ def get_task_run(ctx, from_json, workspace_id, application_key, task_run_key):
 @cli_util.wrap_exceptions
 def get_task_schedule(ctx, from_json, workspace_id, application_key, task_schedule_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(task_schedule_key, six.string_types) and len(task_schedule_key.strip()) == 0:
+    if isinstance(task_schedule_key, str) and len(task_schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --task-schedule-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11539,10 +11538,10 @@ def get_task_schedule(ctx, from_json, workspace_id, application_key, task_schedu
 @cli_util.wrap_exceptions
 def get_task_validation(ctx, from_json, workspace_id, task_validation_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_validation_key, six.string_types) and len(task_validation_key.strip()) == 0:
+    if isinstance(task_validation_key, str) and len(task_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --task-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11566,10 +11565,10 @@ def get_task_validation(ctx, from_json, workspace_id, task_validation_key):
 @cli_util.wrap_exceptions
 def get_template(ctx, from_json, workspace_id, template_id):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+    if isinstance(template_id, str) and len(template_id.strip()) == 0:
         raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11593,10 +11592,10 @@ def get_template(ctx, from_json, workspace_id, template_id):
 @cli_util.wrap_exceptions
 def get_user_defined_function(ctx, from_json, workspace_id, user_defined_function_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(user_defined_function_key, six.string_types) and len(user_defined_function_key.strip()) == 0:
+    if isinstance(user_defined_function_key, str) and len(user_defined_function_key.strip()) == 0:
         raise click.UsageError('Parameter --user-defined-function-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11620,10 +11619,10 @@ def get_user_defined_function(ctx, from_json, workspace_id, user_defined_functio
 @cli_util.wrap_exceptions
 def get_user_defined_function_validation(ctx, from_json, workspace_id, user_defined_function_validation_key):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(user_defined_function_validation_key, six.string_types) and len(user_defined_function_validation_key.strip()) == 0:
+    if isinstance(user_defined_function_validation_key, str) and len(user_defined_function_validation_key.strip()) == 0:
         raise click.UsageError('Parameter --user-defined-function-validation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11646,7 +11645,7 @@ def get_user_defined_function_validation(ctx, from_json, workspace_id, user_defi
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11668,7 +11667,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def get_workspace(ctx, from_json, workspace_id):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11703,7 +11702,7 @@ def list_applications(ctx, from_json, all_pages, page_size, workspace_id, name, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11772,7 +11771,7 @@ def list_connection_validations(ctx, from_json, all_pages, page_size, workspace_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11841,7 +11840,7 @@ def list_connections(ctx, from_json, all_pages, page_size, workspace_id, data_as
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11912,7 +11911,7 @@ def list_copy_object_requests(ctx, from_json, all_pages, page_size, workspace_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11982,7 +11981,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, workspace_id, page, l
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12053,13 +12052,13 @@ def list_data_entities(ctx, from_json, all_pages, page_size, workspace_id, conne
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
-    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+    if isinstance(schema_resource_name, str) and len(schema_resource_name.strip()) == 0:
         raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12138,7 +12137,7 @@ def list_data_flow_validations(ctx, from_json, all_pages, page_size, workspace_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12207,7 +12206,7 @@ def list_data_flows(ctx, from_json, all_pages, page_size, workspace_id, folder_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12279,10 +12278,10 @@ def list_dependent_objects(ctx, from_json, all_pages, page_size, workspace_id, a
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12361,10 +12360,10 @@ def list_dis_application_task_run_lineages(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(dis_application_id, six.string_types) and len(dis_application_id.strip()) == 0:
+    if isinstance(dis_application_id, str) and len(dis_application_id.strip()) == 0:
         raise click.UsageError('Parameter --dis-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12441,7 +12440,7 @@ def list_dis_applications(ctx, from_json, all_pages, page_size, workspace_id, co
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12514,7 +12513,7 @@ def list_export_requests(ctx, from_json, all_pages, page_size, workspace_id, pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12585,10 +12584,10 @@ def list_external_publication_validations(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12657,10 +12656,10 @@ def list_external_publications(ctx, from_json, all_pages, page_size, workspace_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12729,7 +12728,7 @@ def list_folders(ctx, from_json, all_pages, page_size, workspace_id, aggregator_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12800,7 +12799,7 @@ def list_function_libraries(ctx, from_json, all_pages, page_size, workspace_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12870,7 +12869,7 @@ def list_import_requests(ctx, from_json, all_pages, page_size, workspace_id, pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12941,10 +12940,10 @@ def list_patch_changes(ctx, from_json, all_pages, page_size, workspace_id, appli
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13014,10 +13013,10 @@ def list_patches(ctx, from_json, all_pages, page_size, workspace_id, application
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13087,7 +13086,7 @@ def list_pipeline_validations(ctx, from_json, all_pages, page_size, workspace_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13156,7 +13155,7 @@ def list_pipelines(ctx, from_json, all_pages, page_size, workspace_id, aggregato
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13225,7 +13224,7 @@ def list_projects(ctx, from_json, all_pages, page_size, workspace_id, fields, na
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13298,10 +13297,10 @@ def list_published_objects(ctx, from_json, all_pages, page_size, workspace_id, a
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13377,10 +13376,10 @@ def list_references(ctx, from_json, all_pages, page_size, workspace_id, applicat
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13449,13 +13448,13 @@ def list_runtime_operators(ctx, from_json, all_pages, page_size, workspace_id, a
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(runtime_pipeline_key, six.string_types) and len(runtime_pipeline_key.strip()) == 0:
+    if isinstance(runtime_pipeline_key, str) and len(runtime_pipeline_key.strip()) == 0:
         raise click.UsageError('Parameter --runtime-pipeline-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13536,10 +13535,10 @@ def list_runtime_pipelines(ctx, from_json, all_pages, page_size, workspace_id, a
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13618,10 +13617,10 @@ def list_schedules(ctx, from_json, all_pages, page_size, workspace_id, applicati
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13695,10 +13694,10 @@ def list_schemas(ctx, from_json, all_pages, page_size, workspace_id, connection_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13776,10 +13775,10 @@ def list_task_run_lineages(ctx, from_json, all_pages, page_size, workspace_id, a
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13853,13 +13852,13 @@ def list_task_run_logs(ctx, from_json, all_pages, page_size, workspace_id, appli
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(task_run_key, six.string_types) and len(task_run_key.strip()) == 0:
+    if isinstance(task_run_key, str) and len(task_run_key.strip()) == 0:
         raise click.UsageError('Parameter --task-run-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13931,10 +13930,10 @@ def list_task_runs(ctx, from_json, all_pages, page_size, workspace_id, applicati
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14016,10 +14015,10 @@ def list_task_schedules(ctx, from_json, all_pages, page_size, workspace_id, appl
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14093,7 +14092,7 @@ def list_task_validations(ctx, from_json, all_pages, page_size, workspace_id, ke
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14164,7 +14163,7 @@ def list_tasks(ctx, from_json, all_pages, page_size, workspace_id, folder_id, fi
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14236,7 +14235,7 @@ def list_templates(ctx, from_json, all_pages, page_size, workspace_id, name, ide
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14303,7 +14302,7 @@ def list_user_defined_function_validations(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14372,7 +14371,7 @@ def list_user_defined_functions(ctx, from_json, all_pages, page_size, workspace_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14437,7 +14436,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14494,7 +14493,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14666,7 +14665,7 @@ def list_workspaces(ctx, from_json, all_pages, page_size, compartment_id, name, 
 @cli_util.wrap_exceptions
 def start_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14723,7 +14722,7 @@ def start_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def stop_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, quiesce_timeout, is_force_operation, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14799,10 +14798,10 @@ def stop_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, application_key, key, model_type, object_version, model_version, name, description, application_version, object_status, identifier, parent_ref, metadata, display_name, freeform_tags, defined_tags, lifecycle_state, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or metadata or freeform_tags or defined_tags:
@@ -14901,10 +14900,10 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def update_application_detailed_description(ctx, from_json, workspace_id, application_key, logo, detailed_description, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14955,10 +14954,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection(ctx, from_json, force, workspace_id, connection_key, model_type, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata:
@@ -15033,10 +15032,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_lake(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata:
@@ -15115,10 +15114,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_oracle_ebs(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or password_secret:
@@ -15203,10 +15202,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_object_storage(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, credential_file_content, user_id, finger_print, pass_phrase, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata:
@@ -15297,10 +15296,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_bicc(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password_secret, default_external_storage, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or password_secret or default_external_storage:
@@ -15385,10 +15384,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_rest_no_auth(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata:
@@ -15470,10 +15469,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_hdfs(ctx, from_json, force, workspace_id, connection_key, key, object_version, hdfs_principal, data_node_principal, name_node_principal, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, realm, key_distribution_center, key_tab_content, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or key_tab_content:
@@ -15566,10 +15565,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_o_auth2(ctx, from_json, force, workspace_id, connection_key, key, object_version, access_token_url, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, client_id, client_secret, scope, grant_type, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or client_secret:
@@ -15661,10 +15660,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_rest_basic_auth(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password_secret, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, auth_header, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or password_secret:
@@ -15748,10 +15747,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_oracle_siebel(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or password_secret:
@@ -15835,10 +15834,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_my_sql_heat_wave(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or password_secret:
@@ -15921,10 +15920,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_bip(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or password_secret:
@@ -16009,10 +16008,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_my_sql(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password, password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or password_secret:
@@ -16100,10 +16099,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_jdbc(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password, password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or password_secret:
@@ -16190,10 +16189,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_amazon_s3(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, access_key, secret_key, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or access_key or secret_key:
@@ -16280,10 +16279,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_atp(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, tns_alias, tns_names, username, password, password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or tns_names or password_secret:
@@ -16377,10 +16376,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_oracle(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password, password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or password_secret:
@@ -16470,10 +16469,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_adwc(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, tns_alias, tns_names, username, password, password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or tns_names or password_secret:
@@ -16567,10 +16566,10 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_connection_update_connection_from_oracle_people_soft(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or connection_properties or registry_metadata or password_secret:
@@ -16639,10 +16638,10 @@ def update_connection_update_connection_from_oracle_people_soft(ctx, from_json, 
 @cli_util.wrap_exceptions
 def update_copy_object_request(ctx, from_json, workspace_id, copy_object_request_key, status, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(copy_object_request_key, six.string_types) and len(copy_object_request_key.strip()) == 0:
+    if isinstance(copy_object_request_key, str) and len(copy_object_request_key.strip()) == 0:
         raise click.UsageError('Parameter --copy-object-request-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16688,10 +16687,10 @@ def update_copy_object_request(ctx, from_json, workspace_id, copy_object_request
 @cli_util.wrap_exceptions
 def update_data_asset(ctx, from_json, force, workspace_id, data_asset_key, model_type, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata:
@@ -16767,10 +16766,10 @@ def update_data_asset(ctx, from_json, force, workspace_id, data_asset_key, model
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_rest(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, base_url, manifest_file_content, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or default_connection:
@@ -16851,10 +16850,10 @@ def update_data_asset_update_data_asset_from_rest(ctx, from_json, force, workspa
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_my_sql_heat_wave(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, host, port, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or default_connection:
@@ -16942,10 +16941,10 @@ def update_data_asset_update_data_asset_from_my_sql_heat_wave(ctx, from_json, fo
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_oracle_ebs(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, host, port, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or wallet_secret or wallet_password_secret or default_connection:
@@ -17047,10 +17046,10 @@ def update_data_asset_update_data_asset_from_oracle_ebs(ctx, from_json, force, w
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_adwc(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, driver_class, credential_file_content, wallet_secret, wallet_password_secret, region_id, tenancy_id, compartment_id, autonomous_db_id, default_connection, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or wallet_secret or wallet_password_secret or default_connection:
@@ -17159,10 +17158,10 @@ def update_data_asset_update_data_asset_from_adwc(ctx, from_json, force, workspa
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_hdfs(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, host, port, protocol, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, validate_certificate, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or default_connection:
@@ -17251,10 +17250,10 @@ def update_data_asset_update_data_asset_from_hdfs(ctx, from_json, force, workspa
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_oracle_people_soft(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, host, port, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or wallet_secret or wallet_password_secret or default_connection:
@@ -17351,10 +17350,10 @@ def update_data_asset_update_data_asset_from_oracle_people_soft(ctx, from_json, 
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_object_storage(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, oci_region, url, tenancy_id, namespace, default_connection, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or default_connection:
@@ -17444,10 +17443,10 @@ def update_data_asset_update_data_asset_from_object_storage(ctx, from_json, forc
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_amazon_s3(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, region_parameterconflict, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata:
@@ -17528,10 +17527,10 @@ def update_data_asset_update_data_asset_from_amazon_s3(ctx, from_json, force, wo
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_my_sql(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, host, port, service_name, default_connection, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or default_connection:
@@ -17625,10 +17624,10 @@ def update_data_asset_update_data_asset_from_my_sql(ctx, from_json, force, works
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_oracle_siebel(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, host, port, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or wallet_secret or wallet_password_secret or default_connection:
@@ -17724,10 +17723,10 @@ def update_data_asset_update_data_asset_from_oracle_siebel(ctx, from_json, force
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_lake(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, lake_id, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, metastore_id, lake_proxy_endpoint, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or default_connection:
@@ -17819,10 +17818,10 @@ def update_data_asset_update_data_asset_from_lake(ctx, from_json, force, workspa
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_atp(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, driver_class, credential_file_content, wallet_secret, wallet_password_secret, region_id, tenancy_id, compartment_id, autonomous_db_id, default_connection, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or wallet_secret or wallet_password_secret or default_connection:
@@ -17930,10 +17929,10 @@ def update_data_asset_update_data_asset_from_atp(ctx, from_json, force, workspac
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_jdbc(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, host, port, data_asset_type, default_connection, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or default_connection:
@@ -18020,10 +18019,10 @@ def update_data_asset_update_data_asset_from_jdbc(ctx, from_json, force, workspa
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_fusion_app(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_url, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata:
@@ -18109,10 +18108,10 @@ def update_data_asset_update_data_asset_from_fusion_app(ctx, from_json, force, w
 @cli_util.wrap_exceptions
 def update_data_asset_update_data_asset_from_oracle(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, host, port, service_name, driver_class, sid, credential_file_content, wallet_secret, wallet_password_secret, default_connection, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if asset_properties or registry_metadata or wallet_secret or wallet_password_secret or default_connection:
@@ -18220,10 +18219,10 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def update_data_flow(ctx, from_json, force, workspace_id, data_flow_key, key, model_type, object_version, model_version, parent_ref, name, identifier, nodes, parameters, description, flow_config_values, object_status, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(data_flow_key, six.string_types) and len(data_flow_key.strip()) == 0:
+    if isinstance(data_flow_key, str) and len(data_flow_key.strip()) == 0:
         raise click.UsageError('Parameter --data-flow-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or nodes or parameters or flow_config_values or registry_metadata:
@@ -18310,10 +18309,10 @@ def update_data_flow(ctx, from_json, force, workspace_id, data_flow_key, key, mo
 @cli_util.wrap_exceptions
 def update_dis_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, dis_application_id, key, model_type, object_version, model_version, name, description, application_version, object_status, identifier, parent_ref, metadata, display_name, freeform_tags, defined_tags, lifecycle_state, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(dis_application_id, six.string_types) and len(dis_application_id.strip()) == 0:
+    if isinstance(dis_application_id, str) and len(dis_application_id.strip()) == 0:
         raise click.UsageError('Parameter --dis-application-id cannot be whitespace or empty string')
     if not force:
         if parent_ref or metadata or freeform_tags or defined_tags:
@@ -18412,10 +18411,10 @@ def update_dis_application(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def update_dis_application_detailed_description(ctx, from_json, workspace_id, application_key, logo, detailed_description, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18453,10 +18452,10 @@ def update_dis_application_detailed_description(ctx, from_json, workspace_id, ap
 @cli_util.wrap_exceptions
 def update_export_request(ctx, from_json, workspace_id, export_request_key, status, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(export_request_key, six.string_types) and len(export_request_key.strip()) == 0:
+    if isinstance(export_request_key, str) and len(export_request_key.strip()) == 0:
         raise click.UsageError('Parameter --export-request-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18498,13 +18497,13 @@ def update_export_request(ctx, from_json, workspace_id, export_request_key, stat
 @cli_util.wrap_exceptions
 def update_external_publication(ctx, from_json, force, workspace_id, task_key, external_publications_key, application_compartment_id, display_name, application_id, description, resource_configuration, configuration_details, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
 
-    if isinstance(external_publications_key, six.string_types) and len(external_publications_key.strip()) == 0:
+    if isinstance(external_publications_key, str) and len(external_publications_key.strip()) == 0:
         raise click.UsageError('Parameter --external-publications-key cannot be whitespace or empty string')
     if not force:
         if resource_configuration or configuration_details:
@@ -18566,10 +18565,10 @@ def update_external_publication(ctx, from_json, force, workspace_id, task_key, e
 @cli_util.wrap_exceptions
 def update_folder(ctx, from_json, force, workspace_id, folder_key, key, model_type, object_version, model_version, name, description, category_name, object_status, identifier, parent_ref, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
+    if isinstance(folder_key, str) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or registry_metadata:
@@ -18640,10 +18639,10 @@ def update_folder(ctx, from_json, force, workspace_id, folder_key, key, model_ty
 @cli_util.wrap_exceptions
 def update_function_library(ctx, from_json, force, workspace_id, function_library_key, name, description, category_name, object_status, identifier, model_version, object_version, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(function_library_key, six.string_types) and len(function_library_key.strip()) == 0:
+    if isinstance(function_library_key, str) and len(function_library_key.strip()) == 0:
         raise click.UsageError('Parameter --function-library-key cannot be whitespace or empty string')
     if not force:
         if registry_metadata:
@@ -18703,10 +18702,10 @@ def update_function_library(ctx, from_json, force, workspace_id, function_librar
 @cli_util.wrap_exceptions
 def update_import_request(ctx, from_json, workspace_id, import_request_key, status, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(import_request_key, six.string_types) and len(import_request_key.strip()) == 0:
+    if isinstance(import_request_key, str) and len(import_request_key.strip()) == 0:
         raise click.UsageError('Parameter --import-request-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18761,10 +18760,10 @@ This option is a JSON list with items of type Variable.  For documentation on Va
 @cli_util.wrap_exceptions
 def update_pipeline(ctx, from_json, force, workspace_id, pipeline_key, key, model_type, object_version, model_version, parent_ref, name, description, object_status, identifier, nodes, parameters, flow_config_values, variables, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(pipeline_key, six.string_types) and len(pipeline_key.strip()) == 0:
+    if isinstance(pipeline_key, str) and len(pipeline_key.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or nodes or parameters or flow_config_values or variables or registry_metadata:
@@ -18846,10 +18845,10 @@ def update_pipeline(ctx, from_json, force, workspace_id, pipeline_key, key, mode
 @cli_util.wrap_exceptions
 def update_project(ctx, from_json, force, workspace_id, project_key, key, model_type, object_version, model_version, name, description, object_status, identifier, parent_ref, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(project_key, six.string_types) and len(project_key.strip()) == 0:
+    if isinstance(project_key, str) and len(project_key.strip()) == 0:
         raise click.UsageError('Parameter --project-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or registry_metadata:
@@ -18915,13 +18914,13 @@ This option is a JSON list with items of type ChildReferenceDetail.  For documen
 @cli_util.wrap_exceptions
 def update_reference(ctx, from_json, force, workspace_id, application_key, reference_key, options, target_object, child_references, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(reference_key, six.string_types) and len(reference_key.strip()) == 0:
+    if isinstance(reference_key, str) and len(reference_key.strip()) == 0:
         raise click.UsageError('Parameter --reference-key cannot be whitespace or empty string')
     if not force:
         if options or target_object or child_references:
@@ -18981,13 +18980,13 @@ def update_reference(ctx, from_json, force, workspace_id, application_key, refer
 @cli_util.wrap_exceptions
 def update_schedule(ctx, from_json, force, workspace_id, application_key, schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, frequency_details, timezone, is_daylight_adjustment_enabled, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+    if isinstance(schedule_key, str) and len(schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or frequency_details or registry_metadata:
@@ -19076,13 +19075,13 @@ def update_schedule(ctx, from_json, force, workspace_id, application_key, schedu
 @cli_util.wrap_exceptions
 def update_schedule_monthly_frequency_details(ctx, from_json, force, workspace_id, application_key, schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, timezone, is_daylight_adjustment_enabled, registry_metadata, if_match, frequency_details_frequency, frequency_details_interval, frequency_details_time, frequency_details_days):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+    if isinstance(schedule_key, str) and len(schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or registry_metadata:
@@ -19181,13 +19180,13 @@ def update_schedule_monthly_frequency_details(ctx, from_json, force, workspace_i
 @cli_util.wrap_exceptions
 def update_schedule_custom_frequency_details(ctx, from_json, force, workspace_id, application_key, schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, timezone, is_daylight_adjustment_enabled, registry_metadata, if_match, frequency_details_frequency, frequency_details_custom_expression):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+    if isinstance(schedule_key, str) and len(schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or registry_metadata:
@@ -19281,13 +19280,13 @@ def update_schedule_custom_frequency_details(ctx, from_json, force, workspace_id
 @cli_util.wrap_exceptions
 def update_schedule_daily_frequency_details(ctx, from_json, force, workspace_id, application_key, schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, timezone, is_daylight_adjustment_enabled, registry_metadata, if_match, frequency_details_frequency, frequency_details_interval, frequency_details_time):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+    if isinstance(schedule_key, str) and len(schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or registry_metadata:
@@ -19384,13 +19383,13 @@ def update_schedule_daily_frequency_details(ctx, from_json, force, workspace_id,
 @cli_util.wrap_exceptions
 def update_schedule_weekly_frequency_details(ctx, from_json, force, workspace_id, application_key, schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, timezone, is_daylight_adjustment_enabled, registry_metadata, if_match, frequency_details_frequency, frequency_details_time, frequency_details_days):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+    if isinstance(schedule_key, str) and len(schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or registry_metadata:
@@ -19489,13 +19488,13 @@ def update_schedule_weekly_frequency_details(ctx, from_json, force, workspace_id
 @cli_util.wrap_exceptions
 def update_schedule_monthly_rule_frequency_details(ctx, from_json, force, workspace_id, application_key, schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, timezone, is_daylight_adjustment_enabled, registry_metadata, if_match, frequency_details_frequency, frequency_details_week_of_month, frequency_details_interval, frequency_details_time, frequency_details_day_of_week):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+    if isinstance(schedule_key, str) and len(schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or registry_metadata:
@@ -19598,13 +19597,13 @@ def update_schedule_monthly_rule_frequency_details(ctx, from_json, force, worksp
 @cli_util.wrap_exceptions
 def update_schedule_hourly_frequency_details(ctx, from_json, force, workspace_id, application_key, schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, timezone, is_daylight_adjustment_enabled, registry_metadata, if_match, frequency_details_frequency, frequency_details_interval, frequency_details_time):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+    if isinstance(schedule_key, str) and len(schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or registry_metadata:
@@ -19707,10 +19706,10 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def update_task(ctx, from_json, force, workspace_id, task_key, model_type, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata:
@@ -19825,10 +19824,10 @@ This option is a JSON list with items of type TypedExpression.  For documentatio
 @cli_util.wrap_exceptions
 def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, auth_details, auth_config, endpoint_parameterconflict, method_type, headers, additional_properties, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config, poll_rest_call_config, typed_expressions, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or auth_details or auth_config or endpoint_parameterconflict or headers or cancel_endpoint or execute_rest_call_config or cancel_rest_call_config or poll_rest_call_config or typed_expressions:
@@ -19971,10 +19970,10 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def update_task_update_task_from_pipeline_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, pipeline, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or pipeline:
@@ -20080,10 +20079,10 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def update_task_update_task_from_oci_dataflow_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, dataflow_application, driver_shape_details, executor_shape_details, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or dataflow_application or driver_shape_details or executor_shape_details:
@@ -20195,10 +20194,10 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def update_task_update_task_from_sql_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, script, sql_script_type, operation, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or script or operation:
@@ -20311,10 +20310,10 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def update_task_update_task_from_data_loader_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, data_flow, conditional_composite_field_map, is_single_load, parallel_load_limit, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or data_flow or conditional_composite_field_map:
@@ -20427,10 +20426,10 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.wrap_exceptions
 def update_task_update_task_from_integration_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, data_flow, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
+    if isinstance(task_key, str) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or data_flow:
@@ -20522,13 +20521,13 @@ def update_task_update_task_from_integration_task(ctx, from_json, force, workspa
 @cli_util.wrap_exceptions
 def update_task_run(ctx, from_json, force, workspace_id, application_key, task_run_key, key, status, model_type, model_version, name, description, object_version, task_schedule_key, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(task_run_key, six.string_types) and len(task_run_key.strip()) == 0:
+    if isinstance(task_run_key, str) and len(task_run_key.strip()) == 0:
         raise click.UsageError('Parameter --task-run-key cannot be whitespace or empty string')
     if not force:
         if registry_metadata:
@@ -20616,13 +20615,13 @@ def update_task_run(ctx, from_json, force, workspace_id, application_key, task_r
 @cli_util.wrap_exceptions
 def update_task_schedule(ctx, from_json, force, workspace_id, application_key, task_schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, schedule_ref, config_provider_delegate, is_enabled, number_of_retries, retry_delay, retry_delay_unit, start_time_millis, end_time_millis, is_concurrent_allowed, is_backfill_enabled, auth_mode, expected_duration, expected_duration_unit, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+    if isinstance(application_key, str) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
 
-    if isinstance(task_schedule_key, six.string_types) and len(task_schedule_key.strip()) == 0:
+    if isinstance(task_schedule_key, str) and len(task_schedule_key.strip()) == 0:
         raise click.UsageError('Parameter --task-schedule-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or schedule_ref or config_provider_delegate or registry_metadata:
@@ -20736,10 +20735,10 @@ This option is a JSON list with items of type FunctionSignature.  For documentat
 @cli_util.wrap_exceptions
 def update_user_defined_function(ctx, from_json, force, workspace_id, user_defined_function_key, parent_ref, name, identifier, model_version, object_version, signatures, expr, description, object_status, registry_metadata, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
 
-    if isinstance(user_defined_function_key, six.string_types) and len(user_defined_function_key.strip()) == 0:
+    if isinstance(user_defined_function_key, str) and len(user_defined_function_key.strip()) == 0:
         raise click.UsageError('Parameter --user-defined-function-key cannot be whitespace or empty string')
     if not force:
         if parent_ref or signatures or expr or registry_metadata:
@@ -20812,7 +20811,7 @@ def update_user_defined_function(ctx, from_json, force, workspace_id, user_defin
 @cli_util.wrap_exceptions
 def update_workspace(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, freeform_tags, defined_tags, description, display_name, workspace_properties, if_match):
 
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+    if isinstance(workspace_id, str) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or workspace_properties:

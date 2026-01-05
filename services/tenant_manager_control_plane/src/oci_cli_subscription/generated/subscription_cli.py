@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -128,7 +127,7 @@ def create_subscription_mapping(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_subscription_mapping(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subscription_mapping_id, if_match):
 
-    if isinstance(subscription_mapping_id, six.string_types) and len(subscription_mapping_id.strip()) == 0:
+    if isinstance(subscription_mapping_id, str) and len(subscription_mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-mapping-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -187,7 +186,7 @@ def delete_subscription_mapping(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def get_assigned_subscription(ctx, from_json, assigned_subscription_id):
 
-    if isinstance(assigned_subscription_id, six.string_types) and len(assigned_subscription_id.strip()) == 0:
+    if isinstance(assigned_subscription_id, str) and len(assigned_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --assigned-subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -209,7 +208,7 @@ def get_assigned_subscription(ctx, from_json, assigned_subscription_id):
 @cli_util.wrap_exceptions
 def get_subscription(ctx, from_json, subscription_id):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -231,7 +230,7 @@ def get_subscription(ctx, from_json, subscription_id):
 @cli_util.wrap_exceptions
 def get_subscription_mapping(ctx, from_json, subscription_mapping_id):
 
-    if isinstance(subscription_mapping_id, six.string_types) and len(subscription_mapping_id.strip()) == 0:
+    if isinstance(subscription_mapping_id, str) and len(subscription_mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-mapping-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -262,7 +261,7 @@ def list_assigned_subscription_line_items(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(assigned_subscription_id, six.string_types) and len(assigned_subscription_id.strip()) == 0:
+    if isinstance(assigned_subscription_id, str) and len(assigned_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --assigned-subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -372,7 +371,7 @@ def list_assigned_subscriptions(ctx, from_json, all_pages, page_size, compartmen
 @cli_util.wrap_exceptions
 def list_available_regions(ctx, from_json, all_pages, subscription_id, page):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -412,7 +411,7 @@ def list_subscription_line_items(ctx, from_json, all_pages, page_size, subscript
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
