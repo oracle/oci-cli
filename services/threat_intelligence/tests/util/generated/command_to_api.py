@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "threat_intelligence.get_indicator": "oci.threat_intelligence.ThreatintelClient.get_indicator",

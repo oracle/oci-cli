@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "ai_document.add_model_lock": "oci.ai_document.AIServiceDocumentClient.add_model_lock",

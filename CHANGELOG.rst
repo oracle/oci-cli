@@ -6,13 +6,94 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
-3.71.4 - 2025-12-17
+3.72.0 - 2026-01-13
 --------------------
-Fixed
+Added
 ~~~~~
-* Updated oci version to 2.164.2
+* Database Service
+  * Support for PITR as irestore using timestamp
+    * ``oci db database create-from-backup``
 
-3.71.3 - 2025-12-17
+  * Support to select a maintenance window when enabling dedicated storage on a Resource Pool leader.
+    * ``oci db autonomous-database create --autonomous-database-maintenance-window``
+    * ``oci db autonomous-database update --autonomous-database-maintenance-window``
+
+  * Support to pause and resume maintenance/patching operations.
+    * ``oci db autonomous-database update --time-maintenance-pause-until``
+
+  * Support to provide the OCID of the standby local ADG Resource Pool leader when enabling local ADG on a Resource Pool with dedicated storage.
+    * ``oci db autonomous-database update --local-adg-resource-pool-leader-id``
+
+* Devops service
+    * Support for Security Attributes in DevOps Deploy Service
+      * ``oci devops-deploy``
+
+* Fleet Application Management service
+    * [BREAKING] New Parameters for Existing Operation
+    * Support for platform configuration soft links with new optional parameters in the Fleet Application Management service
+      * ``oci fleet-apps-management fleet-apps-management-admin platform-configuration create-platform-configuration-product-config-category-details --config-category-details-versions --config-category-details-is-compliance-policy-required-for-softlink --config-category-details-is-softlink --config-category-details-link-product-id``
+      * ``oci fleet-apps-management fleet-apps-management-admin platform-configuration update-platform-configuration-product-config-category-details --config-category-details-versions --config-category-details-is-compliance-policy-required-for-softlink --config-category-details-is-softlink --config-category-details-link-product-id``
+
+* MySQL Service
+    * Support for Database Console in HeatWave MySQL Service
+      * ``oci mysql db-system clone --database-console``
+      * ``oci mysql db-system create --database-console``
+      * ``oci mysql db-system import --database-console``
+      * ``oci mysql db-system update --database-console``
+
+* Budgets Service
+   * Added new commands for cost-ad feature in Budgets service
+     * ``oci budgets cost-ad cost-alert-subscription create``
+     * ``oci budgets cost-ad cost-alert-subscription delete``
+     * ``oci budgets cost-ad cost-alert-subscription get``
+     * ``oci budgets cost-ad cost-alert-subscription update``
+     * ``oci budgets cost-ad cost-alert-subscription-collection list-subs``
+     * ``oci budgets cost-ad cost-anomaly-event anomaly-events-stats``
+     * ``oci budgets cost-ad cost-anomaly-event get``
+     * ``oci budgets cost-ad cost-anomaly-event update``
+     * ``oci budgets cost-ad cost-anomaly-event-collection list-events``
+     * ``oci budgets cost-ad cost-anomaly-monitor create``
+     * ``oci budgets cost-ad cost-anomaly-monitor delete``
+     * ``oci budgets cost-ad cost-anomaly-monitor disable``
+     * ``oci budgets cost-ad cost-anomaly-monitor enable``
+     * ``oci budgets cost-ad cost-anomaly-monitor get``
+     * ``oci budgets cost-ad cost-anomaly-monitor update``
+     * ``oci budgets cost-ad cost-anomaly-monitor-collection list-monitors``
+
+Modified
+~~~~~~~
+* Budgets Service
+  * [BREAKING] Rename command oci budgets alert-rule create to the below command
+    * ``oci budgets budget alert-rule create``
+
+  * [BREAKING] Rename command oci budgets alert-rule delete to the below command
+    * ``oci budgets budget alert-rule delete``
+
+  * [BREAKING] Rename command oci budgets alert-rule get to the below command
+    * ``oci budgets budget alert-rule get``
+
+  * [BREAKING] Rename command oci budgets alert-rule list to the below command
+    * ``oci budgets budget alert-rule list``
+
+  * [BREAKING] Rename command oci budgets alert-rule update to the below command
+    * ``oci budgets budget alert-rule update``
+
+  * [BREAKING] Rename command oci budgets budget create to the below command and added optional parameter
+    * ``oci budgets budget budget create``
+
+  * [BREAKING] Rename command oci budgets budget delete to the below command
+    * ``oci budgets budget budget delete``
+
+  * [BREAKING] Rename command oci budgets budget get to the below command
+    * ``oci budgets budget budget get``
+
+  * [BREAKING] Rename command oci budgets budget list to the below command
+    * ``oci budgets budget budget list``
+
+  * [BREAKING] Rename command oci budgets budget update to the below command and added optional parameter
+    * ``oci budgets budget budget update``
+
+3.71.4 - 2025-12-17
 --------------------
 Fixed
 ~~~~~

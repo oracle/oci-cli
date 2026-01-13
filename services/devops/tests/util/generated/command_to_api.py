@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "devops.approve_deployment": "oci.devops.DevopsClient.approve_deployment",
@@ -64,7 +64,6 @@ SDK_client_map = {
     "devops.get_pull_request": "oci.devops.DevopsClient.get_pull_request",
     "devops.get_pull_request_attachment": "oci.devops.DevopsClient.get_pull_request_attachment",
     "devops.get_pull_request_attachment_content": "oci.devops.DevopsClient.get_pull_request_attachment_content",
-    "devops.get_pull_request_change_summary_metrics": "oci.devops.DevopsClient.get_pull_request_change_summary_metrics",
     "devops.get_pull_request_comment": "oci.devops.DevopsClient.get_pull_request_comment",
     "devops.get_pull_request_notification_preference": "oci.devops.DevopsClient.get_pull_request_notification_preference",
     "devops.get_ref": "oci.devops.DevopsClient.get_ref",
@@ -101,8 +100,6 @@ SDK_client_map = {
     "devops.list_pull_request_attachments": "oci.devops.DevopsClient.list_pull_request_attachments",
     "devops.list_pull_request_authors": "oci.devops.DevopsClient.list_pull_request_authors",
     "devops.list_pull_request_comments": "oci.devops.DevopsClient.list_pull_request_comments",
-    "devops.list_pull_request_commits": "oci.devops.DevopsClient.list_pull_request_commits",
-    "devops.list_pull_request_file_changes": "oci.devops.DevopsClient.list_pull_request_file_changes",
     "devops.list_pull_requests": "oci.devops.DevopsClient.list_pull_requests",
     "devops.list_refs": "oci.devops.DevopsClient.list_refs",
     "devops.list_repositories": "oci.devops.DevopsClient.list_repositories",
@@ -116,8 +113,6 @@ SDK_client_map = {
     "devops.patch_pull_request": "oci.devops.DevopsClient.patch_pull_request",
     "devops.put_repository_ref": "oci.devops.DevopsClient.put_repository_ref",
     "devops.reopen_pull_request": "oci.devops.DevopsClient.reopen_pull_request",
-    "devops.reopen_pull_request_comment": "oci.devops.DevopsClient.reopen_pull_request_comment",
-    "devops.resolve_pull_request_comment": "oci.devops.DevopsClient.resolve_pull_request_comment",
     "devops.review_pull_request": "oci.devops.DevopsClient.review_pull_request",
     "devops.schedule_cascading_project_deletion": "oci.devops.DevopsClient.schedule_cascading_project_deletion",
     "devops.summarize_project_repository_analytics": "oci.devops.DevopsClient.summarize_project_repository_analytics",

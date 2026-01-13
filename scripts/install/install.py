@@ -604,9 +604,7 @@ def install_native_dependencies_for_ubuntu():
     if ubuntu_version not in ("20.04", "22.04"):
         return
     print_status('Installing native dependencies for Ubuntu.')
-    is_python3 = sys.version_info[0] == 3
-    python_dep = 'python-dev-is-python3' if is_python3 else 'python-dev'
-    dep_list = ['libssl-dev', 'libffi-dev', python_dep, 'build-essential']
+    dep_list = ['libssl-dev', 'libffi-dev', 'python-dev-is-python3', 'build-essential']
     # This is required because if script is run through root user sudo_cmd value will be empty quote and command subprocess.check_call(['', 'apt-get', '--assume-yes', 'install']) will not work.
     if sudo_cmd == "":
         cmd = ['apt-get', '--assume-yes', 'install']
