@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "fleet_software_update.abort_fsu_discovery": "oci.fleet_software_update.FleetSoftwareUpdateClient.abort_fsu_discovery",
