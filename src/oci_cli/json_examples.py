@@ -9,32 +9,36 @@ This enhances the --generate-param-json-input functionality with better examples
 
 import random
 
-# Shape configuration examples for different use cases
+# Cached example OCIDs for realistic examples
+CACHED_OCIDS = {
+    "compartment": "ocid1.compartment.oc1..aaaaaaaaq3loyafnlhij4knz3jvbqycxya6nfkfq7tczzoakdnye3wnzpqeq",
+    "instance": "ocid1.instance.oc1.iad.anuwcljtniwq6syc7g6n7ywrya3avzcctnw7qbbaqn72f2tqhqcbhxiq",
+    "vcn": "ocid1.vcn.oc1.iad.amaaaaaanlc5nbyaknrwfkzv7oqv4kxfytaglazuaeruocuyvdrbcg2bqda",
+    "subnet": "ocid1.subnet.oc1.iad.aaaaaaaawngpvr7vhqvq65vqp2z4bkxhvxl5wqkmpvd3xjmi7rxyogddng4a",
+    "image": "ocid1.image.oc1.iad.aaaaaaaaiu73xa6afjzskjwvt3j5shpmftnbkiwindolgp7c2yxvjpyqhbza",
+    "boot_volume": "ocid1.bootvolume.oc1.iad.abuwcljr5bhtqkplnlaxfzvmvntnigpmzpdo3kmyocoaen6fqhilcixugk7q",
+    "block_volume": "ocid1.volume.oc1.iad.abuwcljrbffbqz2z2e3h7zjlz2nsanx56yt4b6lufnopcgnxk4zgrncdkxeq",
+    "dedicated_vm_host": "ocid1.dedicatedvmhost.oc1.iad.anuwcljtniwq6syc5btw2bzqulj5fp2xdhqcd3r3eltsm4pq4xiq",
+    "capacity_reservation": "ocid1.capacityreservation.oc1.iad.anuwcljrniwq6syc5btw2bzlkj5fp2xdhycd3r3eltpb4pq7xiq"
+}
+
+# Minimal shape configuration examples
 SHAPE_CONFIG_EXAMPLES = [
     {
-        "_comment": "Flexible VM with 2 OCPUs and 16GB RAM (standard configuration)",
-        "ocpus": 2.0,
-        "memoryInGBs": 16.0,
-        "baselineOcpuUtilization": "BASELINE_1_1"
+        "_comment": "Minimal flexible VM",
+        "ocpus": 1.0,
+        "memoryInGBs": 8.0
     },
     {
-        "_comment": "Burstable instance with 50% baseline (cost-optimized)",
+        "_comment": "Burstable instance (cost-optimized)",
         "ocpus": 1.0,
-        "memoryInGBs": 8.0,
+        "memoryInGBs": 4.0,
         "baselineOcpuUtilization": "BASELINE_1_2"
     },
     {
-        "_comment": "High performance with NVMe drives",
-        "ocpus": 4.0,
-        "memoryInGBs": 32.0,
-        "nvmes": 2,
-        "baselineOcpuUtilization": "BASELINE_1_1"
-    },
-    {
-        "_comment": "Minimal configuration for development",
-        "ocpus": 1.0,
-        "memoryInGBs": 4.0,
-        "baselineOcpuUtilization": "BASELINE_1_8"
+        "_comment": "Standard flexible configuration",
+        "ocpus": 2.0,
+        "memoryInGBs": 16.0
     }
 ]
 
@@ -43,50 +47,87 @@ PARAMETER_EXAMPLES = {
     "shape-config": lambda: random.choice(SHAPE_CONFIG_EXAMPLES),
     "shapeConfig": lambda: random.choice(SHAPE_CONFIG_EXAMPLES),
 
-    # Add more parameter examples here as needed
+    # Minimal parameter examples
     "agent-config": lambda: {
-        "_comment": "Agent configuration for monitoring and management",
+        "_comment": "Minimal agent configuration",
         "isMonitoringDisabled": False,
-        "isManagementDisabled": False,
-        "areAllPluginsDisabled": False,
-        "pluginsConfig": [
-            {
-                "name": "OS Management Service Agent",
-                "desiredState": "ENABLED"
-            }
-        ]
+        "isManagementDisabled": False
     },
 
     "availability-config": lambda: {
-        "_comment": "Availability configuration for instance recovery",
-        "recoveryAction": "RESTORE_INSTANCE",
-        "isLiveMigrationPreferred": True
+        "_comment": "Minimal availability configuration",
+        "recoveryAction": "RESTORE_INSTANCE"
     },
 
     "launch-options": lambda: {
-        "_comment": "Launch options for boot configuration",
+        "_comment": "Minimal launch options",
         "bootVolumeType": "PARAVIRTUALIZED",
         "firmware": "UEFI_64",
-        "networkType": "PARAVIRTUALIZED",
-        "remoteDataVolumeType": "PARAVIRTUALIZED",
-        "isPvEncryptionInTransitEnabled": True,
-        "isConsistentVolumeNamingEnabled": True
+        "networkType": "PARAVIRTUALIZED"
     },
 
     "instance-options": lambda: {
-        "_comment": "Instance options for security configuration",
-        "areLegacyImdsEndpointsDisabled": True
+        "_comment": "Minimal instance options",
+        "areLegacyImdsEndpointsDisabled": False
     },
 
     "platform-config": lambda: {
-        "_comment": "Platform configuration for performance tuning",
-        "type": "AMD_MILAN_BM_GPU",
-        "numaNodesPerSocket": "NPS1",
-        "isSymmetricMultiThreadingEnabled": True,
-        "isAccessControlServiceEnabled": True,
-        "areVirtualInstructionsEnabled": True,
-        "isInputOutputMemoryManagementUnitEnabled": True
-    }
+        "_comment": "Minimal platform configuration",
+        "type": "AMD_MILAN_BM"
+    },
+
+    # Source details for instance launch/update
+    "source-details": lambda: random.choice([
+        {
+            "_comment": "Boot from image",
+            "sourceType": "image",
+            "imageId": CACHED_OCIDS["image"]
+        },
+        {
+            "_comment": "Boot from existing boot volume",
+            "sourceType": "bootVolume",
+            "bootVolumeId": CACHED_OCIDS["boot_volume"]
+        }
+    ]),
+
+    # Volume attachments
+    "launch-volume-attachments": lambda: [
+        {
+            "attachmentType": "paravirtualized",
+            "device": "/dev/sdb",
+            "displayName": "data-volume",
+            "volumeId": CACHED_OCIDS["block_volume"]
+        }
+    ],
+
+    # Metadata for cloud-init
+    "metadata": lambda: {
+        "ssh_authorized_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC... user@host",
+        "user_data": "IyEvYmluL2Jhc2gKZWNobyAiSGVsbG8gV29ybGQi"  # base64 encoded
+    },
+
+    # Extended metadata
+    "extended-metadata": lambda: {
+        "app_version": "1.0.0",
+        "environment": "development"
+    },
+
+    # Preemptible instance config
+    "preemptible-instance-config": lambda: {
+        "preemptionAction": {
+            "type": "TERMINATE",
+            "preserveBootVolume": False
+        }
+    },
+
+    # Examples with OCIDs for reference parameters
+    "capacity-reservation-id": lambda: CACHED_OCIDS["capacity_reservation"],
+    "dedicated-vm-host-id": lambda: CACHED_OCIDS["dedicated_vm_host"],
+    "instance-id": lambda: CACHED_OCIDS["instance"],
+    "compartment-id": lambda: CACHED_OCIDS["compartment"],
+    "image-id": lambda: CACHED_OCIDS["image"],
+    "subnet-id": lambda: CACHED_OCIDS["subnet"],
+    "vcn-id": lambda: CACHED_OCIDS["vcn"]
 }
 
 
@@ -141,22 +182,22 @@ def get_example_description_for_parameter(param_name):
     """
     descriptions = {
         "shape-config": """
-Available shape-config examples:
-1. Standard flexible VM (2 OCPUs, 16GB RAM)
-2. Burstable instance with 50% baseline (cost-optimized)
-3. High performance with NVMe drives
-4. Minimal development configuration
-
-The baselineOcpuUtilization options are:
-- BASELINE_1_1: 100% baseline (no burstable performance)
-- BASELINE_1_2: 50% baseline
-- BASELINE_1_8: 12.5% baseline (most cost-effective)
+# Shape config examples (refresh for different examples):
+# - Minimal flexible VM (1 OCPU, 8GB RAM)
+# - Burstable instance with 50% baseline
+# - Standard configuration (2 OCPUs, 16GB RAM)
+# baselineOcpuUtilization: BASELINE_1_1 (100%), BASELINE_1_2 (50%), BASELINE_1_8 (12.5%)
 """,
-        "agent-config": "Agent configuration for monitoring and management services",
-        "availability-config": "Availability configuration for instance recovery behavior",
-        "launch-options": "Launch options for boot and network configuration",
-        "instance-options": "Instance options for security configuration",
-        "platform-config": "Platform configuration for performance tuning"
+        "agent-config": "# Minimal agent configuration example",
+        "availability-config": "# Minimal availability configuration example",
+        "launch-options": "# Minimal launch options example",
+        "instance-options": "# Minimal instance options example",
+        "platform-config": "# Minimal platform configuration example",
+        "source-details": "# Examples: boot from image or boot volume",
+        "launch-volume-attachments": "# Example: attach block volume as /dev/sdb",
+        "metadata": "# Example: SSH keys and cloud-init user_data (base64)",
+        "extended-metadata": "# Example: custom key-value pairs",
+        "preemptible-instance-config": "# Example: preemptible instance with termination action"
     }
 
     return descriptions.get(param_name, "")
