@@ -222,13 +222,139 @@ def chat_on_demand_serving_mode(ctx, from_json, compartment_id, chat_request, se
     cli_util.render_response(result, ctx)
 
 
+@chat_result_group.command(name=cli_util.override('generative_ai_inference.chat_cohere_chat_request_v2.command_name', 'chat-cohere-chat-request-v2'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
+@cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-messages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of chat messages in chronological order, representing a conversation between the user and the model.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-documents', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of relevant documents that the model can refer to for generating grounded responses to the user's requests. Some example keys that you can add to the dictionary are \"text\", \"author\", and \"date\". Keep the total word count of the strings in the dictionary to 300 words or less.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-citation-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-tools-choice', type=custom_types.CliCaseInsensitiveChoice(["REQUIRED", "NONE"]), help=u"""Used to control whether or not the model will be forced to use a tool when answering. When REQUIRED is specified, the model will be forced to use at least one of the user-defined tools, and the tools parameter must be passed in the request. When NONE is specified, the model will be forced not to use one of the specified tools, and give a direct response. If tool_choice isn\u2019t specified, then the model is free to choose whether to use the specified tools or not. Note:This parameter is only compatible with models Command-r7b and newer.""")
+@cli_util.option('--chat-request-tools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of available tools (functions) that the model may suggest invoking before producing a text response.
+
+This option is a JSON list with items of type CohereToolV2.  For documentation on CohereToolV2 please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiinference/20231130/datatypes/CohereToolV2.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-is-strict-tools-enabled', type=click.BOOL, help=u"""When set to true, tool calls in the Assistant message will be forced to follow the tool definition strictly. Note:The first few requests with a new set of tools will take longer to process.""")
+@cli_util.option('--chat-request-is-log-probs-enabled', type=click.BOOL, help=u"""The log probabilities of the generated tokens will be included in the response.""")
+@cli_util.option('--chat-request-thinking', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-response-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-is-search-queries-only', type=click.BOOL, help=u"""When set to true, the response contains only a list of generated search queries without the search results and the model will not respond to the user's message.""")
+@cli_util.option('--chat-request-stream-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-is-stream', type=click.BOOL, help=u"""Whether to stream the partial progress of the model's response. When set to true, as tokens become available, they are sent as data-only server-sent events.""")
+@cli_util.option('--chat-request-max-tokens', type=click.INT, help=u"""The maximum number of output tokens that the model will generate for the response. The token count of your prompt plus maxTokens must not exceed the model's context length. For on-demand inferencing, the response length is capped at 4,000 tokens for each run.""")
+@cli_util.option('--chat-request-temperature', help=u"""A number that sets the randomness of the generated output. A lower temperature means less random generations. Use lower numbers for tasks such as question answering or summarizing. High temperatures can generate hallucinations or factually incorrect information. Start with temperatures lower than 1.0 and increase the temperature for more creative outputs, as you regenerate the prompts to refine the outputs.""")
+@cli_util.option('--chat-request-top-k', type=click.INT, help=u"""A sampling method in which the model chooses the next token randomly from the top k most likely tokens. A higher value for k generates more random output, which makes the output text sound more natural. The default value for k is 0 which disables this method and considers all tokens. To set a number for the likely tokens, choose an integer between 1 and 500.
+
+If also using top p, then the model considers only the top tokens whose probabilities add up to p percent and ignores the rest of the k tokens. For example, if k is 20 but only the probabilities of the top 10 add up to the value of p, then only the top 10 tokens are chosen.""")
+@cli_util.option('--chat-request-top-p', help=u"""If set to a probability 0.0 < p < 1.0, it ensures that only the most likely tokens, with total probability mass of p, are considered for generation at each step.
+
+To eliminate tokens with low likelihood, assign p a minimum percentage for the next token's likelihood. For example, when p is set to 0.75, the model eliminates the bottom 25 percent for the next token. Set to 1.0 to consider all tokens and set to 0 to disable. If both k and p are enabled, p acts after k.""")
+@cli_util.option('--chat-request-frequency-penalty', help=u"""To reduce repetitiveness of generated tokens, this number penalizes new tokens based on their frequency in the generated text so far. Greater numbers encourage the model to use new tokens, while lower numbers encourage the model to repeat the tokens. Set to 0 to disable.""")
+@cli_util.option('--chat-request-presence-penalty', help=u"""To reduce repetitiveness of generated tokens, this number penalizes new tokens based on whether they've appeared in the generated text so far. Greater numbers encourage the model to use new tokens, while lower numbers encourage the model to repeat the tokens.
+
+Similar to frequency penalty, a penalty is applied to previously present tokens, except that this penalty is applied equally to all tokens that have already appeared, regardless of how many times they've appeared. Set to 0 to disable.""")
+@cli_util.option('--chat-request-seed', type=click.INT, help=u"""If specified, the backend will make a best effort to sample tokens deterministically, so that repeated requests with the same seed and parameters yield the same result. However, determinism cannot be fully guaranteed.""")
+@cli_util.option('--chat-request-stop-sequences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Stop the model generation when it reaches a stop sequence defined in this parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-priority', type=click.INT, help=u"""The priority of the request (lower means earlier handling; default 0 highest priority). Higher priority requests are handled first, and dropped last when the system is under load.""")
+@cli_util.option('--chat-request-is-raw-prompting', type=click.BOOL, help=u"""When enabled, the user\u2019s `message` will be sent to the model without any preprocessing.""")
+@cli_util.option('--chat-request-safety-mode', type=custom_types.CliCaseInsensitiveChoice(["CONTEXTUAL", "STRICT", "OFF"]), help=u"""Safety mode: Adds a safety instruction for the model to use when generating responses. Contextual: (Default) Puts fewer constraints on the output. It maintains core protections by aiming to reject harmful or illegal suggestions, but it allows profanity and some toxic content, sexually explicit and violent content, and content that contains medical, financial, or legal information. Contextual mode is suited for entertainment, creative, or academic use. Strict: Aims to avoid sensitive topics, such as violent or sexual acts and profanity. This mode aims to provide a safer experience by prohibiting responses or recommendations that it finds inappropriate. Strict mode is suited for corporate use, such as for corporate communications and customer service. Off: No safety mode is applied. Note: This parameter is only compatible with models cohere.command-r-08-2024, cohere.command-r-plus-08-2024 and Cohere models released after these models. See [release dates].""")
+@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[CohereMessageV2]'}, 'chat-request-documents': {'module': 'generative_ai_inference', 'class': 'list[object]'}, 'chat-request-citation-options': {'module': 'generative_ai_inference', 'class': 'CitationOptionsV2'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[CohereToolV2]'}, 'chat-request-thinking': {'module': 'generative_ai_inference', 'class': 'CohereThinkingV2'}, 'chat-request-response-format': {'module': 'generative_ai_inference', 'class': 'CohereResponseFormat'}, 'chat-request-stream-options': {'module': 'generative_ai_inference', 'class': 'StreamOptions'}, 'chat-request-stop-sequences': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[CohereMessageV2]'}, 'chat-request-documents': {'module': 'generative_ai_inference', 'class': 'list[object]'}, 'chat-request-citation-options': {'module': 'generative_ai_inference', 'class': 'CitationOptionsV2'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[CohereToolV2]'}, 'chat-request-thinking': {'module': 'generative_ai_inference', 'class': 'CohereThinkingV2'}, 'chat-request-response-format': {'module': 'generative_ai_inference', 'class': 'CohereResponseFormat'}, 'chat-request-stream-options': {'module': 'generative_ai_inference', 'class': 'StreamOptions'}, 'chat-request-stop-sequences': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
+@cli_util.wrap_exceptions
+def chat_cohere_chat_request_v2(ctx, from_json, compartment_id, serving_mode, chat_request_messages, chat_request_documents, chat_request_citation_options, chat_request_tools_choice, chat_request_tools, chat_request_is_strict_tools_enabled, chat_request_is_log_probs_enabled, chat_request_thinking, chat_request_response_format, chat_request_is_search_queries_only, chat_request_stream_options, chat_request_is_stream, chat_request_max_tokens, chat_request_temperature, chat_request_top_k, chat_request_top_p, chat_request_frequency_penalty, chat_request_presence_penalty, chat_request_seed, chat_request_stop_sequences, chat_request_priority, chat_request_is_raw_prompting, chat_request_safety_mode):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['chatRequest'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['servingMode'] = cli_util.parse_json_parameter("serving_mode", serving_mode)
+    _details['chatRequest']['messages'] = cli_util.parse_json_parameter("chat_request_messages", chat_request_messages)
+
+    if chat_request_documents is not None:
+        _details['chatRequest']['documents'] = cli_util.parse_json_parameter("chat_request_documents", chat_request_documents)
+
+    if chat_request_citation_options is not None:
+        _details['chatRequest']['citationOptions'] = cli_util.parse_json_parameter("chat_request_citation_options", chat_request_citation_options)
+
+    if chat_request_tools_choice is not None:
+        _details['chatRequest']['toolsChoice'] = chat_request_tools_choice
+
+    if chat_request_tools is not None:
+        _details['chatRequest']['tools'] = cli_util.parse_json_parameter("chat_request_tools", chat_request_tools)
+
+    if chat_request_is_strict_tools_enabled is not None:
+        _details['chatRequest']['isStrictToolsEnabled'] = chat_request_is_strict_tools_enabled
+
+    if chat_request_is_log_probs_enabled is not None:
+        _details['chatRequest']['isLogProbsEnabled'] = chat_request_is_log_probs_enabled
+
+    if chat_request_thinking is not None:
+        _details['chatRequest']['thinking'] = cli_util.parse_json_parameter("chat_request_thinking", chat_request_thinking)
+
+    if chat_request_response_format is not None:
+        _details['chatRequest']['responseFormat'] = cli_util.parse_json_parameter("chat_request_response_format", chat_request_response_format)
+
+    if chat_request_is_search_queries_only is not None:
+        _details['chatRequest']['isSearchQueriesOnly'] = chat_request_is_search_queries_only
+
+    if chat_request_stream_options is not None:
+        _details['chatRequest']['streamOptions'] = cli_util.parse_json_parameter("chat_request_stream_options", chat_request_stream_options)
+
+    if chat_request_is_stream is not None:
+        _details['chatRequest']['isStream'] = chat_request_is_stream
+
+    if chat_request_max_tokens is not None:
+        _details['chatRequest']['maxTokens'] = chat_request_max_tokens
+
+    if chat_request_temperature is not None:
+        _details['chatRequest']['temperature'] = chat_request_temperature
+
+    if chat_request_top_k is not None:
+        _details['chatRequest']['topK'] = chat_request_top_k
+
+    if chat_request_top_p is not None:
+        _details['chatRequest']['topP'] = chat_request_top_p
+
+    if chat_request_frequency_penalty is not None:
+        _details['chatRequest']['frequencyPenalty'] = chat_request_frequency_penalty
+
+    if chat_request_presence_penalty is not None:
+        _details['chatRequest']['presencePenalty'] = chat_request_presence_penalty
+
+    if chat_request_seed is not None:
+        _details['chatRequest']['seed'] = chat_request_seed
+
+    if chat_request_stop_sequences is not None:
+        _details['chatRequest']['stopSequences'] = cli_util.parse_json_parameter("chat_request_stop_sequences", chat_request_stop_sequences)
+
+    if chat_request_priority is not None:
+        _details['chatRequest']['priority'] = chat_request_priority
+
+    if chat_request_is_raw_prompting is not None:
+        _details['chatRequest']['isRawPrompting'] = chat_request_is_raw_prompting
+
+    if chat_request_safety_mode is not None:
+        _details['chatRequest']['safetyMode'] = chat_request_safety_mode
+
+    _details['chatRequest']['apiFormat'] = 'COHEREV2'
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.chat(
+        chat_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @chat_result_group.command(name=cli_util.override('generative_ai_inference.chat_generic_chat_request.command_name', 'chat-generic-chat-request'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request-messages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The series of messages in a chat request. Includes the previous messages in a conversation. Each message includes a role (`USER` or the `CHATBOT`) and content.
 
 This option is a JSON list with items of type Message.  For documentation on Message please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiinference/20231130/datatypes/Message.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--chat-request-reasoning-effort', type=custom_types.CliCaseInsensitiveChoice(["MINIMAL", "LOW", "MEDIUM", "HIGH"]), help=u"""Constrains effort on reasoning for reasoning models. Currently supported values are minimal, low, medium, and high. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.""")
+@cli_util.option('--chat-request-reasoning-effort', type=custom_types.CliCaseInsensitiveChoice(["NONE", "MINIMAL", "LOW", "MEDIUM", "HIGH"]), help=u"""Constrains effort on reasoning for reasoning models. Currently supported values are minimal, low, medium, and high. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.""")
 @cli_util.option('--chat-request-verbosity', type=custom_types.CliCaseInsensitiveChoice(["LOW", "MEDIUM", "HIGH"]), help=u"""Constrains the verbosity of the model's response. Lower values will result in more concise responses, while higher values will result in more verbose responses.""")
 @cli_util.option('--chat-request-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard.
 
@@ -521,6 +647,8 @@ An embedding is numeric representation of a piece of text. This text can be a ph
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
+@cli_util.option('--embedding-types', type=custom_types.CliCaseInsensitiveChoice(["float", "int8", "uint8", "binary", "ubinary", "base64"]), help=u"""Specifies the types of embeddings you want to get back. Supports list of enums. Supported values :float, int8, uint8, binary, ubinary, base64. If nothing is passed default will be considered as float.""")
+@cli_util.option('--output-dimensions', type=click.INT, help=u"""The number of dimensions of the output embedding. This is only available for embed-v4 and newer models. Possible values are 256, 512, 1024, and 1536.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
 @cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING", "IMAGE"]), help=u"""Specifies the input type.""")
 @json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}})
@@ -528,7 +656,7 @@ An embedding is numeric representation of a piece of text. This text can be a ph
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}}, output_type={'module': 'generative_ai_inference', 'class': 'EmbedTextResult'})
 @cli_util.wrap_exceptions
-def embed_text(ctx, from_json, inputs, serving_mode, compartment_id, is_echo, truncate, input_type):
+def embed_text(ctx, from_json, inputs, serving_mode, compartment_id, is_echo, embedding_types, output_dimensions, truncate, input_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -540,6 +668,12 @@ def embed_text(ctx, from_json, inputs, serving_mode, compartment_id, is_echo, tr
 
     if is_echo is not None:
         _details['isEcho'] = is_echo
+
+    if embedding_types is not None:
+        _details['embeddingTypes'] = cli_util.parse_json_parameter("embedding_types", embedding_types)
+
+    if output_dimensions is not None:
+        _details['outputDimensions'] = output_dimensions
 
     if truncate is not None:
         _details['truncate'] = truncate
@@ -562,6 +696,8 @@ An embedding is numeric representation of a piece of text. This text can be a ph
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
+@cli_util.option('--embedding-types', type=custom_types.CliCaseInsensitiveChoice(["float", "int8", "uint8", "binary", "ubinary", "base64"]), help=u"""Specifies the types of embeddings you want to get back. Supports list of enums. Supported values :float, int8, uint8, binary, ubinary, base64. If nothing is passed default will be considered as float.""")
+@cli_util.option('--output-dimensions', type=click.INT, help=u"""The number of dimensions of the output embedding. This is only available for embed-v4 and newer models. Possible values are 256, 512, 1024, and 1536.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
 @cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING", "IMAGE"]), help=u"""Specifies the input type.""")
 @json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
@@ -569,7 +705,7 @@ An embedding is numeric representation of a piece of text. This text can be a ph
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'EmbedTextResult'})
 @cli_util.wrap_exceptions
-def embed_text_dedicated_serving_mode(ctx, from_json, inputs, compartment_id, serving_mode_endpoint_id, is_echo, truncate, input_type):
+def embed_text_dedicated_serving_mode(ctx, from_json, inputs, compartment_id, serving_mode_endpoint_id, is_echo, embedding_types, output_dimensions, truncate, input_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -582,6 +718,12 @@ def embed_text_dedicated_serving_mode(ctx, from_json, inputs, compartment_id, se
 
     if is_echo is not None:
         _details['isEcho'] = is_echo
+
+    if embedding_types is not None:
+        _details['embeddingTypes'] = cli_util.parse_json_parameter("embedding_types", embedding_types)
+
+    if output_dimensions is not None:
+        _details['outputDimensions'] = output_dimensions
 
     if truncate is not None:
         _details['truncate'] = truncate
@@ -606,6 +748,8 @@ An embedding is numeric representation of a piece of text. This text can be a ph
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. You can use the [ListModels] API to list the available models.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
+@cli_util.option('--embedding-types', type=custom_types.CliCaseInsensitiveChoice(["float", "int8", "uint8", "binary", "ubinary", "base64"]), help=u"""Specifies the types of embeddings you want to get back. Supports list of enums. Supported values :float, int8, uint8, binary, ubinary, base64. If nothing is passed default will be considered as float.""")
+@cli_util.option('--output-dimensions', type=click.INT, help=u"""The number of dimensions of the output embedding. This is only available for embed-v4 and newer models. Possible values are 256, 512, 1024, and 1536.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
 @cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING", "IMAGE"]), help=u"""Specifies the input type.""")
 @json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
@@ -613,7 +757,7 @@ An embedding is numeric representation of a piece of text. This text can be a ph
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'EmbedTextResult'})
 @cli_util.wrap_exceptions
-def embed_text_on_demand_serving_mode(ctx, from_json, inputs, compartment_id, serving_mode_model_id, is_echo, truncate, input_type):
+def embed_text_on_demand_serving_mode(ctx, from_json, inputs, compartment_id, serving_mode_model_id, is_echo, embedding_types, output_dimensions, truncate, input_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -626,6 +770,12 @@ def embed_text_on_demand_serving_mode(ctx, from_json, inputs, compartment_id, se
 
     if is_echo is not None:
         _details['isEcho'] = is_echo
+
+    if embedding_types is not None:
+        _details['embeddingTypes'] = cli_util.parse_json_parameter("embedding_types", embedding_types)
+
+    if output_dimensions is not None:
+        _details['outputDimensions'] = output_dimensions
 
     if truncate is not None:
         _details['truncate'] = truncate
@@ -912,12 +1062,13 @@ Rerank assigns an index and a relevance score to each document, indicating which
 @cli_util.option('--top-n', type=click.INT, help=u"""The number of most relevant documents or indices to return. Defaults to the length of the documents.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to return the documents in the response.""")
 @cli_util.option('--max-chunks-per-document', type=click.INT, help=u"""The maximum number of chunks to produce internally from a document.""")
+@cli_util.option('--max-tokens-per-document', type=click.INT, help=u"""Used to truncate the long documents with the specified no of tokens.""")
 @json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'RerankTextResult'})
 @cli_util.wrap_exceptions
-def rerank_text(ctx, from_json, input, compartment_id, serving_mode, documents, top_n, is_echo, max_chunks_per_document):
+def rerank_text(ctx, from_json, input, compartment_id, serving_mode, documents, top_n, is_echo, max_chunks_per_document, max_tokens_per_document):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -937,6 +1088,9 @@ def rerank_text(ctx, from_json, input, compartment_id, serving_mode, documents, 
     if max_chunks_per_document is not None:
         _details['maxChunksPerDocument'] = max_chunks_per_document
 
+    if max_tokens_per_document is not None:
+        _details['maxTokensPerDocument'] = max_tokens_per_document
+
     client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
     result = client.rerank_text(
         rerank_text_details=_details,
@@ -955,12 +1109,13 @@ Rerank assigns an index and a relevance score to each document, indicating which
 @cli_util.option('--top-n', type=click.INT, help=u"""The number of most relevant documents or indices to return. Defaults to the length of the documents.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to return the documents in the response.""")
 @cli_util.option('--max-chunks-per-document', type=click.INT, help=u"""The maximum number of chunks to produce internally from a document.""")
+@cli_util.option('--max-tokens-per-document', type=click.INT, help=u"""Used to truncate the long documents with the specified no of tokens.""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'RerankTextResult'})
 @cli_util.wrap_exceptions
-def rerank_text_dedicated_serving_mode(ctx, from_json, input, compartment_id, documents, serving_mode_endpoint_id, top_n, is_echo, max_chunks_per_document):
+def rerank_text_dedicated_serving_mode(ctx, from_json, input, compartment_id, documents, serving_mode_endpoint_id, top_n, is_echo, max_chunks_per_document, max_tokens_per_document):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -980,6 +1135,9 @@ def rerank_text_dedicated_serving_mode(ctx, from_json, input, compartment_id, do
 
     if max_chunks_per_document is not None:
         _details['maxChunksPerDocument'] = max_chunks_per_document
+
+    if max_tokens_per_document is not None:
+        _details['maxTokensPerDocument'] = max_tokens_per_document
 
     _details['servingMode']['servingType'] = 'DEDICATED'
 
@@ -1001,12 +1159,13 @@ Rerank assigns an index and a relevance score to each document, indicating which
 @cli_util.option('--top-n', type=click.INT, help=u"""The number of most relevant documents or indices to return. Defaults to the length of the documents.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to return the documents in the response.""")
 @cli_util.option('--max-chunks-per-document', type=click.INT, help=u"""The maximum number of chunks to produce internally from a document.""")
+@cli_util.option('--max-tokens-per-document', type=click.INT, help=u"""Used to truncate the long documents with the specified no of tokens.""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'RerankTextResult'})
 @cli_util.wrap_exceptions
-def rerank_text_on_demand_serving_mode(ctx, from_json, input, compartment_id, documents, serving_mode_model_id, top_n, is_echo, max_chunks_per_document):
+def rerank_text_on_demand_serving_mode(ctx, from_json, input, compartment_id, documents, serving_mode_model_id, top_n, is_echo, max_chunks_per_document, max_tokens_per_document):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1026,6 +1185,9 @@ def rerank_text_on_demand_serving_mode(ctx, from_json, input, compartment_id, do
 
     if max_chunks_per_document is not None:
         _details['maxChunksPerDocument'] = max_chunks_per_document
+
+    if max_tokens_per_document is not None:
+        _details['maxTokensPerDocument'] = max_tokens_per_document
 
     _details['servingMode']['servingType'] = 'ON_DEMAND'
 

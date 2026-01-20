@@ -6,6 +6,65 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.72.1 - 2026-01-20
+--------------------
+Added
+~~~~~
+* Database service
+  * Support for importing Transportable Tablespace
+    * ``oci db autonomous-database create --transportable-tablespace``
+    * ``oci db autonomous-database import-transportable-tablespace``
+  * Support to add new scheduled ActionType for FPPCS requirement
+    * ``oci db scheduled-action create --action-order --action-type --compartment-id --scheduling-plan-id --scheduling-window-id --action-members --action-params``
+  * Support for new Execution Window/Action lifecycle substate CANCELED_BY_OPS
+    * ``oci db execution-action get``
+    * ``oci db execution-action list``
+  * Support for Old Execution window to reference the new Execution window
+    * ``oci db execution-window get``
+    * ``oci db execution-window list --execution-resource-id``
+  * Support for additional lifecycle state PARTIAL_SUCCESS and new PatchingState (COMPLETE, FAILED) in MaintenanceRunSummary
+    * ``oci db maintenance-run get``
+    * ``oci db maintenance-run-history get``
+  * Support for running data patch operations in the Database service
+    * ``oci db database run-data-patch --action --from-json --if-match --max-wait-seconds --pluggable-databases --skip-closed-pdbs --wait-for-state --wait-interval-seconds``
+  * Support for DbConnectionBundle and Service-Owned Certificates in DB Cloud Databases
+    * ``oci db db-connection-bundle``
+
+* Generative AI service
+  * Support for API Key management in the Generative AI service
+    * ``oci generative-ai api-key change-compartment``
+    * ``oci generative-ai api-key create``
+    * ``oci generative-ai api-key delete``
+    * ``oci generative-ai api-key get``
+    * ``oci generative-ai api-key renew``
+    * ``oci generative-ai api-key set-api-key-state``
+    * ``oci generative-ai api-key update``
+    * ``oci generative-ai api-key-collection list-api-keys``
+
+
+Modified
+~~~~~~~
+* Database service
+  * Support for new optional parameters ``--skip-closed-pdbs --skip-datapatch``
+    * ``oci db database update``
+    * ``oci db db-home update``
+    * ``oci db database patch``
+  * Support for new parameter ``--grace-period`` to update the wallet for the specified Autonomous AI Database
+    * ``oci db autonomous-database-wallet rotate``
+    * ``oci db autonomous-database-wallet rotate-regional-wallet``
+
+* Generative AI service
+  * Support for new optional parameters ``--pii-detection-config --prompt-injection-config --is-allow-on-demand`` in the Generative AI service
+    * ``oci generative-ai endpoint create --pii-detection-config --prompt-injection-config``
+    * ``oci generative-ai endpoint update --pii-detection-config --prompt-injection-config``
+    * ``oci generative-ai private-endpoint create --is-allow-on-demand``
+    * ``oci generative-ai private-endpoint update --is-allow-on-demand``
+
+* IoT service
+  * Support for new optional parameter ``--type``
+    * ``oci iot domain-group create --type``
+    * ``oci iot domain-group list --type``
+
 3.72.0 - 2026-01-13
 --------------------
 Added
