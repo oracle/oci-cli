@@ -985,6 +985,7 @@ def create_iot_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 @iot_domain_group_group.command(name=cli_util.override('iot.create_iot_domain_group.command_name', 'create'), help=u"""Creates a new IoT domain group. \n[Command Reference](createIotDomainGroup)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment corresponding to the resource.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "LIGHTWEIGHT"]), help=u"""Type of the domain group. LIGHTWEIGHT uses fewer resources and has a higher Recovery Time Objective (RTO), making it suitable for development and testing. STANDARD is recommended for production.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -1001,13 +1002,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'iot', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'iot', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'iot', 'class': 'IotDomainGroup'})
 @cli_util.wrap_exceptions
-def create_iot_domain_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, freeform_tags, defined_tags):
+def create_iot_domain_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, display_name, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['compartmentId'] = compartment_id
+
+    if type is not None:
+        _details['type'] = type
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -1468,7 +1472,7 @@ def get_digital_twin_instance(ctx, from_json, digital_twin_instance_id):
     cli_util.render_response(result, ctx)
 
 
-@digital_twin_instance_group.command(name=cli_util.override('iot.get_digital_twin_instance_content.command_name', 'get-digital-twin-instance-content'), help=u"""Retrieves the latest snapshot data of digital twin instance identified by the specified OCID. \n[Command Reference](getDigitalTwinInstanceContent)""")
+@digital_twin_instance_group.command(name=cli_util.override('iot.get_digital_twin_instance_content.command_name', 'get-digital-twin-instance-content'), help=u"""Retrieves the content associated with a digital twin instance identified by the specified OCID. The content can be retrieved only when a model is associated with the digital twin instance. \n[Command Reference](getDigitalTwinInstanceContent)""")
 @cli_util.option('--digital-twin-instance-id', required=True, help=u"""The [OCID] of digital twin instance.""")
 @cli_util.option('--should-include-metadata', type=click.BOOL, help=u"""If set to true , digital twin instance metadata is included in the response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2098,6 +2102,7 @@ def list_digital_twin_relationships(ctx, from_json, all_pages, page_size, iot_do
 @cli_util.option('--id', help=u"""Filter resources by [OCID]. Must be a valid OCID of the resource type.""")
 @cli_util.option('--display-name', help=u"""Filter resources whose display name matches the specified value.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter resources whose lifecycleState matches the specified value.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "LIGHTWEIGHT"]), help=u"""Filter resources by type. Valid values are LIGHTWEIGHT or STANDARD.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination: The value of the opc-next-page response header from the previous \"List\" call. For important details on how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either ASC (ascending) or DESC (descending).""")
@@ -2109,7 +2114,7 @@ def list_digital_twin_relationships(ctx, from_json, all_pages, page_size, iot_do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'iot', 'class': 'IotDomainGroupCollection'})
 @cli_util.wrap_exceptions
-def list_iot_domain_groups(ctx, from_json, all_pages, page_size, compartment_id, id, display_name, lifecycle_state, limit, page, sort_order, sort_by):
+def list_iot_domain_groups(ctx, from_json, all_pages, page_size, compartment_id, id, display_name, lifecycle_state, type, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2121,6 +2126,8 @@ def list_iot_domain_groups(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['display_name'] = display_name
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if type is not None:
+        kwargs['type'] = type
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:

@@ -577,3 +577,4 @@ identity-domains, mapped-attribute, search
 devops, deploy-environment, update
 devops, deploy-environment, update-compute-instance-environment
 devops, deploy-environment, update-function-environment
+generative-ai-inference, embed-text-result, embed-text

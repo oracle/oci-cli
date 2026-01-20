@@ -40,6 +40,12 @@ def work_request_log_entry_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai.api_key_collection_group.command_name', 'api-key-collection'), cls=CommandGroupWithAlias, help="""Results of a ApiKey search.""")
+@cli_util.help_option_group
+def api_key_collection_group():
+    pass
+
+
 @click.command(cli_util.override('generative_ai.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request. When you start a long-running operation, the service creates a work request. Work requests help you monitor long-running operations.
 
 A work request is an activity log that lets you track each step in the operation's progress. Each work request has an OCID that lets you interact with it programmatically and use it for automation.""")
@@ -65,6 +71,12 @@ def generative_ai_private_endpoint_group():
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resources].""")
 @cli_util.help_option_group
 def endpoint_group():
+    pass
+
+
+@click.command(cli_util.override('generative_ai.api_key_group.command_name', 'api-key'), cls=CommandGroupWithAlias, help="""ApiKeys are resources used to access GenAI models. You must be authorized through an IAM policy to use any API operations. If you're not authorized, contact an administrator who manages OCI resource access. See [Getting Started with Policies] and [Getting Access to Generative AI Resources].""")
+@cli_util.help_option_group
+def api_key_group():
     pass
 
 
@@ -118,10 +130,12 @@ def imported_model_group():
 
 generative_ai_root_group.add_command(endpoint_collection_group)
 generative_ai_root_group.add_command(work_request_log_entry_group)
+generative_ai_root_group.add_command(api_key_collection_group)
 generative_ai_root_group.add_command(work_request_group)
 generative_ai_root_group.add_command(model_collection_group)
 generative_ai_root_group.add_command(generative_ai_private_endpoint_group)
 generative_ai_root_group.add_command(endpoint_group)
+generative_ai_root_group.add_command(api_key_group)
 generative_ai_root_group.add_command(work_request_error_group)
 generative_ai_root_group.add_command(model_group)
 generative_ai_root_group.add_command(dedicated_ai_cluster_collection_group)
@@ -129,6 +143,37 @@ generative_ai_root_group.add_command(dedicated_ai_cluster_group)
 generative_ai_root_group.add_command(generative_ai_private_endpoint_collection_group)
 generative_ai_root_group.add_command(imported_model_collection_group)
 generative_ai_root_group.add_command(imported_model_group)
+
+
+@api_key_group.command(name=cli_util.override('generative_ai.change_api_key_compartment.command_name', 'change-compartment'), help=u"""Moves an API key into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeApiKeyCompartment)""")
+@cli_util.option('--api-key-id', required=True, help=u"""The [OCID] of the APIKey.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the APIKey to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_api_key_compartment(ctx, from_json, api_key_id, compartment_id, if_match):
+
+    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.change_api_key_compartment(
+        api_key_id=api_key_id,
+        change_api_key_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @dedicated_ai_cluster_group.command(name=cli_util.override('generative_ai.change_dedicated_ai_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a dedicated AI cluster into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDedicatedAiClusterCompartment)""")
@@ -316,6 +361,75 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
     cli_util.render_response(result, ctx)
 
 
+@api_key_group.command(name=cli_util.override('generative_ai.create_api_key.command_name', 'create'), help=u"""Creates a new API key in the specified compartment. \n[Command Reference](createApiKey)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID to create the apiKey in.""")
+@cli_util.option('--key-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of key details for creation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""An optional description of the Api key.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'key-details': {'module': 'generative_ai', 'class': 'list[KeyDetails]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'key-details': {'module': 'generative_ai', 'class': 'list[KeyDetails]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'ApiKey'})
+@cli_util.wrap_exceptions
+def create_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, key_details, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['keyDetails'] = cli_util.parse_json_parameter("key_details", key_details)
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.create_api_key(
+        create_api_key_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_api_key') and callable(getattr(client, 'get_api_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_api_key(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @dedicated_ai_cluster_group.command(name=cli_util.override('generative_ai.create_dedicated_ai_cluster.command_name', 'create'), help=u"""Creates a dedicated AI cluster. \n[Command Reference](createDedicatedAiCluster)""")
 @cli_util.option('--type', required=True, help=u"""The dedicated AI cluster type indicating whether this is a fine-tuning/training processor or hosting/inference processor.
 
@@ -324,7 +438,7 @@ Allowed values are: - HOSTING - FINE_TUNING""")
 @cli_util.option('--unit-count', required=True, type=click.INT, help=u"""The number of dedicated units in this AI cluster.""")
 @cli_util.option('--unit-shape', required=True, help=u"""The shape of dedicated unit in this AI cluster. The underlying hardware configuration is hidden from customers.
 
-Allowed values are: - LARGE_COHERE - LARGE_COHERE_V2 - SMALL_COHERE - SMALL_COHERE_V2 - SMALL_COHERE_4 - EMBED_COHERE - LLAMA2_70 - LARGE_GENERIC - LARGE_COHERE_V2_2 - LARGE_GENERIC_4 - SMALL_GENERIC_V2 - LARGE_GENERIC_2 - LARGE_COHERE_V3 - RERANK_COHERE - SMALL_GENERIC_V1 - MEDIUM_GENERIC_V1 - LARGE_GENERIC_V1 - A10_X1 - A10_X2 - A10_X4 - A100_40G_X1 - A100_40G_X2 - A100_40G_X4 - A100_40G_X8 - A100_80G_X1 - A100_80G_X2 - A100_80G_X4 - A100_80G_X8 - H100_X1 - H100_X2 - H100_X4 - H100_X8 - H200_X1 - H200_X2 - H200_X4 - H200_X8
+Allowed values are: - LARGE_COHERE - LARGE_COHERE_V2 - SMALL_COHERE - SMALL_COHERE_V2 - SMALL_COHERE_4 - EMBED_COHERE - LLAMA2_70 - LARGE_GENERIC - LARGE_COHERE_V2_2 - LARGE_GENERIC_4 - SMALL_GENERIC_V2 - LARGE_GENERIC_2 - LARGE_GENERIC_V3 - LARGE_COHERE_V3 - RERANK_COHERE - SMALL_GENERIC_V1 - MEDIUM_GENERIC_V1 - LARGE_GENERIC_V1 - A10_X1 - A10_X2 - A10_X4 - A100_40G_X1 - A100_40G_X2 - A100_40G_X4 - A100_40G_X8 - A100_80G_X1 - A100_80G_X2 - A100_80G_X4 - A100_80G_X8 - H100_X1 - H100_X2 - H100_X4 - H100_X8 - H200_X1 - H200_X2 - H200_X4 - H200_X8
 
 The following shapes can only be used to deploy imported models: - A10_X1, A10_X2, A10_X4 - A100_40G_X1, A100_40G_X2, A100_40G_X4, A100_40G_X8 - A100_80G_X1, A100_80G_X2, A100_80G_X4, A100_80G_X8 - H100_X1, H100_X2, H100_X4, H100_X8 - H200_X1, H200_X2, H200_X4, H200_X8 - OAI_A10_X2 - OAI_H100_X1 - OAI_H100_X2 - OAI_H200_X1 - OAI_A100_80G_X1 - OAI_A100_80G_X2 - OAI_A100_40G_X1 - OAI_A100_40G_X4""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
@@ -411,6 +525,8 @@ The header contains an opc-work-request-id, which is the id for the WorkRequest 
 @cli_util.option('--description', help=u"""An optional description of the endpoint.""")
 @cli_util.option('--generative-ai-private-endpoint-id', help=u"""The OCID of the Generative AI private endpoint to which this endpoint is attached to.""")
 @cli_util.option('--content-moderation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--prompt-injection-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pii-detection-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -420,12 +536,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'content-moderation-config': {'module': 'generative_ai', 'class': 'ContentModerationConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'content-moderation-config': {'module': 'generative_ai', 'class': 'ContentModerationConfig'}, 'prompt-injection-config': {'module': 'generative_ai', 'class': 'PromptInjectionConfig'}, 'pii-detection-config': {'module': 'generative_ai', 'class': 'PiiDetectionConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content-moderation-config': {'module': 'generative_ai', 'class': 'ContentModerationConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'Endpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content-moderation-config': {'module': 'generative_ai', 'class': 'ContentModerationConfig'}, 'prompt-injection-config': {'module': 'generative_ai', 'class': 'PromptInjectionConfig'}, 'pii-detection-config': {'module': 'generative_ai', 'class': 'PiiDetectionConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'Endpoint'})
 @cli_util.wrap_exceptions
-def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, dedicated_ai_cluster_id, display_name, description, generative_ai_private_endpoint_id, content_moderation_config, freeform_tags, defined_tags):
+def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, dedicated_ai_cluster_id, display_name, description, generative_ai_private_endpoint_id, content_moderation_config, prompt_injection_config, pii_detection_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -446,6 +562,12 @@ def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if content_moderation_config is not None:
         _details['contentModerationConfig'] = cli_util.parse_json_parameter("content_moderation_config", content_moderation_config)
+
+    if prompt_injection_config is not None:
+        _details['promptInjectionConfig'] = cli_util.parse_json_parameter("prompt_injection_config", prompt_injection_config)
+
+    if pii_detection_config is not None:
+        _details['piiDetectionConfig'] = cli_util.parse_json_parameter("pii_detection_config", pii_detection_config)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -495,6 +617,7 @@ def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--description', help=u"""A description of this private endpoint.""")
 @cli_util.option('--display-name', help=u"""A user friendly name. It doesn't have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add the private endpoint's VNIC to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-allow-on-demand', type=click.BOOL, help=u"""Flag that allows access to on-demand models using this private endpoint.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -509,7 +632,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'generative_ai', 'class': 'list[string]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'GenerativeAiPrivateEndpoint'})
 @cli_util.wrap_exceptions
-def create_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, dns_prefix, description, display_name, nsg_ids, freeform_tags, defined_tags):
+def create_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, dns_prefix, description, display_name, nsg_ids, is_allow_on_demand, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -527,6 +650,9 @@ def create_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wa
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if is_allow_on_demand is not None:
+        _details['isAllowOnDemand'] = is_allow_on_demand
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -949,6 +1075,70 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
+@api_key_group.command(name=cli_util.override('generative_ai.delete_api_key.command_name', 'delete'), help=u"""Deletes an API key. \n[Command Reference](deleteApiKey)""")
+@cli_util.option('--api-key-id', required=True, help=u"""The [OCID] of the APIKey.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_key_id, if_match):
+
+    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.delete_api_key(
+        api_key_id=api_key_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_api_key') and callable(getattr(client, 'get_api_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_api_key(api_key_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @dedicated_ai_cluster_group.command(name=cli_util.override('generative_ai.delete_dedicated_ai_cluster.command_name', 'delete'), help=u"""Deletes a dedicated AI cluster.
 
 You can only delete clusters without attached resources. Before you delete a hosting dedicated AI cluster, you must delete the endpoints associated to that cluster. Before you delete a fine-tuning dedicated AI cluster, you must delete the custom model on that cluster. The delete action permanently deletes the cluster. This action can't be undone. \n[Command Reference](deleteDedicatedAiCluster)""")
@@ -1231,6 +1421,28 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
+@api_key_group.command(name=cli_util.override('generative_ai.get_api_key.command_name', 'get'), help=u"""Gets information about an API key. \n[Command Reference](getApiKey)""")
+@cli_util.option('--api-key-id', required=True, help=u"""The [OCID] of the APIKey.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'ApiKey'})
+@cli_util.wrap_exceptions
+def get_api_key(ctx, from_json, api_key_id):
+
+    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.get_api_key(
+        api_key_id=api_key_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @dedicated_ai_cluster_group.command(name=cli_util.override('generative_ai.get_dedicated_ai_cluster.command_name', 'get'), help=u"""Gets information about a dedicated AI cluster. \n[Command Reference](getDedicatedAiCluster)""")
 @cli_util.option('--dedicated-ai-cluster-id', required=True, help=u"""The [OCID] of the dedicated AI cluster.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1360,6 +1572,69 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@api_key_collection_group.command(name=cli_util.override('generative_ai.list_api_keys.command_name', 'list-api-keys'), help=u"""Lists the ApiKeys of a specific compartment. \n[Command Reference](listApiKeys)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that their lifecycle state matches the given lifecycle state.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--id', help=u"""The [OCID] of the APIKey.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'ApiKeyCollection'})
+@cli_util.wrap_exceptions
+def list_api_keys(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_api_keys,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_api_keys,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_api_keys(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1627,7 +1902,7 @@ def list_imported_models(ctx, from_json, all_pages, page_size, compartment_id, v
 @model_collection_group.command(name=cli_util.override('generative_ai.list_models.command_name', 'list-models'), help=u"""Lists the models in a specific compartment. Includes pretrained base models and fine-tuned custom models. \n[Command Reference](listModels)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--vendor', help=u"""A filter to return only resources that match the entire vendor given.""")
-@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
+@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_GENERATION", "TEXT_SUMMARIZATION", "TEXT_EMBEDDINGS", "FINE_TUNE", "CHAT", "TEXT_RERANK"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The ID of the model.""")
@@ -1870,6 +2145,226 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
+@api_key_group.command(name=cli_util.override('generative_ai.renew_api_key.command_name', 'renew'), help=u"""Renew the primary or secondary key. \n[Command Reference](renewApiKey)""")
+@cli_util.option('--api-key-id', required=True, help=u"""The [OCID] of the APIKey.""")
+@cli_util.option('--details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'details': {'module': 'generative_ai', 'class': 'KeyDetails'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'details': {'module': 'generative_ai', 'class': 'KeyDetails'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'ApiKey'})
+@cli_util.wrap_exceptions
+def renew_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_key_id, details, freeform_tags, defined_tags, if_match):
+
+    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['details'] = cli_util.parse_json_parameter("details", details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.renew_api_key(
+        api_key_id=api_key_id,
+        renew_api_key_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_api_key') and callable(getattr(client, 'get_api_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_api_key(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@api_key_group.command(name=cli_util.override('generative_ai.set_api_key_state.command_name', 'set-api-key-state'), help=u"""Set state of the key. \n[Command Reference](setApiKeyState)""")
+@cli_util.option('--api-key-id', required=True, help=u"""The [OCID] of the APIKey.""")
+@cli_util.option('--key-name', required=True, help=u"""The key to set state.""")
+@cli_util.option('--state', required=True, help=u"""The target state of the API key item.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'ApiKey'})
+@cli_util.wrap_exceptions
+def set_api_key_state(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_key_id, key_name, state, freeform_tags, defined_tags, if_match):
+
+    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['keyName'] = key_name
+    _details['state'] = state
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.set_api_key_state(
+        api_key_id=api_key_id,
+        set_api_key_state_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_api_key') and callable(getattr(client, 'get_api_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_api_key(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@api_key_group.command(name=cli_util.override('generative_ai.update_api_key.command_name', 'update'), help=u"""Updates the properties of an apiKey. \n[Command Reference](updateApiKey)""")
+@cli_util.option('--api-key-id', required=True, help=u"""The [OCID] of the APIKey.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', help=u"""An optional description of the Api key.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'ApiKey'})
+@cli_util.wrap_exceptions
+def update_api_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, api_key_id, display_name, description, freeform_tags, defined_tags, if_match):
+
+    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.update_api_key(
+        api_key_id=api_key_id,
+        update_api_key_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_api_key') and callable(getattr(client, 'get_api_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_api_key(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @dedicated_ai_cluster_group.command(name=cli_util.override('generative_ai.update_dedicated_ai_cluster.command_name', 'update'), help=u"""Updates a dedicated AI cluster. \n[Command Reference](updateDedicatedAiCluster)""")
 @cli_util.option('--dedicated-ai-cluster-id', required=True, help=u"""The [OCID] of the dedicated AI cluster.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
@@ -1964,6 +2459,8 @@ def update_dedicated_ai_cluster(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.option('--description', help=u"""An optional description of the endpoint.""")
 @cli_util.option('--generative-ai-private-endpoint-id', help=u"""The OCID of the Generative AI private endpoint to which this endpoint will be attached.""")
 @cli_util.option('--content-moderation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--prompt-injection-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pii-detection-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1975,18 +2472,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'content-moderation-config': {'module': 'generative_ai', 'class': 'ContentModerationConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'content-moderation-config': {'module': 'generative_ai', 'class': 'ContentModerationConfig'}, 'prompt-injection-config': {'module': 'generative_ai', 'class': 'PromptInjectionConfig'}, 'pii-detection-config': {'module': 'generative_ai', 'class': 'PiiDetectionConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content-moderation-config': {'module': 'generative_ai', 'class': 'ContentModerationConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'Endpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content-moderation-config': {'module': 'generative_ai', 'class': 'ContentModerationConfig'}, 'prompt-injection-config': {'module': 'generative_ai', 'class': 'PromptInjectionConfig'}, 'pii-detection-config': {'module': 'generative_ai', 'class': 'PiiDetectionConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'Endpoint'})
 @cli_util.wrap_exceptions
-def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, endpoint_id, display_name, description, generative_ai_private_endpoint_id, content_moderation_config, freeform_tags, defined_tags, if_match):
+def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, endpoint_id, display_name, description, generative_ai_private_endpoint_id, content_moderation_config, prompt_injection_config, pii_detection_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
     if not force:
-        if content_moderation_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to content-moderation-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if content_moderation_config or prompt_injection_config or pii_detection_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to content-moderation-config and prompt-injection-config and pii-detection-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2007,6 +2504,12 @@ def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if content_moderation_config is not None:
         _details['contentModerationConfig'] = cli_util.parse_json_parameter("content_moderation_config", content_moderation_config)
+
+    if prompt_injection_config is not None:
+        _details['promptInjectionConfig'] = cli_util.parse_json_parameter("prompt_injection_config", prompt_injection_config)
+
+    if pii_detection_config is not None:
+        _details['piiDetectionConfig'] = cli_util.parse_json_parameter("pii_detection_config", pii_detection_config)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -2056,6 +2559,7 @@ def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--display-name', help=u"""A user friendly name. It doesn't have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--dns-prefix', help=u"""dnsPrefix of the private endpoint FQDN.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add the private endpoint's VNIC to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-allow-on-demand', type=click.BOOL, help=u"""Flag that allows access to on-demand models using this private endpoint.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2072,7 +2576,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'generative_ai', 'class': 'list[string]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'GenerativeAiPrivateEndpoint'})
 @cli_util.wrap_exceptions
-def update_generative_ai_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_private_endpoint_id, description, display_name, dns_prefix, nsg_ids, freeform_tags, defined_tags, if_match):
+def update_generative_ai_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_private_endpoint_id, description, display_name, dns_prefix, nsg_ids, is_allow_on_demand, freeform_tags, defined_tags, if_match):
 
     if isinstance(generative_ai_private_endpoint_id, six.string_types) and len(generative_ai_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-private-endpoint-id cannot be whitespace or empty string')
@@ -2099,6 +2603,9 @@ def update_generative_ai_private_endpoint(ctx, from_json, force, wait_for_state,
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if is_allow_on_demand is not None:
+        _details['isAllowOnDemand'] = is_allow_on_demand
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
