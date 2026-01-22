@@ -30,9 +30,9 @@ class OCIDCache:
     """
 
     CACHE_DIR = os.path.join(os.path.expanduser("~"), ".oci", "completion_cache")
-    CACHE_TTL_HOURS = 24  # Default cache validity period
+    CACHE_TTL_HOURS = 168  # Default cache validity period (1 week)
 
-    def __init__(self, cache_ttl_hours: int = 24):
+    def __init__(self, cache_ttl_hours: int = 168):
         """
         Initialize the OCID cache.
 
@@ -123,13 +123,13 @@ class CompartmentCompleter:
     Provides compartment-aware completion for OCI CLI.
     """
 
-    def __init__(self, ctx, cache_ttl_hours: int = 24):
+    def __init__(self, ctx, cache_ttl_hours: int = 168):
         """
         Initialize the compartment completer.
 
         Args:
             ctx: Click context object
-            cache_ttl_hours: Hours before cache expires
+            cache_ttl_hours: Hours before cache expires (default: 1 week)
         """
         self.ctx = ctx
         self.cache = OCIDCache(cache_ttl_hours)
