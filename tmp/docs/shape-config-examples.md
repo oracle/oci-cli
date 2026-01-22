@@ -4,39 +4,43 @@
 
 The shape-config is used when updating compute instances with flexible shapes. Here are the parameters:
 
-- **baselineOcpuUtilization**: Baseline CPU utilization (e.g., "BASELINE_1_8", "BASELINE_1_2", "BASELINE_1_1")
-- **memoryInGBs**: Memory in gigabytes (float)
-- **nvmes**: Number of NVMe drives (integer)
-- **ocpus**: Number of OCPUs (float)
-- **resourceManagement**: Resource management type (string)
-- **vcpus**: Number of vCPUs (integer)
+- **baselineOcpuUtilization**: Baseline CPU utilization
+  - `BASELINE_1_1`: 100% baseline (no burstable performance)
+  - `BASELINE_1_2`: 50% baseline (cost-optimized)
+  - `BASELINE_1_8`: 12.5% baseline (most cost-effective)
+- **memoryInGBs**: Memory in gigabytes (float, minimum 1.0)
+- **nvmes**: Number of NVMe drives (integer, optional)
+- **ocpus**: Number of OCPUs (float, minimum 1.0)
+- **resourceManagement**: Resource management type (string, optional)
+- **vcpus**: Number of vCPUs (integer, optional)
 
-## Common Examples
+## Two Essential Examples
 
-### Example 1: Flexible VM with 2 OCPUs and 16GB RAM
-```json
-{
-  "ocpus": 2.0,
-  "memoryInGBs": 16.0,
-  "baselineOcpuUtilization": "BASELINE_1_1"
-}
-```
-
-### Example 2: Burstable Instance with 50% baseline
+### Example 1: Truly Minimal Configuration
 ```json
 {
   "ocpus": 1.0,
-  "memoryInGBs": 8.0,
-  "baselineOcpuUtilization": "BASELINE_1_2"
+  "memoryInGBs": 1.0
 }
 ```
+- **Use case**: Development, testing, minimal workloads
+- **Cost**: Absolute minimum
+- **Performance**: Basic
 
-### Example 3: High Performance with NVMe drives
+### Example 2: Reasonable Small with Baseline Control
 ```json
 {
-  "ocpus": 4.0,
-  "memoryInGBs": 32.0,
-  "nvmes": 2,
+  "ocpus": 2.0,
+  "memoryInGBs": 4.0,
   "baselineOcpuUtilization": "BASELINE_1_1"
 }
 ```
+- **Use case**: Small production workloads, consistent performance needed
+- **Cost**: Economical
+- **Performance**: Predictable with 100% baseline
+
+## Notes
+
+- Minimum memory is 1GB per OCPU
+- These examples alternate when using `--generate-param-json-input shape-config`
+- Both configurations are production-ready and cost-effective

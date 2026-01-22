@@ -147,21 +147,57 @@ def get_example_json_for_parameter(param_name):
 
 def enhance_json_skeleton_with_examples(original_skeleton, param_name=None):
     """
-    Enhance a JSON skeleton with realistic examples where available.
+    Enhance a JSON skeleton with realistic examples by layering over schema.
+
+    This approach preserves schema-generated structure and new fields,
+    while providing better values for known fields.
 
     Args:
-        original_skeleton: The original JSON skeleton
+        original_skeleton: The schema-generated JSON skeleton
         param_name: Optional parameter name to get specific example for
 
     Returns:
-        Enhanced JSON skeleton with better examples
+        Enhanced JSON skeleton with better examples layered over schema
     """
-    if param_name:
-        example = get_example_json_for_parameter(param_name)
-        if example:
-            return example
+    if not param_name or not isinstance(original_skeleton, dict):
+        return original_skeleton
 
-    # If no specific example, return the original
+    # For shape-config, layer our defaults over the schema
+    if param_name == "shape-config" or param_name == "shapeConfig":
+        enhanced = original_skeleton.copy()
+
+        # Alternate between two configurations
+        examples = SHAPE_CONFIG_EXAMPLES
+        example = random.choice(examples)
+
+        # Layer the example values over the schema
+        for key, value in example.items():
+            if key != "_comment":
+                # Update the field if it exists in the schema
+                if key in enhanced:
+                    enhanced[key] = value
+                # For baselineOcpuUtilization, handle camelCase as well
+                elif key == "baselineOcpuUtilization" and "baselineOcpuUtilization" in enhanced:
+                    enhanced["baselineOcpuUtilization"] = value
+
+        return enhanced
+
+    # For other parameters with full replacements
+    if param_name in PARAMETER_EXAMPLES:
+        example = PARAMETER_EXAMPLES[param_name]()
+        if "_comment" in example:
+            del example["_comment"]
+
+        # For dict-based examples, merge with schema to preserve new fields
+        if isinstance(original_skeleton, dict) and isinstance(example, dict):
+            enhanced = original_skeleton.copy()
+            enhanced.update(example)
+            return enhanced
+
+        # For non-dict examples (strings, lists), replace entirely
+        return example
+
+    # No enhancement available, return original schema
     return original_skeleton
 
 

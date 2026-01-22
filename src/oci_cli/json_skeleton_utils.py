@@ -129,17 +129,18 @@ def generate_json_skeleton_for_option(ctx, option_name):
     if option_name not in ctx.obj['input_params_to_complex_types']:
         click.echo(message='Option {} is not a recognized complex type, so no example JSON can be produced. Invoke help for this command (--help/-h/-?) to see available documentation on this option'.format(option_name), file=sys.stderr)
     else:
-        # Try to get an enhanced example first
-        enhanced_example = json_examples.get_example_json_for_parameter(option_name)
-        if enhanced_example:
-            # Add a comment about additional examples
-            description = json_examples.get_example_description_for_parameter(option_name)
-            if description:
-                click.echo(message=description, file=sys.stderr)
-            print(json.dumps(enhanced_example, indent=2, sort_keys=True))
-        else:
-            # Fall back to the original skeleton generation
-            print(json.dumps(generate_input_dict_for_skeleton(ctx, option_name), indent=2, sort_keys=True))
+        # Generate the base skeleton from schema
+        base_skeleton = generate_input_dict_for_skeleton(ctx, option_name)
+
+        # Enhance with realistic examples (layer over schema to preserve new fields)
+        enhanced_skeleton = json_examples.enhance_json_skeleton_with_examples(base_skeleton, option_name)
+
+        # Show description if available
+        description = json_examples.get_example_description_for_parameter(option_name)
+        if description:
+            click.echo(message=description, file=sys.stderr)
+
+        print(json.dumps(enhanced_skeleton, indent=2, sort_keys=True))
 
     sys.exit(0)
 
