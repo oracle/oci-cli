@@ -25,20 +25,20 @@ CACHED_OCIDS = {
 # Minimal shape configuration examples - prefer 1.0 OCPU for minimal setup
 SHAPE_CONFIG_EXAMPLES = [
     {
-        "_comment": "Minimal flexible VM",
+        "_comment": "Absolute minimal flexible VM",
         "ocpus": 1.0,
-        "memoryInGBs": 8.0
+        "memoryInGBs": 1.0
     },
     {
         "_comment": "Burstable instance (cost-optimized)",
         "ocpus": 1.0,
-        "memoryInGBs": 4.0,
+        "memoryInGBs": 2.0,
         "baselineOcpuUtilization": "BASELINE_1_2"
     },
     {
         "_comment": "Minimal with baseline control",
         "ocpus": 1.0,
-        "memoryInGBs": 6.0,
+        "memoryInGBs": 1.0,
         "baselineOcpuUtilization": "BASELINE_1_1"
     }
 ]
@@ -183,10 +183,10 @@ def get_example_description_for_parameter(param_name):
     """
     descriptions = {
         "shape-config": """
-# Shape config examples (all use 1.0 OCPU for minimal setup):
-# - Minimal flexible VM (1 OCPU, 8GB RAM)
-# - Burstable instance with 50% baseline (1 OCPU, 4GB RAM)
-# - Minimal with full baseline (1 OCPU, 6GB RAM)
+# Shape config examples (truly minimal configurations):
+# - Absolute minimal: 1 OCPU, 1GB RAM
+# - Burstable minimal: 1 OCPU, 2GB RAM, 50% baseline
+# - Minimal with full baseline: 1 OCPU, 1GB RAM, 100% baseline
 # baselineOcpuUtilization: BASELINE_1_1 (100%), BASELINE_1_2 (50%), BASELINE_1_8 (12.5%)
 """,
         "agent-config": "# Minimal agent configuration example",
