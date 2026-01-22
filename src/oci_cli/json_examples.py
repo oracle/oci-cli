@@ -22,23 +22,17 @@ CACHED_OCIDS = {
     "capacity_reservation": "ocid1.capacityreservation.oc1.iad.anuwcljrniwq6syc5btw2bzlkj5fp2xdhycd3r3eltpb4pq7xiq"
 }
 
-# Minimal shape configuration examples - prefer 1.0 OCPU for minimal setup
+# Shape configuration examples - two clear options
 SHAPE_CONFIG_EXAMPLES = [
     {
-        "_comment": "Absolute minimal flexible VM",
+        "_comment": "Truly minimal",
         "ocpus": 1.0,
         "memoryInGBs": 1.0
     },
     {
-        "_comment": "Burstable instance (cost-optimized)",
-        "ocpus": 1.0,
-        "memoryInGBs": 2.0,
-        "baselineOcpuUtilization": "BASELINE_1_2"
-    },
-    {
-        "_comment": "Minimal with baseline control",
-        "ocpus": 1.0,
-        "memoryInGBs": 1.0,
+        "_comment": "Reasonable small with baseline control",
+        "ocpus": 2.0,
+        "memoryInGBs": 4.0,
         "baselineOcpuUtilization": "BASELINE_1_1"
     }
 ]
@@ -183,11 +177,10 @@ def get_example_description_for_parameter(param_name):
     """
     descriptions = {
         "shape-config": """
-# Shape config examples (truly minimal configurations):
-# - Absolute minimal: 1 OCPU, 1GB RAM
-# - Burstable minimal: 1 OCPU, 2GB RAM, 50% baseline
-# - Minimal with full baseline: 1 OCPU, 1GB RAM, 100% baseline
-# baselineOcpuUtilization: BASELINE_1_1 (100%), BASELINE_1_2 (50%), BASELINE_1_8 (12.5%)
+# Shape config examples (alternates between two configurations):
+# - Truly minimal: 1 OCPU, 1GB RAM
+# - Reasonable small: 2 OCPUs, 4GB RAM with baseline control
+# baselineOcpuUtilization options: BASELINE_1_1 (100%), BASELINE_1_2 (50%), BASELINE_1_8 (12.5%)
 """,
         "agent-config": "# Minimal agent configuration example",
         "availability-config": "# Minimal availability configuration example",
