@@ -122,7 +122,7 @@ email_root_group.add_command(work_request_log_entry_collection_group)
 @email_domain_group.command(name=cli_util.override('email.add_email_domain_lock.command_name', 'add'), help=u"""Adds a lock to a resource. \n[Command Reference](addEmailDomainLock)""")
 @cli_util.option('--email-domain-id', required=True, help=u"""The [OCID] of this email domain.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
-@cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The lock compartment ID.""")
 @cli_util.option('--related-resource-id', help=u"""The resource ID that is locking this resource. Indicates that deleting this resource removes the lock.""")
 @cli_util.option('--message', help=u"""A message added by the lock creator. The message typically gives an indication of why the resource is locked.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -191,7 +191,7 @@ def add_email_domain_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @email_ip_pool_group.command(name=cli_util.override('email.add_email_ip_pool_lock.command_name', 'add'), help=u"""Adds a lock to a resource. \n[Command Reference](addEmailIpPoolLock)""")
 @cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
-@cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The lock compartment ID.""")
 @cli_util.option('--related-resource-id', help=u"""The resource ID that is locking this resource. Indicates that deleting this resource removes the lock.""")
 @cli_util.option('--message', help=u"""A message added by the lock creator. The message typically gives an indication of why the resource is locked.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -321,7 +321,7 @@ def add_email_outbound_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @email_return_path_group.command(name=cli_util.override('email.add_return_path_lock.command_name', 'add'), help=u"""Adds a lock to a resource. \n[Command Reference](addReturnPathLock)""")
 @cli_util.option('--email-return-path-id', required=True, help=u"""The [OCID] of this email return path.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
-@cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The lock compartment ID.""")
 @cli_util.option('--related-resource-id', help=u"""The resource ID that is locking this resource. Indicates that deleting this resource removes the lock.""")
 @cli_util.option('--message', help=u"""A message added by the lock creator. The message typically gives an indication of why the resource is locked.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -390,7 +390,7 @@ def add_return_path_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @sender_group.command(name=cli_util.override('email.add_sender_lock.command_name', 'add'), help=u"""Adds a lock to a resource. \n[Command Reference](addSenderLock)""")
 @cli_util.option('--sender-id', required=True, help=u"""The unique OCID of the sender.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
-@cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The lock compartment ID.""")
 @cli_util.option('--related-resource-id', help=u"""The resource ID that is locking this resource. Indicates that deleting this resource removes the lock.""")
 @cli_util.option('--message', help=u"""A message added by the lock creator. The message typically gives an indication of why the resource is locked.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -460,7 +460,7 @@ def add_sender_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 **Note:** All DKIM objects associated with this email domain will also be moved into the provided compartment. \n[Command Reference](changeEmailDomainCompartment)""")
 @cli_util.option('--email-domain-id', required=True, help=u"""The [OCID] of this email domain.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the specified resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the specified resource to.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -524,7 +524,7 @@ def change_email_domain_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 @email_ip_pool_group.command(name=cli_util.override('email.change_email_ip_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeEmailIpPoolCompartment)""")
 @cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -588,7 +588,7 @@ def change_email_ip_pool_compartment(ctx, from_json, wait_for_state, max_wait_se
 
 @sender_group.command(name=cli_util.override('email.change_sender_compartment.command_name', 'change-compartment'), help=u"""Moves a sender into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeSenderCompartment)""")
 @cli_util.option('--sender-id', required=True, help=u"""The unique OCID of the sender.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the sender should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the sender should be moved.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -703,7 +703,7 @@ def create_dkim(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 @email_domain_group.command(name=cli_util.override('email.create_email_domain.command_name', 'create'), help=u"""Creates a new email domain. Avoid entering confidential information. \n[Command Reference](createEmailDomain)""")
 @cli_util.option('--name', required=True, help=u"""The name of the email domain in the Internet Domain Name System (DNS). The email domain name must be unique in the region for this tenancy. Domain names limited to ASCII characters use alphanumeric, dash (\"-\"), and dot (\".\") characters. The dash and dot are only allowed between alphanumeric characters. For details, see [RFC 5321, section 4.1.2] Non-ASCII domain names should adopt IDNA2008 normalization (RFC 5891-5892).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this email domain.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment for this email domain.""")
 @cli_util.option('--domain-verification-id', help=u"""Id for Domain in Domain Management (under governance) if DOMAINID verification method used.""")
 @cli_util.option('--description', help=u"""A string that describes the details about the domain. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -780,7 +780,7 @@ def create_email_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--name', required=True, help=u"""The name of the IpPool. The name must be unique within a region. The name is case sensitive and supported characters include alphanumeric, hyphens (\"-\") and underscore (\"_\") characters.
 
 Example: green_pool-1""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this IpPool.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment for this IpPool.""")
 @cli_util.option('--outbound-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of outbound public IPs for assignment to the IpPool. These IPs must be in the AVAILABLE state to be eligible for assignment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the IpPool. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -925,7 +925,7 @@ def create_email_return_path(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @sender_group.command(name=cli_util.override('email.create_sender.command_name', 'create'), help=u"""Creates a sender for a tenancy in a given compartment. \n[Command Reference](createSender)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the sender.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the sender.""")
 @cli_util.option('--email-address', required=True, help=u"""The email address of the sender.""")
 @cli_util.option('--email-ip-pool-id', help=u"""An optional field. The IpPool [OCID] used to submit an email by Email Delivery when sent from this sender.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -992,7 +992,7 @@ def create_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @suppression_group.command(name=cli_util.override('email.create_suppression.command_name', 'create'), help=u"""Adds recipient email addresses to the suppression list for a tenancy. Addresses added to the suppression list via the API are denoted as \"MANUAL\" in the `reason` field. *Note:* All email addresses added to the suppression list are normalized to include only lowercase letters. \n[Command Reference](createSuppression)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the suppression. Since suppressions are at the customer level, this must be the tenancy OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to contain the suppression. Since suppressions are at the customer level, this must be the tenancy OCID.""")
 @cli_util.option('--email-address', required=True, help=u"""The recipient email address of the suppression.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1362,7 +1362,7 @@ def get_dkim(ctx, from_json, dkim_id):
 
 
 @configuration_group.command(name=cli_util.override('email.get_email_configuration.command_name', 'get-email'), help=u"""Returns  email configuration associated with the specified compartment. \n[Command Reference](getEmailConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID for the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1580,7 +1580,7 @@ def list_dkims(ctx, from_json, all_pages, page_size, email_domain_id, id, name, 
 
 
 @email_domain_group.command(name=cli_util.override('email.list_email_domains.command_name', 'list'), help=u"""Lists email domains in the specified compartment. \n[Command Reference](listEmailDomains)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID for the compartment.""")
 @cli_util.option('--id', help=u"""A filter to only return resources that match the given id exactly.""")
 @cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. `1` is the minimum, `1000` is the maximum. For important details about how pagination works, see [List Pagination].""")
@@ -1647,7 +1647,7 @@ def list_email_domains(ctx, from_json, all_pages, page_size, compartment_id, id,
 
 
 @email_ip_pool_collection_group.command(name=cli_util.override('email.list_email_ip_pools.command_name', 'list-email-ip-pools'), help=u"""Returns a list of EmailIpPools. \n[Command Reference](listEmailIpPools)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID for the compartment.""")
 @cli_util.option('--id', help=u"""A filter to only return resources that match the given id exactly.""")
 @cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""Filter returned list by specified lifecycle state. This parameter is case-insensitive.""")
@@ -1714,7 +1714,7 @@ def list_email_ip_pools(ctx, from_json, all_pages, page_size, compartment_id, id
 
 
 @email_outbound_ip_collection_group.command(name=cli_util.override('email.list_email_outbound_ips.command_name', 'list-email-outbound-ips'), help=u"""Returns a list of all Outbound Public IPs assigned for a given tenant. \n[Command Reference](listEmailOutboundIps)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID for the compartment.""")
 @cli_util.option('--outbound-ip', help=u"""The outbound IP address assigned to the tenancy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. `1` is the minimum, `1000` is the maximum. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1777,7 +1777,7 @@ def list_email_outbound_ips(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @email_return_path_group.command(name=cli_util.override('email.list_email_return_paths.command_name', 'list'), help=u"""Lists email return paths in the specified compartment or emaildomain. \n[Command Reference](listEmailReturnPaths)""")
-@cli_util.option('--compartment-id', help=u"""The OCID for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID for the compartment.""")
 @cli_util.option('--parent-resource-id', help=u"""The [OCID] of the Email Domain to which this Email Return Path belongs.""")
 @cli_util.option('--id', help=u"""A filter to only return resources that match the given id exactly.""")
 @cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
@@ -1846,7 +1846,7 @@ def list_email_return_paths(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @sender_group.command(name=cli_util.override('email.list_senders.command_name', 'list'), help=u"""Gets a collection of approved sender email addresses and sender IDs. \n[Command Reference](listSenders)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID for the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), help=u"""The current state of a sender.""")
 @cli_util.option('--domain', help=u"""A filter to only return resources that match the given domain exactly.""")
 @cli_util.option('--email-address', help=u"""The email address of the approved sender.""")
@@ -1912,7 +1912,7 @@ def list_senders(ctx, from_json, all_pages, page_size, compartment_id, lifecycle
 
 
 @suppression_group.command(name=cli_util.override('email.list_suppressions.command_name', 'list'), help=u"""Gets a list of suppressed recipient email addresses for a user. The `compartmentId` for suppressions must be a tenancy OCID. The returned list is sorted by creation time in descending order. \n[Command Reference](listSuppressions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID for the compartment.""")
 @cli_util.option('--email-address', help=u"""The email address of the suppression.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Search for suppressions that were created within a specific date range, using this parameter to specify the earliest creation date for the returned list (inclusive). Specifying this parameter without the corresponding `timeCreatedLessThan` parameter will retrieve suppressions created from the given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by [RFC 3339].
 
@@ -2081,7 +2081,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_summary_collection_group.command(name=cli_util.override('email.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID for the compartment.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. `1` is the minimum, `1000` is the maximum. For important details about how pagination works, see [List Pagination].""")
@@ -2134,7 +2134,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @email_domain_group.command(name=cli_util.override('email.remove_email_domain_lock.command_name', 'remove'), help=u"""Remove a lock to a resource. \n[Command Reference](removeEmailDomainLock)""")
 @cli_util.option('--email-domain-id', required=True, help=u"""The [OCID] of this email domain.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
-@cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The lock compartment ID.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2195,7 +2195,7 @@ def remove_email_domain_lock(ctx, from_json, wait_for_state, max_wait_seconds, w
 @email_ip_pool_group.command(name=cli_util.override('email.remove_email_ip_pool_lock.command_name', 'remove'), help=u"""Remove a lock to a resource. \n[Command Reference](removeEmailIpPoolLock)""")
 @cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
-@cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The lock compartment ID.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2317,7 +2317,7 @@ def remove_email_outbound_ip(ctx, from_json, wait_for_state, max_wait_seconds, w
 @email_return_path_group.command(name=cli_util.override('email.remove_return_path_lock.command_name', 'remove'), help=u"""Remove a lock to a resource. \n[Command Reference](removeReturnPathLock)""")
 @cli_util.option('--email-return-path-id', required=True, help=u"""The [OCID] of this email return path.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
-@cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The lock compartment ID.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2378,7 +2378,7 @@ def remove_return_path_lock(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @sender_group.command(name=cli_util.override('email.remove_sender_lock.command_name', 'remove'), help=u"""Remove a lock to a resource. \n[Command Reference](removeSenderLock)""")
 @cli_util.option('--sender-id', required=True, help=u"""The unique OCID of the sender.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
-@cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The lock compartment ID.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")

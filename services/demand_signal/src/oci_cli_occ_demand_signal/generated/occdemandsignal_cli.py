@@ -42,7 +42,7 @@ demand_signal_root_group.add_command(occ_demand_signal_group)
 
 @occ_demand_signal_group.command(name=cli_util.override('demand_signal.change_occ_demand_signal_compartment.command_name', 'change-compartment'), help=u"""Moves a OccDemandSignal into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeOccDemandSignalCompartment)""")
 @cli_util.option('--occ-demand-signal-id', required=True, help=u"""The [OCID] of the OccDemandSignal.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the OccDemandSignal to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the OccDemandSignal to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -74,7 +74,7 @@ def change_occ_demand_signal_compartment(ctx, from_json, occ_demand_signal_id, c
 @occ_demand_signal_group.command(name=cli_util.override('demand_signal.create_occ_demand_signal.command_name', 'create'), help=u"""Creates a OccDemandSignal. \n[Command Reference](createOccDemandSignal)""")
 @cli_util.option('--occ-demand-signals', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OccDemandSignal data.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-active', required=True, type=click.BOOL, help=u"""Indicator of whether to share the data with Oracle.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the OccDemandSignal in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the OccDemandSignal in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -227,7 +227,7 @@ def get_occ_demand_signal(ctx, from_json, occ_demand_signal_id):
 
 
 @occ_demand_signal_collection_group.command(name=cli_util.override('demand_signal.list_occ_demand_signals.command_name', 'list-occ-demand-signals'), help=u"""Gets a list of OccDemandSignals. \n[Command Reference](listOccDemandSignals)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the OccDemandSignal.""")

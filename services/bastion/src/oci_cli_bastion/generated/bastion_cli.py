@@ -61,7 +61,7 @@ bastion_root_group.add_command(work_request_group)
 
 @bastion_group.command(name=cli_util.override('bastion.change_bastion_compartment.command_name', 'change-compartment'), help=u"""Moves a bastion into a different compartment. \n[Command Reference](changeBastionCompartment)""")
 @cli_util.option('--bastion-id', required=True, help=u"""The unique identifier (OCID) of the bastion.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier (OCID) of the compartment that the bastion should move to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier (OCID) of the compartment that the bastion should move to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -92,7 +92,7 @@ def change_bastion_compartment(ctx, from_json, bastion_id, compartment_id, if_ma
 
 @bastion_group.command(name=cli_util.override('bastion.create_bastion.command_name', 'create'), help=u"""Creates a new bastion. A bastion provides secured, public access to target resources in the cloud that you cannot otherwise reach from the internet. A bastion resides in a public subnet and establishes the network infrastructure needed to connect a user to a target resource in a private subnet. \n[Command Reference](createBastion)""")
 @cli_util.option('--bastion-type', required=True, help=u"""The type of bastion. Use `standard`.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier (OCID) of the compartment where the bastion is located.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier (OCID) of the compartment where the bastion is located.""")
 @cli_util.option('--target-subnet-id', required=True, help=u"""The unique identifier (OCID) of the subnet that the bastion connects to.""")
 @cli_util.option('--name', help=u"""The name of the bastion, which can't be changed after creation.""")
 @cli_util.option('--phone-book-entry', help=u"""The phonebook entry of the customer's team, which can't be changed after creation. Not applicable to `standard` bastions.""")
@@ -669,7 +669,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @bastion_group.command(name=cli_util.override('bastion.list_bastions.command_name', 'list'), help=u"""Retrieves a list of BastionSummary objects in a compartment. Bastions provide secured, public access to target resources in the cloud that you cannot otherwise reach from the internet. \n[Command Reference](listBastions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier (OCID) of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier (OCID) of the compartment in which to list resources.""")
 @cli_util.option('--bastion-lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--bastion-id', help=u"""The unique identifier (OCID) of the bastion in which to list resources.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
@@ -897,7 +897,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('bastion.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier (OCID) of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier (OCID) of the compartment in which to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")

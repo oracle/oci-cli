@@ -40,7 +40,7 @@ budget_root_group.add_command(budget_group)
 
 
 @alert_rule_group.command(name=cli_util.override('budget.create_alert_rule.command_name', 'create'), help=u"""Creates a new Alert Rule. \n[Command Reference](createAlertRule)""")
-@cli_util.option('--budget-id', required=True, help=u"""The unique budget OCID.""")
+@cli_util.option('--budget-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique budget OCID.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTUAL", "FORECAST"]), help=u"""The type of the alert. Valid values are ACTUAL (the alert triggers based on actual usage), or FORECAST (the alert triggers based on predicted usage).""")
 @cli_util.option('--threshold', required=True, type=click.FLOAT, help=u"""The threshold for triggering the alert, expressed as a whole number or decimal value. If the thresholdType is ABSOLUTE, the threshold can have at most 12 digits before the decimal point, and up to two digits after the decimal point. If the thresholdType is PERCENTAGE, the maximum value is 10000 and can have up to two digits after the decimal point.""")
 @cli_util.option('--threshold-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PERCENTAGE", "ABSOLUTE"]), help=u"""The type of threshold.""")
@@ -126,7 +126,7 @@ def create_alert_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @budget_group.command(name=cli_util.override('budget.create_budget.command_name', 'create'), help=u"""Creates a new budget. \n[Command Reference](createBudget)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--amount', required=True, type=click.FLOAT, help=u"""The amount of the budget expressed as a whole number in the currency of the customer's rate card.""")
 @cli_util.option('--reset-period', required=True, type=custom_types.CliCaseInsensitiveChoice(["MONTHLY"]), help=u"""The reset period for the budget.""")
 @cli_util.option('--target-compartment-id', help=u"""This is DEPRECATED. Set the target compartment ID in targets instead.""")
@@ -231,7 +231,7 @@ def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @alert_rule_group.command(name=cli_util.override('budget.delete_alert_rule.command_name', 'delete'), help=u"""Deletes a specified Alert Rule resource. \n[Command Reference](deleteAlertRule)""")
-@cli_util.option('--budget-id', required=True, help=u"""The unique budget OCID.""")
+@cli_util.option('--budget-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique budget OCID.""")
 @cli_util.option('--alert-rule-id', required=True, help=u"""The unique Alert Rule OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -262,7 +262,7 @@ def delete_alert_rule(ctx, from_json, budget_id, alert_rule_id, if_match):
 
 
 @budget_group.command(name=cli_util.override('budget.delete_budget.command_name', 'delete'), help=u"""Deletes a specified budget resource. \n[Command Reference](deleteBudget)""")
-@cli_util.option('--budget-id', required=True, help=u"""The unique budget OCID.""")
+@cli_util.option('--budget-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique budget OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -326,7 +326,7 @@ def delete_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @alert_rule_group.command(name=cli_util.override('budget.get_alert_rule.command_name', 'get'), help=u"""Gets an Alert Rule for a specified budget. \n[Command Reference](getAlertRule)""")
-@cli_util.option('--budget-id', required=True, help=u"""The unique budget OCID.""")
+@cli_util.option('--budget-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique budget OCID.""")
 @cli_util.option('--alert-rule-id', required=True, help=u"""The unique Alert Rule OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -353,7 +353,7 @@ def get_alert_rule(ctx, from_json, budget_id, alert_rule_id):
 
 
 @budget_group.command(name=cli_util.override('budget.get_budget.command_name', 'get'), help=u"""Gets a budget by the identifier. \n[Command Reference](getBudget)""")
-@cli_util.option('--budget-id', required=True, help=u"""The unique budget OCID.""")
+@cli_util.option('--budget-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique budget OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -375,7 +375,7 @@ def get_budget(ctx, from_json, budget_id):
 
 
 @alert_rule_group.command(name=cli_util.override('budget.list_alert_rules.command_name', 'list'), help=u"""Returns a list of Alert Rules for a specified budget. \n[Command Reference](listAlertRules)""")
-@cli_util.option('--budget-id', required=True, help=u"""The unique budget OCID.""")
+@cli_util.option('--budget-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique budget OCID.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -446,7 +446,7 @@ By default, ListBudgets returns budgets of the 'COMPARTMENT' target type, and th
 To list all budgets, set the targetType query parameter to ALL (for example: 'targetType=ALL').
 
 Clients should ignore new targetTypes, or upgrade to the latest version of the client SDK to handle new targetTypes. \n[Command Reference](listBudgets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -511,7 +511,7 @@ def list_budgets(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
 
 
 @alert_rule_group.command(name=cli_util.override('budget.update_alert_rule.command_name', 'update'), help=u"""Update an Alert Rule for the budget identified by the OCID. \n[Command Reference](updateAlertRule)""")
-@cli_util.option('--budget-id', required=True, help=u"""The unique budget OCID.""")
+@cli_util.option('--budget-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique budget OCID.""")
 @cli_util.option('--alert-rule-id', required=True, help=u"""The unique Alert Rule OCID.""")
 @cli_util.option('--display-name', help=u"""The name of the alert rule. Avoid entering confidential information.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ACTUAL", "FORECAST"]), help=u"""The type of the alert. Valid values are ACTUAL (the alert triggers based on actual usage), or FORECAST (the alert triggers based on predicted usage).""")
@@ -616,7 +616,7 @@ def update_alert_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
 
 @budget_group.command(name=cli_util.override('budget.update_budget.command_name', 'update'), help=u"""Update a budget identified by the OCID. \n[Command Reference](updateBudget)""")
-@cli_util.option('--budget-id', required=True, help=u"""The unique budget OCID.""")
+@cli_util.option('--budget-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique budget OCID.""")
 @cli_util.option('--display-name', help=u"""The displayName of the budget. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the budget.""")
 @cli_util.option('--amount', type=click.FLOAT, help=u"""The amount of the budget expressed as a whole number in the currency of the customer's rate card.""")

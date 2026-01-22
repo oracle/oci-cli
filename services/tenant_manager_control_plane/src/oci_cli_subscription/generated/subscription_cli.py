@@ -61,8 +61,8 @@ subscription_root_group.add_command(assigned_subscription_line_item_summary_grou
 
 
 @subscription_mapping_group.command(name=cli_util.override('subscription.create_subscription_mapping.command_name', 'create'), help=u"""Assign the tenancy record identified by the compartment ID to the given subscription ID. \n[Command Reference](createSubscriptionMapping)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment. Always a tenancy OCID.""")
-@cli_util.option('--subscription-id', required=True, help=u"""OCID of Subscription.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment. Always a tenancy OCID.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of Subscription.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -201,7 +201,7 @@ def get_assigned_subscription(ctx, from_json, assigned_subscription_id):
 
 
 @subscription_group.command(name=cli_util.override('subscription.get_subscription.command_name', 'get'), help=u"""Gets the subscription details by subscription ID. \n[Command Reference](getSubscription)""")
-@cli_util.option('--subscription-id', required=True, help=u"""OCID of the subscription.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the subscription.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -302,8 +302,8 @@ def list_assigned_subscription_line_items(ctx, from_json, all_pages, page_size, 
 
 
 @assigned_subscription_group.command(name=cli_util.override('subscription.list_assigned_subscriptions.command_name', 'list'), help=u"""Lists subscriptions that are consumed by the compartment. Only the root compartment is allowed. \n[Command Reference](listAssignedSubscriptions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--subscription-id', help=u"""The ID of the subscription to which the tenancy is associated.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The ID of the subscription to which the tenancy is associated.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
@@ -362,7 +362,7 @@ def list_assigned_subscriptions(ctx, from_json, all_pages, page_size, compartmen
 
 
 @subscription_group.command(name=cli_util.override('subscription.list_available_regions.command_name', 'list-available-regions'), help=u"""List the available regions based on subscription ID. \n[Command Reference](listAvailableRegions)""")
-@cli_util.option('--subscription-id', required=True, help=u"""OCID of the subscription.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the subscription.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -395,7 +395,7 @@ def list_available_regions(ctx, from_json, all_pages, subscription_id, page):
 
 
 @subscription_line_item_summary_group.command(name=cli_util.override('subscription.list_subscription_line_items.command_name', 'list-subscription-line-items'), help=u"""Lists the line items in a subscription. \n[Command Reference](listSubscriptionLineItems)""")
-@cli_util.option('--subscription-id', required=True, help=u"""OCID of the subscription.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the subscription.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
@@ -452,9 +452,9 @@ def list_subscription_line_items(ctx, from_json, all_pages, page_size, subscript
 
 
 @subscription_mapping_group.command(name=cli_util.override('subscription.list_subscription_mappings.command_name', 'list'), help=u"""Lists the subscription mappings for all the subscriptions owned by a given compartmentId. Only the root compartment is allowed. \n[Command Reference](listSubscriptionMappings)""")
-@cli_util.option('--subscription-id', required=True, help=u"""OCID of the subscription.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the subscription.""")
 @cli_util.option('--subscription-mapping-id', help=u"""A unique ID for subscription and tenancy mapping.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of the resource.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -515,8 +515,8 @@ def list_subscription_mappings(ctx, from_json, all_pages, page_size, subscriptio
 
 
 @subscription_group.command(name=cli_util.override('subscription.list_subscriptions.command_name', 'list'), help=u"""List the subscriptions that a compartment owns. Only the root compartment is allowed. \n[Command Reference](listSubscriptions)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--subscription-id', help=u"""The ID of the subscription to which the tenancy is associated.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The ID of the subscription to which the tenancy is associated.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")

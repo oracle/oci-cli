@@ -33,7 +33,7 @@ announcementsubscription_cli.announcement_subscription_root_group.add_command(an
 
 @cli_util.copy_params_from_generated_command(announcementsubscription_cli.change_announcement_subscription_compartment, params_to_exclude=['announcement_subscription_id'])
 @announcementsubscription_cli.announcement_subscription_group.command(name=announcementsubscription_cli.change_announcement_subscription_compartment.name, help=announcementsubscription_cli.change_announcement_subscription_compartment.help)
-@cli_util.option('--subscription-id', required=True, help=u"""The OCID of the announcement subscription. [required]""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the announcement subscription. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
@@ -47,7 +47,7 @@ def change_announcement_subscription_compartment_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(announcementsubscription_cli.create_filter_group, params_to_exclude=['announcement_subscription_id'])
 @announcementsubscription_cli.announcement_subscription_group.command(name=announcementsubscription_cli.create_filter_group.name, help=announcementsubscription_cli.create_filter_group.help)
-@cli_util.option('--subscription-id', required=True, help=u"""The OCID of the announcement subscription. [required]""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the announcement subscription. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'filters': {'module': 'announcements_service', 'class': 'list[Filter]'}}, output_type={'module': 'announcements_service', 'class': 'FilterGroup'})
 @cli_util.wrap_exceptions
@@ -61,7 +61,7 @@ def create_filter_group_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(announcementsubscription_cli.delete_announcement_subscription, params_to_exclude=['announcement_subscription_id'])
 @announcementsubscription_cli.announcement_subscription_group.command(name=announcementsubscription_cli.delete_announcement_subscription.name, help=announcementsubscription_cli.delete_announcement_subscription.help)
-@cli_util.option('--subscription-id', required=True, help=u"""The OCID of the announcement subscription. [required]""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the announcement subscription. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
@@ -75,7 +75,7 @@ def delete_announcement_subscription_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(announcementsubscription_cli.delete_filter_group, params_to_exclude=['announcement_subscription_id'])
 @announcementsubscription_cli.announcement_subscription_group.command(name=announcementsubscription_cli.delete_filter_group.name, help=announcementsubscription_cli.delete_filter_group.help)
-@cli_util.option('--subscription-id', required=True, help=u"""The OCID of the announcement subscription. [required]""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the announcement subscription. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
@@ -89,7 +89,7 @@ def delete_filter_group_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(announcementsubscription_cli.get_announcement_subscription, params_to_exclude=['announcement_subscription_id'])
 @announcementsubscription_cli.announcement_subscription_group.command(name=announcementsubscription_cli.get_announcement_subscription.name, help=announcementsubscription_cli.get_announcement_subscription.help)
-@cli_util.option('--subscription-id', required=True, help=u"""The OCID of the announcement subscription. [required]""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the announcement subscription. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'announcements_service', 'class': 'AnnouncementSubscription'})
 @cli_util.wrap_exceptions
@@ -103,7 +103,7 @@ def get_announcement_subscription_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(announcementsubscription_cli.update_announcement_subscription, params_to_exclude=['announcement_subscription_id'])
 @announcementsubscription_cli.announcement_subscription_group.command(name=announcementsubscription_cli.update_announcement_subscription.name, help=announcementsubscription_cli.update_announcement_subscription.help)
-@cli_util.option('--subscription-id', required=True, help=u"""The OCID of the announcement subscription. [required]""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the announcement subscription. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'announcements_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'announcements_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'announcements_service', 'class': 'AnnouncementSubscription'})
 @cli_util.wrap_exceptions
@@ -117,7 +117,7 @@ def update_announcement_subscription_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(announcementsubscription_cli.update_filter_group, params_to_exclude=['announcement_subscription_id'])
 @announcementsubscription_cli.announcement_subscription_group.command(name=announcementsubscription_cli.update_filter_group.name, help=announcementsubscription_cli.update_filter_group.help)
-@cli_util.option('--subscription-id', required=True, help=u"""The OCID of the announcement subscription. [required]""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the announcement subscription. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'filters': {'module': 'announcements_service', 'class': 'list[Filter]'}}, output_type={'module': 'announcements_service', 'class': 'FilterGroup'})
 @cli_util.wrap_exceptions

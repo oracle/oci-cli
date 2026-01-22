@@ -124,7 +124,7 @@ fusion_apps_root_group.add_command(scheduled_activity_group)
 
 @fusion_environment_group.command(name=cli_util.override('fusion_apps.change_fusion_environment_compartment.command_name', 'change-compartment'), help=u"""Moves a FusionEnvironment into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeFusionEnvironmentCompartment)""")
 @cli_util.option('--fusion-environment-id', required=True, help=u"""unique FusionEnvironment identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -185,7 +185,7 @@ def change_fusion_environment_compartment(ctx, from_json, wait_for_state, max_wa
 
 @fusion_environment_family_group.command(name=cli_util.override('fusion_apps.change_fusion_environment_family_compartment.command_name', 'change-compartment'), help=u"""Moves a FusionEnvironmentFamily into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeFusionEnvironmentFamilyCompartment)""")
 @cli_util.option('--fusion-environment-family-id', required=True, help=u"""The unique identifier (OCID) of the FusionEnvironmentFamily.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -306,7 +306,7 @@ def create_data_masking_activity(ctx, from_json, wait_for_state, max_wait_second
 
 @fusion_environment_group.command(name=cli_util.override('fusion_apps.create_fusion_environment.command_name', 'create'), help=u"""Creates a new FusionEnvironment. \n[Command Reference](createFusionEnvironment)""")
 @cli_util.option('--display-name', required=True, help=u"""FusionEnvironment Identifier can be renamed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier (OCID) of the compartment where the Fusion Environment is located.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier (OCID) of the compartment where the Fusion Environment is located.""")
 @cli_util.option('--fusion-environment-family-id', required=True, help=u"""The unique identifier (OCID) of the Fusion Environment Family that the Fusion Environment belongs to.""")
 @cli_util.option('--fusion-environment-type', required=True, help=u"""The type of environment. Valid values are Production, Test, or Development.""")
 @cli_util.option('--create-fusion-environment-admin-user-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -469,7 +469,7 @@ def create_fusion_environment_admin_user(ctx, from_json, wait_for_state, max_wai
 
 @fusion_environment_family_group.command(name=cli_util.override('fusion_apps.create_fusion_environment_family.command_name', 'create'), help=u"""Creates a new FusionEnvironmentFamily. \n[Command Reference](createFusionEnvironmentFamily)""")
 @cli_util.option('--display-name', required=True, help=u"""A friendly name for the environment family. The name must contain only letters, numbers, dashes, and underscores. Can be changed later.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the environment family is located.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the environment family is located.""")
 @cli_util.option('--subscription-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the IDs of the applications subscriptions that are associated with the environment family.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--family-maintenance-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1355,7 +1355,7 @@ def list_data_masking_activities(ctx, from_json, all_pages, page_size, fusion_en
 
 
 @fusion_environment_family_group.command(name=cli_util.override('fusion_apps.list_fusion_environment_families.command_name', 'list'), help=u"""Returns a list of FusionEnvironmentFamilies. \n[Command Reference](listFusionEnvironmentFamilies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--fusion-environment-family-id', help=u"""The ID of the fusion environment family in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter that returns all resources that match the specified lifecycle state.""")
@@ -1418,7 +1418,7 @@ def list_fusion_environment_families(ctx, from_json, all_pages, page_size, compa
 
 
 @fusion_environment_group.command(name=cli_util.override('fusion_apps.list_fusion_environments.command_name', 'list'), help=u"""Returns a list of FusionEnvironments. \n[Command Reference](listFusionEnvironments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--fusion-environment-family-id', help=u"""The ID of the fusion environment family in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter that returns all resources that match the specified lifecycle state.""")
@@ -1865,7 +1865,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('fusion_apps.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")

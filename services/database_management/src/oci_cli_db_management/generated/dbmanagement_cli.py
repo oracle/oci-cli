@@ -765,7 +765,7 @@ def change_database_parameters_database_password_credential_details(ctx, from_js
 
 @db_management_private_endpoint_group.command(name=cli_util.override('db_management.change_db_management_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves the Database Management private endpoint and its dependent resources to the specified compartment. \n[Command Reference](changeDbManagementPrivateEndpointCompartment)""")
 @cli_util.option('--db-management-private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment to which the Database Management private endpoint needs to be moved.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to which the Database Management private endpoint needs to be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -798,7 +798,7 @@ def change_db_management_private_endpoint_compartment(ctx, from_json, db_managem
 
 @external_db_system_group.command(name=cli_util.override('db_management.change_external_db_system_compartment.command_name', 'change-compartment'), help=u"""Moves the external DB system and its related resources (excluding databases) to the specified compartment. \n[Command Reference](changeExternalDbSystemCompartment)""")
 @cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the external DB system to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the external DB system to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -859,7 +859,7 @@ def change_external_db_system_compartment(ctx, from_json, wait_for_state, max_wa
 
 @external_exadata_infrastructure_group.command(name=cli_util.override('db_management.change_external_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""Moves the Exadata infrastructure and its related resources (Exadata storage server, Exadata storage server connectors and Exadata storage server grid) to the specified compartment. \n[Command Reference](changeExternalExadataInfrastructureCompartment)""")
 @cli_util.option('--external-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Exadata infrastructure and related components to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Exadata infrastructure and related components to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -920,7 +920,7 @@ def change_external_exadata_infrastructure_compartment(ctx, from_json, wait_for_
 
 @job_group.command(name=cli_util.override('db_management.change_job_compartment.command_name', 'change-compartment'), help=u"""Moves a job. \n[Command Reference](changeJobCompartment)""")
 @cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the job should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to which the job should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -951,7 +951,7 @@ def change_job_compartment(ctx, from_json, job_id, compartment_id, if_match):
 
 @managed_database_group_group.command(name=cli_util.override('db_management.change_managed_database_group_compartment.command_name', 'change-compartment'), help=u"""Moves a Managed Database Group to a different compartment. The destination compartment must not have a Managed Database Group with the same name. \n[Command Reference](changeManagedDatabaseGroupCompartment)""")
 @cli_util.option('--managed-database-group-id', required=True, help=u"""The [OCID] of the Managed Database Group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the Managed Database Group should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to which the Managed Database Group should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -982,7 +982,7 @@ def change_managed_database_group_compartment(ctx, from_json, managed_database_g
 
 @named_credential_group.command(name=cli_util.override('db_management.change_named_credential_compartment.command_name', 'change-compartment'), help=u"""Moves a named credential to a different compartment. The destination compartment must not have a named credential with the same name. \n[Command Reference](changeNamedCredentialCompartment)""")
 @cli_util.option('--named-credential-id', required=True, help=u"""The [OCID] of the named credential.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the named credential should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to which the named credential should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2539,7 +2539,7 @@ def configure_automatic_spm_evolve_advisor_task_database_password_credential_det
 
 
 @cloud_db_system_group.command(name=cli_util.override('db_management.create_cloud_db_system.command_name', 'create'), help=u"""Creates a cloud DB system and its related resources. \n[Command Reference](createCloudDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the cloud DB system resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the cloud DB system resides.""")
 @cli_util.option('--db-system-discovery-id', required=True, help=u"""The [OCID] of the DB system discovery.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
 @cli_util.option('--database-management-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2739,7 +2739,7 @@ def create_cloud_db_system_connector_create_cloud_db_system_macs_connector_detai
 
 @cloud_db_system_discovery_group.command(name=cli_util.override('db_management.create_cloud_db_system_discovery.command_name', 'create'), help=u"""Creates a cloud DB system discovery resource and initiates the discovery process. \n[Command Reference](createCloudDbSystemDiscovery)""")
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the management agent used for the cloud DB system discovery.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the cloud DB system resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the cloud DB system resides.""")
 @cli_util.option('--dbaas-parent-infrastructure-id', required=True, help=u"""The [OCID] of the parent cloud DB Infrastructure. For VM Dbsystems , it will be the DBSystem Id. For ExaCS and ExaCC,  it will be the cloudVmClusterId and vmClusterId respectively.""")
 @cli_util.option('--deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VM", "EXADATA", "EXADATA_CC", "EXADATA_XS"]), help=u"""The deployment type of cloud dbsystem.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
@@ -2810,8 +2810,8 @@ def create_cloud_db_system_discovery(ctx, from_json, wait_for_state, max_wait_se
 
 @db_management_private_endpoint_group.command(name=cli_util.override('db_management.create_db_management_private_endpoint.command_name', 'create'), help=u"""Creates a new Database Management private endpoint. \n[Command Reference](createDbManagementPrivateEndpoint)""")
 @cli_util.option('--name', required=True, help=u"""The display name of the Database Management private endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet.""")
 @cli_util.option('--is-cluster', type=click.BOOL, help=u"""Specifies whether the Database Management private endpoint will be used for Oracle Databases in a cluster.""")
 @cli_util.option('--is-dns-resolution-enabled', type=click.BOOL, help=u"""Specifies whether the Database Management private endpoint has DNS proxy server enabled to resolve private host name.""")
 @cli_util.option('--description', help=u"""The description of the private endpoint.""")
@@ -2890,7 +2890,7 @@ def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wa
 
 
 @external_db_system_group.command(name=cli_util.override('db_management.create_external_db_system.command_name', 'create'), help=u"""Creates an external DB system and its related resources. \n[Command Reference](createExternalDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the external DB system resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the external DB system resides.""")
 @cli_util.option('--db-system-discovery-id', required=True, help=u"""The [OCID] of the DB system discovery.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
 @cli_util.option('--database-management-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3090,7 +3090,7 @@ def create_external_db_system_connector_create_external_db_system_macs_connector
 
 @external_db_system_discovery_group.command(name=cli_util.override('db_management.create_external_db_system_discovery.command_name', 'create'), help=u"""Creates an external DB system discovery resource and initiates the discovery process. \n[Command Reference](createExternalDbSystemDiscovery)""")
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the management agent used for the external DB system discovery.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the external DB system resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the external DB system resides.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3156,7 +3156,7 @@ def create_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait
 
 
 @external_exadata_infrastructure_group.command(name=cli_util.override('db_management.create_external_exadata_infrastructure.command_name', 'create'), help=u"""Creates an OCI resource for the Exadata infrastructure and enables the Monitoring service for the Exadata infrastructure. The following resource/subresources are created:   Infrastructure   Storage server connectors   Storage servers   Storage grids \n[Command Reference](createExternalExadataInfrastructure)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the Exadata infrastructure.""")
 @cli_util.option('--db-system-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DB systems in the Exadata infrastructure.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--discovery-key', help=u"""The unique key of the discovery request.""")
@@ -3294,7 +3294,7 @@ def create_external_exadata_storage_connector(ctx, from_json, wait_for_state, ma
 
 
 @external_my_sql_database_group.command(name=cli_util.override('db_management.create_external_my_sql_database.command_name', 'create'), help=u"""Creates an external MySQL database. \n[Command Reference](createExternalMySqlDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of compartment for the External MySQL Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of compartment for the External MySQL Database.""")
 @cli_util.option('--db-name', required=True, help=u"""Name of the External MySQL Database.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3319,7 +3319,7 @@ def create_external_my_sql_database(ctx, from_json, compartment_id, db_name):
 
 
 @external_my_sql_database_connector_group.command(name=cli_util.override('db_management.create_external_my_sql_database_connector.command_name', 'create'), help=u"""Creates an external MySQL connector resource. \n[Command Reference](createExternalMySqlDatabaseConnector)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of compartment for the External MySQL Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of compartment for the External MySQL Database.""")
 @cli_util.option('--connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-test-connection-param', required=True, type=click.BOOL, help=u"""Parameter indicating whether database connection needs to be tested.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3373,7 +3373,7 @@ def create_external_my_sql_database_connector(ctx, from_json, wait_for_state, ma
 
 @job_group.command(name=cli_util.override('db_management.create_job.command_name', 'create'), help=u"""Creates a job to be executed on a Managed Database or Managed Database Group. Only one of the parameters, managedDatabaseId or managedDatabaseGroupId should be provided as input in CreateJobDetails resource in request body. \n[Command Reference](createJob)""")
 @cli_util.option('--name', required=True, help=u"""The name of the job. Valid characters are uppercase or lowercase letters, numbers, and \"_\". The name of the job cannot be modified. It must be unique in the compartment and must begin with an alphabetic character.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the job resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the job resides.""")
 @cli_util.option('--schedule-type', required=True, help=u"""The schedule type of the job.""")
 @cli_util.option('--job-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SQL"]), help=u"""The type of job.""")
 @cli_util.option('--description', help=u"""The description of the job.""")
@@ -3456,7 +3456,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 @job_group.command(name=cli_util.override('db_management.create_job_create_sql_job_details.command_name', 'create-job-create-sql-job-details'), help=u"""Creates a job to be executed on a Managed Database or Managed Database Group. Only one of the parameters, managedDatabaseId or managedDatabaseGroupId should be provided as input in CreateJobDetails resource in request body. \n[Command Reference](createJob)""")
 @cli_util.option('--name', required=True, help=u"""The name of the job. Valid characters are uppercase or lowercase letters, numbers, and \"_\". The name of the job cannot be modified. It must be unique in the compartment and must begin with an alphabetic character.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the job resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the job resides.""")
 @cli_util.option('--schedule-type', required=True, help=u"""The schedule type of the job.""")
 @cli_util.option('--operation-type', required=True, help=u"""The SQL operation type.""")
 @cli_util.option('--description', help=u"""The description of the job.""")
@@ -3472,7 +3472,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.option('--sql-type', help=u"""""")
 @cli_util.option('--user-name', help=u"""The database user name used to execute the SQL job. If the job is being executed on a Managed Database Group, then the user name should exist on all the databases in the group with the same password.""")
 @cli_util.option('--password', help=u"""The password for the database user name used to execute the SQL job.""")
-@cli_util.option('--secret-id', help=u"""The [OCID] of the secret containing the user password.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the secret containing the user password.""")
 @cli_util.option('--named-credential-id', help=u"""The [OCID] of the Named Credentials containing password secret.""")
 @cli_util.option('--role', help=u"""The role of the database user. Indicates whether the database user is a normal user or sysdba.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3585,7 +3585,7 @@ def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_s
 
 @job_group.command(name=cli_util.override('db_management.create_job_object_storage_job_execution_result_location.command_name', 'create-job-object-storage-job-execution-result-location'), help=u"""Creates a job to be executed on a Managed Database or Managed Database Group. Only one of the parameters, managedDatabaseId or managedDatabaseGroupId should be provided as input in CreateJobDetails resource in request body. \n[Command Reference](createJob)""")
 @cli_util.option('--name', required=True, help=u"""The name of the job. Valid characters are uppercase or lowercase letters, numbers, and \"_\". The name of the job cannot be modified. It must be unique in the compartment and must begin with an alphabetic character.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the job resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the job resides.""")
 @cli_util.option('--schedule-type', required=True, help=u"""The schedule type of the job.""")
 @cli_util.option('--description', help=u"""The description of the job.""")
 @cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group where the job has to be executed.""")
@@ -3673,7 +3673,7 @@ def create_job_object_storage_job_execution_result_location(ctx, from_json, wait
 
 @managed_database_group_group.command(name=cli_util.override('db_management.create_managed_database_group.command_name', 'create'), help=u"""Creates a Managed Database Group. The group does not contain any Managed Databases when it is created, and they must be added later. \n[Command Reference](createManagedDatabaseGroup)""")
 @cli_util.option('--name', required=True, help=u"""The name of the Managed Database Group. Valid characters are uppercase or lowercase letters, numbers, and \"_\". The name of the Managed Database Group cannot be modified. It must be unique in the compartment and must begin with an alphabetic character.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the Managed Database Group resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the Managed Database Group resides.""")
 @cli_util.option('--description', help=u"""The information specified by the user about the Managed Database Group.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3739,7 +3739,7 @@ def create_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESOURCE", "GLOBAL"]), help=u"""The scope of the named credential.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DB"]), help=u"""The type of resource associated with the named credential.""")
 @cli_util.option('--content', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the named credential resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the named credential resides.""")
 @cli_util.option('--description', help=u"""The information specified by the user about the named credential.""")
 @cli_util.option('--associated-resource', help=u"""The [OCID] of the resource that is associated to the named credential.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3811,7 +3811,7 @@ def create_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--name', required=True, help=u"""The name of the named credential. Valid characters are uppercase or lowercase letters, numbers, and \"_\". The name of the named credential cannot be modified. It must be unique in the compartment and must begin with an alphabetic character.""")
 @cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESOURCE", "GLOBAL"]), help=u"""The scope of the named credential.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DB"]), help=u"""The type of resource associated with the named credential.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the named credential resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the named credential resides.""")
 @cli_util.option('--content-user-name', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--content-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @cli_util.option('--content-password-secret-id', required=True, help=u"""The [OCID] of the Vault service secret that contains the database user password.""")
@@ -5356,7 +5356,7 @@ def disable_automatic_spm_evolve_advisor_task_database_password_credential_detai
 
 
 @managed_database_group.command(name=cli_util.override('db_management.disable_autonomous_database_management_feature.command_name', 'disable-autonomous-database-management-feature'), help=u"""Disables a Database Management feature for the specified Autonomous Database. \n[Command Reference](disableAutonomousDatabaseManagementFeature)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Autonomous Database.""")
 @cli_util.option('--feature', required=True, type=custom_types.CliCaseInsensitiveChoice(["DIAGNOSTICS_AND_MANAGEMENT", "DB_LIFECYCLE_MANAGEMENT", "SQLWATCH"]), help=u"""The name of the Database Management feature.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5527,7 +5527,7 @@ def disable_cloud_db_system_stack_monitoring(ctx, from_json, wait_for_state, max
 
 
 @managed_database_group.command(name=cli_util.override('db_management.disable_database_management_feature.command_name', 'disable-database-management-feature'), help=u"""Disables a Database Management feature for the specified Oracle cloud database. \n[Command Reference](disableDatabaseManagementFeature)""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature', required=True, type=custom_types.CliCaseInsensitiveChoice(["DIAGNOSTICS_AND_MANAGEMENT", "DB_LIFECYCLE_MANAGEMENT", "SQLWATCH"]), help=u"""The name of the Database Management feature.""")
 @cli_util.option('--can-disable-all-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be disabled for the pluggable databases before disabling it for the container database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6562,7 +6562,7 @@ Starts the discovery process for the Exadata system infrastructure. The followin
 - Exadata storage servers from each DB systems - Exadata storage grid for all Exadata storage servers - Exadata infrastructure
 
 The same API covers both new discovery and rediscovery cases.   For the new discovery case, new managed resources/sub-resources are created or the existing ones are overridden.   For rediscovery case, the existing managed resources/sub-resources are checked to find out which ones should be added or which ones should be     removed based on the unique key defined for each resource/sub-resource. \n[Command Reference](discoverExternalExadataInfrastructure)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--discovery-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NEW", "OVERRIDE"]), help=u"""The type of discovery.""")
 @cli_util.option('--db-system-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the DB system identifiers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--exadata-infrastructure-id', help=u"""The [OCID] of the Exadata infrastructure. This is applicable for rediscovery only.""")
@@ -7726,7 +7726,7 @@ def enable_automatic_spm_evolve_advisor_task_database_password_credential_detail
 
 
 @managed_database_group.command(name=cli_util.override('db_management.enable_autonomous_database_management_feature.command_name', 'enable-autonomous-database-management-feature'), help=u"""Enables a Database Management feature for the specified Autonomous Database. \n[Command Reference](enableAutonomousDatabaseManagementFeature)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Autonomous Database.""")
 @cli_util.option('--feature-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -7787,7 +7787,7 @@ def enable_autonomous_database_management_feature(ctx, from_json, wait_for_state
 
 
 @managed_database_group.command(name=cli_util.override('db_management.enable_autonomous_database_management_feature_autonomous_database_sql_watch_feature_details.command_name', 'enable-autonomous-database-management-feature-autonomous-database-sql-watch-feature-details'), help=u"""Enables a Database Management feature for the specified Autonomous Database. \n[Command Reference](enableAutonomousDatabaseManagementFeature)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Autonomous Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--feature-details-connector-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7855,7 +7855,7 @@ def enable_autonomous_database_management_feature_autonomous_database_sql_watch_
 
 
 @managed_database_group.command(name=cli_util.override('db_management.enable_autonomous_database_management_feature_autonomous_database_diagnostics_and_management_feature_details.command_name', 'enable-autonomous-database-management-feature-autonomous-database-diagnostics-and-management-feature-details'), help=u"""Enables a Database Management feature for the specified Autonomous Database. \n[Command Reference](enableAutonomousDatabaseManagementFeature)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Autonomous Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--feature-details-connector-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8053,7 +8053,7 @@ def enable_cloud_db_system_stack_monitoring(ctx, from_json, wait_for_state, max_
 
 
 @managed_database_group.command(name=cli_util.override('db_management.enable_database_management_feature.command_name', 'enable-database-management-feature'), help=u"""Enables a Database Management feature for the specified cloud database. \n[Command Reference](enableDatabaseManagementFeature)""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -8114,7 +8114,7 @@ def enable_database_management_feature(ctx, from_json, wait_for_state, max_wait_
 
 
 @managed_database_group.command(name=cli_util.override('db_management.enable_database_management_feature_database_diagnostics_and_management_feature_details.command_name', 'enable-database-management-feature-database-diagnostics-and-management-feature-details'), help=u"""Enables a Database Management feature for the specified cloud database. \n[Command Reference](enableDatabaseManagementFeature)""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database. Use \"BASIC\" for basic management. Use \"ADVANCED\" for full management.""")
@@ -8190,7 +8190,7 @@ def enable_database_management_feature_database_diagnostics_and_management_featu
 
 
 @managed_database_group.command(name=cli_util.override('db_management.enable_database_management_feature_database_lifecycle_management_feature_details.command_name', 'enable-database-management-feature-database-lifecycle-management-feature-details'), help=u"""Enables a Database Management feature for the specified cloud database. \n[Command Reference](enableDatabaseManagementFeature)""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -8256,7 +8256,7 @@ def enable_database_management_feature_database_lifecycle_management_feature_det
 
 
 @managed_database_group.command(name=cli_util.override('db_management.enable_database_management_feature_database_sql_watch_feature_details.command_name', 'enable-database-management-feature-database-sql-watch-feature-details'), help=u"""Enables a Database Management feature for the specified cloud database. \n[Command Reference](enableDatabaseManagementFeature)""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -10549,7 +10549,7 @@ def get_cluster_cache_metric(ctx, from_json, managed_database_id, start_time, en
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
@@ -10602,7 +10602,7 @@ def get_database_fleet_backup_metrics(ctx, from_json, database_hosted_in, start_
 
 @database_fleet_dataguard_metrics_group.command(name=cli_util.override('db_management.get_database_fleet_dataguard_metrics.command_name', 'get'), help=u"""Gets the fleet of Oracle Data Guard-enabled container databases (CDBs) along with Data Guard metrics and standby databases, in a compartment or Database Group. Either the CompartmentId or the ManagedDatabaseGroupId query parameters must be provided to retrieve the list of databases and Data Guard metrics. \n[Command Reference](getDatabaseFleetDataguardMetrics)""")
 @cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
@@ -10652,7 +10652,7 @@ def get_database_fleet_dataguard_metrics(ctx, from_json, managed_database_group_
 
 @database_fleet_ha_overview_metrics_group.command(name=cli_util.override('db_management.get_database_fleet_ha_overview_metrics.command_name', 'get'), help=u"""Gets the fleet of container databases (CDBs) and their HA and backup metrics in a compartment or in a Database Group. Either the CompartmentId or the ManagedDatabaseGroupId query parameters must be provided to retrieve the HA and backup metrics. \n[Command Reference](getDatabaseFleetHaOverviewMetrics)""")
 @cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
@@ -10704,7 +10704,7 @@ def get_database_fleet_ha_overview_metrics(ctx, from_json, managed_database_grou
 @cli_util.option('--compare-baseline-time', required=True, help=u"""The baseline time for metrics comparison.""")
 @cli_util.option('--compare-target-time', required=True, help=u"""The target time for metrics comparison.""")
 @cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compare-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY", "WEEK"]), help=u"""The time window used for metrics comparison.""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
 @cli_util.option('--filter-by-database-type', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database type.""")
@@ -11522,7 +11522,7 @@ def get_optimizer_statistics_collection_operation(ctx, from_json, managed_databa
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compare-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY", "WEEK"]), help=u"""The time window used for metrics comparison.""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11871,7 +11871,7 @@ def list_asm_properties(ctx, from_json, all_pages, page_size, managed_database_i
 
 @associated_database_summary_group.command(name=cli_util.override('db_management.list_associated_databases.command_name', 'list-associated-databases'), help=u"""Gets the list of databases using a specific Database Management private endpoint. \n[Command Reference](listAssociatedDatabases)""")
 @cli_util.option('--db-management-private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
@@ -12145,7 +12145,7 @@ def list_cloud_asm_disk_groups(ctx, from_json, all_pages, page_size, cloud_asm_i
 
 
 @cloud_asm_instance_group.command(name=cli_util.override('db_management.list_cloud_asm_instances.command_name', 'list'), help=u"""Lists the ASM instances in the specified cloud ASM. \n[Command Reference](listCloudAsmInstances)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-asm-id', help=u"""The [OCID] of the cloud ASM.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -12264,7 +12264,7 @@ def list_cloud_asm_users(ctx, from_json, all_pages, page_size, cloud_asm_id, pag
 
 
 @cloud_asm_group.command(name=cli_util.override('db_management.list_cloud_asms.command_name', 'list'), help=u"""Lists the ASMs in the specified cloud DB system. \n[Command Reference](listCloudAsms)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -12323,7 +12323,7 @@ def list_cloud_asms(ctx, from_json, all_pages, page_size, compartment_id, cloud_
 
 
 @cloud_cluster_instance_group.command(name=cli_util.override('db_management.list_cloud_cluster_instances.command_name', 'list'), help=u"""Lists the cluster instances in the specified cloud cluster. \n[Command Reference](listCloudClusterInstances)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-cluster-id', help=u"""The [OCID] of the cloud cluster.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -12382,7 +12382,7 @@ def list_cloud_cluster_instances(ctx, from_json, all_pages, page_size, compartme
 
 
 @cloud_cluster_group.command(name=cli_util.override('db_management.list_cloud_clusters.command_name', 'list'), help=u"""Lists the clusters in the specified cloud DB system. \n[Command Reference](listCloudClusters)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -12442,7 +12442,7 @@ def list_cloud_clusters(ctx, from_json, all_pages, page_size, compartment_id, cl
 
 @cloud_database_collection_group.command(name=cli_util.override('db_management.list_cloud_databases.command_name', 'list-cloud-databases'), help=u"""Lists the cloud databases in the specified compartment or in the specified DB system. \n[Command Reference](listCloudDatabases)""")
 @cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
@@ -12501,7 +12501,7 @@ def list_cloud_databases(ctx, from_json, all_pages, page_size, cloud_db_system_i
 
 
 @cloud_db_home_group.command(name=cli_util.override('db_management.list_cloud_db_homes.command_name', 'list'), help=u"""Lists the DB homes in the specified cloud DB system. \n[Command Reference](listCloudDbHomes)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -12560,7 +12560,7 @@ def list_cloud_db_homes(ctx, from_json, all_pages, page_size, compartment_id, cl
 
 
 @cloud_db_node_group.command(name=cli_util.override('db_management.list_cloud_db_nodes.command_name', 'list'), help=u"""Lists the cloud DB nodes in the specified cloud DB system. \n[Command Reference](listCloudDbNodes)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -12619,7 +12619,7 @@ def list_cloud_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, cl
 
 
 @cloud_db_system_connector_group.command(name=cli_util.override('db_management.list_cloud_db_system_connectors.command_name', 'list'), help=u"""Lists the cloud connectors in the specified cloud DB system. \n[Command Reference](listCloudDbSystemConnectors)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -12678,7 +12678,7 @@ def list_cloud_db_system_connectors(ctx, from_json, all_pages, page_size, compar
 
 
 @cloud_db_system_discovery_group.command(name=cli_util.override('db_management.list_cloud_db_system_discoveries.command_name', 'list'), help=u"""Lists the cloud DB system discovery resources in the specified compartment. \n[Command Reference](listCloudDbSystemDiscoveries)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
@@ -12735,7 +12735,7 @@ def list_cloud_db_system_discoveries(ctx, from_json, all_pages, page_size, compa
 
 
 @cloud_db_system_group.command(name=cli_util.override('db_management.list_cloud_db_systems.command_name', 'list'), help=u"""Lists the cloud DB systems in the specified compartment. \n[Command Reference](listCloudDbSystems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--dbaas-parent-infrastructure-id', help=u"""The [OCID] of the dbaas parent infrastructure of the cloud DB system.""")
 @cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["VM", "EXADATA", "EXADATA_CC", "EXADATA_XS"]), help=u"""A filter to return cloud DB systems of the specified deployment type.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
@@ -12865,7 +12865,7 @@ def list_cloud_listener_services(ctx, from_json, all_pages, page_size, cloud_lis
 
 
 @cloud_listener_group.command(name=cli_util.override('db_management.list_cloud_listeners.command_name', 'list'), help=u"""Lists the listeners in the specified cloud DB system. \n[Command Reference](listCloudListeners)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -13168,9 +13168,9 @@ def list_database_parameters(ctx, from_json, all_pages, managed_database_id, sou
 
 
 @db_management_private_endpoint_group.command(name=cli_util.override('db_management.list_db_management_private_endpoints.command_name', 'list'), help=u"""Gets a list of Database Management private endpoints. \n[Command Reference](listDbManagementPrivateEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
-@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--is-cluster', type=click.BOOL, help=u"""The option to filter Database Management private endpoints that can used for Oracle Databases in a cluster. This should be used along with the vcnId query parameter.""")
 @cli_util.option('--is-dns-resolution-enabled', type=click.BOOL, help=u"""The option to filter Database Management private endpoints which are endbled with DNS proxy server. This should be used along with the vcnId query parameter. Only one of this parameter and IsClusterDbManagementPrivateEndpointQueryParam should be set to true at one time.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of a resource.""")
@@ -13297,7 +13297,7 @@ def list_external_asm_disk_groups(ctx, from_json, all_pages, page_size, external
 
 
 @external_asm_instance_group.command(name=cli_util.override('db_management.list_external_asm_instances.command_name', 'list'), help=u"""Lists the ASM instances in the specified external ASM. \n[Command Reference](listExternalAsmInstances)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-asm-id', help=u"""The [OCID] of the external ASM.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -13416,7 +13416,7 @@ def list_external_asm_users(ctx, from_json, all_pages, page_size, external_asm_i
 
 
 @external_asm_group.command(name=cli_util.override('db_management.list_external_asms.command_name', 'list'), help=u"""Lists the ASMs in the specified external DB system. \n[Command Reference](listExternalAsms)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -13475,7 +13475,7 @@ def list_external_asms(ctx, from_json, all_pages, page_size, compartment_id, ext
 
 
 @external_cluster_instance_group.command(name=cli_util.override('db_management.list_external_cluster_instances.command_name', 'list'), help=u"""Lists the cluster instances in the specified external cluster. \n[Command Reference](listExternalClusterInstances)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-cluster-id', help=u"""The [OCID] of the external cluster.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -13534,7 +13534,7 @@ def list_external_cluster_instances(ctx, from_json, all_pages, page_size, compar
 
 
 @external_cluster_group.command(name=cli_util.override('db_management.list_external_clusters.command_name', 'list'), help=u"""Lists the clusters in the specified external DB system. \n[Command Reference](listExternalClusters)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -13593,7 +13593,7 @@ def list_external_clusters(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @external_database_collection_group.command(name=cli_util.override('db_management.list_external_databases.command_name', 'list-external-databases'), help=u"""Lists the external databases in the specified compartment or in the specified DB system. \n[Command Reference](listExternalDatabases)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
 @cli_util.option('--external-database-id', help=u"""The [OCID] of the external database.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
@@ -13655,7 +13655,7 @@ def list_external_databases(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @external_db_home_group.command(name=cli_util.override('db_management.list_external_db_homes.command_name', 'list'), help=u"""Lists the DB homes in the specified external DB system. \n[Command Reference](listExternalDbHomes)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -13714,7 +13714,7 @@ def list_external_db_homes(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @external_db_node_group.command(name=cli_util.override('db_management.list_external_db_nodes.command_name', 'list'), help=u"""Lists the external DB nodes in the specified external DB system. \n[Command Reference](listExternalDbNodes)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -13773,7 +13773,7 @@ def list_external_db_nodes(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @external_db_system_connector_group.command(name=cli_util.override('db_management.list_external_db_system_connectors.command_name', 'list'), help=u"""Lists the external connectors in the specified external DB system. \n[Command Reference](listExternalDbSystemConnectors)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -13832,7 +13832,7 @@ def list_external_db_system_connectors(ctx, from_json, all_pages, page_size, com
 
 
 @external_db_system_discovery_group.command(name=cli_util.override('db_management.list_external_db_system_discoveries.command_name', 'list'), help=u"""Lists the external DB system discovery resources in the specified compartment. \n[Command Reference](listExternalDbSystemDiscoveries)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
@@ -13889,7 +13889,7 @@ def list_external_db_system_discoveries(ctx, from_json, all_pages, page_size, co
 
 
 @external_db_system_group.command(name=cli_util.override('db_management.list_external_db_systems.command_name', 'list'), help=u"""Lists the external DB systems in the specified compartment. \n[Command Reference](listExternalDbSystems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
@@ -13946,7 +13946,7 @@ def list_external_db_systems(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @external_exadata_infrastructure_group.command(name=cli_util.override('db_management.list_external_exadata_infrastructures.command_name', 'list'), help=u"""Lists the Exadata infrastructure resources in the specified compartment. \n[Command Reference](listExternalExadataInfrastructures)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""The optional single value query filter parameter on the entity display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
@@ -14003,7 +14003,7 @@ def list_external_exadata_infrastructures(ctx, from_json, all_pages, page_size, 
 
 
 @external_exadata_storage_connector_group.command(name=cli_util.override('db_management.list_external_exadata_storage_connectors.command_name', 'list'), help=u"""Lists the Exadata storage server connectors for the specified Exadata infrastructure. \n[Command Reference](listExternalExadataStorageConnectors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
 @cli_util.option('--display-name', help=u"""The optional single value query filter parameter on the entity display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -14064,7 +14064,7 @@ def list_external_exadata_storage_connectors(ctx, from_json, all_pages, page_siz
 
 
 @external_exadata_storage_server_group.command(name=cli_util.override('db_management.list_external_exadata_storage_servers.command_name', 'list'), help=u"""Lists the Exadata storage servers for the specified Exadata infrastructure. \n[Command Reference](listExternalExadataStorageServers)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
 @cli_util.option('--display-name', help=u"""The optional single value query filter parameter on the entity display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -14189,7 +14189,7 @@ def list_external_listener_services(ctx, from_json, all_pages, page_size, extern
 
 
 @external_listener_group.command(name=cli_util.override('db_management.list_external_listeners.command_name', 'list'), help=u"""Lists the listeners in the specified external DB system. \n[Command Reference](listExternalListeners)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
 @cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -14248,7 +14248,7 @@ def list_external_listeners(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @external_my_sql_database_collection_group.command(name=cli_util.override('db_management.list_external_my_sql_databases.command_name', 'list-external-my-sql-databases'), help=u"""Gets the list of External MySQL Databases. \n[Command Reference](listExternalMySqlDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--name', help=u"""The parameter to filter by MySQL Database System type.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
@@ -14305,7 +14305,7 @@ def list_external_my_sql_databases(ctx, from_json, all_pages, page_size, compart
 
 
 @job_execution_group.command(name=cli_util.override('db_management.list_job_executions.command_name', 'list'), help=u"""Gets the job execution for a specific ID or the list of job executions for a job, job run, Managed Database or Managed Database Group in a specific compartment. Only one of the parameters, ID, jobId, jobRunId, managedDatabaseId or managedDatabaseGroupId should be provided. If none of these parameters is provided, all the job executions in the compartment are listed. Job executions can also be filtered based on the name and status parameters. \n[Command Reference](listJobExecutions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""The identifier of the resource.""")
 @cli_util.option('--job-id', help=u"""The identifier of the job.""")
 @cli_util.option('--managed-database-id', help=u"""The [OCID] of the Managed Database.""")
@@ -14380,7 +14380,7 @@ def list_job_executions(ctx, from_json, all_pages, page_size, compartment_id, id
 
 
 @job_run_group.command(name=cli_util.override('db_management.list_job_runs.command_name', 'list'), help=u"""Gets the job run for a specific ID or the list of job runs for a job, Managed Database or Managed Database Group in a specific compartment. Only one of the parameters, ID, jobId, managedDatabaseId, or managedDatabaseGroupId should be provided. If none of these parameters is provided, all the job runs in the compartment are listed. Job runs can also be filtered based on name and runStatus parameters. \n[Command Reference](listJobRuns)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""The identifier of the resource.""")
 @cli_util.option('--job-id', help=u"""The identifier of the job.""")
 @cli_util.option('--managed-database-id', help=u"""The [OCID] of the Managed Database.""")
@@ -14452,7 +14452,7 @@ def list_job_runs(ctx, from_json, all_pages, page_size, compartment_id, id, job_
 
 
 @job_group.command(name=cli_util.override('db_management.list_jobs.command_name', 'list'), help=u"""Gets the job for a specific ID or the list of jobs for a Managed Database or Managed Database Group in a specific compartment. Only one of the parameters, ID, managedDatabaseId or managedDatabaseGroupId, should be provided. If none of these parameters is provided, all the jobs in the compartment are listed. Jobs can also be filtered based on the name and lifecycleState parameters. \n[Command Reference](listJobs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""The identifier of the resource.""")
 @cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group.""")
 @cli_util.option('--managed-database-id', help=u"""The [OCID] of the Managed Database.""")
@@ -14521,7 +14521,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, compartment_id, id, managed_
 
 
 @managed_database_group_group.command(name=cli_util.override('db_management.list_managed_database_groups.command_name', 'list'), help=u"""Gets the Managed Database Group for a specific ID or the list of Managed Database Groups in a specific compartment. Managed Database Groups can also be filtered based on the name parameter. Only one of the parameters, ID or name should be provided. If none of these parameters is provided, all the Managed Database Groups in the compartment are listed. \n[Command Reference](listManagedDatabaseGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""The identifier of the resource.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of a resource.""")
@@ -14584,7 +14584,7 @@ def list_managed_database_groups(ctx, from_json, all_pages, page_size, compartme
 
 
 @managed_database_group.command(name=cli_util.override('db_management.list_managed_databases.command_name', 'list'), help=u"""Gets the Managed Database for a specific ID or the list of Managed Databases in a specific compartment. Managed Databases can be filtered based on the name parameter. Only one of the parameters, ID or name should be provided. If neither of these parameters is provided, all the Managed Databases in the compartment are listed. Managed Databases can also be filtered based on the deployment type and management option. If the deployment type is not specified or if it is `ONPREMISE`, then the management option is not considered and Managed Databases with `ADVANCED` management option are listed. \n[Command Reference](listManagedDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""The identifier of the resource.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
 @cli_util.option('--management-option', type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""A filter to return Managed Databases with the specified management option.""")
@@ -14653,7 +14653,7 @@ def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @my_sql_connector_collection_group.command(name=cli_util.override('db_management.list_my_sql_database_connectors.command_name', 'list-my-sql-database-connectors'), help=u"""Gets the list of External MySQL Database connectors. \n[Command Reference](listMySqlDatabaseConnectors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-database-id', help=u"""The [OCID] of the external database.""")
 @cli_util.option('--name', help=u"""The parameter to filter by MySQL Database System type.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -14713,7 +14713,7 @@ def list_my_sql_database_connectors(ctx, from_json, all_pages, page_size, compar
 
 
 @named_credential_group.command(name=cli_util.override('db_management.list_named_credentials.command_name', 'list'), help=u"""Gets a single named credential specified by the name or all the named credentials in a specific compartment. \n[Command Reference](listNamedCredentials)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--associated-resource', help=u"""The resource associated to the named credential.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DB"]), help=u"""The type of database that is associated to the named credential.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["RESOURCE", "GLOBAL"]), help=u"""The scope of named credential.""")
@@ -15751,7 +15751,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('db_management.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a specific compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter that returns the resources whose status matches the given WorkRequestStatus.""")
@@ -16652,7 +16652,7 @@ def load_sql_plan_baselines_from_cursor_cache_database_password_credential_detai
 
 
 @managed_database_group.command(name=cli_util.override('db_management.modify_autonomous_database_management_feature.command_name', 'modify-autonomous-database-management-feature'), help=u"""Modifies the Database Management feature for the specified Autonomous Database. \n[Command Reference](modifyAutonomousDatabaseManagementFeature)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Autonomous Database.""")
 @cli_util.option('--feature-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -16713,7 +16713,7 @@ def modify_autonomous_database_management_feature(ctx, from_json, wait_for_state
 
 
 @managed_database_group.command(name=cli_util.override('db_management.modify_autonomous_database_management_feature_autonomous_database_sql_watch_feature_details.command_name', 'modify-autonomous-database-management-feature-autonomous-database-sql-watch-feature-details'), help=u"""Modifies the Database Management feature for the specified Autonomous Database. \n[Command Reference](modifyAutonomousDatabaseManagementFeature)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Autonomous Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--feature-details-connector-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16781,7 +16781,7 @@ def modify_autonomous_database_management_feature_autonomous_database_sql_watch_
 
 
 @managed_database_group.command(name=cli_util.override('db_management.modify_autonomous_database_management_feature_autonomous_database_diagnostics_and_management_feature_details.command_name', 'modify-autonomous-database-management-feature-autonomous-database-diagnostics-and-management-feature-details'), help=u"""Modifies the Database Management feature for the specified Autonomous Database. \n[Command Reference](modifyAutonomousDatabaseManagementFeature)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Autonomous Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--feature-details-connector-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16849,7 +16849,7 @@ def modify_autonomous_database_management_feature_autonomous_database_diagnostic
 
 
 @managed_database_group.command(name=cli_util.override('db_management.modify_database_management_feature.command_name', 'modify-database-management-feature'), help=u"""Modifies a Database Management feature for the specified Oracle cloud database. \n[Command Reference](modifyDatabaseManagementFeature)""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -16910,7 +16910,7 @@ def modify_database_management_feature(ctx, from_json, wait_for_state, max_wait_
 
 
 @managed_database_group.command(name=cli_util.override('db_management.modify_database_management_feature_database_diagnostics_and_management_feature_details.command_name', 'modify-database-management-feature-database-diagnostics-and-management-feature-details'), help=u"""Modifies a Database Management feature for the specified Oracle cloud database. \n[Command Reference](modifyDatabaseManagementFeature)""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database. Use \"BASIC\" for basic management. Use \"ADVANCED\" for full management.""")
@@ -16986,7 +16986,7 @@ def modify_database_management_feature_database_diagnostics_and_management_featu
 
 
 @managed_database_group.command(name=cli_util.override('db_management.modify_database_management_feature_database_lifecycle_management_feature_details.command_name', 'modify-database-management-feature-database-lifecycle-management-feature-details'), help=u"""Modifies a Database Management feature for the specified Oracle cloud database. \n[Command Reference](modifyDatabaseManagementFeature)""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -17052,7 +17052,7 @@ def modify_database_management_feature_database_lifecycle_management_feature_det
 
 
 @managed_database_group.command(name=cli_util.override('db_management.modify_database_management_feature_database_sql_watch_feature_details.command_name', 'modify-database-management-feature-database-sql-watch-feature-details'), help=u"""Modifies a Database Management feature for the specified Oracle cloud database. \n[Command Reference](modifyDatabaseManagementFeature)""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -19249,7 +19249,7 @@ def summarize_external_listener_metrics(ctx, from_json, external_listener_id, st
 
 
 @job_executions_status_summary_collection_group.command(name=cli_util.override('db_management.summarize_job_executions_statuses.command_name', 'summarize-job-executions-statuses'), help=u"""Gets the number of job executions grouped by status for a job, Managed Database, or Database Group in a specific compartment. Only one of the parameters, jobId, managedDatabaseId, or managedDatabaseGroupId should be provided. \n[Command Reference](summarizeJobExecutionsStatuses)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the status summary of job executions in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the status summary of job executions in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--id', help=u"""The identifier of the resource.""")
@@ -21126,7 +21126,7 @@ def update_external_db_system_discovery(ctx, from_json, force, wait_for_state, m
 
 @external_exadata_infrastructure_group.command(name=cli_util.override('db_management.update_external_exadata_infrastructure.command_name', 'update'), help=u"""Updates the details for the Exadata infrastructure specified by externalExadataInfrastructureId. \n[Command Reference](updateExternalExadataInfrastructure)""")
 @cli_util.option('--external-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--discovery-key', help=u"""The unique key of the discovery request.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the database management resources.""")
 @cli_util.option('--display-name', help=u"""The name of the Exadata infrastructure.""")
@@ -21540,7 +21540,7 @@ def update_external_mysql_database(ctx, from_json, external_my_sql_database_id, 
 @external_my_sql_database_connector_group.command(name=cli_util.override('db_management.update_external_mysql_database_connector.command_name', 'update-external-mysql-database-connector'), help=u"""Updates the External Mysql Database Connector. \n[Command Reference](updateExternalMysqlDatabaseConnector)""")
 @cli_util.option('--external-my-sql-database-connector-id', required=True, help=u"""The OCID of the External MySQL Database Connector.""")
 @cli_util.option('--connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""OCID of compartment for the External MySQL Database.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""OCID of compartment for the External MySQL Database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -21699,7 +21699,7 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--sql-type', help=u"""""")
 @cli_util.option('--user-name', help=u"""The database user name used to execute the SQL job. If the job is being executed on a Managed Database Group, then the user name should exist on all the databases in the group with the same password.""")
 @cli_util.option('--password', help=u"""The password for the database user name used to execute the SQL job.""")
-@cli_util.option('--secret-id', help=u"""The [OCID] of the secret containing the user password.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the secret containing the user password.""")
 @cli_util.option('--named-credential-id', help=u"""The [OCID] of the Named Credentials containing password secret.""")
 @cli_util.option('--role', help=u"""The role of the database user. Indicates whether the database user is a normal user or sysdba.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

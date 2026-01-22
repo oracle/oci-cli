@@ -117,8 +117,8 @@ psql_root_group.add_command(backup_collection_group)
 
 
 @backup_group.command(name=cli_util.override('psql.backup_copy.command_name', 'backup-copy'), help=u"""Backup Copy Request to copy back up in remote region. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](backupCopy)""")
-@cli_util.option('--backup-id', required=True, help=u"""A unique identifier for the backup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""target compartment to place a new backup""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the backup.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""target compartment to place a new backup""")
 @cli_util.option('--regions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of region names of the remote region""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--retention-period', type=click.INT, help=u"""Retention period in days of the backup copy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -184,8 +184,8 @@ def backup_copy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 
 @backup_group.command(name=cli_util.override('psql.change_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a backup from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeBackupCompartment)""")
-@cli_util.option('--backup-id', required=True, help=u"""A unique identifier for the backup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the backup will be moved.""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the backup.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the backup will be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -246,7 +246,7 @@ def change_backup_compartment(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 @configuration_group.command(name=cli_util.override('psql.change_configuration_compartment.command_name', 'change-compartment'), help=u"""Moves a configuration from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeConfigurationCompartment)""")
 @cli_util.option('--configuration-id', required=True, help=u"""A unique identifier for the configuration.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the configuration will be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the configuration will be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -276,8 +276,8 @@ def change_configuration_compartment(ctx, from_json, configuration_id, compartme
 
 
 @db_system_group.command(name=cli_util.override('psql.change_db_system_compartment.command_name', 'change-compartment'), help=u"""Moves a database system from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeDbSystemCompartment)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the database system should be moved.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the database system should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -338,8 +338,8 @@ def change_db_system_compartment(ctx, from_json, wait_for_state, max_wait_second
 
 @backup_group.command(name=cli_util.override('psql.create_backup.command_name', 'create'), help=u"""Creates a new backup. \n[Command Reference](createBackup)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the backup. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the backup.""")
-@cli_util.option('--db-system-id', required=True, help=u"""The ID of the database system.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the backup.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the database system.""")
 @cli_util.option('--description', help=u"""A description for the backup.""")
 @cli_util.option('--retention-period', type=click.INT, help=u"""Backup retention period in days.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -411,7 +411,7 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 @configuration_group.command(name=cli_util.override('psql.create_configuration.command_name', 'create'), help=u"""Creates a new configuration. \n[Command Reference](createConfiguration)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the configuration. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the configuration.""")
 @cli_util.option('--db-version', required=True, help=u"""Version of the PostgreSQL database.""")
 @cli_util.option('--db-configuration-overrides', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Details about the configuration set.""")
@@ -508,7 +508,7 @@ def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 @db_system_group.command(name=cli_util.override('psql.create_db_system.command_name', 'create'), help=u"""Creates a new database system. \n[Command Reference](createDbSystem)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the database system. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the database system.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the database system.""")
 @cli_util.option('--db-version', required=True, help=u"""Version of database system software.""")
 @cli_util.option('--storage-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape', required=True, help=u"""The name of the shape for the database instance node. Use the /shapes API for accepted shapes. Example: `VM.Standard.E4.Flex`""")
@@ -619,7 +619,7 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 @db_system_group.command(name=cli_util.override('psql.create_db_system_oci_optimized_storage_details.command_name', 'create-db-system-oci-optimized-storage-details'), help=u"""Creates a new database system. \n[Command Reference](createDbSystem)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the database system. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the database system.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the database system.""")
 @cli_util.option('--db-version', required=True, help=u"""Version of database system software.""")
 @cli_util.option('--shape', required=True, help=u"""The name of the shape for the database instance node. Use the /shapes API for accepted shapes. Example: `VM.Standard.E4.Flex`""")
 @cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -741,7 +741,7 @@ def create_db_system_oci_optimized_storage_details(ctx, from_json, wait_for_stat
 
 @db_system_group.command(name=cli_util.override('psql.create_db_system_backup_source_details.command_name', 'create-db-system-backup-source-details'), help=u"""Creates a new database system. \n[Command Reference](createDbSystem)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the database system. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the database system.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the database system.""")
 @cli_util.option('--db-version', required=True, help=u"""Version of database system software.""")
 @cli_util.option('--storage-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape', required=True, help=u"""The name of the shape for the database instance node. Use the /shapes API for accepted shapes. Example: `VM.Standard.E4.Flex`""")
@@ -857,7 +857,7 @@ def create_db_system_backup_source_details(ctx, from_json, wait_for_state, max_w
 
 @db_system_group.command(name=cli_util.override('psql.create_db_system_none_source_details.command_name', 'create-db-system-none-source-details'), help=u"""Creates a new database system. \n[Command Reference](createDbSystem)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the database system. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the database system.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the database system.""")
 @cli_util.option('--db-version', required=True, help=u"""Version of database system software.""")
 @cli_util.option('--storage-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape', required=True, help=u"""The name of the shape for the database instance node. Use the /shapes API for accepted shapes. Example: `VM.Standard.E4.Flex`""")
@@ -966,7 +966,7 @@ def create_db_system_none_source_details(ctx, from_json, wait_for_state, max_wai
 
 
 @backup_group.command(name=cli_util.override('psql.delete_backup.command_name', 'delete'), help=u"""Deletes a backup by identifier. \n[Command Reference](deleteBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""A unique identifier for the backup.""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the backup.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1086,7 +1086,7 @@ def delete_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @db_system_group.command(name=cli_util.override('psql.delete_db_system.command_name', 'delete'), help=u"""Deletes a database system by identifier. \n[Command Reference](deleteDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1142,7 +1142,7 @@ def delete_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @db_system_group.command(name=cli_util.override('psql.failover_db_system.command_name', 'failover'), help=u"""Runs a failover operation. Optionally, specify the desired AD for regions with three ADs. \n[Command Reference](failoverDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--ad', help=u"""The preferred AD for regions with three availability domains. This parameter is optional. If not set, the AD will be chosen based on availability.""")
 @cli_util.option('--db-instance-id', help=u"""The [OCID] of the database instance node. This parameter is optional. If not set, an existing database instance node will be chosen based on availability.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1209,7 +1209,7 @@ def failover_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @backup_group.command(name=cli_util.override('psql.get_backup.command_name', 'get'), help=u"""Gets a backup by identifier. \n[Command Reference](getBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""A unique identifier for the backup.""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the backup.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1253,7 +1253,7 @@ def get_configuration(ctx, from_json, configuration_id):
 
 
 @connection_details_group.command(name=cli_util.override('psql.get_connection_details.command_name', 'get'), help=u"""Gets the database system connection details. \n[Command Reference](getConnectionDetails)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1275,7 +1275,7 @@ def get_connection_details(ctx, from_json, db_system_id):
 
 
 @db_system_group.command(name=cli_util.override('psql.get_db_system.command_name', 'get'), help=u"""Gets a database system by identifier. \n[Command Reference](getDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--excluded-fields', type=custom_types.CliCaseInsensitiveChoice(["dbConfigurationParams"]), multiple=True, help=u"""A filter to exclude database configuration when this query parameter is set to OverrideDbConfig.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1322,7 +1322,7 @@ def get_default_configuration(ctx, from_json, default_configuration_id):
 
 
 @db_system_group.command(name=cli_util.override('psql.get_primary_db_instance.command_name', 'get-primary-db-instance'), help=u"""Gets the primary database instance node details. \n[Command Reference](getPrimaryDbInstance)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1366,12 +1366,12 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @backup_collection_group.command(name=cli_util.override('psql.list_backups.command_name', 'list-backups'), help=u"""Returns a list of backups. \n[Command Reference](listBackups)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start date for getting backups. An [RFC 3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end date for getting backups. An [RFC 3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources if their `lifecycleState` matches the given `lifecycleState`.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--backup-id', help=u"""A unique identifier for the backup.""")
+@cli_util.option('--backup-id', type=custom_types.CLI_OCID, help=u"""A unique identifier for the backup.""")
 @cli_util.option('--id', help=u"""A unique identifier for the database system.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1437,7 +1437,7 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, time_star
 
 
 @configuration_collection_group.command(name=cli_util.override('psql.list_configurations.command_name', 'list-configurations'), help=u"""Returns a list of configurations. \n[Command Reference](listConfigurations)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources if their `lifecycleState` matches the given `lifecycleState`.""")
 @cli_util.option('--config-type', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT", "CUSTOM", "COPIED"]), help=u"""A filter to return only resources if their `configType` matches the given `configType`.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -1514,7 +1514,7 @@ def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, li
 
 
 @db_system_collection_group.command(name=cli_util.override('psql.list_db_systems.command_name', 'list-db-systems'), help=u"""Returns a list of database systems. \n[Command Reference](listDbSystems)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources if their `lifecycleState` matches the given `lifecycleState`.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""A unique identifier for the database system.""")
@@ -1647,7 +1647,7 @@ def list_default_configurations(ctx, from_json, all_pages, page_size, lifecycle_
 
 
 @shape_summary_group.command(name=cli_util.override('psql.list_shapes.command_name', 'list-shapes'), help=u"""Returns the list of shapes allowed in the region. \n[Command Reference](listShapes)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""A filter to return the feature by the shape name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1817,7 +1817,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('psql.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources if their `lifecycleState` matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the request.""")
@@ -1879,7 +1879,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 
 
 @db_system_group.command(name=cli_util.override('psql.patch_db_system.command_name', 'patch'), help=u"""Modifies the database system by adding or removing database instance nodes. \n[Command Reference](patchDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of patch instructions.
 
 This option is a JSON list with items of type PatchInstruction.  For documentation on PatchInstruction please see our API reference: https://docs.cloud.oracle.com/api/#/en/postgresql/20220915/datatypes/PatchInstruction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1944,7 +1944,7 @@ def patch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @db_system_group.command(name=cli_util.override('psql.reset_master_user_password.command_name', 'reset-master-user-password'), help=u"""Resets the database system's master password. \n[Command Reference](resetMasterUserPassword)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--password-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2005,7 +2005,7 @@ def reset_master_user_password(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @db_system_group.command(name=cli_util.override('psql.reset_master_user_password_plain_text_password_details.command_name', 'reset-master-user-password-plain-text-password-details'), help=u"""Resets the database system's master password. \n[Command Reference](resetMasterUserPassword)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--password-details-password', required=True, help=u"""The database system password.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2069,7 +2069,7 @@ def reset_master_user_password_plain_text_password_details(ctx, from_json, wait_
 
 
 @db_system_group.command(name=cli_util.override('psql.reset_master_user_password_vault_secret_password_details.command_name', 'reset-master-user-password-vault-secret-password-details'), help=u"""Resets the database system's master password. \n[Command Reference](resetMasterUserPassword)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--password-details-secret-id', required=True, help=u"""The [OCID] of the secret where the password is stored.""")
 @cli_util.option('--password-details-secret-version', required=True, help=u"""The secret version of the stored password.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2135,7 +2135,7 @@ def reset_master_user_password_vault_secret_password_details(ctx, from_json, wai
 
 
 @db_system_group.command(name=cli_util.override('psql.restart_db_instance_in_db_system.command_name', 'restart-db-instance-in'), help=u"""Restarts the running database instance node. \n[Command Reference](restartDbInstanceInDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--db-instance-id', required=True, help=u"""A unique identifier for the database instance, or node.""")
 @cli_util.option('--restart-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "NODE_REBOOT"]), help=u"""The restart type for the database instance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2198,8 +2198,8 @@ def restart_db_instance_in_db_system(ctx, from_json, wait_for_state, max_wait_se
 
 
 @db_system_group.command(name=cli_util.override('psql.restore_db_system.command_name', 'restore'), help=u"""Restore the database system. \n[Command Reference](restoreDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
-@cli_util.option('--backup-id', required=True, help=u"""The [OCID] of the database system backup.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the database system backup.""")
 @cli_util.option('--ad', help=u"""The desired AD for regions with three ADs. This parameter is optional. If not set, the AD is chosen based on the database system's current AD.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2263,7 +2263,7 @@ def restore_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @backup_group.command(name=cli_util.override('psql.update_backup.command_name', 'update'), help=u"""Updates the backup. \n[Command Reference](updateBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""A unique identifier for the backup.""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the backup.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the backup. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A description for the backup.""")
 @cli_util.option('--retention-period', type=click.INT, help=u"""Backup retention period in days.""")
@@ -2423,7 +2423,7 @@ def update_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds
 
 
 @db_system_group.command(name=cli_util.override('psql.update_db_system.command_name', 'update'), help=u"""Updates the database system. \n[Command Reference](updateDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the database system. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A user-provided description of the database system.""")
 @cli_util.option('--shape', help=u"""The name of the shape for the database system nodes. Example: `VM.Standard.E4.Flex`""")
@@ -2531,7 +2531,7 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
 
 @db_system_group.command(name=cli_util.override('psql.update_db_system_db_instance.command_name', 'update-db-system-db-instance'), help=u"""Updates the database instance node. \n[Command Reference](updateDbSystemDbInstance)""")
-@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--db-instance-id', required=True, help=u"""A unique identifier for the database instance node.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name of the database instance node. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A user-provided description of the database instance node.""")

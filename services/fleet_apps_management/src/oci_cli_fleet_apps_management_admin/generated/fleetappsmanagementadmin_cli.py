@@ -104,7 +104,7 @@ fleet_apps_management_admin_root_group.add_command(compliance_policy_group)
 
 @platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.change_platform_configuration_compartment.command_name', 'change-compartment'), help=u"""Moves a PlatformConfiguration into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changePlatformConfigurationCompartment)""")
 @cli_util.option('--platform-configuration-id', required=True, help=u"""unique PlatformConfiguration identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Platform Configuration to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Platform Configuration to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -165,7 +165,7 @@ def change_platform_configuration_compartment(ctx, from_json, wait_for_state, ma
 
 @property_group.command(name=cli_util.override('fleet_apps_management_admin.change_property_compartment.command_name', 'change-compartment'), help=u"""Moves a Property into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changePropertyCompartment)""")
 @cli_util.option('--property-id', required=True, help=u"""unique Property identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Property to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Property to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -550,7 +550,7 @@ def create_compliance_policy_rule_patch_name_selection_details(ctx, from_json, w
 
 
 @onboarding_group.command(name=cli_util.override('fleet_apps_management_admin.create_onboarding.command_name', 'create'), help=u"""Onboard a tenant to Fleet Application Management. The onboarding process lets Fleet Application Management create a few required policies that you need to start using it and its features. \n[Command Reference](createOnboarding)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Tenancy OCID""")
 @cli_util.option('--is-fams-tag-enabled', type=click.BOOL, help=u"""A value determining if the Fleet Application Management tagging is enabled or not. Allow Fleet Application Management to tag resources with fleet name using \"Oracle$FAMS-Tags.FleetName\" tag.""")
 @cli_util.option('--is-cost-tracking-tag-enabled', type=click.BOOL, help=u"""A value determining if the cost tracking tag is enabled or not. Allow Fleet Application Management to tag resources with cost tracking tag using \"Oracle$FAMS-Tags.FAMSManaged\" tag.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -619,7 +619,7 @@ def create_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration.command_name', 'create'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -690,7 +690,7 @@ def create_platform_configuration(ctx, from_json, wait_for_state, max_wait_secon
 
 
 @platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_product_stack_config_category_details.command_name', 'create-platform-configuration-product-stack-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -768,7 +768,7 @@ def create_platform_configuration_product_stack_config_category_details(ctx, fro
 
 
 @platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_environment_config_category_details.command_name', 'create-platform-configuration-environment-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -840,7 +840,7 @@ def create_platform_configuration_environment_config_category_details(ctx, from_
 
 
 @platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_credential_config_category_details.command_name', 'create-platform-configuration-credential-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -912,7 +912,7 @@ def create_platform_configuration_credential_config_category_details(ctx, from_j
 
 
 @platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_patch_type_config_category_details.command_name', 'create-platform-configuration-patch-type-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -984,7 +984,7 @@ def create_platform_configuration_patch_type_config_category_details(ctx, from_j
 
 
 @platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_lifecycle_operation_config_category_details.command_name', 'create-platform-configuration-lifecycle-operation-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -1056,7 +1056,7 @@ def create_platform_configuration_lifecycle_operation_config_category_details(ct
 
 
 @platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_product_config_category_details.command_name', 'create-platform-configuration-product-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -1166,7 +1166,7 @@ def create_platform_configuration_product_config_category_details(ctx, from_json
 
 
 @platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_self_hosted_instance_config_category_details.command_name', 'create-platform-configuration-self-hosted-instance-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -1246,7 +1246,7 @@ def create_platform_configuration_self_hosted_instance_config_category_details(c
 
 
 @property_group.command(name=cli_util.override('fleet_apps_management_admin.create_property.command_name', 'create'), help=u"""Create a business-specific metadata property in Fleet Application Management. \n[Command Reference](createProperty)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -1690,7 +1690,7 @@ def get_property(ctx, from_json, property_id):
 
 
 @compliance_policy_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_compliance_policies.command_name', 'list-compliance-policies'), help=u"""Returns a list of all the Compliance Policies in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listCompliancePolicies)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["USER_DEFINED", "ORACLE_DEFINED"]), help=u"""A filter to return Platform Configurations whose type matches the given type.""")
@@ -1755,7 +1755,7 @@ def list_compliance_policies(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @compliance_policy_rule_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_compliance_policy_rules.command_name', 'list-compliance-policy-rules'), help=u"""Gets a list of Compliance policy rules in a compartment. \n[Command Reference](listCompliancePolicyRules)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--patch-name', help=u"""A filter to return only resources that match the patch selection against the given patch name.""")
@@ -1823,7 +1823,7 @@ def list_compliance_policy_rules(ctx, from_json, all_pages, page_size, compartme
 
 
 @onboarding_policy_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_onboarding_policies.command_name', 'list-onboarding-policies'), help=u"""Returns a list of onboarding policy information for Fleet Application Management. \n[Command Reference](listOnboardingPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -1877,7 +1877,7 @@ def list_onboarding_policies(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @onboarding_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_onboardings.command_name', 'list-onboardings'), help=u"""Returns a list of all the onboardings in the specified root compartment (tenancy). The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listOnboardings)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single onboarding by id. Either compartmentId or id must be provided.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1936,7 +1936,7 @@ def list_onboardings(ctx, from_json, all_pages, page_size, compartment_id, lifec
 
 
 @platform_configuration_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_platform_configurations.command_name', 'list-platform-configurations'), help=u"""Returns a list of all the Platform Configurations in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listPlatformConfigurations)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING", "CREATING", "INACTIVE"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single Platform Configuration by id. Either compartmentId or id must be provided.""")
@@ -2007,7 +2007,7 @@ def list_platform_configurations(ctx, from_json, all_pages, page_size, compartme
 
 
 @property_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_properties.command_name', 'list-properties'), help=u"""Returns a list of all the Properties in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listProperties)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "UPDATING"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single Property by id. Either compartmentId or id must be provided.""")

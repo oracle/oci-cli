@@ -75,7 +75,7 @@ db_multicloud_aws_provider_root_group.add_command(oracle_db_aws_key_group)
 
 @oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.change_oracle_db_aws_identity_connector_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle DB AWS Identity Connector resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAwsIdentityConnectorCompartment)""")
 @cli_util.option('--oracle-db-aws-identity-connector-id', required=True, help=u"""The [OCID]  of the Oracle DB AWS Identity Connector resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Oracle DB AWS Identity Connector resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the new compartment to contain the Oracle DB AWS Identity Connector resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -138,7 +138,7 @@ def change_oracle_db_aws_identity_connector_compartment(ctx, from_json, wait_for
 
 @oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.change_oracle_db_aws_key_compartment.command_name', 'change-compartment'), help=u"""Moves the AWS Key resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAwsKeyCompartment)""")
 @cli_util.option('--oracle-db-aws-key-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Oracle DB AWS Key resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the new compartment to contain the Oracle DB AWS Key resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -201,7 +201,7 @@ def change_oracle_db_aws_key_compartment(ctx, from_json, wait_for_state, max_wai
 
 @oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.create_oracle_db_aws_identity_connector.command_name', 'create'), help=u"""Creates Oracle DB AWS Identity Connector resource. \n[Command Reference](createOracleDbAwsIdentityConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle DB Google AWS Identity Connector resource name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Oracle DB AWS Identity Connector resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains Oracle DB AWS Identity Connector resource.""")
 @cli_util.option('--resource-id', required=True, help=u"""The [OCID] of the AWS VM Cluster resource.""")
 @cli_util.option('--oidc-scope', required=True, help=u"""OCI IAM Domain scope for issuer URL.""")
 @cli_util.option('--issuer-url', required=True, help=u"""OIDC token issuer Url.""")
@@ -285,7 +285,7 @@ def create_oracle_db_aws_identity_connector(ctx, from_json, wait_for_state, max_
 
 
 @oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.create_oracle_db_aws_key.command_name', 'create'), help=u"""Create DB AWS Key resource. \n[Command Reference](createOracleDbAwsKey)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Oracle DB AWS Key resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains Oracle DB AWS Key resource.""")
 @cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Connector resource.""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle DB AWS Key resource name.""")
 @cli_util.option('--aws-key-arn', help=u"""Amazon resource name of AWS Key.""")
@@ -546,7 +546,7 @@ def get_oracle_db_aws_key(ctx, from_json, oracle_db_aws_key_id, limit, page, sor
 
 
 @oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.list_oracle_db_aws_identity_connectors.command_name', 'list'), help=u"""Lists all Oracle DB AWS Identity Connectors based on the specified filters. \n[Command Reference](listOracleDbAwsIdentityConnectors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB AWS Identity Connector Resource that match the given display name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--resource-id', help=u"""A filter to return Oracle DB Identity Connector resource that match the given resource [OCID].""")
@@ -609,7 +609,7 @@ def list_oracle_db_aws_identity_connectors(ctx, from_json, all_pages, page_size,
 
 
 @oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.list_oracle_db_aws_keys.command_name', 'list'), help=u"""Lists all DB AWS Keys based on the specified filters. \n[Command Reference](listOracleDbAwsKeys)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB AWS Key Resource that match the given display name.""")
 @cli_util.option('--oracle-db-aws-key-id', help=u"""A filter to return Oracle DB AWS Identity Connector Resource that match the given OCID](/Content/General/Concepts/identifiers.htm) of the Oracle DB AWS Key resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")

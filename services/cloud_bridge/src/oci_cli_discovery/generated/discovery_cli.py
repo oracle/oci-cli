@@ -48,7 +48,7 @@ discovery_root_group.add_command(discovery_schedule_group)
 
 @asset_source_group.command(name=cli_util.override('discovery.change_asset_source_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeAssetSourceCompartment)""")
 @cli_util.option('--asset-source-id', required=True, help=u"""The [OCID] of the asset source.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -79,7 +79,7 @@ def change_asset_source_compartment(ctx, from_json, asset_source_id, compartment
 
 @discovery_schedule_group.command(name=cli_util.override('discovery.change_discovery_schedule_compartment.command_name', 'change-compartment'), help=u"""Moves the specified discovery schedule into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeDiscoveryScheduleCompartment)""")
 @cli_util.option('--discovery-schedule-id', required=True, help=u"""The [OCID] of the discovery schedule.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the discovery schedule should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the discovery schedule should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -110,7 +110,7 @@ def change_discovery_schedule_compartment(ctx, from_json, discovery_schedule_id,
 
 @asset_source_group.command(name=cli_util.override('discovery.create_asset_source.command_name', 'create'), help=u"""Creates an asset source. \n[Command Reference](createAssetSource)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMWARE", "AWS"]), help=u"""Asset source type.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment for the resource.""")
 @cli_util.option('--environment-id', required=True, help=u"""The [OCID] of the environment.""")
 @cli_util.option('--inventory-id', required=True, help=u"""The [OCID] of the inventory that will contain created assets.""")
 @cli_util.option('--assets-compartment-id', required=True, help=u"""The [OCID] of the compartment that is going to be used to create assets.""")
@@ -190,7 +190,7 @@ def create_asset_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 
 @asset_source_group.command(name=cli_util.override('discovery.create_asset_source_create_vm_ware_asset_source_details.command_name', 'create-asset-source-create-vm-ware-asset-source-details'), help=u"""Creates an asset source. \n[Command Reference](createAssetSource)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment for the resource.""")
 @cli_util.option('--environment-id', required=True, help=u"""The [OCID] of the environment.""")
 @cli_util.option('--inventory-id', required=True, help=u"""The [OCID] of the inventory that will contain created assets.""")
 @cli_util.option('--assets-compartment-id', required=True, help=u"""The [OCID] of the compartment that is going to be used to create assets.""")
@@ -287,7 +287,7 @@ def create_asset_source_create_vm_ware_asset_source_details(ctx, from_json, wait
 
 
 @asset_source_group.command(name=cli_util.override('discovery.create_asset_source_create_aws_asset_source_details.command_name', 'create-asset-source-create-aws-asset-source-details'), help=u"""Creates an asset source. \n[Command Reference](createAssetSource)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment for the resource.""")
 @cli_util.option('--environment-id', required=True, help=u"""The [OCID] of the environment.""")
 @cli_util.option('--inventory-id', required=True, help=u"""The [OCID] of the inventory that will contain created assets.""")
 @cli_util.option('--assets-compartment-id', required=True, help=u"""The [OCID] of the compartment that is going to be used to create assets.""")
@@ -390,7 +390,7 @@ def create_asset_source_create_aws_asset_source_details(ctx, from_json, wait_for
 
 
 @discovery_schedule_group.command(name=cli_util.override('discovery.create_discovery_schedule.command_name', 'create'), help=u"""Creates the discovery schedule. \n[Command Reference](createDiscoverySchedule)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the discovery schedule is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the discovery schedule is created.""")
 @cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the discovery schedule execution.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the discovery schedule. Does not have to be unique, and it's mutable. Avoid entering confidential information. The name is generated by the service if it is not explicitly provided.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -668,7 +668,7 @@ def list_asset_source_connections(ctx, from_json, all_pages, page_size, asset_so
 
 
 @asset_source_group.command(name=cli_util.override('discovery.list_asset_sources.command_name', 'list'), help=u"""Returns a list of asset sources. \n[Command Reference](listAssetSources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--asset-source-id', help=u"""The [OCID] of the asset source.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. By default, the timeCreated is in descending order and displayName is in ascending order.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), help=u"""The current state of the asset source.""")
@@ -731,7 +731,7 @@ def list_asset_sources(ctx, from_json, all_pages, page_size, compartment_id, ass
 
 
 @discovery_schedule_group.command(name=cli_util.override('discovery.list_discovery_schedules.command_name', 'list'), help=u"""Lists discovery schedules. \n[Command Reference](listDiscoverySchedules)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--discovery-schedule-id', help=u"""The [OCID] of the discovery schedule.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""The current state of the discovery schedule.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. By default, the timeCreated is in descending order and displayName is in ascending order.""")

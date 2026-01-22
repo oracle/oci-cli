@@ -40,8 +40,8 @@ account_root_group.add_command(launch_eligibility_group)
 
 
 @launch_eligibility_group.command(name=cli_util.override('account.get_launch_eligibility.command_name', 'get'), help=u"""Returns Tenant eligibility and other information for launching a PIC image \n[Command Reference](getLaunchEligibility)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
-@cli_util.option('--image-id', required=True, help=u"""Image ID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""Image ID""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -61,7 +61,7 @@ def get_launch_eligibility(ctx, from_json, compartment_id, image_id):
 
 
 @third_party_paid_listing_eligibility_group.command(name=cli_util.override('account.get_third_party_paid_listing_eligibility.command_name', 'get'), help=u"""Returns eligibility details of the tenancy to see and launch third party paid listings \n[Command Reference](getThirdPartyPaidListingEligibility)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

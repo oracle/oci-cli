@@ -61,7 +61,7 @@ vbstudio_root_group.add_command(work_request_group)
 
 @vbs_instance_group.command(name=cli_util.override('vbstudio.change_vbs_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a VbsInstance resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeVbsInstanceCompartment)""")
 @cli_util.option('--vbs-instance-id', required=True, help=u"""unique VbsInstance identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -121,7 +121,7 @@ def change_vbs_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @vbs_instance_group.command(name=cli_util.override('vbstudio.create_vbs_instance.command_name', 'create'), help=u"""Creates a new VbsInstance. \n[Command Reference](createVbsInstance)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier""")
 @cli_util.option('--name', required=True, help=u"""Service Instance Name""")
 @cli_util.option('--display-name', required=True, help=u"""Display Name""")
 @cli_util.option('--is-resource-usage-agreement-granted', type=click.BOOL, help=u"""Whether VBS is authorized to create and use resources in the customer tenancy""")
@@ -297,7 +297,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @vbs_instance_summary_collection_group.command(name=cli_util.override('vbstudio.list_vbs_instances.command_name', 'list-vbs-instances'), help=u"""Returns a list of VbsInstances. \n[Command Reference](listVbsInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--id', help=u"""unique VbsInstance identifier""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
@@ -474,7 +474,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('vbstudio.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

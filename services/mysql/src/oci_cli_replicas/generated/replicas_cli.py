@@ -33,7 +33,7 @@ replicas_root_group.add_command(replica_group)
 
 
 @replica_group.command(name=cli_util.override('replicas.create_replica.command_name', 'create'), help=u"""Creates a DB System read replica. \n[Command Reference](createReplica)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The OCID of the DB System the read replica is associated with.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the DB System the read replica is associated with.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the read replica. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User provided description of the read replica.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -195,11 +195,11 @@ def get_replica(ctx, from_json, replica_id, if_none_match):
 
 
 @replica_group.command(name=cli_util.override('replicas.list_replicas.command_name', 'list'), help=u"""Lists all the read replicas that match the specified filters. \n[Command Reference](listReplicas)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated list call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the previous list call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resource matching the given display name exactly.""")
-@cli_util.option('--db-system-id', help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "NEEDS_ATTENTION", "FAILED"]), help=u"""The LifecycleState of the read replica.""")
 @cli_util.option('--replica-id', help=u"""The read replica [OCID].""")
 @cli_util.option('--configuration-id', help=u"""The requested Configuration instance.""")

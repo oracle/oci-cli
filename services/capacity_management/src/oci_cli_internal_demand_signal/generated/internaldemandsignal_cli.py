@@ -68,7 +68,7 @@ internal_demand_signal_root_group.add_command(internal_occm_demand_signal_catalo
 
 
 @internal_occm_demand_signal_delivery_group.command(name=cli_util.override('internal_demand_signal.create_internal_occm_demand_signal_delivery.command_name', 'create'), help=u"""This is a post API which is used to create a demand signal delivery resource. operationId: CreateInternalOccmDemandSignalDelivery summary: A post call to create a demand signal delivery. \n[Command Reference](createInternalOccmDemandSignalDelivery)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy from which the demand signal delivery resource is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy from which the demand signal delivery resource is created.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The OCID of the corresponding customer group to which this demand signal delivery resource belongs to.""")
 @cli_util.option('--ds-id', required=True, help=u"""The OCID of the demand signal under which this delivery will be grouped.""")
 @cli_util.option('--ds-item-id', required=True, help=u"""The OCID of the demand signal item corresponding to which this delivery is made.""")
@@ -271,7 +271,7 @@ def get_internal_occm_demand_signal_delivery(ctx, from_json, ds_delivery_id):
 
 
 @internal_occm_demand_signal_catalog_resource_group.command(name=cli_util.override('internal_demand_signal.list_internal_occm_demand_signal_catalog_resources.command_name', 'list'), help=u"""This API will list all the  resources across all demand signal catalogs for a given namespace and customer group. \n[Command Reference](listInternalOccmDemandSignalCatalogResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--ds-catalog-id', required=True, help=u"""The ocid of demand signal catalog id.""")
 @cli_util.option('--name', help=u"""A query parameter to filter the list of demand signal catalog resource based on the resource name.""")
@@ -339,7 +339,7 @@ def list_internal_occm_demand_signal_catalog_resources(ctx, from_json, all_pages
 
 
 @occm_demand_signal_catalog_group.command(name=cli_util.override('internal_demand_signal.list_internal_occm_demand_signal_catalogs.command_name', 'list-internal'), help=u"""This API will list demand signal catalogs for a given customer group. \n[Command Reference](listInternalOccmDemandSignalCatalogs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name. The match is not case sensitive.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -400,7 +400,7 @@ def list_internal_occm_demand_signal_catalogs(ctx, from_json, all_pages, page_si
 
 
 @internal_occm_demand_signal_delivery_group.command(name=cli_util.override('internal_demand_signal.list_internal_occm_demand_signal_deliveries.command_name', 'list'), help=u"""This GET call is used to list all demand signal delivery resources within the customer group passed as a query parameter. \n[Command Reference](listInternalOccmDemandSignalDeliveries)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--id', help=u"""A query parameter to filter the list of demand signals based on it's OCID.""")
 @cli_util.option('--ds-item-id', help=u"""A query parameter to filter the list of demand signal items based on it's OCID.""")
@@ -464,7 +464,7 @@ def list_internal_occm_demand_signal_deliveries(ctx, from_json, all_pages, page_
 
 
 @internal_occm_demand_signal_item_collection_group.command(name=cli_util.override('internal_demand_signal.list_internal_occm_demand_signal_items.command_name', 'list-internal'), help=u"""This internal API will list the detailed information about the resources demanded as part of the demand signal. \n[Command Reference](listInternalOccmDemandSignalItems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--ds-id', help=u"""A query parameter to filter the list of demand signal items based on a demand signal id.""")
 @cli_util.option('--resource-name', help=u"""A query parameter to filter the list of demand signal details based on the resource name.""")
@@ -531,7 +531,7 @@ def list_internal_occm_demand_signal_items(ctx, from_json, all_pages, page_size,
 
 
 @internal_occm_demand_signal_group.command(name=cli_util.override('internal_demand_signal.list_internal_occm_demand_signals.command_name', 'list'), help=u"""This is an internal GET call is used to list all demand signals within the compartment passed as a query parameter. \n[Command Reference](listInternalOccmDemandSignals)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--id', help=u"""A query parameter to filter the list of demand signals based on it's OCID.""")
 @cli_util.option('--lifecycle-details', help=u"""A query parameter to filter the list of demand signals based on its state.""")

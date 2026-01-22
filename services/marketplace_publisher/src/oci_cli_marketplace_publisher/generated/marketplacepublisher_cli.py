@@ -465,7 +465,7 @@ def cascading_delete_listing_revision(ctx, from_json, wait_for_state, max_wait_s
 
 @artifact_group.command(name=cli_util.override('marketplace_publisher.change_artifact_compartment.command_name', 'change-compartment'), help=u"""Moves the specified artifact to the specified compartment within the same tenancy. \n[Command Reference](changeArtifactCompartment)""")
 @cli_util.option('--artifact-id', required=True, help=u"""artifact OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier of the compartment for the artifact.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier of the compartment for the artifact.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -526,7 +526,7 @@ def change_artifact_compartment(ctx, from_json, wait_for_state, max_wait_seconds
 
 @listing_group.command(name=cli_util.override('marketplace_publisher.change_listing_compartment.command_name', 'change-compartment'), help=u"""Moves a listing from one compartment to another \n[Command Reference](changeListingCompartment)""")
 @cli_util.option('--listing-id', required=True, help=u"""listing OCID""")
-@cli_util.option('--compartment-id', help=u"""The id of the compartment which the listing should be moved.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The id of the compartment which the listing should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -640,7 +640,7 @@ def change_listing_revision_to_new_status(ctx, from_json, wait_for_state, max_wa
 
 @term_group.command(name=cli_util.override('marketplace_publisher.change_term_compartment.command_name', 'change-compartment'), help=u"""Moves a term from one compartment to another \n[Command Reference](changeTermCompartment)""")
 @cli_util.option('--term-id', required=True, help=u"""term OCID""")
-@cli_util.option('--compartment-id', help=u"""The id of the compartment which the term should be moved.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The id of the compartment which the term should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -765,7 +765,7 @@ You must also specify a *artifactType* for the artifact. Allowed values are CONT
 You must also provide the container or helm chart registry details for the corresponding images. Oracle container registry details (Registry/Concepts/registryoverview.htm).
 
 After you send your request, the new object's `status` will temporarily be IN_PROGRESS and `lifecycleState` will be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE and the status has changed to \u2018AVAILABLE\u2019 for the new Artifact. \n[Command Reference](createArtifact)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--artifact-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CONTAINER_IMAGE", "HELM_CHART", "MACHINE_IMAGE", "STACK"]), help=u"""Artifact Type for the artifact.""")
 @cli_util.option('--display-name', help=u"""The display name for the artifact.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -840,7 +840,7 @@ You must also specify a *artifactType* for the artifact. Allowed values are CONT
 You must also provide the container or helm chart registry details for the corresponding images. Oracle container registry details (Registry/Concepts/registryoverview.htm).
 
 After you send your request, the new object's `status` will temporarily be IN_PROGRESS and `lifecycleState` will be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE and the status has changed to \u2018AVAILABLE\u2019 for the new Artifact. \n[Command Reference](createArtifact)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--helm-chart', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name for the artifact.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -921,7 +921,7 @@ You must also specify a *artifactType* for the artifact. Allowed values are CONT
 You must also provide the container or helm chart registry details for the corresponding images. Oracle container registry details (Registry/Concepts/registryoverview.htm).
 
 After you send your request, the new object's `status` will temporarily be IN_PROGRESS and `lifecycleState` will be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE and the status has changed to \u2018AVAILABLE\u2019 for the new Artifact. \n[Command Reference](createArtifact)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--stack', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name for the artifact.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -998,7 +998,7 @@ You must also specify a *artifactType* for the artifact. Allowed values are CONT
 You must also provide the container or helm chart registry details for the corresponding images. Oracle container registry details (Registry/Concepts/registryoverview.htm).
 
 After you send your request, the new object's `status` will temporarily be IN_PROGRESS and `lifecycleState` will be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE and the status has changed to \u2018AVAILABLE\u2019 for the new Artifact. \n[Command Reference](createArtifact)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--container-image', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name for the artifact.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1075,7 +1075,7 @@ You must also specify a *artifactType* for the artifact. Allowed values are CONT
 You must also provide the container or helm chart registry details for the corresponding images. Oracle container registry details (Registry/Concepts/registryoverview.htm).
 
 After you send your request, the new object's `status` will temporarily be IN_PROGRESS and `lifecycleState` will be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE and the status has changed to \u2018AVAILABLE\u2019 for the new Artifact. \n[Command Reference](createArtifact)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--machine-image', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name for the artifact.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1150,7 +1150,7 @@ You must also specify a *name* for the listing and cannot be updated later.
 You must also specify a *packageType* for the listing. Allowed values are CONTAINER_IMAGE and HELM_CHART
 
 After you send your request, the new object's `lifecycleState` will be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE. \n[Command Reference](createListing)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--name', required=True, help=u"""The name for the listing.""")
 @cli_util.option('--listing-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OCI_APPLICATION", "LEAD_GENERATION", "SERVICE"]), help=u"""The listing type for the listing.""")
 @cli_util.option('--package-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CONTAINER_IMAGE", "HELM_CHART", "MACHINE_IMAGE", "STACK", "NONE"]), help=u"""The package type for the listing.""")
@@ -2382,7 +2382,7 @@ def create_listing_revision_package(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @term_group.command(name=cli_util.override('marketplace_publisher.create_term.command_name', 'create'), help=u"""Creates a new Term. \n[Command Reference](createTerm)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the publisher's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the publisher's compartment.""")
 @cli_util.option('--name', required=True, help=u"""The name of the term.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3022,7 +3022,7 @@ def get_artifact(ctx, from_json, artifact_id):
 
 @category_group.command(name=cli_util.override('marketplace_publisher.get_category.command_name', 'get'), help=u"""Gets the specified category's information. \n[Command Reference](getCategory)""")
 @cli_util.option('--category-code', required=True, help=u"""Category Code""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3511,7 +3511,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @artifact_collection_group.command(name=cli_util.override('marketplace_publisher.list_artifacts.command_name', 'list-artifacts'), help=u"""Lists the artifacts in your compartment. You must specify your compartment's OCID as the value for the compartment ID. For information about OCIDs, see Resource Identifiers (Content/General/Concepts/identifiers.htm). \n[Command Reference](listArtifacts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only artifacts with their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "AVAILABLE", "UNAVAILABLE"]), help=u"""A filter to return only artifacts with specific status.""")
@@ -3574,7 +3574,7 @@ def list_artifacts(ctx, from_json, all_pages, page_size, compartment_id, lifecyc
 
 
 @available_service_collection_group.command(name=cli_util.override('marketplace_publisher.list_available_services.command_name', 'list-available-services'), help=u"""List all published service listing revisions \n[Command Reference](listAvailableServices)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -3631,7 +3631,7 @@ def list_available_services(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @category_collection_group.command(name=cli_util.override('marketplace_publisher.list_categories.command_name', 'list-categories'), help=u"""Lists the categories in your compartment. You must specify your compartment's OCID as the value for the compartment ID. For information about OCIDs, see Resource Identifiers (Content/General/Concepts/identifiers.htm). \n[Command Reference](listCategories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--product-code', help=u"""product code to filter""")
@@ -3691,7 +3691,7 @@ def list_categories(ctx, from_json, all_pages, page_size, compartment_id, limit,
 
 
 @customer_instance_report_record_collection_group.command(name=cli_util.override('marketplace_publisher.list_customer_instance_report_records.command_name', 'list-customer-instance-report-records'), help=u"""List customer instance report records \n[Command Reference](listCustomerInstanceReportRecords)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--date-range', required=True, type=custom_types.CliCaseInsensitiveChoice(["THIS_WEEK", "LAST_WEEK", "THIS_MONTH", "LAST_MONTH", "LAST_THREE_MONTHS"]), help=u"""The date range of the report""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -3752,7 +3752,7 @@ def list_customer_instance_report_records(ctx, from_json, all_pages, page_size, 
 
 
 @disbursement_report_record_collection_group.command(name=cli_util.override('marketplace_publisher.list_disbursement_report_records.command_name', 'list-disbursement-report-records'), help=u"""List disbursement report records \n[Command Reference](listDisbursementReportRecords)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--date-range', required=True, type=custom_types.CliCaseInsensitiveChoice(["LAST_MONTH", "LAST_THREE_MONTHS"]), help=u"""The date range of the report""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -3813,7 +3813,7 @@ def list_disbursement_report_records(ctx, from_json, all_pages, page_size, compa
 
 
 @lead_collection_group.command(name=cli_util.override('marketplace_publisher.list_leads.command_name', 'list-leads'), help=u"""Lists the leads in your compartment that belong to a listing. You must specify your listing's OCID as the value for the listing ID. For information about OCIDs, see Resource Identifiers (Content/General/Concepts/identifiers.htm). \n[Command Reference](listLeads)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list leads.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list leads.""")
 @cli_util.option('--listing-id', help=u"""Listing OCID to query resource against.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -3873,7 +3873,7 @@ def list_leads(ctx, from_json, all_pages, page_size, compartment_id, listing_id,
 @cli_util.option('--listing-revision-id', required=True, help=u"""OCID of the listing revision.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), help=u"""A filter to return only attachments their lifecycleState matches the given lifecycleState.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -3934,7 +3934,7 @@ def list_listing_revision_attachments(ctx, from_json, all_pages, page_size, list
 
 @listing_revision_note_collection_group.command(name=cli_util.override('marketplace_publisher.list_listing_revision_notes.command_name', 'list-listing-revision-notes'), help=u"""Gets the list of notes for a listing revision. \n[Command Reference](listListingRevisionNotes)""")
 @cli_util.option('--listing-revision-id', required=True, help=u"""OCID of the listing revision.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -3991,7 +3991,7 @@ def list_listing_revision_notes(ctx, from_json, all_pages, page_size, listing_re
 
 @listing_revision_package_collection_group.command(name=cli_util.override('marketplace_publisher.list_listing_revision_packages.command_name', 'list-listing-revision-packages'), help=u"""Gets the list of packages for a listing revision. \n[Command Reference](listListingRevisionPackages)""")
 @cli_util.option('--listing-revision-id', required=True, help=u"""OCID of the listing revision.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only packages their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -4058,7 +4058,7 @@ You can specify your compartment's OCID as the value for the compartment ID. For
 @cli_util.option('--listing-id', required=True, help=u"""listing OCID""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only listing revisions their lifecycleState matches the given lifecycleState.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--listing-revision-status', type=custom_types.CliCaseInsensitiveChoice(["NEW", "PENDING_REVIEW", "REVIEW_IN_PROGRESS", "REJECTED", "APPROVED", "PUBLISH_IN_PROGRESS", "PUBLISH_FAILED", "PUBLISHED", "PUBLISH_AS_PRIVATE_FAILED", "PUBLISHED_AS_PRIVATE", "PUBLISH_AS_PRIVATE_IN_PROGRESS", "UNPUBLISH_IN_PROGRESS", "UNPUBLISHED"]), help=u"""A filter to return only listing revisions their status matches the given listing revision status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -4121,7 +4121,7 @@ def list_listing_revisions(ctx, from_json, all_pages, page_size, listing_id, dis
 
 
 @listing_collection_group.command(name=cli_util.override('marketplace_publisher.list_listings.command_name', 'list-listings'), help=u"""Lists the listings in your compartment. You must specify your compartment's OCID as the value for the compartment ID. For information about OCIDs, see Resource Identifiers (Content/General/Concepts/identifiers.htm). \n[Command Reference](listListings)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only listings their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--listing-type', type=custom_types.CliCaseInsensitiveChoice(["OCI_APPLICATION", "LEAD_GENERATION", "SERVICE"]), help=u"""A filter to return listings based on their type""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
@@ -4184,7 +4184,7 @@ def list_listings(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
 
 
 @market_collection_group.command(name=cli_util.override('marketplace_publisher.list_markets.command_name', 'list-markets'), help=u"""Lists the markets in your compartment. You must specify your compartment's OCID as the value for the compartment ID. For information about OCIDs, see Resource Identifiers (Content/General/Concepts/identifiers.htm). \n[Command Reference](listMarkets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -4244,7 +4244,7 @@ def list_markets(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
 
 
 @product_collection_group.command(name=cli_util.override('marketplace_publisher.list_products.command_name', 'list-products'), help=u"""Lists the products in your compartment. You must specify your compartment's OCID as the value for the compartment ID. For information about OCIDs, see Resource Identifiers (Content/General/Concepts/identifiers.htm). \n[Command Reference](listProducts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -4304,7 +4304,7 @@ def list_products(ctx, from_json, all_pages, page_size, compartment_id, limit, p
 
 
 @publisher_collection_group.command(name=cli_util.override('marketplace_publisher.list_publishers.command_name', 'list-publishers'), help=u"""Returns a list of publishers. \n[Command Reference](listPublishers)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -4361,7 +4361,7 @@ def list_publishers(ctx, from_json, all_pages, page_size, compartment_id, limit,
 
 
 @support_doc_collection_group.command(name=cli_util.override('marketplace_publisher.list_support_docs.command_name', 'list-support-docs'), help=u"""Lists the supportDocs in your compartment. You must specify your compartment's OCID as the value for the compartment ID. For information about OCIDs, see Resource Identifiers (Content/General/Concepts/identifiers.htm). \n[Command Reference](listSupportDocs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -4421,7 +4421,7 @@ def list_support_docs(ctx, from_json, all_pages, page_size, compartment_id, limi
 
 
 @supported_currency_collection_group.command(name=cli_util.override('marketplace_publisher.list_supported_currencies.command_name', 'list-supported-currencies'), help=u"""Lists the currencies supported by the Marketplace Publisher Service. You must specify your compartment's OCID as the value for the compartment ID. For information about OCIDs, see Resource Identifiers (Content/General/Concepts/identifiers.htm). \n[Command Reference](listSupportedCurrencies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -4475,7 +4475,7 @@ def list_supported_currencies(ctx, from_json, all_pages, page_size, compartment_
 
 
 @supported_shape_collection_group.command(name=cli_util.override('marketplace_publisher.list_supported_shapes.command_name', 'list-supported-shapes'), help=u"""Lists the shapes available to select from. \n[Command Reference](listSupportedShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -4533,7 +4533,7 @@ def list_supported_shapes(ctx, from_json, all_pages, page_size, compartment_id, 
 
 @term_version_collection_group.command(name=cli_util.override('marketplace_publisher.list_term_versions.command_name', 'list-term-versions'), help=u"""Returns a list of the publisher term versions. \n[Command Reference](listTermVersions)""")
 @cli_util.option('--term-id', required=True, help=u"""term OCID""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -4592,7 +4592,7 @@ def list_term_versions(ctx, from_json, all_pages, page_size, term_id, compartmen
 
 
 @term_collection_group.command(name=cli_util.override('marketplace_publisher.list_terms.command_name', 'list-terms'), help=u"""Returns a list of the publisher terms. \n[Command Reference](listTerms)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -4763,7 +4763,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('marketplace_publisher.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
@@ -5177,7 +5177,7 @@ def un_publish_listing_revision_package(ctx, from_json, wait_for_state, max_wait
 
 @artifact_group.command(name=cli_util.override('marketplace_publisher.update_artifact.command_name', 'update'), help=u"""Updates the specified artifact identified by the id. \n[Command Reference](updateArtifact)""")
 @cli_util.option('--artifact-id', required=True, help=u"""artifact OCID""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--display-name', help=u"""The display name for the artifact.""")
 @cli_util.option('--artifact-type', type=custom_types.CliCaseInsensitiveChoice(["CONTAINER_IMAGE", "HELM_CHART", "MACHINE_IMAGE", "STACK"]), help=u"""Artifact Type for the artifact.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5261,7 +5261,7 @@ def update_artifact(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
 @artifact_group.command(name=cli_util.override('marketplace_publisher.update_artifact_update_kubernetes_image_artifact_details.command_name', 'update-artifact-update-kubernetes-image-artifact-details'), help=u"""Updates the specified artifact identified by the id. \n[Command Reference](updateArtifact)""")
 @cli_util.option('--artifact-id', required=True, help=u"""artifact OCID""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--display-name', help=u"""The display name for the artifact.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5351,7 +5351,7 @@ def update_artifact_update_kubernetes_image_artifact_details(ctx, from_json, for
 
 @artifact_group.command(name=cli_util.override('marketplace_publisher.update_artifact_update_stack_artifact_details.command_name', 'update-artifact-update-stack-artifact-details'), help=u"""Updates the specified artifact identified by the id. \n[Command Reference](updateArtifact)""")
 @cli_util.option('--artifact-id', required=True, help=u"""artifact OCID""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--display-name', help=u"""The display name for the artifact.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5437,7 +5437,7 @@ def update_artifact_update_stack_artifact_details(ctx, from_json, force, wait_fo
 
 @artifact_group.command(name=cli_util.override('marketplace_publisher.update_artifact_update_container_image_artifact_details.command_name', 'update-artifact-update-container-image-artifact-details'), help=u"""Updates the specified artifact identified by the id. \n[Command Reference](updateArtifact)""")
 @cli_util.option('--artifact-id', required=True, help=u"""artifact OCID""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--display-name', help=u"""The display name for the artifact.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5523,7 +5523,7 @@ def update_artifact_update_container_image_artifact_details(ctx, from_json, forc
 
 @artifact_group.command(name=cli_util.override('marketplace_publisher.update_artifact_update_machine_image_artifact_details.command_name', 'update-artifact-update-machine-image-artifact-details'), help=u"""Updates the specified artifact identified by the id. \n[Command Reference](updateArtifact)""")
 @cli_util.option('--artifact-id', required=True, help=u"""artifact OCID""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--display-name', help=u"""The display name for the artifact.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

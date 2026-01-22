@@ -75,7 +75,7 @@ data_labeling_service_dataplane_root_group.add_command(annotation_collection_gro
 
 @annotation_group.command(name=cli_util.override('data_labeling_service_dataplane.create_annotation.command_name', 'create'), help=u"""Creates an annotation. \n[Command Reference](createAnnotation)""")
 @cli_util.option('--record-id', required=True, help=u"""The OCID of the record annotated.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the annotation.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for the annotation.""")
 @cli_util.option('--entities', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The entity types are validated against the dataset to ensure consistency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -137,7 +137,7 @@ def create_annotation(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @record_group.command(name=cli_util.override('data_labeling_service_dataplane.create_record.command_name', 'create'), help=u"""Creates a record. \n[Command Reference](createRecord)""")
 @cli_util.option('--name', required=True, help=u"""The name is automatically assigned by the service. It is unique and immutable.""")
 @cli_util.option('--dataset-id', required=True, help=u"""The OCID of the dataset to associate the record with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the record. This is tied to the dataset. It is not changeable on the record itself.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for the record. This is tied to the dataset. It is not changeable on the record itself.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--record-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -204,7 +204,7 @@ def create_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @record_group.command(name=cli_util.override('data_labeling_service_dataplane.create_record_create_object_storage_source_details.command_name', 'create-record-create-object-storage-source-details'), help=u"""Creates a record. \n[Command Reference](createRecord)""")
 @cli_util.option('--name', required=True, help=u"""The name is automatically assigned by the service. It is unique and immutable.""")
 @cli_util.option('--dataset-id', required=True, help=u"""The OCID of the dataset to associate the record with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the record. This is tied to the dataset. It is not changeable on the record itself.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for the record. This is tied to the dataset. It is not changeable on the record itself.""")
 @cli_util.option('--source-details-relative-path', required=True, help=u"""The path relative to the prefix specified in the dataset source details (file name).""")
 @cli_util.option('--record-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -282,7 +282,7 @@ def create_record_create_object_storage_source_details(ctx, from_json, wait_for_
 @record_group.command(name=cli_util.override('data_labeling_service_dataplane.create_record_document_metadata.command_name', 'create-record-document-metadata'), help=u"""Creates a record. \n[Command Reference](createRecord)""")
 @cli_util.option('--name', required=True, help=u"""The name is automatically assigned by the service. It is unique and immutable.""")
 @cli_util.option('--dataset-id', required=True, help=u"""The OCID of the dataset to associate the record with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the record. This is tied to the dataset. It is not changeable on the record itself.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for the record. This is tied to the dataset. It is not changeable on the record itself.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -352,7 +352,7 @@ def create_record_document_metadata(ctx, from_json, wait_for_state, max_wait_sec
 @record_group.command(name=cli_util.override('data_labeling_service_dataplane.create_record_image_metadata.command_name', 'create-record-image-metadata'), help=u"""Creates a record. \n[Command Reference](createRecord)""")
 @cli_util.option('--name', required=True, help=u"""The name is automatically assigned by the service. It is unique and immutable.""")
 @cli_util.option('--dataset-id', required=True, help=u"""The OCID of the dataset to associate the record with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the record. This is tied to the dataset. It is not changeable on the record itself.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for the record. This is tied to the dataset. It is not changeable on the record itself.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -430,7 +430,7 @@ def create_record_image_metadata(ctx, from_json, wait_for_state, max_wait_second
 @record_group.command(name=cli_util.override('data_labeling_service_dataplane.create_record_text_metadata.command_name', 'create-record-text-metadata'), help=u"""Creates a record. \n[Command Reference](createRecord)""")
 @cli_util.option('--name', required=True, help=u"""The name is automatically assigned by the service. It is unique and immutable.""")
 @cli_util.option('--dataset-id', required=True, help=u"""The OCID of the dataset to associate the record with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the record. This is tied to the dataset. It is not changeable on the record itself.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for the record. This is tied to the dataset. It is not changeable on the record itself.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -784,7 +784,7 @@ def get_record_preview_content(ctx, from_json, file, record_id, if_none_match):
 
 
 @annotation_collection_group.command(name=cli_util.override('data_labeling_service_dataplane.list_annotations.command_name', 'list-annotations'), help=u"""Returns a list of annotations. \n[Command Reference](listAnnotations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--dataset-id', required=True, help=u"""Filter the results by the OCID of the dataset.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--id', help=u"""The unique OCID identifier.""")
@@ -860,7 +860,7 @@ def list_annotations(ctx, from_json, all_pages, page_size, compartment_id, datas
 
 
 @record_collection_group.command(name=cli_util.override('data_labeling_service_dataplane.list_records.command_name', 'list-records'), help=u"""The list of records in the specified compartment. \n[Command Reference](listRecords)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--dataset-id', required=True, help=u"""Filter the results by the OCID of the dataset.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--name', help=u"""The name of the record.""")
@@ -933,7 +933,7 @@ def list_records(ctx, from_json, all_pages, page_size, compartment_id, dataset_i
 
 
 @annotation_analytics_aggregation_collection_group.command(name=cli_util.override('data_labeling_service_dataplane.summarize_annotation_analytics.command_name', 'summarize-annotation-analytics'), help=u"""Summarize the annotations created for a given dataset. \n[Command Reference](summarizeAnnotationAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--dataset-id', required=True, help=u"""Filter the results by the OCID of the dataset.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--label', help=u"""It summarizes annotations with the specified label.""")
@@ -975,7 +975,7 @@ def summarize_annotation_analytics(ctx, from_json, compartment_id, dataset_id, l
 
 
 @record_analytics_aggregation_collection_group.command(name=cli_util.override('data_labeling_service_dataplane.summarize_record_analytics.command_name', 'summarize-record-analytics'), help=u"""Summarize the records created for a given dataset. \n[Command Reference](summarizeRecordAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--dataset-id', required=True, help=u"""Filter the results by the OCID of the dataset.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

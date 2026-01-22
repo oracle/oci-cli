@@ -43,7 +43,7 @@ announcement_subscription_root_group.add_command(announcement_subscription_colle
 
 This call is subject to an Announcements limit that applies to the total number of requests across all read or write operations. Announcements might throttle this call to reject an otherwise valid request when the total rate of operations exceeds 20 requests per second for a given user. The service might also throttle this call to reject an otherwise valid request when the total rate of operations exceeds 100 requests per second for a given tenancy. \n[Command Reference](changeAnnouncementSubscriptionCompartment)""")
 @cli_util.option('--announcement-subscription-id', required=True, help=u"""The OCID of the announcement subscription.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which you want to move the announcement subscription.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which you want to move the announcement subscription.""")
 @cli_util.option('--if-match', help=u"""The locking version, used for optimistic concurrency control.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -76,7 +76,7 @@ def change_announcement_subscription_compartment(ctx, from_json, announcement_su
 
 This call is subject to an Announcements limit that applies to the total number of requests across all read or write operations. Announcements might throttle this call to reject an otherwise valid request when the total rate of operations exceeds 20 requests per second for a given user. The service might also throttle this call to reject an otherwise valid request when the total rate of operations exceeds 100 requests per second for a given tenancy. \n[Command Reference](createAnnouncementSubscription)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the announcement subscription. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the announcement subscription.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the announcement subscription.""")
 @cli_util.option('--ons-topic-id', required=True, help=u"""The OCID of the Notifications service topic that is the target for publishing announcements that match the configured announcement subscription. The caller of the operation needs the ONS_TOPIC_PUBLISH permission for the targeted Notifications service topic. For more information about Notifications permissions, see [Details for Notifications].""")
 @cli_util.option('--description', help=u"""A description of the announcement subscription. Avoid entering confidential information.""")
 @cli_util.option('--filter-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of filter groups for the announcement subscription. A filter group combines one or more filters that the Announcements service applies to announcements for matching purposes.
@@ -314,7 +314,7 @@ def get_announcement_subscription(ctx, from_json, announcement_subscription_id):
 @announcement_subscription_collection_group.command(name=cli_util.override('announcement_subscription.list_announcement_subscriptions.command_name', 'list-announcement-subscriptions'), help=u"""Gets a list of all announcement subscriptions in the specified compartment.
 
 This call is subject to an Announcements limit that applies to the total number of requests across all read or write operations. Announcements might throttle this call to reject an otherwise valid request when the total rate of operations exceeds 20 requests per second for a given user. The service might also throttle this call to reject an otherwise valid request when the total rate of operations exceeds 100 requests per second for a given tenancy. \n[Command Reference](listAnnouncementSubscriptions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return only announcement subscriptions that match the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The OCID of the announcement subscription.""")

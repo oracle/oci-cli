@@ -159,7 +159,7 @@ def delete_performance_tuning_analysis(ctx, from_json, performance_tuning_analys
 
 
 @analyze_applications_configuration_group.command(name=cli_util.override('jms_utils.get_analyze_applications_configuration.command_name', 'get'), help=u"""Returns the configuration for analyzing applications. \n[Command Reference](getAnalyzeApplicationsConfiguration)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -223,7 +223,7 @@ def get_performance_tuning_analysis(ctx, from_json, performance_tuning_analysis_
 
 
 @subscription_acknowledgment_configuration_group.command(name=cli_util.override('jms_utils.get_subscription_acknowledgment_configuration.command_name', 'get'), help=u"""Returns the configuration for subscription acknowledgment. \n[Command Reference](getSubscriptionAcknowledgmentConfiguration)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -265,7 +265,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @java_migration_analysis_group.command(name=cli_util.override('jms_utils.list_java_migration_analysis.command_name', 'list'), help=u"""Gets a list of Java Migration Analysis. \n[Command Reference](listJavaMigrationAnalysis)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The [OCID] of the Java Migration Analysis.""")
 @cli_util.option('--analysis-project-name', help=u"""The project name of the Performance Tuning Analysis to query for.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -324,7 +324,7 @@ def list_java_migration_analysis(ctx, from_json, all_pages, page_size, compartme
 
 
 @performance_tuning_analysis_group.command(name=cli_util.override('jms_utils.list_performance_tuning_analysis.command_name', 'list'), help=u"""Gets a list of Performance tuning Analysis. \n[Command Reference](listPerformanceTuningAnalysis)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The [OCID] of the Performance Tuning Analysis.""")
 @cli_util.option('--analysis-project-name', help=u"""The project name of the Performance Tuning Analysis to query for.""")
 @cli_util.option('--performance-tuning-analysis-result', type=custom_types.CliCaseInsensitiveChoice(["ACTION_RECOMMENDED", "NO_WARNINGS"]), help=u"""The result of the Performance Tuning Analysis to query for.""")
@@ -551,7 +551,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('jms_utils.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELLED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")
@@ -613,7 +613,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 
 
 @java_migration_analysis_group.command(name=cli_util.override('jms_utils.request_java_migration_analysis.command_name', 'request'), help=u"""Requests Java Migration Analysis. \n[Command Reference](requestJavaMigrationAnalysis)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the Java Migration Analysis will be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the Java Migration Analysis will be created.""")
 @cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of targets for the Java Migration Analysis.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -680,7 +680,7 @@ def request_java_migration_analysis(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @performance_tuning_analysis_group.command(name=cli_util.override('jms_utils.request_performance_tuning_analysis.command_name', 'request'), help=u"""Requests Performance Tuning Analysis. \n[Command Reference](requestPerformanceTuningAnalysis)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the Performance Tuning Analysis will be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the Performance Tuning Analysis will be created.""")
 @cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of targets for the Performance Tuning Analysis.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -749,7 +749,7 @@ def request_performance_tuning_analysis(ctx, from_json, wait_for_state, max_wait
 @analyze_applications_configuration_group.command(name=cli_util.override('jms_utils.update_analyze_applications_configuration.command_name', 'update'), help=u"""Updates the configuration for analyze application. \n[Command Reference](updateAnalyzeApplicationsConfiguration)""")
 @cli_util.option('--namespace-name', help=u"""The Object Storage namespace used for analyzing applications.""")
 @cli_util.option('--bucket-name', help=u"""The name of the bucket used for analyzing applications.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -783,7 +783,7 @@ def update_analyze_applications_configuration(ctx, from_json, namespace_name, bu
 
 @subscription_acknowledgment_configuration_group.command(name=cli_util.override('jms_utils.update_subscription_acknowledgment_configuration.command_name', 'update'), help=u"""Updates the configuration for subscription acknowledgment. \n[Command Reference](updateSubscriptionAcknowledgmentConfiguration)""")
 @cli_util.option('--is-acknowledged', type=click.BOOL, help=u"""Flag to determine whether the subscription was acknowledged or not.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

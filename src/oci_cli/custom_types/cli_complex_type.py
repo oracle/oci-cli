@@ -6,7 +6,7 @@ import click
 
 
 COMPLEX_TYPE_HELP = """
-This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+This is a JSON object whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
@@ -19,10 +19,21 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 # a literal JSON string or as a file:// path), so the type here is currently more a convenience
 # to easily flag/denote these as different than a "normal" string
 class CliComplexType(click.types.StringParamType):
-    name = 'complex type'
+    name = 'json'
+
+    def __init__(self, schema_name=None):
+        """
+        Initialize a complex type with an optional schema name.
+
+        :param schema_name: Optional name of the JSON schema/type (e.g. 'CreateVnicDetails')
+        """
+        super().__init__()
+        self.schema_name = schema_name
 
     def __repr__(self):
-        return 'COMPLEX_TYPE'
+        if self.schema_name:
+            return f'JSON[{self.schema_name}]'
+        return 'JSON'
 
 
 CLI_COMPLEX_TYPE = CliComplexType()

@@ -123,7 +123,7 @@ def cancel_transcription_task(ctx, from_json, transcription_job_id, transcriptio
 
 @customization_group.command(name=cli_util.override('speech.change_customization_compartment.command_name', 'change-compartment'), help=u"""Moves a Customization resource into a different compartment. \n[Command Reference](changeCustomizationCompartment)""")
 @cli_util.option('--customization-id', required=True, help=u"""Unique Customization training Job identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -154,7 +154,7 @@ def change_customization_compartment(ctx, from_json, customization_id, compartme
 
 @transcription_job_group.command(name=cli_util.override('speech.change_transcription_job_compartment.command_name', 'change-compartment'), help=u"""Moves a transcription Job resource into a different compartment. \n[Command Reference](changeTranscriptionJobCompartment)""")
 @cli_util.option('--transcription-job-id', required=True, help=u"""Unique Transcription Job identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -184,7 +184,7 @@ def change_transcription_job_compartment(ctx, from_json, transcription_job_id, c
 
 
 @customization_group.command(name=cli_util.override('speech.create_customization.command_name', 'create'), help=u"""Creates a new Customization. \n[Command Reference](createCustomization)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--model-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--training-dataset', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--alias', help=u"""Customization Details Alias""")
@@ -257,7 +257,7 @@ def create_customization(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @customization_group.command(name=cli_util.override('speech.create_customization_object_storage_dataset.command_name', 'create-customization-object-storage-dataset'), help=u"""Creates a new Customization. \n[Command Reference](createCustomization)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--model-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--training-dataset-location-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--alias', help=u"""Customization Details Alias""")
@@ -337,7 +337,7 @@ def create_customization_object_storage_dataset(ctx, from_json, wait_for_state, 
 
 
 @customization_group.command(name=cli_util.override('speech.create_customization_entity_list_dataset.command_name', 'create-customization-entity-list-dataset'), help=u"""Creates a new Customization. \n[Command Reference](createCustomization)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--model-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--alias', help=u"""Customization Details Alias""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
@@ -421,7 +421,7 @@ def create_customization_entity_list_dataset(ctx, from_json, wait_for_state, max
 
 
 @realtime_session_token_group.command(name=cli_util.override('speech.create_realtime_session_token.command_name', 'create'), help=u"""Returns an authentication token to the user. \n[Command Reference](createRealtimeSessionToken)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace-1\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}, \"foo-namespace-2\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}})
@@ -452,7 +452,7 @@ def create_realtime_session_token(ctx, from_json, compartment_id, freeform_tags,
 
 
 @transcription_job_group.command(name=cli_util.override('speech.create_transcription_job.command_name', 'create'), help=u"""Creates a new Transcription Job. \n[Command Reference](createTranscriptionJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
@@ -533,7 +533,7 @@ def create_transcription_job(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @transcription_job_group.command(name=cli_util.override('speech.create_transcription_job_object_list_file_input_location.command_name', 'create-transcription-job-object-list-file-input-location'), help=u"""Creates a new Transcription Job. \n[Command Reference](createTranscriptionJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-object-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
@@ -617,7 +617,7 @@ def create_transcription_job_object_list_file_input_location(ctx, from_json, wai
 
 
 @transcription_job_group.command(name=cli_util.override('speech.create_transcription_job_object_list_inline_input_location.command_name', 'create-transcription-job-object-list-inline-input-location'), help=u"""Creates a new Transcription Job. \n[Command Reference](createTranscriptionJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
@@ -900,7 +900,7 @@ def get_transcription_task(ctx, from_json, transcription_job_id, transcription_t
 
 
 @customization_group.command(name=cli_util.override('speech.list_customizations.command_name', 'list'), help=u"""Returns a list of Customizations. \n[Command Reference](listCustomizations)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "UPDATING", "ACTIVE", "CREATING"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique identifier(OCID).""")
@@ -962,7 +962,7 @@ def list_customizations(ctx, from_json, all_pages, page_size, compartment_id, li
 
 
 @transcription_job_group.command(name=cli_util.override('speech.list_transcription_jobs.command_name', 'list'), help=u"""Returns a list of Transcription Jobs. \n[Command Reference](listTranscriptionJobs)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique identifier(OCID).""")
@@ -1090,7 +1090,7 @@ def list_transcription_tasks(ctx, from_json, all_pages, page_size, transcription
 
 
 @voice_group.command(name=cli_util.override('speech.list_voices.command_name', 'list'), help=u"""Returns a list of speakers available to the user to choose from based on language code and voice type provided. \n[Command Reference](listVoices)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--model-name', type=custom_types.CliCaseInsensitiveChoice(["TTS_1_STANDARD", "TTS_2_NATURAL"]), help=u"""The model name to filter voices for given model name.""")
 @cli_util.option('--language-code', help=u"""The Code or Id of the language to filter voices for given language code.""")
 @cli_util.option('--display-name', help=u"""The name of the speaker voice in which the user wants tts inference to be.""")
@@ -1123,7 +1123,7 @@ def list_voices(ctx, from_json, all_pages, compartment_id, model_name, language_
 @cli_util.option('--text', required=True, help=u"""The text input to get the inference audio from TTS Service.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--is-stream-enabled', type=click.BOOL, help=u"""If set to true, response will be sent in the chunked transfer-encoding and audio chunks are sent back as and when they are ready. If set to false, response will be sent only once the entire audio is generated.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where the user has access to call `SpeechSynthesize` api. But default user access will be checked at tenancy level.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the user has access to call `SpeechSynthesize` api. But default user access will be checked at tenancy level.""")
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--audio-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'configuration': {'module': 'ai_speech', 'class': 'TtsConfiguration'}, 'audio-config': {'module': 'ai_speech', 'class': 'TtsAudioConfig'}})
@@ -1185,7 +1185,7 @@ def synthesize_speech(ctx, from_json, file, text, is_stream_enabled, compartment
 @cli_util.option('--text', required=True, help=u"""The text input to get the inference audio from TTS Service.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--is-stream-enabled', type=click.BOOL, help=u"""If set to true, response will be sent in the chunked transfer-encoding and audio chunks are sent back as and when they are ready. If set to false, response will be sent only once the entire audio is generated.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where the user has access to call `SpeechSynthesize` api. But default user access will be checked at tenancy level.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the user has access to call `SpeechSynthesize` api. But default user access will be checked at tenancy level.""")
 @cli_util.option('--audio-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-model-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-speech-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1255,7 +1255,7 @@ def synthesize_speech_tts_oracle_configuration(ctx, from_json, file, text, is_st
 @cli_util.option('--audio-config-save-path', required=True, help=u"""Specify the path where you want to save the audio response.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--is-stream-enabled', type=click.BOOL, help=u"""If set to true, response will be sent in the chunked transfer-encoding and audio chunks are sent back as and when they are ready. If set to false, response will be sent only once the entire audio is generated.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where the user has access to call `SpeechSynthesize` api. But default user access will be checked at tenancy level.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the user has access to call `SpeechSynthesize` api. But default user access will be checked at tenancy level.""")
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'configuration': {'module': 'ai_speech', 'class': 'TtsConfiguration'}})
 @cli_util.help_option

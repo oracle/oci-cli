@@ -62,7 +62,7 @@ apm_control_plane_root_group.add_command(data_key_group)
 
 @apm_domain_group.command(name=cli_util.override('apm_control_plane.change_apm_domain_compartment.command_name', 'change-compartment'), help=u"""Moves an APM domain into a different compartment. When provided, If-Match is checked against ETag values of the APM domain. \n[Command Reference](changeApmDomainCompartment)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The OCID of the APM domain.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the destination compartment for the APM domain.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the destination compartment for the APM domain.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. Set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -123,7 +123,7 @@ def change_apm_domain_compartment(ctx, from_json, wait_for_state, max_wait_secon
 
 @apm_domain_group.command(name=cli_util.override('apm_control_plane.create_apm_domain.command_name', 'create'), help=u"""Creates a new APM domain. \n[Command Reference](createApmDomain)""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the APM domain.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment corresponding to the APM domain.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment corresponding to the APM domain.""")
 @cli_util.option('--description', help=u"""Description of the APM domain.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -401,7 +401,7 @@ def list_apm_domain_work_requests(ctx, from_json, all_pages, page_size, apm_doma
 
 
 @apm_domain_group.command(name=cli_util.override('apm_control_plane.list_apm_domains.command_name', 'list'), help=u"""Lists all APM domains for the specified tenant compartment. \n[Command Reference](listApmDomains)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given life-cycle state.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -589,7 +589,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('apm_control_plane.list_work_requests.command_name', 'list'), help=u"""Returns a (paginated) list of work requests in a given compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")

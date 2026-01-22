@@ -34,7 +34,7 @@ address_service_root_group.add_command(address_group)
 
 @address_group.command(name=cli_util.override('address_service.get_address.command_name', 'get'), help=u"""Get the address by id for the compartment \n[Command Reference](getAddress)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--address-id', required=True, help=u"""The identifier of the address.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -60,7 +60,7 @@ def get_address(ctx, from_json, osp_home_region, compartment_id, address_id):
 
 @address_group.command(name=cli_util.override('address_service.verify_address.command_name', 'verify'), help=u"""Verify address \n[Command Reference](verifyAddress)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--address-key', help=u"""Address identifier.""")
 @cli_util.option('--line1', help=u"""Address line 1.""")
 @cli_util.option('--line2', help=u"""Address line 2.""")

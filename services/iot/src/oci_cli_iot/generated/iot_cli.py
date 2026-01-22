@@ -88,7 +88,7 @@ iot_root_group.add_command(digital_twin_instance_group)
 
 @iot_domain_group.command(name=cli_util.override('iot.change_iot_domain_compartment.command_name', 'change-compartment'), help=u"""Moves an IoT domain to a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeIotDomainCompartment)""")
 @cli_util.option('--iot-domain-id', required=True, help=u"""The [OCID] of the IoT domain.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment corresponding to the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment corresponding to the resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -212,7 +212,7 @@ def change_iot_domain_data_retention_period(ctx, from_json, wait_for_state, max_
 
 @iot_domain_group_group.command(name=cli_util.override('iot.change_iot_domain_group_compartment.command_name', 'change-compartment'), help=u"""Moves an IoT domain group to a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeIotDomainGroupCompartment)""")
 @cli_util.option('--iot-domain-group-id', required=True, help=u"""The [OCID] of an IoT Domain Group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment corresponding to the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment corresponding to the resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -910,7 +910,7 @@ def create_digital_twin_relationship(ctx, from_json, wait_for_state, max_wait_se
 
 @iot_domain_group.command(name=cli_util.override('iot.create_iot_domain.command_name', 'create'), help=u"""Creates a new IoT domain. \n[Command Reference](createIotDomain)""")
 @cli_util.option('--iot-domain-group-id', required=True, help=u"""The [OCID] of the IoT domain group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment corresponding to the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment corresponding to the resource.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -984,7 +984,7 @@ def create_iot_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @iot_domain_group_group.command(name=cli_util.override('iot.create_iot_domain_group.command_name', 'create'), help=u"""Creates a new IoT domain group. \n[Command Reference](createIotDomainGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment corresponding to the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment corresponding to the resource.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -2094,7 +2094,7 @@ def list_digital_twin_relationships(ctx, from_json, all_pages, page_size, iot_do
 
 
 @iot_domain_group_group.command(name=cli_util.override('iot.list_iot_domain_groups.command_name', 'list'), help=u"""Retrieves a list of IoT domain groups within the specified compartment. \n[Command Reference](listIotDomainGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Filter resources by [OCID]. Must be a valid OCID of the resource type.""")
 @cli_util.option('--display-name', help=u"""Filter resources whose display name matches the specified value.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter resources whose lifecycleState matches the specified value.""")
@@ -2157,7 +2157,7 @@ def list_iot_domain_groups(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @iot_domain_group.command(name=cli_util.override('iot.list_iot_domains.command_name', 'list'), help=u"""Retrieves a list of IoT domains within the specified compartment. \n[Command Reference](listIotDomains)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Filter resources by [OCID]. Must be a valid OCID of the resource type.""")
 @cli_util.option('--iot-domain-group-id', help=u"""Filter resources that match the specified [OCID] of the IoT domain group.""")
 @cli_util.option('--display-name', help=u"""Filter resources whose display name matches the specified value.""")
@@ -2337,7 +2337,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('iot.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

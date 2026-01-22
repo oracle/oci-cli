@@ -222,7 +222,7 @@ def apply_monitoring_template(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.associate_monitored_resources.command_name', 'associate'), help=u"""Create an association between two monitored resources. Associations can be created between resources from different compartments as long they are in same tenancy. User should have required access in both the compartments. \n[Command Reference](associateMonitoredResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--association-type', required=True, help=u"""Association type to be created between source and destination resources.""")
 @cli_util.option('--source-resource-id', required=True, help=u"""Source Monitored Resource Identifier [OCID].""")
 @cli_util.option('--destination-resource-id', required=True, help=u"""Destination Monitored Resource Identifier [OCID].""")
@@ -261,7 +261,7 @@ So this operation will have the same effect as deleting the configuration item i
 
 When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeConfigCompartment)""")
 @cli_util.option('--config-id', required=True, help=u"""Unique Config identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -292,7 +292,7 @@ def change_config_compartment(ctx, from_json, config_id, compartment_id, if_matc
 
 @metric_extension_group.command(name=cli_util.override('stack_monitoring.change_metric_extension_compartment.command_name', 'change-compartment'), help=u"""Moves a Metric Extension resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMetricExtensionCompartment)""")
 @cli_util.option('--metric-extension-id', required=True, help=u"""The [OCID] of the metric extension resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -323,7 +323,7 @@ def change_metric_extension_compartment(ctx, from_json, metric_extension_id, com
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.change_monitored_resource_compartment.command_name', 'change-compartment'), help=u"""Moves a monitored resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMonitoredResourceCompartment)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -384,7 +384,7 @@ def change_monitored_resource_compartment(ctx, from_json, wait_for_state, max_wa
 
 @monitored_resource_task_group.command(name=cli_util.override('stack_monitoring.change_monitored_resource_task_compartment.command_name', 'change-compartment'), help=u"""Moves a stack monitoring resource task from one compartment to another. \n[Command Reference](changeMonitoredResourceTaskCompartment)""")
 @cli_util.option('--monitored-resource-task-id', required=True, help=u"""The [OCID] of stack monitoring resource task.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -415,7 +415,7 @@ def change_monitored_resource_task_compartment(ctx, from_json, monitored_resourc
 
 @process_set_group.command(name=cli_util.override('stack_monitoring.change_process_set_compartment.command_name', 'change-compartment'), help=u"""Moves a ProcessSet resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeProcessSetCompartment)""")
 @cli_util.option('--process-set-id', required=True, help=u"""The Process Set ID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -519,7 +519,7 @@ def create_alarm_condition(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @baselineable_metric_group.command(name=cli_util.override('stack_monitoring.create_baselineable_metric.command_name', 'create'), help=u"""Creates the specified Baseline-able metric \n[Command Reference](createBaselineableMetric)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment""")
 @cli_util.option('--column', required=True, help=u"""metric column name""")
 @cli_util.option('--namespace', required=True, help=u"""namespace of the metric""")
 @cli_util.option('--name', help=u"""name of the metric""")
@@ -586,7 +586,7 @@ def create_baselineable_metric(ctx, from_json, wait_for_state, max_wait_seconds,
 @config_group.command(name=cli_util.override('stack_monitoring.create_config.command_name', 'create'), help=u"""Creates a configuration item, for example to define whether resources of a specific type should be discovered automatically.
 
 For example, when a new Management Agent gets registered in a certain compartment, this Management Agent can potentially get promoted to a HOST resource. The configuration item will determine if HOST resources in the selected compartment will be discovered automatically. \n[Command Reference](createConfig)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment in which the configuration is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment in which the configuration is created.""")
 @cli_util.option('--config-type', required=True, help=u"""The type of configuration.""")
 @cli_util.option('--display-name', help=u"""The display name of the configuration.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -651,7 +651,7 @@ def create_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @config_group.command(name=cli_util.override('stack_monitoring.create_config_create_license_auto_assign_config_details.command_name', 'create-config-create-license-auto-assign-config-details'), help=u"""Creates a configuration item, for example to define whether resources of a specific type should be discovered automatically.
 
 For example, when a new Management Agent gets registered in a certain compartment, this Management Agent can potentially get promoted to a HOST resource. The configuration item will determine if HOST resources in the selected compartment will be discovered automatically. \n[Command Reference](createConfig)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment in which the configuration is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment in which the configuration is created.""")
 @cli_util.option('--license', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""License edition.""")
 @cli_util.option('--display-name', help=u"""The display name of the configuration.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -718,7 +718,7 @@ def create_config_create_license_auto_assign_config_details(ctx, from_json, wait
 @config_group.command(name=cli_util.override('stack_monitoring.create_config_create_onboard_config_details.command_name', 'create-config-create-onboard-config-details'), help=u"""Creates a configuration item, for example to define whether resources of a specific type should be discovered automatically.
 
 For example, when a new Management Agent gets registered in a certain compartment, this Management Agent can potentially get promoted to a HOST resource. The configuration item will determine if HOST resources in the selected compartment will be discovered automatically. \n[Command Reference](createConfig)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment in which the configuration is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment in which the configuration is created.""")
 @cli_util.option('--is-manually-onboarded', required=True, type=click.BOOL, help=u"""True if customer decides marks configuration as manually configured.""")
 @cli_util.option('--display-name', help=u"""The display name of the configuration.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -809,7 +809,7 @@ def create_config_create_onboard_config_details(ctx, from_json, wait_for_state, 
 @config_group.command(name=cli_util.override('stack_monitoring.create_config_create_auto_promote_config_details.command_name', 'create-config-create-auto-promote-config-details'), help=u"""Creates a configuration item, for example to define whether resources of a specific type should be discovered automatically.
 
 For example, when a new Management Agent gets registered in a certain compartment, this Management Agent can potentially get promoted to a HOST resource. The configuration item will determine if HOST resources in the selected compartment will be discovered automatically. \n[Command Reference](createConfig)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment in which the configuration is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment in which the configuration is created.""")
 @cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOST"]), help=u"""The type of resource to configure for automatic promotion.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""True if automatic promotion is enabled, false if it is not enabled.""")
 @cli_util.option('--display-name', help=u"""The display name of the configuration.""")
@@ -878,7 +878,7 @@ def create_config_create_auto_promote_config_details(ctx, from_json, wait_for_st
 @config_group.command(name=cli_util.override('stack_monitoring.create_config_create_compute_auto_activate_plugin_config_details.command_name', 'create-config-create-compute-auto-activate-plugin-config-details'), help=u"""Creates a configuration item, for example to define whether resources of a specific type should be discovered automatically.
 
 For example, when a new Management Agent gets registered in a certain compartment, this Management Agent can potentially get promoted to a HOST resource. The configuration item will determine if HOST resources in the selected compartment will be discovered automatically. \n[Command Reference](createConfig)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment in which the configuration is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment in which the configuration is created.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""True if automatic activation of the Management Agent plugin is enabled, false if it is not enabled.""")
 @cli_util.option('--display-name', help=u"""The display name of the configuration.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -945,7 +945,7 @@ def create_config_create_compute_auto_activate_plugin_config_details(ctx, from_j
 @config_group.command(name=cli_util.override('stack_monitoring.create_config_create_license_enterprise_extensibility_config_details.command_name', 'create-config-create-license-enterprise-extensibility-config-details'), help=u"""Creates a configuration item, for example to define whether resources of a specific type should be discovered automatically.
 
 For example, when a new Management Agent gets registered in a certain compartment, this Management Agent can potentially get promoted to a HOST resource. The configuration item will determine if HOST resources in the selected compartment will be discovered automatically. \n[Command Reference](createConfig)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment in which the configuration is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment in which the configuration is created.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""True if enterprise extensibility is enabled, false if it is not enabled.""")
 @cli_util.option('--display-name', help=u"""The display name of the configuration.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1010,7 +1010,7 @@ def create_config_create_license_enterprise_extensibility_config_details(ctx, fr
 
 
 @discovery_job_group.command(name=cli_util.override('stack_monitoring.create_discovery_job.command_name', 'create'), help=u"""API to create discovery Job and submit discovery Details to agent. \n[Command Reference](createDiscoveryJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of Compartment""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of Compartment""")
 @cli_util.option('--discovery-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--discovery-type', type=custom_types.CliCaseInsensitiveChoice(["ADD", "ADD_WITH_RETRY", "REFRESH"]), help=u"""Add option submits new discovery Job. Add with retry option to re-submit failed discovery job. Refresh option refreshes the existing discovered resources.""")
 @cli_util.option('--discovery-client', help=u"""Client who submits discovery job.""")
@@ -1082,7 +1082,7 @@ def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 @maintenance_window_group.command(name=cli_util.override('stack_monitoring.create_maintenance_window.command_name', 'create'), help=u"""Creates a new Maintenance Window for the given resources. It will create also the Alarms Suppression for each alarm that the resource migth trigger. \n[Command Reference](createMaintenanceWindow)""")
 @cli_util.option('--name', required=True, help=u"""Maintenance Window name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schedule', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Maintenance Window description.""")
@@ -1153,7 +1153,7 @@ def create_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 @maintenance_window_group.command(name=cli_util.override('stack_monitoring.create_maintenance_window_recurrent_maintenance_window_schedule.command_name', 'create-maintenance-window-recurrent-maintenance-window-schedule'), help=u"""Creates a new Maintenance Window for the given resources. It will create also the Alarms Suppression for each alarm that the resource migth trigger. \n[Command Reference](createMaintenanceWindow)""")
 @cli_util.option('--name', required=True, help=u"""Maintenance Window name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schedule-maintenance-window-recurrences', required=True, help=u"""A RFC5545 formatted recurrence string which represents the Maintenance Window Recurrence. Please refer this for details:https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10 FREQ: Frequency of the Maintenance Window. The supported values are: DAILY and WEEKLY. BYDAY: Comma separated days for Weekly Maintenance Window. BYHOUR: Specifies the start hour of each recurrence after `timeMaintenanceWindowStart` value. BYMINUTE: Specifies the start minute of each reccurrence after `timeMaintenanceWindowStart` value. The default value is 00 BYSECOND: Specifies the start second of each reccurrence after `timeMaintenanceWindowStart` value. The default value is 00 Other Rules are not supported.""")
 @cli_util.option('--description', help=u"""Maintenance Window description.""")
@@ -1239,7 +1239,7 @@ def create_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_js
 
 @maintenance_window_group.command(name=cli_util.override('stack_monitoring.create_maintenance_window_one_time_maintenance_window_schedule.command_name', 'create-maintenance-window-one-time-maintenance-window-schedule'), help=u"""Creates a new Maintenance Window for the given resources. It will create also the Alarms Suppression for each alarm that the resource migth trigger. \n[Command Reference](createMaintenanceWindow)""")
 @cli_util.option('--name', required=True, help=u"""Maintenance Window name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Maintenance Window description.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1321,7 +1321,7 @@ def create_maintenance_window_one_time_maintenance_window_schedule(ctx, from_jso
 @cli_util.option('--name', required=True, help=u"""Metric Extension Resource name.""")
 @cli_util.option('--display-name', required=True, help=u"""Metric Extension display name.""")
 @cli_util.option('--resource-type', required=True, help=u"""Resource type to which Metric Extension applies""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID]""")
 @cli_util.option('--collection-recurrences', required=True, help=u"""Schedule of metric extension should use RFC 5545 format i.e. recur-rule-part = \"FREQ\";INTERVAL where FREQ rule part identifies the type of recurrence rule. Valid values are \"MINUTELY\",\"HOURLY\",\"DAILY\" to specify repeating events based on an interval of a minute, an hour and a day or more. Example- FREQ=DAILY;INTERVAL=1""")
 @cli_util.option('--metric-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics which are part of this metric extension""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--query-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1386,7 +1386,7 @@ def create_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--name', required=True, help=u"""Metric Extension Resource name.""")
 @cli_util.option('--display-name', required=True, help=u"""Metric Extension display name.""")
 @cli_util.option('--resource-type', required=True, help=u"""Resource type to which Metric Extension applies""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID]""")
 @cli_util.option('--collection-recurrences', required=True, help=u"""Schedule of metric extension should use RFC 5545 format i.e. recur-rule-part = \"FREQ\";INTERVAL where FREQ rule part identifies the type of recurrence rule. Valid values are \"MINUTELY\",\"HOURLY\",\"DAILY\" to specify repeating events based on an interval of a minute, an hour and a day or more. Example- FREQ=DAILY;INTERVAL=1""")
 @cli_util.option('--metric-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics which are part of this metric extension""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--query-properties-command', required=True, help=u"""OS command to execute without arguments""")
@@ -1468,7 +1468,7 @@ def create_metric_extension_os_command_query_properties(ctx, from_json, wait_for
 @cli_util.option('--name', required=True, help=u"""Metric Extension Resource name.""")
 @cli_util.option('--display-name', required=True, help=u"""Metric Extension display name.""")
 @cli_util.option('--resource-type', required=True, help=u"""Resource type to which Metric Extension applies""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID]""")
 @cli_util.option('--collection-recurrences', required=True, help=u"""Schedule of metric extension should use RFC 5545 format i.e. recur-rule-part = \"FREQ\";INTERVAL where FREQ rule part identifies the type of recurrence rule. Valid values are \"MINUTELY\",\"HOURLY\",\"DAILY\" to specify repeating events based on an interval of a minute, an hour and a day or more. Example- FREQ=DAILY;INTERVAL=1""")
 @cli_util.option('--metric-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics which are part of this metric extension""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--query-properties-sql-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STATEMENT", "SQL_SCRIPT"]), help=u"""Type of SQL data collection method i.e. either a Statement or SQL Script File""")
@@ -1548,7 +1548,7 @@ def create_metric_extension_sql_query_properties(ctx, from_json, wait_for_state,
 @cli_util.option('--name', required=True, help=u"""Metric Extension Resource name.""")
 @cli_util.option('--display-name', required=True, help=u"""Metric Extension display name.""")
 @cli_util.option('--resource-type', required=True, help=u"""Resource type to which Metric Extension applies""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID]""")
 @cli_util.option('--collection-recurrences', required=True, help=u"""Schedule of metric extension should use RFC 5545 format i.e. recur-rule-part = \"FREQ\";INTERVAL where FREQ rule part identifies the type of recurrence rule. Valid values are \"MINUTELY\",\"HOURLY\",\"DAILY\" to specify repeating events based on an interval of a minute, an hour and a day or more. Example- FREQ=DAILY;INTERVAL=1""")
 @cli_util.option('--metric-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics which are part of this metric extension""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--query-properties-managed-bean-query', required=True, help=u"""JMX Managed Bean Query or Metric Service Table name""")
@@ -1630,7 +1630,7 @@ def create_metric_extension_jmx_query_properties(ctx, from_json, wait_for_state,
 @cli_util.option('--name', required=True, help=u"""Metric Extension Resource name.""")
 @cli_util.option('--display-name', required=True, help=u"""Metric Extension display name.""")
 @cli_util.option('--resource-type', required=True, help=u"""Resource type to which Metric Extension applies""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID]""")
 @cli_util.option('--collection-recurrences', required=True, help=u"""Schedule of metric extension should use RFC 5545 format i.e. recur-rule-part = \"FREQ\";INTERVAL where FREQ rule part identifies the type of recurrence rule. Valid values are \"MINUTELY\",\"HOURLY\",\"DAILY\" to specify repeating events based on an interval of a minute, an hour and a day or more. Example- FREQ=DAILY;INTERVAL=1""")
 @cli_util.option('--metric-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics which are part of this metric extension""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--query-properties-url', required=True, help=u"""Http(s) end point URL""")
@@ -1705,7 +1705,7 @@ def create_metric_extension_http_query_properties(ctx, from_json, wait_for_state
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource.command_name', 'create'), help=u"""Creates a new monitored resource for the given resource type with the details and submits a work request for promoting the resource to agent. Once the resource is successfully added to agent, resource state will be marked active. \n[Command Reference](createMonitoredResource)""")
 @cli_util.option('--name', required=True, help=u"""Monitored Resource Name.""")
 @cli_util.option('--type', required=True, help=u"""Monitored Resource Type.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
 @cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
@@ -1827,7 +1827,7 @@ def create_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_pre_existing_credentials.command_name', 'create-monitored-resource-pre-existing-credentials'), help=u"""Creates a new monitored resource for the given resource type with the details and submits a work request for promoting the resource to agent. Once the resource is successfully added to agent, resource state will be marked active. \n[Command Reference](createMonitoredResource)""")
 @cli_util.option('--name', required=True, help=u"""Monitored Resource Name.""")
 @cli_util.option('--type', required=True, help=u"""Monitored Resource Type.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
 @cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
@@ -1964,7 +1964,7 @@ def create_monitored_resource_pre_existing_credentials(ctx, from_json, wait_for_
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_encrypted_credentials.command_name', 'create-monitored-resource-encrypted-credentials'), help=u"""Creates a new monitored resource for the given resource type with the details and submits a work request for promoting the resource to agent. Once the resource is successfully added to agent, resource state will be marked active. \n[Command Reference](createMonitoredResource)""")
 @cli_util.option('--name', required=True, help=u"""Monitored Resource Name.""")
 @cli_util.option('--type', required=True, help=u"""Monitored Resource Type.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--credentials-key-id', required=True, help=u"""The master key should be created in OCI Vault owned by the client of this API. The user should have permission to access the vault key.""")
 @cli_util.option('--credentials-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The credential properties list. Credential property values will be encrypted format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
@@ -2105,7 +2105,7 @@ def create_monitored_resource_encrypted_credentials(ctx, from_json, wait_for_sta
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_plain_text_credentials.command_name', 'create-monitored-resource-plain-text-credentials'), help=u"""Creates a new monitored resource for the given resource type with the details and submits a work request for promoting the resource to agent. Once the resource is successfully added to agent, resource state will be marked active. \n[Command Reference](createMonitoredResource)""")
 @cli_util.option('--name', required=True, help=u"""Monitored Resource Name.""")
 @cli_util.option('--type', required=True, help=u"""Monitored Resource Type.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--credentials-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The credential properties list. Credential property values will be either in plain text format or encrypted for encrypted credentials.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
 @cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
@@ -2242,7 +2242,7 @@ def create_monitored_resource_plain_text_credentials(ctx, from_json, wait_for_st
 
 
 @monitored_resource_task_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_task.command_name', 'create'), help=u"""Create a new stack monitoring resource task. \n[Command Reference](createMonitoredResourceTask)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment identifier.""")
 @cli_util.option('--task-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', help=u"""Name of the task. If not provided by default the following names will be taken OCI tasks - namespace plus timestamp.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2309,7 +2309,7 @@ def create_monitored_resource_task(ctx, from_json, wait_for_state, max_wait_seco
 
 
 @monitored_resource_task_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_task_import_oci_telemetry_resources_task_details.command_name', 'create-monitored-resource-task-import-oci-telemetry-resources-task-details'), help=u"""Create a new stack monitoring resource task. \n[Command Reference](createMonitoredResourceTask)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment identifier.""")
 @cli_util.option('--task-details-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["OCI_TELEMETRY_NATIVE", "OCI_TELEMETRY_PROMETHEUS", "OCI_TELEMETRY_TELEGRAF", "OCI_TELEMETRY_COLLECTD"]), help=u"""Source from where the metrics pushed to telemetry. Possible values:   * OCI_TELEMETRY_NATIVE      - The metrics are pushed to telemetry from OCI Native Services.   * OCI_TELEMETRY_PROMETHEUS  - The metrics are pushed to telemetry from Prometheus.   * OCI_TELEMETRY_TELEGRAF    - The metrics are pushed to telemetry from Telegraf receiver.   * OCI_TELEMETRY_COLLECTD    - The metrics are pushed to telemetry from CollectD receiver.""")
 @cli_util.option('--task-details-namespace', required=True, help=u"""Name space to be used for OCI Native service resources discovery.""")
 @cli_util.option('--name', help=u"""Name of the task. If not provided by default the following names will be taken OCI tasks - namespace plus timestamp.""")
@@ -2429,7 +2429,7 @@ def create_monitored_resource_task_import_oci_telemetry_resources_task_details(c
 
 
 @monitored_resource_task_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_task_update_agent_receiver_task_details.command_name', 'create-monitored-resource-task-update-agent-receiver-task-details'), help=u"""Create a new stack monitoring resource task. \n[Command Reference](createMonitoredResourceTask)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment identifier.""")
 @cli_util.option('--task-details-agent-id', required=True, help=u"""Management Agent Identifier [OCID].""")
 @cli_util.option('--task-details-handler-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TELEGRAF", "COLLECTD"]), help=u"""Type of the handler.""")
 @cli_util.option('--task-details-is-enable', required=True, type=click.BOOL, help=u"""True to enable the receiver and false to disable the receiver on the agent.""")
@@ -2507,7 +2507,7 @@ def create_monitored_resource_task_update_agent_receiver_task_details(ctx, from_
 
 
 @monitored_resource_task_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_task_update_resource_type_config_task_details.command_name', 'create-monitored-resource-task-update-resource-type-config-task-details'), help=u"""Create a new stack monitoring resource task. \n[Command Reference](createMonitoredResourceTask)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment identifier.""")
 @cli_util.option('--task-details-handler-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TELEGRAF", "COLLECTD"]), help=u"""Type of the handler.""")
 @cli_util.option('--task-details-resource-types-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A collection of resource type configuration details. User can provide availability proxy metrics list for resource types along with the telegraf/collectd handler configuration for the resource types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', help=u"""Name of the task. If not provided by default the following names will be taken OCI tasks - namespace plus timestamp.""")
@@ -2580,7 +2580,7 @@ def create_monitored_resource_task_update_resource_type_config_task_details(ctx,
 
 @monitored_resource_type_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_type.command_name', 'create'), help=u"""Creates a new monitored resource type. \n[Command Reference](createMonitoredResourceType)""")
 @cli_util.option('--name', required=True, help=u"""A unique monitored resource type name. The name must be unique across tenancy. Name can not be changed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--display-name', help=u"""Monitored resource type display name.""")
 @cli_util.option('--description', help=u"""A friendly description.""")
 @cli_util.option('--metric-namespace', help=u"""Metric namespace for resource type.""")
@@ -2663,7 +2663,7 @@ def create_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seco
 
 @monitored_resource_type_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_type_system_format_resource_type_metadata_details.command_name', 'create-monitored-resource-type-system-format-resource-type-metadata-details'), help=u"""Creates a new monitored resource type. \n[Command Reference](createMonitoredResourceType)""")
 @cli_util.option('--name', required=True, help=u"""A unique monitored resource type name. The name must be unique across tenancy. Name can not be changed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--display-name', help=u"""Monitored resource type display name.""")
 @cli_util.option('--description', help=u"""A friendly description.""")
 @cli_util.option('--metric-namespace', help=u"""Metric namespace for resource type.""")
@@ -2775,7 +2775,7 @@ def create_monitored_resource_type_system_format_resource_type_metadata_details(
 
 @monitoring_template_group.command(name=cli_util.override('stack_monitoring.create_monitoring_template.command_name', 'create'), help=u"""Creates a new monitoring template for a given compartment. \n[Command Reference](createMonitoringTemplate)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the monitoring template. It is unique and mutable in nature. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the monitoringTemplate.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment containing the monitoringTemplate.""")
 @cli_util.option('--destinations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of destinations for alarm notifications. Each destination is represented by the OCID of a related resource, such as a topic.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--members', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of members of this monitoring template""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description for the monitoring template. It does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -2857,7 +2857,7 @@ def create_monitoring_template(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @process_set_group.command(name=cli_util.override('stack_monitoring.create_process_set.command_name', 'create'), help=u"""API to create Process Set. \n[Command Reference](createProcessSet)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""Name of the Process Set.""")
 @cli_util.option('--specification', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3628,7 +3628,7 @@ def disable_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.disassociate_monitored_resources.command_name', 'disassociate'), help=u"""Removes associations between two monitored resources. \n[Command Reference](disassociateMonitoredResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--association-type', help=u"""Association type between source and destination resources.""")
 @cli_util.option('--source-resource-id', help=u"""Source Monitored Resource Identifier [OCID].""")
 @cli_util.option('--destination-resource-id', help=u"""Destination Monitored Resource Identifier [OCID].""")
@@ -4201,7 +4201,7 @@ def list_alarm_conditions(ctx, from_json, all_pages, page_size, monitoring_templ
 @cli_util.option('--metric-namespace', help=u"""A filter to return monitored resource types that has the matching namespace.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--baselineable-metric-id', help=u"""Identifier for the metric""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "namespace", "resourceGroup"]), help=u"""The field to sort by. Only one sort order may be provided. Default order is ascending.""")
@@ -4265,7 +4265,7 @@ def list_baselineable_metrics(ctx, from_json, all_pages, page_size, resource_gro
 
 
 @config_collection_group.command(name=cli_util.override('stack_monitoring.list_configs.command_name', 'list-configs'), help=u"""Get a list of configurations in a compartment. \n[Command Reference](listConfigs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["AUTO_PROMOTE", "COMPUTE_AUTO_ACTIVATE_PLUGIN", "LICENSE_AUTO_ASSIGN", "LICENSE_ENTERPRISE_EXTENSIBILITY", "ONBOARD"]), help=u"""A filter to return only configuration items for a given config type.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -4328,7 +4328,7 @@ def list_configs(ctx, from_json, all_pages, page_size, compartment_id, display_n
 
 
 @defined_monitoring_template_summary_group.command(name=cli_util.override('stack_monitoring.list_defined_monitoring_templates.command_name', 'list-defined-monitoring-templates'), help=u"""List Defined Monitoring Templates. \n[Command Reference](listDefinedMonitoringTemplates)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy(root) for which defined monitored templates should be listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the tenancy(root) for which defined monitored templates should be listed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["namespace"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for 'namespace' is ascending.""")
@@ -4448,7 +4448,7 @@ def list_discovery_job_logs(ctx, from_json, all_pages, page_size, discovery_job_
 
 
 @discovery_job_collection_group.command(name=cli_util.override('stack_monitoring.list_discovery_jobs.command_name', 'list-discovery-jobs'), help=u"""API to get the details of all Discovery Jobs. \n[Command Reference](listDiscoveryJobs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--name', help=u"""A filter to return only discovery jobs that match the entire resource name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -4505,7 +4505,7 @@ def list_discovery_jobs(ctx, from_json, all_pages, page_size, compartment_id, na
 
 
 @maintenance_window_group.command(name=cli_util.override('stack_monitoring.list_maintenance_windows.command_name', 'list'), help=u"""Returns a list of maintenance windows. \n[Command Reference](listMaintenanceWindows)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--name', help=u"""A filter to return maintenance windows that match exact resource name.""")
 @cli_util.option('--lifecycle-details', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "SCHEDULED", "COMPLETED"]), help=u"""A filter to return maintenance windows with matching lifecycleDetails.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "INACTIVE", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only maintenance windows with matching lifecycleState.""")
@@ -4572,7 +4572,7 @@ def list_maintenance_windows(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIME_CREATED", "ENABLED_ON_RESOURCE_COUNT"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for resources is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--resource-type', help=u"""A filter to return resources based on resource type.""")
 @cli_util.option('--name', help=u"""A filter to return resources based on name.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DRAFT", "PUBLISHED"]), help=u"""A filter to return resources based on status e.g. Draft or Published""")
@@ -4639,7 +4639,7 @@ def list_metric_extensions(ctx, from_json, all_pages, page_size, limit, page, so
 
 
 @monitored_resource_task_group.command(name=cli_util.override('stack_monitoring.list_monitored_resource_tasks.command_name', 'list'), help=u"""Returns a list of stack monitoring resource tasks in the compartment. \n[Command Reference](listMonitoredResourceTasks)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for which stack monitoring resource tasks should be listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment for which stack monitoring resource tasks should be listed.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources that matches with lifecycleState given.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeUpdated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for 'timeUpdated' is descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -4696,7 +4696,7 @@ def list_monitored_resource_tasks(ctx, from_json, all_pages, page_size, compartm
 
 
 @monitored_resource_type_group.command(name=cli_util.override('stack_monitoring.list_monitored_resource_types.command_name', 'list'), help=u"""Returns list of resource types accessible to the customer. There are two types of resource types - System resource types and User resource types. System resource types are available out of the box in the stack monitoring resource service and are accessible to all the tenant users. User resource types are created in the context of a tenancy and are visible only for the tenancy. By default, both System resource types and User resource types are returned. \n[Command Reference](listMonitoredResourceTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy for which monitored resource types should be listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the tenancy for which monitored resource types should be listed.""")
 @cli_util.option('--name', help=u"""A filter to return monitored resource types that match exactly with the resource type name given.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that matches with lifecycleState given.""")
 @cli_util.option('--is-exclude-system-types', type=click.BOOL, help=u"""A filter to exclude system resource types. If set to true, system resource types will be excluded.""")
@@ -4776,7 +4776,7 @@ def list_monitored_resource_types(ctx, from_json, all_pages, page_size, compartm
 
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.list_monitored_resources.command_name', 'list'), help=u"""Returns a list of monitored resources. \n[Command Reference](listMonitoredResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--name', help=u"""A filter to return resources that match exact resource name.""")
 @cli_util.option('--work-request-id', help=u"""A filter to return resources which were impacted as part of this work request identifier.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources with matching lifecycleState.""")
@@ -4839,7 +4839,7 @@ def list_monitored_resources(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @monitoring_template_group.command(name=cli_util.override('stack_monitoring.list_monitoring_templates.command_name', 'list'), help=u"""Returns a list of Monitoring Templates. \n[Command Reference](listMonitoringTemplates)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--monitoring-template-id', help=u"""A filter to return monitoring template based on input monitoringTemplateId""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -4913,7 +4913,7 @@ def list_monitoring_templates(ctx, from_json, all_pages, page_size, compartment_
 
 
 @process_set_collection_group.command(name=cli_util.override('stack_monitoring.list_process_sets.command_name', 'list-process-sets'), help=u"""API to get the details of all Process Sets. \n[Command Reference](listProcessSets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -5084,7 +5084,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_summary_collection_group.command(name=cli_util.override('stack_monitoring.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
@@ -5229,7 +5229,7 @@ def publish_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.request_monitored_resources_summarized_count.command_name', 'request-monitored-resources-summarized-count'), help=u"""Gets resource count based on the aggregation criteria specified using \"groupBy\" parameter. \n[Command Reference](requestMonitoredResourcesSummarizedCount)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["resourceType", "license", "parentResourceId", "namespace"]), help=u"""The field to group by. Default group by is 'resourceType'.""")
 @cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""Filter to return resource counts that match with the given licence edition.""")
 @cli_util.option('--resource-type', help=u"""A filter to return resource counts that match exact resource type.""")
@@ -5271,7 +5271,7 @@ def request_monitored_resources_summarized_count(ctx, from_json, compartment_id,
 @metric_extension_group.command(name=cli_util.override('stack_monitoring.request_summarized_metric_extensions_metrics.command_name', 'request-summarized-metric-extensions-metrics'), help=u"""Gets metric extension metrics count based on the aggregation criteria specified using request body. Either metricExtensionId or compartmentId must be passed even when no other filter property is passed. \n[Command Reference](requestSummarizedMetricExtensionsMetrics)""")
 @cli_util.option('--metric-extension-id', help=u"""The [OCID] of Metric Extension resource""")
 @cli_util.option('--resource-type', help=u"""Resource type to which Metric Extension applies""")
-@cli_util.option('--compartment-id', help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID]""")
 @cli_util.option('--contains-metric-with-name', help=u"""Filter for metric extension resources which contain the given metric name""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["COUNT"]), help=u"""Result will ne sorted by this parameter value""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Sort orders""")
@@ -5322,7 +5322,7 @@ def request_summarized_metric_extensions_metrics(ctx, from_json, metric_extensio
 @metric_extension_group.command(name=cli_util.override('stack_monitoring.request_summarized_metric_extensions_resources.command_name', 'request-summarized-metric-extensions-resources'), help=u"""Gets metric extension resources count based on the aggregation criteria specified using request body. Either metricExtensionId or compartmentId should be passed, if no other property is passed. \n[Command Reference](requestSummarizedMetricExtensionsResources)""")
 @cli_util.option('--metric-extension-id', help=u"""The [OCID] of Metric Extension resource""")
 @cli_util.option('--resource-type', help=u"""Resource type to which Metric Extension applies""")
-@cli_util.option('--compartment-id', help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID]""")
 @cli_util.option('--association-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Filter to return metric extensions based on input enable status i.e. Enabled/Disabled""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of Monitored Resource""")
 @cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["METRIC_EXTENSION_ID"]), help=u"""The field to group by""")
@@ -5434,7 +5434,7 @@ def retry_failed_maintenance_window_operation(ctx, from_json, wait_for_state, ma
 
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_associated_resources.command_name', 'search-associated-resources'), help=u"""List all associated resources recursively up-to a specified level, for the monitored resources of type specified. \n[Command Reference](searchAssociatedResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--resource-type', help=u"""A filter to return associated resources that match resources of type. Either resourceId or resourceType should be provided.""")
 @cli_util.option('--resource-id', help=u"""Monitored resource identifier for which the associated resources should be fetched. Either resourceId or resourceType should be provided.""")
 @cli_util.option('--limit-level', type=click.INT, help=u"""The field which determines the depth of hierarchy while searching for associated resources. Possible values - 0 for all levels. And positive number to indicate different levels. Default value is 1, which indicates 1st level associations.""")
@@ -5488,7 +5488,7 @@ def search_associated_resources(ctx, from_json, compartment_id, resource_type, r
 
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_monitored_resource_associations.command_name', 'search-monitored-resource-associations'), help=u"""Search associations in the given compartment based on the search criteria. \n[Command Reference](searchMonitoredResourceAssociations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--source-resource-id', help=u"""Source Monitored Resource Identifier [OCID].""")
 @cli_util.option('--source-resource-name', help=u"""Source Monitored Resource Name.""")
 @cli_util.option('--source-resource-type', help=u"""Source Monitored Resource Type.""")
@@ -5605,7 +5605,7 @@ def search_monitored_resource_members(ctx, from_json, monitored_resource_id, des
 
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_monitored_resources.command_name', 'search'), help=u"""Gets a list of all monitored resources in a compartment for the given search criteria. \n[Command Reference](searchMonitoredResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--compartment-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Multiple compartment identifiers [OCID].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--lifecycle-states', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Multiple lifecycle states filter.
 
@@ -6086,8 +6086,8 @@ def update_and_propagate_tags(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--is-out-of-box', required=True, type=click.BOOL, help=u"""Is the metric created out of box, default false""")
 @cli_util.option('--baselineable-metric-id', required=True, help=u"""Identifier for the metric""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""The current lifecycle state of the metric extension""")
-@cli_util.option('--tenancy-id', help=u"""OCID of the tenancy""")
-@cli_util.option('--compartment-id', help=u"""OCID of the compartment""")
+@cli_util.option('--tenancy-id', type=custom_types.CLI_OCID, help=u"""OCID of the tenancy""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""OCID of the compartment""")
 @cli_util.option('--resource-type', help=u"""Resource type of the metric""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

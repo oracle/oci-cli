@@ -34,7 +34,7 @@ rover_entitlement_root_group.add_command(rover_entitlement_group)
 
 @rover_entitlement_group.command(name=cli_util.override('rover_entitlement.change_rover_entitlement_compartment.command_name', 'change-compartment'), help=u"""Moves an entitlement into a different compartment. \n[Command Reference](changeRoverEntitlementCompartment)""")
 @cli_util.option('--rover-entitlement-id', required=True, help=u"""ID of the rover node or cluster entitlement""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  of the compartment into which the resources should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  of the compartment into which the resources should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -64,7 +64,7 @@ def change_rover_entitlement_compartment(ctx, from_json, rover_entitlement_id, c
 
 
 @rover_entitlement_group.command(name=cli_util.override('rover_entitlement.create_rover_entitlement.command_name', 'create'), help=u"""Create the Entitlement to use a Rover Device. It requires some offline process of review and signatures before request is granted. \n[Command Reference](createRoverEntitlement)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the RoverEntitlement.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment containing the RoverEntitlement.""")
 @cli_util.option('--requestor-name', required=True, help=u"""Requestor name for the entitlement.""")
 @cli_util.option('--requestor-email', required=True, help=u"""Requestor email for the entitlement.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -214,7 +214,7 @@ def delete_rover_entitlement(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @rover_entitlement_group.command(name=cli_util.override('rover_entitlement.get_rover_entitlement.command_name', 'get'), help=u"""Describes the Rover Device Entitlement in detail \n[Command Reference](getRoverEntitlement)""")
 @cli_util.option('--rover-entitlement-id', required=True, help=u"""ID of the rover node or cluster entitlement""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -237,7 +237,7 @@ def get_rover_entitlement(ctx, from_json, rover_entitlement_id, compartment_id):
 
 
 @rover_entitlement_group.command(name=cli_util.override('rover_entitlement.list_rover_entitlements.command_name', 'list'), help=u"""Returns a list of RoverEntitlements. \n[Command Reference](listRoverEntitlements)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""filtering by Rover Device Entitlement id""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")

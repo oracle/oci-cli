@@ -111,7 +111,7 @@ dns_root_group.add_command(records_group)
 
 Zones in the default view are not moved. VCN-dedicated resolvers are initially created in the same compartment as their corresponding VCN, but can then be moved to a different compartment. \n[Command Reference](changeResolverCompartment)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resolver, along with its protected default view and resolver endpoints, should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resolver, along with its protected default view and resolver endpoints, should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -183,7 +183,7 @@ def change_resolver_compartment(ctx, from_json, wait_for_state, max_wait_seconds
 
 @steering_policy_group.command(name=cli_util.override('dns.change_steering_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a steering policy into a different compartment. \n[Command Reference](changeSteeringPolicyCompartment)""")
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the steering policy should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the steering policy should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -255,7 +255,7 @@ def change_steering_policy_compartment(ctx, from_json, wait_for_state, max_wait_
 
 @tsig_key_group.command(name=cli_util.override('dns.change_tsig_key_compartment.command_name', 'change-compartment'), help=u"""Moves a TSIG key into a different compartment. \n[Command Reference](changeTsigKeyCompartment)""")
 @cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the TSIG key should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the TSIG key should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -291,7 +291,7 @@ def change_tsig_key_compartment(ctx, from_json, tsig_key_id, compartment_id, if_
 
 To change the compartment of a protected view, change the compartment of its corresponding resolver. \n[Command Reference](changeViewCompartment)""")
 @cli_util.option('--view-id', required=True, help=u"""The OCID of the target view.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the view should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the view should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -367,7 +367,7 @@ Protected zones cannot have their compartment changed. When the zone name is pro
 
 **Note:** All SteeringPolicyAttachment objects associated with this zone will also be moved into the provided compartment. \n[Command Reference](changeZoneCompartment)""")
 @cli_util.option('--zone-id', required=True, help=u"""The OCID of the target zone.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the zone should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the zone should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -515,7 +515,7 @@ def create_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--name', required=True, help=u"""The name of the resolver endpoint. Must be unique, case-insensitive, within the resolver.""")
 @cli_util.option('--is-forwarding', required=True, type=click.BOOL, help=u"""A Boolean flag indicating whether or not the resolver endpoint is for forwarding.""")
 @cli_util.option('--is-listening', required=True, type=click.BOOL, help=u"""A Boolean flag indicating whether or not the resolver endpoint is for listening.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of a subnet. Must be part of the VCN that the resolver is attached to.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of a subnet. Must be part of the VCN that the resolver is attached to.""")
 @cli_util.option('--forwarding-address', help=u"""An IP address from which forwarded queries may be sent. For VNIC endpoints, this IP address must be part of the subnet and will be assigned by the system if unspecified when isForwarding is true.""")
 @cli_util.option('--listening-address', help=u"""An IP address to listen to queries on. For VNIC endpoints this IP address must be part of the subnet and will be assigned by the system if unspecified when isListening is true.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security group OCIDs for the resolver endpoint. These must be part of the VCN that the resolver endpoint is a part of.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -588,7 +588,7 @@ def create_resolver_endpoint_create_resolver_vnic_endpoint_details(ctx, from_jso
 
 
 @steering_policy_group.command(name=cli_util.override('dns.create_steering_policy.command_name', 'create'), help=u"""Creates a new steering policy in the specified compartment. For more information on creating policies with templates, see [Traffic Management API Guide]. \n[Command Reference](createSteeringPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the steering policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment containing the steering policy.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the steering policy. Does not have to be unique and can be changed. Avoid entering confidential information.""")
 @cli_util.option('--template', required=True, type=custom_types.CliCaseInsensitiveChoice(["FAILOVER", "LOAD_BALANCE", "ROUTE_BY_GEO", "ROUTE_BY_ASN", "ROUTE_BY_IP", "CUSTOM"]), help=u"""A set of predefined rules based on the desired purpose of the steering policy. Each template utilizes Traffic Management's rules in a different order to produce the desired results when answering DNS queries.
 
@@ -764,7 +764,7 @@ def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 @tsig_key_group.command(name=cli_util.override('dns.create_tsig_key.command_name', 'create'), help=u"""Creates a new TSIG key in the specified compartment. There is no `opc-retry-token` header since TSIG key names must be globally unique. \n[Command Reference](createTsigKey)""")
 @cli_util.option('--algorithm', required=True, help=u"""TSIG key algorithms are encoded as domain names, but most consist of only one non-empty label, which is not required to be explicitly absolute. Applicable algorithms include: hmac-sha1, hmac-sha224, hmac-sha256, hmac-sha512. For more information on these algorithms, see [RFC 4635].""")
 @cli_util.option('--name', required=True, help=u"""A globally unique domain name identifying the key for a given pair of hosts.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the TSIG key.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment containing the TSIG key.""")
 @cli_util.option('--secret', required=True, help=u"""A base64 string encoding the binary shared secret.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -832,7 +832,7 @@ def create_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @view_group.command(name=cli_util.override('dns.create_view.command_name', 'create'), help=u"""Creates a new view in the specified compartment. \n[Command Reference](createView)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the owning compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the owning compartment.""")
 @cli_util.option('--display-name', help=u"""The display name of the view.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -914,7 +914,7 @@ Unicode characters will be converted into punycode, see [RFC 3492].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
  **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
@@ -1016,7 +1016,7 @@ Metrics are emitted in the `oci_dns` namespace daily for each `KskDnssecKeyVersi
 Enabling DNSSEC results in additional records in DNS responses which increases their size and can cause higher response latency.
 
 For more information, see [DNSSEC].""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
@@ -1116,7 +1116,7 @@ Unicode characters will be converted into punycode, see [RFC 3492].""")
 
  **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dynect-migration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
@@ -1187,7 +1187,7 @@ def create_zone_create_migrated_dynect_zone_details(ctx, from_json, wait_for_sta
 
 
 @zone_group.command(name=cli_util.override('dns.create_zone_from_zone_file.command_name', 'create-zone-from-zone-file'), help=u"""Creates a new zone from a zone file in the specified compartment. Not supported for private zones. \n[Command Reference](createZoneFromZoneFile)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--create-zone-from-zone-file-details', required=True, help=u"""The zone file contents.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
@@ -1226,7 +1226,7 @@ When the zone name is provided as a path parameter and `PRIVATE` is used for the
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.confirm_delete_option
@@ -1342,7 +1342,7 @@ When the zone name is provided as a path parameter and `PRIVATE` is used for the
 @cli_util.option('--rtype', required=True, help=u"""The type of the target RRSet within the target zone.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
@@ -1650,7 +1650,7 @@ A `204` response indicates that the zone has been successfully deleted. Protecte
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.confirm_delete_option
@@ -1730,7 +1730,7 @@ The results are sorted by `rtype` in alphabetical order by default. You can opti
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["rtype", "ttl"]), help=u"""The field by which to sort records.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1886,7 +1886,7 @@ The results are sorted by `recordHash` by default. When the zone name is provide
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--zone-version', help=u"""The version of the zone for which data is requested.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
@@ -2096,7 +2096,7 @@ When the zone name is provided as a path parameter and `PRIVATE` is used for the
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2200,7 +2200,7 @@ The results are sorted by `domain` in alphabetical order by default. For more in
 @cli_util.option('--rtype', help=u"""Search by record type. Will match any record whose [type] (case-insensitive) equals the provided value.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["domain", "rtype", "ttl"]), help=u"""The field by which to sort records.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
@@ -2343,7 +2343,7 @@ def list_resolver_endpoints(ctx, from_json, all_pages, page_size, resolver_id, n
 @resolver_group.command(name=cli_util.override('dns.list_resolvers.command_name', 'list'), help=u"""Gets a list of all resolvers within a compartment.
 
 The collection can be filtered by display name, id, or lifecycle state. It can be sorted on creation time or displayName both in ASC or DESC order. Note that when no lifecycleState query parameter is provided, the collection does not include resolvers in the DELETED lifecycleState to be consistent with other operations of the API. \n[Command Reference](listResolvers)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--display-name', help=u"""The displayName of a resource.""")
 @cli_util.option('--id', help=u"""The OCID of a resource.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -2409,7 +2409,7 @@ def list_resolvers(ctx, from_json, all_pages, page_size, compartment_id, display
 
 
 @steering_policy_group.command(name=cli_util.override('dns.list_steering_policies.command_name', 'list'), help=u"""Gets a list of all steering policies in the specified compartment. \n[Command Reference](listSteeringPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--id', help=u"""The OCID of a resource.""")
@@ -2490,7 +2490,7 @@ def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @steering_policy_attachment_group.command(name=cli_util.override('dns.list_steering_policy_attachments.command_name', 'list'), help=u"""Lists the steering policy attachments in the specified compartment. \n[Command Reference](listSteeringPolicyAttachments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--id', help=u"""The OCID of a resource.""")
@@ -2574,7 +2574,7 @@ def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compa
 
 
 @tsig_key_group.command(name=cli_util.override('dns.list_tsig_keys.command_name', 'list'), help=u"""Gets a list of all TSIG keys in the specified compartment. \n[Command Reference](listTsigKeys)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--id', help=u"""The OCID of a resource.""")
@@ -2642,7 +2642,7 @@ def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, 
 @view_group.command(name=cli_util.override('dns.list_views.command_name', 'list'), help=u"""Gets a list of all views within a compartment.
 
 The collection can be filtered by display name, id, or lifecycle state. It can be sorted on creation time or displayName both in ASC or DESC order. Note that when no lifecycleState query parameter is provided, the collection does not include views in the DELETED lifecycleState to be consistent with other operations of the API. \n[Command Reference](listViews)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--display-name', help=u"""The displayName of a resource.""")
 @cli_util.option('--id', help=u"""The OCID of a resource.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -2708,7 +2708,7 @@ def list_views(ctx, from_json, all_pages, page_size, compartment_id, display_nam
 
 
 @zone_transfer_server_group.command(name=cli_util.override('dns.list_zone_transfer_servers.command_name', 'list'), help=u"""Gets a list of IP addresses of OCI nameservers for inbound and outbound transfer of zones in the specified compartment (which must be the root compartment of a tenancy) that transfer zone data with external master or downstream nameservers. \n[Command Reference](listZoneTransferServers)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -2743,7 +2743,7 @@ def list_zone_transfer_servers(ctx, from_json, all_pages, compartment_id, scope,
 @zone_group.command(name=cli_util.override('dns.list_zones.command_name', 'list'), help=u"""Gets a list of all zones in the specified compartment.
 
 The collection can be filtered by name, time created, scope, associated view, and zone type. Filtering by view is only supported for private zones. \n[Command Reference](listZones)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--name', help=u"""A case-sensitive filter for zone names. Will match any zone with a name that equals the provided value.""")
@@ -2838,7 +2838,7 @@ This option is a JSON list with items of type RecordOperation.  For documentatio
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
@@ -2895,7 +2895,7 @@ This option is a JSON list with items of type RecordOperation.  For documentatio
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
@@ -2954,7 +2954,7 @@ This option is a JSON list with items of type RecordOperation.  For documentatio
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
@@ -3164,7 +3164,7 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -3467,7 +3467,7 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -3908,7 +3908,7 @@ This option is a JSON list with items of type ExternalDownstream.  For documenta
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -4002,7 +4002,7 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)

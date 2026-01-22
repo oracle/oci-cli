@@ -537,7 +537,7 @@ def get_windows_update(ctx, from_json, windows_update_id):
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.install_all_windows_updates_on_managed_instances_in_compartment.command_name', 'install-all-windows-updates-on-managed-instances-in-compartment'), help=u"""Installs all of the available Windows updates for managed instances in a compartment. This applies only to standalone Windows instances. This will not update instances that belong to a group. \n[Command Reference](installAllWindowsUpdatesOnManagedInstancesInCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--windows-update-types', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "ALL"]), help=u"""The types of Windows updates to be installed.""")
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -813,7 +813,7 @@ def install_windows_updates_on_managed_instance(ctx, from_json, wait_for_state, 
 @cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -883,7 +883,7 @@ def list_managed_instance_available_packages(ctx, from_json, all_pages, page_siz
 @cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -956,7 +956,7 @@ def list_managed_instance_available_software_sources(ctx, from_json, all_pages, 
 @cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--is-installable', type=custom_types.CliCaseInsensitiveChoice(["INSTALLABLE", "NOT_INSTALLABLE"]), help=u"""Indicates if the update can be installed by the OS Management Hub service.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -1035,7 +1035,7 @@ def list_managed_instance_available_windows_updates(ctx, from_json, all_pages, p
 
 Example: `ELSA-2020-5804`""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that may partially match the erratum name given.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -1113,7 +1113,7 @@ Example: 2017-07-14T02:40:00.000Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_
 @cli_util.option('--time-install-date-end', type=custom_types.CLI_DATETIME, help=u"""A filter to return only packages that were installed on or before the date provided, in ISO 8601 format.
 
 Example: 2017-07-14T02:40:00.000Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -1188,7 +1188,7 @@ def list_managed_instance_installed_packages(ctx, from_json, all_pages, page_siz
 @cli_util.option('--name', multiple=True, help=u"""A filter based on the unique identifier for the Windows update. Note that this is not an OCID, but is a unique identifier assigned by Microsoft. Example: '6981d463-cd91-4a26-b7c4-ea4ded9183ed'""")
 @cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -1258,7 +1258,7 @@ def list_managed_instance_installed_windows_updates(ctx, from_json, all_pages, p
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_modules.command_name', 'list-managed-instance-modules'), help=u"""Retrieves a list of modules, along with streams of the modules, from a managed instance. Filters may be applied to select a subset of modules based on the filter criteria. \n[Command Reference](listManagedInstanceModules)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--name', help=u"""The resource name.""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that may partially match the name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -1364,7 +1364,7 @@ def list_managed_instance_modules(ctx, from_json, all_pages, page_size, wait_for
 @cli_util.option('--advisory-name', multiple=True, help=u"""The assigned erratum name. It's unique and not changeable.
 
 Example: `ELSA-2020-5804`""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -1435,7 +1435,7 @@ def list_managed_instance_updatable_packages(ctx, from_json, all_pages, page_siz
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instances.command_name', 'list'), help=u"""Lists managed instances that match the specified compartment or managed instance OCID. Filter the list against a variety of criteria including but not limited to its name, status, architecture, and OS version. \n[Command Reference](listManagedInstances)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--managed-instance-id', help=u"""The [OCID] of the managed instance. This filter returns resources associated with this managed instance.""")
@@ -1572,7 +1572,7 @@ def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @windows_update_collection_group.command(name=cli_util.override('managed_instance.list_windows_updates.command_name', 'list-windows-updates'), help=u"""Lists Windows updates that have been reported to the service. \n[Command Reference](listWindowsUpdates)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This parameter is required and returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment. This parameter is required and returns only resources contained within the specified compartment.""")
 @cli_util.option('--classification-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER"]), multiple=True, help=u"""A filter to return only packages that match the given update classification type.""")
 @cli_util.option('--name', multiple=True, help=u"""A filter based on the unique identifier for the Windows update. Note that this is not an OCID, but is a unique identifier assigned by Microsoft. Example: '6981d463-cd91-4a26-b7c4-ea4ded9183ed'""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
@@ -2061,7 +2061,7 @@ def switch_module_stream_on_managed_instance(ctx, from_json, wait_for_state, max
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.update_all_packages_on_managed_instances_in_compartment.command_name', 'update-all-packages-on-managed-instances-in-compartment'), help=u"""Install all of the available package updates for all of the managed instances in a compartment. This applies only to standalone non-Windows instances. This will not update instances that belong to a group or lifecycle environment. \n[Command Reference](updateAllPackagesOnManagedInstancesInCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--update-types', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "KSPLICE_KERNEL", "KSPLICE_USERSPACE", "ALL"]), help=u"""The types of updates to be applied.""")
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

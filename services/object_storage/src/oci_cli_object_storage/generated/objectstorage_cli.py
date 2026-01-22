@@ -382,7 +382,7 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @bucket_group.command(name=cli_util.override('os.create_bucket.command_name', 'create'), help=u"""Creates a bucket in the given namespace with a bucket name and optional user-defined metadata. Avoid entering confidential information in bucket names. \n[Command Reference](createBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--name', required=True, help=u"""The name of the bucket. Valid characters are uppercase or lowercase letters, numbers, hyphens, underscores, and periods. Bucket names must be unique within an Object Storage namespace. Avoid entering confidential information. example: Example: my-new-bucket1""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to create the bucket.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to create the bucket.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Arbitrary string, up to 4KB, of keys and values for user-defined metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--public-access-type', type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead", "ObjectReadWithoutList"]), help=u"""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations. When `ObjectReadWithoutList` is enabled on the bucket, public access is allowed for the `GetObject` and `HeadObject` operations.""")
 @cli_util.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "Archive"]), help=u"""The type of storage tier of this bucket. A bucket is set to 'Standard' tier by default, which means the bucket will be put in the standard storage tier. When 'Archive' tier type is set explicitly, the bucket is put in the Archive Storage tier. The 'storageTier' property is immutable after bucket is created.""")
@@ -577,8 +577,8 @@ def create_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
 @private_endpoint_group.command(name=cli_util.override('os.create_private_endpoint.command_name', 'create'), help=u"""Create a PrivateEndpoint. \n[Command Reference](createPrivateEndpoint)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--name', required=True, help=u"""This name associated with the endpoint. Valid characters are uppercase or lowercase letters, numbers, hyphens,  underscores, and periods. Example: my-new-private-endpoint1""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to create the Private Endpoint.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the customer's subnet where the private endpoint VNIC will reside.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to create the Private Endpoint.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the customer's subnet where the private endpoint VNIC will reside.""")
 @cli_util.option('--prefix', required=True, help=u"""A prefix to use for the private endpoint. The customer VCN's DNS records are updated with this prefix. The prefix input from the customer will be the first sub-domain in the endpointFqdn. Example: If the prefix chosen is \"abc\", then the endpointFqdn will be 'abc.private.objectstorage.<region>.oraclecloud.com'""")
 @cli_util.option('--access-targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of targets that can be accessed by the private endpoint.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--additional-prefixes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of additional prefix that you can provide along with any other prefix. These resulting endpointFqdn's are added to the customer VCN's DNS record.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -940,7 +940,7 @@ def delete_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @replication_group.command(name=cli_util.override('os.delete_replication_policy.command_name', 'delete-replication-policy'), help=u"""Deletes the replication policy associated with the source bucket. \n[Command Reference](deleteReplicationPolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--replication-id', required=True, help=u"""The ID of the replication policy.""")
+@cli_util.option('--replication-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the replication policy.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1045,7 +1045,7 @@ def get_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_ma
 @namespace_group.command(name=cli_util.override('os.get_namespace.command_name', 'get'), help=u"""Each Oracle Cloud Infrastructure tenant is assigned one unique and uneditable Object Storage namespace. The namespace is a system-generated string assigned during account creation. For some older tenancies, the namespace string may be the tenancy name in all lower-case letters. You cannot edit a namespace.
 
 GetNamespace returns the name of the Object Storage namespace for the user making the request. If an optional compartmentId query parameter is provided, GetNamespace returns the namespace name of the corresponding tenancy, provided the user has access to it. \n[Command Reference](getNamespace)""")
-@cli_util.option('--compartment-id', help=u"""This is an optional field representing either the tenancy [OCID] or the compartment [OCID] within the tenancy whose Object Storage namespace is to be retrieved.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""This is an optional field representing either the tenancy [OCID] or the compartment [OCID] within the tenancy whose Object Storage namespace is to be retrieved.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1277,7 +1277,7 @@ def get_private_endpoint(ctx, from_json, namespace_name, pe_name, if_match, if_n
 @replication_group.command(name=cli_util.override('os.get_replication_policy.command_name', 'get-replication-policy'), help=u"""Get the replication policy. \n[Command Reference](getReplicationPolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--replication-id', required=True, help=u"""The ID of the replication policy.""")
+@cli_util.option('--replication-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the replication policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1449,7 +1449,7 @@ ListBuckets returns a BucketSummary containing at most 1000 buckets. To paginate
 
 To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies]. \n[Command Reference](listBuckets)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list buckets.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list buckets.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["tags"]), multiple=True, help=u"""Bucket summary in list of buckets includes the 'namespace', 'name', 'compartmentId', 'createdBy', 'timeCreated', and 'etag' fields. This parameter can also include 'tags' (freeformTags and definedTags). The only supported value of this parameter is 'tags' for now. Example 'tags'.""")
@@ -1828,7 +1828,7 @@ def list_preauthenticated_requests(ctx, from_json, all_pages, page_size, namespa
 
 @private_endpoint_group.command(name=cli_util.override('os.list_private_endpoints.command_name', 'list'), help=u"""Gets a list of all PrivateEndpointSummary in a compartment associated with a namespace. To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies]. \n[Command Reference](listPrivateEndpoints)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list buckets.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list buckets.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["tags"]), multiple=True, help=u"""PrivateEndpoint summary in list of PrivateEndpoints includes the 'namespace', 'name', 'compartmentId', 'createdBy', 'timeCreated', 'timeModified' and 'etag' fields. This parameter can also include 'tags' (freeformTags and definedTags). The only supported value of this parameter is 'tags' for now. Example 'tags'.""")
@@ -2144,7 +2144,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('os.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list buckets.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list buckets.""")
 @cli_util.option('--private-endpoint-name', help=u"""The name of the privateEndpoint for which to list work requests.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -2596,7 +2596,7 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, ho
 Use UpdateBucket to move a bucket from one compartment to another within the same tenancy. Supply the compartmentID of the compartment that you want to move the bucket to. For more information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](updateBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--compartment-id', help=u"""The compartmentId for the compartment to move the bucket to.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartmentId for the compartment to move the bucket to.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Arbitrary string, up to 4KB, of keys and values for user-defined metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--public-access-type', type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead", "ObjectReadWithoutList"]), help=u"""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations. When `ObjectReadWithoutList` is enabled on the bucket, public access is allowed for the `GetObject` and `HeadObject` operations.""")
 @cli_util.option('--object-events-enabled', type=click.BOOL, help=u"""Whether or not events are emitted for object state changes in this bucket. By default, `objectEventsEnabled` is set to `false`. Set `objectEventsEnabled` to `true` to emit events for object state changes. For more information about events, see [Overview of Events].""")

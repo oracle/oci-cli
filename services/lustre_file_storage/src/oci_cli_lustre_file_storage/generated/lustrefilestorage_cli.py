@@ -105,7 +105,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @lustre_file_system_group.command(name=cli_util.override('lfs.change_lustre_file_system_compartment.command_name', 'change-compartment'), help=u"""Moves a Lustre file system into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeLustreFileSystemCompartment)""")
 @cli_util.option('--lustre-file-system-id', required=True, help=u"""The [OCID] of the Lustre file system.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Lustre file system to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Lustre file system to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -166,7 +166,7 @@ def change_lustre_file_system_compartment(ctx, from_json, wait_for_state, max_wa
 
 @object_storage_link_group.command(name=cli_util.override('lfs.change_object_storage_link_compartment.command_name', 'change-compartment'), help=u"""Moves an Object Storage link into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeObjectStorageLinkCompartment)""")
 @cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Object Storage link to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Object Storage link to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -222,13 +222,13 @@ def change_object_storage_link_compartment(ctx, from_json, wait_for_state, max_w
 
 
 @lustre_file_system_group.command(name=cli_util.override('lfs.create_lustre_file_system.command_name', 'create'), help=u"""Creates a Lustre file system. \n[Command Reference](createLustreFileSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the Lustre file system.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the Lustre file system.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain the file system is in. May be unset as a blank or NULL value.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--file-system-name', required=True, help=u"""The Lustre file system name. This is used in mount commands and other aspects of the client command line interface. The file system name is limited to 8 characters. Allowed characters are lower and upper case English letters, numbers, and '_'. If you have multiple Lustre file systems mounted on the same clients, this name can help distinguish them.""")
 @cli_util.option('--capacity-in-gbs', required=True, type=click.INT, help=u"""Capacity of the Lustre file system in GB. You can increase capacity only in multiples of 5 TB.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the Lustre file system is in.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the Lustre file system is in.""")
 @cli_util.option('--performance-tier', required=True, type=custom_types.CliCaseInsensitiveChoice(["MBPS_PER_TB_125", "MBPS_PER_TB_250", "MBPS_PER_TB_500", "MBPS_PER_TB_1000"]), help=u"""The Lustre file system performance tier. A value of `MBPS_PER_TB_125` represents 125 megabytes per second per terabyte.""")
 @cli_util.option('--root-squash-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
@@ -243,7 +243,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Network Security Group [OCIDs] associated with this lustre file system. A maximum of 5 is allowed. Setting this to an empty array after the list is created removes the lustre file system from all NSGs. For more information about NSGs, see [Security Rules].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the KMS key used to encrypt the encryption keys associated with this file system.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group in which the Lustre file system exists.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the cluster placement group in which the Lustre file system exists.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -323,7 +323,7 @@ def create_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @object_storage_link_group.command(name=cli_util.override('lfs.create_object_storage_link.command_name', 'create'), help=u"""Creates an Object Storage link. \n[Command Reference](createObjectStorageLink)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the Object Storage link.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the Object Storage link.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain that the Lustre file system is in. May be unset as a blank or NULL value.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -614,7 +614,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @lustre_file_system_collection_group.command(name=cli_util.override('lfs.list_lustre_file_systems.command_name', 'list-lustre-file-systems'), help=u"""Gets a list of Lustre file systems. \n[Command Reference](listLustreFileSystems)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -683,7 +683,7 @@ def list_lustre_file_systems(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @object_storage_link_collection_group.command(name=cli_util.override('lfs.list_object_storage_links.command_name', 'list-object-storage-links'), help=u"""Gets a list of Object Storage links. \n[Command Reference](listObjectStorageLinks)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -932,7 +932,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('lfs.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

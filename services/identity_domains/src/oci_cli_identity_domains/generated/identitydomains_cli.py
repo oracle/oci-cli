@@ -5223,7 +5223,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["SUCCESS", "FAILURE"]), help=u"""Validation status returned in the response
 
 **SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - mutability: readOnly  - returned: default  - uniqueness: none  - idcsSearchable: false""")
-@cli_util.option('--user-id', help=u"""User guid for whom the validation has initiated. Optional.
+@cli_util.option('--user-id', type=custom_types.CLI_OCID, help=u"""User guid for whom the validation has initiated. Optional.
 
 **SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - mutability: readWrite  - returned: default  - uniqueness: none  - idcsSearchable: false""")
 @cli_util.option('--user-name', help=u"""User name for whom the validation has initiated
@@ -6143,7 +6143,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 **Added In:** 2102181953
 
 **SCIM++ Properties:**  - caseExact: false  - multiValued: false  - idcsSearchable: true  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
-@cli_util.option('--user-id', help=u"""User Support User Id
+@cli_util.option('--user-id', type=custom_types.CLI_OCID, help=u"""User Support User Id
 
 **Added In:** 2102181953
 
@@ -9536,7 +9536,7 @@ def delete_grant(ctx, from_json, grant_id, authorization, resource_type_schema_v
 @group_group.command(name=cli_util.override('identity_domains.delete_group.command_name', 'delete'), help=u"""Delete a group.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteGroup)""")
-@cli_util.option('--group-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
 @cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
 @cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
@@ -10148,7 +10148,7 @@ def delete_password_policy(ctx, from_json, password_policy_id, authorization, re
 @policy_group.command(name=cli_util.override('identity_domains.delete_policy.command_name', 'delete'), help=u"""Delete a Policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deletePolicy)""")
-@cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--policy-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
 @cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
 @cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
@@ -10364,7 +10364,7 @@ def delete_social_identity_provider(ctx, from_json, social_identity_provider_id,
 @user_group.command(name=cli_util.override('identity_domains.delete_user.command_name', 'delete'), help=u"""Delete a user.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteUser)""")
-@cli_util.option('--user-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--user-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
 @cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
 @cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
@@ -11066,7 +11066,7 @@ def get_grant(ctx, from_json, grant_id, authorization, resource_type_schema_vers
 @group_group.command(name=cli_util.override('identity_domains.get_group.command_name', 'get'), help=u"""Get a group. <b>Important:</b> The Group SEARCH and GET operations on users and members will throw an exception if the response has more than 10,000 members. To avoid the exception, use the pagination filter to GET or SEARCH group members.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getGroup)""")
-@cli_util.option('--group-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
 @cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
 @cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
@@ -11905,7 +11905,7 @@ def get_password_policy(ctx, from_json, password_policy_id, authorization, resou
 @policy_group.command(name=cli_util.override('identity_domains.get_policy.command_name', 'get'), help=u"""Get a Policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getPolicy)""")
-@cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--policy-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
 @cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
 @cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
@@ -12208,7 +12208,7 @@ def get_social_identity_provider(ctx, from_json, social_identity_provider_id, au
 @user_group.command(name=cli_util.override('identity_domains.get_user.command_name', 'get'), help=u"""Get a user.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getUser)""")
-@cli_util.option('--user-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--user-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
 @cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
 @cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
@@ -16977,7 +16977,7 @@ def patch_grant(ctx, from_json, grant_id, schemas, operations, authorization, re
 @group_group.command(name=cli_util.override('identity_domains.patch_group.command_name', 'patch'), help=u"""Update a group.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchGroup)""")
-@cli_util.option('--group-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
@@ -17764,7 +17764,7 @@ def patch_password_policy(ctx, from_json, password_policy_id, schemas, operation
 @policy_group.command(name=cli_util.override('identity_domains.patch_policy.command_name', 'patch'), help=u"""Update a Policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchPolicy)""")
-@cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--policy-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
@@ -18166,7 +18166,7 @@ def patch_social_identity_provider(ctx, from_json, social_identity_provider_id, 
 @user_group.command(name=cli_util.override('identity_domains.patch_user.command_name', 'patch'), help=u"""Update a user.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchUser)""")
-@cli_util.option('--user-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--user-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
@@ -20520,7 +20520,7 @@ def put_dynamic_resource_group(ctx, from_json, force, dynamic_resource_group_id,
 @group_group.command(name=cli_util.override('identity_domains.put_group.command_name', 'put'), help=u"""Replace a group.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putGroup)""")
-@cli_util.option('--group-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -22945,7 +22945,7 @@ def put_password_policy(ctx, from_json, force, password_policy_id, schemas, name
 @policy_group.command(name=cli_util.override('identity_domains.put_policy.command_name', 'put'), help=u"""Replace a Policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putPolicy)""")
-@cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--policy-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -24532,7 +24532,7 @@ def put_social_identity_provider(ctx, from_json, force, social_identity_provider
 @user_group.command(name=cli_util.override('identity_domains.put_user.command_name', 'put'), help=u"""Replace a user.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putUser)""")
-@cli_util.option('--user-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--user-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the resource""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

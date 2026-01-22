@@ -69,7 +69,7 @@ zpr_root_group.add_command(zpr_policy_collection_group)
 
 
 @configuration_group.command(name=cli_util.override('zpr.create_configuration.command_name', 'create'), help=u"""Initiates the process to onboard ZPR in a root compartment (the root compartment is the tenancy). It creates an object of ZPR configuration as part of onboarding. \n[Command Reference](createConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy into which ZPR resources will be bootstrapped.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the tenancy into which ZPR resources will be bootstrapped.""")
 @cli_util.option('--zpr-status', help=u"""The enabled or disabled status of ZPR in the tenancy.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -141,7 +141,7 @@ def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @zpr_policy_group.command(name=cli_util.override('zpr.create_zpr_policy.command_name', 'create'), help=u"""Creates a ZprPolicy. \n[Command Reference](createZprPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the ZprPolicy in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the ZprPolicy in.""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the ZprPolicy during creation. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the ZprPolicy during creation. The name must be unique across all ZPL policies in the tenancy.""")
 @cli_util.option('--statements', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of ZprPolicy statements(up to 25 statements per ZprPolicy) written in the Zero Trust Packet Routing Policy Language.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -274,7 +274,7 @@ def delete_zpr_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @configuration_group.command(name=cli_util.override('zpr.get_configuration.command_name', 'get'), help=u"""Retrieves the ZPR configuration details for the root compartment (the root compartment is the tenancy). Returns ZPR configuration for root compartment (the root compartment is the tenancy). \n[Command Reference](getConfiguration)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -474,7 +474,7 @@ def list_zpr_configuration_work_request_logs(ctx, from_json, all_pages, page_siz
 
 
 @work_request_group.command(name=cli_util.override('zpr.list_zpr_configuration_work_requests.command_name', 'list-zpr-configuration'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listZprConfigurationWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")
@@ -536,7 +536,7 @@ def list_zpr_configuration_work_requests(ctx, from_json, all_pages, page_size, c
 
 
 @zpr_policy_collection_group.command(name=cli_util.override('zpr.list_zpr_policies.command_name', 'list-zpr-policies'), help=u"""Gets a list of ZprPolicies. \n[Command Reference](listZprPolicies)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "FAILED", "UPDATING", "DELETING", "DELETED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The [OCID] of the ZprPolicy.""")
@@ -712,7 +712,7 @@ def list_zpr_policy_work_request_logs(ctx, from_json, all_pages, page_size, work
 
 
 @work_request_group.command(name=cli_util.override('zpr.list_zpr_policy_work_requests.command_name', 'list-zpr-policy'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listZprPolicyWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

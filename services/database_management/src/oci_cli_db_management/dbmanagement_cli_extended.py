@@ -595,7 +595,7 @@ def change_plan_retention_managed_database_password_credential_extended(ctx, **k
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.change_plan_retention_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.change_plan_retention_managed_database_secret_credential.name, help=dbmanagement_cli.change_plan_retention_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -643,7 +643,7 @@ def change_space_budget_managed_database_password_credential_extended(ctx, **kwa
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.change_space_budget_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.change_space_budget_managed_database_secret_credential.name, help=dbmanagement_cli.change_space_budget_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -691,7 +691,7 @@ def change_sql_plan_baselines_attributes_managed_database_password_credential_ex
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_secret_credential.name, help=dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -739,7 +739,7 @@ def configure_automatic_capture_filters_managed_database_password_credential_ext
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.configure_automatic_capture_filters_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.configure_automatic_capture_filters_managed_database_secret_credential.name, help=dbmanagement_cli.configure_automatic_capture_filters_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -787,7 +787,7 @@ def configure_automatic_spm_evolve_advisor_task_managed_database_password_creden
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential.name, help=dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -835,7 +835,7 @@ def disable_automatic_initial_plan_capture_managed_database_password_credential_
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_secret_credential.name, help=dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -883,7 +883,7 @@ def disable_automatic_spm_evolve_advisor_task_managed_database_password_credenti
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential.name, help=dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -931,7 +931,7 @@ def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_pa
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential.name, help=dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -979,7 +979,7 @@ def disable_sql_plan_baselines_usage_managed_database_password_credential_extend
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_secret_credential.name, help=dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -1027,7 +1027,7 @@ def drop_sql_plan_baselines_managed_database_password_credential_extended(ctx, *
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.drop_sql_plan_baselines_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.drop_sql_plan_baselines_managed_database_secret_credential.name, help=dbmanagement_cli.drop_sql_plan_baselines_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -1075,7 +1075,7 @@ def enable_automatic_initial_plan_capture_managed_database_password_credential_e
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_secret_credential.name, help=dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -1123,7 +1123,7 @@ def enable_automatic_spm_evolve_advisor_task_managed_database_password_credentia
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential.name, help=dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -1171,7 +1171,7 @@ def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_pas
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential.name, help=dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -1219,7 +1219,7 @@ def enable_sql_plan_baselines_usage_managed_database_password_credential_extende
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_secret_credential.name, help=dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -1267,7 +1267,7 @@ def load_sql_plan_baselines_from_awr_managed_database_password_credential_extend
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_secret_credential.name, help=dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context
@@ -1315,7 +1315,7 @@ def load_sql_plan_baselines_from_cursor_cache_managed_database_password_credenti
 
 @cli_util.copy_params_from_generated_command(dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
 @dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential.name, help=dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential.help)
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
 @cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
 @click.pass_context

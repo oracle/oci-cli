@@ -33,7 +33,7 @@ multicloudsubscriptions_root_group.add_command(multicloud_subscription_collectio
 
 
 @multicloud_subscription_collection_group.command(name=cli_util.override('multicloudsubscriptions.list_multicloud_subscriptions.command_name', 'list-multicloud-subscriptions'), help=u"""Gets a list of Multicloud Resources. \n[Command Reference](listMulticloudSubscriptions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")

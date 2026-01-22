@@ -204,7 +204,7 @@ def cancel_batch_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 @batch_context_group.command(name=cli_util.override('batch.change_batch_context_compartment.command_name', 'change-compartment'), help=u"""Moves a batch context into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeBatchContextCompartment)""")
 @cli_util.option('--batch-context-id', required=True, help=u"""The [OCID] of the batch context.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the batch context to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the batch context to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -265,7 +265,7 @@ def change_batch_context_compartment(ctx, from_json, wait_for_state, max_wait_se
 
 @batch_job_group.command(name=cli_util.override('batch.change_batch_job_compartment.command_name', 'change-compartment'), help=u"""Moves a batch job into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeBatchJobCompartment)""")
 @cli_util.option('--batch-job-id', required=True, help=u"""The [OCID] of the batch job.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -326,7 +326,7 @@ def change_batch_job_compartment(ctx, from_json, wait_for_state, max_wait_second
 
 @batch_job_pool_group.command(name=cli_util.override('batch.change_batch_job_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a batch job pool into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeBatchJobPoolCompartment)""")
 @cli_util.option('--batch-job-pool-id', required=True, help=u"""The [OCID] of the batch job pool.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -387,7 +387,7 @@ def change_batch_job_pool_compartment(ctx, from_json, wait_for_state, max_wait_s
 
 @batch_task_environment_group.command(name=cli_util.override('batch.change_batch_task_environment_compartment.command_name', 'change-compartment'), help=u"""Moves a batch task environment into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeBatchTaskEnvironmentCompartment)""")
 @cli_util.option('--batch-task-environment-id', required=True, help=u"""The [OCID] of the batch task environment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the batch task environment to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the batch task environment to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -448,7 +448,7 @@ def change_batch_task_environment_compartment(ctx, from_json, wait_for_state, ma
 
 @batch_task_profile_group.command(name=cli_util.override('batch.change_batch_task_profile_compartment.command_name', 'change-compartment'), help=u"""Moves a batch task profile into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeBatchTaskProfileCompartment)""")
 @cli_util.option('--batch-task-profile-id', required=True, help=u"""The [OCID] of the batch task profile.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the batch task profile to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the batch task profile to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -508,7 +508,7 @@ def change_batch_task_profile_compartment(ctx, from_json, wait_for_state, max_wa
 
 
 @batch_context_group.command(name=cli_util.override('batch.create_batch_context.command_name', 'create'), help=u"""Creates a batch context. \n[Command Reference](createBatchContext)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--network', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fleets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of fleet configurations related to the batch context.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. If not specified or provided as null or empty string, it will be generated as \"<resourceType><timeCreated>\", where timeCreated corresponds with the resource creation time in ISO 8601 basic format, i.e. omitting separating punctuation, at second-level precision and no UTC offset. Example: batchcontext20250914115623.""")
@@ -599,7 +599,7 @@ def create_batch_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @batch_context_group.command(name=cli_util.override('batch.create_batch_context_oci_logging_configuration.command_name', 'create-batch-context-oci-logging-configuration'), help=u"""Creates a batch context. \n[Command Reference](createBatchContext)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--network', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fleets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of fleet configurations related to the batch context.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logging-configuration-log-group-id', required=True, help=u"""The [OCID] of the log group.""")
@@ -693,7 +693,7 @@ def create_batch_context_oci_logging_configuration(ctx, from_json, wait_for_stat
 
 
 @batch_job_group.command(name=cli_util.override('batch.create_batch_job.command_name', 'create'), help=u"""Creates a batch job. \n[Command Reference](createBatchJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--batch-job-pool-id', required=True, help=u"""The [OCID] of the parent batch job pool.""")
 @cli_util.option('--tasks', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tasks to be executed within this job. Maximum number of tasks a job can have in total, across all nested levels, is 1000.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. If not specified or provided as null or empty string, it will be generated as \"<resourceType><timeCreated>\", where timeCreated corresponds with the resource creation time in ISO 8601 basic format, i.e. omitting separating punctuation, at second-level precision and no UTC offset. Example: batchjob20250914115623.""")
@@ -776,7 +776,7 @@ def create_batch_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @batch_job_pool_group.command(name=cli_util.override('batch.create_batch_job_pool.command_name', 'create'), help=u"""Creates a batch job pool. \n[Command Reference](createBatchJobPool)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--batch-context-id', required=True, help=u"""The OCID of batch context.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. If not specified or provided as null or empty string, it be generated as \"<resourceType><timeCreated>\", where timeCreated corresponds with the resource creation time in ISO 8601 basic format, i.e. omitting separating punctuation, at second-level precision and no UTC offset. Example: batchjobpool20250914115623.""")
 @cli_util.option('--description', help=u"""Summarized information about the batch job pool.""")
@@ -847,7 +847,7 @@ def create_batch_job_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @batch_task_environment_group.command(name=cli_util.override('batch.create_batch_task_environment.command_name', 'create'), help=u"""Creates a batch task environment. \n[Command Reference](createBatchTaskEnvironment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--image-url', required=True, help=u"""The URL of the ocir image.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. If not specified or provided as null or empty string, it be generated as \"<resourceType><timeCreated>\", where timeCreated corresponds with the resource creation time in ISO 8601 basic format, i.e. omitting separating punctuation, at second-level precision and no UTC offset. Example: batchtaskenvironment20250914115623.""")
 @cli_util.option('--description', help=u"""The batch task environment description.""")
@@ -932,7 +932,7 @@ def create_batch_task_environment(ctx, from_json, wait_for_state, max_wait_secon
 
 
 @batch_task_profile_group.command(name=cli_util.override('batch.create_batch_task_profile.command_name', 'create'), help=u"""Creates a batch task profile. \n[Command Reference](createBatchTaskProfile)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--min-ocpus', required=True, type=click.INT, help=u"""The minimum required OCPUs.""")
 @cli_util.option('--min-memory-in-gbs', required=True, type=click.INT, help=u"""The minimum required memory.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. If not specified or provided as null or empty string, it be generated as \"<resourceType><timeCreated>\", where timeCreated corresponds with the resource creation time in ISO 8601 basic format, i.e. omitting separating punctuation, at second-level precision and no UTC offset. Example: batchtaskprofile20250914115623.""")
@@ -1412,7 +1412,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @batch_context_shape_collection_group.command(name=cli_util.override('batch.list_batch_context_shapes.command_name', 'list-batch-context-shapes'), help=u"""Lists the shapes allowed to be specified during batch context creation. Ordered by the shape name. \n[Command Reference](listBatchContextShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1463,7 +1463,7 @@ def list_batch_context_shapes(ctx, from_json, all_pages, page_size, compartment_
 
 
 @batch_context_collection_group.command(name=cli_util.override('batch.list_batch_contexts.command_name', 'list-batch-contexts'), help=u"""Lists the batch contexts by compartment or context [OCID]. You can filter and sort them by various properties like lifecycle state, name and also ocid. All properties require an exact match. List operation only provides a summary information, use GetBatchContext to get the full details on a specific context \n[Command Reference](listBatchContexts)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the batch context.""")
@@ -1525,7 +1525,7 @@ def list_batch_contexts(ctx, from_json, all_pages, page_size, compartment_id, li
 
 
 @batch_job_pool_collection_group.command(name=cli_util.override('batch.list_batch_job_pools.command_name', 'list-batch-job-pools'), help=u"""Lists the batch job pools by compartment or job pool [OCID]. You can filter and sort them by various properties like lifecycle state, display name and also ocid. All properties require an exact match. List operation only provides a summary information, use GetBatchJobPool to get the full details on a specific context \n[Command Reference](listBatchJobPools)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "UPDATING", "NEEDS_ATTENTION", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the batch job pool.""")
@@ -1653,7 +1653,7 @@ def list_batch_job_tasks(ctx, from_json, all_pages, page_size, batch_job_id, lif
 
 
 @batch_job_collection_group.command(name=cli_util.override('batch.list_batch_jobs.command_name', 'list-batch-jobs'), help=u"""Lists the batch jobs by compartment or job [OCID]. You can filter and sort them by various properties like lifecycle state, display name and also ocid. All properties require an exact match.  List operation only provides a summary information, use GetBatchJob to get the full details on a specific context \n[Command Reference](listBatchJobs)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "SUCCEEDED", "NEEDS_ATTENTION", "FAILED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the batch job.""")
@@ -1718,7 +1718,7 @@ def list_batch_jobs(ctx, from_json, all_pages, page_size, compartment_id, lifecy
 
 
 @batch_task_environment_collection_group.command(name=cli_util.override('batch.list_batch_task_environments.command_name', 'list-batch-task-environments'), help=u"""Lists the task environments by compartment or environment [OCID]. You can filter and sort them by various properties like lifecycle state, display name and also ocid. All properties require an exact match. List operation only provides a summary information, use GetBatchTaskEnvironment to get the full details on a specific context \n[Command Reference](listBatchTaskEnvironments)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the batch task environment.""")
@@ -1780,7 +1780,7 @@ def list_batch_task_environments(ctx, from_json, all_pages, page_size, compartme
 
 
 @batch_task_profile_collection_group.command(name=cli_util.override('batch.list_batch_task_profiles.command_name', 'list-batch-task-profiles'), help=u"""Lists the task profiles by compartment or profile [OCID]. You can filter and sort them by various properties like lifecycle state, name and also ocid. All properties require an exact match. List operation only provides a summary information, use GetBatchTaskProfile to get the full details on a specific context \n[Command Reference](listBatchTaskProfiles)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the batch task profile.""")
@@ -1842,7 +1842,7 @@ def list_batch_task_profiles(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @batch_task_collection_group.command(name=cli_util.override('batch.list_batch_tasks.command_name', 'list-batch-tasks'), help=u"""Lists the batch tasks associated with batch jobs. \n[Command Reference](listBatchTasks)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--batch-job-id', help=u"""The [OCID] of the batch job.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--name', help=u"""The name of the task.""")
@@ -2018,7 +2018,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('batch.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

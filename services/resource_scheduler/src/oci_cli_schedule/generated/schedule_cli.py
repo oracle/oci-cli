@@ -140,7 +140,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @schedule_group.command(name=cli_util.override('resource_scheduler.change_schedule_compartment.command_name', 'change-compartment'), help=u"""This API) moves a schedule into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeScheduleCompartment)""")
 @cli_util.option('--schedule-id', required=True, help=u"""This is the [OCID] of the schedule.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the schedule to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the schedule to.""")
 @cli_util.option('--if-match', help=u"""This is used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -200,7 +200,7 @@ def change_schedule_compartment(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @schedule_group.command(name=cli_util.override('resource_scheduler.create_schedule.command_name', 'create'), help=u"""This API creates a schedule. You must provide either resources or resourceFilters. \n[Command Reference](createSchedule)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the schedule is created""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the schedule is created""")
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["START_RESOURCE", "STOP_RESOURCE"]), help=u"""This is the action that will be executed by the schedule.""")
 @cli_util.option('--recurrence-details', required=True, help=u"""This is the frequency of recurrence of a schedule. The frequency field can either conform to RFC-5545 formatting or UNIX cron formatting for recurrences, based on the value specified by the recurrenceType field.""")
 @cli_util.option('--recurrence-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CRON", "ICAL"]), help=u"""Type of recurrence of a schedule""")
@@ -462,7 +462,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @resource_type_collection_group.command(name=cli_util.override('resource_scheduler.list_resource_types.command_name', 'list-resource-types'), help=u"""This API gets a list of schedule resource types. \n[Command Reference](listResourceTypes)""")
-@cli_util.option('--compartment-id', help=u"""This is the [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""This is the [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""This used for list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -509,7 +509,7 @@ def list_resource_types(ctx, from_json, all_pages, page_size, compartment_id, li
 
 
 @schedule_group.command(name=cli_util.override('resource_scheduler.list_schedules.command_name', 'list'), help=u"""This API gets a list of schedules. You must provide either a compartmentId or a scheduleId or both. You can list resources in this compartment [OCID]. This is required unless a specific schedule ID is passed. \n[Command Reference](listSchedules)""")
-@cli_util.option('--compartment-id', help=u"""This is the [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""This is the [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "CREATING", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""This is a filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""This is a filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--schedule-id', help=u"""This is the [OCID] of the schedule.""")
@@ -688,7 +688,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('resource_scheduler.list_work_requests.command_name', 'list'), help=u"""This API gets a list of work requests. You must provide either a compartmentId or a workRequestId or both. You can list work requests in this compartment [OCID]. This is required unless a specific workRequestId is passed. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""This is the [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""This is the [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""This is the [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""This is a filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""This is the [OCID] of the resource affected by the work request.""")

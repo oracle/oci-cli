@@ -44,7 +44,7 @@ omhub_resource_anchor_root_group.add_command(resource_anchor_group)
 @resource_anchor_group.command(name=cli_util.override('omhub_resource_anchor.get_resource_anchor.command_name', 'get'), help=u"""Gets information about a ResourceAnchor. \n[Command Reference](getResourceAnchor)""")
 @cli_util.option('--resource-anchor-id', required=True, help=u"""The [OCID] of the ResourceAnchor.""")
 @cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
 @cli_util.option('--should-fetch-compartment-name', type=click.BOOL, help=u"""Whether to fetch and include the compartment name, setting this field to yes may introduce additional latency.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -71,7 +71,7 @@ def get_resource_anchor(ctx, from_json, resource_anchor_id, subscription_service
 
 
 @resource_anchor_collection_group.command(name=cli_util.override('omhub_resource_anchor.list_resource_anchors.command_name', 'list-resource-anchors'), help=u"""Gets a list of ResourceAnchors. \n[Command Reference](listResourceAnchors)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the Multicloud base compartment or sub-compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Multicloud base compartment or sub-compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
 @cli_util.option('--linked-compartment-id', help=u"""The [OCID] of the compartment linked to the resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -83,7 +83,7 @@ def get_resource_anchor(ctx, from_json, resource_anchor_id, subscription_service
 @cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Check the sub-compartments of a given compartmentId""")
 @cli_util.option('--should-fetch-compartment-name', type=click.BOOL, help=u"""Whether to fetch and include the compartment name, setting this field to yes may introduce additional latency.""")
 @cli_util.option('--subscription-service-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})

@@ -63,7 +63,7 @@ def create_vbs_instance_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(vbsinstance_cli.update_vbs_instance, params_to_exclude=['vbs_instance_id', 'is_resource_usage_agreement_granted', 'resource_compartment_id'])
 @vbsinstance_cli.vbs_instance_group.command(name=vbsinstance_cli.update_vbs_instance.name, help=vbsinstance_cli.update_vbs_instance.help)
-@cli_util.option('--instance-id', required=True, help=u"""unique VbsInstance identifier [required]""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""unique VbsInstance identifier [required]""")
 @cli_util.option('--is-cicd-authorized', type=click.BOOL, help=u"""Whether VBS is authorized to create and use resources in the customer tenancy""")
 @cli_util.option('--cicd-compartment-id', help=u"""Compartment where VBS may create additional resources for the service instance""")
 @click.pass_context
@@ -87,7 +87,7 @@ def update_vbs_instance_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(vbsinstance_cli.delete_vbs_instance, params_to_exclude=['vbs_instance_id'])
 @vbsinstance_cli.vbs_instance_group.command(name=vbsinstance_cli.delete_vbs_instance.name, help=vbsinstance_cli.delete_vbs_instance.help)
-@cli_util.option('--instance-id', required=True, help=u"""unique VbsInstance identifier [required]""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""unique VbsInstance identifier [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
@@ -101,7 +101,7 @@ def delete_vbs_instance_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(vbsinstance_cli.get_vbs_instance, params_to_exclude=['vbs_instance_id'])
 @vbsinstance_cli.vbs_instance_group.command(name=vbsinstance_cli.get_vbs_instance.name, help=vbsinstance_cli.get_vbs_instance.help)
-@cli_util.option('--instance-id', required=True, help=u"""unique VbsInstance identifier [required]""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""unique VbsInstance identifier [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'vbs_inst', 'class': 'VbsInstance'})
 @cli_util.wrap_exceptions

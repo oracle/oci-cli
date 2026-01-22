@@ -490,7 +490,7 @@ cloud_guard_root_group.add_command(risk_score_aggregation_group)
 
 @security_zone_group.command(name=cli_util.override('cloud_guard.add_compartment.command_name', 'add'), help=u"""Adds a compartment to an existing security zone (SecurityZone resource), identified by securityZoneId. Specify parameters in an AddCompartmentDetails resource that you pass. If you previously removed a subcompartment from a security zone, you can add it back to the same security zone. The security zone ensures that resources in the subcompartment comply with the security zone's policies. \n[Command Reference](addCompartment)""")
 @cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to be added to the security zone.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to be added to the security zone.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -573,7 +573,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @data_source_group.command(name=cli_util.override('cloud_guard.change_data_source_compartment.command_name', 'change-compartment'), help=u"""Moves a data source (DataSource resource), identified by parameters passed in a ChangeDataSourceCompartmentDetails resource, from the current compartment to another. \n[Command Reference](changeDataSourceCompartment)""")
 @cli_util.option('--data-source-id', required=True, help=u"""Data source OCID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the data source is to be moved""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the data source is to be moved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -634,7 +634,7 @@ def change_data_source_compartment(ctx, from_json, wait_for_state, max_wait_seco
 
 @detector_recipe_group.command(name=cli_util.override('cloud_guard.change_detector_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves the detector recipe (DetectorRecipe resource), identified by detectorRecipeId, from the current compartment to another compartment. When provided, If-Match is checked against etag values of the resource. \n[Command Reference](changeDetectorRecipeCompartment)""")
 @cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the detector recipe is to be moved""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the detector recipe is to be moved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -665,7 +665,7 @@ def change_detector_recipe_compartment(ctx, from_json, detector_recipe_id, compa
 
 @managed_list_group.command(name=cli_util.override('cloud_guard.change_managed_list_compartment.command_name', 'change-compartment'), help=u"""Moves the managed list (ManagedList resource), identified by managedListId, from the current compartment to another compartment. \n[Command Reference](changeManagedListCompartment)""")
 @cli_util.option('--managed-list-id', required=True, help=u"""The managed list OCID to be passed in the request.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the managed list is to be moved""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the managed list is to be moved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -696,7 +696,7 @@ def change_managed_list_compartment(ctx, from_json, managed_list_id, compartment
 
 @responder_recipe_group.command(name=cli_util.override('cloud_guard.change_responder_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves the responder recipe (ResponderRecipe resource), identified by responderRecipeId in a ChangeResponderRecipeCompartmentDetails resource, from the current compartment to another compartment. When provided, if-match is checked against etag values of the resource. \n[Command Reference](changeResponderRecipeCompartment)""")
 @cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of the responder recipe.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the responder recipe is to be moved""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the responder recipe is to be moved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -727,7 +727,7 @@ def change_responder_recipe_compartment(ctx, from_json, responder_recipe_id, com
 
 @saved_query_group.command(name=cli_util.override('cloud_guard.change_saved_query_compartment.command_name', 'change-compartment'), help=u"""Moves the SavedQuery resource into a different compartment. When provided, If-Match is checked against etag values of the resource. \n[Command Reference](changeSavedQueryCompartment)""")
 @cli_util.option('--saved-query-id', required=True, help=u"""Saved query OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the SavedQuery is to be moved""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the SavedQuery is to be moved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -758,7 +758,7 @@ def change_saved_query_compartment(ctx, from_json, saved_query_id, compartment_i
 
 @security_recipe_group.command(name=cli_util.override('cloud_guard.change_security_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves the security recipe (SecurityRecipe resource), identified by securityRecipeId, from the current compartment to another compartment. When provided, `if-match` is checked against `etag` values of the resource. \n[Command Reference](changeSecurityRecipeCompartment)""")
 @cli_util.option('--security-recipe-id', required=True, help=u"""The unique identifier of the security zone recipe. (`SecurityRecipe`)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -789,7 +789,7 @@ def change_security_recipe_compartment(ctx, from_json, security_recipe_id, compa
 
 @security_zone_group.command(name=cli_util.override('cloud_guard.change_security_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a security zone, identified by securityZoneId, to a different compartment. Pass parameters through a ChangeSecurityZoneCompartmentDetails resource. When provided, `if-match` is checked against `etag` values of the resource. \n[Command Reference](changeSecurityZoneCompartment)""")
 @cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -819,7 +819,7 @@ def change_security_zone_compartment(ctx, from_json, security_zone_id, compartme
 
 
 @adhoc_query_group.command(name=cli_util.override('cloud_guard.create_adhoc_query.command_name', 'create'), help=u"""Creates a AdhocQuery resource. \n[Command Reference](createAdhocQuery)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of adhoc query""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID of adhoc query""")
 @cli_util.option('--adhoc-query-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
@@ -883,7 +883,7 @@ def create_adhoc_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--display-name', required=True, help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID where the resource is created""")
 @cli_util.option('--iam-group-id', required=True, help=u"""IAM group ID associated with the data mask rule""")
 @cli_util.option('--target-selected', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
@@ -964,7 +964,7 @@ def create_data_mask_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--display-name', required=True, help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID where the resource is created""")
 @cli_util.option('--iam-group-id', required=True, help=u"""IAM group ID associated with the data mask rule""")
 @cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
 @cli_util.option('--description', help=u"""The data mask rule description Avoid entering confidential information.""")
@@ -1046,7 +1046,7 @@ def create_data_mask_rule_all_targets_selected(ctx, from_json, wait_for_state, m
 @cli_util.option('--display-name', required=True, help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID where the resource is created""")
 @cli_util.option('--iam-group-id', required=True, help=u"""IAM group ID associated with the data mask rule""")
 @cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
 @cli_util.option('--description', help=u"""The data mask rule description Avoid entering confidential information.""")
@@ -1132,7 +1132,7 @@ def create_data_mask_rule_target_resource_types_selected(ctx, from_json, wait_fo
 @cli_util.option('--display-name', required=True, help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID where the resource is created""")
 @cli_util.option('--iam-group-id', required=True, help=u"""IAM group ID associated with the data mask rule""")
 @cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
 @cli_util.option('--description', help=u"""The data mask rule description Avoid entering confidential information.""")
@@ -1216,7 +1216,7 @@ def create_data_mask_rule_target_ids_selected(ctx, from_json, wait_for_state, ma
 
 @data_source_group.command(name=cli_util.override('cloud_guard.create_data_source.command_name', 'create'), help=u"""Creates a data source (DataSource resource), using parameters passed through a CreateDataSourceDetails resource. \n[Command Reference](createDataSource)""")
 @cli_util.option('--display-name', required=True, help=u"""Data source display name""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of the data source""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID of the data source""")
 @cli_util.option('--data-source-feed-provider', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY", "SCHEDULEDQUERY"]), help=u"""Type of data source feed provider (LoggingQuery)""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Enablement status of data source.""")
 @cli_util.option('--data-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1291,7 +1291,7 @@ def create_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @data_source_group.command(name=cli_util.override('cloud_guard.create_data_source_scheduled_query_data_source_obj_details.command_name', 'create-data-source-scheduled-query-data-source-obj-details'), help=u"""Creates a data source (DataSource resource), using parameters passed through a CreateDataSourceDetails resource. \n[Command Reference](createDataSource)""")
 @cli_util.option('--display-name', required=True, help=u"""Data source display name""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of the data source""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID of the data source""")
 @cli_util.option('--data-source-feed-provider', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY", "SCHEDULEDQUERY"]), help=u"""Type of data source feed provider (LoggingQuery)""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Enablement status of data source.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
@@ -1383,7 +1383,7 @@ def create_data_source_scheduled_query_data_source_obj_details(ctx, from_json, w
 
 @data_source_group.command(name=cli_util.override('cloud_guard.create_data_source_logging_query_data_source_details.command_name', 'create-data-source-logging-query-data-source-details'), help=u"""Creates a data source (DataSource resource), using parameters passed through a CreateDataSourceDetails resource. \n[Command Reference](createDataSource)""")
 @cli_util.option('--display-name', required=True, help=u"""Data source display name""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of the data source""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID of the data source""")
 @cli_util.option('--data-source-feed-provider', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY", "SCHEDULEDQUERY"]), help=u"""Type of data source feed provider (LoggingQuery)""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Enablement status of data source.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
@@ -1495,7 +1495,7 @@ def create_data_source_logging_query_data_source_details(ctx, from_json, wait_fo
 @cli_util.option('--display-name', required=True, help=u"""Detector recipe display name.
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--description', help=u"""Detector recipe description.
 
 Avoid entering confidential information.""")
@@ -1634,7 +1634,7 @@ def create_detector_recipe_detector_rule(ctx, from_json, wait_for_state, max_wai
 @cli_util.option('--display-name', required=True, help=u"""Managed list display name.
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--source-managed-list-id', help=u"""OCID of the source managed list""")
 @cli_util.option('--description', help=u"""Managed list description
 
@@ -1720,7 +1720,7 @@ def create_managed_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 Avoid entering confidential information.""")
 @cli_util.option('--source-responder-recipe-id', required=True, help=u"""The unique identifier of the source responder recipe""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--description', help=u"""Responder recipe description.
 
 Avoid entering confidential information.""")
@@ -1794,7 +1794,7 @@ def create_responder_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @saved_query_group.command(name=cli_util.override('cloud_guard.create_saved_query.command_name', 'create'), help=u"""Creates a SavedQuery resource. \n[Command Reference](createSavedQuery)""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the saved query""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of the saved query""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID of the saved query""")
 @cli_util.option('--query-parameterconflict', required=True, help=u"""The adhoc query expression that is run""")
 @cli_util.option('--description', help=u"""Description of the saved query""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
@@ -1864,7 +1864,7 @@ def create_saved_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 Avoid entering confidential information.""")
 @cli_util.option('--security-policies', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of security policy IDs to include in the recipe""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the recipe""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the recipe""")
 @cli_util.option('--description', help=u"""The recipe's description""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
@@ -1931,7 +1931,7 @@ def create_security_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @security_zone_group.command(name=cli_util.override('cloud_guard.create_security_zone.command_name', 'create'), help=u"""Creates a security zone (SecurityZone resource) for a compartment. Pass parameters through a CreateSecurityZoneDetails resource. \n[Command Reference](createSecurityZone)""")
 @cli_util.option('--display-name', required=True, help=u"""The security zone's display name""")
 @cli_util.option('--security-zone-recipe-id', required=True, help=u"""The OCID of the security zone recipe (`SecurityRecipe` resource) for the security zone""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the security zone""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for the security zone""")
 @cli_util.option('--description', help=u"""The security zone's description""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
@@ -1999,7 +1999,7 @@ def create_security_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--display-name', required=True, help=u"""Display name for the target.
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID where the resource is created""")
 @cli_util.option('--target-resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "ERPCLOUD", "HCMCLOUD", "SECURITY_ZONE"]), help=u"""Type of resource that target support (COMPARTMENT/FACLOUD)""")
 @cli_util.option('--target-resource-id', required=True, help=u"""Resource ID which the target uses to monitor""")
 @cli_util.option('--description', help=u"""The target description.
@@ -2167,7 +2167,7 @@ def create_target_responder_recipe(ctx, from_json, target_id, responder_recipe_i
 
 
 @wlp_agent_group.command(name=cli_util.override('cloud_guard.create_wlp_agent.command_name', 'create'), help=u"""Creates and registers a WLP agent for an on-premise resource. \n[Command Reference](createWlpAgent)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of the host""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID of the host""")
 @cli_util.option('--agent-version', required=True, help=u"""The version of the agent making the request""")
 @cli_util.option('--certificate-signed-request', required=True, help=u"""The certificate signed request containing domain, organization names, organization units, city, state, country, email and public key, among other certificate details, signed by private key""")
 @cli_util.option('--os-info', required=True, help=u"""Concatenated OS name, OS version and agent architecture; for example, ubuntu_22.0_amd64.""")
@@ -2994,7 +2994,7 @@ def delete_wlp_agent(ctx, from_json, wlp_agent_id, if_match):
 
 @responder_execution_group.command(name=cli_util.override('cloud_guard.execute_responder_execution.command_name', 'execute'), help=u"""Executes the responder execution. When provided, if-match is checked against etag values of the resource. \n[Command Reference](executeResponderExecution)""")
 @cli_util.option('--responder-execution-id', required=True, help=u"""The unique identifier of the responder execution.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of responder rule configurations
 
@@ -3125,7 +3125,7 @@ def get_condition_metadata_type(ctx, from_json, condition_metadata_type_id, serv
 
 
 @configuration_group.command(name=cli_util.override('cloud_guard.get_configuration.command_name', 'get'), help=u"""Returns the configuration details for a Cloud Guard tenancy, identified by root compartment OCID. \n[Command Reference](getConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3794,7 +3794,7 @@ The ListAdhocQueries operation returns only the adhoc queries in 'compartmentId'
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListAdhocQueries on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listAdhocQueries)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--adhoc-query-status', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "CREATED", "IN_PROGRESS", "PARTIALLY_COMPLETED", "EXPIRED", "COMPLETED", "FAILED"]), help=u"""The status of the adhoc query created. Default value for state is provisioning. If no value is specified state is provisioning.""")
 @cli_util.option('--time-started-filter-query-param', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended-filter-query-param', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -3864,7 +3864,7 @@ def list_adhoc_queries(ctx, from_json, all_pages, page_size, compartment_id, adh
 
 @adhoc_query_result_collection_group.command(name=cli_util.override('cloud_guard.list_adhoc_query_results.command_name', 'list-adhoc-query-results'), help=u"""Lists the results for a given adhoc ID (from includes results from all monitoring regions). \n[Command Reference](listAdhocQueryResults)""")
 @cli_util.option('--adhoc-query-id', required=True, help=u"""Adhoc query OCID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
@@ -3924,7 +3924,7 @@ def list_adhoc_query_results(ctx, from_json, all_pages, page_size, adhoc_query_i
 
 
 @condition_metadata_type_group.command(name=cli_util.override('cloud_guard.list_condition_metadata_types.command_name', 'list'), help=u"""Returns a list of ConditionMetadataType resources. \n[Command Reference](listConditionMetadataTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -3981,7 +3981,7 @@ def list_condition_metadata_types(ctx, from_json, all_pages, page_size, compartm
 
 
 @data_mask_rule_group.command(name=cli_util.override('cloud_guard.list_data_mask_rules.command_name', 'list'), help=u"""Returns a list of all DataMaskRule resources in the specified compartmentId (OCID) and its subcompartments. \n[Command Reference](listDataMaskRules)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
@@ -4122,7 +4122,7 @@ The ListAdhocQueries operation returns only the adhoc queries in 'compartmentId'
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListAdhocQueries on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listDataSources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--data-source-feed-provider', type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY", "SCHEDULEDQUERY"]), help=u"""A filter to return only resources when their feed provider matches the given feed provider (`DataSourceFeedProvider` resource).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
@@ -4195,7 +4195,7 @@ def list_data_sources(ctx, from_json, all_pages, page_size, compartment_id, disp
 
 @detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.list_detector_recipe_detector_rules.command_name', 'list'), help=u"""Returns a list of detector rules (DetectorRule resources) for a detector recipe (DetectorRecipe resource), identified by detectorRecipeId. \n[Command Reference](listDetectorRecipeDetectorRules)""")
 @cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -4267,7 +4267,7 @@ The ListDetectorRecipes operation returns only the detector recipes in `compartm
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListDetectorRecipes on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listDetectorRecipes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle-managed resources metadata supported by Cloud Guard is returned.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
@@ -4337,7 +4337,7 @@ def list_detector_recipes(ctx, from_json, all_pages, page_size, compartment_id, 
 
 @detector_rule_group.command(name=cli_util.override('cloud_guard.list_detector_rules.command_name', 'list'), help=u"""Returns a list of detector rules for the DetectorRecipe resource identified by detectorId. \n[Command Reference](listDetectorRules)""")
 @cli_util.option('--detector-id', required=True, help=u"""Detector name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
@@ -4403,7 +4403,7 @@ def list_detector_rules(ctx, from_json, all_pages, page_size, detector_id, compa
 
 
 @detector_group.command(name=cli_util.override('cloud_guard.list_detectors.command_name', 'list'), help=u"""Returns a detector catalog (DetectorCollection resource) with a list of DetectorSummary resources. \n[Command Reference](listDetectors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4517,7 +4517,7 @@ def list_impacted_resources(ctx, from_json, all_pages, page_size, problem_id, li
 
 
 @managed_list_type_summary_group.command(name=cli_util.override('cloud_guard.list_managed_list_types.command_name', 'list-managed-list-types'), help=u"""Returns all managed list types (listType parameter) that Cloud Guard supports. \n[Command Reference](listManagedListTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4578,7 +4578,7 @@ def list_managed_list_types(ctx, from_json, all_pages, page_size, compartment_id
 The parameter `accessLevel` specifies whether to return ManagedLists in only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListManagedLists on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listManagedLists)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle-managed resources metadata supported by Cloud Guard is returned.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
@@ -4650,7 +4650,7 @@ def list_managed_lists(ctx, from_json, all_pages, page_size, compartment_id, dis
 
 
 @policy_summary_group.command(name=cli_util.override('cloud_guard.list_policies.command_name', 'list-policies'), help=u"""Returns the list of global policy statements (policy attributes) needed to fully enable Cloud Guard. \n[Command Reference](listPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
@@ -4818,7 +4818,7 @@ def list_problem_entities(ctx, from_json, all_pages, page_size, problem_id, page
 
 
 @problem_group.command(name=cli_util.override('cloud_guard.list_problem_histories.command_name', 'list-problem-histories'), help=u"""Returns a list of actions taken on a problem. \n[Command Reference](listProblemHistories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--problem-id', required=True, help=u"""OCID of the problem.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4885,7 +4885,7 @@ The ListProblems operation returns only the problems in `compartmentId` passed. 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListProblems on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listProblems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-last-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-last-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-first-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -4999,7 +4999,7 @@ def list_problems(ctx, from_json, all_pages, page_size, compartment_id, time_las
 
 
 @recommendation_summary_group.command(name=cli_util.override('cloud_guard.list_recommendations.command_name', 'list-recommendations'), help=u"""Returns a list of recommendations (RecommendationSummaryCollection resource with a page of RecommendationSummary resources) for a specified compartment OCID. \n[Command Reference](listRecommendations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["riskLevel", "timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for riskLevel and timeCreated is descending. If no value is specified riskLevel is default.""")
 @cli_util.option('--target-id', help=u"""The ID of the target in which to list resources.""")
@@ -5246,7 +5246,7 @@ def list_resource_profile_impacted_resources(ctx, from_json, all_pages, page_siz
 The ListResourceProfiles operation returns only the resource profiles in `compartmentId` passed. The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListResourceProfiles on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listResourceProfiles)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-last-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-last-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-first-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5333,7 +5333,7 @@ def list_resource_profiles(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @resource_type_summary_group.command(name=cli_util.override('cloud_guard.list_resource_types.command_name', 'list-resource-types'), help=u"""Returns a single ResourceTypeCollection resource, containing a list of resource types, identified by parameters specified. \n[Command Reference](listResourceTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--detector-id', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR", "IAAS_CONTAINER_SECURITY_DETECTOR"]), help=u"""Detector type.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -5462,7 +5462,7 @@ The ListResources operation returns only the resources in `compartmentId` passed
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListResources on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--target-id', help=u"""The ID of the target in which to list resources.""")
 @cli_util.option('--region-parameterconflict', help=u"""OCI monitoring region.""")
 @cli_util.option('--cvss-score', type=click.INT, help=u"""Cvss score associated with the resource.""")
@@ -5612,7 +5612,7 @@ def list_responder_activities(ctx, from_json, all_pages, page_size, problem_id, 
 
 
 @responder_execution_summary_group.command(name=cli_util.override('cloud_guard.list_responder_executions.command_name', 'list-responder-executions'), help=u"""Returns a list of responder executions. A responder execution is an entity that tracks the collective execution of multiple responder rule executions for a given problem. \n[Command Reference](listResponderExecutions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
 @cli_util.option('--responder-rule-ids', multiple=True, help=u"""Responder rule unique identifier filter for the responder executions.""")
@@ -5703,7 +5703,7 @@ def list_responder_executions(ctx, from_json, all_pages, page_size, compartment_
 
 @responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.list_responder_recipe_responder_rules.command_name', 'list'), help=u"""Returns a list of responder rules (ResponderRule resources in a responderRecipeResponderRuleCollection resource, with page of ResponderRuleSummary resources), for a responder recipe (ResponderRecipe resource), identified by responderRecipeId. \n[Command Reference](listResponderRecipeResponderRules)""")
 @cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of the responder recipe.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -5773,7 +5773,7 @@ def list_responder_recipe_responder_rules(ctx, from_json, all_pages, page_size, 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListResponderRecipe on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listResponderRecipes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle-managed resources metadata supported by Cloud Guard is returned.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
@@ -5842,7 +5842,7 @@ def list_responder_recipes(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @responder_rule_group.command(name=cli_util.override('cloud_guard.list_responder_rules.command_name', 'list'), help=u"""Returns a list of responder rules for the ResponderRecipe resource identified by responderId. The list is contained in a ResponderRuleCollection resource with a page of ResponderRuleSummary resources. \n[Command Reference](listResponderRules)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -5902,7 +5902,7 @@ def list_responder_rules(ctx, from_json, all_pages, page_size, compartment_id, d
 
 
 @saved_query_group.command(name=cli_util.override('cloud_guard.list_saved_queries.command_name', 'list'), help=u"""Returns a list of saved queries run in a tenancy. \n[Command Reference](listSavedQueries)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -5965,7 +5965,7 @@ def list_saved_queries(ctx, from_json, all_pages, page_size, compartment_id, dis
 
 
 @security_policy_collection_group.command(name=cli_util.override('cloud_guard.list_security_policies.command_name', 'list-security-policies'), help=u"""Returns a list of security zone policies (SecurityPolicySummary resources), identified by compartmentId. \n[Command Reference](listSecurityPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The unique identifier of the security zone policy. (`SecurityPolicy`)""")
@@ -6028,7 +6028,7 @@ def list_security_policies(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @security_recipe_collection_group.command(name=cli_util.override('cloud_guard.list_security_recipes.command_name', 'list-security-recipes'), help=u"""Returns a list of security zone recipes (SecurityRecipeSummary resources) in a compartment, identified by compartmentId. \n[Command Reference](listSecurityRecipes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The unique identifier of the security zone recipe. (`SecurityRecipe`)""")
@@ -6091,7 +6091,7 @@ def list_security_recipes(ctx, from_json, all_pages, page_size, compartment_id, 
 
 
 @security_zone_collection_group.command(name=cli_util.override('cloud_guard.list_security_zones.command_name', 'list-security-zones'), help=u"""Returns a list of security zones (SecurityZone resources) in a compartment identified by compartmentId. List is contained in a page of SecurityZoneSummary resources. \n[Command Reference](listSecurityZones)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
@@ -6278,7 +6278,7 @@ def list_sighting_impacted_resources(ctx, from_json, all_pages, page_size, sight
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSightings on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSightings)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--problem-id', help=u"""OCID of the problem.""")
 @cli_util.option('--resource-profile-id', help=u"""OCID of the resource profile.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
@@ -6350,7 +6350,7 @@ def list_sightings(ctx, from_json, all_pages, page_size, compartment_id, problem
 
 
 @tactic_summary_group.command(name=cli_util.override('cloud_guard.list_tactics.command_name', 'list-tactics'), help=u"""Returns a list of TacticSummary resources for a compartment, identified by compartmentId. \n[Command Reference](listTactics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -6409,7 +6409,7 @@ def list_tactics(ctx, from_json, all_pages, page_size, compartment_id, lifecycle
 @target_detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.list_target_detector_recipe_detector_rules.command_name', 'list'), help=u"""Returns a list of DetectorRule associated with DetectorRecipe within a Target. \n[Command Reference](listTargetDetectorRecipeDetectorRules)""")
 @cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
 @cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of the target detector recipe.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -6482,7 +6482,7 @@ def list_target_detector_recipe_detector_rules(ctx, from_json, all_pages, page_s
 
 @target_detector_recipe_group.command(name=cli_util.override('cloud_guard.list_target_detector_recipes.command_name', 'list'), help=u"""Returns a list of all target detector recipes (TargetDetectorRecipe resources) associated with a target (Target resource), identified by targetId. The list is contained in a TargetDetectorRecipeCollection resource with page of TargetDetectorRecipeSummary resources. \n[Command Reference](listTargetDetectorRecipes)""")
 @cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -6550,7 +6550,7 @@ def list_target_detector_recipes(ctx, from_json, all_pages, page_size, target_id
 @target_responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.list_target_responder_recipe_responder_rules.command_name', 'list'), help=u"""Returns a list of responder rules (ResponderRule resources) associated with a responder recipe (ResponderRecipe resource) attached to a Target. List is returned in a TargetResponderRecipeResponderRuleCollection resource with page of TargetResponderRecipeResponderRuleSummary resources. \n[Command Reference](listTargetResponderRecipeResponderRules)""")
 @cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
 @cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of the target responder recipe.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -6623,7 +6623,7 @@ def list_target_responder_recipe_responder_rules(ctx, from_json, all_pages, page
 
 @target_responder_recipe_group.command(name=cli_util.override('cloud_guard.list_target_responder_recipes.command_name', 'list'), help=u"""Returns a list of summary information for all responder recipes (TargetResponderRecipeCollection resource, with a page of TargetResponderRecipeSummary resources) attached to a target identified by targetId, located in a compartment identified by compartmentId. \n[Command Reference](listTargetResponderRecipes)""")
 @cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -6693,7 +6693,7 @@ def list_target_responder_recipes(ctx, from_json, all_pages, page_size, target_i
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListTargets on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all targets in compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listTargets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--is-non-security-zone-targets-only-query', type=click.BOOL, help=u"""Default is false. When set to true, only the targets that would be deleted as part of security zone creation will be returned.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
@@ -6762,7 +6762,7 @@ def list_targets(ctx, from_json, all_pages, page_size, compartment_id, display_n
 
 
 @technique_summary_group.command(name=cli_util.override('cloud_guard.list_techniques.command_name', 'list-techniques'), help=u"""Returns a list of techniques associated with detector rules. \n[Command Reference](listTechniques)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--tactics', multiple=True, help=u"""A filter to return only resources that match the list of tactics given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -6822,7 +6822,7 @@ def list_techniques(ctx, from_json, all_pages, page_size, compartment_id, tactic
 
 
 @wlp_agent_group.command(name=cli_util.override('cloud_guard.list_wlp_agents.command_name', 'list'), help=u"""Returns a list of WLP agents in a compartment. \n[Command Reference](listWlpAgents)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
@@ -6990,7 +6990,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('cloud_guard.list_work_requests.command_name', 'list'), help=u"""Returns a list of work requests (WorkRequestSummaryCollection resource), in a compartment identified by compartmentId. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given operation status (OperationStatus resource).""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -7051,7 +7051,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, sta
 
 @security_zone_group.command(name=cli_util.override('cloud_guard.remove_compartment.command_name', 'remove'), help=u"""Removes a compartment from a security zone (SecurityZone resource), identified by securityZoneId. Pass compartmentId of compartment to remove through a RemoveCompartmentDetails resource. When you remove a subcompartment from a security zone, it no longer enforces security zone policies on the resources in the subcompartment. You can't remove the primary compartment that was used to create the security zone. \n[Command Reference](removeCompartment)""")
 @cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to be removed from SecurityZone.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to be removed from SecurityZone.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7107,7 +7107,7 @@ def remove_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @risk_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_risk_scores.command_name', 'request-risk-scores'), help=u"""Returns a page of RiskScoreAggregation resources for a compartment, identified by compartmentId. \n[Command Reference](requestRiskScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7132,7 +7132,7 @@ def request_risk_scores(ctx, from_json, compartment_id, limit, page):
 
 
 @security_score_trend_aggregation_group.command(name=cli_util.override('cloud_guard.request_security_score_summarized_trend.command_name', 'request-security-score-summarized-trend'), help=u"""Returns a page of SecurityScoreTrendAggregation resources. These measure the number of resources examined across all regions and compare it with the number of problems detected. \n[Command Reference](requestSecurityScoreSummarizedTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-score-computed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-score-computed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -7163,7 +7163,7 @@ def request_security_score_summarized_trend(ctx, from_json, compartment_id, time
 
 
 @security_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_security_scores.command_name', 'request-security-scores'), help=u"""Returns a page of SecurityScoreAggregation resources. These measure the number of resources examined across all regions and compare it with the number of problems detected. \n[Command Reference](requestSecurityScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7194,7 +7194,7 @@ The parameter `accessLevel` specifies whether to return only those compartments 
 The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE.
 
 The compartmentId to be passed with `accessLevel` and `compartmentIdInSubtree` params has to be the root compartment id (tenant-id) only. \n[Command Reference](requestSummarizedActivityProblems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -7233,7 +7233,7 @@ The parameter `accessLevel` specifies whether to return only those compartments 
 
 The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](requestSummarizedProblems)""")
 @cli_util.option('--list-dimensions', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESOURCE_TYPE", "REGION", "COMPARTMENT_ID", "RISK_LEVEL", "DETECTOR_ID", "TARGET_ID"]), multiple=True, help=u"""The possible attributes based on which the problems can be distinguished.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -7270,7 +7270,7 @@ Setting accessLevel to ACCESSIBLE returns only those compartments for which the 
 
 Setting accessLevel to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions, directly or indirectly (permissions can be on a resource in a subcompartment). \u201CNot Authorized\u201D is returned if user doesn't have access to at least one of the child compartments. When accessLevel is set to RESTRICTED, permissions are checked and no partial results are displayed. This is valid only when compartmentIdInSubtree is set to true. \n[Command Reference](requestSummarizedResponderExecutions)""")
 @cli_util.option('--responder-executions-dimensions', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESPONDER_RULE_TYPE", "RESPONDER_EXECUTION_STATUS"]), multiple=True, help=u"""The possible attributes based on which the responder executions can be distinguished.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--responder-type-filter', type=custom_types.CliCaseInsensitiveChoice(["REMEDIATION", "NOTIFICATION"]), multiple=True, help=u"""The possible filters for responder type dimension to distinguish responder executions. If no values are passed, the metric for responder executions of all responder types are returned.""")
 @cli_util.option('--responder-execution-status-filter', type=custom_types.CliCaseInsensitiveChoice(["STARTED", "AWAITING_CONFIRMATION", "SUCCEEDED", "FAILED", "SKIPPED"]), multiple=True, help=u"""The possible filters for responder type dimension to distinguish responder executions. If no values are passed, the metric for responder executions of all status are returned.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
@@ -7308,7 +7308,7 @@ def request_summarized_responder_executions(ctx, from_json, responder_executions
 
 
 @risk_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_risk_scores.command_name', 'request-summarized-risk-scores'), help=u"""DEPRECATED \n[Command Reference](requestSummarizedRiskScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7333,7 +7333,7 @@ def request_summarized_risk_scores(ctx, from_json, compartment_id, limit, page):
 
 
 @security_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_security_scores.command_name', 'request-summarized-security-scores'), help=u"""DEPRECATED \n[Command Reference](requestSummarizedSecurityScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7358,7 +7358,7 @@ def request_summarized_security_scores(ctx, from_json, compartment_id, limit, pa
 
 
 @resource_profile_risk_score_aggregation_summary_group.command(name=cli_util.override('cloud_guard.request_summarized_top_trend_resource_profile_risk_scores.command_name', 'request-summarized-top-trend-resource-profile-risk-scores'), help=u"""Returns a list of resource profile risk score aggregation summaries (ResourceProfileRiskScoreAggregationSummaryCollection resource with a page of ResourceProfileRiskScoreAggregationSummary resources) for a specified compartment. \n[Command Reference](requestSummarizedTopTrendResourceProfileRiskScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-score-computed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-score-computed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
@@ -7405,7 +7405,7 @@ def request_summarized_top_trend_resource_profile_risk_scores(ctx, from_json, co
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](requestSummarizedTrendProblems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-first-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-first-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
@@ -7444,7 +7444,7 @@ def request_summarized_trend_problems(ctx, from_json, compartment_id, time_first
 @resource_risk_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_trend_resource_risk_scores.command_name', 'request-summarized-trend-resource-risk-scores'), help=u"""Returns a summary of risk score trends in a  ResourceRiskScoreAggregationCollection resource, with a page of ResourceRiskScoreAggregation resources, filtered by parameters that you specify in a RequestSummarizedTrendResourceRiskScoresDetailsresource. \n[Command Reference](requestSummarizedTrendResourceRiskScores)""")
 @cli_util.option('--filter', required=True, type=custom_types.CliCaseInsensitiveChoice(["PROBLEM_ID", "RESOURCE_PROFILE_ID"]), help=u"""The filter type""")
 @cli_util.option('--filter-id', required=True, help=u"""ID to be passed in to filter the risk scores""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-score-computed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-score-computed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
@@ -7491,7 +7491,7 @@ def request_summarized_trend_resource_risk_scores(ctx, from_json, filter, filter
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](requestSummarizedTrendResponderExecutions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-completed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Completion end time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-completed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Completion start time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
@@ -7528,7 +7528,7 @@ def request_summarized_trend_responder_executions(ctx, from_json, compartment_id
 
 
 @security_score_trend_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_trend_security_scores.command_name', 'request-summarized-trend-security-scores'), help=u"""DEPRECATED \n[Command Reference](requestSummarizedTrendSecurityScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-score-computed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-score-computed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
@@ -7583,7 +7583,7 @@ def skip_bulk_responder_execution(ctx, from_json, responder_execution_ids):
 
 @responder_execution_group.command(name=cli_util.override('cloud_guard.skip_responder_execution.command_name', 'skip'), help=u"""Skips the execution of the responder execution. When provided, If-Match is checked against etag values of the resource. \n[Command Reference](skipResponderExecution)""")
 @cli_util.option('--responder-execution-id', required=True, help=u"""The unique identifier of the responder execution.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -7677,7 +7677,7 @@ def update_bulk_problem_status(ctx, from_json, status, problem_ids, comment):
 @configuration_group.command(name=cli_util.override('cloud_guard.update_configuration.command_name', 'update'), help=u"""Updates configuration details for a Cloud Guard tenancy, identified by root compartment OCID. The reporting region cannot be updated once created. \n[Command Reference](updateConfiguration)""")
 @cli_util.option('--reporting-region', required=True, help=u"""The reporting region""")
 @cli_util.option('--status', required=True, type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of Cloud Guard tenant""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--service-configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of service configurations for tenant
 
 This option is a JSON list with items of type ServiceConfiguration.  For documentation on ServiceConfiguration please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/ServiceConfiguration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7724,7 +7724,7 @@ def update_configuration(ctx, from_json, force, reporting_region, status, compar
 @cli_util.option('--display-name', help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""Compartment OCID where the resource is created""")
 @cli_util.option('--iam-group-id', help=u"""IAM group ID associated with the data mask rule""")
 @cli_util.option('--target-selected', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
@@ -7820,7 +7820,7 @@ def update_data_mask_rule(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.option('--display-name', help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""Compartment OCID where the resource is created""")
 @cli_util.option('--iam-group-id', help=u"""IAM group ID associated with the data mask rule""")
 @cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
 @cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the data mask rule""")
@@ -7915,7 +7915,7 @@ def update_data_mask_rule_all_targets_selected(ctx, from_json, force, wait_for_s
 @cli_util.option('--display-name', help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""Compartment OCID where the resource is created""")
 @cli_util.option('--iam-group-id', help=u"""IAM group ID associated with the data mask rule""")
 @cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
 @cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the data mask rule""")
@@ -8014,7 +8014,7 @@ def update_data_mask_rule_target_resource_types_selected(ctx, from_json, force, 
 @cli_util.option('--display-name', help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""Compartment OCID where the resource is created""")
 @cli_util.option('--iam-group-id', help=u"""IAM group ID associated with the data mask rule""")
 @cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
 @cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the data mask rule""")

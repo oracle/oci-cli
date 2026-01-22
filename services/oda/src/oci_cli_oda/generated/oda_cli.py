@@ -77,7 +77,7 @@ oda_service_cli.oda_service_group.add_command(work_request_group)
 
 @oda_instance_group.command(name=cli_util.override('oda.change_oda_instance_compartment.command_name', 'change-compartment'), help=u"""Moves an Digital Assistant instance into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeOdaInstanceCompartment)""")
 @cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Identifier of the compartment into which the Digital Assistant instance should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Identifier of the compartment into which the Digital Assistant instance should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control in a PUT or DELETE call for a Digital Assistant instance, set the `if-match` query parameter to the value of the `ETAG` header from a previous GET or POST response for that instance. The service updates or deletes the instance only if the etag that you provide matches the instance's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -139,7 +139,7 @@ def change_oda_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @oda_instance_group.command(name=cli_util.override('oda.create_oda_instance.command_name', 'create'), help=u"""Starts an asynchronous job to create a Digital Assistant instance.
 
 To monitor the status of the job, take the `opc-work-request-id` response header value and use it to call `GET /workRequests/{workRequestId}`. \n[Command Reference](createOdaInstance)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Identifier of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Identifier of the compartment.""")
 @cli_util.option('--shape-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEVELOPMENT", "PRODUCTION"]), help=u"""Shape or size of the instance.""")
 @cli_util.option('--display-name', help=u"""User-friendly name for the instance. Avoid entering confidential information. You can change this value anytime.""")
 @cli_util.option('--description', help=u"""Description of the Digital Assistant instance.""")
@@ -565,7 +565,7 @@ def list_oda_instance_attachments(ctx, from_json, all_pages, page_size, oda_inst
 @oda_instance_group.command(name=cli_util.override('oda.list_oda_instances.command_name', 'list'), help=u"""Returns a page of Digital Assistant instances that belong to the specified compartment.
 
 If the `opc-next-page` header appears in the response, then there are more items to retrieve. To get the next page in the subsequent GET request, include the header's value as the `page` query parameter. \n[Command Reference](listOdaInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""List the Digital Assistant instances that belong to this compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""List the Digital Assistant instances that belong to this compartment.""")
 @cli_util.option('--display-name', help=u"""List only the information for the Digital Assistant instance with this user-friendly name. These names don't have to be unique and may change.
 
 Example: `My new resource`""")
@@ -765,7 +765,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_group.command(name=cli_util.override('oda.list_work_requests.command_name', 'list'), help=u"""Returns a page of work requests for the specified compartment.
 
 If the `opc-next-page` header appears in the response, then there are more items to retrieve. To get the next page in the subsequent GET request, include the header's value as the `page` query parameter. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""List the Digital Assistant instances that belong to this compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""List the Digital Assistant instances that belong to this compartment.""")
 @cli_util.option('--oda-instance-id', help=u"""List only the information for this Digital Assistant instance.""")
 @cli_util.option('--resource-id', help=u"""List only the information for this resource.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.

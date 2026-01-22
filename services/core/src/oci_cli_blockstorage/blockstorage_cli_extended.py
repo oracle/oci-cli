@@ -14,6 +14,7 @@ from services.core.src.oci_cli_blockstorage.generated import blockstorage_cli
 from oci_cli.cli_root import cli
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
+from oci_cli import custom_types  # noqa: F401
 
 cli_util.rename_command(blockstorage_cli, cli, blockstorage_cli.blockstorage_root_group, "bv")
 blockstorage_cli.volume_group.commands.pop(blockstorage_cli.create_volume.name)
@@ -50,7 +51,7 @@ You may optionally specify a *display name* for the volume, which is simply a fr
 @cli_util.option('--availability-domain', help="""The Availability Domain of the volume.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', help="""The OCID of the compartment that contains the volume.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help="""The OCID of the compartment that contains the volume.""")
 @cli_util.option('--source-volume-id', help="""The OCID of a Block volume in the same Availability Domain from which the data should be cloned to the newly created volume. You can specify either this, --volume-backup-id or --source-volume-replica-id but not all. If neither is specified then the new Block volume will be empty.""")
 @cli_util.option('--volume-backup-id', help="""The OCID of the volume backup from which the data should be restored on the newly created volume. You can specify either this, --source-volume-id or --source-volume-replica-id but not all. If neither is specified then the new Block volume will be empty.""")
 @cli_util.option('--source-volume-replica-id', help="""The OCID of the block volume replica from which the data should be restored on the newly created volume. You can specify either this, --volume-backup-id or --source-volume-id but not all. If neither is specified then the new Block volume will be empty.""")
@@ -124,8 +125,8 @@ def create_volume_extended(ctx, **kwargs):
 @cli_util.option('--availability-domain', help="""The Availability Domain of the boot volume. Example: `Uocm:PHX-AD-1`.
 
 This is optional when cloning a boot volume as the newly created boot volume will be created in the same Availability Domain as its source. This is required when restoring a volume from a backup.""")
-@cli_util.option('--compartment-id', help="""The OCID of the compartment that contains the boot volume. This is optional when cloning a boot volume or restoring a boot volume from a backup. If it is not supplied then the boot volume will be created in the same compartment as the source.""")
-@cli_util.option('--source-boot-volume-id', help="""The OCID of a boot volume in the same Availability Domain from which the data should be cloned to the newly created boot volume. You can specify either this, --boot-volume-backup-id or --source-volume-replica-id but not all.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help="""The OCID of the compartment that contains the boot volume. This is optional when cloning a boot volume or restoring a boot volume from a backup. If it is not supplied then the boot volume will be created in the same compartment as the source.""")
+@cli_util.option('--source-boot-volume-id', type=custom_types.CLI_OCID, help="""The OCID of a boot volume in the same Availability Domain from which the data should be cloned to the newly created boot volume. You can specify either this, --boot-volume-backup-id or --source-volume-replica-id but not all.""")
 @cli_util.option('--boot-volume-backup-id', help="""The OCID of the boot volume backup from which the data should be restored on the newly created boot volume. You can specify either this, --source-boot-volume-id or --source-volume-replica-id but not all.""")
 @cli_util.option('--source-volume-replica-id', help="""The OCID of the boot volume replica from which the data should be restored on the newly created boot volume. You can specify either this, --source-boot-volume-id or --boot-volume-backup-id --but not all.""")
 @click.pass_context

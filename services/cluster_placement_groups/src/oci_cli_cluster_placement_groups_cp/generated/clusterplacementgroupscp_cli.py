@@ -60,7 +60,7 @@ cpg_root_group.add_command(work_request_group)
 
 
 @cluster_placement_group_group.command(name=cli_util.override('cpg.activate_cluster_placement_group.command_name', 'activate'), help=u"""Activates the specified, previously deactivated cluster placement group to let resources be created in it. \n[Command Reference](activateClusterPlacementGroup)""")
-@cli_util.option('--cluster-placement-group-id', required=True, help=u"""A unique cluster placement group identifier.""")
+@cli_util.option('--cluster-placement-group-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique cluster placement group identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -139,8 +139,8 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cluster_placement_group_group.command(name=cli_util.override('cpg.change_cluster_placement_group_compartment.command_name', 'change-compartment'), help=u"""Moves a cluster placement group resource from one compartment to another in the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
 When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeClusterPlacementGroupCompartment)""")
-@cli_util.option('--cluster-placement-group-id', required=True, help=u"""A unique cluster placement group identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--cluster-placement-group-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique cluster placement group identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -174,7 +174,7 @@ def change_cluster_placement_group_compartment(ctx, from_json, cluster_placement
 @cli_util.option('--cluster-placement-group-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD"]), help=u"""ClusterPlacementGroup Identifier.""")
 @cli_util.option('--description', required=True, help=u"""A description of the cluster placement group.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where you want to create the cluster placement group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the cluster placement group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the cluster placement group.""")
 @cli_util.option('--placement-instruction', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--capabilities', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -250,7 +250,7 @@ def create_cluster_placement_group(ctx, from_json, wait_for_state, max_wait_seco
 
 
 @cluster_placement_group_group.command(name=cli_util.override('cpg.deactivate_cluster_placement_group.command_name', 'deactivate'), help=u"""Deactivates the specified cluster placement group to prevent new resources from being created in it. \n[Command Reference](deactivateClusterPlacementGroup)""")
-@cli_util.option('--cluster-placement-group-id', required=True, help=u"""A unique cluster placement group identifier.""")
+@cli_util.option('--cluster-placement-group-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique cluster placement group identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -301,7 +301,7 @@ def deactivate_cluster_placement_group(ctx, from_json, wait_for_state, max_wait_
 
 
 @cluster_placement_group_group.command(name=cli_util.override('cpg.delete_cluster_placement_group.command_name', 'delete'), help=u"""Deletes the specified cluster placement group. \n[Command Reference](deleteClusterPlacementGroup)""")
-@cli_util.option('--cluster-placement-group-id', required=True, help=u"""A unique cluster placement group identifier.""")
+@cli_util.option('--cluster-placement-group-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique cluster placement group identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -357,7 +357,7 @@ def delete_cluster_placement_group(ctx, from_json, wait_for_state, max_wait_seco
 
 
 @cluster_placement_group_group.command(name=cli_util.override('cpg.get_cluster_placement_group.command_name', 'get'), help=u"""Gets the specified cluster placement group. \n[Command Reference](getClusterPlacementGroup)""")
-@cli_util.option('--cluster-placement-group-id', required=True, help=u"""A unique cluster placement group identifier.""")
+@cli_util.option('--cluster-placement-group-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique cluster placement group identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -401,7 +401,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @cluster_placement_group_collection_group.command(name=cli_util.override('cpg.list_cluster_placement_groups.command_name', 'list-cluster-placement-groups'), help=u"""Gets a list of all cluster placement groups in the specified compartment. \n[Command Reference](listClusterPlacementGroups)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only the resources that match the specified compartment [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only the resources that match the specified compartment [OCID].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle state.""")
 @cli_util.option('--name', help=u"""A filter to return only the resources that match the entire display name specified.""")
 @cli_util.option('--ad', help=u"""A filter to return only the resources that match the specified availability domain.""")
@@ -583,7 +583,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('cpg.list_work_requests.command_name', 'list'), help=u"""Lists all work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only the resources that match the specified compartment [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only the resources that match the specified compartment [OCID].""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources with a lifecycle state that matches the specified operation status.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
@@ -645,7 +645,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 
 
 @cluster_placement_group_group.command(name=cli_util.override('cpg.update_cluster_placement_group.command_name', 'update'), help=u"""Updates the specified cluster placement group. \n[Command Reference](updateClusterPlacementGroup)""")
-@cli_util.option('--cluster-placement-group-id', required=True, help=u"""A unique cluster placement group identifier.""")
+@cli_util.option('--cluster-placement-group-id', required=True, type=custom_types.CLI_OCID, help=u"""A unique cluster placement group identifier.""")
 @cli_util.option('--description', help=u"""The description of the cluster placement group.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

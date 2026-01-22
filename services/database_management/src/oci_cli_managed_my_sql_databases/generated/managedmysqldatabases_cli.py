@@ -165,7 +165,7 @@ def get_general_replication_information(ctx, from_json, managed_my_sql_database_
 
 
 @heat_wave_fleet_metrics_group.command(name=cli_util.override('managed_my_sql_databases.get_heat_wave_fleet_metric.command_name', 'get'), help=u"""Gets the health metrics for a fleet of HeatWave clusters in a compartment. \n[Command Reference](getHeatWaveFleetMetric)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
@@ -222,7 +222,7 @@ def get_managed_my_sql_database(ctx, from_json, managed_my_sql_database_id):
 
 
 @my_sql_fleet_metrics_group.command(name=cli_util.override('managed_my_sql_databases.get_my_sql_fleet_metric.command_name', 'get'), help=u"""Gets the health metrics for a fleet of MySQL Databases in a compartment. \n[Command Reference](getMySqlFleetMetric)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
@@ -529,7 +529,7 @@ def list_managed_my_sql_database_sql_data(ctx, from_json, all_pages, page_size, 
 
 
 @managed_my_sql_database_collection_group.command(name=cli_util.override('managed_my_sql_databases.list_managed_my_sql_databases.command_name', 'list-managed-my-sql-databases'), help=u"""Gets the list of Managed MySQL Databases in a specific compartment. \n[Command Reference](listManagedMySqlDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--filter-by-my-sql-database-type-param', type=custom_types.CliCaseInsensitiveChoice(["EXTERNAL", "MDS"]), help=u"""The parameter to filter by MySQL database type. Allowed values are EXTERNAL or MDS.""")

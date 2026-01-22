@@ -33,7 +33,7 @@ shape_root_group.add_command(shape_summary_group)
 
 
 @shape_summary_group.command(name=cli_util.override('shape.list_shapes.command_name', 'list-shapes'), help=u"""Returns a list of Shapes. \n[Command Reference](listShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")

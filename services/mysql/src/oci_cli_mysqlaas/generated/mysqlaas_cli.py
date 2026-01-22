@@ -47,7 +47,7 @@ mysqlaas_root_group.add_command(version_group)
 
 
 @configuration_group.command(name=cli_util.override('mysqlaas.create_configuration.command_name', 'create'), help=u"""Creates a new Configuration. \n[Command Reference](createConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the associated Shape.""")
 @cli_util.option('--description', help=u"""User-provided data about the Configuration.""")
 @cli_util.option('--display-name', help=u"""The display name of the Configuration.""")
@@ -225,7 +225,7 @@ def get_configuration(ctx, from_json, configuration_id, if_none_match):
 This may include DEFAULT configurations per Shape and CUSTOM configurations.
 
 The default sort order is a multi-part sort by:   - shapeName, ascending   - DEFAULT-before-CUSTOM   - displayName ascending \n[Command Reference](listConfigurations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--configuration-id', help=u"""The requested Configuration instance.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""Configuration Lifecycle State""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT", "CUSTOM"]), multiple=True, help=u"""The requested Configuration types.""")
@@ -294,7 +294,7 @@ def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, co
 
 
 @shape_group.command(name=cli_util.override('mysqlaas.list_shapes.command_name', 'list'), help=u"""Gets a list of the shapes you can use to create a new MySQL DB System. The shape determines the resources allocated to the DB System: CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. \n[Command Reference](listShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--is-supported-for', type=custom_types.CliCaseInsensitiveChoice(["DBSYSTEM", "HEATWAVECLUSTER"]), multiple=True, help=u"""Return shapes that are supported by the service feature.""")
 @cli_util.option('--availability-domain', help=u"""The name of the Availability Domain.""")
 @cli_util.option('--name', help=u"""Name""")
@@ -325,7 +325,7 @@ def list_shapes(ctx, from_json, all_pages, compartment_id, is_supported_for, ava
 @version_group.command(name=cli_util.override('mysqlaas.list_versions.command_name', 'list'), help=u"""Get a list of supported and available MySQL database major versions.
 
 The list is sorted by version family. \n[Command Reference](listVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

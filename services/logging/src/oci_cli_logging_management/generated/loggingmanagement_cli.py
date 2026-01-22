@@ -85,7 +85,7 @@ logging_root_group.add_command(log_saved_search_group)
 
 @log_group_group.command(name=cli_util.override('logging.change_log_group_compartment.command_name', 'change-compartment'), help=u"""Moves a log group into a different compartment within the same tenancy.  When provided, the If-Match is checked against the resource ETag values. For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changeLogGroupCompartment)""")
 @cli_util.option('--log-group-id', required=True, help=u"""OCID of a log group to work with.""")
-@cli_util.option('--compartment-id', help=u"""The compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -216,7 +216,7 @@ def change_log_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 @log_saved_search_group.command(name=cli_util.override('logging.change_log_saved_search_compartment.command_name', 'change-compartment'), help=u"""Moves a saved search into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeLogSavedSearchCompartment)""")
 @cli_util.option('--log-saved-search-id', required=True, help=u"""OCID of the logSavedSearch.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -247,7 +247,7 @@ def change_log_saved_search_compartment(ctx, from_json, log_saved_search_id, com
 
 @unified_agent_configuration_group.command(name=cli_util.override('logging.change_unified_agent_configuration_compartment.command_name', 'change-compartment'), help=u"""Moves the unified agent configuration into a different compartment within the same tenancy.  When provided, the If-Match is checked against the ETag values of the resource. For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changeUnifiedAgentConfigurationCompartment)""")
 @cli_util.option('--unified-agent-configuration-id', required=True, help=u"""The OCID of the Unified Agent configuration.""")
-@cli_util.option('--compartment-id', help=u"""The OCID the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -391,7 +391,7 @@ def create_log(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 
 @log_group_group.command(name=cli_util.override('logging.create_log_group.command_name', 'create'), help=u"""Create a new log group with a unique display name. This call fails if the log group is already created with the same displayName in the compartment. \n[Command Reference](createLogGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that the resource belongs to.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description for this resource.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -460,7 +460,7 @@ def create_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @log_saved_search_group.command(name=cli_util.override('logging.create_log_saved_search.command_name', 'create'), help=u"""Creates a new LogSavedSearch. \n[Command Reference](createLogSavedSearch)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that the resource belongs to.""")
 @cli_util.option('--name', required=True, help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--query-parameterconflict', required=True, help=u"""The search query that is saved.""")
 @cli_util.option('--description', help=u"""Description for this resource.""")
@@ -530,7 +530,7 @@ def create_log_saved_search(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether or not this resource is currently enabled.""")
 @cli_util.option('--service-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that the resource belongs to.""")
 @cli_util.option('--description', required=True, help=u"""Description for this resource.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -604,7 +604,7 @@ def create_unified_agent_configuration(ctx, from_json, wait_for_state, max_wait_
 @unified_agent_configuration_group.command(name=cli_util.override('logging.create_unified_agent_configuration_unified_agent_logging_configuration.command_name', 'create-unified-agent-configuration-unified-agent-logging-configuration'), help=u"""Create unified agent configuration registration. \n[Command Reference](createUnifiedAgentConfiguration)""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether or not this resource is currently enabled.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that the resource belongs to.""")
 @cli_util.option('--description', required=True, help=u"""Description for this resource.""")
 @cli_util.option('--service-configuration-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Logging source object.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--service-configuration-destination', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -690,7 +690,7 @@ def create_unified_agent_configuration_unified_agent_logging_configuration(ctx, 
 @unified_agent_configuration_group.command(name=cli_util.override('logging.create_unified_agent_configuration_unified_agent_monitoring_configuration_details.command_name', 'create-unified-agent-configuration-unified-agent-monitoring-configuration-details'), help=u"""Create unified agent configuration registration. \n[Command Reference](createUnifiedAgentConfiguration)""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether or not this resource is currently enabled.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that the resource belongs to.""")
 @cli_util.option('--description', required=True, help=u"""Description for this resource.""")
 @cli_util.option('--service-configuration-application-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Unified Agent monitoring application configuration details.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1174,7 +1174,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @log_group_group.command(name=cli_util.override('logging.list_log_groups.command_name', 'list'), help=u"""Lists all log groups for the specified compartment or tenancy. \n[Command Reference](listLogGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID to list resources in. See compartmentIdInSubtree      for nested compartments traversal.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID to list resources in. See compartmentIdInSubtree      for nested compartments traversal.""")
 @cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Specifies whether or not nested compartments should be traversed. Defaults to false.""")
 @cli_util.option('--display-name', help=u"""Resource name.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` or `opc-previous-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1234,7 +1234,7 @@ def list_log_groups(ctx, from_json, all_pages, page_size, compartment_id, is_com
 
 
 @log_saved_search_group.command(name=cli_util.override('logging.list_log_saved_searches.command_name', 'list'), help=u"""Lists LogSavedSearches for this compartment. \n[Command Reference](listLogSavedSearches)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID to list resources in. See compartmentIdInSubtree      for nested compartments traversal.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID to list resources in. See compartmentIdInSubtree      for nested compartments traversal.""")
 @cli_util.option('--log-saved-search-id', help=u"""OCID of the LogSavedSearch.""")
 @cli_util.option('--name', help=u"""Resource name.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` or `opc-previous-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1384,10 +1384,10 @@ def list_services(ctx, from_json, all_pages, ):
 
 
 @unified_agent_configuration_group.command(name=cli_util.override('logging.list_unified_agent_configurations.command_name', 'list'), help=u"""Lists all unified agent configurations in the specified compartment. \n[Command Reference](listUnifiedAgentConfigurations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID to list resources in. See compartmentIdInSubtree      for nested compartments traversal.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID to list resources in. See compartmentIdInSubtree      for nested compartments traversal.""")
 @cli_util.option('--log-id', help=u"""Custom log OCID to list resources with the log as destination.""")
 @cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Specifies whether or not nested compartments should be traversed. Defaults to false.""")
-@cli_util.option('--group-id', help=u"""The OCID of a group or a dynamic group.""")
+@cli_util.option('--group-id', type=custom_types.CLI_OCID, help=u"""The OCID of a group or a dynamic group.""")
 @cli_util.option('--display-name', help=u"""Resource name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "INACTIVE", "DELETING", "FAILED"]), help=u"""Lifecycle state of the log object""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -1555,7 +1555,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('logging.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID to list resources in. See compartmentIdInSubtree      for nested compartments traversal.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID to list resources in. See compartmentIdInSubtree      for nested compartments traversal.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), help=u"""Filter results by work request status.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` or `opc-previous-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")

@@ -165,7 +165,7 @@ marketplace_service_cli.marketplace_service_group.add_command(listing_group)
 
 @publication_group.command(name=cli_util.override('marketplace.change_publication_compartment.command_name', 'change-compartment'), help=u"""Moves the specified publication from one compartment to another. \n[Command Reference](changePublicationCompartment)""")
 @cli_util.option('--publication-id', required=True, help=u"""The unique identifier for the publication.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to move the publication.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to move the publication.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -197,7 +197,7 @@ def change_publication_compartment(ctx, from_json, publication_id, compartment_i
 
 
 @accepted_agreement_group.command(name=cli_util.override('marketplace.create_accepted_agreement.command_name', 'create'), help=u"""Accepts a terms of use agreement for a specific package version of a listing. You must accept all terms of use for a package before you can deploy the package. \n[Command Reference](createAcceptedAgreement)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment where the agreement will be accepted.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment where the agreement will be accepted.""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing associated with the agreement.""")
 @cli_util.option('--package-version', required=True, help=u"""The package version associated with the agreement.""")
 @cli_util.option('--agreement-id', required=True, help=u"""The agreement to accept.""")
@@ -240,8 +240,8 @@ def create_accepted_agreement(ctx, from_json, compartment_id, listing_id, packag
 
 
 @create_marketplace_external_attested_metadata_details_group.command(name=cli_util.override('marketplace.create_marketplace_external_attested_metadata.command_name', 'create-marketplace-external-attested-metadata'), help=u"""Generates attested marketplace metadata \n[Command Reference](createMarketplaceExternalAttestedMetadata)""")
-@cli_util.option('--instance-id', required=True, help=u"""unique id that identifies the associated instance""")
-@cli_util.option('--compartment-id', required=True, help=u"""compartment that associated instance is in""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""unique id that identifies the associated instance""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""compartment that associated instance is in""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -269,7 +269,7 @@ def create_marketplace_external_attested_metadata(ctx, from_json, instance_id, c
 @cli_util.option('--name', required=True, help=u"""The name of the publication, which is also used in the listing.""")
 @cli_util.option('--short-description', required=True, help=u"""A short description of the publication to use in the listing.""")
 @cli_util.option('--support-contacts', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Contact information for getting support from the publisher for the listing.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the publication.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the publication.""")
 @cli_util.option('--package-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-agreement-acknowledged', required=True, type=click.BOOL, help=u"""Whether the publisher acknowledged that they have the right and authority to share the contents of the publication and that they accepted the Oracle terms of use agreements required to create a publication.""")
 @cli_util.option('--long-description', help=u"""A long description of the publication to use in the listing.""")
@@ -342,7 +342,7 @@ def create_publication(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--name', required=True, help=u"""The name of the publication, which is also used in the listing.""")
 @cli_util.option('--short-description', required=True, help=u"""A short description of the publication to use in the listing.""")
 @cli_util.option('--support-contacts', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Contact information for getting support from the publisher for the listing.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the publication.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the publication.""")
 @cli_util.option('--is-agreement-acknowledged', required=True, type=click.BOOL, help=u"""Whether the publisher acknowledged that they have the right and authority to share the contents of the publication and that they accepted the Oracle terms of use agreements required to create a publication.""")
 @cli_util.option('--package-details-package-version', required=True, help=u"""The package version.""")
 @cli_util.option('--package-details-operating-system', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -517,7 +517,7 @@ def delete_publication(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @listing_group.command(name=cli_util.override('marketplace.export_listing.command_name', 'export'), help=u"""Exports container images or helm chart from marketplace to customer's registry. \n[Command Reference](exportListing)""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
 @cli_util.option('--package-version', required=True, help=u"""The version of the package. Package versions are unique within a listing.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to export container image or helm chart.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to export container image or helm chart.""")
 @cli_util.option('--container-repository-path', required=True, help=u"""The repository path (/Content/General/Concepts/identifiers.htm) of the container reposistory where the container image or helm chart should be exported.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -605,7 +605,7 @@ def get_accepted_agreement(ctx, from_json, accepted_agreement_id):
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
 @cli_util.option('--package-version', required=True, help=u"""The version of the package. Package versions are unique within a listing.""")
 @cli_util.option('--agreement-id', required=True, help=u"""The unique identifier for the agreement.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -644,7 +644,7 @@ Subscribing to the listing requires you to first get a signature from the terms 
 
 To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call. \n[Command Reference](getListing)""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -676,7 +676,7 @@ Subscribing to the listing requires you to first get a signature from the terms 
 To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call. \n[Command Reference](getPackage)""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
 @cli_util.option('--package-version', required=True, help=u"""The version of the package. Package versions are unique within a listing.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -775,7 +775,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @accepted_agreement_group.command(name=cli_util.override('marketplace.list_accepted_agreements.command_name', 'list'), help=u"""Lists the terms of use agreements that have been accepted in the specified compartment. You can filter results by specifying query parameters. \n[Command Reference](listAcceptedAgreements)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--display-name', help=u"""The display name of the resource.""")
 @cli_util.option('--listing-id', help=u"""The unique identifier for the listing.""")
 @cli_util.option('--package-version', help=u"""The version of the package. Package versions are unique within a listing.""")
@@ -845,7 +845,7 @@ def list_accepted_agreements(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--package-version', required=True, help=u"""The version of the package. Package versions are unique within a listing.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -904,7 +904,7 @@ def list_agreements(ctx, from_json, all_pages, page_size, listing_id, package_ve
 @category_summary_group.command(name=cli_util.override('marketplace.list_categories.command_name', 'list-categories'), help=u"""Gets the list of all the categories for listings published to Oracle Cloud Infrastructure Marketplace. Categories apply to the software product provided by the listing. \n[Command Reference](listCategories)""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -957,7 +957,7 @@ Subscribing to the listing requires you to first get a signature from the terms 
 To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call. \n[Command Reference](listListings)""")
 @cli_util.option('--name', multiple=True, help=u"""The name of the listing.""")
 @cli_util.option('--listing-id', help=u"""The unique identifier for the listing.""")
-@cli_util.option('--image-id', help=u"""The image identifier of the listing.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""The image identifier of the listing.""")
 @cli_util.option('--publisher-id', help=u"""Limit results to just this publisher.""")
 @cli_util.option('--package-type', help=u"""A filter to return only packages that match the given package type exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
@@ -969,7 +969,7 @@ To get the image ID to launch an instance, issue a [GetAppCatalogListingResource
 @cli_util.option('--is-featured', type=click.BOOL, help=u"""Indicates whether to show only featured listings. If this is set to `false` or is omitted, then all listings will be returned.""")
 @cli_util.option('--listing-types', type=custom_types.CliCaseInsensitiveChoice(["COMMUNITY", "PARTNER", "PRIVATE"]), multiple=True, help=u"""The type of the listing.""")
 @cli_util.option('--operating-systems', multiple=True, help=u"""The operating system of the listing.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'marketplace', 'class': 'list[string]'}, 'category': {'module': 'marketplace', 'class': 'list[string]'}, 'operating-systems': {'module': 'marketplace', 'class': 'list[string]'}})
@@ -1042,7 +1042,7 @@ def list_listings(ctx, from_json, all_pages, page_size, name, listing_id, image_
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either `ASC` or `DESC`.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["keyId"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for keyId is descending.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1104,7 +1104,7 @@ To get the image ID to launch an instance, issue a [GetAppCatalogListingResource
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMERELEASED"]), help=u"""The field to use to sort listed results. You can only specify one field to sort by. `TIMERELEASED` displays results in descending order by default. You can change your preference by specifying a different sort order.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either `ASC` or `DESC`.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1226,7 +1226,7 @@ def list_publication_packages(ctx, from_json, all_pages, page_size, publication_
 
 
 @publication_summary_group.command(name=cli_util.override('marketplace.list_publications.command_name', 'list-publications'), help=u"""Lists the publications in the specified compartment. \n[Command Reference](listPublications)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--listing-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMUNITY", "PARTNER", "PRIVATE"]), help=u"""The type of the listing.""")
 @cli_util.option('--name', multiple=True, help=u"""The name of the publication.""")
 @cli_util.option('--publication-id', help=u"""The unique identifier for the publication.""")
@@ -1296,7 +1296,7 @@ def list_publications(ctx, from_json, all_pages, page_size, compartment_id, list
 @cli_util.option('--publisher-id', help=u"""Limit results to just this publisher.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1343,7 +1343,7 @@ def list_publishers(ctx, from_json, all_pages, page_size, publisher_id, limit, p
 
 
 @report_type_collection_group.command(name=cli_util.override('marketplace.list_report_types.command_name', 'list-report-types'), help=u"""Lists available types of reports for the compartment. \n[Command Reference](listReportTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1375,7 +1375,7 @@ def list_report_types(ctx, from_json, all_pages, compartment_id, page):
 @report_collection_group.command(name=cli_util.override('marketplace.list_reports.command_name', 'list-reports'), help=u"""Lists reports in the compartment that match the specified report type and date. \n[Command Reference](listReports)""")
 @cli_util.option('--report-type', required=True, help=u"""The type of the report.""")
 @cli_util.option('--date', required=True, type=custom_types.CLI_DATETIME, help=u"""Date, expressed in [RFC 3339] timestamp format. The service only interprets the year, month, and day parts in the input value, and ignores the hour, minute, and second parts.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1410,7 +1410,7 @@ def list_reports(ctx, from_json, all_pages, report_type, date, compartment_id, p
 
 @tax_summary_group.command(name=cli_util.override('marketplace.list_taxes.command_name', 'list-taxes'), help=u"""Returns list of all tax implications that current tenant may be liable to once they launch the listing. \n[Command Reference](listTaxes)""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1549,7 +1549,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('marketplace.list_work_requests.command_name', 'list'), help=u"""List all work requests in a compartment \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--work-request-id', help=u"""The OCID of the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help=u"""A filter to return only resources whose status matches the given OperationStatus.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")

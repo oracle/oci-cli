@@ -62,7 +62,7 @@ For example, if the value is `myCluster`, the ESXi hosts are named `myCluster-1`
 @cli_util.option('--initial-host-shape-name', help=u"""The initial compute shape of the Cluster's ESXi hosts. [ListSupportedHostShapes].""")
 @cli_util.option('--initial-host-ocpu-count', type=click.FLOAT, help=u"""The initial OCPU count of the Cluster's ESXi hosts.""")
 @cli_util.option('--is-shielded-instance-enabled', type=click.BOOL, help=u"""Indicates whether shielded instance is enabled for this Cluster.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The [OCID] of the Capacity Reservation.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Capacity Reservation.""")
 @cli_util.option('--datastores', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of datastore info for the Cluster. This value is required only when `initialHostShapeName` is a standard shape.
 
 This option is a JSON list with items of type DatastoreInfo.  For documentation on DatastoreInfo please see our API reference: https://docs.cloud.oracle.com/api/#/en/cluster/20230701/datatypes/DatastoreInfo.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -261,7 +261,7 @@ def get_cluster(ctx, from_json, cluster_id):
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of the resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment as optional parameter.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment as optional parameter.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})

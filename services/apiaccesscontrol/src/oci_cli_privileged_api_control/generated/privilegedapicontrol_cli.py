@@ -48,7 +48,7 @@ privileged_api_control_root_group.add_command(privileged_api_control_collection_
 
 @privileged_api_control_group.command(name=cli_util.override('privileged_api_control.change_privileged_api_control_compartment.command_name', 'change-compartment'), help=u"""Moves a PrivilegedApiControl into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changePrivilegedApiControlCompartment)""")
 @cli_util.option('--privileged-api-control-id', required=True, help=u"""The [OCID] of the PrivilegedApiControl.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the PrivilegedApiControl to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the PrivilegedApiControl to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -108,7 +108,7 @@ def change_privileged_api_control_compartment(ctx, from_json, wait_for_state, ma
 
 
 @privileged_api_control_group.command(name=cli_util.override('privileged_api_control.create_privileged_api_control.command_name', 'create'), help=u"""Creates a PrivilegedApiControl. \n[Command Reference](createPrivilegedApiControl)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the PrivilegedApiControl in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the PrivilegedApiControl in.""")
 @cli_util.option('--notification-topic-id', required=True, help=u"""The OCID of the OCI Notification topic to publish messages related to this Delegation Control.""")
 @cli_util.option('--approver-group-id-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of user IAM group ids who can approve an privilegedApi request associated with a resource governed by this operator control.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--privileged-operation-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of privileged operator operations. If Privileged API Managment is enabled for a resource it will be validated whether the operation done by the operator is a part of privileged operation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -276,7 +276,7 @@ def get_privileged_api_control(ctx, from_json, privileged_api_control_id):
 
 
 @privileged_api_control_collection_group.command(name=cli_util.override('privileged_api_control.list_privileged_api_controls.command_name', 'list-privileged-api-controls'), help=u"""Gets a list of PrivilegedApiControls. \n[Command Reference](listPrivilegedApiControls)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The [OCID] of the PrivilegedApiControl.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")

@@ -42,7 +42,7 @@ distributed_db_service_root_group.add_command(distributed_database_group)
 @distributed_database_group.command(name=cli_util.override('distributed_db_service.add_distributed_database_gds_control_node.command_name', 'add'), help=u"""Add new Global database services control(GDS CTL) node for the Globally distributed database. \n[Command Reference](addDistributedDatabaseGdsControlNode)""")
 @cli_util.option('--distributed-database-id', required=True, help=u"""Globally distributed database identifier""")
 @cli_util.option('--public-ssh-key', required=True, help=u"""The public sshKey for Global database services control(GDS CTL) node.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet on which the Global database services control(GDS CTL) node should be created.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet on which the Global database services control(GDS CTL) node should be created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -105,7 +105,7 @@ def add_distributed_database_gds_control_node(ctx, from_json, wait_for_state, ma
 
 
 @distributed_database_group.command(name=cli_util.override('distributed_db_service.change_distributed_database_compartment.command_name', 'change-compartment'), help=u"""Move the Globally distributed database and its dependent resources to the specified compartment. \n[Command Reference](changeDistributedDatabaseCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--distributed-database-id', required=True, help=u"""Globally distributed database identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -348,7 +348,7 @@ def configure_distributed_database_sharding(ctx, from_json, wait_for_state, max_
 
 
 @distributed_database_group.command(name=cli_util.override('distributed_db_service.create_distributed_database.command_name', 'create'), help=u"""Creates a Globally distributed database. \n[Command Reference](createDistributedDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Globally distributed database compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Globally distributed database compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the Globally distributed database.""")
 @cli_util.option('--database-version', required=True, help=u"""Oracle Database version for the shards and catalog used in Globally distributed database.""")
 @cli_util.option('--prefix', required=True, help=u"""Unique name prefix for the Globally distributed databases. Only alpha-numeric values are allowed. First character has to be a letter followed by any combination of letter and number.""")
@@ -706,7 +706,7 @@ def get_distributed_database(ctx, from_json, distributed_database_id, metadata, 
 
 
 @distributed_database_collection_group.command(name=cli_util.override('distributed_db_service.list_distributed_databases.command_name', 'list-distributed-databases'), help=u"""List of Globally distributed databases. \n[Command Reference](listDistributedDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "NEEDS_ATTENTION", "INACTIVE", "DELETING", "DELETED", "UPDATING", "CREATING"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")

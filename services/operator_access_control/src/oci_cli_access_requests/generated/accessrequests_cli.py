@@ -247,7 +247,7 @@ def list_access_request_histories(ctx, from_json, all_pages, page_size, access_r
 
 
 @access_request_group.command(name=cli_util.override('access_requests.list_access_requests.command_name', 'list'), help=u"""Lists all access requests in the compartment. \n[Command Reference](listAccessRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--resource-name', help=u"""A filter to return only resources that match the given ResourceName.""")
 @cli_util.option('--resource-type', help=u"""A filter to return only lists of resources that match the entire given service type.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "APPROVALWAITING", "PREAPPROVED", "APPROVED", "MOREINFO", "REJECTED", "DEPLOYED", "DEPLOYFAILED", "UNDEPLOYED", "UNDEPLOYFAILED", "CLOSEFAILED", "REVOKEFAILED", "EXPIRYFAILED", "REVOKING", "REVOKED", "EXTENDING", "EXTENDED", "EXTENSIONREJECTED", "COMPLETING", "COMPLETED", "EXPIRED", "APPROVEDFORFUTURE", "INREVIEW"]), help=u"""A filter to return only resources whose lifecycleState matches the given AccessRequest lifecycleState.""")

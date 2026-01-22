@@ -98,7 +98,7 @@ def get_oracle_db_azure_key(ctx, from_json, oracle_db_azure_key_id, limit, page,
 
 
 @oracle_db_azure_key_group.command(name=cli_util.override('oracle_db_azure_key.list_oracle_db_azure_keys.command_name', 'list'), help=u"""Lists all Oracle DB Azure Keys based on the specified filters. \n[Command Reference](listOracleDbAzureKeys)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB Azure Vault Keys resources that match the specified display name.""")
 @cli_util.option('--oracle-db-azure-vault-id', help=u"""A filter to return Oracle DB Azure Vault resources that match the specified [OCID] of the Oracle DB Azure Vault resource.""")
 @cli_util.option('--oracle-db-azure-key-id', help=u"""A filter to return Oracle DB Azure Vault Keys resource that match the specified Oracle DB Azure Key [OCID].""")

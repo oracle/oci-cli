@@ -167,7 +167,7 @@ ai_vision_root_group.add_command(vision_private_endpoint_collection_group)
 @analyze_document_result_group.command(name=cli_util.override('ai_vision.analyze_document.command_name', 'analyze-document'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeDocument)""")
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--document', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that calls the API.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""The document language, abbreviated according to ISO 639-2.""")
 @cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The document type.""")
@@ -210,7 +210,7 @@ def analyze_document(ctx, from_json, features, document, compartment_id, output_
 @cli_util.option('--document-namespace-name', required=True, help=u"""The Object Storage namespace.""")
 @cli_util.option('--document-bucket-name', required=True, help=u"""The Object Storage bucket name.""")
 @cli_util.option('--document-object-name', required=True, help=u"""The Object Storage object name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that calls the API.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""The document language, abbreviated according to ISO 639-2.""")
 @cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The document type.""")
@@ -256,7 +256,7 @@ def analyze_document_object_storage_document_details(ctx, from_json, features, d
 @analyze_document_result_group.command(name=cli_util.override('ai_vision.analyze_document_inline_document_details.command_name', 'analyze-document-inline-document-details'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeDocument)""")
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--document-data', required=True, help=u"""Raw document data.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that calls the API.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""The document language, abbreviated according to ISO 639-2.""")
 @cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The document type.""")
@@ -300,7 +300,7 @@ def analyze_document_inline_document_details(ctx, from_json, features, document_
 @analyze_image_result_group.command(name=cli_util.override('ai_vision.analyze_image.command_name', 'analyze-image'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeImage)""")
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of image analysis.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--image', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that calls the API.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[ImageFeature]'}, 'image': {'module': 'ai_vision', 'class': 'ImageDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -331,7 +331,7 @@ def analyze_image(ctx, from_json, features, image, compartment_id):
 @cli_util.option('--image-namespace-name', required=True, help=u"""The Object Storage namespace.""")
 @cli_util.option('--image-bucket-name', required=True, help=u"""The Object Storage bucket name.""")
 @cli_util.option('--image-object-name', required=True, help=u"""The Object Storage object name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that calls the API.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[ImageFeature]'}})
 @cli_util.help_option
 @click.pass_context
@@ -365,7 +365,7 @@ def analyze_image_object_storage_image_details(ctx, from_json, features, image_n
 @analyze_image_result_group.command(name=cli_util.override('ai_vision.analyze_image_inline_image_details.command_name', 'analyze-image-inline-image-details'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeImage)""")
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of image analysis.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--image-data', required=True, help=u"""Raw image data.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that calls the API.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[ImageFeature]'}})
 @cli_util.help_option
 @click.pass_context
@@ -497,7 +497,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @model_group.command(name=cli_util.override('ai_vision.change_model_compartment.command_name', 'change-compartment'), help=u"""Moves a model from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeModelCompartment)""")
 @cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the model should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the model should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -528,7 +528,7 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
 
 @project_group.command(name=cli_util.override('ai_vision.change_project_compartment.command_name', 'change-compartment'), help=u"""Move a project from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeProjectCompartment)""")
 @cli_util.option('--project-id', required=True, help=u"""A unique project identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the project should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the project should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -559,7 +559,7 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 
 @stream_group_group.command(name=cli_util.override('ai_vision.change_stream_group_compartment.command_name', 'change-compartment'), help=u"""Move a streamGroup from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeStreamGroupCompartment)""")
 @cli_util.option('--stream-group-id', required=True, help=u"""StreamGroup Id.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the streamGroup should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the streamGroup should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -620,7 +620,7 @@ def change_stream_group_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 @stream_job_group.command(name=cli_util.override('ai_vision.change_stream_job_compartment.command_name', 'change-compartment'), help=u"""Move a streamJob from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeStreamJobCompartment)""")
 @cli_util.option('--stream-job-id', required=True, help=u"""Stream job id.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the streamJob should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the streamJob should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -681,7 +681,7 @@ def change_stream_job_compartment(ctx, from_json, wait_for_state, max_wait_secon
 
 @stream_source_group.command(name=cli_util.override('ai_vision.change_stream_source_compartment.command_name', 'change-compartment'), help=u"""Move a streamSource from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeStreamSourceCompartment)""")
 @cli_util.option('--stream-source-id', required=True, help=u"""StreamSource Id.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the streamSource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the streamSource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -742,7 +742,7 @@ def change_stream_source_compartment(ctx, from_json, wait_for_state, max_wait_se
 
 @vision_private_endpoint_group.command(name=cli_util.override('ai_vision.change_vision_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Move a visionPrivateEndpoint from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeVisionPrivateEndpointCompartment)""")
 @cli_util.option('--vision-private-endpoint-id', required=True, help=u"""Vision private endpoint Id.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the visionPrivateEndpoint should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the visionPrivateEndpoint should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -775,7 +775,7 @@ def change_vision_private_endpoint_compartment(ctx, from_json, vision_private_en
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of requested document analysis types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The compartment identifier from the requester.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment identifier from the requester.""")
 @cli_util.option('--display-name', help=u"""The document job display name.""")
 @cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""The language of the document, abbreviated according to ISO 639-2.""")
 @cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The type of documents.""")
@@ -848,7 +848,7 @@ def create_document_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of requested document analysis types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The compartment identifier from the requester.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment identifier from the requester.""")
 @cli_util.option('--display-name', help=u"""The document job display name.""")
 @cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""The language of the document, abbreviated according to ISO 639-2.""")
 @cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The type of documents.""")
@@ -924,7 +924,7 @@ def create_document_job_object_list_inline_input_location(ctx, from_json, wait_f
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of requested image analysis types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The compartment identifier from the requester.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment identifier from the requester.""")
 @cli_util.option('--display-name', help=u"""The image job display name.""")
 @cli_util.option('--is-zip-output-enabled', type=click.BOOL, help=u"""Whether or not to generate a ZIP file containing the results.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -989,7 +989,7 @@ def create_image_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of requested image analysis types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The compartment identifier from the requester.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment identifier from the requester.""")
 @cli_util.option('--display-name', help=u"""The image job display name.""")
 @cli_util.option('--is-zip-output-enabled', type=click.BOOL, help=u"""Whether or not to generate a ZIP file containing the results.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1055,7 +1055,7 @@ def create_image_job_object_list_inline_input_location(ctx, from_json, wait_for_
 
 @model_group.command(name=cli_util.override('ai_vision.create_model.command_name', 'create'), help=u"""Create a new model. \n[Command Reference](createModel)""")
 @cli_util.option('--model-type', required=True, help=u"""Which type of Vision model this is.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--training-dataset', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project that contains the model.""")
 @cli_util.option('--display-name', help=u"""A human-friendly name for the model, which can be changed.""")
@@ -1149,7 +1149,7 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 
 @project_group.command(name=cli_util.override('ai_vision.create_project.command_name', 'create'), help=u"""Create a new project. \n[Command Reference](createProject)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--display-name', help=u"""A human-friendly name for the project, that can be changed.""")
 @cli_util.option('--description', help=u"""An optional description of the project.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1218,7 +1218,7 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @stream_group_group.command(name=cli_util.override('ai_vision.create_stream_group.command_name', 'create'), help=u"""Registration of new streamGroup \n[Command Reference](createStreamGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of compartment""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""[OCID] of compartment""")
 @cli_util.option('--display-name', help=u"""A human-friendly name for the streamGroup.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Stream""")
 @cli_util.option('--stream-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of streamSource OCIDs associated with the stream group""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1300,7 +1300,7 @@ def create_stream_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--stream-source-id', required=True, help=u"""[OCID] of streamSource.""")
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""a list of stream analysis features.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--stream-output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of the compartment""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""[OCID] of the compartment""")
 @cli_util.option('--display-name', help=u"""Stream job display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1370,7 +1370,7 @@ def create_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @stream_job_group.command(name=cli_util.override('ai_vision.create_stream_job_object_storage_output_location.command_name', 'create-stream-job-object-storage-output-location'), help=u"""Create a stream analysis job with given inputs and features. \n[Command Reference](createStreamJob)""")
 @cli_util.option('--stream-source-id', required=True, help=u"""[OCID] of streamSource.""")
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""a list of stream analysis features.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of the compartment""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""[OCID] of the compartment""")
 @cli_util.option('--stream-output-location-namespace-name', required=True, help=u"""The Object Storage namespace.""")
 @cli_util.option('--stream-output-location-bucket-name', required=True, help=u"""The Object Storage bucket name.""")
 @cli_util.option('--stream-output-location-prefix', required=True, help=u"""The Object Storage folder name.""")
@@ -1447,7 +1447,7 @@ def create_stream_job_object_storage_output_location(ctx, from_json, wait_for_st
 
 @stream_source_group.command(name=cli_util.override('ai_vision.create_stream_source.command_name', 'create'), help=u"""Registration of new streamSource \n[Command Reference](createStreamSource)""")
 @cli_util.option('--stream-source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of compartment""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""[OCID] of compartment""")
 @cli_util.option('--display-name', help=u"""A human-friendly name for the streamSource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1513,7 +1513,7 @@ def create_stream_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @stream_source_group.command(name=cli_util.override('ai_vision.create_stream_source_rtsp_source_details.command_name', 'create-stream-source-rtsp-source-details'), help=u"""Registration of new streamSource \n[Command Reference](createStreamSource)""")
-@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of compartment""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""[OCID] of compartment""")
 @cli_util.option('--stream-source-details-stream-network-access-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--stream-source-details-camera-url', required=True, help=u"""url of camera""")
 @cli_util.option('--display-name', help=u"""A human-friendly name for the streamSource.""")
@@ -1592,7 +1592,7 @@ def create_stream_source_rtsp_source_details(ctx, from_json, wait_for_state, max
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""a list of video analysis features.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""Compartment identifier from the requester.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""Compartment identifier from the requester.""")
 @cli_util.option('--display-name', help=u"""Video job display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1661,7 +1661,7 @@ def create_video_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""a list of video analysis features.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""Compartment identifier from the requester.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""Compartment identifier from the requester.""")
 @cli_util.option('--display-name', help=u"""Video job display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1730,8 +1730,8 @@ def create_video_job_object_list_inline_input_location(ctx, from_json, wait_for_
 
 
 @vision_private_endpoint_group.command(name=cli_util.override('ai_vision.create_vision_private_endpoint.command_name', 'create'), help=u"""Create a new visionPrivateEndpoint. \n[Command Reference](createVisionPrivateEndpoint)""")
-@cli_util.option('--subnet-id', required=True, help=u"""[OCID] of subnet""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""[OCID] of subnet""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--display-name', help=u"""A human-friendly name for the visionPrivateEndpoint, that can be changed.""")
 @cli_util.option('--description', help=u"""An optional description of the visionPrivateEndpoint.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2357,7 +2357,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @model_collection_group.command(name=cli_util.override('ai_vision.list_models.command_name', 'list-models'), help=u"""Returns a list of models in a compartment. \n[Command Reference](listModels)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--project-id', help=u"""The ID of the project for which to list the objects.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The filter to match models with the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -2422,7 +2422,7 @@ def list_models(ctx, from_json, all_pages, page_size, compartment_id, project_id
 
 
 @project_collection_group.command(name=cli_util.override('ai_vision.list_projects.command_name', 'list-projects'), help=u"""Returns a list of projects. \n[Command Reference](listProjects)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The filter to match projects with the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The filter to find the project with the given identifier.""")
@@ -2484,7 +2484,7 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
 
 
 @stream_group_collection_group.command(name=cli_util.override('ai_vision.list_stream_groups.command_name', 'list-stream-groups'), help=u"""Gets a list of the streamGroups in the specified compartment. \n[Command Reference](listStreamGroups)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The filter to find the device with the given identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -2543,7 +2543,7 @@ def list_stream_groups(ctx, from_json, all_pages, page_size, compartment_id, id,
 
 
 @stream_job_collection_group.command(name=cli_util.override('ai_vision.list_stream_jobs.command_name', 'list-stream-jobs'), help=u"""Get list of stream jobs \n[Command Reference](listStreamJobs)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE", "NEEDS_ATTENTION"]), help=u"""The filter to match projects with the given lifecycleState.""")
 @cli_util.option('--id', help=u"""The filter to find the streamjob with the given identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -2605,7 +2605,7 @@ def list_stream_jobs(ctx, from_json, all_pages, page_size, compartment_id, lifec
 
 
 @stream_source_collection_group.command(name=cli_util.override('ai_vision.list_stream_sources.command_name', 'list-stream-sources'), help=u"""Gets a list of the streamSources in the specified compartment. \n[Command Reference](listStreamSources)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The filter to match projects with the given lifecycleState.""")
 @cli_util.option('--id', help=u"""The filter to find the device with the given identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -2667,7 +2667,7 @@ def list_stream_sources(ctx, from_json, all_pages, page_size, compartment_id, li
 
 
 @vision_private_endpoint_collection_group.command(name=cli_util.override('ai_vision.list_vision_private_endpoints.command_name', 'list-vision-private-endpoints'), help=u"""Returns a list of visionPrivateEndpoints. \n[Command Reference](listVisionPrivateEndpoints)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The filter to match projects with the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The filter to find the device with the given identifier.""")
@@ -2843,7 +2843,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('ai_vision.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources whose lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")

@@ -250,7 +250,7 @@ def cancel_fsu_action(ctx, from_json, fsu_action_id, if_match):
 
 @fsu_action_group.command(name=cli_util.override('fleet_software_update.change_fsu_action_compartment.command_name', 'change-compartment'), help=u"""Moves a Exadata Fleet Update Action resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeFsuActionCompartment)""")
 @cli_util.option('--fsu-action-id', required=True, help=u"""Unique Exadata Fleet Update Action identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -311,7 +311,7 @@ def change_fsu_action_compartment(ctx, from_json, wait_for_state, max_wait_secon
 
 @fsu_collection_group.command(name=cli_util.override('fleet_software_update.change_fsu_collection_compartment.command_name', 'change-compartment'), help=u"""Moves a Exadata Fleet Update Collection resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeFsuCollectionCompartment)""")
 @cli_util.option('--fsu-collection-id', required=True, help=u"""Unique Exadata Fleet Update Collection identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -372,7 +372,7 @@ def change_fsu_collection_compartment(ctx, from_json, wait_for_state, max_wait_s
 
 @fsu_cycle_group.command(name=cli_util.override('fleet_software_update.change_fsu_cycle_compartment.command_name', 'change-compartment'), help=u"""Moves a Exadata Fleet Update Cycle resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeFsuCycleCompartment)""")
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""Unique Exadata Fleet Update Cycle identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -433,7 +433,7 @@ def change_fsu_cycle_compartment(ctx, from_json, wait_for_state, max_wait_second
 
 @fsu_discovery_group.command(name=cli_util.override('fleet_software_update.change_fsu_discovery_compartment.command_name', 'change-compartment'), help=u"""Moves a Exadata Fleet Update Discovery resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeFsuDiscoveryCompartment)""")
 @cli_util.option('--fsu-discovery-id', required=True, help=u"""Unique Exadata Fleet Update Discovery identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -466,7 +466,7 @@ def change_fsu_discovery_compartment(ctx, from_json, fsu_discovery_id, compartme
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""Unique Exadata Fleet Update Cycle identifier.""")
 @cli_util.option('--goal-version-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Exadata Fleet Update Cycle.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the Compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Compartment.""")
 @cli_util.option('--fsu-collection-id', help=u"""The [OCID] of the Exadata Fleet Update Collection which will be updated by the Exadata Fleet Update Cycle being created. If not specified, the cloned Exadata Fleet Update Cycle will be assigned to the same Exadata Fleet Update Collection as the source Exadata Fleet Update Cycle.""")
 @cli_util.option('--batching-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--stage-action-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -545,7 +545,7 @@ def clone_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @fsu_action_group.command(name=cli_util.override('fleet_software_update.create_fsu_action.command_name', 'create'), help=u"""Creates a new Exadata Fleet Update Action. \n[Command Reference](createFsuAction)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STAGE", "PRECHECK", "APPLY", "ROLLBACK_AND_REMOVE_TARGET", "CLEANUP", "ROLLBACK_MAINTENANCE_CYCLE"]), help=u"""Type of Exadata Fleet Update Action.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Action display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -612,7 +612,7 @@ def create_fsu_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @fsu_action_group.command(name=cli_util.override('fleet_software_update.create_fsu_action_create_rollback_cycle_apply_action_details.command_name', 'create-fsu-action-create-rollback-cycle-apply-action-details'), help=u"""Creates a new Exadata Fleet Update Action. \n[Command Reference](createFsuAction)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""OCID identifier for the Exadata Fleet Update Cycle the Action will be part of.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Action display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -681,7 +681,7 @@ def create_fsu_action_create_rollback_cycle_apply_action_details(ctx, from_json,
 
 
 @fsu_action_group.command(name=cli_util.override('fleet_software_update.create_fsu_action_create_apply_action_details.command_name', 'create-fsu-action-create-apply-action-details'), help=u"""Creates a new Exadata Fleet Update Action. \n[Command Reference](createFsuAction)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""OCID identifier for the Exadata Fleet Update Cycle the Action will be part of.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Action display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -754,7 +754,7 @@ def create_fsu_action_create_apply_action_details(ctx, from_json, wait_for_state
 
 
 @fsu_action_group.command(name=cli_util.override('fleet_software_update.create_fsu_action_create_stage_action_details.command_name', 'create-fsu-action-create-stage-action-details'), help=u"""Creates a new Exadata Fleet Update Action. \n[Command Reference](createFsuAction)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""OCID identifier for the Exadata Fleet Update Cycle the Action will be part of.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Action display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -827,7 +827,7 @@ def create_fsu_action_create_stage_action_details(ctx, from_json, wait_for_state
 
 
 @fsu_action_group.command(name=cli_util.override('fleet_software_update.create_fsu_action_create_rollback_action_details.command_name', 'create-fsu-action-create-rollback-action-details'), help=u"""Creates a new Exadata Fleet Update Action. \n[Command Reference](createFsuAction)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""OCID identifier for the Exadata Fleet Update Cycle the Action will be part of.""")
 @cli_util.option('--details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Action display name.""")
@@ -902,7 +902,7 @@ def create_fsu_action_create_rollback_action_details(ctx, from_json, wait_for_st
 
 
 @fsu_action_group.command(name=cli_util.override('fleet_software_update.create_fsu_action_create_cleanup_action_details.command_name', 'create-fsu-action-create-cleanup-action-details'), help=u"""Creates a new Exadata Fleet Update Action. \n[Command Reference](createFsuAction)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""OCID identifier for the Exadata Fleet Update Cycle the Action will be part of.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Action display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -975,7 +975,7 @@ def create_fsu_action_create_cleanup_action_details(ctx, from_json, wait_for_sta
 
 
 @fsu_action_group.command(name=cli_util.override('fleet_software_update.create_fsu_action_create_precheck_action_details.command_name', 'create-fsu-action-create-precheck-action-details'), help=u"""Creates a new Exadata Fleet Update Action. \n[Command Reference](createFsuAction)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""OCID identifier for the Exadata Fleet Update Cycle the Action will be part of.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Action display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1050,7 +1050,7 @@ def create_fsu_action_create_precheck_action_details(ctx, from_json, wait_for_st
 @fsu_collection_group.command(name=cli_util.override('fleet_software_update.create_fsu_collection.command_name', 'create'), help=u"""Creates a new Exadata Fleet Update Collection. \n[Command Reference](createFsuCollection)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB", "GI", "GUEST_OS", "EXADB_STACK"]), help=u"""Collection type. DB: Only Database entity type resources allowed. GI: CloudVMCluster and VMCluster entity type resources allowed. GUEST_OS: CloudVmCluster and VmCluster entity type resources are allowed. EXADB_STACK: CloudVmCluster and VmCluster entity type resources are allowed.""")
 @cli_util.option('--service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACS", "EXACC"]), help=u"""Exadata service type for the target resource members.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Compartment.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Exadata Fleet Update Collection.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1118,7 +1118,7 @@ def create_fsu_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @fsu_collection_group.command(name=cli_util.override('fleet_software_update.create_fsu_collection_create_db_fsu_collection_details.command_name', 'create-fsu-collection-create-db-fsu-collection-details'), help=u"""Creates a new Exadata Fleet Update Collection. \n[Command Reference](createFsuCollection)""")
 @cli_util.option('--service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACS", "EXACC"]), help=u"""Exadata service type for the target resource members.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Compartment.""")
 @cli_util.option('--source-major-version', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_11204", "DB_121", "DB_122", "DB_18", "DB_19", "DB_23", "DB_26"]), help=u"""Database Major Version of targets to be included in the Exadata Fleet Update Collection. https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/DbVersionSummary/ListDbVersions Only Database targets that match the version specified in this value would be added to the Exadata Fleet Update Collection.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Exadata Fleet Update Collection.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1193,7 +1193,7 @@ def create_fsu_collection_create_db_fsu_collection_details(ctx, from_json, wait_
 
 @fsu_collection_group.command(name=cli_util.override('fleet_software_update.create_fsu_collection_create_gi_fsu_collection_details.command_name', 'create-fsu-collection-create-gi-fsu-collection-details'), help=u"""Creates a new Exadata Fleet Update Collection. \n[Command Reference](createFsuCollection)""")
 @cli_util.option('--service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACS", "EXACC"]), help=u"""Exadata service type for the target resource members.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Compartment.""")
 @cli_util.option('--source-major-version', required=True, type=custom_types.CliCaseInsensitiveChoice(["GI_18", "GI_19", "GI_23", "GI_26"]), help=u"""Grid Infrastructure Major Version of targets to be included in the Exadata Fleet Update Collection. Only GI targets that match the version specified in this value would be added to the Exadata Fleet Update Collection.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Exadata Fleet Update Collection.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1268,7 +1268,7 @@ def create_fsu_collection_create_gi_fsu_collection_details(ctx, from_json, wait_
 
 @fsu_collection_group.command(name=cli_util.override('fleet_software_update.create_fsu_collection_create_guest_os_fsu_collection_details.command_name', 'create-fsu-collection-create-guest-os-fsu-collection-details'), help=u"""Creates a new Exadata Fleet Update Collection. \n[Command Reference](createFsuCollection)""")
 @cli_util.option('--service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACS", "EXACC"]), help=u"""Exadata service type for the target resource members.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Compartment.""")
 @cli_util.option('--source-major-version', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXA_OL_5", "EXA_OL_6", "EXA_OL_7", "EXA_OL_8"]), help=u"""Major version of Exadata Image (Guest OS) release for Exadata VM Cluster targets to be included in the Exadata Fleet Update Collection. Only Exadata VM Clusters whose 'systemVersion' is related to the major version will be added to the Exadata Fleet Update Collection. For more details, refer to [Oracle document 2075007.1]""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Exadata Fleet Update Collection.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1343,7 +1343,7 @@ def create_fsu_collection_create_guest_os_fsu_collection_details(ctx, from_json,
 
 @fsu_collection_group.command(name=cli_util.override('fleet_software_update.create_fsu_collection_create_exadb_stack_fsu_collection_details.command_name', 'create-fsu-collection-create-exadb-stack-fsu-collection-details'), help=u"""Creates a new Exadata Fleet Update Collection. \n[Command Reference](createFsuCollection)""")
 @cli_util.option('--service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACS", "EXACC"]), help=u"""Exadata service type for the target resource members.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Compartment.""")
 @cli_util.option('--components', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of components in an Exadata software stack.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Exadata Fleet Update Collection.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1413,7 +1413,7 @@ def create_fsu_collection_create_exadb_stack_fsu_collection_details(ctx, from_js
 
 
 @fsu_cycle_group.command(name=cli_util.override('fleet_software_update.create_fsu_cycle.command_name', 'create'), help=u"""Creates a new Exadata Fleet Update Cycle. \n[Command Reference](createFsuCycle)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Compartment.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PATCH", "UPGRADE"]), help=u"""Type of Exadata Fleet Update Cycle.""")
 @cli_util.option('--fsu-collection-id', required=True, help=u"""The [OCID] of the Exadata Fleet Update Collection which will be updated by the Exadata Fleet Update Cycle being created.""")
 @cli_util.option('--goal-version-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1500,7 +1500,7 @@ def create_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @fsu_cycle_group.command(name=cli_util.override('fleet_software_update.create_fsu_cycle_create_patch_fsu_cycle.command_name', 'create-fsu-cycle-create-patch-fsu-cycle'), help=u"""Creates a new Exadata Fleet Update Cycle. \n[Command Reference](createFsuCycle)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Compartment.""")
 @cli_util.option('--fsu-collection-id', required=True, help=u"""The [OCID] of the Exadata Fleet Update Collection which will be updated by the Exadata Fleet Update Cycle being created.""")
 @cli_util.option('--goal-version-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Exadata Fleet Update Cycle.""")
@@ -1603,7 +1603,7 @@ def create_fsu_cycle_create_patch_fsu_cycle(ctx, from_json, wait_for_state, max_
 
 
 @fsu_cycle_group.command(name=cli_util.override('fleet_software_update.create_fsu_cycle_create_upgrade_fsu_cycle.command_name', 'create-fsu-cycle-create-upgrade-fsu-cycle'), help=u"""Creates a new Exadata Fleet Update Cycle. \n[Command Reference](createFsuCycle)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Compartment.""")
 @cli_util.option('--fsu-collection-id', required=True, help=u"""The [OCID] of the Exadata Fleet Update Collection which will be updated by the Exadata Fleet Update Cycle being created.""")
 @cli_util.option('--goal-version-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Exadata Fleet Update Cycle.""")
@@ -1694,7 +1694,7 @@ def create_fsu_cycle_create_upgrade_fsu_cycle(ctx, from_json, wait_for_state, ma
 
 
 @fsu_discovery_group.command(name=cli_util.override('fleet_software_update.create_fsu_discovery.command_name', 'create'), help=u"""Creates a new Exadata Fleet Update Discovery. \n[Command Reference](createFsuDiscovery)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Collection display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1761,7 +1761,7 @@ def create_fsu_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @fsu_discovery_group.command(name=cli_util.override('fleet_software_update.create_fsu_discovery_gi_discovery_details.command_name', 'create-fsu-discovery-gi-discovery-details'), help=u"""Creates a new Exadata Fleet Update Discovery. \n[Command Reference](createFsuDiscovery)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--details-service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACS", "EXACC"]), help=u"""Exadata service type for the target resource members.""")
 @cli_util.option('--details-source-major-version', required=True, type=custom_types.CliCaseInsensitiveChoice(["GI_18", "GI_19", "GI_23", "GI_26"]), help=u"""Grid Infrastructure Major Version of targets to be included in the Exadata Fleet Update Discovery results. Only GI targets that match the version specified in this value would be added to the Exadata Fleet Update Discovery results.""")
 @cli_util.option('--details-criteria', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1835,7 +1835,7 @@ def create_fsu_discovery_gi_discovery_details(ctx, from_json, wait_for_state, ma
 
 
 @fsu_discovery_group.command(name=cli_util.override('fleet_software_update.create_fsu_discovery_db_discovery_details.command_name', 'create-fsu-discovery-db-discovery-details'), help=u"""Creates a new Exadata Fleet Update Discovery. \n[Command Reference](createFsuDiscovery)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--details-service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACS", "EXACC"]), help=u"""Exadata service type for the target resource members.""")
 @cli_util.option('--details-source-major-version', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_11204", "DB_121", "DB_122", "DB_18", "DB_19", "DB_23", "DB_26"]), help=u"""Database Major Version of targets to be included in the Exadata Fleet Update Discovery results. https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/DbVersionSummary/ListDbVersions Only Database targets that match the version specified in this value would be added to the Exadata Fleet Update Discovery results.""")
 @cli_util.option('--details-criteria', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1909,7 +1909,7 @@ def create_fsu_discovery_db_discovery_details(ctx, from_json, wait_for_state, ma
 
 
 @fsu_discovery_group.command(name=cli_util.override('fleet_software_update.create_fsu_discovery_exadb_stack_discovery_details.command_name', 'create-fsu-discovery-exadb-stack-discovery-details'), help=u"""Creates a new Exadata Fleet Update Discovery. \n[Command Reference](createFsuDiscovery)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--details-service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACS", "EXACC"]), help=u"""Exadata service type for the target resource members.""")
 @cli_util.option('--details-components', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Discovery filter details of components in an Exadata software stack.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Collection display name.""")
@@ -1981,7 +1981,7 @@ def create_fsu_discovery_exadb_stack_discovery_details(ctx, from_json, wait_for_
 
 
 @fsu_discovery_group.command(name=cli_util.override('fleet_software_update.create_fsu_discovery_guest_os_discovery_details.command_name', 'create-fsu-discovery-guest-os-discovery-details'), help=u"""Creates a new Exadata Fleet Update Discovery. \n[Command Reference](createFsuDiscovery)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--details-service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACS", "EXACC"]), help=u"""Exadata service type for the target resource members.""")
 @cli_util.option('--details-source-major-version', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXA_OL_5", "EXA_OL_6", "EXA_OL_7", "EXA_OL_8"]), help=u"""Major version of Exadata Image (Guest OS) release for Exadata VM Cluster targets to be included in the results for an Exadata Fleet Update Discovery. Major Versions of Exadata Software are demarcated by the underlying Oracle Linux OS version. For more details, refer to [Oracle document 2075007.1]""")
 @cli_util.option('--details-criteria', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2653,7 +2653,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @fsu_action_summary_collection_group.command(name=cli_util.override('fleet_software_update.list_fsu_actions.command_name', 'list-fsu-actions'), help=u"""Gets a list of all Exadata Fleet Update Actions in a compartment. \n[Command Reference](listFsuActions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--fsu-cycle-id', help=u"""A filter to return only resources whose fsuCycleId matches the given fleetSoftwareUpdateCycleId.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "UPDATING", "FAILED", "NEEDS_ATTENTION", "SUCCEEDED", "CANCELING", "CANCELED", "UNKNOWN", "DELETING", "DELETED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -2720,7 +2720,7 @@ def list_fsu_actions(ctx, from_json, all_pages, page_size, compartment_id, fsu_c
 
 @target_summary_collection_group.command(name=cli_util.override('fleet_software_update.list_fsu_collection_targets.command_name', 'list-fsu-collection-targets'), help=u"""Gets a list of all Targets that are members of a specific Exadata Fleet Update Collection. \n[Command Reference](listFsuCollectionTargets)""")
 @cli_util.option('--fsu-collection-id', required=True, help=u"""Unique Exadata Fleet Update Collection identifier.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--target-id', help=u"""A filter to return a resource whose target OCID matches the given OCID.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["IDLE", "EXECUTING_JOB", "JOB_FAILED"]), help=u"""A filter to return only entries whose status matches the given status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -2785,7 +2785,7 @@ def list_fsu_collection_targets(ctx, from_json, all_pages, page_size, fsu_collec
 
 
 @fsu_collection_summary_collection_group.command(name=cli_util.override('fleet_software_update.list_fsu_collections.command_name', 'list-fsu-collections'), help=u"""Gets a list of all Exadata Fleet Update Collections in a compartment. \n[Command Reference](listFsuCollections)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["DB", "GI", "GUEST_OS", "EXADB_STACK"]), help=u"""A filter to return only resources whose type matches the given type.""")
@@ -2848,7 +2848,7 @@ def list_fsu_collections(ctx, from_json, all_pages, page_size, compartment_id, l
 
 
 @fsu_cycle_summary_group.command(name=cli_util.override('fleet_software_update.list_fsu_cycles.command_name', 'list-fsu-cycles'), help=u"""Gets a list of all Exadata Fleet Update Cycles in a compartment. \n[Command Reference](listFsuCycles)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--fsu-collection-id', help=u"""A filter to return only resources whose fsuCollectionId matches the given fsuCollectionId.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "IN_PROGRESS", "FAILED", "NEEDS_ATTENTION", "SUCCEEDED", "DELETING", "DELETED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--collection-type', type=custom_types.CliCaseInsensitiveChoice(["DB", "GI", "GUEST_OS", "EXADB_STACK"]), help=u"""A filter to return only resources whose Collection type matches the given type.""")
@@ -2917,7 +2917,7 @@ def list_fsu_cycles(ctx, from_json, all_pages, page_size, compartment_id, fsu_co
 
 
 @fsu_discovery_summary_group.command(name=cli_util.override('fleet_software_update.list_fsu_discoveries.command_name', 'list-fsu-discoveries'), help=u"""Returns a list of Exadata Fleet Update Discoveries resources in the specified compartment. \n[Command Reference](listFsuDiscoveries)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -2978,7 +2978,7 @@ def list_fsu_discoveries(ctx, from_json, all_pages, page_size, compartment_id, l
 
 @target_summary_collection_group.command(name=cli_util.override('fleet_software_update.list_fsu_discovery_targets.command_name', 'list-fsu-discovery-targets'), help=u"""Gets a list of all Targets in the results of a Exadata Fleet Update Discovery. \n[Command Reference](listFsuDiscoveryTargets)""")
 @cli_util.option('--fsu-discovery-id', required=True, help=u"""Unique Exadata Fleet Update Discovery identifier.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--target-id', help=u"""A filter to return a resource whose target OCID matches the given OCID.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["IDLE", "EXECUTING_JOB", "JOB_FAILED"]), help=u"""A filter to return only entries whose status matches the given status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3268,7 +3268,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('fleet_software_update.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources whose lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")

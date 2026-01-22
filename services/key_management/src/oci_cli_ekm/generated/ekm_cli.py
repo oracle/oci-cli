@@ -33,8 +33,8 @@ ekm_root_group.add_command(ekms_private_endpoint_group)
 
 
 @ekms_private_endpoint_group.command(name=cli_util.override('ekm.create_ekms_private_endpoint.command_name', 'create'), help=u"""Create a new EKMS private endpoint used to connect to external key manager system \n[Command Reference](createEkmsPrivateEndpoint)""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of subnet in which the EKMS private endpoint is to be created""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of subnet in which the EKMS private endpoint is to be created""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the EKMS private endpoint resource being created.""")
 @cli_util.option('--external-key-manager-ip', required=True, help=u"""External private IP to connect to from this EKMS private endpoint""")
 @cli_util.option('--ca-bundle', required=True, help=u"""CABundle to validate TLS certificate of the external key manager system in PEM format""")
@@ -188,7 +188,7 @@ def get_ekms_private_endpoint(ctx, from_json, ekms_private_endpoint_id):
 
 
 @ekms_private_endpoint_group.command(name=cli_util.override('ekm.list_ekms_private_endpoints.command_name', 'list'), help=u"""Returns a list of all the EKMS private endpoints in the specified compartment. \n[Command Reference](listEkmsPrivateEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")

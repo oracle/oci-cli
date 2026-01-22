@@ -8,6 +8,7 @@ from .cli_from_json import CliFromJson
 from .cli_complex_type import CLI_COMPLEX_TYPE
 from .cli_datetime import CLI_DATETIME, CLI_DATETIME_ROUNDED_MINUTE
 from .cli_case_insensitive_choice import CliCaseInsensitiveChoice
+from .cli_ocid_type import CLI_OCID
 from .object_storage_bulk_operation_output import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
 
-__all__ = ["CliDatetime", "CliFromJson", "CLI_COMPLEX_TYPE", "CLI_DATETIME", "CLI_DATETIME_ROUNDED_MINUTE", "CliCaseInsensitiveChoice", "BulkPutOperationOutput", "BulkGetOperationOutput", "BulkDeleteOperationOutput"]
+__all__ = ["CliDatetime", "CliFromJson", "CLI_COMPLEX_TYPE", "CLI_DATETIME", "CLI_DATETIME_ROUNDED_MINUTE", "CliCaseInsensitiveChoice", "CLI_OCID", "BulkPutOperationOutput", "BulkGetOperationOutput", "BulkDeleteOperationOutput"]

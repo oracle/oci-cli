@@ -164,7 +164,7 @@ def cancel_certificate_authority_version_deletion(ctx, from_json, certificate_au
 
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.cancel_certificate_deletion.command_name', 'cancel-certificate-deletion'), help=u"""Cancels the pending deletion of the specified certificate. Canceling a scheduled deletion restores the certificate's lifecycle state to what it was before you scheduled the certificate for deletion. \n[Command Reference](cancelCertificateDeletion)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -189,7 +189,7 @@ def cancel_certificate_deletion(ctx, from_json, certificate_id, if_match):
 
 
 @certificate_version_group.command(name=cli_util.override('certs_mgmt.cancel_certificate_version_deletion.command_name', 'cancel-certificate-version-deletion'), help=u"""Cancels the scheduled deletion of the specified certificate version. \n[Command Reference](cancelCertificateVersionDeletion)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--certificate-version-number', required=True, type=click.INT, help=u"""The version number of the certificate.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -222,7 +222,7 @@ def cancel_certificate_version_deletion(ctx, from_json, certificate_id, certific
 
 When provided, if-match is checked against the ETag values of the secret. \n[Command Reference](changeCaBundleCompartment)""")
 @cli_util.option('--ca-bundle-id', required=True, help=u"""The OCID of the CA bundle.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the CA bundle should move.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the CA bundle should move.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -255,7 +255,7 @@ def change_ca_bundle_compartment(ctx, from_json, ca_bundle_id, compartment_id, i
 
 When provided, If-Match is checked against the ETag values of the source. \n[Command Reference](changeCertificateAuthorityCompartment)""")
 @cli_util.option('--certificate-authority-id', required=True, help=u"""The OCID of the certificate authority (CA).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the CA should move.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the CA should move.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -287,8 +287,8 @@ def change_certificate_authority_compartment(ctx, from_json, certificate_authori
 @certificate_group.command(name=cli_util.override('certs_mgmt.change_certificate_compartment.command_name', 'change-compartment'), help=u"""Moves a certificate to a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
 When provided, if-match is checked against the ETag values of the secret. \n[Command Reference](changeCertificateCompartment)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the certificate should move.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the certificate should move.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -319,7 +319,7 @@ def change_certificate_compartment(ctx, from_json, certificate_id, compartment_i
 
 @ca_bundle_group.command(name=cli_util.override('certs_mgmt.create_ca_bundle.command_name', 'create'), help=u"""Creates a new CA bundle according to the details of the request. \n[Command Reference](createCaBundle)""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the CA bundle. Names are unique within a compartment. Avoid entering confidential information. Valid characters include uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the CA bundle.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for the CA bundle.""")
 @cli_util.option('--ca-bundle-pem', required=True, help=u"""Certificates (in PEM format) to include in the CA bundle.""")
 @cli_util.option('--description', help=u"""A brief description of the CA bundle.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -384,7 +384,7 @@ def create_ca_bundle(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.create_certificate.command_name', 'create'), help=u"""Creates a new certificate according to the details of the request. \n[Command Reference](createCertificate)""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the certificate. Names are unique within a compartment. Avoid entering confidential information. Valid characters are uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the certificate.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to create the certificate.""")
 @cli_util.option('--certificate-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A brief description of the certificate. Avoid entering confidential information.""")
 @cli_util.option('--certificate-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An optional list of rules that control how the certificate is used and managed.
@@ -455,7 +455,7 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.create_certificate_create_certificate_managed_externally_issued_by_internal_ca_config_details.command_name', 'create-certificate-create-certificate-managed-externally-issued-by-internal-ca-config-details'), help=u"""Creates a new certificate according to the details of the request. \n[Command Reference](createCertificate)""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the certificate. Names are unique within a compartment. Avoid entering confidential information. Valid characters are uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the certificate.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to create the certificate.""")
 @cli_util.option('--certificate-config-issuer-certificate-authority-id', required=True, help=u"""The OCID of the private CA.""")
 @cli_util.option('--certificate-config-csr-pem', required=True, help=u"""The certificate signing request (in PEM format).""")
 @cli_util.option('--description', help=u"""A brief description of the certificate. Avoid entering confidential information.""")
@@ -539,7 +539,7 @@ def create_certificate_create_certificate_managed_externally_issued_by_internal_
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.create_certificate_create_certificate_issued_by_internal_ca_config_details.command_name', 'create-certificate-create-certificate-issued-by-internal-ca-config-details'), help=u"""Creates a new certificate according to the details of the request. \n[Command Reference](createCertificate)""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the certificate. Names are unique within a compartment. Avoid entering confidential information. Valid characters are uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the certificate.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to create the certificate.""")
 @cli_util.option('--certificate-config-certificate-profile-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TLS_SERVER_OR_CLIENT", "TLS_SERVER", "TLS_CLIENT", "TLS_CODE_SIGN"]), help=u"""The name of the profile used to create the certificate, which depends on the type of certificate you need.""")
 @cli_util.option('--certificate-config-issuer-certificate-authority-id', required=True, help=u"""The OCID of the private CA.""")
 @cli_util.option('--certificate-config-subject', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -639,7 +639,7 @@ def create_certificate_create_certificate_issued_by_internal_ca_config_details(c
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.create_certificate_create_certificate_by_importing_config_details.command_name', 'create-certificate-create-certificate-by-importing-config-details'), help=u"""Creates a new certificate according to the details of the request. \n[Command Reference](createCertificate)""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the certificate. Names are unique within a compartment. Avoid entering confidential information. Valid characters are uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the certificate.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to create the certificate.""")
 @cli_util.option('--certificate-config-cert-chain-pem', required=True, help=u"""The certificate chain (in PEM format) for the imported certificate.""")
 @cli_util.option('--certificate-config-private-key-pem', required=True, help=u"""The private key (in PEM format) for the imported certificate.""")
 @cli_util.option('--certificate-config-certificate-pem', required=True, help=u"""The certificate (in PEM format) for the imported certificate.""")
@@ -725,7 +725,7 @@ def create_certificate_create_certificate_by_importing_config_details(ctx, from_
 
 @certificate_authority_group.command(name=cli_util.override('certs_mgmt.create_certificate_authority.command_name', 'create'), help=u"""Creates a new certificate authority (CA) according to the details of the request. \n[Command Reference](createCertificateAuthority)""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the CA. Names are unique within a compartment. Avoid entering confidential information. Valid characters include uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment in which you want to create the CA.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment in which you want to create the CA.""")
 @cli_util.option('--certificate-authority-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', required=True, help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
 @cli_util.option('--description', help=u"""A brief description of the CA.""")
@@ -802,7 +802,7 @@ def create_certificate_authority(ctx, from_json, wait_for_state, max_wait_second
 
 @certificate_authority_group.command(name=cli_util.override('certs_mgmt.create_certificate_authority_create_root_ca_by_generating_internally_config_details.command_name', 'create-certificate-authority-create-root-ca-by-generating-internally-config-details'), help=u"""Creates a new certificate authority (CA) according to the details of the request. \n[Command Reference](createCertificateAuthority)""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the CA. Names are unique within a compartment. Avoid entering confidential information. Valid characters include uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment in which you want to create the CA.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment in which you want to create the CA.""")
 @cli_util.option('--kms-key-id', required=True, help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
 @cli_util.option('--certificate-authority-config-subject', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A brief description of the CA.""")
@@ -894,7 +894,7 @@ def create_certificate_authority_create_root_ca_by_generating_internally_config_
 
 @certificate_authority_group.command(name=cli_util.override('certs_mgmt.create_certificate_authority_create_subordinate_ca_issued_by_internal_ca_config_details.command_name', 'create-certificate-authority-create-subordinate-ca-issued-by-internal-ca-config-details'), help=u"""Creates a new certificate authority (CA) according to the details of the request. \n[Command Reference](createCertificateAuthority)""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the CA. Names are unique within a compartment. Avoid entering confidential information. Valid characters include uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment in which you want to create the CA.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment in which you want to create the CA.""")
 @cli_util.option('--kms-key-id', required=True, help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
 @cli_util.option('--certificate-authority-config-issuer-certificate-authority-id', required=True, help=u"""The OCID of the private CA.""")
 @cli_util.option('--certificate-authority-config-subject', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1095,7 +1095,7 @@ def get_ca_bundle(ctx, from_json, ca_bundle_id):
 
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.get_certificate.command_name', 'get'), help=u"""Gets details about the specified certificate. \n[Command Reference](getCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1166,7 +1166,7 @@ def get_certificate_authority_version(ctx, from_json, certificate_authority_id, 
 
 
 @certificate_version_group.command(name=cli_util.override('certs_mgmt.get_certificate_version.command_name', 'get'), help=u"""Gets details about the specified version of a certificate. \n[Command Reference](getCertificateVersion)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--certificate-version-number', required=True, type=click.INT, help=u"""The version number of the certificate.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1193,7 +1193,7 @@ def get_certificate_version(ctx, from_json, certificate_id, certificate_version_
 
 
 @association_summary_group.command(name=cli_util.override('certs_mgmt.list_associations.command_name', 'list-associations'), help=u"""Lists all associations that match the query parameters. Optionally, you can use the parameter `FilterByAssociationIdQueryParam` to limit the result set to a single item that matches the specified association. \n[Command Reference](listAssociations)""")
-@cli_util.option('--compartment-id', help=u"""A filter that returns only resources that match the given compartment OCID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter that returns only resources that match the given compartment OCID.""")
 @cli_util.option('--certificates-resource-id', help=u"""A filter that returns only resources that match the given OCID of a certificate-related resource.""")
 @cli_util.option('--associated-resource-id', help=u"""A filter that returns only resources that match the given OCID of an associated Oracle Cloud Infrastructure resource.""")
 @cli_util.option('--association-id', help=u"""The OCID of the association. If the parameter is set to null, the service lists all associations.""")
@@ -1261,7 +1261,7 @@ def list_associations(ctx, from_json, all_pages, page_size, compartment_id, cert
 
 
 @ca_bundle_summary_group.command(name=cli_util.override('certs_mgmt.list_ca_bundles.command_name', 'list-ca-bundles'), help=u"""Lists all CA bundles that match the query parameters. Optionally, you can use the parameter `FilterByCaBundleIdQueryParam` to limit the result set to a single item that matches the specified CA bundle. \n[Command Reference](listCaBundles)""")
-@cli_util.option('--compartment-id', help=u"""A filter that returns only resources that match the given compartment OCID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter that returns only resources that match the given compartment OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter that returns only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--name', help=u"""A filter that returns only resources that match the specified name.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `TIMECREATED` is descending. The default order for `NAME` is ascending.""")
@@ -1323,7 +1323,7 @@ def list_ca_bundles(ctx, from_json, all_pages, page_size, compartment_id, lifecy
 
 
 @certificate_authority_summary_group.command(name=cli_util.override('certs_mgmt.list_certificate_authorities.command_name', 'list-certificate-authorities'), help=u"""Lists all certificate authorities (CAs) in the specified compartment. Optionally, you can use the parameter `FilterByCertificateAuthorityIdQueryParam` to limit the results to a single item that matches the specified CA. \n[Command Reference](listCertificateAuthorities)""")
-@cli_util.option('--compartment-id', help=u"""A filter that returns only resources that match the given compartment OCID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter that returns only resources that match the given compartment OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), help=u"""A filter that returns only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--name', help=u"""A filter that returns only resources that match the specified name.""")
 @cli_util.option('--issuer-certificate-authority-id', help=u"""The OCID of the certificate authority (CA). If the parameter is set to null, the service lists all CAs.""")
@@ -1448,7 +1448,7 @@ def list_certificate_authority_versions(ctx, from_json, all_pages, page_size, ce
 
 
 @certificate_version_summary_group.command(name=cli_util.override('certs_mgmt.list_certificate_versions.command_name', 'list-certificate-versions'), help=u"""Lists all certificate versions for the specified certificate. Optionally, you can use the parameter `FilterByVersionNumberQueryParam` to limit the result set to a single item that matches the specified version number. \n[Command Reference](listCertificateVersions)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--version-number', type=click.INT, help=u"""A filter that returns only resources that match the specified version number. The default value is 0, which means that this filter is not applied.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -1508,7 +1508,7 @@ def list_certificate_versions(ctx, from_json, all_pages, page_size, certificate_
 
 
 @certificate_summary_group.command(name=cli_util.override('certs_mgmt.list_certificates.command_name', 'list-certificates'), help=u"""Lists all certificates that match the query parameters. Optionally, you can use the parameter `FilterByCertificateIdQueryParam` to limit the result set to a single item that matches the specified certificate. \n[Command Reference](listCertificates)""")
-@cli_util.option('--compartment-id', help=u"""A filter that returns only resources that match the given compartment OCID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter that returns only resources that match the given compartment OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), help=u"""A filter that returns only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--name', help=u"""A filter that returns only resources that match the specified name.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "EXPIRATIONDATE", "TIMECREATED"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `EXPIRATIONDATE` and 'TIMECREATED' is descending. The default order for `NAME` is ascending.""")
@@ -1516,7 +1516,7 @@ def list_certificate_versions(ctx, from_json, all_pages, page_size, certificate_
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--issuer-certificate-authority-id', help=u"""The OCID of the certificate authority (CA). If the parameter is set to null, the service lists all CAs.""")
-@cli_util.option('--certificate-id', help=u"""The OCID of the certificate. If the parameter is set to null, the service lists all certificates.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The OCID of the certificate. If the parameter is set to null, the service lists all certificates.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1611,7 +1611,7 @@ def revoke_certificate_authority_version(ctx, from_json, certificate_authority_i
 
 
 @certificate_version_group.command(name=cli_util.override('certs_mgmt.revoke_certificate_version.command_name', 'revoke'), help=u"""Revokes the specified certificate version. \n[Command Reference](revokeCertificateVersion)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--certificate-version-number', required=True, type=click.INT, help=u"""The version number of the certificate.""")
 @cli_util.option('--revocation-reason', type=custom_types.CliCaseInsensitiveChoice(["UNSPECIFIED", "KEY_COMPROMISE", "CA_COMPROMISE", "AFFILIATION_CHANGED", "SUPERSEDED", "CESSATION_OF_OPERATION", "PRIVILEGE_WITHDRAWN", "AA_COMPROMISE"]), help=u"""The reason that the certificate or certificate authority was revoked.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1720,7 +1720,7 @@ def schedule_certificate_authority_version_deletion(ctx, from_json, certificate_
 
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.schedule_certificate_deletion.command_name', 'schedule-certificate-deletion'), help=u"""Schedules the deletion of the specified certificate. This sets the lifecycle state of the certificate to `PENDING_DELETION` and then deletes it after the specified retention period ends. You can subsequently use `GetCertificate` to determine the current deletion status. \n[Command Reference](scheduleCertificateDeletion)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help=u"""An optional property indicating when to delete the certificate version, expressed in [RFC 3339] timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1755,7 +1755,7 @@ def schedule_certificate_deletion(ctx, from_json, certificate_id, time_of_deleti
 @certificate_version_group.command(name=cli_util.override('certs_mgmt.schedule_certificate_version_deletion.command_name', 'schedule-certificate-version-deletion'), help=u"""Schedules the deletion of the specified certificate version. This sets the lifecycle state of the certificate version to `PENDING_DELETION` and then deletes it after the specified retention period ends. You can only delete a certificate version if the certificate version rotation state is marked as `DEPRECATED`.
 
 You can subsequently use `GetCertificateVersion` to determine the current certificate version deletion status. \n[Command Reference](scheduleCertificateVersionDeletion)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--certificate-version-number', required=True, type=click.INT, help=u"""The version number of the certificate.""")
 @cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help=u"""An optional property that indicates when to delete the certificate version, expressed in [RFC 3339] timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1869,7 +1869,7 @@ def update_ca_bundle(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.update_certificate.command_name', 'update'), help=u"""Updates the properties of a certificate. \n[Command Reference](updateCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--description', help=u"""A brief description of the certificate. Avoid entering confidential information.""")
 @cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property cannot be updated in combination with any other properties.""")
 @cli_util.option('--certificate-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1955,7 +1955,7 @@ def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.update_certificate_update_certificate_by_importing_config_details.command_name', 'update-certificate-update-certificate-by-importing-config-details'), help=u"""Updates the properties of a certificate. \n[Command Reference](updateCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--certificate-config-cert-chain-pem', required=True, help=u"""The certificate chain (in PEM format) for the imported certificate.""")
 @cli_util.option('--certificate-config-private-key-pem', required=True, help=u"""The private key (in PEM format) for the imported certificate.""")
 @cli_util.option('--certificate-config-certificate-pem', required=True, help=u"""The certificate (in PEM format) for the imported certificate.""")
@@ -2058,7 +2058,7 @@ def update_certificate_update_certificate_by_importing_config_details(ctx, from_
 
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.update_certificate_update_certificate_issued_by_internal_ca_config_details.command_name', 'update-certificate-update-certificate-issued-by-internal-ca-config-details'), help=u"""Updates the properties of a certificate. \n[Command Reference](updateCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--description', help=u"""A brief description of the certificate. Avoid entering confidential information.""")
 @cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property cannot be updated in combination with any other properties.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2155,7 +2155,7 @@ def update_certificate_update_certificate_issued_by_internal_ca_config_details(c
 
 
 @certificate_group.command(name=cli_util.override('certs_mgmt.update_certificate_update_certificate_managed_externally_issued_by_internal_ca_config_details.command_name', 'update-certificate-update-certificate-managed-externally-issued-by-internal-ca-config-details'), help=u"""Updates the properties of a certificate. \n[Command Reference](updateCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--certificate-config-csr-pem', required=True, help=u"""The certificate signing request (in PEM format).""")
 @cli_util.option('--description', help=u"""A brief description of the certificate. Avoid entering confidential information.""")
 @cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property cannot be updated in combination with any other properties.""")

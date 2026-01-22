@@ -165,7 +165,7 @@ def attach_software_sources_to_managed_instance_group(ctx, from_json, wait_for_s
 
 @managed_instance_group_group.command(name=cli_util.override('managed_instance_group.change_managed_instance_group_compartment.command_name', 'change-compartment'), help=u"""Moves the specified managed instance group to a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeManagedInstanceGroupCompartment)""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""The [OCID] of the managed instance group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the group to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the group to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -196,7 +196,7 @@ def change_managed_instance_group_compartment(ctx, from_json, managed_instance_g
 
 @managed_instance_group_group.command(name=cli_util.override('managed_instance_group.create_managed_instance_group.command_name', 'create'), help=u"""Creates a new managed instance group. \n[Command Reference](createManagedInstanceGroup)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the managed instance group. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the managed instance group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the managed instance group.""")
 @cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""The operating system type of the managed instances that will be attached to this group.""")
 @cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""The CPU architecture type of the managed instances that will be attached to this group.""")
 @cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""The vendor of the operating system that will be used by the managed instances in the group.""")
@@ -794,7 +794,7 @@ def install_windows_updates_on_managed_instance_group(ctx, from_json, wait_for_s
 
 @managed_instance_group_group.command(name=cli_util.override('managed_instance_group.list_managed_instance_group_available_modules.command_name', 'list-managed-instance-group-available-modules'), help=u"""List modules that are available for installation on the specified managed instance group. Filter the list against a variety of criteria including but not limited to module name. \n[Command Reference](listManagedInstanceGroupAvailableModules)""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""The [OCID] of the managed instance group.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--name', help=u"""The resource name.""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that may partially match the name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -866,7 +866,7 @@ def list_managed_instance_group_available_modules(ctx, from_json, all_pages, pag
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""The [OCID] of the managed instance group.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -939,7 +939,7 @@ def list_managed_instance_group_available_packages(ctx, from_json, all_pages, pa
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""The [OCID] of the managed instance group.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -1015,7 +1015,7 @@ Example: 2017-07-14T02:40:00.000Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_
 @cli_util.option('--time-install-date-end', type=custom_types.CLI_DATETIME, help=u"""A filter to return only packages that were installed on or before the date provided, in ISO 8601 format.
 
 Example: 2017-07-14T02:40:00.000Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -1093,7 +1093,7 @@ The \"status\" attribute filters against the state of a module stream. Valid val
 
 When sorting by the display name, the result set is sorted first by the module name and then by the stream name. \n[Command Reference](listManagedInstanceGroupModules)""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""The [OCID] of the managed instance group.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--name', help=u"""The resource name.""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that may partially match the name given.""")
 @cli_util.option('--stream-name', help=u"""The name of the module stream. This parameter is required if a profile name is specified.""")
@@ -1195,7 +1195,7 @@ def list_managed_instance_group_modules(ctx, from_json, all_pages, page_size, wa
 
 
 @managed_instance_group_group.command(name=cli_util.override('managed_instance_group.list_managed_instance_groups.command_name', 'list'), help=u"""Lists managed instance groups that match the specified compartment or managed instance group [OCID]. Filter the list against a variety of criteria including but not limited to name, status, architecture, and OS family. \n[Command Reference](listManagedInstanceGroups)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--managed-instance-group-id', help=u"""The [OCID] of the managed instance group. This filter returns resources associated with this group.""")
 @cli_util.option('--software-source-id', help=u"""The [OCID] of the software source. This filter returns resources associated with this software source.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")

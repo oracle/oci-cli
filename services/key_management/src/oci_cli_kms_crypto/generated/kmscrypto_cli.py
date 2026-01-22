@@ -71,7 +71,7 @@ kms_crypto_root_group.add_command(encrypted_data_group)
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](decrypt)""")
 @cli_util.option('--ciphertext', required=True, help=u"""The encrypted data to decrypt.""")
-@cli_util.option('--key-id', required=True, help=u"""The OCID of the key used to encrypt the ciphertext.""")
+@cli_util.option('--key-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the key used to encrypt the ciphertext.""")
 @cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associated data must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logging-context', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that provides context for audit logging. You can provide this additional data as key-value pairs to include in audit logs when audit logging is enabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--key-version-id', help=u"""The OCID of the key version used to encrypt the ciphertext.""")
@@ -113,7 +113,7 @@ def decrypt(ctx, from_json, ciphertext, key_id, associated_data, logging_context
 @encrypted_data_group.command(name=cli_util.override('kms_crypto.encrypt.command_name', 'encrypt'), help=u"""Encrypts data using the given [EncryptDataDetails] resource. Plaintext included in the example request is a base64-encoded value of a UTF-8 string.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](encrypt)""")
-@cli_util.option('--key-id', required=True, help=u"""The OCID of the key to encrypt with.""")
+@cli_util.option('--key-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the key to encrypt with.""")
 @cli_util.option('--plaintext', required=True, help=u"""The plaintext data to encrypt.""")
 @cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associated data must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logging-context', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that provides context for audit logging. You can provide this additional data as key-value pairs to include in the audit logs when audit logging is enabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -156,7 +156,7 @@ def encrypt(ctx, from_json, key_id, plaintext, associated_data, logging_context,
 @exported_key_data_group.command(name=cli_util.override('kms_crypto.export_key.command_name', 'export-key'), help=u"""Exports a specific version of a master encryption key according to the details of the request. For their protection, keys that you create and store on a hardware security module (HSM) can never leave the HSM. You can only export keys stored on the server. For export, the key version is encrypted by an RSA public key that you provide. This operation is not supported for keys having protection mode `EXTERNAL`.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](exportKey)""")
-@cli_util.option('--key-id', required=True, help=u"""The OCID of the master encryption key associated with the key version you want to export.""")
+@cli_util.option('--key-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the master encryption key associated with the key version you want to export.""")
 @cli_util.option('--algorithm', required=True, type=custom_types.CliCaseInsensitiveChoice(["RSA_OAEP_AES_SHA256", "RSA_OAEP_SHA256"]), help=u"""The encryption algorithm to use to encrypt exportable key material from a software-backed key. Specifying `RSA_OAEP_AES_SHA256` invokes the RSA AES key wrap mechanism, which generates a temporary AES key. The temporary AES key is wrapped by the RSA public wrapping key provided along with the request, creating a wrapped temporary AES key. The temporary AES key is also used to wrap the exportable key material. The wrapped temporary AES key and the wrapped exportable key material are concatenated, producing concatenated blob output that jointly represents them. Specifying `RSA_OAEP_SHA256` means that the software key is wrapped by the RSA public wrapping key provided along with the request.""")
 @cli_util.option('--public-key', required=True, help=u"""The PEM format of the 2048-bit, 3072-bit, or 4096-bit RSA wrapping key in your possession that you want to use to encrypt the key.""")
 @cli_util.option('--key-version-id', help=u"""The OCID of the specific key version to export. If not specified, the service exports the current key version.""")
@@ -193,7 +193,7 @@ def export_key(ctx, from_json, key_id, algorithm, public_key, key_version_id, lo
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](generateDataEncryptionKey)""")
 @cli_util.option('--include-plaintext-key', required=True, type=click.BOOL, help=u"""If true, the generated key is also returned unencrypted.""")
-@cli_util.option('--key-id', required=True, help=u"""The OCID of the master encryption key to encrypt the generated data encryption key with.""")
+@cli_util.option('--key-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the master encryption key to encrypt the generated data encryption key with.""")
 @cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associated data must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logging-context', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that provides context for audit logging. You can provide this additional data by formatting it as key-value pairs to include in audit logs when audit logging is enabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -230,7 +230,7 @@ def generate_data_encryption_key(ctx, from_json, include_plaintext_key, key_id, 
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](sign)""")
 @cli_util.option('--message', required=True, help=u"""The base64-encoded binary data object denoting the message or message digest to sign. You can have a message up to 4096 bytes in size. To sign a larger message, provide the message digest.""")
-@cli_util.option('--key-id', required=True, help=u"""The OCID of the key used to sign the message.""")
+@cli_util.option('--key-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the key used to sign the message.""")
 @cli_util.option('--signing-algorithm', required=True, type=custom_types.CliCaseInsensitiveChoice(["SHA_224_RSA_PKCS_PSS", "SHA_256_RSA_PKCS_PSS", "SHA_384_RSA_PKCS_PSS", "SHA_512_RSA_PKCS_PSS", "SHA_224_RSA_PKCS1_V1_5", "SHA_256_RSA_PKCS1_V1_5", "SHA_384_RSA_PKCS1_V1_5", "SHA_512_RSA_PKCS1_V1_5", "ECDSA_SHA_256", "ECDSA_SHA_384", "ECDSA_SHA_512"]), help=u"""The algorithm to use to sign the message or message digest. For RSA keys, supported signature schemes include PKCS #1 and RSASSA-PSS, along with different hashing algorithms. For ECDSA keys, ECDSA is the supported signature scheme with different hashing algorithms. When you pass a message digest for signing, ensure that you specify the same hashing algorithm as used when creating the message digest.""")
 @cli_util.option('--key-version-id', help=u"""The OCID of the key version used to sign the message.""")
 @cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["RAW", "DIGEST"]), help=u"""Denotes whether the value of the message parameter is a raw message or a message digest. The default value, `RAW`, indicates a message. To indicate a message digest, use `DIGEST`.""")
@@ -270,7 +270,7 @@ def sign(ctx, from_json, message, key_id, signing_algorithm, key_version_id, mes
 @verified_data_group.command(name=cli_util.override('kms_crypto.verify.command_name', 'verify'), help=u"""Verifies a digital signature that was generated by the [Sign] operation by using the public key of the same asymmetric key that was used to sign the data. If you want to validate the digital signature outside of the service, you can do so by using the public key of the asymmetric key. This operation is not supported for keys having protection mode `EXTERNAL`.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](verify)""")
-@cli_util.option('--key-id', required=True, help=u"""The OCID of the key used to sign the message.""")
+@cli_util.option('--key-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the key used to sign the message.""")
 @cli_util.option('--key-version-id', required=True, help=u"""The OCID of the key version used to sign the message.""")
 @cli_util.option('--signature', required=True, help=u"""The base64-encoded binary data object denoting the cryptographic signature generated for the message.""")
 @cli_util.option('--message', required=True, help=u"""The base64-encoded binary data object denoting the message or message digest to sign. You can have a message up to 4096 bytes in size. To sign a larger message, provide the message digest.""")

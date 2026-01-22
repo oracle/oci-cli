@@ -133,7 +133,7 @@ generative_ai_root_group.add_command(imported_model_group)
 
 @dedicated_ai_cluster_group.command(name=cli_util.override('generative_ai.change_dedicated_ai_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a dedicated AI cluster into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDedicatedAiClusterCompartment)""")
 @cli_util.option('--dedicated-ai-cluster-id', required=True, help=u"""The [OCID] of the dedicated AI cluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the dedicated AI cluster to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to move the dedicated AI cluster to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -164,7 +164,7 @@ def change_dedicated_ai_cluster_compartment(ctx, from_json, dedicated_ai_cluster
 
 @endpoint_group.command(name=cli_util.override('generative_ai.change_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves an endpoint into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeEndpointCompartment)""")
 @cli_util.option('--endpoint-id', required=True, help=u"""The [OCID] of the endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the endpoint to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to move the endpoint to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -195,7 +195,7 @@ def change_endpoint_compartment(ctx, from_json, endpoint_id, compartment_id, if_
 
 @generative_ai_private_endpoint_group.command(name=cli_util.override('generative_ai.change_generative_ai_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a Generative AI private endpoint into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeGenerativeAiPrivateEndpointCompartment)""")
 @cli_util.option('--generative-ai-private-endpoint-id', required=True, help=u"""The unique id for a Generative AI private endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the target compartment where the private endpoint is moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the target compartment where the private endpoint is moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -256,7 +256,7 @@ def change_generative_ai_private_endpoint_compartment(ctx, from_json, wait_for_s
 
 @imported_model_group.command(name=cli_util.override('generative_ai.change_imported_model_compartment.command_name', 'change-compartment'), help=u"""Moves an imported model into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeImportedModelCompartment)""")
 @cli_util.option('--imported-model-id', required=True, help=u"""The importedModel OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The destination compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The destination compartment OCID""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -287,7 +287,7 @@ def change_imported_model_compartment(ctx, from_json, imported_model_id, compart
 
 @model_group.command(name=cli_util.override('generative_ai.change_model_compartment.command_name', 'change-compartment'), help=u"""Moves a custom model into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeModelCompartment)""")
 @cli_util.option('--model-id', required=True, help=u"""The model OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID to create the model in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID to create the model in.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -320,7 +320,7 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
 @cli_util.option('--type', required=True, help=u"""The dedicated AI cluster type indicating whether this is a fine-tuning/training processor or hosting/inference processor.
 
 Allowed values are: - HOSTING - FINE_TUNING""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID to create the dedicated AI cluster in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID to create the dedicated AI cluster in.""")
 @cli_util.option('--unit-count', required=True, type=click.INT, help=u"""The number of dedicated units in this AI cluster.""")
 @cli_util.option('--unit-shape', required=True, help=u"""The shape of dedicated unit in this AI cluster. The underlying hardware configuration is hidden from customers.
 
@@ -404,7 +404,7 @@ def create_dedicated_ai_cluster(ctx, from_json, wait_for_state, max_wait_seconds
 @endpoint_group.command(name=cli_util.override('generative_ai.create_endpoint.command_name', 'create'), help=u"""Creates an endpoint.
 
 The header contains an opc-work-request-id, which is the id for the WorkRequest that tracks the endpoint creation progress. \n[Command Reference](createEndpoint)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID to create the endpoint in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID to create the endpoint in.""")
 @cli_util.option('--model-id', required=True, help=u"""The OCID of the model that's used to create this endpoint.""")
 @cli_util.option('--dedicated-ai-cluster-id', required=True, help=u"""The OCID of the dedicated AI cluster on which a model will be deployed to.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
@@ -489,8 +489,8 @@ def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @generative_ai_private_endpoint_group.command(name=cli_util.override('generative_ai.create_generative_ai_private_endpoint.command_name', 'create'), help=u"""Creates a Generative AI private endpoint. \n[Command Reference](createGenerativeAiPrivateEndpoint)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the private endpoint is created.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the customer's subnet where the private endpoint VNIC will reside.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the private endpoint is created.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the customer's subnet where the private endpoint VNIC will reside.""")
 @cli_util.option('--dns-prefix', required=True, help=u"""dnsPrefix of the private endpoint FQDN.""")
 @cli_util.option('--description', help=u"""A description of this private endpoint.""")
 @cli_util.option('--display-name', help=u"""A user friendly name. It doesn't have to be unique. Avoid entering confidential information.""")
@@ -572,7 +572,7 @@ def create_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wa
 @imported_model_group.command(name=cli_util.override('generative_ai.create_imported_model.command_name', 'create'), help=u"""Import a model from ModelDataSource.
 
 The header contains an opc-work-request-id, which is the id for the WorkRequest that tracks the importedModel creation progress. \n[Command Reference](createImportedModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID from which the model is imported.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID from which the model is imported.""")
 @cli_util.option('--data-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name for the imported model.""")
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
@@ -661,7 +661,7 @@ def create_imported_model(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @imported_model_group.command(name=cli_util.override('generative_ai.create_imported_model_object_storage_object.command_name', 'create-imported-model-object-storage-object'), help=u"""Import a model from ModelDataSource.
 
 The header contains an opc-work-request-id, which is the id for the WorkRequest that tracks the importedModel creation progress. \n[Command Reference](createImportedModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID from which the model is imported.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID from which the model is imported.""")
 @cli_util.option('--data-source-namespace-name', required=True, help=u"""The namespace of the Object Storage where the files are stored.""")
 @cli_util.option('--data-source-bucket-name', required=True, help=u"""The name of the Object Storage bucket.""")
 @cli_util.option('--data-source-prefix-name', required=True, help=u"""The prefix path (or folder) within the bucket where files are located.""")
@@ -761,7 +761,7 @@ def create_imported_model_object_storage_object(ctx, from_json, wait_for_state, 
 @imported_model_group.command(name=cli_util.override('generative_ai.create_imported_model_hugging_face_model.command_name', 'create-imported-model-hugging-face-model'), help=u"""Import a model from ModelDataSource.
 
 The header contains an opc-work-request-id, which is the id for the WorkRequest that tracks the importedModel creation progress. \n[Command Reference](createImportedModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID from which the model is imported.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID from which the model is imported.""")
 @cli_util.option('--data-source-model-id', required=True, help=u"""The full model OCID from Hugging Face, typically in the format \"org/model-name\" (e.g., \"meta-llama/Llama-2-7b\").""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the imported model.""")
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
@@ -865,7 +865,7 @@ def create_imported_model_hugging_face_model(ctx, from_json, wait_for_state, max
 @model_group.command(name=cli_util.override('generative_ai.create_model.command_name', 'create'), help=u"""Creates a custom model by fine-tuning a base model with your own dataset. You can create a new custom models or create a new version of existing custom model..
 
 The header contains an opc-work-request-id, which is the id for the WorkRequest that tracks the model creation progress. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID for fine-tuned models. For pretrained models, this value is null.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID for fine-tuned models. For pretrained models, this value is null.""")
 @cli_util.option('--base-model-id', required=True, help=u"""The OCID of the base model that's used for fine-tuning.""")
 @cli_util.option('--fine-tune-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name.""")
@@ -1364,7 +1364,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @dedicated_ai_cluster_collection_group.command(name=cli_util.override('generative_ai.list_dedicated_ai_clusters.command_name', 'list-dedicated-ai-clusters'), help=u"""Lists the dedicated AI clusters in a specific compartment. \n[Command Reference](listDedicatedAiClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only the dedicated AI clusters that their lifecycle state matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the dedicated AI cluster.""")
@@ -1427,7 +1427,7 @@ def list_dedicated_ai_clusters(ctx, from_json, all_pages, page_size, compartment
 
 
 @endpoint_collection_group.command(name=cli_util.override('generative_ai.list_endpoints.command_name', 'list-endpoints'), help=u"""Lists the endpoints of a specific compartment. \n[Command Reference](listEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that their lifecycle state matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the endpoint.""")
@@ -1493,7 +1493,7 @@ def list_endpoints(ctx, from_json, all_pages, page_size, compartment_id, lifecyc
 
 
 @generative_ai_private_endpoint_collection_group.command(name=cli_util.override('generative_ai.list_generative_ai_private_endpoints.command_name', 'list-generative-ai-private-endpoints'), help=u"""Lists all Generative AI private endpoints in the specified compartment. \n[Command Reference](listGenerativeAiPrivateEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The [OCID] of the private endpoint.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of Generative AI private endpoints.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field used to sort the results. Multiple fields aren't supported.""")
@@ -1556,7 +1556,7 @@ def list_generative_ai_private_endpoints(ctx, from_json, all_pages, page_size, c
 
 
 @imported_model_collection_group.command(name=cli_util.override('generative_ai.list_imported_models.command_name', 'list-imported-models'), help=u"""Lists imported models in a specific compartment. \n[Command Reference](listImportedModels)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--vendor', help=u"""A filter to return only resources that match the entire vendor given.""")
 @cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
@@ -1625,7 +1625,7 @@ def list_imported_models(ctx, from_json, all_pages, page_size, compartment_id, v
 
 
 @model_collection_group.command(name=cli_util.override('generative_ai.list_models.command_name', 'list-models'), help=u"""Lists the models in a specific compartment. Includes pretrained base models and fine-tuned custom models. \n[Command Reference](listModels)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--vendor', help=u"""A filter to return only resources that match the entire vendor given.""")
 @cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
@@ -1808,7 +1808,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('generative_ai.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

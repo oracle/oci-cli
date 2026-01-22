@@ -102,7 +102,7 @@ license_manager_root_group.add_command(bulk_upload_template_group)
 
 
 @bulk_upload_license_records_details_group.command(name=cli_util.override('license_manager.bulk_upload_license_records.command_name', 'bulk-upload-license-records'), help=u"""Bulk upload the product licenses and license records for a given compartment. \n[Command Reference](bulkUploadLicenseRecords)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] where license records are created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] where license records are created.""")
 @cli_util.option('--file-name', required=True, help=u"""Name of the file that is being uploaded.""")
 @cli_util.option('--file-content', required=True, help=u"""The file to be uploaded.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -208,7 +208,7 @@ def create_license_record(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @product_license_group.command(name=cli_util.override('license_manager.create_product_license.command_name', 'create'), help=u"""Creates a new product license. \n[Command Reference](createProductLicense)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] where product licenses are created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] where product licenses are created.""")
 @cli_util.option('--is-vendor-oracle', required=True, type=click.BOOL, help=u"""Specifies if the product license vendor is Oracle or a third party.""")
 @cli_util.option('--display-name', required=True, help=u"""Name of the product license.""")
 @cli_util.option('--license-unit', required=True, type=custom_types.CliCaseInsensitiveChoice(["OCPU", "NAMED_USER_PLUS", "PROCESSORS"]), help=u"""The product license unit.""")
@@ -426,7 +426,7 @@ def get_bulk_upload_template(ctx, from_json, ):
 
 
 @configuration_group.command(name=cli_util.override('license_manager.get_configuration.command_name', 'get'), help=u"""Retrieves configuration for a compartment. \n[Command Reference](getConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -445,7 +445,7 @@ def get_configuration(ctx, from_json, compartment_id):
 
 
 @license_metric_group.command(name=cli_util.override('license_manager.get_license_metric.command_name', 'get'), help=u"""Retrieves the license metrics for a given compartment. \n[Command Reference](getLicenseMetric)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
 @cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Indicates if the given compartment is the root compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -570,7 +570,7 @@ def list_license_records(ctx, from_json, all_pages, page_size, product_license_i
 
 @product_license_consumer_collection_group.command(name=cli_util.override('license_manager.list_product_license_consumers.command_name', 'list-product-license-consumers'), help=u"""Retrieves the product license consumers for a particular product license ID. \n[Command Reference](listProductLicenseConsumers)""")
 @cli_util.option('--product-license-id', required=True, help=u"""Unique product license identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Indicates if the given compartment is the root compartment.""")
@@ -634,7 +634,7 @@ def list_product_license_consumers(ctx, from_json, all_pages, page_size, product
 
 
 @product_license_collection_group.command(name=cli_util.override('license_manager.list_product_licenses.command_name', 'list-product-licenses'), help=u"""Retrieves all the product licenses from a given compartment. \n[Command Reference](listProductLicenses)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Indicates if the given compartment is the root compartment.""")
@@ -695,7 +695,7 @@ def list_product_licenses(ctx, from_json, all_pages, page_size, compartment_id, 
 
 
 @top_utilized_product_license_collection_group.command(name=cli_util.override('license_manager.list_top_utilized_product_licenses.command_name', 'list-top-utilized-product-licenses'), help=u"""Retrieves the top utilized product licenses for a given compartment. \n[Command Reference](listTopUtilizedProductLicenses)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Indicates if the given compartment is the root compartment.""")
@@ -756,7 +756,7 @@ def list_top_utilized_product_licenses(ctx, from_json, all_pages, page_size, com
 
 
 @top_utilized_resource_collection_group.command(name=cli_util.override('license_manager.list_top_utilized_resources.command_name', 'list-top-utilized-resources'), help=u"""Retrieves the top utilized resources for a given compartment. \n[Command Reference](listTopUtilizedResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Indicates if the given compartment is the root compartment.""")
@@ -820,7 +820,7 @@ def list_top_utilized_resources(ctx, from_json, all_pages, page_size, compartmen
 
 
 @configuration_group.command(name=cli_util.override('license_manager.update_configuration.command_name', 'update'), help=u"""Updates the configuration for the compartment. \n[Command Reference](updateConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] used for the license record, product license, and configuration.""")
 @cli_util.option('--email-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of email IDs associated with the configuration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)

@@ -62,7 +62,7 @@ rover_node_root_group.add_command(rover_node_get_rpt_group)
 
 @rover_node_group.command(name=cli_util.override('rover_node.change_rover_node_compartment.command_name', 'change-compartment'), help=u"""Moves a rover node into a different compartment. \n[Command Reference](changeRoverNodeCompartment)""")
 @cli_util.option('--rover-node-id', required=True, help=u"""Unique RoverNode identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  of the compartment into which the resources should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  of the compartment into which the resources should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -93,7 +93,7 @@ def change_rover_node_compartment(ctx, from_json, rover_node_id, compartment_id,
 
 @rover_node_group.command(name=cli_util.override('rover_node.create_rover_node.command_name', 'create'), help=u"""Creates a new RoverNode. \n[Command Reference](createRoverNode)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the RoverNode.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment containing the RoverNode.""")
 @cli_util.option('--shape', help=u"""The shape of the node.""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-workloads', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of existing workloads that should be provisioned on the node.
@@ -427,7 +427,7 @@ def get_rover_node_get_rpt(ctx, from_json, rover_node_id, jwt):
 
 
 @rover_node_group.command(name=cli_util.override('rover_node.list_rover_nodes.command_name', 'list'), help=u"""Returns a list of RoverNodes. \n[Command Reference](listRoverNodes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--node-type', type=custom_types.CliCaseInsensitiveChoice(["STANDALONE", "CLUSTERED", "STATION"]), help=u"""A filter to return only Nodes of type matched with the given node type.""")
 @cli_util.option('--shape', help=u"""A filter to return only Nodes of type matched with the given node shape.""")

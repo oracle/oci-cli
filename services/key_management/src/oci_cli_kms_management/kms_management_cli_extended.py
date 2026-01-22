@@ -9,6 +9,7 @@ import sys  # noqa: F401
 from services.key_management.src.oci_cli_kms_management.generated import kmsmanagement_cli
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
+from oci_cli import custom_types  # noqa: F401
 from oci_cli.cli_util import get_param, copy_help_from_generated_code
 
 
@@ -38,7 +39,7 @@ key_backup_params_from_generated = {
 
 
 @kmsmanagement_cli.key_group.command(name=cli_util.override('kms_management.key_backup_from_bucket_or_uri.command_name', 'backup'), help=kmsmanagement_cli.backup_key_backup_location_bucket.help)
-@cli_util.option('--key-id', required=True, help=copy_help_from_generated_code(kmsmanagement_cli.backup_key_backup_location_bucket, 'key_id', remove_required=True))
+@cli_util.option('--key-id', required=True, type=custom_types.CLI_OCID, help=copy_help_from_generated_code(kmsmanagement_cli.backup_key_backup_location_bucket, 'key_id', remove_required=True))
 @cli_util.option('--namespace', help=copy_help_from_generated_code(kmsmanagement_cli.backup_key_backup_location_bucket, 'backup_location_namespace', remove_required=True))
 @cli_util.option('--bucket-name', help=copy_help_from_generated_code(kmsmanagement_cli.backup_key_backup_location_bucket, 'backup_location_bucket_name', remove_required=True))
 @cli_util.option('--object-name', help=copy_help_from_generated_code(kmsmanagement_cli.backup_key_backup_location_bucket, 'backup_location_object_name', remove_required=True))

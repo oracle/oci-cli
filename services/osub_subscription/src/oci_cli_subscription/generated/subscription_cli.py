@@ -33,9 +33,9 @@ subscription_root_group.add_command(subscription_group)
 
 
 @subscription_group.command(name=cli_util.override('subscription.list_subscriptions.command_name', 'list'), help=u"""This list API returns all subscriptions for a given plan number or subscription id or buyer email and provides additional parameters to include ratecard and commitment details. This API expects exactly one of the above mentioned parameters as input. If more than one parameters are provided the API will throw a 400 - invalid parameters exception and if no parameters are provided it will throw a 400 - missing parameter exception \n[Command Reference](listSubscriptions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--plan-number', help=u"""The Plan Number""")
-@cli_util.option('--subscription-id', help=u"""Line level Subscription Id""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""Line level Subscription Id""")
 @cli_util.option('--buyer-email', help=u"""Buyer Email Id""")
 @cli_util.option('--is-commit-info-required', type=click.BOOL, help=u"""Boolean value to decide whether commitment services will be shown""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)

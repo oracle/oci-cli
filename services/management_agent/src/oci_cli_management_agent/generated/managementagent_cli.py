@@ -85,7 +85,7 @@ management_agent_root_group.add_command(management_agent_image_group)
 @cli_util.option('--management-agent-id', required=True, help=u"""Unique Management Agent identifier""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["KUBERNETES_CLUSTER", "PROMETHEUS_EMITTER"]), help=u"""The type of the DataSource.""")
 @cli_util.option('--name', required=True, help=u"""Unique name of the DataSource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment owning this DataSource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment owning this DataSource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -149,7 +149,7 @@ def create_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @management_agent_group.command(name=cli_util.override('management_agent.create_data_source_create_prometheus_emitter_data_source_details.command_name', 'create-data-source-create-prometheus-emitter-data-source-details'), help=u"""Datasource creation request to given Management Agent. \n[Command Reference](createDataSource)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""Unique Management Agent identifier""")
 @cli_util.option('--name', required=True, help=u"""Unique name of the DataSource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment owning this DataSource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment owning this DataSource.""")
 @cli_util.option('--url', required=True, help=u"""The url through which the Prometheus Exporter publishes its metrics. (http only)""")
 @cli_util.option('--namespace', required=True, help=u"""The OCI monitoring namespace to which scraped metrics should be uploaded.""")
 @cli_util.option('--allow-metrics', help=u"""Comma separated metric name list. The complete set of desired scraped metrics. Use this property to limit the set of metrics uploaded if required.""")
@@ -251,7 +251,7 @@ def create_data_source_create_prometheus_emitter_data_source_details(ctx, from_j
 
 @management_agent_install_key_group.command(name=cli_util.override('management_agent.create_management_agent_install_key.command_name', 'create'), help=u"""User creates a new install key as part of this API. \n[Command Reference](createManagementAgentInstallKey)""")
 @cli_util.option('--display-name', required=True, help=u"""Management Agent install Key Name""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier""")
 @cli_util.option('--allowed-key-install-count', type=click.INT, help=u"""Total number of install for this keys""")
 @cli_util.option('--time-expires', type=custom_types.CLI_DATETIME, help=u"""date after which key would expire after creation""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--is-unlimited', type=click.BOOL, help=u"""If set to true, the install key has no expiration date or usage limit. Defaults to false""")
@@ -715,7 +715,7 @@ def deploy_plugins(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @management_agent_group.command(name=cli_util.override('management_agent.get_auto_upgradable_config.command_name', 'get-auto-upgradable-config'), help=u"""Get the AutoUpgradable configuration for all agents in a tenancy. The supplied compartmentId must be a tenancy root. \n[Command Reference](getAutoUpgradableConfig)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -875,7 +875,7 @@ def get_named_credential(ctx, from_json, named_credential_id):
 
 
 @named_credential_group.command(name=cli_util.override('management_agent.get_named_credentials_metadatum.command_name', 'get-named-cred-metadata'), help=u"""Return the Metadata definition for Named Credentials supported by Management Agent. \n[Command Reference](getNamedCredentialsMetadatum)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--management-agent-id', help=u"""Filter the named credential metadata which is compatible with the given Management Agent identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1042,7 +1042,7 @@ def list_data_sources(ctx, from_json, all_pages, page_size, management_agent_id,
 
 
 @management_agent_image_group.command(name=cli_util.override('management_agent.list_management_agent_images.command_name', 'list'), help=u"""Get supported agent image information \n[Command Reference](listManagementAgentImages)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -1105,7 +1105,7 @@ def list_management_agent_images(ctx, from_json, all_pages, page_size, compartme
 
 
 @management_agent_install_key_group.command(name=cli_util.override('management_agent.list_management_agent_install_keys.command_name', 'list'), help=u"""Returns a list of Management Agent installed Keys. \n[Command Reference](listManagementAgentInstallKeys)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""if set to true then it fetches resources for all compartments where user has access to else only on the compartment specified.""")
 @cli_util.option('--access-level', help=u"""Value of this is always \"ACCESSIBLE\" and any other value is not supported.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "TERMINATED", "DELETING", "DELETED", "FAILED"]), help=u"""Filter to return only Management Agents in the particular lifecycle state.""")
@@ -1153,7 +1153,7 @@ def list_management_agent_install_keys(ctx, from_json, all_pages, compartment_id
 
 
 @management_agent_plugin_group.command(name=cli_util.override('management_agent.list_management_agent_plugins.command_name', 'list'), help=u"""Returns a list of managementAgentPlugins. \n[Command Reference](listManagementAgentPlugins)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--display-name', help=u"""Filter to return only Management Agent Plugins having the particular display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1219,7 +1219,7 @@ def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartm
 
 
 @management_agent_group.command(name=cli_util.override('management_agent.list_management_agents.command_name', 'list'), help=u"""Returns a list of Management Agents. If no explicit page size limit is specified, it will default to 1000 when compartmentIdInSubtree is true and 5000 otherwise. The response is limited to maximum 1000 records when compartmentIdInSubtree is true. \n[Command Reference](listManagementAgents)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--plugin-name', multiple=True, help=u"""Filter to return only Management Agents having the particular Plugin installed. A special pluginName of 'None' can be provided and this will return only Management Agents having no plugin installed.""")
 @cli_util.option('--version-parameterconflict', multiple=True, help=u"""Filter to return only Management Agents having the particular agent version.""")
 @cli_util.option('--display-name', help=u"""Filter to return only Management Agents having the particular display name.""")
@@ -1495,7 +1495,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('management_agent.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--agent-id', help=u"""The ManagementAgentID of the agent from which the Management Agents to be filtered.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1561,7 +1561,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, age
 
 
 @management_agent_group.command(name=cli_util.override('management_agent.set_auto_upgradable_config.command_name', 'set-auto-upgradable-config'), help=u"""Sets the AutoUpgradable configuration for all agents in a tenancy. The supplied compartmentId must be a tenancy root. \n[Command Reference](setAutoUpgradableConfig)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Tenancy identifier i.e, Root compartment identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Tenancy identifier i.e, Root compartment identifier""")
 @cli_util.option('--is-agent-auto-upgradable', required=True, type=click.BOOL, help=u"""true if the agents can be upgraded automatically; false if they must be upgraded manually.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1586,7 +1586,7 @@ def set_auto_upgradable_config(ctx, from_json, compartment_id, is_agent_auto_upg
 
 
 @management_agent_group.command(name=cli_util.override('management_agent.summarize_management_agent_counts.command_name', 'summarize-management-agent-counts'), help=u"""Gets count of the inventory of agents for a given compartment id, group by, and isPluginDeployed parameters. Supported groupBy parameters: availabilityStatus, platformType, version \n[Command Reference](summarizeManagementAgentCounts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--group-by', required=True, type=custom_types.CliCaseInsensitiveChoice(["availabilityStatus", "platformType", "version"]), multiple=True, help=u"""The field by which to group Management Agents. Currently, only one groupBy dimension is supported at a time.""")
 @cli_util.option('--has-plugins', type=click.BOOL, help=u"""When set to true then agents that have at least one plugin deployed will be returned. When set to false only agents that have no plugins deployed will be returned.""")
 @cli_util.option('--install-type', type=custom_types.CliCaseInsensitiveChoice(["AGENT", "GATEWAY"]), help=u"""A filter to return either agents or gateway types depending upon install type selected by user. By default both install type will be returned.""")
@@ -1619,7 +1619,7 @@ def summarize_management_agent_counts(ctx, from_json, compartment_id, group_by, 
 
 
 @management_agent_group.command(name=cli_util.override('management_agent.summarize_management_agent_plugin_counts.command_name', 'summarize-management-agent-plugin-counts'), help=u"""Gets count of the inventory of management agent plugins for a given compartment id and group by parameter. Supported groupBy parameter: pluginName \n[Command Reference](summarizeManagementAgentPluginCounts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--group-by', required=True, type=custom_types.CliCaseInsensitiveChoice(["pluginName"]), help=u"""The field by which to group Management Agent Plugins""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""if set to true then it fetches resources for all compartments where user has access to else only on the compartment specified.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")

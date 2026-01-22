@@ -41,7 +41,7 @@ resources_root_group.add_command(resource_quotum_summary_group)
 
 @resource_quotum_summary_group.command(name=cli_util.override('resources.list_resource_quota.command_name', 'list-resource-quota'), help=u"""Returns the resource quota details under a tenancy > **Important**: Calls to this API will only succeed against the endpoint in the home region. \n[Command Reference](listResourceQuota)""")
 @cli_util.option('--service-name', required=True, help=u"""Service Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the root compartment.""")
 @cli_util.option('--service-entitlement', help=u"""Service entitlement Id.""")
 @cli_util.option('--page', help=u"""The value of the 'opc-next-page' response header from the previous call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in the paginated response.""")
@@ -102,7 +102,7 @@ def list_resource_quota(ctx, from_json, all_pages, page_size, service_name, comp
 
 @resource_summary_group.command(name=cli_util.override('resources.list_resources.command_name', 'list-resources'), help=u"""Returns the resource details for a service > **Important**: Calls to this API will only succeed against the endpoint in the home region. \n[Command Reference](listResources)""")
 @cli_util.option('--service-name', required=True, help=u"""Service Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the root compartment.""")
 @cli_util.option('--entitlement-id', help=u"""Subscription or entitlement Id.""")
 @cli_util.option('--page', help=u"""The value of the 'opc-next-page' response header from the previous call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in the paginated response.""")

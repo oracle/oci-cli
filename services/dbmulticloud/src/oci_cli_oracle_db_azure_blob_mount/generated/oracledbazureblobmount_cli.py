@@ -68,7 +68,7 @@ oracle_db_azure_blob_mount_root_group.add_command(oracle_db_azure_blob_mount_gro
 
 @oracle_db_azure_blob_mount_group.command(name=cli_util.override('oracle_db_azure_blob_mount.change_oracle_db_azure_blob_mount_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle DB Azure Blob Mount resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAzureBlobMountCompartment)""")
 @cli_util.option('--oracle-db-azure-blob-mount-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Blob Mount resource.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the new compartment to contain the Oracle DB Azure Blob Mount resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the new compartment to contain the Oracle DB Azure Blob Mount resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -148,7 +148,7 @@ def change_oracle_db_azure_blob_mount_compartment(ctx, from_json, wait_for_state
 
 
 @oracle_db_azure_blob_mount_group.command(name=cli_util.override('oracle_db_azure_blob_mount.create_oracle_db_azure_blob_mount.command_name', 'create'), help=u"""Creates Oracle DB Azure Blob Mount resource. \n[Command Reference](createOracleDbAzureBlobMount)""")
-@cli_util.option('--compartment-id', required=True, help=u"""TThe [OCID] of the compartment that contains Oracle DB Azure Blob Mount resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""TThe [OCID] of the compartment that contains Oracle DB Azure Blob Mount resource.""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle DB Azure Blob Mount resource name.""")
 @cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Connector resource that contains Oracle DB Azure Blob Mount resource.""")
 @cli_util.option('--oracle-db-azure-blob-container-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Blob Container resource that contains Oracle DB Azure Blob Mount resource.""")
@@ -309,7 +309,7 @@ def get_oracle_db_azure_blob_mount(ctx, from_json, oracle_db_azure_blob_mount_id
 
 
 @oracle_db_azure_blob_mount_group.command(name=cli_util.override('oracle_db_azure_blob_mount.list_oracle_db_azure_blob_mounts.command_name', 'list'), help=u"""Lists all Oracle DB Azure Blob Mount resources based on the specified filters. \n[Command Reference](listOracleDbAzureBlobMounts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB Azure Blob Mount resources that match the specified display name.""")
 @cli_util.option('--oracle-db-azure-blob-mount-id', help=u"""The [OCID] of the Oracle DB Azure Blob Mount resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
@@ -379,7 +379,7 @@ def list_oracle_db_azure_blob_mounts(ctx, from_json, all_pages, page_size, compa
 
 @oracle_db_azure_blob_mount_group.command(name=cli_util.override('oracle_db_azure_blob_mount.update_oracle_db_azure_blob_mount.command_name', 'update'), help=u"""Modifies the existing Oracle DB Azure Blob Mount resource for a given [OCID]. \n[Command Reference](updateOracleDbAzureBlobMount)""")
 @cli_util.option('--oracle-db-azure-blob-mount-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Blob Mount resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains Oracle DB Azure Blob Mount resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains Oracle DB Azure Blob Mount resource.""")
 @cli_util.option('--display-name', help=u"""Oracle DB Azure Blob Mount resource name.""")
 @cli_util.option('--oracle-db-azure-connector-id', help=u"""The [OCID] of the Oracle DB Azure Connector resource that contains Oracle DB Azure Blob Mount resource.""")
 @cli_util.option('--oracle-db-azure-blob-container-id', help=u"""The [OCID] of the Oracle DB Azure Blob Container resource that contains Oracle DB Azure Blob Mount resource.""")

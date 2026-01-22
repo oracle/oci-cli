@@ -47,7 +47,7 @@ occ_root_group.add_command(summarized_metric_data_collection_group)
 
 @metric_property_collection_group.command(name=cli_util.override('occ.list_metric_properties.command_name', 'list-metric-properties'), help=u"""Returns a list of available metrics for the given namespace. The results for metrics with dimensions includes list of all the associated dimensions. The results are sorted by the metricName and then by dimension in ascending alphabetical order. For a list of valid namespaces, see [List Namespaces API]. \n[Command Reference](listMetricProperties)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The name of the source service emitting the metric.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to use for authorization. To use the root compartment, provide the tenancyId.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to use for authorization. To use the root compartment, provide the tenancyId.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see <a href=\"https://docs.oracle.com/iaas/Content/API/Concepts/usingapi.htm#nine\">List Pagination</a>.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -101,7 +101,7 @@ def list_metric_properties(ctx, from_json, all_pages, page_size, namespace_name,
 
 
 @namespace_collection_group.command(name=cli_util.override('occ.list_namespaces.command_name', 'list-namespaces'), help=u"""List all the available source services called namespaces emitting metrics for this region. The namespaces are sorted in ascending alphabetical order. \n[Command Reference](listNamespaces)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to use for authorization. To use the root compartment, provide the tenancyId.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to use for authorization. To use the root compartment, provide the tenancyId.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see <a href=\"https://docs.oracle.com/iaas/Content/API/Concepts/usingapi.htm#nine\">List Pagination</a>.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -151,7 +151,7 @@ def list_namespaces(ctx, from_json, all_pages, page_size, compartment_id, page, 
 @summarized_metric_data_collection_group.command(name=cli_util.override('occ.request_summarized_metric_data.command_name', 'request-summarized-metric-data'), help=u"""Returns the summarized data for the given metric from the given namespace.  The aggregation method depends on the metric. The metric data can be filtered by providing the dimension, startTime or endTime.  The metric data in the response is sorted by dimension in ascending order and then by sampleTime in ascending chronological order. \n[Command Reference](requestSummarizedMetricData)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The source service or application to use when searching for metric data points to aggregate. For a list of valid namespaces, see [List Namespaces API].""")
 @cli_util.option('--metric-name', required=True, help=u"""The name of a metric for retrieving aggregated data. For a list of valid metrics for a given namespace, see [List Metric Properties API].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to use for authorization to read metrics. To use the root compartment, provide the tenancyId.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to use for authorization to read metrics. To use the root compartment, provide the tenancyId.""")
 @cli_util.option('--dimensions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Qualifiers to use when searching for metric data. For a list of valid dimensions for a given metric, see [List Metric Properties API].
 
 This option is a JSON dictionary of type dict(str, DimensionValue).  For documentation on DimensionValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/occmetrics/20230515/datatypes/DimensionValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

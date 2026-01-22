@@ -87,7 +87,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @opa_instance_group.command(name=cli_util.override('opa.change_opa_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a OpaInstance resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeOpaInstanceCompartment)""")
 @cli_util.option('--opa-instance-id', required=True, help=u"""unique OpaInstance identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -148,7 +148,7 @@ def change_opa_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 @opa_instance_group.command(name=cli_util.override('opa.create_opa_instance.command_name', 'create'), help=u"""Creates a new OpaInstance. \n[Command Reference](createOpaInstance)""")
 @cli_util.option('--display-name', required=True, help=u"""OpaInstance Identifier. User-friendly name for the instance. Avoid entering confidential information. You can change this value anytime.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier""")
 @cli_util.option('--shape-name', required=True, help=u"""Shape of the instance.""")
 @cli_util.option('--description', help=u"""Description of the Oracle Process Automation instance.""")
 @cli_util.option('--consumption-model', help=u"""Parameter specifying which entitlement to use for billing purposes""")
@@ -332,7 +332,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @opa_instance_collection_group.command(name=cli_util.override('opa.list_opa_instances.command_name', 'list-opa-instances'), help=u"""Returns a list of OpaInstances. \n[Command Reference](listOpaInstances)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""unique OpaInstance identifier""")
@@ -508,7 +508,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('opa.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")

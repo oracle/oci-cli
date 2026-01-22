@@ -33,7 +33,7 @@ service_root_group.add_command(service_group)
 
 
 @service_group.command(name=cli_util.override('service.list_services.command_name', 'list'), help=u"""List all active services \n[Command Reference](listServices)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS", "SAAS", "PAAS"]), help=u"""A filter to return only announcements affecting a specific platform.""")
 @cli_util.option('--comms-manager-name', type=custom_types.CliCaseInsensitiveChoice(["CN", "FUSION", "AS", "ERF"]), help=u"""Filter by comms manager name""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")

@@ -154,7 +154,7 @@ def approve_delegated_resource_access_request(ctx, from_json, wait_for_state, ma
 
 @delegation_control_group.command(name=cli_util.override('delegate_access_control.change_delegation_control_compartment.command_name', 'change-compartment'), help=u"""Moves the Delegation Control resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeDelegationControlCompartment)""")
 @cli_util.option('--delegation-control-id', required=True, help=u"""unique Delegation Control identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the new compartment to contain the Delegation Control.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the new compartment to contain the Delegation Control.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -217,7 +217,7 @@ def change_delegation_control_compartment(ctx, from_json, wait_for_state, max_wa
 
 @delegation_subscription_group.command(name=cli_util.override('delegate_access_control.change_delegation_subscription_compartment.command_name', 'change-compartment'), help=u"""Moves the Delegation Subscription resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeDelegationSubscriptionCompartment)""")
 @cli_util.option('--delegation-subscription-id', required=True, help=u"""unique Delegation Subscription identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the new compartment to contain the Delegation Subscription.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the new compartment to contain the Delegation Subscription.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -279,7 +279,7 @@ def change_delegation_subscription_compartment(ctx, from_json, wait_for_state, m
 
 
 @delegation_control_group.command(name=cli_util.override('delegate_access_control.create_delegation_control.command_name', 'create'), help=u"""Creates a Delegation Control. \n[Command Reference](createDelegationControl)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this Delegation Control.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains this Delegation Control.""")
 @cli_util.option('--display-name', required=True, help=u"""Name of the Delegation Control. The name does not need to be unique.""")
 @cli_util.option('--delegation-subscription-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Delegation Subscription OCID that are allowed for this Delegation Control. The allowed subscriptions will determine the available Service Provider Actions. Only support operators for the allowed subscriptions are allowed to create Delegated Resource Access Request.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCID of the selected resources that this Delegation Control is applicable to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -290,7 +290,7 @@ def change_delegation_subscription_compartment(ctx, from_json, wait_for_state, m
 @cli_util.option('--num-approvals-required', type=click.INT, help=u"""number of approvals required.""")
 @cli_util.option('--pre-approved-service-provider-action-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of pre-approved Service Provider Action names. The list of pre-defined Service Provider Actions can be obtained from the ListServiceProviderActions API. Delegated Resource Access Requests associated with a resource governed by this Delegation Control will be automatically approved if the Delegated Resource Access Request only contain Service Provider Actions in the pre-approved list.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-approve-during-maintenance', type=click.BOOL, help=u"""Set to true to allow all Delegated Resource Access Request to be approved automatically during maintenance.""")
-@cli_util.option('--vault-id', help=u"""The OCID of the OCI Vault that will store the secrets containing the SSH keys to access the resource governed by this Delegation Control by Delegate Access Control Service. This property is required when resourceType is CLOUDVMCLUSTER. Delegate Access Control Service will generate the SSH keys and store them as secrets in the OCI Vault.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The OCID of the OCI Vault that will store the secrets containing the SSH keys to access the resource governed by this Delegation Control by Delegate Access Control Service. This property is required when resourceType is CLOUDVMCLUSTER. Delegate Access Control Service will generate the SSH keys and store them as secrets in the OCI Vault.""")
 @cli_util.option('--vault-key-id', help=u"""The OCID of the Master Encryption Key in the OCI Vault specified by vaultId. This key will be used to encrypt the SSH keys to access the resource governed by this Delegation Control by Delegate Access Control Service. This property is required when resourceType is CLOUDVMCLUSTER.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -380,7 +380,7 @@ def create_delegation_control(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @delegation_subscription_group.command(name=cli_util.override('delegate_access_control.create_delegation_subscription.command_name', 'create'), help=u"""Creates Delegation Subscription in Delegation Control. \n[Command Reference](createDelegationSubscription)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the Delegation Control.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the Delegation Control.""")
 @cli_util.option('--service-provider-id', required=True, help=u"""Unique identifier of the Service Provider.""")
 @cli_util.option('--subscribed-service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TROUBLESHOOTING", "ASSISTED_PATCHING"]), help=u"""Subscribed Service Provider Service Type.""")
 @cli_util.option('--description', help=u"""Description of the Delegation Subscription.""")
@@ -760,7 +760,7 @@ def list_delegated_resource_access_request_histories(ctx, from_json, all_pages, 
 
 
 @delegated_resource_access_request_group.command(name=cli_util.override('delegate_access_control.list_delegated_resource_access_requests.command_name', 'list'), help=u"""Lists all Delegated Resource Access Requests in the compartment. Note that only one of lifecycleState or requestStatus query parameter can be used. \n[Command Reference](listDelegatedResourceAccessRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--delegation-control-id', help=u"""unique Delegation Control identifier""")
 @cli_util.option('--resource-id', help=u"""A filter to return only Delegated Resource Access Requests for the given resource identifier.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), help=u"""A filter to return only Delegated Resource Access Requests whose lifecycleState matches the given Delegated Resource Access Request lifecycleState.""")
@@ -883,7 +883,7 @@ def list_delegation_control_resources(ctx, from_json, all_pages, page_size, dele
 
 
 @delegation_control_group.command(name=cli_util.override('delegate_access_control.list_delegation_controls.command_name', 'list'), help=u"""Lists the Delegation Controls in the compartment. \n[Command Reference](listDelegationControls)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only Delegation Control resources whose lifecycleState matches the given Delegation Control lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return Delegation Control resources that match the given display name.""")
 @cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER"]), help=u"""A filter to return only resources that match the given resource type.""")
@@ -949,7 +949,7 @@ def list_delegation_controls(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @delegation_subscription_group.command(name=cli_util.override('delegate_access_control.list_delegation_subscriptions.command_name', 'list'), help=u"""Lists the Delegation Subscriptions in Delegation Control. \n[Command Reference](listDelegationSubscriptions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only Delegation Subscription resources whose lifecycleState matches the given Delegation Subscription lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return Delegation Subscription resources that match the given display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1009,7 +1009,7 @@ def list_delegation_subscriptions(ctx, from_json, all_pages, page_size, compartm
 
 
 @service_provider_action_group.command(name=cli_util.override('delegate_access_control.list_service_provider_actions.command_name', 'list'), help=u"""Lists all the ServiceProviderActions available in the system. \n[Command Reference](listServiceProviderActions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
 @cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER"]), help=u"""A filter to return only resources that match the given resource type.""")
 @cli_util.option('--service-provider-service-type', type=custom_types.CliCaseInsensitiveChoice(["TROUBLESHOOTING", "ASSISTED_PATCHING"]), multiple=True, help=u"""A filter to return only resources that match the given Service Provider service type.""")
@@ -1126,7 +1126,7 @@ def list_service_provider_interactions(ctx, from_json, all_pages, page_size, del
 
 
 @service_provider_group.command(name=cli_util.override('delegate_access_control.list_service_providers.command_name', 'list'), help=u"""Lists the Service Providers. \n[Command Reference](listServiceProviders)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only Service Provider resources whose lifecycleState matches the given Service Provider lifecycle state.""")
 @cli_util.option('--name', help=u"""A filter to return Service Provider resources that match the given name.""")
 @cli_util.option('--supported-resource-type', type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER"]), help=u"""A filter to return only Service Provider resources whose supported resource type matches the given resource type.""")

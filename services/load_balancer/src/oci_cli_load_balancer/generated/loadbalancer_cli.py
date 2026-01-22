@@ -232,8 +232,8 @@ lb_root_group.add_command(network_security_groups_group)
 
 
 @load_balancer_group.command(name=cli_util.override('lb.change_load_balancer_compartment.command_name', 'change-compartment'), help=u"""Moves a load balancer into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeLoadBalancerCompartment)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to move.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the load balancer to.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer to move.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the load balancer to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -305,7 +305,7 @@ Example: `10.0.0.3`""")
 @cli_util.option('--port', required=True, type=click.INT, help=u"""The communication port for the backend server.
 
 Example: `8080`""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and servers.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the backend set and servers.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to add the backend server to.
 
 Example: `example_backend_set`""")
@@ -422,7 +422,7 @@ Example: `example_backend_set`""")
 
 Example: `LEAST_CONNECTIONS`""")
 @cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer on which to add a backend set.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer on which to add a backend set.""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON list with items of type BackendDetails.  For documentation on BackendDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/BackendDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -519,7 +519,7 @@ def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--certificate-name', required=True, help=u"""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.
 
 Example: `example_certificate_bundle`""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer on which to add the certificate bundle.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer on which to add the certificate bundle.""")
 @cli_util.option('--passphrase', help=u"""A passphrase for encrypted private keys. This is needed only if you created your certificate with a passphrase.""")
 @cli_util.option('--private-key', help=u"""The SSL private key for your certificate, in PEM format.
 
@@ -619,7 +619,7 @@ Example: `example_hostname_001`""")
 @cli_util.option('--hostname', required=True, help=u"""A virtual hostname. For more information about virtual hostname string construction, see [Managing Request Routing].
 
 Example: `app.example.com`""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to add the hostname to.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer to add the hostname to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -698,7 +698,7 @@ Example: `HTTP`""")
 @cli_util.option('--name', required=True, help=u"""A friendly name for the listener. It must be unique and it cannot be changed. Avoid entering confidential information.
 
 Example: `example_listener`""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer on which to add a listener.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer on which to add a listener.""")
 @cli_util.option('--hostname-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of hostname resource names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--path-route-set-name', help=u"""Deprecated. Please use `routingPolicies` instead.
 
@@ -811,7 +811,7 @@ All Oracle Cloud Infrastructure resources, including load balancers, get an Orac
 After you send your request, the new object's state will temporarily be PROVISIONING. Before using the object, first make sure its state has changed to RUNNING.
 
 When you create a load balancer, the system assigns an IP address. To get the IP address, use the [GetLoadBalancer] operation. \n[Command Reference](createLoadBalancer)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the load balancer.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to create the load balancer.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `example_load_balancer`""")
@@ -1028,7 +1028,7 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 Example: `example_path_route_set`""")
 @cli_util.option('--path-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of path route rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to add the path route set to.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer to add the path route set to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -1100,7 +1100,7 @@ def create_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
 Example: `example_routing_rules`""")
 @cli_util.option('--condition-language-version', required=True, type=custom_types.CliCaseInsensitiveChoice(["V1"]), help=u"""The version of the language in which `condition` of `rules` are composed.""")
 @cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of routing rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to add the routing policy rule list to.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer to add the routing policy rule list to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -1168,7 +1168,7 @@ def create_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @rule_set_group.command(name=cli_util.override('lb.create_rule_set.command_name', 'create'), help=u"""Creates a new rule set associated with the specified load balancer. For more information, see [Managing Rule Sets]. \n[Command Reference](createRuleSet)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--name', required=True, help=u"""The name for this set of rules. It must be unique and it cannot be changed. Avoid entering confidential information.
 
 Example: `example_rule_set`""")
@@ -1263,7 +1263,7 @@ The following ciphers are valid values for this property:
         \"AES128-SHA\"         \"AES256-SHA\"         \"CAMELLIA128-SHA\"         \"CAMELLIA256-SHA\"         \"DES-CBC3-SHA\"         \"DH-DSS-AES128-SHA\"         \"DH-DSS-AES256-SHA\"         \"DH-DSS-CAMELLIA128-SHA\"         \"DH-DSS-CAMELLIA256-SHA\"         \"DH-DSS-DES-CBC3-SHAv\"         \"DH-DSS-SEED-SHA\"         \"DH-RSA-AES128-SHA\"         \"DH-RSA-AES256-SHA\"         \"DH-RSA-CAMELLIA128-SHA\"         \"DH-RSA-CAMELLIA256-SHA\"         \"DH-RSA-DES-CBC3-SHA\"         \"DH-RSA-SEED-SHA\"         \"DHE-DSS-AES128-SHA\"         \"DHE-DSS-AES256-SHA\"         \"DHE-DSS-CAMELLIA128-SHA\"         \"DHE-DSS-CAMELLIA256-SHA\"         \"DHE-DSS-DES-CBC3-SHA\"         \"DHE-DSS-SEED-SHA\"         \"DHE-RSA-AES128-SHA\"         \"DHE-RSA-AES256-SHA\"         \"DHE-RSA-CAMELLIA128-SHA\"         \"DHE-RSA-CAMELLIA256-SHA\"         \"DHE-RSA-DES-CBC3-SHA\"         \"DHE-RSA-SEED-SHA\"         \"ECDH-ECDSA-AES128-SHA\"         \"ECDH-ECDSA-AES256-SHA\"         \"ECDH-ECDSA-DES-CBC3-SHA\"         \"ECDH-ECDSA-RC4-SHA\"         \"ECDH-RSA-AES128-SHA\"         \"ECDH-RSA-AES256-SHA\"         \"ECDH-RSA-DES-CBC3-SHA\"         \"ECDH-RSA-RC4-SHA\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-ECDSA-AES256-SHA\"         \"ECDHE-ECDSA-DES-CBC3-SHA\"         \"ECDHE-ECDSA-RC4-SHA\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-RSA-DES-CBC3-SHA\"         \"ECDHE-RSA-RC4-SHA\"         \"IDEA-CBC-SHA\"         \"KRB5-DES-CBC3-MD5\"         \"KRB5-DES-CBC3-SHA\"         \"KRB5-IDEA-CBC-MD5\"         \"KRB5-IDEA-CBC-SHA\"         \"KRB5-RC4-MD5\"         \"KRB5-RC4-SHA\"         \"PSK-3DES-EDE-CBC-SHA\"         \"PSK-AES128-CBC-SHA\"         \"PSK-AES256-CBC-SHA\"         \"PSK-RC4-SHA\"         \"RC4-MD5\"         \"RC4-SHA\"         \"SEED-SHA\"
 
 example: `[\"ECDHE-RSA-AES256-GCM-SHA384\",\"ECDHE-ECDSA-AES256-GCM-SHA384\",\"ECDHE-RSA-AES128-GCM-SHA256\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the associated load balancer.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -1330,7 +1330,7 @@ def create_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @backend_group.command(name=cli_util.override('lb.delete_backend.command_name', 'delete'), help=u"""Removes a backend server from a given load balancer and backend set. \n[Command Reference](deleteBackend)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and server.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the backend set and server.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend server.
 
 Example: `example_backend_set`""")
@@ -1408,7 +1408,7 @@ def delete_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @backend_set_group.command(name=cli_util.override('lb.delete_backend_set.command_name', 'delete'), help=u"""Deletes the specified backend set. Note that deleting a backend set removes its backend servers from the load balancer.
 
 Before you can delete a backend set, you must remove it from any active listeners. \n[Command Reference](deleteBackendSet)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the backend set.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to delete.
 
 Example: `example_backend_set`""")
@@ -1477,7 +1477,7 @@ def delete_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @certificate_group.command(name=cli_util.override('lb.delete_certificate.command_name', 'delete'), help=u"""Deletes an SSL certificate bundle from a load balancer. \n[Command Reference](deleteCertificate)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the certificate bundle to be deleted.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the certificate bundle to be deleted.""")
 @cli_util.option('--certificate-name', required=True, help=u"""The name of the certificate bundle to delete.
 
 Example: `example_certificate_bundle`""")
@@ -1546,7 +1546,7 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @hostname_group.command(name=cli_util.override('lb.delete_hostname.command_name', 'delete'), help=u"""Deletes a hostname resource from the specified load balancer. \n[Command Reference](deleteHostname)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the hostname to delete.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the hostname to delete.""")
 @cli_util.option('--name', required=True, help=u"""The name of the hostname resource to delete.
 
 Example: `example_hostname_001`""")
@@ -1615,7 +1615,7 @@ def delete_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @listener_group.command(name=cli_util.override('lb.delete_listener.command_name', 'delete'), help=u"""Deletes a listener from a load balancer. \n[Command Reference](deleteListener)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the listener to delete.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the listener to delete.""")
 @cli_util.option('--listener-name', required=True, help=u"""The name of the listener to delete.
 
 Example: `example_listener`""")
@@ -1684,7 +1684,7 @@ def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @load_balancer_group.command(name=cli_util.override('lb.delete_load_balancer.command_name', 'delete'), help=u"""Stops a load balancer and removes it from service. \n[Command Reference](deleteLoadBalancer)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to delete.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer to delete.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -1748,7 +1748,7 @@ def delete_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @path_route_set_group.command(name=cli_util.override('lb.delete_path_route_set.command_name', 'delete'), help=u"""Deletes a path route set from the specified load balancer.
 
 To delete a path route rule from a path route set, use the [UpdatePathRouteSet] operation. \n[Command Reference](deletePathRouteSet)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the path route set to delete.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the path route set to delete.""")
 @cli_util.option('--path-route-set-name', required=True, help=u"""The name of the path route set to delete.
 
 Example: `example_path_route_set`""")
@@ -1819,7 +1819,7 @@ def delete_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @routing_policy_group.command(name=cli_util.override('lb.delete_routing_policy.command_name', 'delete'), help=u"""Deletes a routing policy from the specified load balancer.
 
 To delete a routing rule from a routing policy, use the [UpdateRoutingPolicy] operation. \n[Command Reference](deleteRoutingPolicy)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the routing policy to delete.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the routing policy to delete.""")
 @cli_util.option('--routing-policy-name', required=True, help=u"""The name of the routing policy to delete.
 
 Example: `example_routing_policy`""")
@@ -1890,7 +1890,7 @@ def delete_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @rule_set_group.command(name=cli_util.override('lb.delete_rule_set.command_name', 'delete'), help=u"""Deletes a rule set from the specified load balancer.
 
 To delete a rule from a rule set, use the [UpdateRuleSet] operation. \n[Command Reference](deleteRuleSet)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--rule-set-name', required=True, help=u"""The name of the rule set to delete.
 
 Example: `example_rule_set`""")
@@ -1959,7 +1959,7 @@ def delete_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @ssl_cipher_suite_group.command(name=cli_util.override('lb.delete_ssl_cipher_suite.command_name', 'delete'), help=u"""Deletes an SSL cipher suite from a load balancer. \n[Command Reference](deleteSSLCipherSuite)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the associated load balancer.""")
 @cli_util.option('--name', required=True, help=u"""The name of the SSL cipher suite to delete.
 
 example: `example_cipher_suite`""")
@@ -2028,7 +2028,7 @@ def delete_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @backend_group.command(name=cli_util.override('lb.get_backend.command_name', 'get'), help=u"""Gets the specified backend server's configuration information. \n[Command Reference](getBackend)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and server.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the backend set and server.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set that includes the backend server.
 
 Example: `example_backend_set`""")
@@ -2073,7 +2073,7 @@ def get_backend(ctx, from_json, load_balancer_id, backend_set_name, backend_name
 
 
 @backend_health_group.command(name=cli_util.override('lb.get_backend_health.command_name', 'get'), help=u"""Gets the current health status of the specified backend server. \n[Command Reference](getBackendHealth)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend server health status to be retrieved.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the backend server health status to be retrieved.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend server to retrieve the health status for.
 
 Example: `example_backend_set`""")
@@ -2118,7 +2118,7 @@ def get_backend_health(ctx, from_json, load_balancer_id, backend_set_name, backe
 
 
 @backend_set_group.command(name=cli_util.override('lb.get_backend_set.command_name', 'get'), help=u"""Gets the specified backend set's configuration information. \n[Command Reference](getBackendSet)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to retrieve.
 
 Example: `example_backend_set`""")
@@ -2156,7 +2156,7 @@ def get_backend_set(ctx, from_json, load_balancer_id, backend_set_name, if_match
 
 
 @backend_set_health_group.command(name=cli_util.override('lb.get_backend_set_health.command_name', 'get'), help=u"""Gets the health status for the specified backend set. \n[Command Reference](getBackendSetHealth)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set health status to be retrieved.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the backend set health status to be retrieved.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to retrieve the health status for.
 
 Example: `example_backend_set`""")
@@ -2194,7 +2194,7 @@ def get_backend_set_health(ctx, from_json, load_balancer_id, backend_set_name, i
 
 
 @health_checker_group.command(name=cli_util.override('lb.get_health_checker.command_name', 'get'), help=u"""Gets the health check policy information for a given load balancer and backend set. \n[Command Reference](getHealthChecker)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the health check policy to be retrieved.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the health check policy to be retrieved.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the health check policy to be retrieved.
 
 Example: `example_backend_set`""")
@@ -2232,7 +2232,7 @@ def get_health_checker(ctx, from_json, load_balancer_id, backend_set_name, if_ma
 
 
 @hostname_group.command(name=cli_util.override('lb.get_hostname.command_name', 'get'), help=u"""Gets the specified hostname resource's configuration information. \n[Command Reference](getHostname)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--name', required=True, help=u"""The name of the hostname resource to retrieve.
 
 Example: `example_hostname_001`""")
@@ -2270,7 +2270,7 @@ def get_hostname(ctx, from_json, load_balancer_id, name, if_match):
 
 
 @load_balancer_group.command(name=cli_util.override('lb.get_load_balancer.command_name', 'get'), help=u"""Gets the specified load balancer's configuration information. \n[Command Reference](getLoadBalancer)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to retrieve.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer to retrieve.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -2301,7 +2301,7 @@ def get_load_balancer(ctx, from_json, load_balancer_id, if_match):
 
 
 @load_balancer_health_group.command(name=cli_util.override('lb.get_load_balancer_health.command_name', 'get'), help=u"""Gets the health status for the specified load balancer. \n[Command Reference](getLoadBalancerHealth)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to return health status for.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer to return health status for.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -2332,7 +2332,7 @@ def get_load_balancer_health(ctx, from_json, load_balancer_id, if_match):
 
 
 @path_route_set_group.command(name=cli_util.override('lb.get_path_route_set.command_name', 'get'), help=u"""Gets the specified path route set's configuration information. \n[Command Reference](getPathRouteSet)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--path-route-set-name', required=True, help=u"""The name of the path route set to retrieve.
 
 Example: `example_path_route_set`""")
@@ -2370,7 +2370,7 @@ def get_path_route_set(ctx, from_json, load_balancer_id, path_route_set_name, if
 
 
 @routing_policy_group.command(name=cli_util.override('lb.get_routing_policy.command_name', 'get'), help=u"""Gets the specified routing policy. \n[Command Reference](getRoutingPolicy)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--routing-policy-name', required=True, help=u"""The name of the routing policy to retrieve.
 
 Example: `example_routing_policy`""")
@@ -2408,7 +2408,7 @@ def get_routing_policy(ctx, from_json, load_balancer_id, routing_policy_name, if
 
 
 @rule_set_group.command(name=cli_util.override('lb.get_rule_set.command_name', 'get'), help=u"""Gets the specified set of rules. \n[Command Reference](getRuleSet)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--rule-set-name', required=True, help=u"""The name of the rule set to retrieve.
 
 Example: `example_rule_set`""")
@@ -2446,7 +2446,7 @@ def get_rule_set(ctx, from_json, load_balancer_id, rule_set_name, if_match):
 
 
 @ssl_cipher_suite_group.command(name=cli_util.override('lb.get_ssl_cipher_suite.command_name', 'get'), help=u"""Gets the specified SSL cipher suite's configuration information. \n[Command Reference](getSSLCipherSuite)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the associated load balancer.""")
 @cli_util.option('--name', required=True, help=u"""The name of the SSL cipher suite to retrieve.
 
 example: `example_cipher_suite`""")
@@ -2506,7 +2506,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @backend_set_group.command(name=cli_util.override('lb.list_backend_sets.command_name', 'list'), help=u"""Lists all backend sets associated with a given load balancer. \n[Command Reference](listBackendSets)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend sets to retrieve.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the backend sets to retrieve.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -2538,7 +2538,7 @@ def list_backend_sets(ctx, from_json, all_pages, load_balancer_id, if_match):
 
 
 @backend_group.command(name=cli_util.override('lb.list_backends.command_name', 'list'), help=u"""Lists the backend servers for a given load balancer and backend set. \n[Command Reference](listBackends)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and servers.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the backend set and servers.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend servers.
 
 Example: `example_backend_set`""")
@@ -2577,7 +2577,7 @@ def list_backends(ctx, from_json, all_pages, load_balancer_id, backend_set_name,
 
 
 @certificate_group.command(name=cli_util.override('lb.list_certificates.command_name', 'list'), help=u"""Lists all SSL certificates bundles associated with a given load balancer. \n[Command Reference](listCertificates)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the certificate bundles to be listed.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the certificate bundles to be listed.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -2609,7 +2609,7 @@ def list_certificates(ctx, from_json, all_pages, load_balancer_id, if_match):
 
 
 @hostname_group.command(name=cli_util.override('lb.list_hostnames.command_name', 'list'), help=u"""Lists all hostname resources associated with the specified load balancer. \n[Command Reference](listHostnames)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the hostnames to retrieve.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the hostnames to retrieve.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -2643,7 +2643,7 @@ def list_hostnames(ctx, from_json, all_pages, load_balancer_id, if_match):
 @listener_rule_group.command(name=cli_util.override('lb.list_listener_rules.command_name', 'list'), help=u"""Lists all of the rules from all of the rule sets associated with the specified listener. The response organizes the rules in the following order:
 
 *  Access control rules *  Allow method rules *  Request header rules *  Response header rules \n[Command Reference](listListenerRules)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the listener.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the listener.""")
 @cli_util.option('--listener-name', required=True, help=u"""The name of the listener the rules are associated with. Example: `example_listener`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
@@ -2680,7 +2680,7 @@ def list_listener_rules(ctx, from_json, all_pages, load_balancer_id, listener_na
 
 
 @load_balancer_health_group.command(name=cli_util.override('lb.list_load_balancer_healths.command_name', 'list'), help=u"""Lists the summary health statuses for all load balancers in the specified compartment. \n[Command Reference](listLoadBalancerHealths)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancers to return health status information for.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the load balancers to return health status information for.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -2732,7 +2732,7 @@ def list_load_balancer_healths(ctx, from_json, all_pages, page_size, compartment
 
 
 @load_balancer_group.command(name=cli_util.override('lb.list_load_balancers.command_name', 'list'), help=u"""Lists all load balancers in the specified compartment. \n[Command Reference](listLoadBalancers)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancers to list.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the load balancers to list.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -2805,7 +2805,7 @@ def list_load_balancers(ctx, from_json, all_pages, page_size, compartment_id, li
 
 
 @path_route_set_group.command(name=cli_util.override('lb.list_path_route_sets.command_name', 'list'), help=u"""Lists all path route sets associated with the specified load balancer. \n[Command Reference](listPathRouteSets)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the path route sets to retrieve.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the path route sets to retrieve.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -2837,7 +2837,7 @@ def list_path_route_sets(ctx, from_json, all_pages, load_balancer_id, if_match):
 
 
 @load_balancer_policy_group.command(name=cli_util.override('lb.list_policies.command_name', 'list-policies'), help=u"""Lists the available load balancer policies. \n[Command Reference](listPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancer policies to list.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the load balancer policies to list.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -2889,7 +2889,7 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, p
 
 
 @load_balancer_protocol_group.command(name=cli_util.override('lb.list_protocols.command_name', 'list-protocols'), help=u"""Lists all supported traffic protocols. \n[Command Reference](listProtocols)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancer protocols to list.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the load balancer protocols to list.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -2941,7 +2941,7 @@ def list_protocols(ctx, from_json, all_pages, page_size, compartment_id, limit, 
 
 
 @routing_policy_group.command(name=cli_util.override('lb.list_routing_policies.command_name', 'list'), help=u"""Lists all routing policies associated with the specified load balancer. \n[Command Reference](listRoutingPolicies)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the routing policies.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the routing policies.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3005,7 +3005,7 @@ def list_routing_policies(ctx, from_json, all_pages, page_size, load_balancer_id
 
 
 @rule_set_group.command(name=cli_util.override('lb.list_rule_sets.command_name', 'list'), help=u"""Lists all rule sets associated with the specified load balancer. \n[Command Reference](listRuleSets)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -3037,7 +3037,7 @@ def list_rule_sets(ctx, from_json, all_pages, load_balancer_id, if_match):
 
 
 @load_balancer_shape_group.command(name=cli_util.override('lb.list_shapes.command_name', 'list-shapes'), help=u"""Lists the valid load balancer shapes. \n[Command Reference](listShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancer shapes to list.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the load balancer shapes to list.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3089,7 +3089,7 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
 
 
 @ssl_cipher_suite_group.command(name=cli_util.override('lb.list_ssl_cipher_suites.command_name', 'list'), help=u"""Lists all SSL cipher suites associated with the specified load balancer. \n[Command Reference](listSSLCipherSuites)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the associated load balancer.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -3121,7 +3121,7 @@ def list_ssl_cipher_suites(ctx, from_json, all_pages, load_balancer_id, if_match
 
 
 @work_request_group.command(name=cli_util.override('lb.list_work_requests.command_name', 'list'), help=u"""Lists the work requests for a given load balancer. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the work requests to retrieve.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the work requests to retrieve.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3190,7 +3190,7 @@ Example: `false`""")
 @cli_util.option('--offline', required=True, type=click.BOOL, help=u"""Whether the load balancer should treat this server as offline. Offline servers receive no incoming traffic.
 
 Example: `false`""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and server.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the backend set and server.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend server.
 
 Example: `example_backend_set`""")
@@ -3286,7 +3286,7 @@ def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 Example: `LEAST_CONNECTIONS`""")
 @cli_util.option('--backends', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the backend set.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to update.
 
 Example: `example_backend_set`""")
@@ -3407,7 +3407,7 @@ Example: `10000`""")
 @cli_util.option('--response-body-regex', required=True, help=u"""A regular expression for parsing the response body from the backend server.
 
 Example: `^((?!false).|\\s)*$`""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the health check policy to be updated.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the health check policy to be updated.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the health check policy to be retrieved.
 
 Example: `example_backend_set`""")
@@ -3502,7 +3502,7 @@ def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @hostname_group.command(name=cli_util.override('lb.update_hostname.command_name', 'update'), help=u"""Overwrites an existing hostname resource on the specified load balancer. Use this operation to change a virtual hostname. \n[Command Reference](updateHostname)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the virtual hostname to update.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the virtual hostname to update.""")
 @cli_util.option('--name', required=True, help=u"""The name of the hostname resource to update.
 
 Example: `example_hostname_001`""")
@@ -3589,7 +3589,7 @@ Example: `80`""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. To get a list of valid protocols, use the [ListProtocols] operation.
 
 Example: `HTTP`""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the listener to update.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the listener to update.""")
 @cli_util.option('--listener-name', required=True, help=u"""The name of the listener to update.
 
 Example: `example_listener`""")
@@ -3701,7 +3701,7 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
 
 @load_balancer_group.command(name=cli_util.override('lb.update_load_balancer.command_name', 'update'), help=u"""Updates a load balancer's configuration. \n[Command Reference](updateLoadBalancer)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to update.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer to update.""")
 @cli_util.option('--display-name', help=u"""The user-friendly display name for the load balancer. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `example_load_balancer`""")
@@ -3853,7 +3853,7 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
 
 
 @load_balancer_group.command(name=cli_util.override('lb.update_load_balancer_shape.command_name', 'update-load-balancer-shape'), help=u"""Update the shape of a load balancer. The new shape can be larger or smaller compared to existing shape of the LB. The service will try to perform this operation in the least disruptive way to existing connections, but there is a possibility that they might be lost during the LB resizing process. The new shape becomes effective as soon as the related work request completes successfully, i.e. when reshaping to a larger shape, the LB will start accepting larger bandwidth and when reshaping to a smaller one, the LB will be accepting smaller bandwidth. \n[Command Reference](updateLoadBalancerShape)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer whose shape will be updated.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer whose shape will be updated.""")
 @cli_util.option('--shape-name', required=True, help=u"""The new shape name for the load balancer.
 
 Allowed values are :   *  10Mbps   *  100Mbps   *  400Mbps   *  8000Mbps   *  Flexible
@@ -3935,7 +3935,7 @@ def update_load_balancer_shape(ctx, from_json, force, wait_for_state, max_wait_s
 
 
 @network_security_groups_group.command(name=cli_util.override('lb.update_network_security_groups.command_name', 'update'), help=u"""Updates the network security groups associated with the specified load balancer. \n[Command Reference](updateNetworkSecurityGroups)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to update the NSGs for.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer to update the NSGs for.""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of NSG [OCIDs] associated with the load balancer.
 
 During the load balancer's creation, the service adds the new load balancer to the specified NSGs.
@@ -4020,7 +4020,7 @@ def update_network_security_groups(ctx, from_json, force, wait_for_state, max_wa
 
 To add a new path route rule to a path route set, the `pathRoutes` in the [UpdatePathRouteSetDetails] object must include both the new path route rule to add and the existing path route rules to retain. \n[Command Reference](updatePathRouteSet)""")
 @cli_util.option('--path-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of path route rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the path route set to update.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the path route set to update.""")
 @cli_util.option('--path-route-set-name', required=True, help=u"""The name of the path route set to update.
 
 Example: `example_path_route_set`""")
@@ -4101,7 +4101,7 @@ def update_path_route_set(ctx, from_json, force, wait_for_state, max_wait_second
 
 To add a new routing rule to a routing policy, the body must include both the new routing rule to add and the existing rules to retain. \n[Command Reference](updateRoutingPolicy)""")
 @cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of routing rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the routing policy to update.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the load balancer associated with the routing policy to update.""")
 @cli_util.option('--routing-policy-name', required=True, help=u"""The name of the routing policy to update.
 
 Example: `example_routing_policy_name`""")
@@ -4185,7 +4185,7 @@ def update_routing_policy(ctx, from_json, force, wait_for_state, max_wait_second
 @rule_set_group.command(name=cli_util.override('lb.update_rule_set.command_name', 'update'), help=u"""Overwrites an existing set of rules on the specified load balancer. Use this operation to add or alter the rules in a rule set.
 
 To add a new rule to a set, the body must include both the new rule to add and the existing rules to retain. \n[Command Reference](updateRuleSet)""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--rule-set-name', required=True, help=u"""The name of the rule set to update.
 
 Example: `example_rule_set`""")
@@ -4281,7 +4281,7 @@ The following ciphers are valid values for this property:
         \"AES128-SHA\"         \"AES256-SHA\"         \"CAMELLIA128-SHA\"         \"CAMELLIA256-SHA\"         \"DES-CBC3-SHA\"         \"DH-DSS-AES128-SHA\"         \"DH-DSS-AES256-SHA\"         \"DH-DSS-CAMELLIA128-SHA\"         \"DH-DSS-CAMELLIA256-SHA\"         \"DH-DSS-DES-CBC3-SHAv\"         \"DH-DSS-SEED-SHA\"         \"DH-RSA-AES128-SHA\"         \"DH-RSA-AES256-SHA\"         \"DH-RSA-CAMELLIA128-SHA\"         \"DH-RSA-CAMELLIA256-SHA\"         \"DH-RSA-DES-CBC3-SHA\"         \"DH-RSA-SEED-SHA\"         \"DHE-DSS-AES128-SHA\"         \"DHE-DSS-AES256-SHA\"         \"DHE-DSS-CAMELLIA128-SHA\"         \"DHE-DSS-CAMELLIA256-SHA\"         \"DHE-DSS-DES-CBC3-SHA\"         \"DHE-DSS-SEED-SHA\"         \"DHE-RSA-AES128-SHA\"         \"DHE-RSA-AES256-SHA\"         \"DHE-RSA-CAMELLIA128-SHA\"         \"DHE-RSA-CAMELLIA256-SHA\"         \"DHE-RSA-DES-CBC3-SHA\"         \"DHE-RSA-SEED-SHA\"         \"ECDH-ECDSA-AES128-SHA\"         \"ECDH-ECDSA-AES256-SHA\"         \"ECDH-ECDSA-DES-CBC3-SHA\"         \"ECDH-ECDSA-RC4-SHA\"         \"ECDH-RSA-AES128-SHA\"         \"ECDH-RSA-AES256-SHA\"         \"ECDH-RSA-DES-CBC3-SHA\"         \"ECDH-RSA-RC4-SHA\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-ECDSA-AES256-SHA\"         \"ECDHE-ECDSA-DES-CBC3-SHA\"         \"ECDHE-ECDSA-RC4-SHA\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-RSA-DES-CBC3-SHA\"         \"ECDHE-RSA-RC4-SHA\"         \"IDEA-CBC-SHA\"         \"KRB5-DES-CBC3-MD5\"         \"KRB5-DES-CBC3-SHA\"         \"KRB5-IDEA-CBC-MD5\"         \"KRB5-IDEA-CBC-SHA\"         \"KRB5-RC4-MD5\"         \"KRB5-RC4-SHA\"         \"PSK-3DES-EDE-CBC-SHA\"         \"PSK-AES128-CBC-SHA\"         \"PSK-AES256-CBC-SHA\"         \"PSK-RC4-SHA\"         \"RC4-MD5\"         \"RC4-SHA\"         \"SEED-SHA\"
 
 example: `[\"ECDHE-RSA-AES256-GCM-SHA384\",\"ECDHE-ECDSA-AES256-GCM-SHA384\",\"ECDHE-RSA-AES128-GCM-SHA256\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the associated load balancer.""")
 @cli_util.option('--name', required=True, help=u"""The name of the SSL cipher suite to update.
 
 example: `example_cipher_suite`""")

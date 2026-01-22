@@ -68,7 +68,7 @@ oracle_db_azure_connector_root_group.add_command(oracle_db_azure_connector_group
 
 @oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.change_oracle_db_azure_connector_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle DB Azure Connector resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAzureConnectorCompartment)""")
 @cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Connector resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Oracle DB Azure Connector resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the new compartment to contain the Oracle DB Azure Connector resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -148,7 +148,7 @@ def change_oracle_db_azure_connector_compartment(ctx, from_json, wait_for_state,
 
 
 @oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.create_oracle_db_azure_connector.command_name', 'create'), help=u"""Creates Oracle DB Azure Connector resource and configured Azure Identity in Oracle Database resource. \n[Command Reference](createOracleDbAzureConnector)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Oracle DB Azure Connector resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains Oracle DB Azure Connector resource.""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle DB Azure Connector resource name.""")
 @cli_util.option('--db-cluster-resource-id', required=True, help=u"""The [OCID] of the Oracle DB Cloud VM Cluster resource where this Azure Arc Agent Identity to configure.""")
 @cli_util.option('--azure-identity-mechanism', required=True, help=u"""Azure Identity mechanism.""")
@@ -324,7 +324,7 @@ def get_oracle_db_azure_connector(ctx, from_json, oracle_db_azure_connector_id, 
 
 
 @oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.list_oracle_db_azure_connectors.command_name', 'list'), help=u"""Lists all Oracle DB Azure Connector resources based on the specified filters. \n[Command Reference](listOracleDbAzureConnectors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB Azure Connector resources that match the specified display name.""")
 @cli_util.option('--oracle-db-azure-connector-id', help=u"""A filter to return Oracle DB Azure Azure Identity Connector resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
@@ -527,7 +527,7 @@ def refresh_oracle_db_azure_connector(ctx, from_json, wait_for_state, max_wait_s
 
 @oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.update_oracle_db_azure_connector.command_name', 'update'), help=u"""Modifies the existing Oracle DB Azure Connector resource for a given [OCID]. \n[Command Reference](updateOracleDbAzureConnector)""")
 @cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Connector resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains Oracle DB Azure Connector resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains Oracle DB Azure Connector resource.""")
 @cli_util.option('--display-name', help=u"""Oracle DB Azure Connector resource name.""")
 @cli_util.option('--db-cluster-resource-id', help=u"""The [OCID] of the Oracle DB Cloud VM Cluster resource where this Azure Arc Agent Identity to configure.""")
 @cli_util.option('--azure-identity-mechanism', help=u"""Azure Identity mechanism.""")

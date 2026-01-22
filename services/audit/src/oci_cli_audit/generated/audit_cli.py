@@ -42,7 +42,7 @@ audit_root_group.add_command(configuration_group)
 
 
 @configuration_group.command(name=cli_util.override('audit.get_configuration.command_name', 'get'), help=u"""Get the configuration \n[Command Reference](getConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""ID of the root compartment (tenancy)""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the root compartment (tenancy)""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -60,7 +60,7 @@ def get_configuration(ctx, from_json, compartment_id):
 
 
 @audit_event_group.command(name=cli_util.override('audit.list_events.command_name', 'list-events'), help=u"""Returns all the audit events processed for the specified compartment within the specified time range. \n[Command Reference](listEvents)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--start-time', required=True, type=custom_types.CLI_DATETIME, help=u"""Returns events that were processed at or after this start date and time, expressed in [RFC 3339] timestamp format.
 
 For example, a start value of `2017-01-15T11:30:00Z` will retrieve a list of all events processed since 30 minutes after the 11th hour of January 15, 2017, in Coordinated Universal Time (UTC). You can specify a value with granularity to the minute. Seconds (and milliseconds, if included) must be set to `0`.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -100,7 +100,7 @@ def list_events(ctx, from_json, all_pages, compartment_id, start_time, end_time,
 
 
 @configuration_group.command(name=cli_util.override('audit.update_configuration.command_name', 'update'), help=u"""Update the configuration \n[Command Reference](updateConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""ID of the root compartment (tenancy)""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the root compartment (tenancy)""")
 @cli_util.option('--retention-period-days', required=True, type=click.INT, help=u"""The retention period setting, specified in days. The minimum is 90, the maximum 365.
 
 Example: `90`""")

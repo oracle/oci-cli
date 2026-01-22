@@ -621,11 +621,11 @@ def import_image_internal(ctx, compartment_id, display_name, import_image_detail
 
 
 @compute_cli.instance_group.command(name='list-vnics', help="""Lists the VNICs that are attached to the specified instance. VNICs that are in the process of attaching or detaching will not be returned.""")
-@cli_util.option('--compartment-id', help="""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help="""The OCID of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--instance-id', help="""The OCID of the instance.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help="""The OCID of the instance.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
@@ -719,9 +719,9 @@ def list_vnics(ctx, from_json, compartment_id, availability_domain, instance_id,
 @cli_util.option('--ipv6-address-subnet-cidr-pairs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IPv6 addresses and subnet CIDR blocks (prefixes) to specify how IPv6 addresses are to be assigned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--user-data-file', type=click.File('rb'), help="""A file containing data that Cloud-Init can use to run custom scripts or provide custom Cloud-Init configuration. This parameter is a convenience wrapper around the 'user_data' field of the --metadata parameter.  Populating both values in the same call will result in an error. For more info see Cloud-Init documentation: https://cloudinit.readthedocs.org/en/latest/topics/format.html.""")
 @cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
-@cli_util.option('--source-boot-volume-id', help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
+@cli_util.option('--source-boot-volume-id', type=custom_types.CLI_OCID, help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
 @cli_util.option('--boot-volume-size-in-gbs', type=click.INT, help="""The size of the boot volume in GBs. Minimum value is 50 GB and maximum value is 16384 GB (16TB). This is a shortcut for specifying a boot volume size via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet where the VNIC attached to this instance will be created.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the subnet where the VNIC attached to this instance will be created.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}, 'ipv6-address-subnet-cidr-pairs': {'module': 'core', 'class': 'list[Ipv6AddressIpv6SubnetCidrPairDetails]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
@@ -834,8 +834,8 @@ def launch_instance_extended(ctx, **kwargs):
 
 
 @compute_cli.instance_group.command(name='attach-vnic', help="""Creates a secondary VNIC and attaches it to the specified instance. You can specify either --subnet-id or --vlan-id for this create request, but not both. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)].""")
-@cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
-@cli_util.option('--subnet-id', help="""The OCID of the subnet to create the VNIC in. You can specify either this parameter or --vlan-id, but not both.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the instance.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help="""The OCID of the subnet to create the VNIC in. You can specify either this parameter or --vlan-id, but not both.""")
 @cli_util.option('--vlan-id', help="""The OCID of the VLAN to create the VNIC in. You can specify either this parameter or --subnet-id, but not both.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) to add the VNIC to..""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-display-name', help="""A user-friendly name for the VNIC. Does not have to be unique.""")
@@ -932,7 +932,7 @@ def attach_vnic(ctx, from_json, instance_id, subnet_id, vlan_id, nsg_ids, vnic_d
 
 @compute_cli.instance_group.command(name='detach-vnic', help="""Detaches and deletes the specified secondary VNIC. This operation cannot be used on the instance's primary VNIC. When you terminate an instance, all attached VNICs (primary and secondary) are automatically detached and deleted.""")
 @cli_util.option('--vnic-id', required=True, help="""The OCID of the VNIC.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the instance's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the instance's compartment.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1127,8 +1127,8 @@ def change_instance_compartment(ctx, instance_id, compartment_id, if_match, from
 
 # Change the required field compartment_id to be optional and make sure either compartment_id or instance_id is
 # provided.
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--instance-id', help=u"""The OCID of the instance. If --compartment-id is not provided, then --instance-id must be provided.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help=u"""The OCID of the instance. If --compartment-id is not provided, then --instance-id must be provided.""")
 @cli_util.copy_params_from_generated_command(compute_cli.list_volume_attachments, params_to_exclude=['compartment_id', 'instance_id'])
 @compute_cli.volume_attachment_group.command(name=cli_util.override('compute.list_volume_attachments.command_name', 'list'), help=compute_cli.list_volume_attachments.help)
 @click.pass_context

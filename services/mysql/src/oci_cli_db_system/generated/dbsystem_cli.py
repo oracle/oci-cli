@@ -47,7 +47,7 @@ db_system_root_group.add_command(db_system_group)
 
 
 @heat_wave_cluster_group.command(name=cli_util.override('db_system.add_heat_wave_cluster.command_name', 'add'), help=u"""Adds a HeatWave cluster to the DB System. \n[Command Reference](addHeatWaveCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--shape-name', required=True, help=u"""The shape determines resources to allocate to the HeatWave nodes - CPU cores, memory.""")
 @cli_util.option('--cluster-size', required=True, type=click.INT, help=u"""The number of analytics-processing nodes provisioned for the HeatWave cluster.""")
 @cli_util.option('--is-lakehouse-enabled', type=click.BOOL, help=u"""Enable/disable Lakehouse for the HeatWave cluster.""")
@@ -116,9 +116,9 @@ def add_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @db_system_group.command(name=cli_util.override('db_system.create_db_system.command_name', 'create'), help=u"""Creates and launches a DB System. \n[Command Reference](createDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet the DB System is associated with.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the subnet the DB System is associated with.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
 @cli_util.option('--rest', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -323,9 +323,9 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @db_system_group.command(name=cli_util.override('db_system.create_db_system_create_db_system_source_from_backup_details.command_name', 'create-db-system-create-db-system-source-from-backup-details'), help=u"""Creates and launches a DB System. \n[Command Reference](createDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet the DB System is associated with.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the subnet the DB System is associated with.""")
 @cli_util.option('--source-backup-id', required=True, help=u"""The OCID of the backup to be used as the source for the new DB System.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
@@ -531,9 +531,9 @@ def create_db_system_create_db_system_source_from_backup_details(ctx, from_json,
 
 
 @db_system_group.command(name=cli_util.override('db_system.create_db_system_create_db_system_source_from_none_details.command_name', 'create-db-system-create-db-system-source-from-none-details'), help=u"""Creates and launches a DB System. \n[Command Reference](createDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet the DB System is associated with.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the subnet the DB System is associated with.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
 @cli_util.option('--rest', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -737,9 +737,9 @@ def create_db_system_create_db_system_source_from_none_details(ctx, from_json, w
 
 
 @db_system_group.command(name=cli_util.override('db_system.create_db_system_create_db_system_source_import_from_url_details.command_name', 'create-db-system-create-db-system-source-import-from-url-details'), help=u"""Creates and launches a DB System. \n[Command Reference](createDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet the DB System is associated with.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the subnet the DB System is associated with.""")
 @cli_util.option('--source-source-url', required=True, help=u"""The Pre-Authenticated Request (PAR) of a bucket/prefix or PAR of a @.manifest.json object from the Object Storage. Check [Using Pre-Authenticated Requests] for information related to PAR creation. Please create PAR with \"Permit object reads\" access type and \"Enable Object Listing\" permission when using a bucket/prefix PAR. Please create PAR with \"Permit object reads\" access type when using a @.manifest.json object PAR.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
@@ -945,9 +945,9 @@ def create_db_system_create_db_system_source_import_from_url_details(ctx, from_j
 
 
 @db_system_group.command(name=cli_util.override('db_system.create_db_system_create_db_system_source_from_pitr_details.command_name', 'create-db-system-create-db-system-source-from-pitr-details'), help=u"""Creates and launches a DB System. \n[Command Reference](createDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet the DB System is associated with.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the subnet the DB System is associated with.""")
 @cli_util.option('--source-db-system-id', required=True, help=u"""The OCID of the DB System from which a backup shall be selected to be restored when creating the new DB System. Use this together with recovery point to perform a point in time recovery operation.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
@@ -1157,7 +1157,7 @@ def create_db_system_create_db_system_source_from_pitr_details(ctx, from_json, w
 
 
 @db_system_group.command(name=cli_util.override('db_system.delete_db_system.command_name', 'delete'), help=u"""Delete a DB System, including terminating, detaching, removing, finalizing and otherwise deleting all related resources. \n[Command Reference](deleteDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1215,7 +1215,7 @@ def delete_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @heat_wave_cluster_group.command(name=cli_util.override('db_system.delete_heat_wave_cluster.command_name', 'delete'), help=u"""Deletes the HeatWave cluster including terminating, detaching, removing, finalizing and otherwise deleting all related resources. \n[Command Reference](deleteHeatWaveCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1273,7 +1273,7 @@ def delete_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @heat_wave_cluster_memory_estimate_group.command(name=cli_util.override('db_system.generate_heat_wave_cluster_memory_estimate.command_name', 'generate'), help=u"""Sends a request to estimate the memory footprints of user tables when loaded to HeatWave cluster memory. \n[Command Reference](generateHeatWaveClusterMemoryEstimate)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1327,7 +1327,7 @@ def generate_heat_wave_cluster_memory_estimate(ctx, from_json, wait_for_state, m
 
 
 @db_system_group.command(name=cli_util.override('db_system.get_db_system.command_name', 'get'), help=u"""Get information about the specified DB System. \n[Command Reference](getDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--if-none-match', help=u"""For conditional requests. In the GET call for a resource, set the `If-None-Match` header to the value of the ETag from a previous GET (or POST or PUT) response for that resource. The server will return with either a 304 Not Modified response if the resource has not changed, or a 200 OK response with the updated representation.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1352,7 +1352,7 @@ def get_db_system(ctx, from_json, db_system_id, if_none_match):
 
 
 @heat_wave_cluster_group.command(name=cli_util.override('db_system.get_heat_wave_cluster.command_name', 'get'), help=u"""Gets information about the HeatWave cluster. \n[Command Reference](getHeatWaveCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--if-none-match', help=u"""For conditional requests. In the GET call for a resource, set the `If-None-Match` header to the value of the ETag from a previous GET (or POST or PUT) response for that resource. The server will return with either a 304 Not Modified response if the resource has not changed, or a 200 OK response with the updated representation.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1377,7 +1377,7 @@ def get_heat_wave_cluster(ctx, from_json, db_system_id, if_none_match):
 
 
 @heat_wave_cluster_memory_estimate_group.command(name=cli_util.override('db_system.get_heat_wave_cluster_memory_estimate.command_name', 'get'), help=u"""Gets the most recent HeatWave cluster memory estimate that can be used to determine a suitable HeatWave cluster size. \n[Command Reference](getHeatWaveClusterMemoryEstimate)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1399,9 +1399,9 @@ def get_heat_wave_cluster_memory_estimate(ctx, from_json, db_system_id):
 
 
 @db_system_group.command(name=cli_util.override('db_system.list_db_systems.command_name', 'list'), help=u"""Get a list of DB Systems in the specified compartment. The default sort order is by timeUpdated, descending. \n[Command Reference](listDbSystems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--is-heat-wave-cluster-attached', type=click.BOOL, help=u"""If true, return only DB Systems with a HeatWave cluster attached, if false return only DB Systems with no HeatWave cluster attached. If not present, return all DB Systems.""")
-@cli_util.option('--db-system-id', help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resource matching the given display name exactly.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""DbSystem Lifecycle State""")
 @cli_util.option('--configuration-id', help=u"""The requested Configuration instance.""")
@@ -1474,7 +1474,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, is_hea
 
 
 @db_system_group.command(name=cli_util.override('db_system.restart_db_system.command_name', 'restart'), help=u"""Restarts the specified DB System. \n[Command Reference](restartDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--shutdown-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["IMMEDIATE", "FAST", "SLOW"]), help=u"""The InnoDB shutdown mode to use, following the option \"[innodb_fast_shutdown]\".""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1537,7 +1537,7 @@ def restart_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @heat_wave_cluster_group.command(name=cli_util.override('db_system.restart_heat_wave_cluster.command_name', 'restart'), help=u"""Restarts the HeatWave cluster. \n[Command Reference](restartHeatWaveCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1594,7 +1594,7 @@ def restart_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @db_system_group.command(name=cli_util.override('db_system.start_db_system.command_name', 'start'), help=u"""Start the specified DB System. \n[Command Reference](startDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1651,7 +1651,7 @@ def start_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @heat_wave_cluster_group.command(name=cli_util.override('db_system.start_heat_wave_cluster.command_name', 'start'), help=u"""Starts the HeatWave cluster. \n[Command Reference](startHeatWaveCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1710,7 +1710,7 @@ def start_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @db_system_group.command(name=cli_util.override('db_system.stop_db_system.command_name', 'stop'), help=u"""Stops the specified DB System.
 
 A stopped DB System is not billed. \n[Command Reference](stopDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--shutdown-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["IMMEDIATE", "FAST", "SLOW"]), help=u"""The InnoDB shutdown mode to use, following the option \"[innodb_fast_shutdown]\".""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1773,7 +1773,7 @@ def stop_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @heat_wave_cluster_group.command(name=cli_util.override('db_system.stop_heat_wave_cluster.command_name', 'stop'), help=u"""Stops the HeatWave cluster. \n[Command Reference](stopHeatWaveCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1832,10 +1832,10 @@ def stop_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @db_system_group.command(name=cli_util.override('db_system.update_db_system.command_name', 'update'), help=u"""Update the configuration of a DB System.
 
 Updating different fields in the DB System will have different results on the uptime of the DB System. For example, changing the displayName of a DB System will take effect immediately, but changing the shape of a DB System is an asynchronous operation that involves provisioning new Compute resources, pausing the DB System and migrating storage before making the DB System available again. \n[Command Reference](updateDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
-@cli_util.option('--subnet-id', help=u"""The OCID of the subnet the DB System is associated with.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The OCID of the subnet the DB System is associated with.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Network Security Group OCIDs used for the VNIC attachment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [ZPR Artifacts]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-mode', help=u"""The database mode indicating the types of statements that will be allowed to run in the DB system. This mode will apply only to statements run by user connections. Replicated write statements will continue to be allowed regardless of the DatabaseMode.   - READ_WRITE: allow running read and write statements on the DB system;   - READ_ONLY: only allow running read statements on the DB system.""")
@@ -2052,7 +2052,7 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
 
 @heat_wave_cluster_group.command(name=cli_util.override('db_system.update_heat_wave_cluster.command_name', 'update'), help=u"""Updates the HeatWave cluster. \n[Command Reference](updateHeatWaveCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--shape-name', help=u"""A change to the shape of the nodes in the HeatWave cluster will result in the entire cluster being torn down and re-created with Compute instances of the new Shape. This may result in significant downtime for the analytics capability while the HeatWave cluster is re-provisioned.""")
 @cli_util.option('--cluster-size', type=click.INT, help=u"""A change to the number of nodes in the HeatWave cluster will result in the entire cluster being torn down and re-created with the new cluster of nodes. This may result in a significant downtime for the analytics capability while the HeatWave cluster is re-provisioned.""")
 @cli_util.option('--is-lakehouse-enabled', type=click.BOOL, help=u"""Enable/disable Lakehouse for the HeatWave cluster.""")

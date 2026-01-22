@@ -80,7 +80,7 @@ waf_root_group.add_command(network_address_list_group)
 
 @network_address_list_group.command(name=cli_util.override('waf.change_network_address_list_compartment.command_name', 'change-compartment'), help=u"""Moves a NetworkAddressList resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeNetworkAddressListCompartment)""")
 @cli_util.option('--network-address-list-id', required=True, help=u"""The [OCID] of the NetworkAddressList.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -141,7 +141,7 @@ def change_network_address_list_compartment(ctx, from_json, wait_for_state, max_
 
 @web_app_firewall_group.command(name=cli_util.override('waf.change_web_app_firewall_compartment.command_name', 'change-compartment'), help=u"""Moves a Web App Firewall resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeWebAppFirewallCompartment)""")
 @cli_util.option('--web-app-firewall-id', required=True, help=u"""The [OCID] of the WebAppFirewall.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -202,7 +202,7 @@ def change_web_app_firewall_compartment(ctx, from_json, wait_for_state, max_wait
 
 @web_app_firewall_policy_group.command(name=cli_util.override('waf.change_web_app_firewall_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a WebAppFirewallfPolicy resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeWebAppFirewallPolicyCompartment)""")
 @cli_util.option('--web-app-firewall-policy-id', required=True, help=u"""The [OCID] of the WebAppFirewallPolicy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -262,7 +262,7 @@ def change_web_app_firewall_policy_compartment(ctx, from_json, wait_for_state, m
 
 
 @network_address_list_group.command(name=cli_util.override('waf.create_network_address_list.command_name', 'create'), help=u"""Creates a new NetworkAddressList. \n[Command Reference](createNetworkAddressList)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADDRESSES", "VCN_ADDRESSES"]), help=u"""Type of NetworkAddressList.""")
 @cli_util.option('--display-name', help=u"""NetworkAddressList display name, can be renamed.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -333,7 +333,7 @@ def create_network_address_list(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @network_address_list_group.command(name=cli_util.override('waf.create_network_address_list_create_network_address_list_vcn_addresses_details.command_name', 'create-network-address-list-create-network-address-list-vcn-addresses-details'), help=u"""Creates a new NetworkAddressList. \n[Command Reference](createNetworkAddressList)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--vcn-addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of private address prefixes, each associated with a particular VCN. To specify all addresses in a VCN, use \"0.0.0.0/0\" for IPv4 and \"::/0\" for IPv6.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""NetworkAddressList display name, can be renamed.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -406,7 +406,7 @@ def create_network_address_list_create_network_address_list_vcn_addresses_detail
 
 
 @network_address_list_group.command(name=cli_util.override('waf.create_network_address_list_create_network_address_list_addresses_details.command_name', 'create-network-address-list-create-network-address-list-addresses-details'), help=u"""Creates a new NetworkAddressList. \n[Command Reference](createNetworkAddressList)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IP address prefixes in CIDR notation. To specify all addresses, use \"0.0.0.0/0\" for IPv4 and \"::/0\" for IPv6.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""NetworkAddressList display name, can be renamed.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -480,7 +480,7 @@ def create_network_address_list_create_network_address_list_addresses_details(ct
 
 @web_app_firewall_group.command(name=cli_util.override('waf.create_web_app_firewall.command_name', 'create'), help=u"""Creates a new WebAppFirewall. \n[Command Reference](createWebAppFirewall)""")
 @cli_util.option('--backend-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOAD_BALANCER"]), help=u"""Type of the WebAppFirewall, as example LOAD_BALANCER.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--web-app-firewall-policy-id', required=True, help=u"""The [OCID] of WebAppFirewallPolicy, which is attached to the resource.""")
 @cli_util.option('--display-name', help=u"""WebAppFirewall display name, can be renamed.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -552,9 +552,9 @@ def create_web_app_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @web_app_firewall_group.command(name=cli_util.override('waf.create_web_app_firewall_create_web_app_firewall_load_balancer_details.command_name', 'create-web-app-firewall-create-web-app-firewall-load-balancer-details'), help=u"""Creates a new WebAppFirewall. \n[Command Reference](createWebAppFirewall)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--web-app-firewall-policy-id', required=True, help=u"""The [OCID] of WebAppFirewallPolicy, which is attached to the resource.""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""LoadBalancer [OCID] to which the WebAppFirewallPolicy is attached to.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""LoadBalancer [OCID] to which the WebAppFirewallPolicy is attached to.""")
 @cli_util.option('--display-name', help=u"""WebAppFirewall display name, can be renamed.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -627,7 +627,7 @@ def create_web_app_firewall_create_web_app_firewall_load_balancer_details(ctx, f
 
 
 @web_app_firewall_policy_group.command(name=cli_util.override('waf.create_web_app_firewall_policy.command_name', 'create'), help=u"""Creates a new WebAppFirewallPolicy. \n[Command Reference](createWebAppFirewallPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""WebAppFirewallPolicy display name, can be renamed.""")
 @cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Predefined actions for use in multiple different rules. Not all actions are supported in every module. Some actions terminate further execution of modules and rules in a module and some do not. Actions names must be unique within this array.
 
@@ -978,7 +978,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @network_address_list_group.command(name=cli_util.override('waf.list_network_address_lists.command_name', 'list'), help=u"""Gets a list of all NetworkAddressLists in a compartment. \n[Command Reference](listNetworkAddressLists)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""A filter to return only resources that match the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""A filter to return only the NetworkAddressList with the given [OCID].""")
@@ -1041,7 +1041,7 @@ def list_network_address_lists(ctx, from_json, all_pages, page_size, compartment
 
 
 @protection_capability_group.command(name=cli_util.override('waf.list_protection_capabilities.command_name', 'list'), help=u"""Lists of protection capabilities filtered by query parameters. \n[Command Reference](listProtectionCapabilities)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--key', help=u"""The unique key of protection capability to filter by.""")
@@ -1110,7 +1110,7 @@ def list_protection_capabilities(ctx, from_json, all_pages, page_size, compartme
 
 
 @protection_capability_group.command(name=cli_util.override('waf.list_protection_capability_group_tags.command_name', 'list-protection-capability-group-tags'), help=u"""Lists of available group tags filtered by query parameters. \n[Command Reference](listProtectionCapabilityGroupTags)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["REQUEST_PROTECTION_CAPABILITY", "RESPONSE_PROTECTION_CAPABILITY"]), help=u"""A filter to return only resources that matches given type.""")
@@ -1170,7 +1170,7 @@ def list_protection_capability_group_tags(ctx, from_json, all_pages, page_size, 
 
 
 @web_app_firewall_policy_group.command(name=cli_util.override('waf.list_web_app_firewall_policies.command_name', 'list'), help=u"""Gets a list of all WebAppFirewallPolicies in a compartment. \n[Command Reference](listWebAppFirewallPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""A filter to return only resources that match the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""A filter to return only the WebAppFirewallPolicy with the given [OCID].""")
@@ -1233,7 +1233,7 @@ def list_web_app_firewall_policies(ctx, from_json, all_pages, page_size, compart
 
 
 @web_app_firewall_group.command(name=cli_util.override('waf.list_web_app_firewalls.command_name', 'list'), help=u"""Gets a list of all WebAppFirewalls in a compartment. \n[Command Reference](listWebAppFirewalls)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""A filter to return only the WebAppFirewall with the given [OCID].""")
 @cli_util.option('--web-app-firewall-policy-id', help=u"""A filter to return only the WebAppFirewall with the given [OCID] of related WebAppFirewallPolicy.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""A filter to return only resources that match the given lifecycleState.""")
@@ -1401,7 +1401,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('waf.list_work_requests.command_name', 'list'), help=u"""Lists the WorkRequests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

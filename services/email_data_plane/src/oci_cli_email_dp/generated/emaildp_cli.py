@@ -90,7 +90,7 @@ def submit_email(ctx, from_json, sender, recipients, subject, message_id, body_h
 
 @email_raw_submitted_response_group.command(name=cli_util.override('email_data_plane.submit_raw_email.command_name', 'submit-raw-email'), help=u"""Submits a raw email. \n[Command Reference](submitRawEmail)""")
 @cli_util.option('--content-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["message/rfc822", "message/global"]), help=u"""The media type of the body.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the approved sender resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the approved sender resource.""")
 @cli_util.option('--sender', required=True, help=u"""The envelope and the header from email address, that is sending the email. Email address must be an approved sender.""")
 @cli_util.option('--recipients', required=True, multiple=True, help=u"""The destination for the email, all recipients including to, cc and bcc addresses.""")
 @cli_util.option('--raw-message', required=True, help=u"""This should be formatted in valid MIME format. Message can include attachments. MIME libraries should be used to convert the content into the appropriate format.""")

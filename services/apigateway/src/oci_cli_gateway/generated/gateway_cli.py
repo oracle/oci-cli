@@ -104,7 +104,7 @@ def add_gateway_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 @gateway_group.command(name=cli_util.override('gateway.change_gateway_compartment.command_name', 'change-compartment'), help=u"""Changes the gateway compartment. \n[Command Reference](changeGatewayCompartment)""")
 @cli_util.option('--gateway-id', required=True, help=u"""The ocid of the gateway.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -169,16 +169,16 @@ def change_gateway_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @gateway_group.command(name=cli_util.override('gateway.create_gateway.command_name', 'create'), help=u"""Creates a new gateway. \n[Command Reference](createGateway)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--endpoint-type', required=True, help=u"""Gateway endpoint type. `PUBLIC` will have a public ip address assigned to it, while `PRIVATE` will only be accessible on a private IP address on the subnet.
 
 Example: `PUBLIC` or `PRIVATE`""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet in which related resources are created.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet in which related resources are created.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the resource which can be empty string.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the resource which can be empty string.""")
 @cli_util.option('--response-cache-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
@@ -284,11 +284,11 @@ def create_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @gateway_group.command(name=cli_util.override('gateway.create_gateway_external_resp_cache.command_name', 'create-gateway-external-resp-cache'), help=u"""Creates a new gateway. \n[Command Reference](createGateway)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--endpoint-type', required=True, help=u"""Gateway endpoint type. `PUBLIC` will have a public ip address assigned to it, while `PRIVATE` will only be accessible on a private IP address on the subnet.
 
 Example: `PUBLIC` or `PRIVATE`""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet in which related resources are created.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet in which related resources are created.""")
 @cli_util.option('--response-cache-details-servers', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of cache store members to connect to. At present only a single server is supported.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--response-cache-details-authentication-secret-id', required=True, help=u"""The [OCID] of the Oracle Vault Service secret resource.""")
 @cli_util.option('--response-cache-details-authentication-secret-version-number', required=True, type=click.INT, help=u"""The version number of the authentication secret to use.""")
@@ -296,7 +296,7 @@ Example: `PUBLIC` or `PRIVATE`""")
 
 Example: `My new resource`""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the resource which can be empty string.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the resource which can be empty string.""")
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/gateway/20190501/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -424,16 +424,16 @@ def create_gateway_external_resp_cache(ctx, from_json, wait_for_state, max_wait_
 
 
 @gateway_group.command(name=cli_util.override('gateway.create_gateway_no_cache.command_name', 'create-gateway-no-cache'), help=u"""Creates a new gateway. \n[Command Reference](createGateway)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--endpoint-type', required=True, help=u"""Gateway endpoint type. `PUBLIC` will have a public ip address assigned to it, while `PRIVATE` will only be accessible on a private IP address on the subnet.
 
 Example: `PUBLIC` or `PRIVATE`""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet in which related resources are created.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet in which related resources are created.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the resource which can be empty string.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the resource which can be empty string.""")
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/gateway/20190501/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -621,8 +621,8 @@ def get_gateway(ctx, from_json, gateway_id):
 
 
 @gateway_summary_group.command(name=cli_util.override('gateway.list_gateways.command_name', 'list-gateways'), help=u"""Returns a list of gateways. \n[Command Reference](listGateways)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
-@cli_util.option('--certificate-id', help=u"""Filter gateways by the certificate ocid.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment in which to list resources.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""Filter gateways by the certificate ocid.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -750,7 +750,7 @@ def remove_gateway_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 Example: `My new resource`""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the resource which can be empty string.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the resource which can be empty string.""")
 @cli_util.option('--response-cache-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -858,7 +858,7 @@ def update_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
 Example: `My new resource`""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the resource which can be empty string.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the resource which can be empty string.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -985,7 +985,7 @@ def update_gateway_external_resp_cache(ctx, from_json, force, wait_for_state, ma
 
 Example: `My new resource`""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the resource which can be empty string.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the resource which can be empty string.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

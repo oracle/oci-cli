@@ -119,7 +119,7 @@ media_services_service_cli.media_services_service_group.add_command(media_workfl
 
 @media_asset_group.command(name=cli_util.override('media_services.add_media_asset_lock.command_name', 'add'), help=u"""Add a lock to an MediaAsset. \n[Command Reference](addMediaAssetLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--media-asset-id', required=True, help=u"""Unique MediaAsset identifier""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -190,7 +190,7 @@ def add_media_asset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 @media_workflow_configuration_group.command(name=cli_util.override('media_services.add_media_workflow_configuration_lock.command_name', 'add'), help=u"""Add a lock to a MediaWorkflowConfiguration. \n[Command Reference](addMediaWorkflowConfigurationLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--media-workflow-configuration-id', required=True, help=u"""Unique MediaWorkflowConfiguration identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -261,7 +261,7 @@ def add_media_workflow_configuration_lock(ctx, from_json, wait_for_state, max_wa
 
 @media_workflow_job_group.command(name=cli_util.override('media_services.add_media_workflow_job_lock.command_name', 'add'), help=u"""Add a lock to a MediaWorkflowJob. \n[Command Reference](addMediaWorkflowJobLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--media-workflow-job-id', required=True, help=u"""Unique MediaWorkflowJob identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -332,7 +332,7 @@ def add_media_workflow_job_lock(ctx, from_json, wait_for_state, max_wait_seconds
 
 @media_workflow_group.command(name=cli_util.override('media_services.add_media_workflow_lock.command_name', 'add'), help=u"""Add a lock to a MediaWorkflow. \n[Command Reference](addMediaWorkflowLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--media-workflow-id', required=True, help=u"""Unique MediaWorkflow identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -403,7 +403,7 @@ def add_media_workflow_lock(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @stream_cdn_config_group.command(name=cli_util.override('media_services.add_stream_cdn_config_lock.command_name', 'add'), help=u"""Add a lock to a StreamCdnConfig. \n[Command Reference](addStreamCdnConfigLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--stream-cdn-config-id', required=True, help=u"""Unique StreamCdnConfig identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -474,7 +474,7 @@ def add_stream_cdn_config_lock(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @stream_distribution_channel_group.command(name=cli_util.override('media_services.add_stream_distribution_channel_lock.command_name', 'add'), help=u"""Add a lock to a StreamDistributionChannel. \n[Command Reference](addStreamDistributionChannelLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--stream-distribution-channel-id', required=True, help=u"""Unique Stream Distribution Channel path identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -545,7 +545,7 @@ def add_stream_distribution_channel_lock(ctx, from_json, wait_for_state, max_wai
 
 @stream_packaging_config_group.command(name=cli_util.override('media_services.add_stream_packaging_config_lock.command_name', 'add'), help=u"""Add a lock to a StreamPackagingConfig. \n[Command Reference](addStreamPackagingConfigLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--stream-packaging-config-id', required=True, help=u"""Unique Stream Packaging Configuration path identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -616,7 +616,7 @@ def add_stream_packaging_config_lock(ctx, from_json, wait_for_state, max_wait_se
 
 @media_asset_group.command(name=cli_util.override('media_services.change_media_asset_compartment.command_name', 'change-compartment'), help=u"""Moves a MediaAsset resource from one compartment identifier to another. \n[Command Reference](changeMediaAssetCompartment)""")
 @cli_util.option('--media-asset-id', required=True, help=u"""Unique MediaAsset identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -650,7 +650,7 @@ def change_media_asset_compartment(ctx, from_json, media_asset_id, compartment_i
 
 @media_workflow_group.command(name=cli_util.override('media_services.change_media_workflow_compartment.command_name', 'change-compartment'), help=u"""Moves a MediaWorkflow resource from one compartment identifier to another. \n[Command Reference](changeMediaWorkflowCompartment)""")
 @cli_util.option('--media-workflow-id', required=True, help=u"""Unique MediaWorkflow identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -684,7 +684,7 @@ def change_media_workflow_compartment(ctx, from_json, media_workflow_id, compart
 
 @media_workflow_configuration_group.command(name=cli_util.override('media_services.change_media_workflow_configuration_compartment.command_name', 'change-compartment'), help=u"""Moves a MediaWorkflowConfiguration resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMediaWorkflowConfigurationCompartment)""")
 @cli_util.option('--media-workflow-configuration-id', required=True, help=u"""Unique MediaWorkflowConfiguration identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -718,7 +718,7 @@ def change_media_workflow_configuration_compartment(ctx, from_json, media_workfl
 
 @media_workflow_job_group.command(name=cli_util.override('media_services.change_media_workflow_job_compartment.command_name', 'change-compartment'), help=u"""Moves a MediaWorkflowJob resource from one compartment identifier to another. \n[Command Reference](changeMediaWorkflowJobCompartment)""")
 @cli_util.option('--media-workflow-job-id', required=True, help=u"""Unique MediaWorkflowJob identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -752,7 +752,7 @@ def change_media_workflow_job_compartment(ctx, from_json, media_workflow_job_id,
 
 @stream_distribution_channel_group.command(name=cli_util.override('media_services.change_stream_distribution_channel_compartment.command_name', 'change-compartment'), help=u"""Moves a Stream Distribution Channel resource from one compartment identifier to another. \n[Command Reference](changeStreamDistributionChannelCompartment)""")
 @cli_util.option('--stream-distribution-channel-id', required=True, help=u"""Unique Stream Distribution Channel path identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -785,7 +785,7 @@ def change_stream_distribution_channel_compartment(ctx, from_json, stream_distri
 
 
 @media_asset_group.command(name=cli_util.override('media_services.create_media_asset.command_name', 'create'), help=u"""Creates a new MediaAsset. \n[Command Reference](createMediaAsset)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["AUDIO", "VIDEO", "PLAYLIST", "IMAGE", "CAPTION_FILE", "UNKNOWN"]), help=u"""The type of the media asset.""")
 @cli_util.option('--source-media-workflow-id', help=u"""The ID of the MediaWorkflow used to produce this asset.""")
 @cli_util.option('--media-workflow-job-id', help=u"""The ID of the MediaWorkflowJob used to produce this asset.""")
@@ -911,7 +911,7 @@ def create_media_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @media_workflow_group.command(name=cli_util.override('media_services.create_media_workflow.command_name', 'create'), help=u"""Creates a new MediaWorkflow. \n[Command Reference](createMediaWorkflow)""")
 @cli_util.option('--display-name', required=True, help=u"""Name for the MediaWorkflow. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The processing to be done in this workflow. Each key of the MediaWorkflowTasks in this array must be unique within the array. The order of tasks given here will be preserved.
 
 This option is a JSON list with items of type MediaWorkflowTask.  For documentation on MediaWorkflowTask please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/MediaWorkflowTask.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -991,7 +991,7 @@ def create_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @media_workflow_configuration_group.command(name=cli_util.override('media_services.create_media_workflow_configuration.command_name', 'create'), help=u"""Creates a new MediaWorkflowConfiguration. \n[Command Reference](createMediaWorkflowConfiguration)""")
 @cli_util.option('--display-name', required=True, help=u"""MediaWorkflowConfiguration identifier. Avoid entering confidential information.""")
 @cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Reuseable parameter values encoded as a JSON; the top and second level JSON elements are objects. Each key of the top level object refers to a task key that is unqiue to the workflow, each of the second level objects' keys refer to the name of a parameter that is unique to the task. taskKey -> parameterName -> parameterValue""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
@@ -1057,7 +1057,7 @@ def create_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait
 
 @media_workflow_job_group.command(name=cli_util.override('media_services.create_media_workflow_job.command_name', 'create'), help=u"""Run the MediaWorkflow according to the given mediaWorkflow definition and configuration. \n[Command Reference](createMediaWorkflowJob)""")
 @cli_util.option('--workflow-identifier-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ID", "NAME"]), help=u"""Discriminate identification of a workflow by name versus a workflow by ID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""ID of the compartment in which the job should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the compartment in which the job should be created.""")
 @cli_util.option('--media-workflow-configuration-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configurations to be applied to this run of the workflow.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Name of the Media Workflow Job. Does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Parameters that override parameters specified in MediaWorkflowTaskDeclarations, the MediaWorkflow, the MediaWorkflow's MediaWorkflowConfigurations and the MediaWorkflowConfigurations of this MediaWorkflowJob. The parameters are given as JSON. The top level and 2nd level elements must be JSON objects (vs arrays, scalars, etc). The top level keys refer to a task's key and the 2nd level keys refer to a parameter's name.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1133,7 +1133,7 @@ def create_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @media_workflow_job_group.command(name=cli_util.override('media_services.create_media_workflow_job_create_media_workflow_job_by_name_details.command_name', 'create-media-workflow-job-create-media-workflow-job-by-name-details'), help=u"""Run the MediaWorkflow according to the given mediaWorkflow definition and configuration. \n[Command Reference](createMediaWorkflowJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""ID of the compartment in which the job should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the compartment in which the job should be created.""")
 @cli_util.option('--media-workflow-configuration-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configurations to be applied to this run of the workflow.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Name of the Media Workflow Job. Does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Parameters that override parameters specified in MediaWorkflowTaskDeclarations, the MediaWorkflow, the MediaWorkflow's MediaWorkflowConfigurations and the MediaWorkflowConfigurations of this MediaWorkflowJob. The parameters are given as JSON. The top level and 2nd level elements must be JSON objects (vs arrays, scalars, etc). The top level keys refer to a task's key and the 2nd level keys refer to a parameter's name.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1214,7 +1214,7 @@ def create_media_workflow_job_create_media_workflow_job_by_name_details(ctx, fro
 
 
 @media_workflow_job_group.command(name=cli_util.override('media_services.create_media_workflow_job_create_media_workflow_job_by_id_details.command_name', 'create-media-workflow-job-create-media-workflow-job-by-id-details'), help=u"""Run the MediaWorkflow according to the given mediaWorkflow definition and configuration. \n[Command Reference](createMediaWorkflowJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""ID of the compartment in which the job should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""ID of the compartment in which the job should be created.""")
 @cli_util.option('--media-workflow-configuration-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configurations to be applied to this run of the workflow.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Name of the Media Workflow Job. Does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Parameters that override parameters specified in MediaWorkflowTaskDeclarations, the MediaWorkflow, the MediaWorkflow's MediaWorkflowConfigurations and the MediaWorkflowConfigurations of this MediaWorkflowJob. The parameters are given as JSON. The top level and 2nd level elements must be JSON objects (vs arrays, scalars, etc). The top level keys refer to a task's key and the 2nd level keys refer to a parameter's name.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1555,7 +1555,7 @@ def create_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, wait_for_sta
 
 @stream_distribution_channel_group.command(name=cli_util.override('media_services.create_stream_distribution_channel.command_name', 'create'), help=u"""Creates a new Stream Distribution Channel. \n[Command Reference](createStreamDistributionChannel)""")
 @cli_util.option('--display-name', required=True, help=u"""Stream Distribution Channel display name. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
@@ -2563,7 +2563,7 @@ def ingest_stream_distribution_channel(ctx, from_json, stream_distribution_chann
 @stream_distribution_channel_group.command(name=cli_util.override('media_services.ingest_stream_distribution_channel_asset_metadata_entry_details.command_name', 'ingest-stream-distribution-channel-asset-metadata-entry-details'), help=u"""Ingests an Asset into a Distribution Channel. \n[Command Reference](ingestStreamDistributionChannel)""")
 @cli_util.option('--stream-distribution-channel-id', required=True, help=u"""Unique Stream Distribution Channel path identifier.""")
 @cli_util.option('--media-asset-id', required=True, help=u"""The Media Asset ID to ingest into the Distribution Channel.""")
-@cli_util.option('--compartment-id', help=u"""The compartment ID where the Ingest Workflow Job will be run.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment ID where the Ingest Workflow Job will be run.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2658,7 +2658,7 @@ def list_media_asset_distribution_channel_attachments(ctx, from_json, all_pages,
 
 
 @media_asset_group.command(name=cli_util.override('media_services.list_media_assets.command_name', 'list'), help=u"""Returns a list of MediaAssetSummary. \n[Command Reference](listMediaAssets)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -2744,7 +2744,7 @@ def list_media_assets(ctx, from_json, all_pages, page_size, compartment_id, disp
 
 
 @media_workflow_configuration_collection_group.command(name=cli_util.override('media_services.list_media_workflow_configurations.command_name', 'list-media-workflow-configurations'), help=u"""Returns a list of MediaWorkflowConfigurations. \n[Command Reference](listMediaWorkflowConfigurations)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), help=u"""A filter to return only the resources with lifecycleState matching the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique MediaWorkflowConfiguration identifier.""")
@@ -2806,7 +2806,7 @@ def list_media_workflow_configurations(ctx, from_json, all_pages, page_size, com
 
 
 @media_workflow_job_group.command(name=cli_util.override('media_services.list_media_workflow_jobs.command_name', 'list'), help=u"""Lists the MediaWorkflowJobs. \n[Command Reference](listMediaWorkflowJobs)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""unique MediaWorkflowJob identifier""")
 @cli_util.option('--media-workflow-id', help=u"""Unique MediaWorkflow identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name given.""")
@@ -2871,7 +2871,7 @@ def list_media_workflow_jobs(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @media_workflow_task_declaration_collection_group.command(name=cli_util.override('media_services.list_media_workflow_task_declarations.command_name', 'list-media-workflow-task-declarations'), help=u"""Returns a list of MediaWorkflowTaskDeclarations. \n[Command Reference](listMediaWorkflowTaskDeclarations)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--name', help=u"""A filter to return only the resources with their system defined, unique name matching the given name.""")
 @cli_util.option('--version-parameterconflict', type=click.INT, help=u"""A filter to select MediaWorkflowTaskDeclaration by version.""")
 @cli_util.option('--is-current', type=click.BOOL, help=u"""A filter to only select the newest version for each MediaWorkflowTaskDeclaration name.""")
@@ -2933,7 +2933,7 @@ def list_media_workflow_task_declarations(ctx, from_json, all_pages, page_size, 
 
 
 @media_workflow_group.command(name=cli_util.override('media_services.list_media_workflows.command_name', 'list'), help=u"""Lists the MediaWorkflows. \n[Command Reference](listMediaWorkflows)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Unique MediaWorkflow identifier.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), help=u"""A filter to return only the resources with lifecycleState matching the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name given.""")
@@ -3058,7 +3058,7 @@ def list_stream_cdn_configs(ctx, from_json, all_pages, page_size, distribution_c
 
 
 @stream_distribution_channel_group.command(name=cli_util.override('media_services.list_stream_distribution_channels.command_name', 'list'), help=u"""Lists the Stream Distribution Channels. \n[Command Reference](listStreamDistributionChannels)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Unique Stream Distribution Channel identifier.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), help=u"""A filter to return only the resources with lifecycleState matching the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name given.""")
@@ -3183,7 +3183,7 @@ def list_stream_packaging_configs(ctx, from_json, all_pages, page_size, distribu
 
 
 @media_workflow_group.command(name=cli_util.override('media_services.list_system_media_workflows.command_name', 'list-system'), help=u"""Lists the SystemMediaWorkflows that can be used to run a job by name or as a template to create a MediaWorkflow. \n[Command Reference](listSystemMediaWorkflows)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--name', help=u"""A filter to return only the resources with their system defined, unique name matching the given name.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -3237,7 +3237,7 @@ def list_system_media_workflows(ctx, from_json, all_pages, page_size, compartmen
 
 @media_asset_group.command(name=cli_util.override('media_services.remove_media_asset_lock.command_name', 'remove'), help=u"""Remove a lock to an MediaAsset. \n[Command Reference](removeMediaAssetLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--media-asset-id', required=True, help=u"""Unique MediaAsset identifier""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -3308,7 +3308,7 @@ def remove_media_asset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @media_workflow_configuration_group.command(name=cli_util.override('media_services.remove_media_workflow_configuration_lock.command_name', 'remove'), help=u"""Remove a lock from a MediaWorkflowConfiguration. \n[Command Reference](removeMediaWorkflowConfigurationLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--media-workflow-configuration-id', required=True, help=u"""Unique MediaWorkflowConfiguration identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -3379,7 +3379,7 @@ def remove_media_workflow_configuration_lock(ctx, from_json, wait_for_state, max
 
 @media_workflow_job_group.command(name=cli_util.override('media_services.remove_media_workflow_job_lock.command_name', 'remove'), help=u"""Remove a lock from a MediaWorkflowJob. \n[Command Reference](removeMediaWorkflowJobLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--media-workflow-job-id', required=True, help=u"""Unique MediaWorkflowJob identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -3450,7 +3450,7 @@ def remove_media_workflow_job_lock(ctx, from_json, wait_for_state, max_wait_seco
 
 @media_workflow_group.command(name=cli_util.override('media_services.remove_media_workflow_lock.command_name', 'remove'), help=u"""Remove a lock from a MediaWorkflow. \n[Command Reference](removeMediaWorkflowLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--media-workflow-id', required=True, help=u"""Unique MediaWorkflow identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -3521,7 +3521,7 @@ def remove_media_workflow_lock(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @stream_cdn_config_group.command(name=cli_util.override('media_services.remove_stream_cdn_config_lock.command_name', 'remove'), help=u"""Remove a lock from a StreamCdnConfig. \n[Command Reference](removeStreamCdnConfigLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--stream-cdn-config-id', required=True, help=u"""Unique StreamCdnConfig identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -3592,7 +3592,7 @@ def remove_stream_cdn_config_lock(ctx, from_json, wait_for_state, max_wait_secon
 
 @stream_distribution_channel_group.command(name=cli_util.override('media_services.remove_stream_distribution_channel_lock.command_name', 'remove'), help=u"""Remove a lock to a StreamDistributionChannel. \n[Command Reference](removeStreamDistributionChannelLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--stream-distribution-channel-id', required=True, help=u"""Unique Stream Distribution Channel path identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
@@ -3663,7 +3663,7 @@ def remove_stream_distribution_channel_lock(ctx, from_json, wait_for_state, max_
 
 @stream_packaging_config_group.command(name=cli_util.override('media_services.remove_stream_packaging_config_lock.command_name', 'remove'), help=u"""Remove a lock from a StreamPackagingConfig. \n[Command Reference](removeStreamPackagingConfigLock)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment ID of the lock.""")
 @cli_util.option('--stream-packaging-config-id', required=True, help=u"""Unique Stream Packaging Configuration path identifier.""")
 @cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")

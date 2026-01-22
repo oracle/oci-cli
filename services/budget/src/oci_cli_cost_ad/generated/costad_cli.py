@@ -68,7 +68,7 @@ cost_ad_root_group.add_command(cost_anomaly_event_collection_group)
 
 
 @cost_alert_subscription_group.command(name=cli_util.override('cost_ad.create_cost_alert_subscription.command_name', 'create'), help=u"""Creates a new CostAlert Subscription. \n[Command Reference](createCostAlertSubscription)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--name', required=True, help=u"""The name of the cost alert subscription. Avoid entering confidential information.""")
 @cli_util.option('--channels', required=True, help=u"""The notification channels string.""")
 @cli_util.option('--description', help=u"""The description of the cost alert subscription.""")
@@ -137,7 +137,7 @@ def create_cost_alert_subscription(ctx, from_json, wait_for_state, max_wait_seco
 
 
 @cost_anomaly_monitor_group.command(name=cli_util.override('cost_ad.create_cost_anomaly_monitor.command_name', 'create'), help=u"""Creates a new costAnomaly Monitor. \n[Command Reference](createCostAnomalyMonitor)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--name', required=True, help=u"""The name of the cost anomaly monitor. Avoid entering confidential information.""")
 @cli_util.option('--target-resource-filter', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the cost anomaly monitor.""")
@@ -210,7 +210,7 @@ def create_cost_anomaly_monitor(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @cost_alert_subscription_group.command(name=cli_util.override('cost_ad.delete_cost_alert_subscription.command_name', 'delete'), help=u"""Deletes a specified CostAlertSubscription resource. \n[Command Reference](deleteCostAlertSubscription)""")
-@cli_util.option('--subscription-id', required=True, help=u"""The unique costAlertSubscription OCID.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique costAlertSubscription OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -440,7 +440,7 @@ def enable_cost_anomaly_monitor(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @cost_alert_subscription_group.command(name=cli_util.override('cost_ad.get_cost_alert_subscription.command_name', 'get'), help=u"""Gets a CostAlertSubscription by the identifier. \n[Command Reference](getCostAlertSubscription)""")
-@cli_util.option('--subscription-id', required=True, help=u"""The unique costAlertSubscription OCID.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique costAlertSubscription OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -506,7 +506,7 @@ def get_cost_anomaly_monitor(ctx, from_json, cost_anomaly_monitor_id):
 
 
 @cost_alert_subscription_collection_group.command(name=cli_util.override('cost_ad.list_cost_alert_subscriptions.command_name', 'list-subs'), help=u"""Gets a list of Cost Alert Subscription in a compartment. \n[Command Reference](listCostAlertSubscriptions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -566,7 +566,7 @@ def list_cost_alert_subscriptions(ctx, from_json, all_pages, page_size, compartm
 
 
 @cost_anomaly_event_collection_group.command(name=cli_util.override('cost_ad.list_cost_anomaly_events.command_name', 'list-events'), help=u"""Gets a list of Cost Anomaly Event in a compartment. \n[Command Reference](listCostAnomalyEvents)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -644,7 +644,7 @@ def list_cost_anomaly_events(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @cost_anomaly_monitor_collection_group.command(name=cli_util.override('cost_ad.list_cost_anomaly_monitors.command_name', 'list-monitors'), help=u"""Gets a list of Cost Anomaly Monitors in a compartment. \n[Command Reference](listCostAnomalyMonitors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -710,7 +710,7 @@ def list_cost_anomaly_monitors(ctx, from_json, all_pages, page_size, compartment
 
 
 @cost_anomaly_event_group.command(name=cli_util.override('cost_ad.summarize_cost_anomaly_event_analytics.command_name', 'anomaly-events-stats'), help=u"""Gets a list of Cost Anomaly Events analytics summary - aggregated metrics for a given time period. \n[Command Reference](summarizeCostAnomalyEventAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -765,7 +765,7 @@ def summarize_cost_anomaly_event_analytics(ctx, from_json, compartment_id, limit
 
 
 @cost_alert_subscription_group.command(name=cli_util.override('cost_ad.update_cost_alert_subscription.command_name', 'update'), help=u"""Update a CostAlertSubscription identified by the OCID. \n[Command Reference](updateCostAlertSubscription)""")
-@cli_util.option('--subscription-id', required=True, help=u"""The unique costAlertSubscription OCID.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique costAlertSubscription OCID.""")
 @cli_util.option('--description', help=u"""The description of the cost alert subscription.""")
 @cli_util.option('--channels', help=u"""The notification channels string.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].

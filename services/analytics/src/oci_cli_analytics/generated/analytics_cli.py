@@ -54,7 +54,7 @@ analytics_root_group.add_command(work_request_group)
 
 @analytics_instance_group.command(name=cli_util.override('analytics.change_analytics_instance_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of an Analytics instance. The operation is long-running and creates a new WorkRequest. \n[Command Reference](changeAnalyticsInstanceCompartment)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the new compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -322,7 +322,7 @@ def change_analytics_instance_network_endpoint_public_endpoint_details(ctx, from
 
 @analytics_instance_group.command(name=cli_util.override('analytics.create_analytics_instance.command_name', 'create'), help=u"""Create a new AnalyticsInstance in the specified compartment. The operation is long-running and creates a new WorkRequest. \n[Command Reference](createAnalyticsInstance)""")
 @cli_util.option('--name', required=True, help=u"""The name of the Analytics instance. This name must be unique in the tenancy and cannot be changed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--feature-set', required=True, type=custom_types.CliCaseInsensitiveChoice(["SELF_SERVICE_ANALYTICS", "ENTERPRISE_ANALYTICS"]), help=u"""Analytics feature set.""")
 @cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--license-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The license used for the service.""")
@@ -431,7 +431,7 @@ def create_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 @analytics_instance_group.command(name=cli_util.override('analytics.create_analytics_instance_private_endpoint_details.command_name', 'create-analytics-instance-private-endpoint-details'), help=u"""Create a new AnalyticsInstance in the specified compartment. The operation is long-running and creates a new WorkRequest. \n[Command Reference](createAnalyticsInstance)""")
 @cli_util.option('--name', required=True, help=u"""The name of the Analytics instance. This name must be unique in the tenancy and cannot be changed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--feature-set', required=True, type=custom_types.CliCaseInsensitiveChoice(["SELF_SERVICE_ANALYTICS", "ENTERPRISE_ANALYTICS"]), help=u"""Analytics feature set.""")
 @cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--license-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The license used for the service.""")
@@ -547,7 +547,7 @@ def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_
 
 @analytics_instance_group.command(name=cli_util.override('analytics.create_analytics_instance_public_endpoint_details.command_name', 'create-analytics-instance-public-endpoint-details'), help=u"""Create a new AnalyticsInstance in the specified compartment. The operation is long-running and creates a new WorkRequest. \n[Command Reference](createAnalyticsInstance)""")
 @cli_util.option('--name', required=True, help=u"""The name of the Analytics instance. This name must be unique in the tenancy and cannot be changed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--feature-set', required=True, type=custom_types.CliCaseInsensitiveChoice(["SELF_SERVICE_ANALYTICS", "ENTERPRISE_ANALYTICS"]), help=u"""Analytics feature set.""")
 @cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--license-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The license used for the service.""")
@@ -670,8 +670,8 @@ def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_s
 @analytics_instance_group.command(name=cli_util.override('analytics.create_private_access_channel.command_name', 'create-private-access-channel'), help=u"""Create an Private access Channel for the Analytics instance. The operation is long-running and creates a new WorkRequest. \n[Command Reference](createPrivateAccessChannel)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--display-name', required=True, help=u"""Display Name of the Private Access Channel.""")
-@cli_util.option('--vcn-id', required=True, help=u"""OCID of the customer VCN peered with private access channel.""")
-@cli_util.option('--subnet-id', required=True, help=u"""OCID of the customer subnet connected to private access channel.""")
+@cli_util.option('--vcn-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the customer VCN peered with private access channel.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the customer subnet connected to private access channel.""")
 @cli_util.option('--private-source-dns-zones', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Private Source DNS zones registered with Private Access Channel, where datasource hostnames from these dns zones / domains will be resolved in the peered VCN for access from Analytics Instance. Min of 1 is required and Max of 30 Private Source DNS zones can be registered.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-source-scan-hosts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Private Source DB SCAN hosts registered with Private Access Channel for access from Analytics Instance.
 
@@ -1089,7 +1089,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @analytics_instance_group.command(name=cli_util.override('analytics.list_analytics_instances.command_name', 'list'), help=u"""List Analytics instances. \n[Command Reference](listAnalyticsInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
 @cli_util.option('--capacity-type', type=custom_types.CliCaseInsensitiveChoice(["OLPU_COUNT", "USER_COUNT"]), help=u"""A filter to only return resources matching the capacity type enum. Values are case-insensitive.""")
 @cli_util.option('--feature-set', type=custom_types.CliCaseInsensitiveChoice(["SELF_SERVICE_ANALYTICS", "ENTERPRISE_ANALYTICS"]), help=u"""A filter to only return resources matching the feature set. Values are case-insensitive.""")
@@ -1263,7 +1263,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('analytics.list_work_requests.command_name', 'list'), help=u"""List all work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--resource-id', help=u"""The OCID of the resource associated with a work request.""")
 @cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["ANALYTICS_INSTANCE"]), help=u"""Type of the resource associated with a work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help=u"""One or more work request status values to filter on.""")
@@ -1714,8 +1714,8 @@ def update_analytics_instance(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.option('--private-access-channel-key', required=True, help=u"""The unique identifier key of the Private Access Channel.""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--display-name', help=u"""Display Name of the Private Access Channel.""")
-@cli_util.option('--vcn-id', help=u"""OCID of the customer VCN peered with private access channel.""")
-@cli_util.option('--subnet-id', help=u"""OCID of the customer subnet connected to private access channel.""")
+@cli_util.option('--vcn-id', type=custom_types.CLI_OCID, help=u"""OCID of the customer VCN peered with private access channel.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""OCID of the customer subnet connected to private access channel.""")
 @cli_util.option('--private-source-dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Private Source DNS zones registered with Private Access Channel, where datasource hostnames from these dns zones / domains will be resolved in the peered VCN for access from Analytics Instance. Min of 1 is required and Max of 30 Private Source DNS zones can be registered.
 
 This option is a JSON list with items of type PrivateSourceDnsZone.  For documentation on PrivateSourceDnsZone please see our API reference: https://docs.cloud.oracle.com/api/#/en/analytics/20190331/datatypes/PrivateSourceDnsZone.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

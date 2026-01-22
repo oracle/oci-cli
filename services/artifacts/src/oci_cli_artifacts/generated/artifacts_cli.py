@@ -90,7 +90,7 @@ artifacts_root_group.add_command(container_image_signature_group)
 @cli_util.option('--repository-id', required=True, help=u"""The [OCID] of the container repository.
 
 Example: `ocid1.containerrepo.oc1..exampleuniqueID`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which to move the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which to move the resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -123,7 +123,7 @@ def change_container_repository_compartment(ctx, from_json, repository_id, compa
 @cli_util.option('--repository-id', required=True, help=u"""The [OCID] of the repository.
 
 Example: `ocid1.artifactrepository.oc1..exampleuniqueID`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the repository should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the repository should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -153,8 +153,8 @@ def change_repository_compartment(ctx, from_json, repository_id, compartment_id,
 
 
 @container_image_signature_group.command(name=cli_util.override('artifacts.create_container_image_signature.command_name', 'create'), help=u"""Upload a signature to an image. \n[Command Reference](createContainerImageSignature)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the container repository exists.""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the container image.
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the container repository exists.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the container image.
 
 Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
 @cli_util.option('--kms-key-id', required=True, help=u"""The [OCID] of the kmsKeyId used to sign the container image.
@@ -235,7 +235,7 @@ def create_container_image_signature(ctx, from_json, wait_for_state, max_wait_se
 
 
 @container_repository_group.command(name=cli_util.override('artifacts.create_container_repository.command_name', 'create'), help=u"""Create a new empty container repository. Avoid entering confidential information. \n[Command Reference](createContainerRepository)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to create the resource.""")
 @cli_util.option('--display-name', required=True, help=u"""The container repository name.""")
 @cli_util.option('--is-immutable', type=click.BOOL, help=u"""Whether the repository is immutable. Images cannot be overwritten in an immutable repository.""")
 @cli_util.option('--is-public', type=click.BOOL, help=u"""Whether the repository is public. A public repository allows unauthenticated access.""")
@@ -310,7 +310,7 @@ def create_container_repository(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @repository_group.command(name=cli_util.override('artifacts.create_repository.command_name', 'create'), help=u"""Creates a new repository for storing artifacts. \n[Command Reference](createRepository)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the repository's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the repository's compartment.""")
 @cli_util.option('--repository-type', required=True, help=u"""The repository's supported artifact type.""")
 @cli_util.option('--is-immutable', required=True, type=click.BOOL, help=u"""Whether to make the repository immutable. The artifacts of an immutable repository cannot be overwritten.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the repository. If not present, will be auto-generated. It can be modified later. Avoid entering confidential information.""")
@@ -383,7 +383,7 @@ def create_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @repository_group.command(name=cli_util.override('artifacts.create_repository_create_generic_repository_details.command_name', 'create-repository-create-generic-repository-details'), help=u"""Creates a new repository for storing artifacts. \n[Command Reference](createRepository)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the repository's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the repository's compartment.""")
 @cli_util.option('--is-immutable', required=True, type=click.BOOL, help=u"""Whether to make the repository immutable. The artifacts of an immutable repository cannot be overwritten.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the repository. If not present, will be auto-generated. It can be modified later. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the repository. It can be updated later.""")
@@ -456,7 +456,7 @@ def create_repository_create_generic_repository_details(ctx, from_json, wait_for
 
 
 @container_image_group.command(name=cli_util.override('artifacts.delete_container_image.command_name', 'delete'), help=u"""Delete a container image. \n[Command Reference](deleteContainerImage)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the container image.
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the container image.
 
 Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -828,7 +828,7 @@ def delete_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @container_configuration_group.command(name=cli_util.override('artifacts.get_container_configuration.command_name', 'get'), help=u"""Get container configuration. \n[Command Reference](getContainerConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -847,7 +847,7 @@ def get_container_configuration(ctx, from_json, compartment_id):
 
 
 @container_image_group.command(name=cli_util.override('artifacts.get_container_image.command_name', 'get'), help=u"""Get container image metadata. \n[Command Reference](getContainerImage)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the container image.
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the container image.
 
 Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1005,9 +1005,9 @@ def get_repository(ctx, from_json, repository_id):
 
 
 @container_image_signature_summary_group.command(name=cli_util.override('artifacts.list_container_image_signatures.command_name', 'list-container-image-signatures'), help=u"""List container image signatures in an image. \n[Command Reference](listContainerImageSignatures)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are inspected depending on the the setting of `accessLevel`. Default is false. Can only be set to true when calling the API on the tenancy (root compartment).""")
-@cli_util.option('--image-id', help=u"""A filter to return a container image summary only for the specified container image OCID.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""A filter to return a container image summary only for the specified container image OCID.""")
 @cli_util.option('--repository-id', help=u"""A filter to return container images only for the specified container repository OCID.""")
 @cli_util.option('--repository-name', help=u"""A filter to return container images or container image signatures that match the repository name.
 
@@ -1098,10 +1098,10 @@ def list_container_image_signatures(ctx, from_json, all_pages, page_size, compar
 
 
 @container_image_summary_group.command(name=cli_util.override('artifacts.list_container_images.command_name', 'list-container-images'), help=u"""List container images in a compartment. \n[Command Reference](listContainerImages)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are inspected depending on the the setting of `accessLevel`. Default is false. Can only be set to true when calling the API on the tenancy (root compartment).""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--image-id', help=u"""A filter to return a container image summary only for the specified container image OCID.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""A filter to return a container image summary only for the specified container image OCID.""")
 @cli_util.option('--is-versioned', type=click.BOOL, help=u"""A filter to return container images based on whether there are any associated versions.""")
 @cli_util.option('--repository-id', help=u"""A filter to return container images only for the specified container repository OCID.""")
 @cli_util.option('--repository-name', help=u"""A filter to return container images or container image signatures that match the repository name.
@@ -1189,7 +1189,7 @@ def list_container_images(ctx, from_json, all_pages, page_size, compartment_id, 
 
 
 @container_repository_group.command(name=cli_util.override('artifacts.list_container_repositories.command_name', 'list'), help=u"""List container repositories in a compartment. \n[Command Reference](listContainerRepositories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are inspected depending on the the setting of `accessLevel`. Default is false. Can only be set to true when calling the API on the tenancy (root compartment).""")
 @cli_util.option('--repository-id', help=u"""A filter to return container images only for the specified container repository OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -1262,7 +1262,7 @@ def list_container_repositories(ctx, from_json, all_pages, page_size, compartmen
 
 
 @generic_artifact_group.command(name=cli_util.override('artifacts.list_generic_artifacts.command_name', 'list'), help=u"""Lists artifacts in the specified repository. \n[Command Reference](listGenericArtifacts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--repository-id', required=True, help=u"""A filter to return the artifacts only for the specified repository OCID.""")
 @cli_util.option('--id', help=u"""A filter to return the resources for the specified OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -1342,7 +1342,7 @@ def list_generic_artifacts(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @repository_group.command(name=cli_util.override('artifacts.list_repositories.command_name', 'list'), help=u"""Lists repositories in the specified compartment. \n[Command Reference](listRepositories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""A filter to return the resources for the specified OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--is-immutable', type=click.BOOL, help=u"""A filter to return resources that match the isImmutable value.""")
@@ -1435,7 +1435,7 @@ def lookup_container_image_by_uri(ctx, from_json, image_uri):
 
 
 @container_image_group.command(name=cli_util.override('artifacts.remove_container_version.command_name', 'remove'), help=u"""Remove version from container image. \n[Command Reference](removeContainerVersion)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the container image.
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the container image.
 
 Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
 @cli_util.option('--version-parameterconflict', required=True, help=u"""The version to remove.""")
@@ -1494,7 +1494,7 @@ def remove_container_version(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @container_image_group.command(name=cli_util.override('artifacts.restore_container_image.command_name', 'restore'), help=u"""Restore a container image. \n[Command Reference](restoreContainerImage)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the container image.
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the container image.
 
 Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
 @cli_util.option('--version-parameterconflict', help=u"""Optional version to associate with image.""")
@@ -1555,7 +1555,7 @@ def restore_container_image(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @container_configuration_group.command(name=cli_util.override('artifacts.update_container_configuration.command_name', 'update'), help=u"""Update container configuration. \n[Command Reference](updateContainerConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--is-repository-created-on-first-push', type=click.BOOL, help=u"""Whether to create a new container repository when a container is pushed to a new repository path. Repositories created in this way belong to the root compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1585,7 +1585,7 @@ def update_container_configuration(ctx, from_json, compartment_id, is_repository
 
 
 @container_image_group.command(name=cli_util.override('artifacts.update_container_image.command_name', 'update'), help=u"""Modify the properties of a container image. Avoid entering confidential information. \n[Command Reference](updateContainerImage)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the container image.
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the container image.
 
 Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].

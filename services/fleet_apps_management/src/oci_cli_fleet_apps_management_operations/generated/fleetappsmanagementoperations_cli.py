@@ -202,7 +202,7 @@ fleet_apps_management_operations_root_group.add_command(step_collection_group)
 
 @patch_group.command(name=cli_util.override('fleet_apps_management_operations.change_patch_compartment.command_name', 'change-compartment'), help=u"""Moves a Patch into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changePatchCompartment)""")
 @cli_util.option('--patch-id', required=True, help=u"""Unique Patch identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the patch to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the patch to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -268,7 +268,7 @@ def change_patch_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--time-released', required=True, type=custom_types.CLI_DATETIME, help=u"""Date when the patch was released.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--artifact-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--product', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--dependent-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Dependent Patches for this patch.
 
@@ -346,7 +346,7 @@ def create_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--severity', required=True, type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch Severity.""")
 @cli_util.option('--time-released', required=True, type=custom_types.CLI_DATETIME, help=u"""Date when the patch was released.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--product', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--artifact-details-artifacts', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Artifacts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--dependent-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Dependent Patches for this patch.
@@ -428,7 +428,7 @@ def create_patch_platform_specific_artifact_details(ctx, from_json, wait_for_sta
 @cli_util.option('--severity', required=True, type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch Severity.""")
 @cli_util.option('--time-released', required=True, type=custom_types.CLI_DATETIME, help=u"""Date when the patch was released.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--product', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--artifact-details-artifact', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--dependent-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Dependent Patches for this patch.
@@ -505,7 +505,7 @@ def create_patch_generic_artifact_details(ctx, from_json, wait_for_state, max_wa
 
 
 @scheduler_definition_group.command(name=cli_util.override('fleet_apps_management_operations.create_scheduler_definition.command_name', 'create'), help=u"""Create a SchedulerDefinition to perform lifecycle operations. \n[Command Reference](createSchedulerDefinition)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--schedule', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--action-groups', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Action Groups associated with the Schedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
@@ -586,7 +586,7 @@ def create_scheduler_definition(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @scheduler_definition_group.command(name=cli_util.override('fleet_apps_management_operations.create_scheduler_definition_custom_schedule.command_name', 'create-scheduler-definition-custom-schedule'), help=u"""Create a SchedulerDefinition to perform lifecycle operations. \n[Command Reference](createSchedulerDefinition)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--action-groups', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Action Groups associated with the Schedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schedule-execution-startdate', required=True, type=custom_types.CLI_DATETIME, help=u"""Start Date for the schedule. An RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-duration', required=True, help=u"""Duration of the schedule.""")
@@ -676,7 +676,7 @@ def create_scheduler_definition_custom_schedule(ctx, from_json, wait_for_state, 
 
 
 @scheduler_definition_group.command(name=cli_util.override('fleet_apps_management_operations.create_scheduler_definition_maintenance_window_schedule.command_name', 'create-scheduler-definition-maintenance-window-schedule'), help=u"""Create a SchedulerDefinition to perform lifecycle operations. \n[Command Reference](createSchedulerDefinition)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--action-groups', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Action Groups associated with the Schedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schedule-execution-startdate', required=True, type=custom_types.CLI_DATETIME, help=u"""Start Date for the schedule. An RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-maintenance-window-id', required=True, help=u"""Provide MaintenanceWindowId""")
@@ -946,7 +946,7 @@ def delete_scheduler_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @compliance_record_group.command(name=cli_util.override('fleet_apps_management_operations.export_compliance_report.command_name', 'export-compliance-report'), help=u"""Generate Compliance Report \n[Command Reference](exportComplianceReport)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--entity-id', help=u"""The OCID of the entity for which the compliance is calculated.Ex.FleetId""")
 @cli_util.option('--resource-id', help=u"""The OCID to identify the resource.""")
@@ -1148,7 +1148,7 @@ def get_scheduler_job(ctx, from_json, scheduler_job_id):
 
 
 @compliance_record_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_compliance_records.command_name', 'list-compliance-records'), help=u"""Gets a list of complianceDetails. \n[Command Reference](listComplianceRecords)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--resource-id', help=u"""Resource identifier.""")
 @cli_util.option('--entity-id', help=u"""Entity identifier.Ex:FleetId""")
 @cli_util.option('--product-name', help=u"""Product Name.""")
@@ -1306,7 +1306,7 @@ def list_executions(ctx, from_json, all_pages, page_size, scheduler_job_id, job_
 
 
 @installed_patch_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_installed_patches.command_name', 'list-installed-patches'), help=u"""Gets a list of installed patches. CompartmentId should be the compartmentId of resource(Containing the target). \n[Command Reference](listInstalledPatches)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--target-id', help=u"""Target Id.""")
 @cli_util.option('--target-name', help=u"""Target name.""")
 @cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch severity.""")
@@ -1375,7 +1375,7 @@ def list_installed_patches(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @inventory_record_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_inventory_records.command_name', 'list-inventory-records'), help=u"""Gets a list of inventoryDetails. \n[Command Reference](listInventoryRecords)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If set to true, resources will be returned for not only the provided compartment, but all compartments which descend from it. Which resources are returned and their field contents depends on the value of accessLevel.""")
 @cli_util.option('--fleet-id', help=u"""unique Fleet identifier""")
 @cli_util.option('--resource-id', help=u"""Resource Identifier""")
@@ -1441,7 +1441,7 @@ def list_inventory_records(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @patch_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_patches.command_name', 'list-patches'), help=u"""Returns a list of all the Patches in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listPatches)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--product-id', help=u"""Product platformConfigurationId associated with the Patch.""")
 @cli_util.option('--version-parameterconflict', help=u"""Product version.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["USER_DEFINED", "ORACLE_DEFINED"]), help=u"""DefinedBy type.""")
@@ -1524,7 +1524,7 @@ def list_patches(ctx, from_json, all_pages, page_size, compartment_id, product_i
 
 
 @recommended_patch_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_recommended_patches.command_name', 'list-recommended-patches'), help=u"""Gets a list of recommended patches. \n[Command Reference](listRecommendedPatches)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--target-id', help=u"""Target identifier.""")
 @cli_util.option('--target-name', help=u"""Unique target name""")
 @cli_util.option('--patch-level', type=custom_types.CliCaseInsensitiveChoice(["LATEST", "LATEST_MINUS_ONE", "LATEST_MINUS_TWO"]), help=u"""Patch level.""")
@@ -1596,7 +1596,7 @@ def list_recommended_patches(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @report_metadata_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_report_metadata.command_name', 'list-report-metadata'), help=u"""Returns a list of all the report metadata. \n[Command Reference](listReportMetadata)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--report-name', help=u"""A filter to return data for given report name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1789,7 +1789,7 @@ def list_scheduled_fleets(ctx, from_json, all_pages, page_size, scheduler_defini
 
 
 @scheduler_definition_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduler_definitions.command_name', 'list-scheduler-definitions'), help=u"""Returns a list of all the Schedule Definitions in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listSchedulerDefinitions)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""A filter to return only scheduleDefinitions whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--product', help=u"""A filter to return only dchedule definitions whose assocaited product matches the given product""")
@@ -1872,7 +1872,7 @@ def list_scheduler_definitions(ctx, from_json, all_pages, page_size, compartment
 
 
 @scheduler_execution_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduler_executions.command_name', 'list-scheduler-executions'), help=u"""Returns a list of all executions that are scheduled. \n[Command Reference](listSchedulerExecutions)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--time-scheduled-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Scheduled Time""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-scheduled-less-than', type=custom_types.CLI_DATETIME, help=u"""Scheduled Time""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1958,7 +1958,7 @@ def list_scheduler_executions(ctx, from_json, all_pages, page_size, compartment_
 
 
 @scheduler_job_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduler_jobs.command_name', 'list-scheduler-jobs'), help=u"""Returns a list of all schedule jobs in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listSchedulerJobs)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If set to true, resources will be returned for not only the provided compartment, but all compartments which descend from it. Which resources are returned and their field contents depends on the value of accessLevel.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--fleet-id', help=u"""unique Fleet identifier""")
@@ -2117,7 +2117,7 @@ def list_steps(ctx, from_json, all_pages, page_size, scheduler_job_id, job_activ
 
 
 @target_component_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_target_components.command_name', 'list-target-components'), help=u"""Gets a list of target component. \n[Command Reference](listTargetComponents)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--target-id', help=u"""Target Id.""")
 @cli_util.option('--target-name', help=u"""Target name.""")
 @cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch severity.""")
@@ -2183,7 +2183,7 @@ def list_target_components(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @target_property_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_target_properties.command_name', 'list-target-properties'), help=u"""Gets a list of target properties. \n[Command Reference](listTargetProperties)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--target-id', help=u"""Target Id.""")
 @cli_util.option('--target-name', help=u"""Target name.""")
 @cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch severity.""")
@@ -2448,7 +2448,7 @@ def manage_job_execution_action_group_based_user_action_details(ctx, from_json, 
 
 @report_collection_group.command(name=cli_util.override('fleet_apps_management_operations.report.command_name', 'report'), help=u"""Report \n[Command Reference](report)""")
 @cli_util.option('--name', required=True, help=u"""Name of report.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--granularity', type=custom_types.CliCaseInsensitiveChoice(["DAY", "WEEK", "MONTH", "QUARTER", "YEAR"]), help=u"""Granularity.""")
 @cli_util.option('--report-time-range', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--condition', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ANY"]), help=u"""Condition.""")
@@ -2508,7 +2508,7 @@ def report(ctx, from_json, name, compartment_id, granularity, report_time_range,
 
 
 @compliance_record_aggregation_collection_group.command(name=cli_util.override('fleet_apps_management_operations.summarize_compliance_record_counts.command_name', 'summarize-compliance-record-counts'), help=u"""Retrieve  aggregated summary information of ComplianceRecords within a Compartment. \n[Command Reference](summarizeComplianceRecordCounts)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If set to true, resources will be returned for not only the provided compartment, but all compartments which descend from it. Which resources are returned and their field contents depends on the value of accessLevel.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -2540,7 +2540,7 @@ def summarize_compliance_record_counts(ctx, from_json, compartment_id, compartme
 
 
 @managed_entity_aggregation_collection_group.command(name=cli_util.override('fleet_apps_management_operations.summarize_managed_entity_counts.command_name', 'summarize-managed-entity-counts'), help=u"""Retrieve  aggregated summary information of Managed entities within a Compartment. \n[Command Reference](summarizeManagedEntityCounts)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If set to true, resources will be returned for not only the provided compartment, but all compartments which descend from it. Which resources are returned and their field contents depends on the value of accessLevel.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -2572,7 +2572,7 @@ def summarize_managed_entity_counts(ctx, from_json, compartment_id, compartment_
 
 
 @scheduler_job_aggregation_collection_group.command(name=cli_util.override('fleet_apps_management_operations.summarize_scheduler_job_counts.command_name', 'summarize-scheduler-job-counts'), help=u"""Retrieve aggregated summary information of Scheduler Jobs within a Compartment. \n[Command Reference](summarizeSchedulerJobCounts)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If set to true, resources will be returned for not only the provided compartment, but all compartments which descend from it. Which resources are returned and their field contents depends on the value of accessLevel.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")

@@ -68,7 +68,7 @@ oracle_db_azure_blob_container_root_group.add_command(oracle_db_azure_blob_conta
 
 @oracle_db_azure_blob_container_group.command(name=cli_util.override('oracle_db_azure_blob_container.change_oracle_db_azure_blob_container_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle DB Azure Blob Container resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAzureBlobContainerCompartment)""")
 @cli_util.option('--oracle-db-azure-blob-container-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Blob Container resource.""")
-@cli_util.option('--compartment-id', help=u"""he [OCID] of the compartment that contains the Oracle DB Azure Blob Container resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""he [OCID] of the compartment that contains the Oracle DB Azure Blob Container resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -148,7 +148,7 @@ def change_oracle_db_azure_blob_container_compartment(ctx, from_json, wait_for_s
 
 
 @oracle_db_azure_blob_container_group.command(name=cli_util.override('oracle_db_azure_blob_container.create_oracle_db_azure_blob_container.command_name', 'create'), help=u"""Creates Oracle DB Azure Blob Container resource. \n[Command Reference](createOracleDbAzureBlobContainer)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of Oracle DB Azure Blob Container resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of Oracle DB Azure Blob Container resource.""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle DB Azure Blob Container resource name.""")
 @cli_util.option('--azure-storage-account-name', required=True, help=u"""Azure Storage account name.""")
 @cli_util.option('--azure-storage-container-name', required=True, help=u"""Azure Storage container name.""")
@@ -317,7 +317,7 @@ def get_oracle_db_azure_blob_container(ctx, from_json, oracle_db_azure_blob_cont
 
 
 @oracle_db_azure_blob_container_group.command(name=cli_util.override('oracle_db_azure_blob_container.list_oracle_db_azure_blob_containers.command_name', 'list'), help=u"""Lists all Oracle DB Azure Blob Container resources based on the specified filters. \n[Command Reference](listOracleDbAzureBlobContainers)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB Azure Blob Container resources that match the specified display name.""")
 @cli_util.option('--oracle-db-azure-blob-container-id', help=u"""A filter to return Oracle DB Azure Blob Container resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
@@ -387,7 +387,7 @@ def list_oracle_db_azure_blob_containers(ctx, from_json, all_pages, page_size, c
 
 @oracle_db_azure_blob_container_group.command(name=cli_util.override('oracle_db_azure_blob_container.update_oracle_db_azure_blob_container.command_name', 'update'), help=u"""Modifies the existing Oracle DB Azure Blob Container resource for a given [OCID]. \n[Command Reference](updateOracleDbAzureBlobContainer)""")
 @cli_util.option('--oracle-db-azure-blob-container-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Blob Container resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the Oracle DB Azure Blob Container resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle DB Azure Blob Container resource.""")
 @cli_util.option('--display-name', help=u"""Oracle DB Azure Blob Container resource name.""")
 @cli_util.option('--private-endpoint-ip-address', help=u"""Private endpoint IP.""")
 @cli_util.option('--private-endpoint-dns-alias', help=u"""Private endpoint's DNS alias.""")

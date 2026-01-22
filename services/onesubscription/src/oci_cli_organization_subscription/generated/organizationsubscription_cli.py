@@ -33,7 +33,7 @@ organization_subscription_root_group.add_command(organization_subscription_group
 
 
 @organization_subscription_group.command(name=cli_util.override('organization_subscription.list_organization_subscriptions.command_name', 'list'), help=u"""API that returns data for the list of subscription ids returned from Organizations API \n[Command Reference](listOrganizationSubscriptions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the root compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 
 Example: '500'""")

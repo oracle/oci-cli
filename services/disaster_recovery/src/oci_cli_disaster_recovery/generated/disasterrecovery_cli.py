@@ -247,7 +247,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 
 @dr_protection_group_group.command(name=cli_util.override('disaster_recovery.change_dr_protection_group_compartment.command_name', 'change-compartment'), help=u"""Move the DR protection group identified by *drProtectionGroupId* to a different compartment. \n[Command Reference](changeDrProtectionGroupCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which the DR protection group should be moved.
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which the DR protection group should be moved.
 
 Example: `ocid1.compartment.oc1..uniqueID`""")
 @cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group.
@@ -1231,7 +1231,7 @@ def create_dr_plan_execution_failover_execution_option_details(ctx, from_json, w
 
 
 @dr_protection_group_group.command(name=cli_util.override('disaster_recovery.create_dr_protection_group.command_name', 'create'), help=u"""Create a DR protection group. \n[Command Reference](createDrProtectionGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the DR protection group.
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the DR protection group.
 
 Example: `ocid1.compartment.oc1..uniqueID`""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the DR protection group.
@@ -1808,7 +1808,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.ignore_dr_plan_execution.command_name', 'ignore'), help=u"""Ignore the failed group or step in DR plan execution identified by *drPlanExecutionId* and resume execution. \n[Command Reference](ignoreDrPlanExecution)""")
-@cli_util.option('--group-id', required=True, help=u"""The unique id of the group to ignore as a whole, or the group containing the step to ignore.
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique id of the group to ignore as a whole, or the group containing the step to ignore.
 
 Example: `sgid1.group..uniqueID`""")
 @cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.
@@ -2119,7 +2119,7 @@ def list_dr_plans(ctx, from_json, all_pages, page_size, dr_protection_group_id, 
 
 
 @dr_protection_group_group.command(name=cli_util.override('disaster_recovery.list_dr_protection_groups.command_name', 'list'), help=u"""Get a summary list of all DR protection groups in a compartment. \n[Command Reference](listDrProtectionGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID (OCID) of the compartment in which to list resources.
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID (OCID) of the compartment in which to list resources.
 
 Example: `ocid1.compartment.oc1..uniqueID`""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "INACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only DR protection groups that match the given lifecycle state.""")
@@ -2332,7 +2332,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('disaster_recovery.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID (OCID) of the compartment in which to list resources.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID (OCID) of the compartment in which to list resources.
 
 Example: `ocid1.compartment.oc1..uniqueID`""")
 @cli_util.option('--work-request-id', help=u"""The ID (OCID) of the asynchronous work request.
@@ -2662,7 +2662,7 @@ def resume_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.retry_dr_plan_execution.command_name', 'retry'), help=u"""Retry the failed group or step in DR plan execution identified by *drPlanExecutionId* and resume execution. \n[Command Reference](retryDrPlanExecution)""")
-@cli_util.option('--group-id', required=True, help=u"""The unique id of the group to retry as a whole, or the group containing the step being retried.
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique id of the group to retry as a whole, or the group containing the step being retried.
 
 Example: `sgid1.group..uniqueID`""")
 @cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.

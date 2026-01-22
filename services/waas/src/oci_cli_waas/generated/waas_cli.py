@@ -328,7 +328,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @address_list_group.command(name=cli_util.override('waas.change_address_list_compartment.command_name', 'change-compartment'), help=u"""Moves address list into a different compartment. When provided, If-Match is checked against ETag values of the address list. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeAddressListCompartment)""")
 @cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -358,8 +358,8 @@ def change_address_list_compartment(ctx, from_json, address_list_id, compartment
 
 
 @certificate_group.command(name=cli_util.override('waas.change_certificate_compartment.command_name', 'change-compartment'), help=u"""Moves certificate into a different compartment. When provided, If-Match is checked against ETag values of the certificate. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeCertificateCompartment)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -390,7 +390,7 @@ def change_certificate_compartment(ctx, from_json, certificate_id, compartment_i
 
 @custom_protection_rule_group.command(name=cli_util.override('waas.change_custom_protection_rule_compartment.command_name', 'change-compartment'), help=u"""Moves a custom protection rule into a different compartment within the same tenancy. When provided, If-Match is checked against ETag values of the custom protection rule. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeCustomProtectionRuleCompartment)""")
 @cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the custom protection rule. This number is generated when the custom protection rule is added to the compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -421,7 +421,7 @@ def change_custom_protection_rule_compartment(ctx, from_json, custom_protection_
 
 @waas_policy_group.command(name=cli_util.override('waas.change_waas_policy_compartment.command_name', 'change-compartment'), help=u"""Moves WAAS policy into a different compartment. When provided, If-Match is checked against ETag values of the WAAS policy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeWaasPolicyCompartment)""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -451,7 +451,7 @@ def change_waas_policy_compartment(ctx, from_json, waas_policy_id, compartment_i
 
 
 @address_list_group.command(name=cli_util.override('waas.create_address_list.command_name', 'create'), help=u"""Creates an address list in a set compartment and allows it to be used in a WAAS policy and referenced by access rules. Addresses can be IP addresses and CIDR notations. \n[Command Reference](createAddressList)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the address list.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to create the address list.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the address list.""")
 @cli_util.option('--addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IP addresses or CIDR notations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -518,7 +518,7 @@ def create_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @certificate_group.command(name=cli_util.override('waas.create_certificate.command_name', 'create'), help=u"""Allows an SSL certificate to be added to a WAAS policy. The Web Application Firewall terminates SSL connections to inspect requests in runtime, and then re-encrypts requests before sending them to the origin for fulfillment.
 
 For more information, see [WAF Settings]. \n[Command Reference](createCertificate)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the SSL certificate.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to create the SSL certificate.""")
 @cli_util.option('--certificate-data', required=True, help=u"""The data of the SSL certificate.
 
  **Note:** Many SSL certificate providers require an intermediate certificate chain to ensure a trusted status. If your SSL certificate requires an intermediate certificate chain, please append the intermediate certificate key in the `certificateData` field after the leaf certificate issued by the SSL certificate provider. If you are unsure if your certificate requires an intermediate certificate chain, see your certificate provider's documentation.
@@ -597,7 +597,7 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @custom_protection_rule_group.command(name=cli_util.override('waas.create_custom_protection_rule.command_name', 'create'), help=u"""Creates a new custom protection rule in the specified compartment.
 
 Custom protection rules allow you to create rules in addition to the rulesets provided by the Web Application Firewall service, including rules from [ModSecurity]. The syntax for custom rules is based on the ModSecurity syntax. For more information about custom protection rules, see [Custom Protection Rules]. \n[Command Reference](createCustomProtectionRule)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the custom protection rule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to create the custom protection rule.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the custom protection rule.""")
 @cli_util.option('--template', required=True, help=u"""The template text of the custom protection rule. All custom protection rules are expressed in ModSecurity Rule Language.
 
@@ -694,7 +694,7 @@ You must specify a display name and domain for the WAAS policy. The display name
 All Oracle Cloud Infrastructure resources, including WAAS policies, receive a unique, Oracle-assigned ID called an Oracle Cloud Identifier (OCID). When a resource is created, you can find its OCID in the response. You can also retrieve a resource's OCID by using a list API operation for that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].
 
 **Note:** After sending the POST request, the new object's state will temporarily be `CREATING`. Ensure that the resource's state has changed to `ACTIVE` before use. \n[Command Reference](createWaasPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the WAAS policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to create the WAAS policy.""")
 @cli_util.option('--domain', required=True, help=u"""The web application domain that the WAAS policy protects.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the WAAS policy. The name can be changed and does not need to be unique.""")
 @cli_util.option('--additional-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of additional domains for the specified web application.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -853,7 +853,7 @@ def delete_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 
 @certificate_group.command(name=cli_util.override('waas.delete_certificate.command_name', 'delete'), help=u"""Deletes an SSL certificate from the WAAS service. \n[Command Reference](deleteCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1059,7 +1059,7 @@ def get_address_list(ctx, from_json, address_list_id):
 
 
 @certificate_group.command(name=cli_util.override('waas.get_certificate.command_name', 'get'), help=u"""Gets the details of an SSL certificate. \n[Command Reference](getCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1379,7 +1379,7 @@ def list_access_rules(ctx, from_json, all_pages, page_size, waas_policy_id, limi
 
 
 @address_list_group.command(name=cli_util.override('waas.list_address_lists.command_name', 'list'), help=u"""Gets a list of address lists that can be used in a WAAS policy. \n[Command Reference](listAddressLists)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. If unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "name", "timeCreated"]), help=u"""The value by which address lists are sorted in a paginated 'List' call. If unspecified, defaults to `timeCreated`.""")
@@ -1552,7 +1552,7 @@ def list_captchas(ctx, from_json, all_pages, page_size, waas_policy_id, limit, p
 
 
 @certificate_group.command(name=cli_util.override('waas.list_certificates.command_name', 'list'), help=u"""Gets a list of SSL certificates that can be used in a WAAS policy. \n[Command Reference](listCertificates)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. If unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "compartmentId", "displayName", "notValidAfter", "timeCreated"]), help=u"""The value by which certificate summaries are sorted in a paginated 'List' call. If unspecified, defaults to `timeCreated`.""")
@@ -1621,7 +1621,7 @@ def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, limi
 
 
 @custom_protection_rule_group.command(name=cli_util.override('waas.list_custom_protection_rules.command_name', 'list'), help=u"""Gets a list of custom protection rules for the specified Web Application Firewall. \n[Command Reference](listCustomProtectionRules)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. If unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "compartmentId", "displayName", "modSecurityRuleId", "timeCreated"]), help=u"""The value by which custom protection rules are sorted in a paginated 'List' call. If unspecified, defaults to `timeCreated`.""")
@@ -1957,7 +1957,7 @@ def list_threat_feeds(ctx, from_json, all_pages, page_size, waas_policy_id, limi
 
 
 @waas_policy_group.command(name=cli_util.override('waas.list_waas_policies.command_name', 'list'), help=u"""Gets a list of WAAS policies. \n[Command Reference](listWaasPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. If unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "displayName", "timeCreated"]), help=u"""The value by which policies are sorted in a paginated 'List' call.  If unspecified, defaults to `timeCreated`.""")
@@ -2417,7 +2417,7 @@ def list_whitelists(ctx, from_json, all_pages, page_size, waas_policy_id, limit,
 
 @work_request_group.command(name=cli_util.override('waas.list_work_requests.command_name', 'list'), help=u"""Gets a list of subnets (CIDR notation) from which the WAAS EDGE may make requests. The subnets are owned by OCI and forward traffic to your origins. Allow traffic from these subnets to your origins. They are not associated with specific regions or compartments. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the policy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. If unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "status", "timeAccepted", "timeStarted", "timeFinished", "operationType"]), help=u"""The value by which work requests are sorted in a paginated 'List' call. If unspecified, defaults to `timeAccepted`.""")
@@ -2808,7 +2808,7 @@ def update_captchas(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @certificate_group.command(name=cli_util.override('waas.update_certificate.command_name', 'update'), help=u"""It is not possible to update a certificate, only create and delete. Therefore, this operation can only update the display name, freeform tags, and defined tags of a certificate. \n[Command Reference](updateCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the SSL certificate. The name can be changed and does not need to be unique.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -3344,7 +3344,7 @@ def update_js_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
 @policy_config_group.command(name=cli_util.override('waas.update_policy_config.command_name', 'update'), help=u"""Updates the configuration for a WAAS policy. Only the fields specified in the request body will be updated; all other properties will remain unchanged. \n[Command Reference](updatePolicyConfig)""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
-@cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
 @cli_util.option('--is-https-forced', type=click.BOOL, help=u"""Force HTTP to HTTPS redirection. If unspecified, defaults to `false`.""")
 @cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
@@ -3488,7 +3488,7 @@ def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds
 
 @policy_config_group.command(name=cli_util.override('waas.update_policy_config_round_robin_load_balancing_method.command_name', 'update-policy-config-round-robin-load-balancing-method'), help=u"""Updates the configuration for a WAAS policy. Only the fields specified in the request body will be updated; all other properties will remain unchanged. \n[Command Reference](updatePolicyConfig)""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
-@cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
 @cli_util.option('--is-https-forced', type=click.BOOL, help=u"""Force HTTP to HTTPS redirection. If unspecified, defaults to `false`.""")
 @cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
@@ -3631,7 +3631,7 @@ def update_policy_config_round_robin_load_balancing_method(ctx, from_json, force
 
 @policy_config_group.command(name=cli_util.override('waas.update_policy_config_sticky_cookie_load_balancing_method.command_name', 'update-policy-config-sticky-cookie-load-balancing-method'), help=u"""Updates the configuration for a WAAS policy. Only the fields specified in the request body will be updated; all other properties will remain unchanged. \n[Command Reference](updatePolicyConfig)""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
-@cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
 @cli_util.option('--is-https-forced', type=click.BOOL, help=u"""Force HTTP to HTTPS redirection. If unspecified, defaults to `false`.""")
 @cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
@@ -3786,7 +3786,7 @@ def update_policy_config_sticky_cookie_load_balancing_method(ctx, from_json, for
 
 @policy_config_group.command(name=cli_util.override('waas.update_policy_config_ip_hash_load_balancing_method.command_name', 'update-policy-config-ip-hash-load-balancing-method'), help=u"""Updates the configuration for a WAAS policy. Only the fields specified in the request body will be updated; all other properties will remain unchanged. \n[Command Reference](updatePolicyConfig)""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
-@cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
 @cli_util.option('--is-https-forced', type=click.BOOL, help=u"""Force HTTP to HTTPS redirection. If unspecified, defaults to `false`.""")
 @cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.

@@ -99,7 +99,7 @@ dblm_root_group.add_command(vulnerability_scan_group)
 
 
 @vulnerability_scan_group.command(name=cli_util.override('dblm.create_vulnerability_scan.command_name', 'create'), help=u"""Creates a VulnerabilityScan. \n[Command Reference](createVulnerabilityScan)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier""")
 @cli_util.option('--vulnerability-scan-type', required=True, help=u"""Vulnerability Scan type is CVE, PATCH or IMAGE_PATCH""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -154,7 +154,7 @@ def create_vulnerability_scan(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @dblm_patch_management_group.command(name=cli_util.override('dblm.get_patch_management.command_name', 'get-patch-management'), help=u"""Overview of Patch Management. \n[Command Reference](getPatchManagement)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The required ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The required ID of the compartment in which to list resources.""")
 @cli_util.option('--database-release', help=u"""A filter to return only database that match the given release version.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "NEEDS_ATTENTION", "DELETING", "DELETED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--time-started-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only resources whose timeStarted is greater than or equal to the given date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -185,7 +185,7 @@ def get_patch_management(ctx, from_json, compartment_id, database_release, lifec
 
 
 @dblm_vulnerability_group.command(name=cli_util.override('dblm.get_vulnerability.command_name', 'get-vulnerability'), help=u"""Gets a Vulnerability \n[Command Reference](getVulnerability)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The required ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The required ID of the compartment in which to list resources.""")
 @cli_util.option('--database-release', help=u"""A filter to return only database that match the given release version.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "NEEDS_ATTENTION", "DELETING", "DELETED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -254,7 +254,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @dblm_vulnerability_group.command(name=cli_util.override('dblm.list_aggregated_vulnerability_data.command_name', 'list-aggregated-vulnerability-data'), help=u"""Gets an AggregatedVulnerabilityData \n[Command Reference](listAggregatedVulnerabilityData)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--time-created-greater-than', type=custom_types.CLI_DATETIME, help=u"""The created greater than.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended-less-than', type=custom_types.CLI_DATETIME, help=u"""The time ended less than.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-release', help=u"""A filter to return only database that match the given release version.""")
@@ -313,7 +313,7 @@ def list_aggregated_vulnerability_data(ctx, from_json, all_pages, page_size, com
 
 
 @patch_databases_collection_group.command(name=cli_util.override('dblm.list_databases.command_name', 'list-databases'), help=u"""Gets the list of databases \n[Command Reference](listDatabases)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "NEEDS_ATTENTION", "DELETING", "DELETED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--database-release', help=u"""A filter to return only database that match the given release version.""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["SI", "RAC"]), help=u"""Filter by database type. Possible values Single Instance or RAC.""")
@@ -321,7 +321,7 @@ def list_aggregated_vulnerability_data(ctx, from_json, all_pages, page_size, com
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name", "resourceType", "release", "subscribedImage", "patchCompliance"]), help=u"""The field to sort by.""")
-@cli_util.option('--image-id', help=u"""Subscribed image""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Subscribed image""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--drifter-patch-id', type=click.INT, help=u"""A filter to return only database that have given patchId as additional patch (drifter from image version).""")
 @cli_util.option('--image-compliance', type=custom_types.CliCaseInsensitiveChoice(["NOT_SUBSCRIBED", "NOT_COMPLIANT_WITH_IMAGES", "ALL_DATABASES"]), help=u"""Filter databases by image compliance status.""")
@@ -390,7 +390,7 @@ def list_databases(ctx, from_json, all_pages, page_size, compartment_id, lifecyc
 
 
 @notification_collection_group.command(name=cli_util.override('dblm.list_notifications.command_name', 'list-notifications'), help=u"""List of notifications \n[Command Reference](listNotifications)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The required ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The required ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -413,7 +413,7 @@ def list_notifications(ctx, from_json, all_pages, compartment_id, limit):
 
 
 @dblm_vulnerability_group.command(name=cli_util.override('dblm.list_vulnerabilities.command_name', 'list-vulnerabilities'), help=u"""Gets the vulnerabilities summary list \n[Command Reference](listVulnerabilities)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -484,7 +484,7 @@ def list_vulnerabilities(ctx, from_json, all_pages, page_size, compartment_id, l
 
 
 @vulnerability_resource_collection_group.command(name=cli_util.override('dblm.list_vulnerability_resources.command_name', 'list-vulnerability-resources'), help=u"""Lists the summary of vulnerable and clean resourcees \n[Command Reference](listVulnerabilityResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The required ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The required ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -557,7 +557,7 @@ def list_vulnerability_resources(ctx, from_json, all_pages, page_size, compartme
 
 @vulnerability_scan_collection_group.command(name=cli_util.override('dblm.list_vulnerability_scans.command_name', 'list-vulnerability-scans'), help=u"""Gets a list of VulnerabilityScans. \n[Command Reference](listVulnerabilityScans)""")
 @cli_util.option('--vulnerability-scan-id', help=u"""The ID of the vulnerability scan.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -741,7 +741,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('dblm.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")

@@ -117,7 +117,7 @@ def add_dataset_labels(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @dataset_group.command(name=cli_util.override('data_labeling_service.change_dataset_compartment.command_name', 'change-compartment'), help=u"""Moves a Dataset resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeDatasetCompartment)""")
 @cli_util.option('--dataset-id', required=True, help=u"""Unique Dataset OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -177,7 +177,7 @@ def change_dataset_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @dataset_group.command(name=cli_util.override('data_labeling_service.create_dataset.command_name', 'create'), help=u"""Creates a new Dataset. \n[Command Reference](createDataset)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment of the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment of the resource.""")
 @cli_util.option('--annotation-format', required=True, help=u"""The annotation format name required for labeling records.""")
 @cli_util.option('--dataset-source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dataset-format-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -266,7 +266,7 @@ def create_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @dataset_group.command(name=cli_util.override('data_labeling_service.create_dataset_object_storage_source_details.command_name', 'create-dataset-object-storage-source-details'), help=u"""Creates a new Dataset. \n[Command Reference](createDataset)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment of the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment of the resource.""")
 @cli_util.option('--annotation-format', required=True, help=u"""The annotation format name required for labeling records.""")
 @cli_util.option('--dataset-format-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--label-set', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -364,7 +364,7 @@ def create_dataset_object_storage_source_details(ctx, from_json, wait_for_state,
 
 
 @dataset_group.command(name=cli_util.override('data_labeling_service.create_dataset_image_dataset_format_details.command_name', 'create-dataset-image-dataset-format-details'), help=u"""Creates a new Dataset. \n[Command Reference](createDataset)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment of the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment of the resource.""")
 @cli_util.option('--annotation-format', required=True, help=u"""The annotation format name required for labeling records.""")
 @cli_util.option('--dataset-source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--label-set', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -454,7 +454,7 @@ def create_dataset_image_dataset_format_details(ctx, from_json, wait_for_state, 
 
 
 @dataset_group.command(name=cli_util.override('data_labeling_service.create_dataset_document_dataset_format_details.command_name', 'create-dataset-document-dataset-format-details'), help=u"""Creates a new Dataset. \n[Command Reference](createDataset)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment of the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment of the resource.""")
 @cli_util.option('--annotation-format', required=True, help=u"""The annotation format name required for labeling records.""")
 @cli_util.option('--dataset-source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--label-set', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -544,7 +544,7 @@ def create_dataset_document_dataset_format_details(ctx, from_json, wait_for_stat
 
 
 @dataset_group.command(name=cli_util.override('data_labeling_service.create_dataset_text_dataset_format_details.command_name', 'create-dataset-text-dataset-format-details'), help=u"""Creates a new Dataset. \n[Command Reference](createDataset)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment of the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment of the resource.""")
 @cli_util.option('--annotation-format', required=True, help=u"""The annotation format name required for labeling records.""")
 @cli_util.option('--dataset-source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--label-set', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -940,7 +940,7 @@ def import_pre_annotated_data_object_storage_import_metadata_path(ctx, from_json
 
 
 @annotation_format_group.command(name=cli_util.override('data_labeling_service.list_annotation_formats.command_name', 'list'), help=u"""These are a static list in a given region. \n[Command Reference](listAnnotationFormats)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -991,7 +991,7 @@ def list_annotation_formats(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @dataset_collection_group.command(name=cli_util.override('data_labeling_service.list_datasets.command_name', 'list-datasets'), help=u"""Returns a list of Datasets. \n[Command Reference](listDatasets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Unique Dataset OCID""")
 @cli_util.option('--annotation-format', help=u"""A filter to return only resources that match the entire annotation format given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources whose lifecycleState matches this query param.""")
@@ -1159,7 +1159,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('data_labeling_service.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

@@ -61,7 +61,7 @@ inventory_root_group.add_command(historical_metric_group)
 
 
 @asset_aggregation_group.command(name=cli_util.override('inventory.analyze_assets.command_name', 'analyze-assets'), help=u"""Returns an aggregation of assets. Aggregation groups are sorted by groupBy property. Default sort order is ascending, but can be overridden by the sortOrder parameter. \n[Command Reference](analyzeAssets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--aggregation-properties', required=True, multiple=True, help=u"""An array of properties on which to aggregate.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -110,7 +110,7 @@ def analyze_assets(ctx, from_json, compartment_id, aggregation_properties, limit
 
 @asset_group.command(name=cli_util.override('inventory.change_asset_compartment.command_name', 'change-compartment'), help=u"""Moves an asset resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeAssetCompartment)""")
 @cli_util.option('--asset-id', required=True, help=u"""Unique asset identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -204,7 +204,7 @@ def change_asset_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 @asset_group.command(name=cli_util.override('inventory.create_asset.command_name', 'create'), help=u"""Creates an asset. \n[Command Reference](createAsset)""")
 @cli_util.option('--inventory-id', required=True, help=u"""Inventory ID to which an asset belongs.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the asset belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that the asset belongs to.""")
 @cli_util.option('--source-key', required=True, help=u"""The source key to which the asset belongs.""")
 @cli_util.option('--external-asset-key', required=True, help=u"""The key of the asset from the external environment.""")
 @cli_util.option('--asset-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM", "AWS_EC2", "AWS_EBS"]), help=u"""The type of asset.""")
@@ -277,7 +277,7 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @asset_group.command(name=cli_util.override('inventory.create_asset_create_aws_ebs_asset_details.command_name', 'create-asset-create-aws-ebs-asset-details'), help=u"""Creates an asset. \n[Command Reference](createAsset)""")
 @cli_util.option('--inventory-id', required=True, help=u"""Inventory ID to which an asset belongs.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the asset belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that the asset belongs to.""")
 @cli_util.option('--source-key', required=True, help=u"""The source key to which the asset belongs.""")
 @cli_util.option('--external-asset-key', required=True, help=u"""The key of the asset from the external environment.""")
 @cli_util.option('--aws-ebs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -352,7 +352,7 @@ def create_asset_create_aws_ebs_asset_details(ctx, from_json, wait_for_state, ma
 
 @asset_group.command(name=cli_util.override('inventory.create_asset_create_vmware_vm_asset_details.command_name', 'create-asset-create-vmware-vm-asset-details'), help=u"""Creates an asset. \n[Command Reference](createAsset)""")
 @cli_util.option('--inventory-id', required=True, help=u"""Inventory ID to which an asset belongs.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the asset belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that the asset belongs to.""")
 @cli_util.option('--source-key', required=True, help=u"""The source key to which the asset belongs.""")
 @cli_util.option('--external-asset-key', required=True, help=u"""The key of the asset from the external environment.""")
 @cli_util.option('--compute', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -433,7 +433,7 @@ def create_asset_create_vmware_vm_asset_details(ctx, from_json, wait_for_state, 
 
 @asset_group.command(name=cli_util.override('inventory.create_asset_create_aws_ec2_asset_details.command_name', 'create-asset-create-aws-ec2-asset-details'), help=u"""Creates an asset. \n[Command Reference](createAsset)""")
 @cli_util.option('--inventory-id', required=True, help=u"""Inventory ID to which an asset belongs.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the asset belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that the asset belongs to.""")
 @cli_util.option('--source-key', required=True, help=u"""The source key to which the asset belongs.""")
 @cli_util.option('--external-asset-key', required=True, help=u"""The key of the asset from the external environment.""")
 @cli_util.option('--compute', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -520,7 +520,7 @@ def create_asset_create_aws_ec2_asset_details(ctx, from_json, wait_for_state, ma
 
 @inventory_group.command(name=cli_util.override('inventory.create_inventory.command_name', 'create'), help=u"""Creates an inventory. \n[Command Reference](createInventory)""")
 @cli_util.option('--display-name', required=True, help=u"""Inventory displayName.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenantId.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenantId.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -776,7 +776,7 @@ def get_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @inventory_group.command(name=cli_util.override('inventory.import_inventory.command_name', 'import'), help=u"""Import resources in inventory. \n[Command Reference](importInventory)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartmentId that resources import.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartmentId that resources import.""")
 @cli_util.option('--inventory-id', required=True, help=u"""Inventory OCID.""")
 @cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["ASSET"]), help=u"""Import inventory resource type.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -846,7 +846,7 @@ def import_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @inventory_group.command(name=cli_util.override('inventory.import_inventory_import_inventory_via_assets_details.command_name', 'import-inventory-import-inventory-via-assets-details'), help=u"""Import resources in inventory. \n[Command Reference](importInventory)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartmentId that resources import.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartmentId that resources import.""")
 @cli_util.option('--data', required=True, help=u"""The file body to be sent in the request.""")
 @cli_util.option('--asset-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM", "AWS_EC2", "AWS_EBS"]), help=u"""The type of asset.""")
 @cli_util.option('--inventory-id', required=True, help=u"""Inventory OCID.""")
@@ -918,7 +918,7 @@ def import_inventory_import_inventory_via_assets_details(ctx, from_json, wait_fo
 
 
 @asset_collection_group.command(name=cli_util.override('inventory.list_assets.command_name', 'list-assets'), help=u"""Returns a list of assets. \n[Command Reference](listAssets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return only assets whose lifecycleState matches the given lifecycleState.""")
@@ -1050,7 +1050,7 @@ def list_historical_metrics(ctx, from_json, all_pages, page_size, asset_id, limi
 
 
 @inventory_group.command(name=cli_util.override('inventory.list_inventories.command_name', 'list'), help=u"""Returns a list of inventories. \n[Command Reference](listInventories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeUpdated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

@@ -118,7 +118,7 @@ def get_opensearch_cluster_backup(ctx, from_json, opensearch_cluster_backup_id):
 
 
 @opensearch_cluster_backup_collection_group.command(name=cli_util.override('opensearch_cluster_backup.list_opensearch_cluster_backups.command_name', 'list-opensearch-cluster-backups'), help=u"""Returns a list of OpensearchClusterBackups. \n[Command Reference](listOpensearchClusterBackups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--source-opensearch-cluster-id', help=u"""A filter to return only resources that match the entire source cluster id given.""")

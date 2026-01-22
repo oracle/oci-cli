@@ -126,7 +126,7 @@ def bulk_replace_service_catalog_associations(ctx, from_json, force, service_cat
 
 @private_application_group.command(name=cli_util.override('service_catalog.change_private_application_compartment.command_name', 'change-compartment'), help=u"""Moves the specified private application from one compartment to another. \n[Command Reference](changePrivateApplicationCompartment)""")
 @cli_util.option('--private-application-id', required=True, help=u"""The unique identifier for the private application.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to move the private application.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to move the private application.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -189,7 +189,7 @@ def change_private_application_compartment(ctx, from_json, wait_for_state, max_w
 
 @service_catalog_group.command(name=cli_util.override('service_catalog.change_service_catalog_compartment.command_name', 'change-compartment'), help=u"""Moves the specified service catalog from one compartment to another. \n[Command Reference](changeServiceCatalogCompartment)""")
 @cli_util.option('--service-catalog-id', required=True, help=u"""The unique identifier for the service catalog.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to move the service catalog.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to move the service catalog.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -221,7 +221,7 @@ def change_service_catalog_compartment(ctx, from_json, service_catalog_id, compa
 
 
 @private_application_group.command(name=cli_util.override('service_catalog.create_private_application.command_name', 'create'), help=u"""Creates a private application along with a single package to be hosted. \n[Command Reference](createPrivateApplication)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the private application.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the private application.""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the private application.""")
 @cli_util.option('--short-description', required=True, help=u"""A short description of the private application.""")
 @cli_util.option('--package-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -296,7 +296,7 @@ def create_private_application(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @private_application_group.command(name=cli_util.override('service_catalog.create_private_application_create_private_application_stack_package.command_name', 'create-private-application-create-private-application-stack-package'), help=u"""Creates a private application along with a single package to be hosted. \n[Command Reference](createPrivateApplication)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the private application.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the private application.""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the private application.""")
 @cli_util.option('--short-description', required=True, help=u"""A short description of the private application.""")
 @cli_util.option('--package-details-version', required=True, help=u"""The package version.""")
@@ -376,7 +376,7 @@ def create_private_application_create_private_application_stack_package(ctx, fro
 
 
 @service_catalog_group.command(name=cli_util.override('service_catalog.create_service_catalog.command_name', 'create'), help=u"""Creates a brand new service catalog in a given compartment. \n[Command Reference](createServiceCatalog)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment where the service catalog will be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment where the service catalog will be created.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the service catalog.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The status of a service catalog.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -614,7 +614,7 @@ def delete_service_catalog_association(ctx, from_json, service_catalog_associati
 
 
 @configuration_group.command(name=cli_util.override('service_catalog.get_configuration.command_name', 'get'), help=u"""Get the detail of whether the tenancy is in service catalog mode or not. \n[Command Reference](getConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -833,7 +833,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @application_summary_group.command(name=cli_util.override('service_catalog.list_all_applications.command_name', 'list-all-applications'), help=u"""Lists all the available listings and private applications in a compartment. A new API for catalog manager use when creating/updating a service catalog. \n[Command Reference](listAllApplications)""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--entity-type', help=u"""The type of the application in the service catalog.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -904,7 +904,7 @@ def list_all_applications(ctx, from_json, all_pages, page_size, compartment_id, 
 
 
 @application_summary_group.command(name=cli_util.override('service_catalog.list_applications.command_name', 'list-applications'), help=u"""Lists all the applications in a service catalog or a tenancy. If no parameter is specified, all catalogs from all compartments in the tenancy will be scanned for any type of content. \n[Command Reference](listApplications)""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--service-catalog-id', help=u"""The unique identifier for the service catalog.""")
 @cli_util.option('--entity-type', help=u"""The type of the application in the service catalog.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
@@ -1041,7 +1041,7 @@ def list_private_application_packages(ctx, from_json, all_pages, page_size, priv
 
 
 @private_application_group.command(name=cli_util.override('service_catalog.list_private_applications.command_name', 'list'), help=u"""Lists all the private applications in a given compartment. \n[Command Reference](listPrivateApplications)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--private-application-id', help=u"""The unique identifier for the private application.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -1163,7 +1163,7 @@ def list_service_catalog_associations(ctx, from_json, all_pages, page_size, serv
 
 
 @service_catalog_group.command(name=cli_util.override('service_catalog.list_service_catalogs.command_name', 'list'), help=u"""Lists all the service catalogs in the given compartment. \n[Command Reference](listServiceCatalogs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--service-catalog-id', help=u"""The unique identifier for the service catalog.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""Status of the service catalog, use as a filter to filter out all active catalogs.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
@@ -1340,7 +1340,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('service_catalog.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "FAILED", "SUCCEEDED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request""")

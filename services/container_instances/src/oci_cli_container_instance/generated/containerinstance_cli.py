@@ -93,7 +93,7 @@ container_instances_root_group.add_command(work_request_log_entry_collection_gro
 
 @container_instance_group.command(name=cli_util.override('container_instances.change_container_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a container instance resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeContainerInstanceCompartment)""")
 @cli_util.option('--container-instance-id', required=True, help=u"""The [OCID] of the container instance.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the container instance to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the container instance to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -153,7 +153,7 @@ def change_container_instance_compartment(ctx, from_json, wait_for_state, max_wa
 
 
 @container_instance_group.command(name=cli_util.override('container_instances.create_container_instance.command_name', 'create'), help=u"""Creates a container instance and deploys the containers on it. \n[Command Reference](createContainerInstance)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the container instance runs.""")
 @cli_util.option('--shape', required=True, help=u"""The shape of the container instance. The shape determines the resources available to the container instance.""")
 @cli_util.option('--shape-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -380,7 +380,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @container_instance_shape_collection_group.command(name=cli_util.override('container_instances.list_container_instance_shapes.command_name', 'list-container-instance-shapes'), help=u"""Lists the shapes that can be used to create container instances. \n[Command Reference](listContainerInstanceShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -433,7 +433,7 @@ def list_container_instance_shapes(ctx, from_json, all_pages, page_size, compart
 
 
 @container_instance_collection_group.command(name=cli_util.override('container_instances.list_container_instances.command_name', 'list-container-instances'), help=u"""Returns a list of container instances. \n[Command Reference](listContainerInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to only return resources that match the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
@@ -500,7 +500,7 @@ def list_container_instances(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @container_collection_group.command(name=cli_util.override('container_instances.list_containers.command_name', 'list-containers'), help=u"""Returns a list of containers in a compartment. \n[Command Reference](listContainers)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to only return resources that match the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--container-instance-id', help=u"""The [OCID] of the container instance.""")
@@ -684,7 +684,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_summary_collection_group.command(name=cli_util.override('container_instances.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")

@@ -35,7 +35,7 @@ plugin_root_group.add_command(plugin_group)
 
 @plugin_group.command(name=cli_util.override('plugin.get_instance_agent_plugin.command_name', 'get-instance-agent'), help=u"""Gets information about a specific Oracle Cloud Agent plugin on a compute instance. \n[Command Reference](getInstanceAgentPlugin)""")
 @cli_util.option('--instanceagent-id', required=True, help=u"""The [OCID] of the instance.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--plugin-name', required=True, help=u"""The name of the plugin.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -63,7 +63,7 @@ def get_instance_agent_plugin(ctx, from_json, instanceagent_id, compartment_id, 
 
 
 @plugin_group.command(name=cli_util.override('plugin.list_instance_agent_plugins.command_name', 'list-instance-agent'), help=u"""Gets information about the Oracle Cloud Agent plugins that are available on a specific compute instance. \n[Command Reference](listInstanceAgentPlugins)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--instanceagent-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["RUNNING", "STOPPED", "NOT_SUPPORTED", "INVALID"]), help=u"""The plugin status.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")

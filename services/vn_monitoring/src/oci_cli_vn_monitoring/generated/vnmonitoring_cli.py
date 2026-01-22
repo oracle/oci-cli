@@ -76,7 +76,7 @@ vn_monitoring_root_group.add_command(path_analyzer_test_group)
 
 @path_analyzer_test_group.command(name=cli_util.override('vn_monitoring.change_path_analyzer_test_compartment.command_name', 'change-compartment'), help=u"""Moves a `PathAnalyzerTest` resource from one compartment to another based on the identifier. \n[Command Reference](changePathAnalyzerTestCompartment)""")
 @cli_util.option('--path-analyzer-test-id', required=True, help=u"""The [OCID] of the `PathAnalyzerTest` resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the `PathAnalyzerTest` resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the `PathAnalyzerTest` resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -106,7 +106,7 @@ def change_path_analyzer_test_compartment(ctx, from_json, path_analyzer_test_id,
 
 
 @path_analyzer_test_group.command(name=cli_util.override('vn_monitoring.create_path_analyzer_test.command_name', 'create'), help=u"""Creates a new `PathAnalyzerTest` resource. \n[Command Reference](createPathAnalyzerTest)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the `PathAnalyzerTest` resource's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] for the `PathAnalyzerTest` resource's compartment.""")
 @cli_util.option('--protocol', required=True, type=click.INT, help=u"""The IP protocol to use in the `PathAnalyzerTest` resource.""")
 @cli_util.option('--source-endpoint', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--destination-endpoint', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -305,7 +305,7 @@ def get_path_analysis(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @path_analysis_work_request_result_group.command(name=cli_util.override('vn_monitoring.get_path_analysis_adhoc_get_path_analysis_details.command_name', 'get-path-analysis-adhoc-get-path-analysis-details'), help=u"""Use this method to initiate a [Network Path Analyzer] analysis. This method returns an opc-work-request-id, and you can poll the status of the work request until it either fails or succeeds.
 
 If the work request status is successful, use [ListWorkRequestResults] with the work request ID to ask for the successful analysis results. If the work request status is failed, use [ListWorkRequestErrors] with the work request ID to ask for the analysis failure information. The information returned from either of these methods can be used to build a final report. \n[Command Reference](getPathAnalysis)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] for the compartment.""")
 @cli_util.option('--protocol', required=True, type=click.INT, help=u"""The IP protocol to used for the path analysis.""")
 @cli_util.option('--source-endpoint', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--destination-endpoint', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -481,7 +481,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @path_analyzer_test_collection_group.command(name=cli_util.override('vn_monitoring.list_path_analyzer_tests.command_name', 'list-path-analyzer-tests'), help=u"""Returns a list of all `PathAnalyzerTests` in a compartment. \n[Command Reference](listPathAnalyzerTests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter that returns only resources whose `lifecycleState` matches the given `lifecycleState`.""")
 @cli_util.option('--display-name', help=u"""A filter that returns only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -719,7 +719,7 @@ def list_work_request_results(ctx, from_json, all_pages, page_size, work_request
 
 
 @work_request_group.command(name=cli_util.override('vn_monitoring.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 

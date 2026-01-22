@@ -121,7 +121,7 @@ def cancel_protected_database_deletion(ctx, from_json, protected_database_id, if
 
 @protected_database_group.command(name=cli_util.override('recovery.change_protected_database_compartment.command_name', 'change-compartment'), help=u"""Moves a protected database resource from the existing compartment to the specified compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeProtectedDatabaseCompartment)""")
 @cli_util.option('--protected-database-id', required=True, help=u"""The protected database OCID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the protected database should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the protected database should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -182,7 +182,7 @@ def change_protected_database_compartment(ctx, from_json, wait_for_state, max_wa
 
 @protected_database_group.command(name=cli_util.override('recovery.change_protected_database_subscription.command_name', 'change-protected-database-subscription'), help=u"""Associates the protected database with a new cloud service environment, such as Microsoft Azure. \n[Command Reference](changeProtectedDatabaseSubscription)""")
 @cli_util.option('--protected-database-id', required=True, help=u"""The protected database OCID.""")
-@cli_util.option('--subscription-id', help=u"""The OCID of the new cloud service subscription to which you want to link the protected database.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The OCID of the new cloud service subscription to which you want to link the protected database.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates whether it is a Universal Credit Model (UCM) subscription.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -249,7 +249,7 @@ def change_protected_database_subscription(ctx, from_json, wait_for_state, max_w
 
 @protection_policy_group.command(name=cli_util.override('recovery.change_protection_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a protection policy resource from the existing compartment to the specified compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeProtectionPolicyCompartment)""")
 @cli_util.option('--protection-policy-id', required=True, help=u"""The protection policy OCID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Protection Policy should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the Protection Policy should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -310,7 +310,7 @@ def change_protection_policy_compartment(ctx, from_json, wait_for_state, max_wai
 
 @recovery_service_subnet_group.command(name=cli_util.override('recovery.change_recovery_service_subnet_compartment.command_name', 'change-compartment'), help=u"""Moves a recovery service subnet resource from the existing compartment to the specified compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeRecoveryServiceSubnetCompartment)""")
 @cli_util.option('--recovery-service-subnet-id', required=True, help=u"""The recovery service subnet OCID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Recovery Service subnet should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the Recovery Service subnet should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -375,14 +375,14 @@ def change_recovery_service_subnet_compartment(ctx, from_json, wait_for_state, m
 @cli_util.option('--password', required=True, help=u"""Password credential which can be used to connect to Protected Database. It must contain at least 2 uppercase, 2 lowercase, 2 numeric and 2 special characters. The special characters must be underscore (_), number sign (#) or hyphen (-). The password must not contain the username \"admin\", regardless of casing.""")
 @cli_util.option('--protection-policy-id', required=True, help=u"""The OCID of the protection policy associated with the protected database.""")
 @cli_util.option('--recovery-service-subnets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of recovery service subnet resources associated with the protected database.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the protected database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the protected database.""")
 @cli_util.option('--database-size', type=custom_types.CliCaseInsensitiveChoice(["XS", "S", "M", "L", "XL", "XXL", "AUTO"]), help=u"""The size of the protected database. XS - Less than 5GB, S - 5GB to 50GB, M - 50GB to 500GB, L - 500GB to 1TB, XL - 1TB to 5TB, XXL - Greater than 5TB.""")
-@cli_util.option('--database-id', help=u"""The OCID of the protected database.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""The OCID of the protected database.""")
 @cli_util.option('--database-size-in-gbs', type=click.INT, help=u"""The size of the database, in gigabytes.""")
 @cli_util.option('--change-rate', help=u"""The percentage of data changes that exist in the database between successive incremental backups.""")
 @cli_util.option('--compression-ratio', help=u"""The compression ratio of the protected database. The compression ratio represents the ratio of compressed block size to expanded block size.""")
 @cli_util.option('--is-redo-logs-shipped', type=click.BOOL, help=u"""The value TRUE indicates that the protected database is configured to use Real-time data protection, and redo-data is sent from the protected database to Recovery Service. Real-time data protection substantially reduces the window of potential data loss that exists between successive archived redo log backups.""")
-@cli_util.option('--subscription-id', help=u"""The OCID of the cloud service subscription to which you want to link the protected database. For example, specify the Microsoft Azure subscription ID if you want to provision the protected database in Azure.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cloud service subscription to which you want to link the protected database. For example, specify the Microsoft Azure subscription ID if you want to provision the protected database in Azure.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. For more information, see [Resource Tags]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates if the request is to test the preparedness for creating a protected database, without actually creating a protected database.
@@ -484,7 +484,7 @@ def create_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @protection_policy_group.command(name=cli_util.override('recovery.create_protection_policy.command_name', 'create'), help=u"""Creates a new Protection Policy. \n[Command Reference](createProtectionPolicy)""")
 @cli_util.option('--display-name', required=True, help=u"""A user provided name for the protection policy. The 'displayName' does not have to be unique, and it can be modified. Avoid entering confidential information.""")
 @cli_util.option('--backup-retention-period-in-days', required=True, type=click.INT, help=u"""The maximum number of days to retain backups for a protected database.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier""")
 @cli_util.option('--must-enforce-cloud-locality', type=click.BOOL, help=u"""Indicates whether the protection policy enforces Recovery Service to retain backups in the same cloud service environment where your Oracle Database is provisioned. This parameter is applicable if your Oracle Database runs in a different cloud service environment, such as Microsoft Azure. If you set the mustEnforceCloudLocality parameter to TRUE, then Recovery Service stores the database backups locally in the same cloud service environment where the database resides. For example, if your Oracle Database is provisioned on Microsoft Azure, then Recovery Service stores the database backups in Azure. Note: You cannot change the mustEnforceCloudLocality setting for a protection policy after you create it.""")
 @cli_util.option('--policy-locked-date-time', help=u"""An RFC3339 formatted datetime string that specifies the exact date and time for the retention lock to take effect and permanently lock the retention period defined in the policy.
 
@@ -558,9 +558,9 @@ def create_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @recovery_service_subnet_group.command(name=cli_util.override('recovery.create_recovery_service_subnet.command_name', 'create'), help=u"""Creates a new Recovery Service Subnet. \n[Command Reference](createRecoveryServiceSubnet)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-provided name for the recovery service subnet. The 'displayName' does not have to be unique, and it can be modified. Avoid entering confidential information.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the virtual cloud network (VCN) that contains the recovery service subnet. You can create a single recovery service subnet per VCN.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
-@cli_util.option('--subnet-id', help=u"""Deprecated. One of the subnets associated with the Recovery Service subnet.""")
+@cli_util.option('--vcn-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the virtual cloud network (VCN) that contains the recovery service subnet. You can create a single recovery service subnet per VCN.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. One of the subnets associated with the Recovery Service subnet.""")
 @cli_util.option('--subnets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of OCIDs of the subnets associated with the Recovery Service subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of network security group (NSG) OCIDs that are associated with the Recovery Service subnet. You can specify a maximum of 5 unique OCIDs, which implies that you can associate a maximum of 5 NSGs to each Recovery Service subnet. Specify an empty array if you want to remove all the associated NSGs from a Recovery Service subnet. See [Network Security Groups] for more information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -949,7 +949,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @protected_database_collection_group.command(name=cli_util.override('recovery.list_protected_databases.command_name', 'list-protected-databases'), help=u"""Lists the protected databases based on the specified parameters. \n[Command Reference](listProtectedDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETE_SCHEDULED", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire 'displayname' given.""")
 @cli_util.option('--id', help=u"""The protected database OCID.""")
@@ -1018,7 +1018,7 @@ def list_protected_databases(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @protection_policy_collection_group.command(name=cli_util.override('recovery.list_protection_policies.command_name', 'list-protection-policies'), help=u"""Gets a list of protection policies based on the specified parameters. \n[Command Reference](listProtectionPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETE_SCHEDULED", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire 'displayname' given.""")
 @cli_util.option('--protection-policy-id', help=u"""The protection policy OCID.""")
@@ -1084,11 +1084,11 @@ def list_protection_policies(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @recovery_service_subnet_collection_group.command(name=cli_util.override('recovery.list_recovery_service_subnets.command_name', 'list-recovery-service-subnets'), help=u"""Returns a list of Recovery Service Subnets. \n[Command Reference](listRecoveryServiceSubnets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETE_SCHEDULED", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire 'displayname' given.""")
 @cli_util.option('--id', help=u"""The recovery service subnet OCID.""")
-@cli_util.option('--vcn-id', help=u"""The OCID of the virtual cloud network (VCN) associated with the recovery service subnet.""")
+@cli_util.option('--vcn-id', type=custom_types.CLI_OCID, help=u"""The OCID of the virtual cloud network (VCN) associated with the recovery service subnet.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC). Allowed values are:   - ASC   - DESC""")
@@ -1264,7 +1264,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_summary_collection_group.command(name=cli_util.override('recovery.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment OCID.""")
 @cli_util.option('--work-request-id', help=u"""Unique Oracle-assigned identifier of the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")

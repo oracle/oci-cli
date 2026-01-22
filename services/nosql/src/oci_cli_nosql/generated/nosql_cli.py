@@ -138,7 +138,7 @@ def change_table_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--name', required=True, help=u"""Index name.""")
 @cli_util.option('--keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A set of keys for a secondary index.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The OCID of the table's compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the table's compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
 @cli_util.option('--is-if-not-exists', type=click.BOOL, help=u"""If true, the operation completes successfully even when the index exists.  Otherwise, an attempt to create an index that already exists will return an error.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -205,7 +205,7 @@ def create_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @table_group.command(name=cli_util.override('nosql.create_replica.command_name', 'create-replica'), help=u"""Add a replica for this table. The table's schema must be frozen prior to this operation. \n[Command Reference](createReplica)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--region-parameterconflict', required=True, help=u"""Name of the remote region in standard OCI format, i.e. us-ashburn-1""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the table's compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the table's compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
 @cli_util.option('--max-read-units', type=click.INT, help=u"""Maximum sustained read throughput limit for the new replica table. If not specified, the local table's read limit is used.""")
 @cli_util.option('--max-write-units', type=click.INT, help=u"""Maximum sustained write throughput limit for the new replica table. If not specified, the local table's write limit is used.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -277,7 +277,7 @@ def create_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 @table_group.command(name=cli_util.override('nosql.create_table.command_name', 'create'), help=u"""Create a new table. \n[Command Reference](createTable)""")
 @cli_util.option('--name', required=True, help=u"""Table name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--ddl-statement', required=True, help=u"""Complete CREATE TABLE DDL statement.""")
 @cli_util.option('--table-limits', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-reclaimable', type=click.BOOL, help=u"""True if table can be reclaimed after an idle period.""")
@@ -351,7 +351,7 @@ def create_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @index_group.command(name=cli_util.override('nosql.delete_index.command_name', 'delete'), help=u"""Delete an index from the table identified by tableNameOrId. \n[Command Reference](deleteIndex)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--index-name', required=True, help=u"""The name of a table's index.""")
-@cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @cli_util.option('--is-if-exists', type=click.BOOL, help=u"""Set as true to select \"if exists\" behavior.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -418,7 +418,7 @@ def delete_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @table_group.command(name=cli_util.override('nosql.delete_replica.command_name', 'delete-replica'), help=u"""Delete the specified replica table in the remote region. \n[Command Reference](deleteReplica)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--region-parameterconflict', required=True, help=u"""A customer-facing region identifier""")
-@cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -482,7 +482,7 @@ def delete_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @row_group.command(name=cli_util.override('nosql.delete_row.command_name', 'delete'), help=u"""Delete a single row from the table, by primary key. \n[Command Reference](deleteRow)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--key', required=True, multiple=True, help=u"""An array of strings, each of the format \"column-name:value\", representing the primary key of the row.""")
-@cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @cli_util.option('--is-get-return-row', type=click.BOOL, help=u"""If true, and the operation fails due to an option setting (ifVersion et al), then the existing row will be returned.""")
 @cli_util.option('--timeout-in-ms', type=click.INT, help=u"""Timeout setting for this operation.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -518,7 +518,7 @@ def delete_row(ctx, from_json, table_name_or_id, key, compartment_id, is_get_ret
 
 @table_group.command(name=cli_util.override('nosql.delete_table.command_name', 'delete'), help=u"""Delete a table by tableNameOrId. \n[Command Reference](deleteTable)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
-@cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @cli_util.option('--is-if-exists', type=click.BOOL, help=u"""Set as true to select \"if exists\" behavior.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -635,7 +635,7 @@ def delete_work_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 
 @configuration_group.command(name=cli_util.override('nosql.get_configuration.command_name', 'get'), help=u"""Retrieves the current service-level configuration.  The service may of the standard MULTI_TENANCY type, or of the HOSTED environment type.  In the latter case, information about the current state of the environment's global encryption key is included in the response. \n[Command Reference](getConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -656,7 +656,7 @@ def get_configuration(ctx, from_json, compartment_id):
 @index_group.command(name=cli_util.override('nosql.get_index.command_name', 'get'), help=u"""Get information about a single index. \n[Command Reference](getIndex)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--index-name', required=True, help=u"""The name of a table's index.""")
-@cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -686,7 +686,7 @@ def get_index(ctx, from_json, table_name_or_id, index_name, compartment_id):
 @row_group.command(name=cli_util.override('nosql.get_row.command_name', 'get'), help=u"""Get a single row from the table by primary key. \n[Command Reference](getRow)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--key', required=True, multiple=True, help=u"""An array of strings, each of the format \"column-name:value\", representing the primary key of the row.""")
-@cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @cli_util.option('--consistency', type=custom_types.CliCaseInsensitiveChoice(["EVENTUAL", "ABSOLUTE"]), help=u"""Consistency requirement for a read operation.""")
 @cli_util.option('--timeout-in-ms', type=click.INT, help=u"""Timeout setting for this operation.""")
 @json_skeleton_utils.get_cli_json_input_option({'key': {'module': 'nosql', 'class': 'list[string]'}})
@@ -718,7 +718,7 @@ def get_row(ctx, from_json, table_name_or_id, key, compartment_id, consistency, 
 
 @table_group.command(name=cli_util.override('nosql.get_table.command_name', 'get'), help=u"""Get table info by identifier. \n[Command Reference](getTable)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
-@cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -765,7 +765,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @index_group.command(name=cli_util.override('nosql.list_indexes.command_name', 'list'), help=u"""Get a list of indexes on a table. \n[Command Reference](listIndexes)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
-@cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @cli_util.option('--name', help=u"""A shell-globbing-style (*?[]) filter for names.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ALL", "CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""Filter list by the lifecycle state of the item.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -831,7 +831,7 @@ def list_indexes(ctx, from_json, all_pages, page_size, table_name_or_id, compart
 
 @table_group.command(name=cli_util.override('nosql.list_table_usage.command_name', 'list-table-usage'), help=u"""Get table usage info. \n[Command Reference](listTableUsage)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
-@cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start time to use for the request. If no time range is set for this request, the most recent complete usage record is returned.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end time to use for the request.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -890,7 +890,7 @@ def list_table_usage(ctx, from_json, all_pages, page_size, table_name_or_id, com
 
 
 @table_group.command(name=cli_util.override('nosql.list_tables.command_name', 'list'), help=u"""Get a list of tables in a compartment. \n[Command Reference](listTables)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--name', help=u"""A shell-globbing-style (*?[]) filter for names.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1052,7 +1052,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('nosql.list_work_requests.command_name', 'list'), help=u"""List the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1100,7 +1100,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 
 
 @query_result_collection_group.command(name=cli_util.override('nosql.prepare_statement.command_name', 'prepare-statement'), help=u"""Prepare a SQL statement for use in a query with variable substitution. \n[Command Reference](prepareStatement)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--statement', required=True, help=u"""A NoSQL SQL statement.""")
 @cli_util.option('--is-get-query-plan', type=click.BOOL, help=u"""Include a query execution plan in the result.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1124,7 +1124,7 @@ def prepare_statement(ctx, from_json, compartment_id, statement, is_get_query_pl
 
 
 @query_result_collection_group.command(name=cli_util.override('nosql.query.command_name', 'query'), help=u"""Execute a SQL query. \n[Command Reference](query)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID, to provide context for a table name in the given statement.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID, to provide context for a table name in the given statement.""")
 @cli_util.option('--statement', required=True, help=u"""A NoSQL SQL query statement; or a Base64-encoded prepared statement.""")
 @cli_util.option('--is-prepared', type=click.BOOL, help=u"""If true, the statement is a prepared statement.""")
 @cli_util.option('--consistency', type=custom_types.CliCaseInsensitiveChoice(["EVENTUAL", "ABSOLUTE"]), help=u"""Consistency requirement for a read operation.""")
@@ -1175,7 +1175,7 @@ def query(ctx, from_json, compartment_id, statement, is_prepared, consistency, m
 
 
 @query_result_collection_group.command(name=cli_util.override('nosql.summarize_statement.command_name', 'summarize-statement'), help=u"""Check the syntax and return a brief summary of a SQL statement. \n[Command Reference](summarizeStatement)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--statement', required=True, help=u"""A NoSQL SQL statement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1196,7 +1196,7 @@ def summarize_statement(ctx, from_json, compartment_id, statement):
 
 
 @configuration_group.command(name=cli_util.override('nosql.unassign_kms_key.command_name', 'unassign-kms-key'), help=u"""Removes the global encryption key, if such exists, from a Hosted Environment, reverting to Oracle-managed encryption. \n[Command Reference](unassignKmsKey)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-opc-dry-run', type=click.BOOL, help=u"""If true, indicates that the request is a dry run A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1251,7 +1251,7 @@ def unassign_kms_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @configuration_group.command(name=cli_util.override('nosql.update_configuration.command_name', 'update'), help=u"""Updates the service-level configuration.  The discriminator value `UpdateConfigurationDetails.environment` must match the service's environment type. \n[Command Reference](updateConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--environment', required=True, type=custom_types.CliCaseInsensitiveChoice(["MULTI_TENANCY", "HOSTED"]), help=u"""The service environment type.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-opc-dry-run', type=click.BOOL, help=u"""If true, indicates that the request is a dry run A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
@@ -1312,7 +1312,7 @@ def update_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @configuration_group.command(name=cli_util.override('nosql.update_configuration_update_multi_tenancy_configuration_details.command_name', 'update-configuration-update-multi-tenancy-configuration-details'), help=u"""Updates the service-level configuration.  The discriminator value `UpdateConfigurationDetails.environment` must match the service's environment type. \n[Command Reference](updateConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-opc-dry-run', type=click.BOOL, help=u"""If true, indicates that the request is a dry run A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1373,7 +1373,7 @@ def update_configuration_update_multi_tenancy_configuration_details(ctx, from_js
 
 
 @configuration_group.command(name=cli_util.override('nosql.update_configuration_update_hosted_configuration_details.command_name', 'update-configuration-update-hosted-configuration-details'), help=u"""Updates the service-level configuration.  The discriminator value `UpdateConfigurationDetails.environment` must match the service's environment type. \n[Command Reference](updateConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--kms-key', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-opc-dry-run', type=click.BOOL, help=u"""If true, indicates that the request is a dry run A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
@@ -1443,7 +1443,7 @@ def update_configuration_update_hosted_configuration_details(ctx, from_json, for
 @row_group.command(name=cli_util.override('nosql.update_row.command_name', 'update'), help=u"""Write a single row into the table. \n[Command Reference](updateRow)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--value', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of values from a row.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The OCID of the table's compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the table's compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
 @cli_util.option('--option', type=custom_types.CliCaseInsensitiveChoice(["IF_ABSENT", "IF_PRESENT"]), help=u"""Specifies a condition for the put operation.""")
 @cli_util.option('--is-get-return-row', type=click.BOOL, help=u"""If true, and the put fails due to an option setting, then the existing row will be returned.""")
 @cli_util.option('--timeout-in-ms', type=click.INT, help=u"""Timeout setting for the put.""")
@@ -1510,7 +1510,7 @@ def update_row(ctx, from_json, force, table_name_or_id, value, compartment_id, o
 
 @table_group.command(name=cli_util.override('nosql.update_table.command_name', 'update'), help=u"""Alter the table identified by tableNameOrId, changing schema, limits, or tags \n[Command Reference](updateTable)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the table's current compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the table's current compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
 @cli_util.option('--ddl-statement', help=u"""Complete ALTER TABLE DDL statement.""")
 @cli_util.option('--table-limits', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

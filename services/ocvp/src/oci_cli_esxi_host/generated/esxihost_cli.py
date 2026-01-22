@@ -59,7 +59,7 @@ Avoid entering confidential information.""")
 @cli_util.option('--compute-availability-domain', help=u"""The availability domain to create the ESXi host in. If keep empty, for AD-specific Cluster, new ESXi host will be created in the same availability domain; for multi-AD Cluster, new ESXi host will be auto assigned to the next availability domain following evenly distribution strategy.""")
 @cli_util.option('--host-shape-name', help=u"""The compute shape name of the ESXi host. [ListSupportedHostShapes].""")
 @cli_util.option('--host-ocpu-count', type=click.FLOAT, help=u"""The OCPU count of the ESXi host.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The [OCID] of the Capacity Reservation.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Capacity Reservation.""")
 @cli_util.option('--esxi-software-version', help=u"""The ESXi software bundle to install on the ESXi host. Only versions under the same vmwareSoftwareVersion and have been validate by Oracle Cloud VMware Solution will be accepted. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -306,7 +306,7 @@ Remember that in terms of implementation, an ESXi host is a Compute instance tha
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of the resource.""")
 @cli_util.option('--is-billing-donors-only', type=click.BOOL, help=u"""If this flag/param is set to True, we return only deleted hosts with LeftOver billingCycle.""")
 @cli_util.option('--is-swap-billing-only', type=click.BOOL, help=u"""If this flag/param is set to True, we return only active hosts.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment as optional parameter.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment as optional parameter.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})

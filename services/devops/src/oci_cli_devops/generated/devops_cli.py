@@ -545,7 +545,7 @@ def cancel_scheduled_cascading_project_deletion(ctx, from_json, wait_for_state, 
 
 @project_group.command(name=cli_util.override('devops.change_project_compartment.command_name', 'change-compartment'), help=u"""Moves a project resource from one compartment OCID to another. \n[Command Reference](changeProjectCompartment)""")
 @cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the resource must be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to which the resource must be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -4821,7 +4821,7 @@ def create_or_update_protected_branch(ctx, from_json, repository_id, branch_name
 @project_group.command(name=cli_util.override('devops.create_project.command_name', 'create'), help=u"""Creates a new project. \n[Command Reference](createProject)""")
 @cli_util.option('--name', required=True, help=u"""Project name (case-sensitive).""")
 @cli_util.option('--notification-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the project is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the project is created.""")
 @cli_util.option('--description', help=u"""Project description.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7685,7 +7685,7 @@ def list_authors(ctx, from_json, all_pages, page_size, repository_id, ref_name, 
 @build_pipeline_stage_summary_group.command(name=cli_util.override('devops.list_build_pipeline_stages.command_name', 'list-build-pipeline-stages'), help=u"""Returns a list of all stages in a compartment or build pipeline. \n[Command Reference](listBuildPipelineStages)""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
 @cli_util.option('--build-pipeline-id', help=u"""The OCID of the parent build pipeline.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return the stages that matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -7750,7 +7750,7 @@ def list_build_pipeline_stages(ctx, from_json, all_pages, page_size, id, build_p
 @build_pipeline_collection_group.command(name=cli_util.override('devops.list_build_pipelines.command_name', 'list-build-pipelines'), help=u"""Returns a list of build pipelines. \n[Command Reference](listBuildPipelines)""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
 @cli_util.option('--project-id', help=u"""unique project identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only build pipelines that matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -7882,7 +7882,7 @@ def list_build_run_snapshots(ctx, from_json, all_pages, page_size, pull_request_
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
 @cli_util.option('--build-pipeline-id', help=u"""Unique build pipeline identifier.""")
 @cli_util.option('--project-id', help=u"""unique project identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETING"]), help=u"""A filter to return only build runs that matches the given lifecycle state.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -8086,7 +8086,7 @@ def list_commits(ctx, from_json, all_pages, page_size, repository_id, ref_name, 
 @connection_collection_group.command(name=cli_util.override('devops.list_connections.command_name', 'list-connections'), help=u"""Returns a list of connections. \n[Command Reference](listConnections)""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
 @cli_util.option('--project-id', help=u"""unique project identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING"]), help=u"""A filter to return only connections that matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GITHUB_ACCESS_TOKEN", "GITLAB_ACCESS_TOKEN", "GITLAB_SERVER_ACCESS_TOKEN", "BITBUCKET_SERVER_ACCESS_TOKEN", "BITBUCKET_CLOUD_APP_PASSWORD", "VBS_ACCESS_TOKEN"]), help=u"""A filter to return only resources that match the given connection type.""")
@@ -8154,7 +8154,7 @@ def list_connections(ctx, from_json, all_pages, page_size, id, project_id, compa
 @deploy_artifact_summary_group.command(name=cli_util.override('devops.list_deploy_artifacts.command_name', 'list-deploy-artifacts'), help=u"""Returns a list of deployment artifacts. \n[Command Reference](listDeployArtifacts)""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
 @cli_util.option('--project-id', help=u"""unique project identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only DeployArtifacts that matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -8218,7 +8218,7 @@ def list_deploy_artifacts(ctx, from_json, all_pages, page_size, id, project_id, 
 
 @deploy_environment_summary_group.command(name=cli_util.override('devops.list_deploy_environments.command_name', 'list-deploy-environments'), help=u"""Returns a list of deployment environments. \n[Command Reference](listDeployEnvironments)""")
 @cli_util.option('--project-id', help=u"""unique project identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only DeployEnvironments that matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -8284,7 +8284,7 @@ def list_deploy_environments(ctx, from_json, all_pages, page_size, project_id, c
 @deploy_pipeline_summary_group.command(name=cli_util.override('devops.list_deploy_pipelines.command_name', 'list-deploy-pipelines'), help=u"""Returns a list of deployment pipelines. \n[Command Reference](listDeployPipelines)""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
 @cli_util.option('--project-id', help=u"""unique project identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only DeployPipelines that matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -8349,7 +8349,7 @@ def list_deploy_pipelines(ctx, from_json, all_pages, page_size, id, project_id, 
 @deploy_stage_summary_group.command(name=cli_util.override('devops.list_deploy_stages.command_name', 'list-deploy-stages'), help=u"""Retrieves a list of deployment stages. \n[Command Reference](listDeployStages)""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
 @cli_util.option('--deploy-pipeline-id', help=u"""The ID of the parent pipeline.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only deployment stages that matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -8414,7 +8414,7 @@ def list_deploy_stages(ctx, from_json, all_pages, page_size, id, deploy_pipeline
 @deployment_summary_group.command(name=cli_util.override('devops.list_deployments.command_name', 'list-deployments'), help=u"""Returns a list of deployments. \n[Command Reference](listDeployments)""")
 @cli_util.option('--deploy-pipeline-id', help=u"""The ID of the parent pipeline.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--project-id', help=u"""unique project identifier""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only Deployments that matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -8694,7 +8694,7 @@ def list_project_commit_analytics_authors(ctx, from_json, all_pages, page_size, 
 
 
 @project_summary_group.command(name=cli_util.override('devops.list_projects.command_name', 'list-projects'), help=u"""Returns a list of projects. \n[Command Reference](listProjects)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only Projects that matches the given lifecycleState.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
@@ -8875,7 +8875,7 @@ def list_pull_request_activities(ctx, from_json, all_pages, page_size, pull_requ
 
 @pull_request_group.command(name=cli_util.override('devops.list_pull_request_attachments.command_name', 'list-pull-request-attachments'), help=u"""List PullRequest level attachments by identifier \n[Command Reference](listPullRequestAttachments)""")
 @cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["fileName", "timeCreated", "createdBy"]), help=u"""The field to sort by. Only one sort order may be provided. Default order is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--file-name', help=u"""A filter to return only resources that match the entire file name given.""")
@@ -8992,7 +8992,7 @@ def list_pull_request_authors(ctx, from_json, all_pages, page_size, repository_i
 
 @pull_request_group.command(name=cli_util.override('devops.list_pull_request_comments.command_name', 'list-pull-request-comments'), help=u"""List PullRequest level comments by identifier \n[Command Reference](listPullRequestComments)""")
 @cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "createdBy"]), help=u"""The field to sort by. Only one sort order may be provided. Default order is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--comment-id', help=u"""unique PullRequest Comment identifier""")
@@ -9060,7 +9060,7 @@ def list_pull_request_comments(ctx, from_json, all_pages, page_size, pull_reques
 
 
 @pull_request_collection_group.command(name=cli_util.override('devops.list_pull_requests.command_name', 'list-pull-requests'), help=u"""Returns a list of PullRequests. \n[Command Reference](listPullRequests)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only pull requests that match the given lifecycle state.""")
 @cli_util.option('--lifecycle-details', type=custom_types.CliCaseInsensitiveChoice(["OPEN", "CONFLICT", "CLOSED", "MERGING", "MERGED"]), help=u"""A filter to return only pull requests that match the given lifecycle state.""")
 @cli_util.option('--repository-id', help=u"""The OCID of the repository in which to list resources.""")
@@ -9209,7 +9209,7 @@ def list_refs(ctx, from_json, all_pages, page_size, repository_id, ref_type, com
 
 
 @repository_group.command(name=cli_util.override('devops.list_repositories.command_name', 'list'), help=u"""Returns a list of repositories given a compartment ID or a project ID. \n[Command Reference](listRepositories)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--project-id', help=u"""unique project identifier""")
 @cli_util.option('--repository-id', help=u"""Unique repository identifier.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "FAILED", "DELETING"]), help=u"""A filter to return only resources whose lifecycle state matches the given lifecycle state.""")
@@ -9331,7 +9331,7 @@ def list_repository_commit_analytics_authors(ctx, from_json, all_pages, page_siz
 
 
 @trigger_collection_group.command(name=cli_util.override('devops.list_triggers.command_name', 'list-triggers'), help=u"""Returns a list of triggers. \n[Command Reference](listTriggers)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--project-id', help=u"""unique project identifier""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING"]), help=u"""A filter to return only triggers that matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -9510,7 +9510,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('devops.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources where the lifecycle state matches the given operation status.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")

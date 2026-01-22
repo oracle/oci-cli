@@ -178,7 +178,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('work_request.list_work_requests.command_name', 'list'), help=u"""Lists work requests that match the specified compartment or work request OCID. Filter the list against a variety of criteria including but not limited to its name, status, and operation type. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help=u"""A filter to return work requests that match the given status.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource. This filter returns resources associated with the specified resource.""")

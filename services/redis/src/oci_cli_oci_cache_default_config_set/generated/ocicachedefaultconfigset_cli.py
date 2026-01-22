@@ -40,7 +40,7 @@ oci_cache_default_config_set_root_group.add_command(oci_cache_default_config_set
 
 
 @oci_cache_default_config_set_group.command(name=cli_util.override('oci_cache_default_config_set.get_oci_cache_default_config_set.command_name', 'get'), help=u"""Retrieves the specified OCI Cache Default Config Set. \n[Command Reference](getOciCacheDefaultConfigSet)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--oci-cache-default-config-set-id', required=True, help=u"""Unique OCI Cache Default Config Set identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -64,7 +64,7 @@ def get_oci_cache_default_config_set(ctx, from_json, compartment_id, oci_cache_d
 
 
 @oci_cache_default_config_set_summary_group.command(name=cli_util.override('oci_cache_default_config_set.list_oci_cache_default_config_sets.command_name', 'list-oci-cache-default-config-sets'), help=u"""Lists the OCI Cache Default Config Sets in the specified compartment. \n[Command Reference](listOciCacheDefaultConfigSets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--id', help=u"""Unique OCI Cache Default Config Set identifier.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""A filter to return the OCI Cache Default Config Set resources, whose lifecycle state matches with the given lifecycle state.""")
 @cli_util.option('--software-version', type=custom_types.CliCaseInsensitiveChoice(["V7_0_5", "REDIS_7_0", "VALKEY_7_2"]), help=u"""A filter to return the OCI Cache Config Set resources, whose software version matches with the given software version.""")

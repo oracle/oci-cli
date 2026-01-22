@@ -77,7 +77,7 @@ health_checks_root_group.add_command(http_probe_group)
 
 @http_monitor_group.command(name=cli_util.override('health_checks.change_http_monitor_compartment.command_name', 'change-compartment'), help=u"""Moves a monitor into a different compartment. When provided, `If-Match` is checked against ETag values of the resource. \n[Command Reference](changeHttpMonitorCompartment)""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of a monitor.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -108,7 +108,7 @@ def change_http_monitor_compartment(ctx, from_json, monitor_id, compartment_id, 
 
 @ping_monitor_group.command(name=cli_util.override('health_checks.change_ping_monitor_compartment.command_name', 'change-compartment'), help=u"""Moves a monitor into a different compartment. When provided, `If-Match` is checked against ETag values of the resource. \n[Command Reference](changePingMonitorCompartment)""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of a monitor.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -138,7 +138,7 @@ def change_ping_monitor_compartment(ctx, from_json, monitor_id, compartment_id, 
 
 
 @http_monitor_group.command(name=cli_util.override('health_checks.create_http_monitor.command_name', 'create'), help=u"""Creates an HTTP monitor. Vantage points will be automatically selected if not specified, and probes will be initiated from each vantage point to each of the targets at the frequency specified by `intervalInSeconds`. \n[Command Reference](createHttpMonitor)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of targets (hostnames or IP addresses) of the probe.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help=u"""""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly and mutable name suitable for display in a user interface.""")
@@ -209,7 +209,7 @@ def create_http_monitor(ctx, from_json, compartment_id, targets, protocol, displ
 @http_probe_group.command(name=cli_util.override('health_checks.create_on_demand_http_probe.command_name', 'create-on-demand'), help=u"""Creates an on-demand HTTP probe. The location response header contains the URL for fetching the probe results.
 
 *Note:* On-demand probe configurations are not saved. \n[Command Reference](createOnDemandHttpProbe)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of targets (hostnames or IP addresses) of the probe.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help=u"""""")
 @cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of names of vantage points from which to execute the probe.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -264,7 +264,7 @@ def create_on_demand_http_probe(ctx, from_json, compartment_id, targets, protoco
 @ping_probe_group.command(name=cli_util.override('health_checks.create_on_demand_ping_probe.command_name', 'create-on-demand'), help=u"""Creates an on-demand ping probe. The location response header contains the URL for fetching probe results.
 
 *Note:* The on-demand probe configuration is not saved. \n[Command Reference](createOnDemandPingProbe)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of targets (hostnames or IP addresses) of the probe.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["ICMP", "TCP"]), help=u"""""")
 @cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of names of vantage points from which to execute the probe.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -303,7 +303,7 @@ def create_on_demand_ping_probe(ctx, from_json, compartment_id, targets, protoco
 
 
 @ping_monitor_group.command(name=cli_util.override('health_checks.create_ping_monitor.command_name', 'create'), help=u"""Creates a ping monitor. Vantage points will be automatically selected if not specified, and probes will be initiated from each vantage point to each of the targets at the frequency specified by `intervalInSeconds`. \n[Command Reference](createPingMonitor)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of targets (hostnames or IP addresses) of the probe.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["ICMP", "TCP"]), help=u"""""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly and mutable name suitable for display in a user interface.""")
@@ -516,7 +516,7 @@ def list_health_checks_vantage_points(ctx, from_json, all_pages, page_size, limi
 
 
 @http_monitor_group.command(name=cli_util.override('health_checks.list_http_monitors.command_name', 'list'), help=u"""Gets a list of HTTP monitors. \n[Command Reference](listHttpMonitors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Filters results by compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Filters results by compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "displayName", "timeCreated"]), help=u"""The field to sort by when listing monitors.""")
@@ -641,7 +641,7 @@ def list_http_probe_results(ctx, from_json, all_pages, page_size, probe_configur
 @ping_monitor_group.command(name=cli_util.override('health_checks.list_ping_monitors.command_name', 'list'), help=u"""Gets a list of configured ping monitors.
 
 Results are paginated based on `page` and `limit`.  The `opc-next-page` header provides a URL for fetching the next page. \n[Command Reference](listPingMonitors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Filters results by compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Filters results by compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "displayName", "timeCreated"]), help=u"""The field to sort by when listing monitors.""")

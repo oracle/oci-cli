@@ -184,7 +184,7 @@ def add_oracle_managed_custom_endpoint(ctx, from_json, wait_for_state, max_wait_
 
 @integration_instance_group.command(name=cli_util.override('integration.change_integration_instance_compartment.command_name', 'change-compartment'), help=u"""Change the compartment for an integration instance \n[Command Reference](changeIntegrationInstanceCompartment)""")
 @cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
-@cli_util.option('--compartment-id', help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -652,7 +652,7 @@ def convert_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 @integration_instance_group.command(name=cli_util.override('integration.create_integration_instance.command_name', 'create'), help=u"""Creates a new Integration Instance. \n[Command Reference](createIntegrationInstance)""")
 @cli_util.option('--display-name', required=True, help=u"""Integration Instance Identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--integration-instance-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE", "STANDARDX", "ENTERPRISEX", "HEALTHCARE"]), help=u"""Standard or Enterprise type, Oracle Integration Generation 2 uses ENTERPRISE and STANDARD, Oracle Integration 3 uses ENTERPRISEX and STANDARDX""")
 @cli_util.option('--is-byol', required=True, type=click.BOOL, help=u"""Bring your own license.""")
 @cli_util.option('--message-packs', required=True, type=click.INT, help=u"""The number of configured message packs""")
@@ -769,7 +769,7 @@ def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
 
 @integration_instance_group.command(name=cli_util.override('integration.create_integration_instance_public_endpoint_details.command_name', 'create-integration-instance-public-endpoint-details'), help=u"""Creates a new Integration Instance. \n[Command Reference](createIntegrationInstance)""")
 @cli_util.option('--display-name', required=True, help=u"""Integration Instance Identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--integration-instance-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE", "STANDARDX", "ENTERPRISEX", "HEALTHCARE"]), help=u"""Standard or Enterprise type, Oracle Integration Generation 2 uses ENTERPRISE and STANDARD, Oracle Integration 3 uses ENTERPRISEX and STANDARDX""")
 @cli_util.option('--is-byol', required=True, type=click.BOOL, help=u"""Bring your own license.""")
 @cli_util.option('--message-packs', required=True, type=click.INT, help=u"""The number of configured message packs""")
@@ -1232,7 +1232,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @integration_instance_group.command(name=cli_util.override('integration.list_integration_instances.command_name', 'list'), help=u"""Returns a list of Integration Instances. \n[Command Reference](listIntegrationInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -1294,7 +1294,7 @@ def list_integration_instances(ctx, from_json, all_pages, page_size, compartment
 
 
 @work_request_error_group.command(name=cli_util.override('integration.list_work_request_errors.command_name', 'list'), help=u"""Get the errors of a work request. \n[Command Reference](listWorkRequestErrors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1349,7 +1349,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @work_request_log_entry_group.command(name=cli_util.override('integration.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Get the logs of a work request. \n[Command Reference](listWorkRequestLogs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1404,7 +1404,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @work_request_group.command(name=cli_util.override('integration.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--integration-instance-id', help=u"""The Integration Instance identifier to use to filter results""")

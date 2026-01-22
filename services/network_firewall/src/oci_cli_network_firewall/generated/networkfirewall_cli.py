@@ -966,7 +966,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @network_firewall_group.command(name=cli_util.override('network_firewall.change_network_firewall_compartment.command_name', 'change-compartment'), help=u"""Moves a NetworkFirewall resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeNetworkFirewallCompartment)""")
 @cli_util.option('--network-firewall-id', required=True, help=u"""The [OCID] of the Network Firewall resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Network Firewalll resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the Network Firewalll resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "NEEDS_ATTENTION", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1027,7 +1027,7 @@ def change_network_firewall_compartment(ctx, from_json, wait_for_state, max_wait
 
 @network_firewall_policy_group.command(name=cli_util.override('network_firewall.change_network_firewall_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a NetworkFirewallPolicy resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeNetworkFirewallPolicyCompartment)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1059,7 +1059,7 @@ def change_network_firewall_policy_compartment(ctx, from_json, network_firewall_
 @network_firewall_policy_group.command(name=cli_util.override('network_firewall.clone_network_firewall_policy.command_name', 'clone'), help=u"""Clones a NetworkFirewallPolicy resource from an existing Network Firewall Policy. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](cloneNetworkFirewallPolicy)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly optional name for the cloned firewall policy. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the NetworkFirewall Policy.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the NetworkFirewall Policy.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1638,8 +1638,8 @@ def create_nat_rule_create_nat_v4_rule_details(ctx, from_json, network_firewall_
 
 
 @network_firewall_group.command(name=cli_util.override('network_firewall.create_network_firewall.command_name', 'create'), help=u"""Creates a new NetworkFirewall. \n[Command Reference](createNetworkFirewall)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Network Firewall.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet associated with the Network Firewall.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the Network Firewall.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet associated with the Network Firewall.""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""The [OCID] of the Network Firewall Policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the Network Firewall. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--availability-domain', help=u"""Availability Domain where Network Firewall instance is created. To get a list of availability domains for a tenancy, use [ListAvailabilityDomains] operation. Example: `kIdk:PHX-AD-1`""")
@@ -1727,7 +1727,7 @@ def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @network_firewall_policy_group.command(name=cli_util.override('network_firewall.create_network_firewall_policy.command_name', 'create'), help=u"""Creates a new Network Firewall Policy. \n[Command Reference](createNetworkFirewallPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the NetworkFirewall Policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the NetworkFirewall Policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly optional name for the firewall policy. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3404,7 +3404,7 @@ def list_nat_rules(ctx, from_json, all_pages, page_size, network_firewall_policy
 
 
 @network_firewall_policy_group.command(name=cli_util.override('network_firewall.list_network_firewall_policies.command_name', 'list'), help=u"""Returns a list of Network Firewall Policies. \n[Command Reference](listNetworkFirewallPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3467,7 +3467,7 @@ def list_network_firewall_policies(ctx, from_json, all_pages, page_size, compart
 
 
 @network_firewall_group.command(name=cli_util.override('network_firewall.list_network_firewalls.command_name', 'list'), help=u"""Returns a list of NetworkFirewalls. \n[Command Reference](listNetworkFirewalls)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--network-firewall-policy-id', help=u"""A filter to return only resources that match the entire networkFirewallPolicyId given.""")
 @cli_util.option('--id', help=u"""The [OCID] of the Network Firewall resource.""")
@@ -3958,7 +3958,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('network_firewall.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "NEEDS_ATTENTION", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")

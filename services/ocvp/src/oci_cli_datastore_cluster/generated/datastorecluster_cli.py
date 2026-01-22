@@ -224,7 +224,7 @@ def attach_datastore_cluster_to_esxi_host(ctx, from_json, wait_for_state, max_wa
 
 @datastore_cluster_group.command(name=cli_util.override('datastore_cluster.change_datastore_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves an Datastore Cluster into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDatastoreClusterCompartment)""")
 @cli_util.option('--datastore-cluster-id', required=True, help=u"""The [OCID] of the Datastore Cluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Datastore Cluster to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Datastore Cluster to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -255,7 +255,7 @@ def change_datastore_cluster_compartment(ctx, from_json, datastore_cluster_id, c
 
 @datastore_cluster_group.command(name=cli_util.override('datastore_cluster.create_datastore_cluster.command_name', 'create'), help=u"""Creates a Oracle Cloud VMware Solution Datastore Cluster. \n[Command Reference](createDatastoreCluster)""")
 @cli_util.option('--display-name', required=True, help=u"""A descriptive name for the Datastore Cluster. It must be unique within a SDDC, start with a letter, and contain only letters, digits, whitespaces, dashes and underscores. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the Datastore Cluster.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to contain the Datastore Cluster.""")
 @cli_util.option('--datastore-cluster-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MANAGEMENT", "WORKLOAD"]), help=u"""Type of the datastore.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain to create the Datastore Cluster in.""")
 @cli_util.option('--datastore-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCIDs] of the Datastores that belong to the Datastore Cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -527,7 +527,7 @@ def get_datastore_cluster(ctx, from_json, datastore_cluster_id):
 
 
 @datastore_cluster_group.command(name=cli_util.override('datastore_cluster.list_datastore_clusters.command_name', 'list'), help=u"""List the Datastore Clusters in the specified compartment. The list can be filtered by compartment, Datastore Cluster, Display name and Lifecycle state \n[Command Reference](listDatastoreClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--datastore-cluster-id', help=u"""The [OCID] of the Datastore Cluster.""")
 @cli_util.option('--cluster-id', help=u"""The [OCID] of the SDDC Cluster.""")

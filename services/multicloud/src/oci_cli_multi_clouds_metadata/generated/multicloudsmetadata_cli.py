@@ -40,8 +40,8 @@ multi_clouds_metadata_root_group.add_command(multi_cloud_metadata_group)
 
 
 @multi_cloud_metadata_group.command(name=cli_util.override('multi_clouds_metadata.get_multi_cloud_metadata.command_name', 'get'), help=u"""Gets information about the Multicloud base compartment for a given tenancy Id. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud). \n[Command Reference](getMultiCloudMetadata)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the OCI subscription.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the OCI subscription.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -64,7 +64,7 @@ def get_multi_cloud_metadata(ctx, from_json, compartment_id, subscription_id):
 
 
 @multi_cloud_metadata_collection_group.command(name=cli_util.override('multi_clouds_metadata.list_multi_cloud_metadata.command_name', 'list-multi-cloud-metadata'), help=u"""Gets a list of multicloud metadata with pairs of Multicloud base compartment and subscription across Cloud Service Providers from a tenancy Id. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud). \n[Command Reference](listMultiCloudMetadata)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")

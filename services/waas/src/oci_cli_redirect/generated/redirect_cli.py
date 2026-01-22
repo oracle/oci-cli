@@ -36,7 +36,7 @@ redirect_root_group.add_command(http_redirect_group)
 
 @http_redirect_group.command(name=cli_util.override('redirect.change_http_redirect_compartment.command_name', 'change-compartment'), help=u"""Moves HTTP Redirect into a different compartment. When provided, If-Match is checked against ETag values of the WAAS policy. \n[Command Reference](changeHttpRedirectCompartment)""")
 @cli_util.option('--http-redirect-id', required=True, help=u"""The [OCID] of the HTTP Redirect.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -66,7 +66,7 @@ def change_http_redirect_compartment(ctx, from_json, http_redirect_id, compartme
 
 
 @http_redirect_group.command(name=cli_util.override('redirect.create_http_redirect.command_name', 'create'), help=u"""Creates a new HTTP Redirect on the WAF edge. \n[Command Reference](createHttpRedirect)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the HTTP Redirects compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the HTTP Redirects compartment.""")
 @cli_util.option('--domain', required=True, help=u"""The domain from which traffic will be redirected.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The redirect target object including all the redirect data.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-friendly name of the HTTP Redirect. The name can be changed and does not need to be unique.""")
@@ -221,7 +221,7 @@ def get_http_redirect(ctx, from_json, http_redirect_id):
 
 
 @http_redirect_group.command(name=cli_util.override('redirect.list_http_redirects.command_name', 'list'), help=u"""Gets a list of HTTP Redirects. \n[Command Reference](listHttpRedirects)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. If unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The value of the sorting direction of resources in a paginated 'List' call. If unspecified, defaults to `DESC`.""")

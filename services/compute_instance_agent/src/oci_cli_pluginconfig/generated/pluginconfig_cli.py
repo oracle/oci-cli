@@ -34,7 +34,7 @@ pluginconfig_root_group.add_command(plugin_group)
 
 
 @plugin_group.command(name=cli_util.override('pluginconfig.list_instanceagent_available_plugins.command_name', 'list-instanceagent-available'), help=u"""Lists the Oracle Cloud Agent plugins that are available for compute instances. \n[Command Reference](listInstanceagentAvailablePlugins)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--os-name', required=True, help=u"""The image (OS) for the compute instance.
 
 If no match is found, all plugins are returned.

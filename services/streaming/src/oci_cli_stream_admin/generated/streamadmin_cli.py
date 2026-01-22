@@ -47,8 +47,8 @@ stream_admin_root_group.add_command(connect_harness_group)
 
 
 @connect_harness_group.command(name=cli_util.override('stream_admin.change_connect_harness_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeConnectHarnessCompartment)""")
-@cli_util.option('--connect-harness-id', required=True, help=u"""The OCID of the connect harness.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--connect-harness-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the connect harness.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -78,8 +78,8 @@ def change_connect_harness_compartment(ctx, from_json, connect_harness_id, compa
 
 
 @stream_group.command(name=cli_util.override('stream_admin.change_stream_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. The stream will also be moved into the default stream pool in the destination compartment. \n[Command Reference](changeStreamCompartment)""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--stream-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the stream.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -109,8 +109,8 @@ def change_stream_compartment(ctx, from_json, stream_id, compartment_id, if_matc
 
 
 @stream_pool_group.command(name=cli_util.override('stream_admin.change_stream_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeStreamPoolCompartment)""")
-@cli_util.option('--stream-pool-id', required=True, help=u"""The OCID of the stream pool.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--stream-pool-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the stream pool.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -143,7 +143,7 @@ def change_stream_pool_compartment(ctx, from_json, stream_pool_id, compartment_i
 @cli_util.option('--name', required=True, help=u"""The name of the connect harness. Avoid entering confidential information.
 
 Example: `JDBCConnector`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the connect harness.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the connect harness.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair that is applied with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -209,8 +209,8 @@ def create_connect_harness(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 Example: `TelemetryEvents`""")
 @cli_util.option('--partitions', required=True, type=click.INT, help=u"""The number of partitions in the stream.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the stream.""")
-@cli_util.option('--stream-pool-id', help=u"""The OCID of the stream pool that contains the stream.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the stream.""")
+@cli_util.option('--stream-pool-id', type=custom_types.CLI_OCID, help=u"""The OCID of the stream pool that contains the stream.""")
 @cli_util.option('--retention-in-hours', type=click.INT, help=u"""The retention period of the stream, in hours. Accepted values are between 24 and 168 (7 days). If not specified, the stream will have a retention period of 24 hours.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair that is applied with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
 
@@ -282,7 +282,7 @@ def create_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @stream_pool_group.command(name=cli_util.override('stream_admin.create_stream_pool.command_name', 'create'), help=u"""Starts the provisioning of a new stream pool. To track the progress of the provisioning, you can periodically call GetStreamPool. In the response, the `lifecycleState` parameter of the object tells you its current state. \n[Command Reference](createStreamPool)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the stream.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the stream.""")
 @cli_util.option('--name', required=True, help=u"""The name of the stream pool. Avoid entering confidential information.
 
 Example: `MyStreamPool`""")
@@ -365,7 +365,7 @@ def create_stream_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @connect_harness_group.command(name=cli_util.override('stream_admin.delete_connect_harness.command_name', 'delete'), help=u"""Deletes a connect harness and its content. Connect harness contents are deleted immediately. The service retains records of the connect harness itself for 90 days after deletion. The `lifecycleState` parameter of the `ConnectHarness` object changes to `DELETING` and the connect harness becomes inaccessible for read or write operations. To verify that a connect harness has been deleted, make a [GetConnectHarness] request. If the call returns the connect harness's lifecycle state as `DELETED`, then the connect harness has been deleted. If the call returns a \"404 Not Found\" error, that means all records of the connect harness have been deleted. \n[Command Reference](deleteConnectHarness)""")
-@cli_util.option('--connect-harness-id', required=True, help=u"""The OCID of the connect harness.""")
+@cli_util.option('--connect-harness-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the connect harness.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -429,7 +429,7 @@ def delete_connect_harness(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @stream_group.command(name=cli_util.override('stream_admin.delete_stream.command_name', 'delete'), help=u"""Deletes a stream and its content. Stream contents are deleted immediately. The service retains records of the stream itself for 90 days after deletion. The `lifecycleState` parameter of the `Stream` object changes to `DELETING` and the stream becomes inaccessible for read or write operations. To verify that a stream has been deleted, make a [GetStream] request. If the call returns the stream's lifecycle state as `DELETED`, then the stream has been deleted. If the call returns a \"404 Not Found\" error, that means all records of the stream have been deleted. \n[Command Reference](deleteStream)""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
+@cli_util.option('--stream-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the stream.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -493,7 +493,7 @@ def delete_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @stream_pool_group.command(name=cli_util.override('stream_admin.delete_stream_pool.command_name', 'delete'), help=u"""Deletes a stream pool. All containing streams will also be deleted. The default stream pool of a compartment cannot be deleted. \n[Command Reference](deleteStreamPool)""")
-@cli_util.option('--stream-pool-id', required=True, help=u"""The OCID of the stream pool.""")
+@cli_util.option('--stream-pool-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the stream pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -557,7 +557,7 @@ def delete_stream_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @connect_harness_group.command(name=cli_util.override('stream_admin.get_connect_harness.command_name', 'get'), help=u"""Gets detailed information about a connect harness. \n[Command Reference](getConnectHarness)""")
-@cli_util.option('--connect-harness-id', required=True, help=u"""The OCID of the connect harness.""")
+@cli_util.option('--connect-harness-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the connect harness.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -579,7 +579,7 @@ def get_connect_harness(ctx, from_json, connect_harness_id):
 
 
 @stream_group.command(name=cli_util.override('stream_admin.get_stream.command_name', 'get'), help=u"""Gets detailed information about a stream, including the number of partitions. \n[Command Reference](getStream)""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
+@cli_util.option('--stream-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the stream.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -601,7 +601,7 @@ def get_stream(ctx, from_json, stream_id):
 
 
 @stream_pool_group.command(name=cli_util.override('stream_admin.get_stream_pool.command_name', 'get'), help=u"""Gets detailed information about the stream pool, such as Kafka settings. \n[Command Reference](getStreamPool)""")
-@cli_util.option('--stream-pool-id', required=True, help=u"""The OCID of the stream pool.""")
+@cli_util.option('--stream-pool-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the stream pool.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -623,7 +623,7 @@ def get_stream_pool(ctx, from_json, stream_pool_id):
 
 
 @connect_harness_group.command(name=cli_util.override('stream_admin.list_connect_harnesses.command_name', 'list'), help=u"""Lists the connectharness. \n[Command Reference](listConnectHarnesses)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the given ID exactly.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 50. The default is 10.""")
@@ -686,7 +686,7 @@ def list_connect_harnesses(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @stream_pool_group.command(name=cli_util.override('stream_admin.list_stream_pools.command_name', 'list'), help=u"""List the stream pools for a given compartment ID. \n[Command Reference](listStreamPools)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the given ID exactly.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 50. The default is 10.""")
@@ -749,8 +749,8 @@ def list_stream_pools(ctx, from_json, all_pages, page_size, compartment_id, id, 
 
 
 @stream_group.command(name=cli_util.override('stream_admin.list_streams.command_name', 'list'), help=u"""Lists the streams in the given compartment id. If the compartment id is specified, it will list streams in the compartment, regardless of their stream pool. If the stream pool id is specified, the action will be scoped to that stream pool. The compartment id and stream pool id cannot be specified at the same time. \n[Command Reference](listStreams)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment. Is exclusive with the `streamPoolId` parameter. One of them is required.""")
-@cli_util.option('--stream-pool-id', help=u"""The OCID of the stream pool. Is exclusive with the `compartmentId` parameter. One of them is required.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment. Is exclusive with the `streamPoolId` parameter. One of them is required.""")
+@cli_util.option('--stream-pool-id', type=custom_types.CLI_OCID, help=u"""The OCID of the stream pool. Is exclusive with the `compartmentId` parameter. One of them is required.""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the given ID exactly.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 50. The default is 10.""")
@@ -814,7 +814,7 @@ def list_streams(ctx, from_json, all_pages, page_size, compartment_id, stream_po
 
 
 @connect_harness_group.command(name=cli_util.override('stream_admin.update_connect_harness.command_name', 'update'), help=u"""Updates the tags applied to the connect harness. \n[Command Reference](updateConnectHarness)""")
-@cli_util.option('--connect-harness-id', required=True, help=u"""The OCID of the connect harness.""")
+@cli_util.option('--connect-harness-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the connect harness.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair that is applied with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -886,8 +886,8 @@ def update_connect_harness(ctx, from_json, force, wait_for_state, max_wait_secon
 
 
 @stream_group.command(name=cli_util.override('stream_admin.update_stream.command_name', 'update'), help=u"""Updates the stream. Only specified values will be updated. \n[Command Reference](updateStream)""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
-@cli_util.option('--stream-pool-id', help=u"""The [OCID] of the stream pool where the stream should be moved.""")
+@cli_util.option('--stream-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the stream.""")
+@cli_util.option('--stream-pool-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the stream pool where the stream should be moved.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair that is applied with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -962,7 +962,7 @@ def update_stream(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
 
 @stream_pool_group.command(name=cli_util.override('stream_admin.update_stream_pool.command_name', 'update'), help=u"""Updates the specified stream pool. \n[Command Reference](updateStreamPool)""")
-@cli_util.option('--stream-pool-id', required=True, help=u"""The OCID of the stream pool.""")
+@cli_util.option('--stream-pool-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the stream pool.""")
 @cli_util.option('--name', help=u"""""")
 @cli_util.option('--kafka-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--custom-encryption-key-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

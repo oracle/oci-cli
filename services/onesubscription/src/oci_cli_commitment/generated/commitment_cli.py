@@ -56,7 +56,7 @@ def get_commitment(ctx, from_json, commitment_id):
 
 @commitment_group.command(name=cli_util.override('commitment.list_commitments.command_name', 'list'), help=u"""This list API returns all commitments for a particular Subscribed Service \n[Command Reference](listCommitments)""")
 @cli_util.option('--subscribed-service-id', required=True, help=u"""This param is used to get the commitments for a particular subscribed service""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the root compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 
 Example: '500'""")

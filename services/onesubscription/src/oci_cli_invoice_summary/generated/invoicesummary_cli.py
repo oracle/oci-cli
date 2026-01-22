@@ -40,7 +40,7 @@ invoice_summary_root_group.add_command(invoice_group)
 
 
 @invoiceline_computed_usage_group.command(name=cli_util.override('invoice_summary.list_invoiceline_computed_usages.command_name', 'list'), help=u"""This is a collection API which returns a list of Invoiced Computed Usages for given Invoiceline id. \n[Command Reference](listInvoicelineComputedUsages)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the root compartment.""")
 @cli_util.option('--invoice-line-id', required=True, help=u"""Invoice Line Identifier - Primary Key SPM""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending ('ASC') or descending ('DESC').""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "meteredOnDate"]), help=u"""The field to sort by Invoiced Computed Usages. You can provide one sort order (`sortOrder`).""")
@@ -103,7 +103,7 @@ def list_invoiceline_computed_usages(ctx, from_json, all_pages, page_size, compa
 
 
 @invoice_group.command(name=cli_util.override('invoice_summary.list_invoices.command_name', 'list'), help=u"""This is a collection API which returns a list of Invoices for given filters. \n[Command Reference](listInvoices)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the root compartment.""")
 @cli_util.option('--ar-customer-transaction-id', required=True, help=u"""AR Unique identifier for an invoice .""")
 @cli_util.option('--time-from', type=custom_types.CLI_DATETIME, help=u"""Initial date to filter Invoice data in SPM.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-to', type=custom_types.CLI_DATETIME, help=u"""Final date to filter Invoice data in SPM.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)

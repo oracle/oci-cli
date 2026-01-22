@@ -32,7 +32,7 @@ onboarding_cli.profile_group.commands.pop(onboarding_cli.create_profile.name)
 
 @cli_util.copy_params_from_generated_command(onboarding_cli.create_profile_create_group_profile_details, params_to_exclude=['managed_instance_group_id'])
 @onboarding_cli.profile_group.command(name=onboarding_cli.create_profile_create_group_profile_details.name, help=onboarding_cli.create_profile_create_group_profile_details.help)
-@cli_util.option('--group-id', required=True, help=u"""The OCID of the managed instance group from which the registration profile will inherit its software sources. [required]""")
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the managed instance group from which the registration profile will inherit its software sources. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'Profile'})
 @cli_util.wrap_exceptions
@@ -114,7 +114,7 @@ def list_profiles_extended(ctx, **kwargs):
 # Manual changes for OSMH 3.0
 @cli_util.copy_params_from_generated_command(onboarding_cli.attach_managed_instance_group_to_profile, params_to_exclude=['managed_instance_group_id'])
 @onboarding_cli.profile_group.command(name=onboarding_cli.attach_managed_instance_group_to_profile.name, help=onboarding_cli.attach_managed_instance_group_to_profile.help)
-@cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group that the profile will be associated with.""")
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the managed instance group that the profile will be associated with.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

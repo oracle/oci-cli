@@ -135,7 +135,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @agent_group.command(name=cli_util.override('generative_ai_agent.change_agent_compartment.command_name', 'change-compartment'), help=u"""Moves an agent into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeAgentCompartment)""")
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the agent.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the agent to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the agent to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -196,7 +196,7 @@ def change_agent_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.change_agent_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves an endpoint into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeAgentEndpointCompartment)""")
 @cli_util.option('--agent-endpoint-id', required=True, help=u"""The [OCID] of the endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the endpoint to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the endpoint to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -257,7 +257,7 @@ def change_agent_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_s
 
 @knowledge_base_group.command(name=cli_util.override('generative_ai_agent.change_knowledge_base_compartment.command_name', 'change-compartment'), help=u"""Moves a knowledge base into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeKnowledgeBaseCompartment)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the knowledge base.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the KnowledgeBase to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the KnowledgeBase to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -317,7 +317,7 @@ def change_knowledge_base_compartment(ctx, from_json, wait_for_state, max_wait_s
 
 
 @agent_group.command(name=cli_util.override('generative_ai_agent.create_agent.command_name', 'create'), help=u"""Creates an agent. \n[Command Reference](createAgent)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the agent in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the agent in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description about the agent.""")
 @cli_util.option('--knowledge-base-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of [OCID] of the knowledgeBases associated with agent. This field is deprecated and will be removed after March 26 2026.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -403,7 +403,7 @@ def create_agent(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.create_agent_endpoint.command_name', 'create'), help=u"""Creates an endpoint. \n[Command Reference](createAgentEndpoint)""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent that this endpoint is associated with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the endpoint in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the endpoint in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""An optional description of the endpoint.""")
 @cli_util.option('--content-moderation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -518,7 +518,7 @@ def create_agent_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.create_data_ingestion_job.command_name', 'create'), help=u"""Creates a data ingestion job. \n[Command Reference](createDataIngestionJob)""")
 @cli_util.option('--data-source-id', required=True, help=u"""The [OCID] of the parent DataSource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the data ingestion job in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the data ingestion job in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A user-friendly description of the data ingestion job.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -594,7 +594,7 @@ def create_data_ingestion_job(ctx, from_json, wait_for_state, max_wait_seconds, 
 @data_source_group.command(name=cli_util.override('generative_ai_agent.create_data_source.command_name', 'create'), help=u"""Creates a data source. \n[Command Reference](createDataSource)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the parent KnowledgeBase.""")
 @cli_util.option('--data-source-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the data source in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the data source in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A description of the data source.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-value pairs to allow additional configurations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -674,7 +674,7 @@ def create_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @data_source_group.command(name=cli_util.override('generative_ai_agent.create_data_source_oci_object_storage_data_source_config.command_name', 'create-data-source-oci-object-storage-data-source-config'), help=u"""Creates a data source. \n[Command Reference](createDataSource)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the parent KnowledgeBase.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the data source in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the data source in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A description of the data source.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-value pairs to allow additional configurations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -766,7 +766,7 @@ def create_data_source_oci_object_storage_data_source_config(ctx, from_json, wai
 
 @knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base.command_name', 'create'), help=u"""Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
 @cli_util.option('--index-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A user-friendly description of the knowledge base.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -840,7 +840,7 @@ def create_knowledge_base(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base_default_index_config.command_name', 'create-knowledge-base-default-index-config'), help=u"""Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A user-friendly description of the knowledge base.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -920,7 +920,7 @@ def create_knowledge_base_default_index_config(ctx, from_json, wait_for_state, m
 
 
 @knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base_oci_database_config.command_name', 'create-knowledge-base-oci-database-config'), help=u"""Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
 @cli_util.option('--index-config-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--index-config-database-functions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of Database functions to be used.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -1000,7 +1000,7 @@ def create_knowledge_base_oci_database_config(ctx, from_json, wait_for_state, ma
 
 
 @knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base_oci_open_search_index_config.command_name', 'create-knowledge-base-oci-open-search-index-config'), help=u"""Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
 @cli_util.option('--index-config-cluster-id', required=True, help=u"""The [OCID] of the OpenSearch Cluster.""")
 @cli_util.option('--index-config-secret-detail', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--index-config-indexes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Index configuration for open search.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1084,7 +1084,7 @@ def create_knowledge_base_oci_open_search_index_config(ctx, from_json, wait_for_
 @tool_group.command(name=cli_util.override('generative_ai_agent.create_tool.command_name', 'create'), help=u"""Creates a tool. \n[Command Reference](createTool)""")
 @cli_util.option('--description', required=True, help=u"""Description about the Tool.""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent that this Tool is attached to.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--tool-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-value pairs to allow additional configurations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1163,7 +1163,7 @@ def create_tool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @tool_group.command(name=cli_util.override('generative_ai_agent.create_tool_sql_tool_config.command_name', 'create-tool-sql-tool-config'), help=u"""Creates a tool. \n[Command Reference](createTool)""")
 @cli_util.option('--description', required=True, help=u"""Description about the Tool.""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent that this Tool is attached to.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--tool-config-dialect', required=True, type=custom_types.CliCaseInsensitiveChoice(["SQL_LITE", "ORACLE_SQL"]), help=u"""Dialect to be used for SQL generation.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-value pairs to allow additional configurations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1277,7 +1277,7 @@ def create_tool_sql_tool_config(ctx, from_json, wait_for_state, max_wait_seconds
 @tool_group.command(name=cli_util.override('generative_ai_agent.create_tool_function_calling_tool_config.command_name', 'create-tool-function-calling-tool-config'), help=u"""Creates a tool. \n[Command Reference](createTool)""")
 @cli_util.option('--description', required=True, help=u"""Description about the Tool.""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent that this Tool is attached to.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--tool-config-function', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-value pairs to allow additional configurations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1359,7 +1359,7 @@ def create_tool_function_calling_tool_config(ctx, from_json, wait_for_state, max
 @tool_group.command(name=cli_util.override('generative_ai_agent.create_tool_http_endpoint_tool_config.command_name', 'create-tool-http-endpoint-tool-config'), help=u"""Creates a tool. \n[Command Reference](createTool)""")
 @cli_util.option('--description', required=True, help=u"""Description about the Tool.""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent that this Tool is attached to.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--tool-config-api-schema', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tool-config-subnet-id', required=True, help=u"""The subnet ID from agent developer tenancy through which the egress is going to be routed.""")
 @cli_util.option('--tool-config-http-endpoint-auth-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1445,7 +1445,7 @@ def create_tool_http_endpoint_tool_config(ctx, from_json, wait_for_state, max_wa
 @tool_group.command(name=cli_util.override('generative_ai_agent.create_tool_agent_tool_config.command_name', 'create-tool-agent-tool-config'), help=u"""Creates a tool. \n[Command Reference](createTool)""")
 @cli_util.option('--description', required=True, help=u"""Description about the Tool.""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent that this Tool is attached to.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--tool-config-agent-endpoint-id', required=True, help=u"""The AgentEndpoint OCID to be used as a tool in this agent.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-value pairs to allow additional configurations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1527,7 +1527,7 @@ def create_tool_agent_tool_config(ctx, from_json, wait_for_state, max_wait_secon
 @tool_group.command(name=cli_util.override('generative_ai_agent.create_tool_rag_tool_config.command_name', 'create-tool-rag-tool-config'), help=u"""Creates a tool. \n[Command Reference](createTool)""")
 @cli_util.option('--description', required=True, help=u"""Description about the Tool.""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent that this Tool is attached to.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--tool-config-knowledge-base-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The KnowledgeBase configurations that this RAG Tool uses""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-value pairs to allow additional configurations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2146,7 +2146,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.list_agent_endpoints.command_name', 'list'), help=u"""Gets a list of endpoints. \n[Command Reference](listAgentEndpoints)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--agent-id', help=u"""The [OCID] of the agent.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -2208,7 +2208,7 @@ def list_agent_endpoints(ctx, from_json, all_pages, page_size, compartment_id, a
 
 
 @agent_group.command(name=cli_util.override('generative_ai_agent.list_agents.command_name', 'list'), help=u"""Gets a list of agents. \n[Command Reference](listAgents)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -2267,7 +2267,7 @@ def list_agents(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_
 
 
 @data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.list_data_ingestion_jobs.command_name', 'list'), help=u"""Gets a list of data ingestion jobs. \n[Command Reference](listDataIngestionJobs)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--data-source-id', help=u"""The [OCID] of the data source.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -2329,7 +2329,7 @@ def list_data_ingestion_jobs(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @data_source_group.command(name=cli_util.override('generative_ai_agent.list_data_sources.command_name', 'list'), help=u"""Gets a list of data sources. \n[Command Reference](listDataSources)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--knowledge-base-id', help=u"""The [OCID] of the knowledge base.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -2391,7 +2391,7 @@ def list_data_sources(ctx, from_json, all_pages, page_size, compartment_id, know
 
 
 @knowledge_base_group.command(name=cli_util.override('generative_ai_agent.list_knowledge_bases.command_name', 'list'), help=u"""Gets a list of knowledge bases. \n[Command Reference](listKnowledgeBases)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -2450,7 +2450,7 @@ def list_knowledge_bases(ctx, from_json, all_pages, page_size, compartment_id, l
 
 
 @tool_group.command(name=cli_util.override('generative_ai_agent.list_tools.command_name', 'list'), help=u"""Gets a list of tools. \n[Command Reference](listTools)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--agent-id', help=u"""The [OCID] of the agent.""")
@@ -2626,7 +2626,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('generative_ai_agent.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

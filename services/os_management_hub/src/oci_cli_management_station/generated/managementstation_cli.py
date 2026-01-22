@@ -42,7 +42,7 @@ management_station_root_group.add_command(management_station_group)
 
 @management_station_group.command(name=cli_util.override('management_station.change_management_station_compartment.command_name', 'change-compartment'), help=u"""Moves a managment station to a different compartment. \n[Command Reference](changeManagementStationCompartment)""")
 @cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the management station to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the management station to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -72,7 +72,7 @@ def change_management_station_compartment(ctx, from_json, management_station_id,
 
 
 @management_station_group.command(name=cli_util.override('management_station.create_management_station.command_name', 'create'), help=u"""Creates a management station using the proxy and mirror configuration information provided. \n[Command Reference](createManagementStation)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the management station.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the management station.""")
 @cli_util.option('--display-name', required=True, help=u"""User-friendly name for the management station. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--hostname', required=True, help=u"""Hostname of the management station.""")
 @cli_util.option('--proxy-parameterconflict', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -231,7 +231,7 @@ def get_management_station(ctx, from_json, management_station_id):
 
 
 @management_station_group.command(name=cli_util.override('management_station.list_management_stations.command_name', 'list'), help=u"""Lists management stations within the specified compartment. Filter the list against a variety of criteria including but not limited to name, status, and location. \n[Command Reference](listManagementStations)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter that returns information for management stations in the specified state.""")

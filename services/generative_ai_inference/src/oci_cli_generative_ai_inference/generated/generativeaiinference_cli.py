@@ -75,7 +75,7 @@ generative_ai_inference_root_group.add_command(chat_result_group)
 @apply_guardrails_result_group.command(name=cli_util.override('generative_ai_inference.apply_guardrails.command_name', 'apply-guardrails'), help=u"""Applies guardrails to the input text, including content moderation, PII detection, and prompt injection protection. \n[Command Reference](applyGuardrails)""")
 @cli_util.option('--input', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--guardrail-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to apply guardrails.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to apply guardrails.""")
 @json_skeleton_utils.get_cli_json_input_option({'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}})
 @cli_util.help_option
 @click.pass_context
@@ -101,7 +101,7 @@ def apply_guardrails(ctx, from_json, input, guardrail_configs, compartment_id):
 
 @apply_guardrails_result_group.command(name=cli_util.override('generative_ai_inference.apply_guardrails_guardrails_text_input.command_name', 'apply-guardrails-guardrails-text-input'), help=u"""Applies guardrails to the input text, including content moderation, PII detection, and prompt injection protection. \n[Command Reference](applyGuardrails)""")
 @cli_util.option('--guardrail-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to apply guardrails.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to apply guardrails.""")
 @cli_util.option('--input-content', help=u"""The actual input data.""")
 @cli_util.option('--input-language-code', help=u"""The language code of the input text. example - en | es | en-US | zh-CN""")
 @json_skeleton_utils.get_cli_json_input_option({'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}})
@@ -136,7 +136,7 @@ def apply_guardrails_guardrails_text_input(ctx, from_json, guardrail_configs, co
 
 
 @chat_result_group.command(name=cli_util.override('generative_ai_inference.chat.command_name', 'chat'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request': {'module': 'generative_ai_inference', 'class': 'BaseChatRequest'}})
@@ -163,7 +163,7 @@ def chat(ctx, from_json, compartment_id, serving_mode, chat_request):
 
 
 @chat_result_group.command(name=cli_util.override('generative_ai_inference.chat_dedicated_serving_mode.command_name', 'chat-dedicated-serving-mode'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
 @cli_util.option('--chat-request', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
 @json_skeleton_utils.get_cli_json_input_option({'chat-request': {'module': 'generative_ai_inference', 'class': 'BaseChatRequest'}})
@@ -193,7 +193,7 @@ def chat_dedicated_serving_mode(ctx, from_json, compartment_id, chat_request, se
 
 
 @chat_result_group.command(name=cli_util.override('generative_ai_inference.chat_on_demand_serving_mode.command_name', 'chat-on-demand-serving-mode'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
 @cli_util.option('--chat-request', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. You can use the [ListModels] API to list the available models.""")
 @json_skeleton_utils.get_cli_json_input_option({'chat-request': {'module': 'generative_ai_inference', 'class': 'BaseChatRequest'}})
@@ -223,7 +223,7 @@ def chat_on_demand_serving_mode(ctx, from_json, compartment_id, chat_request, se
 
 
 @chat_result_group.command(name=cli_util.override('generative_ai_inference.chat_generic_chat_request.command_name', 'chat-generic-chat-request'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request-messages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The series of messages in a chat request. Includes the previous messages in a conversation. Each message includes a role (`USER` or the `CHATBOT`) and content.
 
@@ -373,7 +373,7 @@ def chat_generic_chat_request(ctx, from_json, compartment_id, serving_mode, chat
 
 
 @chat_result_group.command(name=cli_util.override('generative_ai_inference.chat_cohere_chat_request.command_name', 'chat-cohere-chat-request'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to chat.""")
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request-message', required=True, help=u"""The text that the user inputs for the model to respond to.""")
 @cli_util.option('--chat-request-chat-history', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of previous messages between the user and the model. The chat history gives the model context for responding to the user's inputs.
@@ -519,7 +519,7 @@ def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
 @cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
 @cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING", "IMAGE"]), help=u"""Specifies the input type.""")
@@ -559,7 +559,7 @@ def embed_text(ctx, from_json, inputs, serving_mode, compartment_id, is_echo, tr
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
 @cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
@@ -603,7 +603,7 @@ def embed_text_dedicated_serving_mode(ctx, from_json, inputs, compartment_id, se
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
 @cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. You can use the [ListModels] API to list the available models.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
@@ -644,7 +644,7 @@ def embed_text_on_demand_serving_mode(ctx, from_json, inputs, compartment_id, se
 
 
 @generate_text_result_group.command(name=cli_util.override('generative_ai_inference.generate_text.command_name', 'generate-text'), help=u"""Generates a text response based on the user prompt. \n[Command Reference](generateText)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to generate text.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to generate text.""")
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--inference-request', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'inference-request': {'module': 'generative_ai_inference', 'class': 'LlmInferenceRequest'}})
@@ -671,7 +671,7 @@ def generate_text(ctx, from_json, compartment_id, serving_mode, inference_reques
 
 
 @generate_text_result_group.command(name=cli_util.override('generative_ai_inference.generate_text_dedicated_serving_mode.command_name', 'generate-text-dedicated-serving-mode'), help=u"""Generates a text response based on the user prompt. \n[Command Reference](generateText)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to generate text.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to generate text.""")
 @cli_util.option('--inference-request', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
 @json_skeleton_utils.get_cli_json_input_option({'inference-request': {'module': 'generative_ai_inference', 'class': 'LlmInferenceRequest'}})
@@ -701,7 +701,7 @@ def generate_text_dedicated_serving_mode(ctx, from_json, compartment_id, inferen
 
 
 @generate_text_result_group.command(name=cli_util.override('generative_ai_inference.generate_text_on_demand_serving_mode.command_name', 'generate-text-on-demand-serving-mode'), help=u"""Generates a text response based on the user prompt. \n[Command Reference](generateText)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to generate text.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to generate text.""")
 @cli_util.option('--inference-request', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. You can use the [ListModels] API to list the available models.""")
 @json_skeleton_utils.get_cli_json_input_option({'inference-request': {'module': 'generative_ai_inference', 'class': 'LlmInferenceRequest'}})
@@ -731,7 +731,7 @@ def generate_text_on_demand_serving_mode(ctx, from_json, compartment_id, inferen
 
 
 @generate_text_result_group.command(name=cli_util.override('generative_ai_inference.generate_text_llama_llm_inference_request.command_name', 'generate-text-llama-llm-inference-request'), help=u"""Generates a text response based on the user prompt. \n[Command Reference](generateText)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to generate text.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to generate text.""")
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--inference-request-prompt', help=u"""Represents the prompt to be completed. The trailing white spaces are trimmed before completion.""")
 @cli_util.option('--inference-request-is-stream', type=click.BOOL, help=u"""Whether to stream back partial progress. If set, tokens are sent as data-only server-sent events as they become available.""")
@@ -817,7 +817,7 @@ def generate_text_llama_llm_inference_request(ctx, from_json, compartment_id, se
 
 
 @generate_text_result_group.command(name=cli_util.override('generative_ai_inference.generate_text_cohere_llm_inference_request.command_name', 'generate-text-cohere-llm-inference-request'), help=u"""Generates a text response based on the user prompt. \n[Command Reference](generateText)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to generate text.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to generate text.""")
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--inference-request-prompt', required=True, help=u"""Represents the prompt to be completed. The trailing white spaces are trimmed before completion.""")
 @cli_util.option('--inference-request-is-stream', type=click.BOOL, help=u"""Whether to stream back partial progress. If set, tokens are sent as data-only server-sent events as they become available.""")
@@ -906,7 +906,7 @@ def generate_text_cohere_llm_inference_request(ctx, from_json, compartment_id, s
 
 Rerank assigns an index and a relevance score to each document, indicating which document is most related to the prompt. \n[Command Reference](rerankText)""")
 @cli_util.option('--input', required=True, help=u"""Input query for search in the documents.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to call into the Generative AI service LLMs.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to call into the Generative AI service LLMs.""")
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of document strings to rerank based on the query asked.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--top-n', type=click.INT, help=u"""The number of most relevant documents or indices to return. Defaults to the length of the documents.""")
@@ -949,7 +949,7 @@ def rerank_text(ctx, from_json, input, compartment_id, serving_mode, documents, 
 
 Rerank assigns an index and a relevance score to each document, indicating which document is most related to the prompt. \n[Command Reference](rerankText)""")
 @cli_util.option('--input', required=True, help=u"""Input query for search in the documents.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to call into the Generative AI service LLMs.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to call into the Generative AI service LLMs.""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of document strings to rerank based on the query asked.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
 @cli_util.option('--top-n', type=click.INT, help=u"""The number of most relevant documents or indices to return. Defaults to the length of the documents.""")
@@ -995,7 +995,7 @@ def rerank_text_dedicated_serving_mode(ctx, from_json, input, compartment_id, do
 
 Rerank assigns an index and a relevance score to each document, indicating which document is most related to the prompt. \n[Command Reference](rerankText)""")
 @cli_util.option('--input', required=True, help=u"""Input query for search in the documents.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to call into the Generative AI service LLMs.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to call into the Generative AI service LLMs.""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of document strings to rerank based on the query asked.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. You can use the [ListModels] API to list the available models.""")
 @cli_util.option('--top-n', type=click.INT, help=u"""The number of most relevant documents or indices to return. Defaults to the length of the documents.""")
@@ -1040,7 +1040,7 @@ def rerank_text_on_demand_serving_mode(ctx, from_json, input, compartment_id, do
 @summarize_text_result_group.command(name=cli_util.override('generative_ai_inference.summarize_text.command_name', 'summarize-text'), help=u"""Summarizes the input text. \n[Command Reference](summarizeText)""")
 @cli_util.option('--input', required=True, help=u"""The input string to be summarized.""")
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to summarize text.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to summarize text.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response.""")
 @cli_util.option('--temperature', help=u"""A number that sets the randomness of the generated output. Lower temperatures mean less random generations.
 
@@ -1092,7 +1092,7 @@ def summarize_text(ctx, from_json, input, serving_mode, compartment_id, is_echo,
 
 @summarize_text_result_group.command(name=cli_util.override('generative_ai_inference.summarize_text_dedicated_serving_mode.command_name', 'summarize-text-dedicated-serving-mode'), help=u"""Summarizes the input text. \n[Command Reference](summarizeText)""")
 @cli_util.option('--input', required=True, help=u"""The input string to be summarized.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to summarize text.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to summarize text.""")
 @cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response.""")
 @cli_util.option('--temperature', help=u"""A number that sets the randomness of the generated output. Lower temperatures mean less random generations.
@@ -1148,7 +1148,7 @@ def summarize_text_dedicated_serving_mode(ctx, from_json, input, compartment_id,
 
 @summarize_text_result_group.command(name=cli_util.override('generative_ai_inference.summarize_text_on_demand_serving_mode.command_name', 'summarize-text-on-demand-serving-mode'), help=u"""Summarizes the input text. \n[Command Reference](summarizeText)""")
 @cli_util.option('--input', required=True, help=u"""The input string to be summarized.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to summarize text.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of compartment in which to call the Generative AI service to summarize text.""")
 @cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. You can use the [ListModels] API to list the available models.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response.""")
 @cli_util.option('--temperature', help=u"""A number that sets the randomness of the generated output. Lower temperatures mean less random generations.

@@ -139,7 +139,7 @@ def add_api_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 
 @certificate_group.command(name=cli_util.override('api_gateway.add_certificate_lock.command_name', 'add'), help=u"""Adds a lock to a Certificate resource. \n[Command Reference](addCertificateLock)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the certificate.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -262,7 +262,7 @@ def add_sdk_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @api_group.command(name=cli_util.override('api_gateway.change_api_compartment.command_name', 'change-compartment'), help=u"""Changes the API compartment. \n[Command Reference](changeApiCompartment)""")
 @cli_util.option('--api-id', required=True, help=u"""The ocid of the API.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -327,8 +327,8 @@ def change_api_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @certificate_group.command(name=cli_util.override('api_gateway.change_certificate_compartment.command_name', 'change-compartment'), help=u"""Changes the certificate compartment. \n[Command Reference](changeCertificateCompartment)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the certificate.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -361,7 +361,7 @@ def change_certificate_compartment(ctx, from_json, certificate_id, compartment_i
 
 
 @api_group.command(name=cli_util.override('api_gateway.create_api.command_name', 'create'), help=u"""Creates a new API. \n[Command Reference](createApi)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -444,7 +444,7 @@ def create_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 
 @certificate_group.command(name=cli_util.override('api_gateway.create_certificate.command_name', 'create'), help=u"""Creates a new Certificate. \n[Command Reference](createCertificate)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--private-key', required=True, help=u"""The private key associated with the certificate in pem format.""")
 @cli_util.option('--certificate', required=True, help=u"""The data of the leaf certificate in pem format.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
@@ -679,7 +679,7 @@ def delete_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 
 @certificate_group.command(name=cli_util.override('api_gateway.delete_certificate.command_name', 'delete'), help=u"""Deletes the certificate with the given identifier. \n[Command Reference](deleteCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the certificate.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
@@ -924,7 +924,7 @@ def get_api_validations(ctx, from_json, api_id, if_match):
 
 
 @certificate_group.command(name=cli_util.override('api_gateway.get_certificate.command_name', 'get'), help=u"""Gets a certificate by identifier. \n[Command Reference](getCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the certificate.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -968,7 +968,7 @@ def get_sdk(ctx, from_json, sdk_id):
 
 
 @api_group.command(name=cli_util.override('api_gateway.list_apis.command_name', 'list'), help=u"""Returns a list of APIs. \n[Command Reference](listApis)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -1032,7 +1032,7 @@ def list_apis(ctx, from_json, all_pages, page_size, compartment_id, display_name
 
 
 @certificate_group.command(name=cli_util.override('api_gateway.list_certificates.command_name', 'list'), help=u"""Returns a list of certificates. \n[Command Reference](listCertificates)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -1096,7 +1096,7 @@ def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, disp
 
 
 @sdk_language_type_summary_group.command(name=cli_util.override('api_gateway.list_sdk_language_types.command_name', 'list-sdk-language-types'), help=u"""Lists programming languages in which SDK can be generated. \n[Command Reference](listSdkLanguageTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -1278,7 +1278,7 @@ def remove_api_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @certificate_group.command(name=cli_util.override('api_gateway.remove_certificate_lock.command_name', 'remove'), help=u"""Removes a lock from a Certificate resource. \n[Command Reference](removeCertificateLock)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the certificate.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1483,7 +1483,7 @@ def update_api(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 
 
 @certificate_group.command(name=cli_util.override('api_gateway.update_certificate.command_name', 'update'), help=u"""Updates a certificate with the given identifier \n[Command Reference](updateCertificate)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the certificate.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
