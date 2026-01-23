@@ -3125,7 +3125,7 @@ Added
 
 * MySQL Database Service
 
-  * Support for new optional DB system parameters (database mode, access mode, read endpoint) in the Heatwave sevice
+  * Support for new optional DB system parameters (database mode, access mode, read endpoint) in the Heatwave service
 
     * ``oci mysql db-system create --database-mode --access-mode --read-endpoint``
     * ``oci mysql db-system update --database-mode --access-mode --read-endpoint``
@@ -3327,7 +3327,7 @@ Added
     * ``oci bds instance install-patch-domain-based-odh-patching-config``
     * ``oci bds instance install-patch-batching-based-odh-patching-config``
 
-  * Support for Start API with heterogenous shape supports
+  * Support for Start API with heterogeneous shape supports
 
     * ``oci bds instance start``
 
@@ -3770,7 +3770,7 @@ Added
     * ``oci bv volume create --xrc-kms-key-id``
     * ``oci bv volume create-volume-volume-source-from-block-volume-replica-details --xrc-kms-key-id``
     * ``oci bv volume-backup-policy-assignment create --xrc-kms-key-id``
-    * ``oci bv volume-group creat --xrc-kms-key-id``
+    * ``oci bv volume-group create --xrc-kms-key-id``
 
   * Support for Direct API feature in BlockStorage service
 
@@ -7442,7 +7442,7 @@ Added
     * ``oci database-management external-db-system enable-external-db-system-stack-monitoring``
     * ``oci database-management external-db-system disable-external-db-system-stack-monitoring``
 
-  * Support for new optional paramater for External DB System
+  * Support for new optional parameter for External DB System
 
     * ``oci database-management external-db-system create --stack-monitoring-config``
 
@@ -11376,7 +11376,7 @@ Changed
   * ``oci jms jre-usage request-summarized``
   * ``oci jms managed-instance-usage request-summarized``
 
-* Fixed bug in Management Dashborad service
+* Fixed bug in Management Dashboard service
   * ``oci management-dashboard dashboard export``
 
 3.0.5 - 2021-09-14
@@ -12208,7 +12208,7 @@ Added
     * ``oci network drg-route-table``
     * ``oci network internal-public-ip delete-drg-route-table``
 
-  * Support to asssign/unassign IPV6 for the VNIC
+  * Support to assign/unassign IPV6 for the VNIC
 
     * ``oci network vnic assign-ipv6``
     * ``oci network vnic unassign-ipv6``
@@ -12463,7 +12463,7 @@ Added
 
   * ``oci nlb``
 
-* Support for Organizations Domain and Domian Governance in Organization service
+* Support for Organizations Domain and Domain Governance in Organization service
 
   * ``oci organizations domain``
   * ``oci organizations domain-governance``
@@ -14455,8 +14455,8 @@ Changed
 
   * Notifications setup
 
-    * ``oci dts job create`` has a new option called ``--setup-notificaitons``
-    * ``oci dts appliance request`` has a new option called ``--setup-notificaitons``
+    * ``oci dts job create`` has a new option called ``--setup-notifications``
+    * ``oci dts appliance request`` has a new option called ``--setup-notifications``
 
   * Bug fixes in ``oci dts export configure-physical-appliance``
 
@@ -15005,7 +15005,7 @@ Added
 * Improvement to provisioning time for launching VMDB instance in DBaaS.
 
   * ``oci db system launch --storage-management``
-  * ``oci db system launch-from-backup --storage-managament``
+  * ``oci db system launch-from-backup --storage-management``
 * Support for migrating zones from Dyn Managed DNS to OCI Public DNS.
 
   * ``oci dns zone migrate-from-dynect``
@@ -15245,7 +15245,7 @@ Added
 
   * ``oci waas waas-policy custom-protection-rule list --waas-policy-id, --action, --all-pages, --mod-security-rule-id``
 
-* Improve support for WAF Policy sercice by introducing new Origin Groups option in the WAF Policy Service.
+* Improve support for WAF Policy service by introducing new Origin Groups option in the WAF Policy Service.
 
   * ``oci waas waas-policy create --origin-groups``
   * ``oci waas waas-policy update --origin-groups``
@@ -15329,7 +15329,7 @@ Added
   * ``oci network cpe change-compartment --cpe-id  --compartment-id``
   * ``oci network ip-sec-connection change-compartment --ip-sec-connection-id  --compartment-id``
   * ``oci network cross-connect-group change-compartment --cross-connect-group-id  --compartment-id``
-  * ``oci network cross-conenct change-compartment --cross-connect-id  --compartment-id``
+  * ``oci network cross-connect change-compartment --cross-connect-id  --compartment-id``
   * ``oci network remote-peering-connection change-compartment --remote-peering-connection-id  --compartment-id``
   * ``oci network virtual-circuit change-compartment --virtual-circuit-id  --compartment-id``
 
@@ -15768,7 +15768,7 @@ Added
   * ``oci network ipsecconnection create --customer-reference-name [text]``
   * ``oci network ipsecconnection update --customer-reference-name [text]``
 
-* Improve information to RemorePeeringConnection by introducing Provider Service Key Name in the VPN Service.
+* Improve information to RemotePeeringConnection by introducing Provider Service Key Name in the VPN Service.
 
   * ``oci network remote-peering-connection create --provider-service-key-name [text]``
   * ``oci network remote-peering-connection update --provider-service-key-name [text]``
@@ -16400,7 +16400,7 @@ Users should upgrade to release 2.4.26 to use Oracle Container Engine Service re
 Fixed
 ~~~~~~~~
 * Enabled 'namespace-name' parameter for all commands in the Object Storage service.
-* Add dependency to idna >=2.5,<2.7 since cryptography and requests both have a dependency on the library and pip can install a version that is incompatable with requests.
+* Add dependency to idna >=2.5,<2.7 since cryptography and requests both have a dependency on the library and pip can install a version that is incompatible with requests.
 
 2.4.24 - 2018-05-31
 ---------------------
@@ -16510,7 +16510,7 @@ Changed
 
 Fixed
 ~~~~~~~
-* When providing a datetime parameter to the CLI, v2.4.18 and below did not parse datetimes correctly but instead of failing they silently coverted values to midnight of the date provided and sent this value to the service. This version fixes the datetime parsing and the following inputs will be considered valid:
+* When providing a datetime parameter to the CLI, v2.4.18 and below did not parse datetimes correctly but instead of failing they silently converted values to midnight of the date provided and sent this value to the service. This version fixes the datetime parsing and the following inputs will be considered valid:
 
   * ``YYYY-MM-DDTHH:mm:ss.sssTZD`` (UTC) with milliseconds, e.g. 2017-09-15T20:30:00.123Z
   * ``YYYY-MM-DDTHH:mm:ssTZD`` (UTC) without milliseconds, e.g. 2017-09-15T20:30:00Z
@@ -16610,7 +16610,7 @@ Changed
   * Changed dependency on pyOpenSSL <= 17.4.0 as the minimum cryptography version for pyOpenSSL 17.5.0 is 2.1.4
 
 * Upgraded six dependency to 1.11.0
-* Ugraded requests dependency to 2.18.4
+* Upgraded requests dependency to 2.18.4
 
 
 2.4.13 - 2017-12-11
