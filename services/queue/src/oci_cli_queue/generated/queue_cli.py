@@ -70,13 +70,14 @@ queue_service_cli.queue_service_group.add_command(updated_message_group)
 @get_message_group.command(name=cli_util.override('queue.delete_message.command_name', 'delete-message'), help=u"""Deletes the message represented by the receipt from the queue. You must use the [messages endpoint] to delete messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](deleteMessage)""")
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--message-receipt', required=True, help=u"""The receipt of the message retrieved from a GetMessages call.""")
+@cli_util.option('--consumer-group-id', help=u"""Optional parameter to specify a consumer group.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_message(ctx, from_json, queue_id, message_receipt):
+def delete_message(ctx, from_json, queue_id, message_receipt, consumer_group_id):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
@@ -85,6 +86,8 @@ def delete_message(ctx, from_json, queue_id, message_receipt):
         raise click.UsageError('Parameter --message-receipt cannot be whitespace or empty string')
 
     kwargs = {}
+    if consumer_group_id is not None:
+        kwargs['consumer_group_id'] = consumer_group_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('queue', 'queue', ctx)
     result = client.delete_message(
@@ -98,17 +101,20 @@ def delete_message(ctx, from_json, queue_id, message_receipt):
 @get_message_group.command(name=cli_util.override('queue.delete_messages.command_name', 'delete-messages'), help=u"""Deletes multiple messages from the queue or the consumer group. Only messages from the same queue/consumer group can be deleted at once. You must use the [messages endpoint] to delete messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](deleteMessages)""")
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--entries', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of messages to delete from a queue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--consumer-group-id', help=u"""Optional parameter to specify a consumer group.""")
 @json_skeleton_utils.get_cli_json_input_option({'entries': {'module': 'queue', 'class': 'list[DeleteMessagesDetailsEntry]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'entries': {'module': 'queue', 'class': 'list[DeleteMessagesDetailsEntry]'}}, output_type={'module': 'queue', 'class': 'DeleteMessagesResult'})
 @cli_util.wrap_exceptions
-def delete_messages(ctx, from_json, queue_id, entries):
+def delete_messages(ctx, from_json, queue_id, entries, consumer_group_id):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if consumer_group_id is not None:
+        kwargs['consumer_group_id'] = consumer_group_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -133,12 +139,13 @@ Using a `visibilityInSeconds` value of 0 effectively acts as a peek functionalit
 If the parameter is set to 0, the request is using the short-polling mode and immediately returns whether messages have been retrieved or not. In same rare-cases a long-polling request could be interrupted (returned with empty response) before the end of the timeout.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The limit parameter controls how many messages is returned at-most.""")
 @cli_util.option('--channel-filter', help=u"""Optional parameter to filter the channels.""")
+@cli_util.option('--consumer-group-id', help=u"""Optional parameter to specify a consumer group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'queue', 'class': 'GetMessages'})
 @cli_util.wrap_exceptions
-def get_messages(ctx, from_json, queue_id, visibility_in_seconds, timeout_in_seconds, limit, channel_filter):
+def get_messages(ctx, from_json, queue_id, visibility_in_seconds, timeout_in_seconds, limit, channel_filter, consumer_group_id):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
@@ -152,6 +159,8 @@ def get_messages(ctx, from_json, queue_id, visibility_in_seconds, timeout_in_sec
         kwargs['limit'] = limit
     if channel_filter is not None:
         kwargs['channel_filter'] = channel_filter
+    if consumer_group_id is not None:
+        kwargs['consumer_group_id'] = consumer_group_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('queue', 'queue', ctx)
     result = client.get_messages(
@@ -164,12 +173,13 @@ def get_messages(ctx, from_json, queue_id, visibility_in_seconds, timeout_in_sec
 @queue_stats_group.command(name=cli_util.override('queue.get_stats.command_name', 'get-stats'), help=u"""Gets the statistics for the queue and its dead letter queue. You must use the [messages endpoint] to get a queue's statistics. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](getStats)""")
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--channel-id', help=u"""Id to specify channel.""")
+@cli_util.option('--consumer-group-id', help=u"""Optional parameter to specify a consumer group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'queue', 'class': 'QueueStats'})
 @cli_util.wrap_exceptions
-def get_stats(ctx, from_json, queue_id, channel_id):
+def get_stats(ctx, from_json, queue_id, channel_id, consumer_group_id):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
@@ -177,6 +187,8 @@ def get_stats(ctx, from_json, queue_id, channel_id):
     kwargs = {}
     if channel_id is not None:
         kwargs['channel_id'] = channel_id
+    if consumer_group_id is not None:
+        kwargs['consumer_group_id'] = consumer_group_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('queue', 'queue', ctx)
     result = client.get_stats(
@@ -188,6 +200,7 @@ def get_stats(ctx, from_json, queue_id, channel_id):
 
 @channel_collection_group.command(name=cli_util.override('queue.list_channels.command_name', 'list-channels'), help=u"""Gets the list of IDs of non-empty channels. It will return an approximate list of IDs of non-empty channels. That information is based on the queue level statistics. API supports optional channelFilter parameter which will filter the returned results according to the specified filter. List of channel IDs is approximate, because statistics is refreshed once per-second, and that list represents a snapshot of the past information. API is paginated. \n[Command Reference](listChannels)""")
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
+@cli_util.option('--consumer-group-id', help=u"""Optional parameter to specify a consumer group.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--channel-filter', help=u"""Optional parameter to filter the channels.""")
@@ -198,7 +211,7 @@ def get_stats(ctx, from_json, queue_id, channel_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'queue', 'class': 'ChannelCollection'})
 @cli_util.wrap_exceptions
-def list_channels(ctx, from_json, all_pages, page_size, queue_id, limit, page, channel_filter):
+def list_channels(ctx, from_json, all_pages, page_size, queue_id, consumer_group_id, limit, page, channel_filter):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -207,6 +220,8 @@ def list_channels(ctx, from_json, all_pages, page_size, queue_id, limit, page, c
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if consumer_group_id is not None:
+        kwargs['consumer_group_id'] = consumer_group_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -272,12 +287,13 @@ def put_messages(ctx, from_json, queue_id, messages):
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--message-receipt', required=True, help=u"""The receipt of the message retrieved from a GetMessages call.""")
 @cli_util.option('--visibility-in-seconds', required=True, type=click.INT, help=u"""The new visibility of the message relative to the current time (as-per the clock of the server receiving the request).""")
+@cli_util.option('--consumer-group-id', help=u"""Optional parameter to specify a consumer group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'queue', 'class': 'UpdatedMessage'})
 @cli_util.wrap_exceptions
-def update_message(ctx, from_json, queue_id, message_receipt, visibility_in_seconds):
+def update_message(ctx, from_json, queue_id, message_receipt, visibility_in_seconds, consumer_group_id):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
@@ -286,6 +302,8 @@ def update_message(ctx, from_json, queue_id, message_receipt, visibility_in_seco
         raise click.UsageError('Parameter --message-receipt cannot be whitespace or empty string')
 
     kwargs = {}
+    if consumer_group_id is not None:
+        kwargs['consumer_group_id'] = consumer_group_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -304,17 +322,20 @@ def update_message(ctx, from_json, queue_id, message_receipt, visibility_in_seco
 @get_message_group.command(name=cli_util.override('queue.update_messages.command_name', 'update-messages'), help=u"""Updates multiple messages in the queue or the consumer group. Only messages from the same queue/consumer group can be updated at once. You must use the [messages endpoint] to update messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](updateMessages)""")
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--entries', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of messages to update in a queue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--consumer-group-id', help=u"""Optional parameter to specify a consumer group.""")
 @json_skeleton_utils.get_cli_json_input_option({'entries': {'module': 'queue', 'class': 'list[UpdateMessagesDetailsEntry]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'entries': {'module': 'queue', 'class': 'list[UpdateMessagesDetailsEntry]'}}, output_type={'module': 'queue', 'class': 'UpdateMessagesResult'})
 @cli_util.wrap_exceptions
-def update_messages(ctx, from_json, queue_id, entries):
+def update_messages(ctx, from_json, queue_id, entries, consumer_group_id):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if consumer_group_id is not None:
+        kwargs['consumer_group_id'] = consumer_group_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}

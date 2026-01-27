@@ -727,15 +727,16 @@ def create_certificate_create_certificate_by_importing_config_details(ctx, from_
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the CA. Names are unique within a compartment. Avoid entering confidential information. Valid characters include uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment in which you want to create the CA.""")
 @cli_util.option('--certificate-authority-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', required=True, help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
 @cli_util.option('--description', help=u"""A brief description of the CA.""")
 @cli_util.option('--certificate-authority-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules that control how the CA is used and managed.
 
 This option is a JSON list with items of type CertificateAuthorityRule.  For documentation on CertificateAuthorityRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/certificatesmanagement/20210224/datatypes/CertificateAuthorityRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-revocation-list-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
+@cli_util.option('--external-key-description', help=u"""For externally managed CAs, a description of the externally managed private key. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-authority-config': {'module': 'certificates_management', 'class': 'CreateCertificateAuthorityConfigDetails'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}})
@@ -743,7 +744,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-authority-config': {'module': 'certificates_management', 'class': 'CreateCertificateAuthorityConfigDetails'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'certificates_management', 'class': 'CertificateAuthority'})
 @cli_util.wrap_exceptions
-def create_certificate_authority(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, certificate_authority_config, kms_key_id, description, certificate_authority_rules, certificate_revocation_list_details, freeform_tags, defined_tags):
+def create_certificate_authority(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, certificate_authority_config, description, certificate_authority_rules, certificate_revocation_list_details, kms_key_id, external_key_description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -752,7 +753,6 @@ def create_certificate_authority(ctx, from_json, wait_for_state, max_wait_second
     _details['name'] = name
     _details['compartmentId'] = compartment_id
     _details['certificateAuthorityConfig'] = cli_util.parse_json_parameter("certificate_authority_config", certificate_authority_config)
-    _details['kmsKeyId'] = kms_key_id
 
     if description is not None:
         _details['description'] = description
@@ -762,6 +762,12 @@ def create_certificate_authority(ctx, from_json, wait_for_state, max_wait_second
 
     if certificate_revocation_list_details is not None:
         _details['certificateRevocationListDetails'] = cli_util.parse_json_parameter("certificate_revocation_list_details", certificate_revocation_list_details)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if external_key_description is not None:
+        _details['externalKeyDescription'] = external_key_description
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -803,19 +809,20 @@ def create_certificate_authority(ctx, from_json, wait_for_state, max_wait_second
 @certificate_authority_group.command(name=cli_util.override('certs_mgmt.create_certificate_authority_create_root_ca_by_generating_internally_config_details.command_name', 'create-certificate-authority-create-root-ca-by-generating-internally-config-details'), help=u"""Creates a new certificate authority (CA) according to the details of the request. \n[Command Reference](createCertificateAuthority)""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the CA. Names are unique within a compartment. Avoid entering confidential information. Valid characters include uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment in which you want to create the CA.""")
-@cli_util.option('--kms-key-id', required=True, help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
 @cli_util.option('--certificate-authority-config-subject', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A brief description of the CA.""")
 @cli_util.option('--certificate-authority-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules that control how the CA is used and managed.
 
 This option is a JSON list with items of type CertificateAuthorityRule.  For documentation on CertificateAuthorityRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/certificatesmanagement/20210224/datatypes/CertificateAuthorityRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-revocation-list-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
+@cli_util.option('--external-key-description', help=u"""For externally managed CAs, a description of the externally managed private key. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-authority-config-version-name', help=u"""The name of the CA version. When the value is not null, a name is unique across versions of a given CA.""")
 @cli_util.option('--certificate-authority-config-validity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-authority-config-signing-algorithm', type=custom_types.CliCaseInsensitiveChoice(["SHA256_WITH_RSA", "SHA384_WITH_RSA", "SHA512_WITH_RSA", "SHA256_WITH_ECDSA", "SHA384_WITH_ECDSA", "SHA512_WITH_ECDSA"]), help=u"""The algorithm used to sign public key certificates that the CA issues.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-config-validity': {'module': 'certificates_management', 'class': 'Validity'}, 'certificate-authority-config-subject': {'module': 'certificates_management', 'class': 'CertificateSubject'}})
@@ -823,7 +830,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-config-validity': {'module': 'certificates_management', 'class': 'Validity'}, 'certificate-authority-config-subject': {'module': 'certificates_management', 'class': 'CertificateSubject'}}, output_type={'module': 'certificates_management', 'class': 'CertificateAuthority'})
 @cli_util.wrap_exceptions
-def create_certificate_authority_create_root_ca_by_generating_internally_config_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, kms_key_id, certificate_authority_config_subject, description, certificate_authority_rules, certificate_revocation_list_details, freeform_tags, defined_tags, certificate_authority_config_version_name, certificate_authority_config_validity, certificate_authority_config_signing_algorithm):
+def create_certificate_authority_create_root_ca_by_generating_internally_config_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, certificate_authority_config_subject, description, certificate_authority_rules, certificate_revocation_list_details, kms_key_id, external_key_description, freeform_tags, defined_tags, certificate_authority_config_version_name, certificate_authority_config_validity, certificate_authority_config_signing_algorithm):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -832,7 +839,6 @@ def create_certificate_authority_create_root_ca_by_generating_internally_config_
     _details['certificateAuthorityConfig'] = {}
     _details['name'] = name
     _details['compartmentId'] = compartment_id
-    _details['kmsKeyId'] = kms_key_id
     _details['certificateAuthorityConfig']['subject'] = cli_util.parse_json_parameter("certificate_authority_config_subject", certificate_authority_config_subject)
 
     if description is not None:
@@ -843,6 +849,12 @@ def create_certificate_authority_create_root_ca_by_generating_internally_config_
 
     if certificate_revocation_list_details is not None:
         _details['certificateRevocationListDetails'] = cli_util.parse_json_parameter("certificate_revocation_list_details", certificate_revocation_list_details)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if external_key_description is not None:
+        _details['externalKeyDescription'] = external_key_description
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -895,7 +907,6 @@ def create_certificate_authority_create_root_ca_by_generating_internally_config_
 @certificate_authority_group.command(name=cli_util.override('certs_mgmt.create_certificate_authority_create_subordinate_ca_issued_by_internal_ca_config_details.command_name', 'create-certificate-authority-create-subordinate-ca-issued-by-internal-ca-config-details'), help=u"""Creates a new certificate authority (CA) according to the details of the request. \n[Command Reference](createCertificateAuthority)""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the CA. Names are unique within a compartment. Avoid entering confidential information. Valid characters include uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment in which you want to create the CA.""")
-@cli_util.option('--kms-key-id', required=True, help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
 @cli_util.option('--certificate-authority-config-issuer-certificate-authority-id', required=True, help=u"""The OCID of the private CA.""")
 @cli_util.option('--certificate-authority-config-subject', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A brief description of the CA.""")
@@ -903,12 +914,14 @@ def create_certificate_authority_create_root_ca_by_generating_internally_config_
 
 This option is a JSON list with items of type CertificateAuthorityRule.  For documentation on CertificateAuthorityRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/certificatesmanagement/20210224/datatypes/CertificateAuthorityRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-revocation-list-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
+@cli_util.option('--external-key-description', help=u"""For externally managed CAs, a description of the externally managed private key. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-authority-config-version-name', help=u"""The name of the CA version. When the value is not null, a name is unique across versions of a given CA.""")
 @cli_util.option('--certificate-authority-config-validity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-authority-config-signing-algorithm', type=custom_types.CliCaseInsensitiveChoice(["SHA256_WITH_RSA", "SHA384_WITH_RSA", "SHA512_WITH_RSA", "SHA256_WITH_ECDSA", "SHA384_WITH_ECDSA", "SHA512_WITH_ECDSA"]), help=u"""The algorithm used to sign public key certificates that the CA issues.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-config-validity': {'module': 'certificates_management', 'class': 'Validity'}, 'certificate-authority-config-subject': {'module': 'certificates_management', 'class': 'CertificateSubject'}})
@@ -916,7 +929,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-config-validity': {'module': 'certificates_management', 'class': 'Validity'}, 'certificate-authority-config-subject': {'module': 'certificates_management', 'class': 'CertificateSubject'}}, output_type={'module': 'certificates_management', 'class': 'CertificateAuthority'})
 @cli_util.wrap_exceptions
-def create_certificate_authority_create_subordinate_ca_issued_by_internal_ca_config_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, kms_key_id, certificate_authority_config_issuer_certificate_authority_id, certificate_authority_config_subject, description, certificate_authority_rules, certificate_revocation_list_details, freeform_tags, defined_tags, certificate_authority_config_version_name, certificate_authority_config_validity, certificate_authority_config_signing_algorithm):
+def create_certificate_authority_create_subordinate_ca_issued_by_internal_ca_config_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, certificate_authority_config_issuer_certificate_authority_id, certificate_authority_config_subject, description, certificate_authority_rules, certificate_revocation_list_details, kms_key_id, external_key_description, freeform_tags, defined_tags, certificate_authority_config_version_name, certificate_authority_config_validity, certificate_authority_config_signing_algorithm):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -925,7 +938,6 @@ def create_certificate_authority_create_subordinate_ca_issued_by_internal_ca_con
     _details['certificateAuthorityConfig'] = {}
     _details['name'] = name
     _details['compartmentId'] = compartment_id
-    _details['kmsKeyId'] = kms_key_id
     _details['certificateAuthorityConfig']['issuerCertificateAuthorityId'] = certificate_authority_config_issuer_certificate_authority_id
     _details['certificateAuthorityConfig']['subject'] = cli_util.parse_json_parameter("certificate_authority_config_subject", certificate_authority_config_subject)
 
@@ -937,6 +949,12 @@ def create_certificate_authority_create_subordinate_ca_issued_by_internal_ca_con
 
     if certificate_revocation_list_details is not None:
         _details['certificateRevocationListDetails'] = cli_util.parse_json_parameter("certificate_revocation_list_details", certificate_revocation_list_details)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if external_key_description is not None:
+        _details['externalKeyDescription'] = external_key_description
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -954,6 +972,192 @@ def create_certificate_authority_create_subordinate_ca_issued_by_internal_ca_con
         _details['certificateAuthorityConfig']['signingAlgorithm'] = certificate_authority_config_signing_algorithm
 
     _details['certificateAuthorityConfig']['configType'] = 'SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA'
+
+    client = cli_util.build_client('certificates_management', 'certificates_management', ctx)
+    result = client.create_certificate_authority(
+        create_certificate_authority_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_certificate_authority') and callable(getattr(client, 'get_certificate_authority')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_certificate_authority(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@certificate_authority_group.command(name=cli_util.override('certs_mgmt.create_certificate_authority_create_root_ca_managed_externally_config_details.command_name', 'create-certificate-authority-create-root-ca-managed-externally-config-details'), help=u"""Creates a new certificate authority (CA) according to the details of the request. \n[Command Reference](createCertificateAuthority)""")
+@cli_util.option('--name', required=True, help=u"""A user-friendly name for the CA. Names are unique within a compartment. Avoid entering confidential information. Valid characters include uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment in which you want to create the CA.""")
+@cli_util.option('--certificate-authority-config-certificate-pem', required=True, help=u"""The externally signed certificate (in PEM format) for the imported root CA.""")
+@cli_util.option('--description', help=u"""A brief description of the CA.""")
+@cli_util.option('--certificate-authority-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules that control how the CA is used and managed.
+
+This option is a JSON list with items of type CertificateAuthorityRule.  For documentation on CertificateAuthorityRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/certificatesmanagement/20210224/datatypes/CertificateAuthorityRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-revocation-list-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
+@cli_util.option('--external-key-description', help=u"""For externally managed CAs, a description of the externally managed private key. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-authority-config-version-name', help=u"""The name of the CA version. When the value is not null, a name is unique across versions of a given CA.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'certificates_management', 'class': 'CertificateAuthority'})
+@cli_util.wrap_exceptions
+def create_certificate_authority_create_root_ca_managed_externally_config_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, certificate_authority_config_certificate_pem, description, certificate_authority_rules, certificate_revocation_list_details, kms_key_id, external_key_description, freeform_tags, defined_tags, certificate_authority_config_version_name):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['certificateAuthorityConfig'] = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['certificateAuthorityConfig']['certificatePem'] = certificate_authority_config_certificate_pem
+
+    if description is not None:
+        _details['description'] = description
+
+    if certificate_authority_rules is not None:
+        _details['certificateAuthorityRules'] = cli_util.parse_json_parameter("certificate_authority_rules", certificate_authority_rules)
+
+    if certificate_revocation_list_details is not None:
+        _details['certificateRevocationListDetails'] = cli_util.parse_json_parameter("certificate_revocation_list_details", certificate_revocation_list_details)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if external_key_description is not None:
+        _details['externalKeyDescription'] = external_key_description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if certificate_authority_config_version_name is not None:
+        _details['certificateAuthorityConfig']['versionName'] = certificate_authority_config_version_name
+
+    _details['certificateAuthorityConfig']['configType'] = 'ROOT_CA_MANAGED_EXTERNALLY'
+
+    client = cli_util.build_client('certificates_management', 'certificates_management', ctx)
+    result = client.create_certificate_authority(
+        create_certificate_authority_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_certificate_authority') and callable(getattr(client, 'get_certificate_authority')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_certificate_authority(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@certificate_authority_group.command(name=cli_util.override('certs_mgmt.create_certificate_authority_create_subordinate_ca_managed_internally_issued_by_external_ca_config_details.command_name', 'create-certificate-authority-create-subordinate-ca-managed-internally-issued-by-external-ca-config-details'), help=u"""Creates a new certificate authority (CA) according to the details of the request. \n[Command Reference](createCertificateAuthority)""")
+@cli_util.option('--name', required=True, help=u"""A user-friendly name for the CA. Names are unique within a compartment. Avoid entering confidential information. Valid characters include uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment in which you want to create the CA.""")
+@cli_util.option('--certificate-authority-config-issuer-certificate-authority-id', required=True, help=u"""The OCID of the private, external issuer CA.""")
+@cli_util.option('--certificate-authority-config-subject', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A brief description of the CA.""")
+@cli_util.option('--certificate-authority-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules that control how the CA is used and managed.
+
+This option is a JSON list with items of type CertificateAuthorityRule.  For documentation on CertificateAuthorityRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/certificatesmanagement/20210224/datatypes/CertificateAuthorityRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-revocation-list-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Oracle Cloud Infrastructure Vault key used to encrypt the CA.""")
+@cli_util.option('--external-key-description', help=u"""For externally managed CAs, a description of the externally managed private key. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-authority-config-version-name', help=u"""The name of the CA version. When the value is not null, a name is unique across versions of a given CA.""")
+@cli_util.option('--certificate-authority-config-signing-algorithm', type=custom_types.CliCaseInsensitiveChoice(["SHA256_WITH_RSA", "SHA384_WITH_RSA", "SHA512_WITH_RSA", "SHA256_WITH_ECDSA", "SHA384_WITH_ECDSA", "SHA512_WITH_ECDSA"]), help=u"""The algorithm used to sign public key certificates that the CA issues.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-config-subject': {'module': 'certificates_management', 'class': 'CertificateSubject'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-config-subject': {'module': 'certificates_management', 'class': 'CertificateSubject'}}, output_type={'module': 'certificates_management', 'class': 'CertificateAuthority'})
+@cli_util.wrap_exceptions
+def create_certificate_authority_create_subordinate_ca_managed_internally_issued_by_external_ca_config_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, certificate_authority_config_issuer_certificate_authority_id, certificate_authority_config_subject, description, certificate_authority_rules, certificate_revocation_list_details, kms_key_id, external_key_description, freeform_tags, defined_tags, certificate_authority_config_version_name, certificate_authority_config_signing_algorithm):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['certificateAuthorityConfig'] = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['certificateAuthorityConfig']['issuerCertificateAuthorityId'] = certificate_authority_config_issuer_certificate_authority_id
+    _details['certificateAuthorityConfig']['subject'] = cli_util.parse_json_parameter("certificate_authority_config_subject", certificate_authority_config_subject)
+
+    if description is not None:
+        _details['description'] = description
+
+    if certificate_authority_rules is not None:
+        _details['certificateAuthorityRules'] = cli_util.parse_json_parameter("certificate_authority_rules", certificate_authority_rules)
+
+    if certificate_revocation_list_details is not None:
+        _details['certificateRevocationListDetails'] = cli_util.parse_json_parameter("certificate_revocation_list_details", certificate_revocation_list_details)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if external_key_description is not None:
+        _details['externalKeyDescription'] = external_key_description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if certificate_authority_config_version_name is not None:
+        _details['certificateAuthorityConfig']['versionName'] = certificate_authority_config_version_name
+
+    if certificate_authority_config_signing_algorithm is not None:
+        _details['certificateAuthorityConfig']['signingAlgorithm'] = certificate_authority_config_signing_algorithm
+
+    _details['certificateAuthorityConfig']['configType'] = 'SUBORDINATE_CA_MANAGED_INTERNALLY_ISSUED_BY_EXTERNAL_CA'
 
     client = cli_util.build_client('certificates_management', 'certificates_management', ctx)
     result = client.create_certificate_authority(
@@ -1324,7 +1528,7 @@ def list_ca_bundles(ctx, from_json, all_pages, page_size, compartment_id, lifecy
 
 @certificate_authority_summary_group.command(name=cli_util.override('certs_mgmt.list_certificate_authorities.command_name', 'list-certificate-authorities'), help=u"""Lists all certificate authorities (CAs) in the specified compartment. Optionally, you can use the parameter `FilterByCertificateAuthorityIdQueryParam` to limit the results to a single item that matches the specified CA. \n[Command Reference](listCertificateAuthorities)""")
 @cli_util.option('--compartment-id', help=u"""A filter that returns only resources that match the given compartment OCID.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), help=u"""A filter that returns only resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), help=u"""A filter that returns only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--name', help=u"""A filter that returns only resources that match the specified name.""")
 @cli_util.option('--issuer-certificate-authority-id', help=u"""The OCID of the certificate authority (CA). If the parameter is set to null, the service lists all CAs.""")
 @cli_util.option('--certificate-authority-id', help=u"""The OCID of the certificate authority (CA). If the parameter is set to null, the service lists all CAs.""")
@@ -2255,10 +2459,11 @@ def update_certificate_update_certificate_managed_externally_issued_by_internal_
 
 @certificate_authority_group.command(name=cli_util.override('certs_mgmt.update_certificate_authority.command_name', 'update'), help=u"""Updates the properties of the specified certificate authority (CA). \n[Command Reference](updateCertificateAuthority)""")
 @cli_util.option('--certificate-authority-id', required=True, help=u"""The OCID of the certificate authority (CA).""")
-@cli_util.option('--description', help=u"""A brief description of the CA.""")
-@cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property cannot be updated in combination with any other properties.""")
+@cli_util.option('--description', help=u"""A brief description of the CA. Avoid entering confidential information.""")
+@cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property can't be updated in combination with any other properties.""")
 @cli_util.option('--certificate-authority-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-revocation-list-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--external-key-description', help=u"""For externally managed CAs, a description of the externally managed key. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-authority-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules that control how the CA is used and managed.
@@ -2266,7 +2471,7 @@ def update_certificate_update_certificate_managed_externally_issued_by_internal_
 This option is a JSON list with items of type CertificateAuthorityRule.  For documentation on CertificateAuthorityRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/certificatesmanagement/20210224/datatypes/CertificateAuthorityRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'certificate-authority-config': {'module': 'certificates_management', 'class': 'UpdateCertificateAuthorityConfigDetails'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}})
@@ -2274,7 +2479,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'certificate-authority-config': {'module': 'certificates_management', 'class': 'UpdateCertificateAuthorityConfigDetails'}, 'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}}, output_type={'module': 'certificates_management', 'class': 'CertificateAuthority'})
 @cli_util.wrap_exceptions
-def update_certificate_authority(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, description, current_version_number, certificate_authority_config, certificate_revocation_list_details, freeform_tags, defined_tags, certificate_authority_rules, if_match):
+def update_certificate_authority(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, description, current_version_number, certificate_authority_config, certificate_revocation_list_details, external_key_description, freeform_tags, defined_tags, certificate_authority_rules, if_match):
 
     if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
@@ -2301,6 +2506,9 @@ def update_certificate_authority(ctx, from_json, force, wait_for_state, max_wait
 
     if certificate_revocation_list_details is not None:
         _details['certificateRevocationListDetails'] = cli_util.parse_json_parameter("certificate_revocation_list_details", certificate_revocation_list_details)
+
+    if external_key_description is not None:
+        _details['externalKeyDescription'] = external_key_description
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -2343,11 +2551,115 @@ def update_certificate_authority(ctx, from_json, force, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
+@certificate_authority_group.command(name=cli_util.override('certs_mgmt.update_certificate_authority_update_root_ca_managed_externally_config_details.command_name', 'update-certificate-authority-update-root-ca-managed-externally-config-details'), help=u"""Updates the properties of the specified certificate authority (CA). \n[Command Reference](updateCertificateAuthority)""")
+@cli_util.option('--certificate-authority-id', required=True, help=u"""The OCID of the certificate authority (CA).""")
+@cli_util.option('--certificate-authority-config-certificate-pem', required=True, help=u"""The externally signed certificate (in PEM format) for the CA.""")
+@cli_util.option('--description', help=u"""A brief description of the CA. Avoid entering confidential information.""")
+@cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property can't be updated in combination with any other properties.""")
+@cli_util.option('--certificate-revocation-list-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--external-key-description', help=u"""For externally managed CAs, a description of the externally managed key. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-authority-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules that control how the CA is used and managed.
+
+This option is a JSON list with items of type CertificateAuthorityRule.  For documentation on CertificateAuthorityRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/certificatesmanagement/20210224/datatypes/CertificateAuthorityRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--certificate-authority-config-version-name', help=u"""The name of the CA version. When the value is not null, a name is unique across versions of a given CA.""")
+@cli_util.option('--certificate-authority-config-stage', type=custom_types.CliCaseInsensitiveChoice(["CURRENT", "PENDING"]), help=u"""The rotation state of the CA. The default is `PENDING`, meaning that the CA is staged and available for use. A CA version that you mark as `CURRENT` is currently in use, but you don't yet want to rotate it into current, active use. For example, you might create or update a CA and mark its rotation state as `PENDING` if you haven't yet updated the certificate on the target system.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}}, output_type={'module': 'certificates_management', 'class': 'CertificateAuthority'})
+@cli_util.wrap_exceptions
+def update_certificate_authority_update_root_ca_managed_externally_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, certificate_authority_config_certificate_pem, description, current_version_number, certificate_revocation_list_details, external_key_description, freeform_tags, defined_tags, certificate_authority_rules, if_match, certificate_authority_config_version_name, certificate_authority_config_stage):
+
+    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
+    if not force:
+        if certificate_revocation_list_details or freeform_tags or defined_tags or certificate_authority_rules:
+            if not click.confirm("WARNING: Updates to certificate-revocation-list-details and freeform-tags and defined-tags and certificate-authority-rules will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['certificateAuthorityConfig'] = {}
+    _details['certificateAuthorityConfig']['certificatePem'] = certificate_authority_config_certificate_pem
+
+    if description is not None:
+        _details['description'] = description
+
+    if current_version_number is not None:
+        _details['currentVersionNumber'] = current_version_number
+
+    if certificate_revocation_list_details is not None:
+        _details['certificateRevocationListDetails'] = cli_util.parse_json_parameter("certificate_revocation_list_details", certificate_revocation_list_details)
+
+    if external_key_description is not None:
+        _details['externalKeyDescription'] = external_key_description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if certificate_authority_rules is not None:
+        _details['certificateAuthorityRules'] = cli_util.parse_json_parameter("certificate_authority_rules", certificate_authority_rules)
+
+    if certificate_authority_config_version_name is not None:
+        _details['certificateAuthorityConfig']['versionName'] = certificate_authority_config_version_name
+
+    if certificate_authority_config_stage is not None:
+        _details['certificateAuthorityConfig']['stage'] = certificate_authority_config_stage
+
+    _details['certificateAuthorityConfig']['configType'] = 'ROOT_CA_MANAGED_EXTERNALLY'
+
+    client = cli_util.build_client('certificates_management', 'certificates_management', ctx)
+    result = client.update_certificate_authority(
+        certificate_authority_id=certificate_authority_id,
+        update_certificate_authority_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_certificate_authority') and callable(getattr(client, 'get_certificate_authority')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_certificate_authority(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @certificate_authority_group.command(name=cli_util.override('certs_mgmt.update_certificate_authority_update_subordinate_ca_issued_by_internal_ca_config_details.command_name', 'update-certificate-authority-update-subordinate-ca-issued-by-internal-ca-config-details'), help=u"""Updates the properties of the specified certificate authority (CA). \n[Command Reference](updateCertificateAuthority)""")
 @cli_util.option('--certificate-authority-id', required=True, help=u"""The OCID of the certificate authority (CA).""")
-@cli_util.option('--description', help=u"""A brief description of the CA.""")
-@cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property cannot be updated in combination with any other properties.""")
+@cli_util.option('--description', help=u"""A brief description of the CA. Avoid entering confidential information.""")
+@cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property can't be updated in combination with any other properties.""")
 @cli_util.option('--certificate-revocation-list-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--external-key-description', help=u"""For externally managed CAs, a description of the externally managed key. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-authority-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules that control how the CA is used and managed.
@@ -2358,7 +2670,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @cli_util.option('--certificate-authority-config-stage', type=custom_types.CliCaseInsensitiveChoice(["CURRENT", "PENDING"]), help=u"""The rotation state of the CA. The default is `PENDING`, meaning that the CA is staged and available for use. A CA version that you mark as `CURRENT` is currently in use, but you don't yet want to rotate it into current, active use. For example, you might create or update a CA and mark its rotation state as `PENDING` if you haven't yet updated the certificate on the target system.""")
 @cli_util.option('--certificate-authority-config-validity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-authority-config-validity': {'module': 'certificates_management', 'class': 'Validity'}})
@@ -2366,7 +2678,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-authority-config-validity': {'module': 'certificates_management', 'class': 'Validity'}}, output_type={'module': 'certificates_management', 'class': 'CertificateAuthority'})
 @cli_util.wrap_exceptions
-def update_certificate_authority_update_subordinate_ca_issued_by_internal_ca_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, description, current_version_number, certificate_revocation_list_details, freeform_tags, defined_tags, certificate_authority_rules, if_match, certificate_authority_config_version_name, certificate_authority_config_stage, certificate_authority_config_validity):
+def update_certificate_authority_update_subordinate_ca_issued_by_internal_ca_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, description, current_version_number, certificate_revocation_list_details, external_key_description, freeform_tags, defined_tags, certificate_authority_rules, if_match, certificate_authority_config_version_name, certificate_authority_config_stage, certificate_authority_config_validity):
 
     if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
@@ -2391,6 +2703,9 @@ def update_certificate_authority_update_subordinate_ca_issued_by_internal_ca_con
 
     if certificate_revocation_list_details is not None:
         _details['certificateRevocationListDetails'] = cli_util.parse_json_parameter("certificate_revocation_list_details", certificate_revocation_list_details)
+
+    if external_key_description is not None:
+        _details['externalKeyDescription'] = external_key_description
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -2446,9 +2761,10 @@ def update_certificate_authority_update_subordinate_ca_issued_by_internal_ca_con
 
 @certificate_authority_group.command(name=cli_util.override('certs_mgmt.update_certificate_authority_update_root_ca_by_generating_internally_config_details.command_name', 'update-certificate-authority-update-root-ca-by-generating-internally-config-details'), help=u"""Updates the properties of the specified certificate authority (CA). \n[Command Reference](updateCertificateAuthority)""")
 @cli_util.option('--certificate-authority-id', required=True, help=u"""The OCID of the certificate authority (CA).""")
-@cli_util.option('--description', help=u"""A brief description of the CA.""")
-@cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property cannot be updated in combination with any other properties.""")
+@cli_util.option('--description', help=u"""A brief description of the CA. Avoid entering confidential information.""")
+@cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property can't be updated in combination with any other properties.""")
 @cli_util.option('--certificate-revocation-list-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--external-key-description', help=u"""For externally managed CAs, a description of the externally managed key. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-authority-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules that control how the CA is used and managed.
@@ -2459,7 +2775,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @cli_util.option('--certificate-authority-config-stage', type=custom_types.CliCaseInsensitiveChoice(["CURRENT", "PENDING"]), help=u"""The rotation state of the CA. The default is `PENDING`, meaning that the CA is staged and available for use. A CA version that you mark as `CURRENT` is currently in use, but you don't yet want to rotate it into current, active use. For example, you might create or update a CA and mark its rotation state as `PENDING` if you haven't yet updated the certificate on the target system.""")
 @cli_util.option('--certificate-authority-config-validity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-authority-config-validity': {'module': 'certificates_management', 'class': 'Validity'}})
@@ -2467,7 +2783,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-authority-config-validity': {'module': 'certificates_management', 'class': 'Validity'}}, output_type={'module': 'certificates_management', 'class': 'CertificateAuthority'})
 @cli_util.wrap_exceptions
-def update_certificate_authority_update_root_ca_by_generating_internally_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, description, current_version_number, certificate_revocation_list_details, freeform_tags, defined_tags, certificate_authority_rules, if_match, certificate_authority_config_version_name, certificate_authority_config_stage, certificate_authority_config_validity):
+def update_certificate_authority_update_root_ca_by_generating_internally_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, description, current_version_number, certificate_revocation_list_details, external_key_description, freeform_tags, defined_tags, certificate_authority_rules, if_match, certificate_authority_config_version_name, certificate_authority_config_stage, certificate_authority_config_validity):
 
     if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
@@ -2493,6 +2809,9 @@ def update_certificate_authority_update_root_ca_by_generating_internally_config_
     if certificate_revocation_list_details is not None:
         _details['certificateRevocationListDetails'] = cli_util.parse_json_parameter("certificate_revocation_list_details", certificate_revocation_list_details)
 
+    if external_key_description is not None:
+        _details['externalKeyDescription'] = external_key_description
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -2512,6 +2831,109 @@ def update_certificate_authority_update_root_ca_by_generating_internally_config_
         _details['certificateAuthorityConfig']['validity'] = cli_util.parse_json_parameter("certificate_authority_config_validity", certificate_authority_config_validity)
 
     _details['certificateAuthorityConfig']['configType'] = 'ROOT_CA_GENERATED_INTERNALLY'
+
+    client = cli_util.build_client('certificates_management', 'certificates_management', ctx)
+    result = client.update_certificate_authority(
+        certificate_authority_id=certificate_authority_id,
+        update_certificate_authority_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_certificate_authority') and callable(getattr(client, 'get_certificate_authority')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_certificate_authority(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@certificate_authority_group.command(name=cli_util.override('certs_mgmt.update_certificate_authority_update_subordinate_ca_managed_internally_issued_by_external_ca_config_details.command_name', 'update-certificate-authority-update-subordinate-ca-managed-internally-issued-by-external-ca-config-details'), help=u"""Updates the properties of the specified certificate authority (CA). \n[Command Reference](updateCertificateAuthority)""")
+@cli_util.option('--certificate-authority-id', required=True, help=u"""The OCID of the certificate authority (CA).""")
+@cli_util.option('--certificate-authority-config-action-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A brief description of the CA. Avoid entering confidential information.""")
+@cli_util.option('--current-version-number', type=click.INT, help=u"""Makes this version the current version. This property can't be updated in combination with any other properties.""")
+@cli_util.option('--certificate-revocation-list-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--external-key-description', help=u"""For externally managed CAs, a description of the externally managed key. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-authority-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules that control how the CA is used and managed.
+
+This option is a JSON list with items of type CertificateAuthorityRule.  For documentation on CertificateAuthorityRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/certificatesmanagement/20210224/datatypes/CertificateAuthorityRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--certificate-authority-config-version-name', help=u"""The name of the CA version. When the value is not null, a name is unique across versions of a given CA.""")
+@cli_util.option('--certificate-authority-config-stage', type=custom_types.CliCaseInsensitiveChoice(["CURRENT", "PENDING"]), help=u"""The rotation state of the CA. The default is `PENDING`, meaning that the CA is staged and available for use. A CA version that you mark as `CURRENT` is currently in use, but you don't yet want to rotate it into current, active use. For example, you might create or update a CA and mark its rotation state as `PENDING` if you haven't yet updated the certificate on the target system.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED", "PENDING_ACTIVATION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-authority-config-action-details': {'module': 'certificates_management', 'class': 'UpdateCertificateAuthorityActionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'certificate-revocation-list-details': {'module': 'certificates_management', 'class': 'CertificateRevocationListDetails'}, 'freeform-tags': {'module': 'certificates_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'certificates_management', 'class': 'dict(str, dict(str, object))'}, 'certificate-authority-rules': {'module': 'certificates_management', 'class': 'list[CertificateAuthorityRule]'}, 'certificate-authority-config-action-details': {'module': 'certificates_management', 'class': 'UpdateCertificateAuthorityActionDetails'}}, output_type={'module': 'certificates_management', 'class': 'CertificateAuthority'})
+@cli_util.wrap_exceptions
+def update_certificate_authority_update_subordinate_ca_managed_internally_issued_by_external_ca_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, certificate_authority_config_action_details, description, current_version_number, certificate_revocation_list_details, external_key_description, freeform_tags, defined_tags, certificate_authority_rules, if_match, certificate_authority_config_version_name, certificate_authority_config_stage):
+
+    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
+    if not force:
+        if certificate_revocation_list_details or freeform_tags or defined_tags or certificate_authority_rules:
+            if not click.confirm("WARNING: Updates to certificate-revocation-list-details and freeform-tags and defined-tags and certificate-authority-rules will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['certificateAuthorityConfig'] = {}
+    _details['certificateAuthorityConfig']['actionDetails'] = cli_util.parse_json_parameter("certificate_authority_config_action_details", certificate_authority_config_action_details)
+
+    if description is not None:
+        _details['description'] = description
+
+    if current_version_number is not None:
+        _details['currentVersionNumber'] = current_version_number
+
+    if certificate_revocation_list_details is not None:
+        _details['certificateRevocationListDetails'] = cli_util.parse_json_parameter("certificate_revocation_list_details", certificate_revocation_list_details)
+
+    if external_key_description is not None:
+        _details['externalKeyDescription'] = external_key_description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if certificate_authority_rules is not None:
+        _details['certificateAuthorityRules'] = cli_util.parse_json_parameter("certificate_authority_rules", certificate_authority_rules)
+
+    if certificate_authority_config_version_name is not None:
+        _details['certificateAuthorityConfig']['versionName'] = certificate_authority_config_version_name
+
+    if certificate_authority_config_stage is not None:
+        _details['certificateAuthorityConfig']['stage'] = certificate_authority_config_stage
+
+    _details['certificateAuthorityConfig']['configType'] = 'SUBORDINATE_CA_MANAGED_INTERNALLY_ISSUED_BY_EXTERNAL_CA'
 
     client = cli_util.build_client('certificates_management', 'certificates_management', ctx)
     result = client.update_certificate_authority(

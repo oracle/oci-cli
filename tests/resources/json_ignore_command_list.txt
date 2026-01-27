@@ -578,3 +578,7 @@ devops, deploy-environment, update
 devops, deploy-environment, update-compute-instance-environment
 devops, deploy-environment, update-function-environment
 generative-ai-inference, embed-text-result, embed-text
+queue, queue-admin, queue, create
+queue, queue-admin, queue, update
+compute, compute-host, get
+compute, compute-host, update

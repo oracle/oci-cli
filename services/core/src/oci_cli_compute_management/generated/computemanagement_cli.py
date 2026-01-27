@@ -524,7 +524,7 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The [OCID] of the instance configuration associated with the instance pool.""")
 @cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. Provide one placement configuration for each availability domain.
 
-To use the instance pool with a regional subnet, provide a placement configuration for each availability domain, and include the regional subnet in each placement configuration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+To use the instance pool with a regional subnet, provide a placement configuration for each availability domain, and include the regional subnet in each placement configuration. To use compute cluster with instance pool, provide a single placement configuration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--size', required=True, type=click.INT, help=u"""The number of instances that should be in the instance pool.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -887,17 +887,20 @@ If the instance configuration does not include all of the parameters that are re
 To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstanceConfiguration)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--instance-type', required=True, help=u"""The type of instance details. Supported instanceType is compute""")
+@cli_util.option('--opc-compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_configuration(ctx, from_json, instance_configuration_id, instance_type):
+def launch_instance_configuration(ctx, from_json, instance_configuration_id, instance_type, opc_compute_cluster_id):
 
     if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_compute_cluster_id is not None:
+        kwargs['opc_compute_cluster_id'] = opc_compute_cluster_id
 
     _details = {}
     _details['instanceType'] = instance_type
@@ -920,17 +923,20 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Compute Instance Configuration parameters.
 
 This option is a JSON list with items of type ComputeInstanceDetails.  For documentation on ComputeInstanceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/ComputeInstanceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @json_skeleton_utils.get_cli_json_input_option({'options': {'module': 'core', 'class': 'list[ComputeInstanceDetails]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'options': {'module': 'core', 'class': 'list[ComputeInstanceDetails]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_configuration_compute_instance_options(ctx, from_json, instance_configuration_id, options):
+def launch_instance_configuration_compute_instance_options(ctx, from_json, instance_configuration_id, options, opc_compute_cluster_id):
 
     if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_compute_cluster_id is not None:
+        kwargs['opc_compute_cluster_id'] = opc_compute_cluster_id
 
     _details = {}
 
@@ -961,17 +967,20 @@ This option is a JSON list with items of type InstanceConfigurationBlockVolumeDe
 @cli_util.option('--secondary-vnics', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Secondary VNIC parameters.
 
 This option is a JSON list with items of type InstanceConfigurationAttachVnicDetails.  For documentation on InstanceConfigurationAttachVnicDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/InstanceConfigurationAttachVnicDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @json_skeleton_utils.get_cli_json_input_option({'block-volumes': {'module': 'core', 'class': 'list[InstanceConfigurationBlockVolumeDetails]'}, 'launch-details': {'module': 'core', 'class': 'InstanceConfigurationLaunchInstanceDetails'}, 'secondary-vnics': {'module': 'core', 'class': 'list[InstanceConfigurationAttachVnicDetails]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'block-volumes': {'module': 'core', 'class': 'list[InstanceConfigurationBlockVolumeDetails]'}, 'launch-details': {'module': 'core', 'class': 'InstanceConfigurationLaunchInstanceDetails'}, 'secondary-vnics': {'module': 'core', 'class': 'list[InstanceConfigurationAttachVnicDetails]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_configuration_compute_instance_details(ctx, from_json, instance_configuration_id, block_volumes, launch_details, secondary_vnics):
+def launch_instance_configuration_compute_instance_details(ctx, from_json, instance_configuration_id, block_volumes, launch_details, secondary_vnics, opc_compute_cluster_id):
 
     if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_compute_cluster_id is not None:
+        kwargs['opc_compute_cluster_id'] = opc_compute_cluster_id
 
     _details = {}
 

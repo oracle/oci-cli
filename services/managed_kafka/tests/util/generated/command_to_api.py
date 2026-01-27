@@ -19,6 +19,7 @@ SDK_client_map = {
     "kafka.list_kafka_cluster_config_versions": "oci.managed_kafka.KafkaClusterClient.list_kafka_cluster_config_versions",
     "kafka.list_kafka_cluster_configs": "oci.managed_kafka.KafkaClusterClient.list_kafka_cluster_configs",
     "kafka.list_kafka_clusters": "oci.managed_kafka.KafkaClusterClient.list_kafka_clusters",
+    "kafka.list_node_shapes": "oci.managed_kafka.KafkaClusterClient.list_node_shapes",
     "kafka.list_work_request_errors": "oci.managed_kafka.KafkaClusterClient.list_work_request_errors",
     "kafka.list_work_request_logs": "oci.managed_kafka.KafkaClusterClient.list_work_request_logs",
     "kafka.list_work_requests": "oci.managed_kafka.KafkaClusterClient.list_work_requests",
