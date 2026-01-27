@@ -63,8 +63,8 @@ dif_root_group.add_command(stack_collection_group)
 
 @stack_group.command(name=cli_util.override('dif.add_service.command_name', 'add'), help=u"""Add new service or update existing service. \n[Command Reference](addService)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the Stack.""")
-@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be added for the stack.""")
-@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be added for the stack.""")
+@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION"]), help=u"""List of templates to be added for the stack.""")
+@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW"]), help=u"""List of services to be added for the stack.""")
 @cli_util.option('--adb', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ADB details if adb is included in the services to be added.
 
 This option is a JSON list with items of type AdbDetail.  For documentation on AdbDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/AdbDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -80,25 +80,16 @@ This option is a JSON list with items of type ObjectStorageDetail.  For document
 @cli_util.option('--genai', type=custom_types.CLI_COMPLEX_TYPE, help=u"""GenAI Details if genai is included in services to be added.
 
 This option is a JSON list with items of type GenAiDetail.  For documentation on GenAiDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/GenAiDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--aidataplatform', type=custom_types.CLI_COMPLEX_TYPE, help=u"""AI Data Platform Details if aidataplatform is included in services to be added.
-
-This option is a JSON list with items of type AiDataPlatformDetail.  For documentation on AiDataPlatformDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/AiDataPlatformDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--omk', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OMK Details if omk is included in services to be added.
-
-This option is a JSON list with items of type OmkDetail.  For documentation on OmkDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/OmkDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--oke', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OKE Details if oke is included in services to be added.
-
-This option is a JSON list with items of type OkeDetail.  For documentation on OkeDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/OkeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELLED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}, 'aidataplatform': {'module': 'dif', 'class': 'list[AiDataPlatformDetail]'}, 'omk': {'module': 'dif', 'class': 'list[OmkDetail]'}, 'oke': {'module': 'dif', 'class': 'list[OkeDetail]'}})
+@json_skeleton_utils.get_cli_json_input_option({'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}, 'aidataplatform': {'module': 'dif', 'class': 'list[AiDataPlatformDetail]'}, 'omk': {'module': 'dif', 'class': 'list[OmkDetail]'}, 'oke': {'module': 'dif', 'class': 'list[OkeDetail]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}})
 @cli_util.wrap_exceptions
-def add_service(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, stack_templates, services, adb, ggcs, dataflow, objectstorage, genai, aidataplatform, omk, oke, if_match):
+def add_service(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, stack_templates, services, adb, ggcs, dataflow, objectstorage, genai, if_match):
 
     if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
@@ -126,15 +117,6 @@ def add_service(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if genai is not None:
         _details['genai'] = cli_util.parse_json_parameter("genai", genai)
-
-    if aidataplatform is not None:
-        _details['aidataplatform'] = cli_util.parse_json_parameter("aidataplatform", aidataplatform)
-
-    if omk is not None:
-        _details['omk'] = cli_util.parse_json_parameter("omk", omk)
-
-    if oke is not None:
-        _details['oke'] = cli_util.parse_json_parameter("oke", oke)
 
     client = cli_util.build_client('dif', 'stack', ctx)
     result = client.add_service(
@@ -262,8 +244,8 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @stack_group.command(name=cli_util.override('dif.create_stack.command_name', 'create'), help=u"""Creates a Stack. \n[Command Reference](createStack)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Should be unique per compartment. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the Stack in.""")
-@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be onboarded for the stack.""")
-@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be onboarded for the stack.""")
+@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION"]), help=u"""List of templates to be onboarded for the stack.""")
+@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW"]), help=u"""List of services to be onboarded for the stack.""")
 @cli_util.option('--notification-email', help=u"""email id to which the stack notifications would be sent.""")
 @cli_util.option('--adb', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ADB details if adb is included in the services.
 
@@ -280,15 +262,6 @@ This option is a JSON list with items of type ObjectStorageDetail.  For document
 @cli_util.option('--genai', type=custom_types.CLI_COMPLEX_TYPE, help=u"""GenAi Details if genai is included in services.
 
 This option is a JSON list with items of type GenAiDetail.  For documentation on GenAiDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/GenAiDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--aidataplatform', type=custom_types.CLI_COMPLEX_TYPE, help=u"""AI Data Platform Details if aidataplatform is included in services.
-
-This option is a JSON list with items of type AiDataPlatformDetail.  For documentation on AiDataPlatformDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/AiDataPlatformDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--omk', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OMK Details if omk is included in services.
-
-This option is a JSON list with items of type OmkDetail.  For documentation on OmkDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/OmkDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--oke', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OKE Details if oke is included in services.
-
-This option is a JSON list with items of type OkeDetail.  For documentation on OkeDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/OkeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -298,12 +271,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELLED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}, 'aidataplatform': {'module': 'dif', 'class': 'list[AiDataPlatformDetail]'}, 'omk': {'module': 'dif', 'class': 'list[OmkDetail]'}, 'oke': {'module': 'dif', 'class': 'list[OkeDetail]'}, 'freeform-tags': {'module': 'dif', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dif', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}, 'freeform-tags': {'module': 'dif', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dif', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}, 'aidataplatform': {'module': 'dif', 'class': 'list[AiDataPlatformDetail]'}, 'omk': {'module': 'dif', 'class': 'list[OmkDetail]'}, 'oke': {'module': 'dif', 'class': 'list[OkeDetail]'}, 'freeform-tags': {'module': 'dif', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dif', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dif', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}, 'freeform-tags': {'module': 'dif', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dif', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dif', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, stack_templates, services, notification_email, adb, ggcs, dataflow, objectstorage, genai, aidataplatform, omk, oke, freeform_tags, defined_tags):
+def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, stack_templates, services, notification_email, adb, ggcs, dataflow, objectstorage, genai, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -331,15 +304,6 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if genai is not None:
         _details['genai'] = cli_util.parse_json_parameter("genai", genai)
-
-    if aidataplatform is not None:
-        _details['aidataplatform'] = cli_util.parse_json_parameter("aidataplatform", aidataplatform)
-
-    if omk is not None:
-        _details['omk'] = cli_util.parse_json_parameter("omk", omk)
-
-    if oke is not None:
-        _details['oke'] = cli_util.parse_json_parameter("oke", oke)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -440,8 +404,8 @@ def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @stack_group.command(name=cli_util.override('dif.deploy_artifacts.command_name', 'deploy-artifacts'), help=u"""DeployArtifacts \n[Command Reference](deployArtifacts)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the Stack.""")
-@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be onboarded for the stack.""")
-@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be onboarded for the stack.""")
+@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION"]), help=u"""List of templates to be onboarded for the stack.""")
+@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW"]), help=u"""List of services to be onboarded for the stack.""")
 @cli_util.option('--subnet-id', help=u"""Subnet id for the Private Endpoint creation for artifact deployment.""")
 @cli_util.option('--adb', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ADB artifact details if adb is included in the services.
 
@@ -452,22 +416,16 @@ This option is a JSON list with items of type GgcsArtifactsDetail.  For document
 @cli_util.option('--dataflow', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Dataflow artifact details if dataflow is included in the services.
 
 This option is a JSON list with items of type DataflowArtifactsDetail.  For documentation on DataflowArtifactsDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/DataflowArtifactsDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--omk', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Omk artifact details if omk is included in the services.
-
-This option is a JSON list with items of type OmkArtifactsDetail.  For documentation on OmkArtifactsDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/OmkArtifactsDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--oke', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Oke artifact details if oke is included in the services.
-
-This option is a JSON list with items of type OkeArtifactsDetail.  For documentation on OkeArtifactsDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/OkeArtifactsDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELLED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'adb': {'module': 'dif', 'class': 'list[AdbArtifactsDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsArtifactsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowArtifactsDetail]'}, 'omk': {'module': 'dif', 'class': 'list[OmkArtifactsDetail]'}, 'oke': {'module': 'dif', 'class': 'list[OkeArtifactsDetail]'}})
+@json_skeleton_utils.get_cli_json_input_option({'adb': {'module': 'dif', 'class': 'list[AdbArtifactsDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsArtifactsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowArtifactsDetail]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbArtifactsDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsArtifactsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowArtifactsDetail]'}, 'omk': {'module': 'dif', 'class': 'list[OmkArtifactsDetail]'}, 'oke': {'module': 'dif', 'class': 'list[OkeArtifactsDetail]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbArtifactsDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsArtifactsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowArtifactsDetail]'}})
 @cli_util.wrap_exceptions
-def deploy_artifacts(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, stack_templates, services, subnet_id, adb, ggcs, dataflow, omk, oke, if_match):
+def deploy_artifacts(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, stack_templates, services, subnet_id, adb, ggcs, dataflow, if_match):
 
     if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
@@ -492,12 +450,6 @@ def deploy_artifacts(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if dataflow is not None:
         _details['dataflow'] = cli_util.parse_json_parameter("dataflow", dataflow)
-
-    if omk is not None:
-        _details['omk'] = cli_util.parse_json_parameter("omk", omk)
-
-    if oke is not None:
-        _details['oke'] = cli_util.parse_json_parameter("oke", oke)
 
     client = cli_util.build_client('dif', 'stack', ctx)
     result = client.deploy_artifacts(
@@ -820,8 +772,8 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @stack_group.command(name=cli_util.override('dif.update_stack.command_name', 'update'), help=u"""Updates a Stack. \n[Command Reference](updateStack)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the Stack.""")
 @cli_util.option('--notification-email', help=u"""email id to which the stack notifications would be sent.""")
-@cli_util.option('--stack-templates', type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be updated for the stack.""")
-@cli_util.option('--services', type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be updated for the stack.""")
+@cli_util.option('--stack-templates', type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION"]), help=u"""List of templates to be updated for the stack.""")
+@cli_util.option('--services', type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW"]), help=u"""List of services to be updated for the stack.""")
 @cli_util.option('--adb', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ADB details if adb is included in the services to be updated.
 
 This option is a JSON list with items of type AdbUpdateDetail.  For documentation on AdbUpdateDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/AdbUpdateDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
