@@ -12,10 +12,10 @@ from services.dif.src.oci_cli_stack.generated import stack_cli
 
 @cli_util.copy_params_from_generated_command(stack_cli.add_service, params_to_exclude=['services', 'stack_templates'])
 @stack_cli.stack_group.command(name=cli_util.override('dif.add_service.command_name', 'add'), help=u"""Add new service or update existing service. \n[Command Reference](addService)""")
-@cli_util.option('--stack-templates', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be added for the stack.""")
-@cli_util.option('--services', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be added for the stack.""")
+@cli_util.option('--stack-templates', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION"]), help=u"""List of templates to be added for the stack.""")
+@cli_util.option('--services', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW"]), help=u"""List of services to be added for the stack.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}, 'aidataplatform': {'module': 'dif', 'class': 'list[AiDataPlatformDetail]'}, 'omk': {'module': 'dif', 'class': 'list[OmkDetail]'}, 'oke': {'module': 'dif', 'class': 'list[OkeDetail]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}})
 @cli_util.wrap_exceptions
 def add_service_extended(ctx, **kwargs):
     ctx.invoke(stack_cli.add_service, **kwargs)
@@ -23,10 +23,10 @@ def add_service_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(stack_cli.create_stack, params_to_exclude=['services', 'stack_templates'])
 @stack_cli.stack_group.command(name=cli_util.override('dif.create_stack.command_name', 'create'), help=u"""Creates a Stack. \n[Command Reference](createStack)""")
-@cli_util.option('--stack-templates', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be onboarded for the stack.""")
-@cli_util.option('--services', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be onboarded for the stack.""")
+@cli_util.option('--stack-templates', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION"]), help=u"""List of templates to be onboarded for the stack.""")
+@cli_util.option('--services', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW"]), help=u"""List of services to be onboarded for the stack.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}, 'aidataplatform': {'module': 'dif', 'class': 'list[AiDataPlatformDetail]'}, 'omk': {'module': 'dif', 'class': 'list[OmkDetail]'}, 'oke': {'module': 'dif', 'class': 'list[OkeDetail]'}, 'freeform-tags': {'module': 'dif', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dif', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dif', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowDetail]'}, 'objectstorage': {'module': 'dif', 'class': 'list[ObjectStorageDetail]'}, 'genai': {'module': 'dif', 'class': 'list[GenAiDetail]'}, 'freeform-tags': {'module': 'dif', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dif', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dif', 'class': 'Stack'})
 @cli_util.wrap_exceptions
 def create_stack_extended(ctx, **kwargs):
     ctx.invoke(stack_cli.create_stack, **kwargs)
@@ -34,10 +34,10 @@ def create_stack_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(stack_cli.deploy_artifacts, params_to_exclude=['services', 'stack_templates'])
 @stack_cli.stack_group.command(name=cli_util.override('dif.deploy_artifacts.command_name', 'deploy-artifacts'), help=u"""DeployArtifacts \n[Command Reference](deployArtifacts)""")
-@cli_util.option('--stack-templates', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates where artifacts are to be deployed for the stack.""")
-@cli_util.option('--services', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services where artifacts are to be deployed for the stack.""")
+@cli_util.option('--stack-templates', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION"]), help=u"""List of templates to be onboarded for the stack.""")
+@cli_util.option('--services', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW"]), help=u"""List of services to be onboarded for the stack.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbArtifactsDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsArtifactsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowArtifactsDetail]'}, 'omk': {'module': 'dif', 'class': 'list[OmkArtifactsDetail]'}, 'oke': {'module': 'dif', 'class': 'list[OkeArtifactsDetail]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adb': {'module': 'dif', 'class': 'list[AdbArtifactsDetail]'}, 'ggcs': {'module': 'dif', 'class': 'list[GgcsArtifactsDetail]'}, 'dataflow': {'module': 'dif', 'class': 'list[DataflowArtifactsDetail]'}})
 @cli_util.wrap_exceptions
 def deploy_artifacts_extended(ctx, **kwargs):
     ctx.invoke(stack_cli.deploy_artifacts, **kwargs)
