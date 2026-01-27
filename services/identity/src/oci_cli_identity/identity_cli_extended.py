@@ -561,6 +561,8 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
         )
     if with_root:
         tenancy_id = get_tenancy_from_config(ctx)
+        if tenancy_id is None:
+            tenancy_id = compartment_id
         tenancy_result = client.get_compartment(
             compartment_id=tenancy_id,
         )
