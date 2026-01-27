@@ -22,6 +22,18 @@ def queue_admin_root_group():
     pass
 
 
+@click.command(cli_util.override('queue_admin.consumer_group_group.command_name', 'consumer-group'), cls=CommandGroupWithAlias, help="""A detailed representation of a consumer group.""")
+@cli_util.help_option_group
+def consumer_group_group():
+    pass
+
+
+@click.command(cli_util.override('queue_admin.consumer_group_collection_group.command_name', 'consumer-group-collection'), cls=CommandGroupWithAlias, help="""Results of a consumer group search. Contains both ConsumerGroupSummary items and other information, such as metadata.""")
+@cli_util.help_option_group
+def consumer_group_collection_group():
+    pass
+
+
 @click.command(cli_util.override('queue_admin.work_request_error_collection_group.command_name', 'work-request-error-collection'), cls=CommandGroupWithAlias, help="""Results of a workRequestError search. Contains both WorkRequestError items and other information, such as metadata.""")
 @cli_util.help_option_group
 def work_request_error_collection_group():
@@ -59,6 +71,8 @@ def work_request_log_entry_collection_group():
 
 
 queue_service_cli.queue_service_group.add_command(queue_admin_root_group)
+queue_admin_root_group.add_command(consumer_group_group)
+queue_admin_root_group.add_command(consumer_group_collection_group)
 queue_admin_root_group.add_command(work_request_error_collection_group)
 queue_admin_root_group.add_command(work_request_summary_collection_group)
 queue_admin_root_group.add_command(queue_collection_group)
@@ -128,15 +142,12 @@ def change_queue_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@queue_group.command(name=cli_util.override('queue_admin.create_queue.command_name', 'create'), help=u"""Creates a new queue. \n[Command Reference](createQueue)""")
-@cli_util.option('--display-name', required=True, help=u"""The user-friendly name of the queue.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the queue.""")
-@cli_util.option('--retention-in-seconds', type=click.INT, help=u"""The retention period of messages in the queue, in seconds.""")
-@cli_util.option('--visibility-in-seconds', type=click.INT, help=u"""The default visibility timeout of the messages consumed from the queue, in seconds.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The default polling timeout of the messages in the queue, in seconds.""")
-@cli_util.option('--channel-consumption-limit', type=click.INT, help=u"""The percentage of allocated queue resources that can be consumed by a single channel. For example, if a queue has a storage limit of 2Gb, and a single channel consumption limit is 0.1 (10%), that means data size of a single channel  can't exceed 200Mb. Consumption limit of 100% (default) means that a single channel can consume up-to all allocated queue's resources.""")
-@cli_util.option('--dead-letter-queue-delivery-count', type=click.INT, help=u"""The number of times a message can be delivered to a consumer before being moved to the dead letter queue. A value of 0 indicates that the DLQ is not used.""")
-@cli_util.option('--custom-encryption-key-id', help=u"""The [OCID] of the custom encryption key to be used to encrypt messages content.""")
+@consumer_group_group.command(name=cli_util.override('queue_admin.create_consumer_group.command_name', 'create'), help=u"""Creates a new consumer group. \n[Command Reference](createConsumerGroup)""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name of the consumer group.""")
+@cli_util.option('--queue-id', required=True, help=u"""The OCID of the associated queue.""")
+@cli_util.option('--filter', help=u"""The filter used by the consumer group. Only messages matching the filter will be available by consumers of the group.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Used to enable or disable the consumer group. An enabled consumer group will have a lifecycle state of ACTIVE, while a disabled will have its state as INACTIVE.""")
+@cli_util.option('--dead-letter-queue-delivery-count', type=click.INT, help=u"""The number of times a message can be delivered to a consumer before being moved to the dead letter queue. A value of 0 indicates that the DLQ is not used. If the value isn't specified, it will be using the value defined at the queue level.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -147,7 +158,88 @@ def change_queue_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, retention_in_seconds, visibility_in_seconds, timeout_in_seconds, channel_consumption_limit, dead_letter_queue_delivery_count, custom_encryption_key_id, freeform_tags, defined_tags):
+def create_consumer_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, queue_id, filter, is_enabled, dead_letter_queue_delivery_count, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['queueId'] = queue_id
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if dead_letter_queue_delivery_count is not None:
+        _details['deadLetterQueueDeliveryCount'] = dead_letter_queue_delivery_count
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('queue', 'queue_admin', ctx)
+    result = client.create_consumer_group(
+        create_consumer_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@queue_group.command(name=cli_util.override('queue_admin.create_queue.command_name', 'create'), help=u"""Creates a new queue. \n[Command Reference](createQueue)""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name of the queue.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the queue.""")
+@cli_util.option('--retention-in-seconds', type=click.INT, help=u"""The retention period of messages in the queue, in seconds.""")
+@cli_util.option('--visibility-in-seconds', type=click.INT, help=u"""The default visibility timeout of the messages consumed from the queue, in seconds.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The default polling timeout of the messages in the queue, in seconds.""")
+@cli_util.option('--channel-consumption-limit', type=click.INT, help=u"""The percentage of allocated queue resources that can be consumed by a single channel. For example, if a queue has a storage limit of 2Gb, and a single channel consumption limit is 0.1 (10%), that means data size of a single channel  can't exceed 200Mb. Consumption limit of 100% (default) means that a single channel can consume up-to all allocated queue's resources.""")
+@cli_util.option('--dead-letter-queue-delivery-count', type=click.INT, help=u"""The number of times a message can be delivered to a consumer before being moved to the dead letter queue. A value of 0 indicates that the DLQ is not used.""")
+@cli_util.option('--custom-encryption-key-id', help=u"""The [OCID] of the custom encryption key to be used to encrypt messages content.""")
+@cli_util.option('--capabilities', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capability to add on the queue
+
+This option is a JSON list with items of type CapabilityDetails.  For documentation on CapabilityDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/queueadmin/20210201/datatypes/CapabilityDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'capabilities': {'module': 'queue', 'class': 'list[CapabilityDetails]'}, 'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capabilities': {'module': 'queue', 'class': 'list[CapabilityDetails]'}, 'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def create_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, retention_in_seconds, visibility_in_seconds, timeout_in_seconds, channel_consumption_limit, dead_letter_queue_delivery_count, custom_encryption_key_id, capabilities, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -173,6 +265,9 @@ def create_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if custom_encryption_key_id is not None:
         _details['customEncryptionKeyId'] = custom_encryption_key_id
+
+    if capabilities is not None:
+        _details['capabilities'] = cli_util.parse_json_parameter("capabilities", capabilities)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -204,6 +299,62 @@ def create_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@consumer_group_group.command(name=cli_util.override('queue_admin.delete_consumer_group.command_name', 'delete'), help=u"""Deletes a consumer group resource by identifier. \n[Command Reference](deleteConsumerGroup)""")
+@cli_util.option('--consumer-group-id', required=True, help=u"""The unique consumer group identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_consumer_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, consumer_group_id, if_match):
+
+    if isinstance(consumer_group_id, six.string_types) and len(consumer_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --consumer-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('queue', 'queue_admin', ctx)
+    result = client.delete_consumer_group(
+        consumer_group_id=consumer_group_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 sys.exit(2)
             except Exception:
@@ -271,6 +422,28 @@ def delete_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
+@consumer_group_group.command(name=cli_util.override('queue_admin.get_consumer_group.command_name', 'get'), help=u"""Gets a consumer group by identifier. \n[Command Reference](getConsumerGroup)""")
+@cli_util.option('--consumer-group-id', required=True, help=u"""The unique consumer group identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'queue', 'class': 'ConsumerGroup'})
+@cli_util.wrap_exceptions
+def get_consumer_group(ctx, from_json, consumer_group_id):
+
+    if isinstance(consumer_group_id, six.string_types) and len(consumer_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --consumer-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('queue', 'queue_admin', ctx)
+    result = client.get_consumer_group(
+        consumer_group_id=consumer_group_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @queue_group.command(name=cli_util.override('queue_admin.get_queue.command_name', 'get'), help=u"""Gets a queue by identifier. \n[Command Reference](getQueue)""")
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -312,6 +485,68 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@consumer_group_collection_group.command(name=cli_util.override('queue_admin.list_consumer_groups.command_name', 'list-consumer-groups'), help=u"""Returns a list of consumer groups. \n[Command Reference](listConsumerGroups)""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--id', help=u"""The unique consumer group identifier.""")
+@cli_util.option('--queue-id', help=u"""The unique queue identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'queue', 'class': 'ConsumerGroupCollection'})
+@cli_util.wrap_exceptions
+def list_consumer_groups(ctx, from_json, all_pages, page_size, lifecycle_state, display_name, id, queue_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if queue_id is not None:
+        kwargs['queue_id'] = queue_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('queue', 'queue_admin', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_consumer_groups,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_consumer_groups,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_consumer_groups(
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -529,10 +764,11 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
-@queue_group.command(name=cli_util.override('queue_admin.purge_queue.command_name', 'purge'), help=u"""Deletes all messages present in the queue, or deletes all the messages in the specific channel at the time of invocation. Only one concurrent purge operation is supported for any given queue. However multiple concurrent purge operations are supported for different queues. Purge request without specification of target channels will clean up all messages in the queue and in the child channels. \n[Command Reference](purgeQueue)""")
+@queue_group.command(name=cli_util.override('queue_admin.purge_queue.command_name', 'purge'), help=u"""Deletes all messages present in the queue or in the specified consumer group, or deletes all the messages in the specific channel at the time of invocation. Only one concurrent purge operation is supported for any given queue. However multiple concurrent purge operations are supported for different queues. Purge request without specification of target channels will clean up all messages in the queue and in the child channels. Purge request without specification of consumer group will either clean up all messages in the queue or in the primary consumer group, depending on the presence of the CONSUMER_GROUPS capability on the queue. To purge all consumer groups, the special value 'all' can be used. \n[Command Reference](purgeQueue)""")
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--purge-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "DLQ", "BOTH"]), help=u"""Type of the purge to perform: - NORMAL - purge only the normal queue - DLQ - purge only the dead letter queue - BOTH - purge both the normal queue and the dead letter queue""")
 @cli_util.option('--channel-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Optional parameter to specify the destination of purge operation. If the channel ID is specified, the purge operation will delete all the messages in the specific channels. If the channel ID is not specified, the purge operation will delete all the messages in the queue and in the child channels.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--consumer-group-id', help=u"""The consumer group ID to purge. If the CONSUMER_GROUPS capability is enabled on the queue, omitting that field will purge the \"Primary Consumer Group\", otherwise it will purge the queue. If you wish to purge all consumer groups in the queue, you can pass the special value 'all'.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -542,7 +778,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'channel-ids': {'module': 'queue', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def purge_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, queue_id, purge_type, channel_ids, if_match):
+def purge_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, queue_id, purge_type, channel_ids, consumer_group_id, if_match):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
@@ -558,10 +794,101 @@ def purge_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     if channel_ids is not None:
         _details['channelIds'] = cli_util.parse_json_parameter("channel_ids", channel_ids)
 
+    if consumer_group_id is not None:
+        _details['consumerGroupId'] = consumer_group_id
+
     client = cli_util.build_client('queue', 'queue_admin', ctx)
     result = client.purge_queue(
         queue_id=queue_id,
         purge_queue_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@consumer_group_group.command(name=cli_util.override('queue_admin.update_consumer_group.command_name', 'update'), help=u"""Updates the specified consumer group. \n[Command Reference](updateConsumerGroup)""")
+@cli_util.option('--consumer-group-id', required=True, help=u"""The unique consumer group identifier.""")
+@cli_util.option('--display-name', help=u"""The [OCID] of the consumer group.""")
+@cli_util.option('--filter', help=u"""The filter used by the consumer group. Only messages matching the filter will be available by consumers of the group.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Used to enable or disable the consumer group. An enabled consumer group will have a lifecycle state of ACTIVE, while a disabled will have its state as INACTIVE.""")
+@cli_util.option('--dead-letter-queue-delivery-count', type=click.INT, help=u"""The number of times a message can be delivered to a consumer before being moved to the dead letter queue. A value of 0 indicates that the DLQ is not used. Changing that value to a lower threshold does not retroactively move in-flight messages in the dead letter queue. A value of -1 unsets the delivery count for the consumer group (i.e. it will now be using the value set at the queue level).""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_consumer_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, consumer_group_id, display_name, filter, is_enabled, dead_letter_queue_delivery_count, freeform_tags, defined_tags, if_match):
+
+    if isinstance(consumer_group_id, six.string_types) and len(consumer_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --consumer-group-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if dead_letter_queue_delivery_count is not None:
+        _details['deadLetterQueueDeliveryCount'] = dead_letter_queue_delivery_count
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('queue', 'queue_admin', ctx)
+    result = client.update_consumer_group(
+        consumer_group_id=consumer_group_id,
+        update_consumer_group_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -602,6 +929,9 @@ def purge_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--channel-consumption-limit', type=click.INT, help=u"""The percentage of allocated queue resources that can be consumed by a single channel. For example, if a queue has a storage limit of 2Gb, and a single channel consumption limit is 0.1 (10%), that means data size of a single channel  can't exceed 200Mb. Consumption limit of 100% (default) means that a single channel can consume up-to all allocated queue's resources.""")
 @cli_util.option('--dead-letter-queue-delivery-count', type=click.INT, help=u"""The number of times a message can be delivered to a consumer before being moved to the dead letter queue. A value of 0 indicates that the DLQ is not used. Changing that value to a lower threshold does not retroactively move in-flight messages in the dead letter queue.""")
 @cli_util.option('--custom-encryption-key-id', help=u"""The [OCID] of the custom encryption key to be used to encrypt messages content. A string with a length of 0 means the custom key should be removed from queue.""")
+@cli_util.option('--capabilities', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of capabilities enabled on the queue
+
+This option is a JSON list with items of type CapabilityDetails.  For documentation on CapabilityDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/queueadmin/20210201/datatypes/CapabilityDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -609,18 +939,18 @@ def purge_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'capabilities': {'module': 'queue', 'class': 'list[CapabilityDetails]'}, 'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capabilities': {'module': 'queue', 'class': 'list[CapabilityDetails]'}, 'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_queue(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, queue_id, display_name, visibility_in_seconds, timeout_in_seconds, channel_consumption_limit, dead_letter_queue_delivery_count, custom_encryption_key_id, freeform_tags, defined_tags, if_match):
+def update_queue(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, queue_id, display_name, visibility_in_seconds, timeout_in_seconds, channel_consumption_limit, dead_letter_queue_delivery_count, custom_encryption_key_id, capabilities, freeform_tags, defined_tags, if_match):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if capabilities or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to capabilities and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -647,6 +977,9 @@ def update_queue(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if custom_encryption_key_id is not None:
         _details['customEncryptionKeyId'] = custom_encryption_key_id
+
+    if capabilities is not None:
+        _details['capabilities'] = cli_util.parse_json_parameter("capabilities", capabilities)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
