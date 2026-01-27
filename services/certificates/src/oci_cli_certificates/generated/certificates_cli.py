@@ -59,7 +59,7 @@ certificates_root_group.add_command(certificate_authority_bundle_version_summary
 certificates_root_group.add_command(certificate_bundle_group)
 
 
-@ca_bundle_group.command(name=cli_util.override('certificates.get_ca_bundle.command_name', 'get'), help=u"""Gets a ca-bundle bundle. \n[Command Reference](getCaBundle)""")
+@ca_bundle_group.command(name=cli_util.override('certificates.get_ca_bundle.command_name', 'get'), help=u"""Gets the bundle for the specified CA bundle. \n[Command Reference](getCaBundle)""")
 @cli_util.option('--ca-bundle-id', required=True, help=u"""The OCID of the CA bundle.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -81,11 +81,11 @@ def get_ca_bundle(ctx, from_json, ca_bundle_id):
     cli_util.render_response(result, ctx)
 
 
-@certificate_authority_bundle_group.command(name=cli_util.override('certificates.get_certificate_authority_bundle.command_name', 'get'), help=u"""Gets a certificate authority bundle that matches either the specified `stage`, `name`, or `versionNumber` parameter. If none of these parameters are provided, the bundle for the certificate authority version marked as `CURRENT` will be returned. \n[Command Reference](getCertificateAuthorityBundle)""")
+@certificate_authority_bundle_group.command(name=cli_util.override('certificates.get_certificate_authority_bundle.command_name', 'get'), help=u"""Gets a bundle for a certificate authority (CA) that matches either the specified `stage`, `name`, or `versionNumber` parameter. If none of these parameters are provided, the bundle for the CA version marked as `CURRENT` is returned. \n[Command Reference](getCertificateAuthorityBundle)""")
 @cli_util.option('--certificate-authority-id', required=True, help=u"""The OCID of the certificate authority (CA).""")
 @cli_util.option('--version-number', type=click.INT, help=u"""The version number of the certificate authority (CA).""")
 @cli_util.option('--certificate-authority-version-name', help=u"""The name of the certificate authority (CA). (This might be referred to as the name of the CA version, as every CA consists of at least one version.) Names are unique across versions of a given CA.""")
-@cli_util.option('--stage', type=custom_types.CliCaseInsensitiveChoice(["CURRENT", "PENDING", "LATEST", "PREVIOUS", "DEPRECATED"]), help=u"""The rotation state of the certificate version.""")
+@cli_util.option('--stage', type=custom_types.CliCaseInsensitiveChoice(["CURRENT", "PENDING", "PENDING_ACTIVATION", "LATEST", "PREVIOUS", "DEPRECATED"]), help=u"""The rotation state of the certificate version.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -112,9 +112,9 @@ def get_certificate_authority_bundle(ctx, from_json, certificate_authority_id, v
     cli_util.render_response(result, ctx)
 
 
-@certificate_bundle_group.command(name=cli_util.override('certificates.get_certificate_bundle.command_name', 'get'), help=u"""Gets a certificate bundle that matches either the specified `stage`, `versionName`, or `versionNumber` parameter. If none of these parameters are provided, the bundle for the certificate version marked as `CURRENT` will be returned.
+@certificate_bundle_group.command(name=cli_util.override('certificates.get_certificate_bundle.command_name', 'get'), help=u"""Gets a certificate bundle that matches either the specified `stage`, `versionName`, or `versionNumber` parameter. If none of these parameters are provided, the bundle for the certificate version marked as `CURRENT` is returned.
 
-By default, the private key is not included in the query result, and a CertificateBundlePublicOnly is returned. If the private key is needed, use the CertificateBundleTypeQueryParam parameter to get a CertificateBundleWithPrivateKey response. \n[Command Reference](getCertificateBundle)""")
+By default, the private key is not included in the query result, and only the certificate bundle is returned. If you also need the private key, you can use the parameter `CertificateBundleTypeQueryParam` to indicate that you want a certificate bundle along with its private key as a response to your request. \n[Command Reference](getCertificateBundle)""")
 @cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
 @cli_util.option('--version-number', type=click.INT, help=u"""The version number of the certificate. The default value is 0, which means that this query parameter is ignored.""")
 @cli_util.option('--certificate-version-name', help=u"""The name of the certificate. (This might be referred to as the name of the certificate version, as every certificate consists of at least one version.) Names are unique across versions of a given certificate.""")
@@ -148,7 +148,7 @@ def get_certificate_bundle(ctx, from_json, certificate_id, version_number, certi
     cli_util.render_response(result, ctx)
 
 
-@certificate_authority_bundle_version_summary_group.command(name=cli_util.override('certificates.list_certificate_authority_bundle_versions.command_name', 'list-certificate-authority-bundle-versions'), help=u"""Lists all certificate authority bundle versions for the specified certificate authority. \n[Command Reference](listCertificateAuthorityBundleVersions)""")
+@certificate_authority_bundle_version_summary_group.command(name=cli_util.override('certificates.list_certificate_authority_bundle_versions.command_name', 'list-certificate-authority-bundle-versions'), help=u"""Lists all versions of bundles for a given certificate authority (CA). \n[Command Reference](listCertificateAuthorityBundleVersions)""")
 @cli_util.option('--certificate-authority-id', required=True, help=u"""The OCID of the certificate authority (CA).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["VERSION_NUMBER"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `VERSION_NUMBER` is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")

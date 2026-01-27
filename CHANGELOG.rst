@@ -6,6 +6,168 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.73.1 - 2026-01-27
+-------------------
+Added
+~~~~~
+* Queue service
+
+  * Support for message fanout with filtering using Consumer Groups
+
+    * ``oci queue queue-admin consumer-group create``
+    * ``oci queue queue-admin consumer-group delete``
+    * ``oci queue queue-admin consumer-group get``
+    * ``oci queue queue-admin consumer-group update``
+    * ``oci queue queue-admin consumer-group-collection list-consumer-groups``
+
+* Generative AI Agent Service
+
+  * Support for managing provisioned capacities
+
+    * ``oci generative-ai-agent provisioned-capacity change-compartment``
+    * ``oci generative-ai-agent provisioned-capacity create``
+    * ``oci generative-ai-agent provisioned-capacity delete``
+    * ``oci generative-ai-agent provisioned-capacity get``
+    * ``oci generative-ai-agent provisioned-capacity list``
+    * ``oci generative-ai-agent provisioned-capacity update``
+
+* Certificates Management service
+
+  * Support for managing certificate authority (CA) hierarchies with two new CA types
+
+    * ``oci certs-mgmt certificate-authority create-root-ca-managed-externally``
+    * ``oci certs-mgmt certificate-authority create-subordinate-ca-managed-internally-issued-by-external-ca``
+    * ``oci certs-mgmt certificate-authority update-root-ca-managed-externally``
+    * ``oci certs-mgmt certificate-authority update-subordinate-ca-managed-internally-issued-by-external-ca``
+
+* Oracle Cloud VMware Provisioning service
+
+  * Support for Management Appliance in Oracle Cloud VMware Provisioning service
+
+    * ``oci ocvs management-appliance management-appliance create``
+    * ``oci ocvs management-appliance management-appliance delete``
+    * ``oci ocvs management-appliance management-appliance get``
+    * ``oci ocvs management-appliance management-appliance list``
+    * ``oci ocvs management-appliance management-appliance update``
+
+* Managed Kafka service
+
+  * Support for listing shapes allowed in the region
+
+    * ``oci kafka cluster list-node-shapes``
+
+* MySQL HeatWave service
+
+  * Support for exporting MySQL HeatWave backup images to a customer's Object Storage bucket
+
+    * ``oci mysql backup export``
+
+  * Support for canceling ongoing export operations
+
+    * ``oci mysql work-request cancel``
+
+
+Modified
+~~~~~~~~
+* Queue service
+
+  * Support for new optional parameter ``--consumer-group-id`` for the following commands
+
+    * ``oci queue channels list-channels``
+    * ``oci queue messages delete-message``
+    * ``oci queue messages delete-messages``
+    * ``oci queue messages get-messages``
+    * ``oci queue messages get-stats``
+    * ``oci queue messages update-message``
+    * ``oci queue messages update-messages``
+    * ``oci queue queue-admin queue purge``
+
+  * Support for new optional parameter ``--capabilities`` for the following commands
+
+    * ``oci queue queue-admin queue create``
+    * ``oci queue queue-admin queue update``
+
+* Certificates Management service
+
+  * Moved parameter ``--kms-key-id`` from required to optional for the following commands
+
+    * ``oci certs-mgmt certificate-authority create-root-ca-by-generating-config-details``
+    * ``oci certs-mgmt certificate-authority create-subordinate-ca-issued-by-internal-ca``
+
+  * Support for new optional parameter ``--external-key-description`` for the following commands
+
+    * ``oci certs-mgmt certificate-authority create-root-ca-by-generating-config-details``
+    * ``oci certs-mgmt certificate-authority create-subordinate-ca-issued-by-internal-ca``
+    * ``oci certs-mgmt certificate-authority update-root-ca-by-generating-config-details``
+    * ``oci certs-mgmt certificate-authority update-subordinate-ca-issued-by-internal-ca``
+
+* OCI OpenSearch service
+
+  * Support for providing load balancer configuration for a OpensearchCluster
+
+    * ``oci opensearch cluster create --load-balancer-config``
+    * ``oci opensearch cluster update --load-balancer-config``
+
+* Compute service
+
+  * Support for new optional parameter ``--opc-compute-cluster-id`` for Compute Cluster ID in Instance Pools
+
+    * ``oci compute-management instance-configuration launch-compute-instance --opc-compute-cluster-id``
+
+  * [BREAKING] Removed optional parameters ``--max-wait-seconds, --wait-for-state, --wait-interval-seconds`` from the following commands
+
+    * ``oci compute compute-host apply-host-configuration``
+    * ``oci compute compute-host attach``
+    * ``oci compute compute-host check-host-configuration``
+
+  * Support for new optional parameter ``--capacity-config`` for the following commands
+
+    * ``oci compute dedicated-vm-host create``
+    * ``oci compute dedicated-vm-host create-dedicated-vm-host-compute-bare-metal-host-placement-constraint-details``
+    * ``oci compute dedicated-vm-host create-dedicated-vm-host-host-group-placement-constraint-details``
+
+  * Support for new optional parameter ``--is-memory-encryption-enabled`` for the following commands
+
+    * ``oci compute dedicated-vm-host create``
+    * ``oci compute dedicated-vm-host create-dedicated-vm-host-compute-bare-metal-host-placement-constraint-details``
+    * ``oci compute dedicated-vm-host create-dedicated-vm-host-host-group-placement-constraint-details``
+    * ``oci compute dedicated-vm-host list``
+    * ``oci compute dedicated-vm-host-instance list``
+
+* Data Intelligence Foundation service
+
+  * Support for AI Data Platform, Oracle Managed Kubernetes & Oracle Kubernetes Engine
+
+    * ``oci dif stack add --aidataplatform, --oke, --omk``
+    * ``oci dif stack create --aidataplatform, --oke, --omk``
+    * ``oci dif stack deploy-artifacts --oke, --omk``
+
+* Database service
+
+  * Support for new optional parameter ``--is-online-restart`` to trigger an online restart of the specified autonomous database
+
+    * ``oci db autonomous-database restart --is-online-restart``
+
+* Generative AI Agent Service
+
+  * Support for new optional parameter ``--provisioned-capacity-config`` for the following commands
+
+    * ``oci generative-ai-agent agent-endpoint create``
+    * ``oci generative-ai-agent agent-endpoint update``
+
+  * Support for new optional parameters ``--tool-config-embedding-llm-customization, --tool-config-reranking-llm-customization, --tool-config-reasoning-llm-customization`` for the following commands
+
+    * ``oci generative-ai-agent tool create-tool-rag-tool-config``
+    * ``oci generative-ai-agent tool update-tool-rag-tool-config``
+
+  * Support for new optional parameter ``--tool-config-runtime-version`` for the following commands
+
+    * ``oci generative-ai-agent tool create-tool-rag-tool-config``
+    * ``oci generative-ai-agent tool create-tool-sql-tool-config``
+    * ``oci generative-ai-agent tool update-tool-rag-tool-config``
+    * ``oci generative-ai-agent tool update-tool-sql-tool-config``
+
+
 3.72.1 - 2026-01-20
 --------------------
 Added
