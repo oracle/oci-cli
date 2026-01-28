@@ -46,6 +46,32 @@ work_requests_root_group.add_command(work_request_log_entry_group)
 work_requests_root_group.add_command(work_request_group)
 
 
+@work_request_group.command(name=cli_util.override('work_requests.cancel_work_request.command_name', 'cancel'), help=u"""Cancels a work request. \n[Command Reference](cancelWorkRequest)""")
+@cli_util.option('--work-request-id', required=True, help=u"""the ID of the WorkRequest""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def cancel_work_request(ctx, from_json, work_request_id, if_match):
+
+    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('mysql', 'work_requests', ctx)
+    result = client.cancel_work_request(
+        work_request_id=work_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @work_request_group.command(name=cli_util.override('work_requests.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""the ID of the WorkRequest""")
 @cli_util.option('--if-none-match', help=u"""For conditional requests. In the GET call for a resource, set the `If-None-Match` header to the value of the ETag from a previous GET (or POST or PUT) response for that resource. The server will return with either a 304 Not Modified response if the resource has not changed, or a 200 OK response with the updated representation.""")
