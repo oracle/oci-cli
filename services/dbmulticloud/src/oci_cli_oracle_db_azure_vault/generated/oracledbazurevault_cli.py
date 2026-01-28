@@ -68,7 +68,7 @@ oracle_db_azure_vault_root_group.add_command(oracle_db_azure_vault_group)
 
 @oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.change_oracle_db_azure_vault_compartment.command_name', 'change-compartment'), help=u"""Moves the DB Azure Vault resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAzureVaultCompartment)""")
 @cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Vault resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Oracle DB Azure Vault resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the new compartment to contain the Oracle DB Azure Vault resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -148,7 +148,7 @@ def change_oracle_db_azure_vault_compartment(ctx, from_json, wait_for_state, max
 
 
 @oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.create_oracle_db_azure_vault.command_name', 'create'), help=u"""Creates DB Azure Vault resource. \n[Command Reference](createOracleDbAzureVault)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains DB Azure Vault resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains DB Azure Vault resource.""")
 @cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Connector resource that contains Oracle DB Azure Vault resource.""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle DB Azure Vault resource name.""")
 @cli_util.option('--oracle-db-azure-resource-group', help=u"""Oracle DB Azure resource group name.""")
@@ -327,7 +327,7 @@ def get_oracle_db_azure_vault(ctx, from_json, oracle_db_azure_vault_id, limit, p
 
 
 @oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.list_oracle_db_azure_vaults.command_name', 'list'), help=u"""Lists all DB Azure Vault resources based on the specified filters. \n[Command Reference](listOracleDbAzureVaults)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB Azure Vault resources that match the specified display name.""")
 @cli_util.option('--oracle-db-azure-vault-id', help=u"""A filter to return Oracle DB Azure Vault resources that match the specified [OCID] of the Oracle DB Azure Vault resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
@@ -460,7 +460,7 @@ def refresh_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_secon
 
 @oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.update_oracle_db_azure_vault.command_name', 'update'), help=u"""Modifies the configuration details of an existing Oracle Database Azure Vault resource identified by its unique [OCID]. This operation updates only the specified fields in the request body. \n[Command Reference](updateOracleDbAzureVault)""")
 @cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Vault resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains this Oracle DB Azure Vault resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains this Oracle DB Azure Vault resource.""")
 @cli_util.option('--oracle-db-connector-id', help=u"""The [OCID] of the Oracle DB Connector resource that contains Oracle DB Azure Vault resource.""")
 @cli_util.option('--display-name', help=u"""Oracle DB Azure Vault resource name.""")
 @cli_util.option('--oracle-db-azure-resource-group', help=u"""Oracle DB Azure resource group name.""")

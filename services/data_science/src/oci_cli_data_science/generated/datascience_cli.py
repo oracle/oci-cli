@@ -554,7 +554,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @data_science_private_endpoint_group.command(name=cli_util.override('data_science.change_data_science_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a private endpoint into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeDataSciencePrivateEndpointCompartment)""")
 @cli_util.option('--data-science-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create private endpoint.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create private endpoint.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -615,7 +615,7 @@ def change_data_science_private_endpoint_compartment(ctx, from_json, wait_for_st
 
 @job_group.command(name=cli_util.override('data_science.change_job_compartment.command_name', 'change-compartment'), help=u"""Changes a job's compartment \n[Command Reference](changeJobCompartment)""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -646,7 +646,7 @@ def change_job_compartment(ctx, from_json, job_id, compartment_id, if_match):
 
 @job_run_group.command(name=cli_util.override('data_science.change_job_run_compartment.command_name', 'change-compartment'), help=u"""Changes a job run's compartment \n[Command Reference](changeJobRunCompartment)""")
 @cli_util.option('--job-run-id', required=True, help=u"""The [OCID] of the job run.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -677,7 +677,7 @@ def change_job_run_compartment(ctx, from_json, job_run_id, compartment_id, if_ma
 
 @ml_application_group.command(name=cli_util.override('data_science.change_ml_application_compartment.command_name', 'change-compartment'), help=u"""Moves a MlApplication resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMlApplicationCompartment)""")
 @cli_util.option('--ml-application-id', required=True, help=u"""unique MlApplication identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -708,7 +708,7 @@ def change_ml_application_compartment(ctx, from_json, ml_application_id, compart
 
 @ml_application_implementation_group.command(name=cli_util.override('data_science.change_ml_application_implementation_compartment.command_name', 'change-compartment'), help=u"""Moves a MlApplicationImplementation resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMlApplicationImplementationCompartment)""")
 @cli_util.option('--ml-application-implementation-id', required=True, help=u"""unique MlApplicationImplementation identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -769,7 +769,7 @@ def change_ml_application_implementation_compartment(ctx, from_json, wait_for_st
 
 @ml_application_instance_group.command(name=cli_util.override('data_science.change_ml_application_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a MlApplicationInstance resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMlApplicationInstanceCompartment)""")
 @cli_util.option('--ml-application-instance-id', required=True, help=u"""unique MlApplicationInstance identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -830,7 +830,7 @@ def change_ml_application_instance_compartment(ctx, from_json, wait_for_state, m
 
 @ml_application_instance_view_group.command(name=cli_util.override('data_science.change_ml_application_instance_view_compartment.command_name', 'change-compartment'), help=u"""Moves a MlApplicationInstanceView resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMlApplicationInstanceViewCompartment)""")
 @cli_util.option('--ml-application-instance-view-id', required=True, help=u"""unique MlApplicationInstanceView identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -891,7 +891,7 @@ def change_ml_application_instance_view_compartment(ctx, from_json, wait_for_sta
 
 @model_group.command(name=cli_util.override('data_science.change_model_compartment.command_name', 'change-compartment'), help=u"""Moves a model resource into a different compartment. \n[Command Reference](changeModelCompartment)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -922,7 +922,7 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
 
 @model_deployment_group.command(name=cli_util.override('data_science.change_model_deployment_compartment.command_name', 'change-compartment'), help=u"""Moves a model deployment into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeModelDeploymentCompartment)""")
 @cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -953,7 +953,7 @@ def change_model_deployment_compartment(ctx, from_json, model_deployment_id, com
 
 @model_group_group.command(name=cli_util.override('data_science.change_model_group_compartment.command_name', 'change-compartment'), help=u"""Moves a model group resource into a different compartment. \n[Command Reference](changeModelGroupCompartment)""")
 @cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -984,7 +984,7 @@ def change_model_group_compartment(ctx, from_json, model_group_id, compartment_i
 
 @model_group_version_history_group.command(name=cli_util.override('data_science.change_model_group_version_history_compartment.command_name', 'change-compartment'), help=u"""Moves a model Group Version History resource into a different compartment. \n[Command Reference](changeModelGroupVersionHistoryCompartment)""")
 @cli_util.option('--model-group-version-history-id', required=True, help=u"""The [OCID] of the modelGroupVersionHistory.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1015,7 +1015,7 @@ def change_model_group_version_history_compartment(ctx, from_json, model_group_v
 
 @model_version_set_group.command(name=cli_util.override('data_science.change_model_version_set_compartment.command_name', 'change-compartment'), help=u"""Moves a modelVersionSet resource into a different compartment. \n[Command Reference](changeModelVersionSetCompartment)""")
 @cli_util.option('--model-version-set-id', required=True, help=u"""The [OCID] of the model version set.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1076,7 +1076,7 @@ def change_model_version_set_compartment(ctx, from_json, wait_for_state, max_wai
 
 @notebook_session_group.command(name=cli_util.override('data_science.change_notebook_session_compartment.command_name', 'change-compartment'), help=u"""Moves a notebook session resource into a different compartment. \n[Command Reference](changeNotebookSessionCompartment)""")
 @cli_util.option('--notebook-session-id', required=True, help=u"""The [OCID] of the notebook session.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1107,7 +1107,7 @@ def change_notebook_session_compartment(ctx, from_json, notebook_session_id, com
 
 @pipeline_group.command(name=cli_util.override('data_science.change_pipeline_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePipelineCompartment)""")
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1138,7 +1138,7 @@ def change_pipeline_compartment(ctx, from_json, pipeline_id, compartment_id, if_
 
 @pipeline_run_group.command(name=cli_util.override('data_science.change_pipeline_run_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePipelineRunCompartment)""")
 @cli_util.option('--pipeline-run-id', required=True, help=u"""The [OCID] of the pipeline run.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1169,7 +1169,7 @@ def change_pipeline_run_compartment(ctx, from_json, pipeline_run_id, compartment
 
 @project_group.command(name=cli_util.override('data_science.change_project_compartment.command_name', 'change-compartment'), help=u"""Moves a project resource into a different compartment. \n[Command Reference](changeProjectCompartment)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1200,7 +1200,7 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 
 @schedule_group.command(name=cli_util.override('data_science.change_schedule_compartment.command_name', 'change-compartment'), help=u"""Moves a Schedule resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeScheduleCompartment)""")
 @cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1260,8 +1260,8 @@ def change_schedule_compartment(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @data_science_private_endpoint_group.command(name=cli_util.override('data_science.create_data_science_private_endpoint.command_name', 'create'), help=u"""Creates a Data Science private endpoint to be used by a Data Science resource. \n[Command Reference](createDataSciencePrivateEndpoint)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the private endpoint.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the private endpoint.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the subnet.""")
 @cli_util.option('--data-science-resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION", "MODEL_DEPLOYMENT"]), help=u"""Data Science resource type.""")
 @cli_util.option('--description', help=u"""A user friendly description. Avoid entering confidential information.""")
 @cli_util.option('--display-name', help=u"""A user friendly name. It doesn't have to be unique. Avoid entering confidential information.""")
@@ -1342,7 +1342,7 @@ def create_data_science_private_endpoint(ctx, from_json, wait_for_state, max_wai
 
 @job_group.command(name=cli_util.override('data_science.create_job.command_name', 'create'), help=u"""Creates a job. \n[Command Reference](createJob)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1435,7 +1435,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 @job_group.command(name=cli_util.override('data_science.create_job_empty_job_configuration_details.command_name', 'create-job-empty-job-configuration-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--job-infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1527,7 +1527,7 @@ def create_job_empty_job_configuration_details(ctx, from_json, wait_for_state, m
 
 @job_group.command(name=cli_util.override('data_science.create_job_default_job_configuration_details.command_name', 'create-job-default-job-configuration-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--job-infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1635,7 +1635,7 @@ def create_job_default_job_configuration_details(ctx, from_json, wait_for_state,
 
 @job_group.command(name=cli_util.override('data_science.create_job_multi_node_job_infrastructure_configuration_details.command_name', 'create-job-multi-node-job-infrastructure-configuration-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--job-infrastructure-configuration-details-shape-name', required=True, help=u"""The name that corresponds to the JobShapeSummary to use for the job node""")
 @cli_util.option('--job-infrastructure-configuration-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
@@ -1735,7 +1735,7 @@ def create_job_multi_node_job_infrastructure_configuration_details(ctx, from_jso
 
 @job_group.command(name=cli_util.override('data_science.create_job_empty_job_infrastructure_configuration_details.command_name', 'create-job-empty-job-infrastructure-configuration-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1827,7 +1827,7 @@ def create_job_empty_job_infrastructure_configuration_details(ctx, from_json, wa
 
 @job_group.command(name=cli_util.override('data_science.create_job_managed_egress_standalone_job_infrastructure_configuration_details.command_name', 'create-job-managed-egress-standalone-job-infrastructure-configuration-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--job-infrastructure-configuration-details-shape-name', required=True, help=u"""The shape used to launch the job run instances.""")
 @cli_util.option('--job-infrastructure-configuration-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
@@ -1927,7 +1927,7 @@ def create_job_managed_egress_standalone_job_infrastructure_configuration_detail
 
 @job_group.command(name=cli_util.override('data_science.create_job_standalone_job_infrastructure_configuration_details.command_name', 'create-job-standalone-job-infrastructure-configuration-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--job-infrastructure-configuration-details-shape-name', required=True, help=u"""The shape used to launch the job run instances.""")
 @cli_util.option('--job-infrastructure-configuration-details-subnet-id', required=True, help=u"""The subnet to create a secondary vnic in to attach to the instance running the job""")
 @cli_util.option('--job-infrastructure-configuration-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
@@ -2029,7 +2029,7 @@ def create_job_standalone_job_infrastructure_configuration_details(ctx, from_jso
 
 @job_group.command(name=cli_util.override('data_science.create_job_ocir_container_job_environment_configuration_details.command_name', 'create-job-ocir-container-job-environment-configuration-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--job-environment-configuration-details-image', required=True, help=u"""The full path to the Oracle Container Repository (OCIR) registry, image, and tag in a canonical format. Acceptable format: `<region>.ocir.io/<registry>/<image>:<tag>` `<region>.ocir.io/<registry>/<image>:<tag>@digest`""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
@@ -2139,7 +2139,7 @@ def create_job_ocir_container_job_environment_configuration_details(ctx, from_js
 
 @job_group.command(name=cli_util.override('data_science.create_job_multi_node_job_node_configuration_details.command_name', 'create-job-multi-node-job-node-configuration-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2283,7 +2283,7 @@ def create_job_artifact(ctx, from_json, job_id, job_artifact, content_length, co
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run.command_name', 'create'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2377,7 +2377,7 @@ def create_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_empty_job_configuration_details.command_name', 'create-job-run-empty-job-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2470,7 +2470,7 @@ def create_job_run_empty_job_configuration_details(ctx, from_json, wait_for_stat
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_default_job_configuration_details.command_name', 'create-job-run-default-job-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2579,7 +2579,7 @@ def create_job_run_default_job_configuration_details(ctx, from_json, wait_for_st
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_ocir_container_job_environment_configuration_details.command_name', 'create-job-run-ocir-container-job-environment-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--job-environment-configuration-override-details-image', required=True, help=u"""The full path to the Oracle Container Repository (OCIR) registry, image, and tag in a canonical format. Acceptable format: `<region>.ocir.io/<registry>/<image>:<tag>` `<region>.ocir.io/<registry>/<image>:<tag>@digest`""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
@@ -2690,7 +2690,7 @@ def create_job_run_ocir_container_job_environment_configuration_details(ctx, fro
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_multi_node_job_infrastructure_configuration_details.command_name', 'create-job-run-multi-node-job-infrastructure-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--job-infrastructure-configuration-override-details-shape-name', required=True, help=u"""The name that corresponds to the JobShapeSummary to use for the job node""")
 @cli_util.option('--job-infrastructure-configuration-override-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
@@ -2791,7 +2791,7 @@ def create_job_run_multi_node_job_infrastructure_configuration_details(ctx, from
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_empty_job_infrastructure_configuration_details.command_name', 'create-job-run-empty-job-infrastructure-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2884,7 +2884,7 @@ def create_job_run_empty_job_infrastructure_configuration_details(ctx, from_json
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_managed_egress_standalone_job_infrastructure_configuration_details.command_name', 'create-job-run-managed-egress-standalone-job-infrastructure-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--job-infrastructure-configuration-override-details-shape-name', required=True, help=u"""The shape used to launch the job run instances.""")
 @cli_util.option('--job-infrastructure-configuration-override-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
@@ -2985,7 +2985,7 @@ def create_job_run_managed_egress_standalone_job_infrastructure_configuration_de
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_standalone_job_infrastructure_configuration_details.command_name', 'create-job-run-standalone-job-infrastructure-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--job-infrastructure-configuration-override-details-shape-name', required=True, help=u"""The shape used to launch the job run instances.""")
 @cli_util.option('--job-infrastructure-configuration-override-details-subnet-id', required=True, help=u"""The subnet to create a secondary vnic in to attach to the instance running the job""")
@@ -3088,7 +3088,7 @@ def create_job_run_standalone_job_infrastructure_configuration_details(ctx, from
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_multi_node_job_node_configuration_details.command_name', 'create-job-run-multi-node-job-node-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3199,7 +3199,7 @@ def create_job_run_multi_node_job_node_configuration_details(ctx, from_json, wai
 
 @ml_application_group.command(name=cli_util.override('data_science.create_ml_application.command_name', 'create'), help=u"""Creates a new MlApplication. \n[Command Reference](createMlApplication)""")
 @cli_util.option('--name', required=True, help=u"""The name of MlApplication. It is unique in a given tenancy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the MlApplication is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the MlApplication is created.""")
 @cli_util.option('--description', help=u"""Optional description of the ML Application""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3263,7 +3263,7 @@ def create_ml_application(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @ml_application_implementation_group.command(name=cli_util.override('data_science.create_ml_application_implementation.command_name', 'create'), help=u"""Creates a new MlApplicationImplementation. \n[Command Reference](createMlApplicationImplementation)""")
 @cli_util.option('--name', required=True, help=u"""ML Application Implementation name which is unique for given ML Application.""")
 @cli_util.option('--ml-application-id', required=True, help=u"""The OCID of the ML Application implemented by this ML Application Implementation""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where ML Application Implementation is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where ML Application Implementation is created.""")
 @cli_util.option('--logging', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--allowed-migration-destinations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of ML Application Implementation OCIDs for which migration from this implementation is allowed. Migration means that if consumers change implementation for their instances to implementation with OCID from this list, instance components will be updated in place otherwise new instance components are created based on the new implementation and old instance components are removed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3332,7 +3332,7 @@ def create_ml_application_implementation(ctx, from_json, wait_for_state, max_wai
 @ml_application_instance_group.command(name=cli_util.override('data_science.create_ml_application_instance.command_name', 'create'), help=u"""Creates a new MlApplicationInstance. \n[Command Reference](createMlApplicationInstance)""")
 @cli_util.option('--ml-application-id', required=True, help=u"""The OCID of ML Application. This resource is an instance of ML Application referenced by this OCID.""")
 @cli_util.option('--ml-application-implementation-id', required=True, help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the MlApplicationInstance is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the MlApplicationInstance is created.""")
 @cli_util.option('--display-name', help=u"""The name of MlApplicationInstance. System will generate displayName when not provided.""")
 @cli_util.option('--auth-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Data that are used for provisioning of the given MlApplicationInstance. These are validated against configurationSchema defined in referenced MlApplicationImplementation.
@@ -3415,7 +3415,7 @@ def create_ml_application_instance(ctx, from_json, wait_for_state, max_wait_seco
 @ml_application_instance_group.command(name=cli_util.override('data_science.create_ml_application_instance_create_idcs_auth_configuration_details.command_name', 'create-ml-application-instance-create-idcs-auth-configuration-details'), help=u"""Creates a new MlApplicationInstance. \n[Command Reference](createMlApplicationInstance)""")
 @cli_util.option('--ml-application-id', required=True, help=u"""The OCID of ML Application. This resource is an instance of ML Application referenced by this OCID.""")
 @cli_util.option('--ml-application-implementation-id', required=True, help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the MlApplicationInstance is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the MlApplicationInstance is created.""")
 @cli_util.option('--auth-configuration-domain-id', required=True, help=u"""Identity Domain OCID""")
 @cli_util.option('--display-name', help=u"""The name of MlApplicationInstance. System will generate displayName when not provided.""")
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Data that are used for provisioning of the given MlApplicationInstance. These are validated against configurationSchema defined in referenced MlApplicationImplementation.
@@ -3499,7 +3499,7 @@ def create_ml_application_instance_create_idcs_auth_configuration_details(ctx, f
 @ml_application_instance_group.command(name=cli_util.override('data_science.create_ml_application_instance_create_idcs_custom_service_auth_configuration_details.command_name', 'create-ml-application-instance-create-idcs-custom-service-auth-configuration-details'), help=u"""Creates a new MlApplicationInstance. \n[Command Reference](createMlApplicationInstance)""")
 @cli_util.option('--ml-application-id', required=True, help=u"""The OCID of ML Application. This resource is an instance of ML Application referenced by this OCID.""")
 @cli_util.option('--ml-application-implementation-id', required=True, help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the MlApplicationInstance is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the MlApplicationInstance is created.""")
 @cli_util.option('--auth-configuration-audience', required=True, help=u"""Audience of the IDCS application""")
 @cli_util.option('--auth-configuration-scope', required=True, help=u"""Scope of the IDCS application""")
 @cli_util.option('--auth-configuration-application-name', required=True, help=u"""Name of the IDCS application""")
@@ -3593,7 +3593,7 @@ def create_ml_application_instance_create_idcs_custom_service_auth_configuration
 @ml_application_instance_group.command(name=cli_util.override('data_science.create_ml_application_instance_create_iam_auth_configuration_create_details.command_name', 'create-ml-application-instance-create-iam-auth-configuration-create-details'), help=u"""Creates a new MlApplicationInstance. \n[Command Reference](createMlApplicationInstance)""")
 @cli_util.option('--ml-application-id', required=True, help=u"""The OCID of ML Application. This resource is an instance of ML Application referenced by this OCID.""")
 @cli_util.option('--ml-application-implementation-id', required=True, help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the MlApplicationInstance is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the MlApplicationInstance is created.""")
 @cli_util.option('--display-name', help=u"""The name of MlApplicationInstance. System will generate displayName when not provided.""")
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Data that are used for provisioning of the given MlApplicationInstance. These are validated against configurationSchema defined in referenced MlApplicationImplementation.
 
@@ -3673,7 +3673,7 @@ def create_ml_application_instance_create_iam_auth_configuration_create_details(
 
 
 @model_group.command(name=cli_util.override('data_science.create_model.command_name', 'create'), help=u"""Creates a new model. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the model in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the model in.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information. Example: `My Model`""")
 @cli_util.option('--description', help=u"""A short description of the model.""")
@@ -3898,7 +3898,7 @@ def create_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_
 
 @model_deployment_group.command(name=cli_util.override('data_science.create_model_deployment.command_name', 'create'), help=u"""Creates a new model deployment. \n[Command Reference](createModelDeployment)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model deployment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the model deployment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the model deployment.""")
 @cli_util.option('--model-deployment-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
 @cli_util.option('--description', help=u"""A short description of the model deployment.""")
@@ -3978,7 +3978,7 @@ def create_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @model_deployment_group.command(name=cli_util.override('data_science.create_model_deployment_single_model_deployment_configuration_details.command_name', 'create-model-deployment-single-model-deployment-configuration-details'), help=u"""Creates a new model deployment. \n[Command Reference](createModelDeployment)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model deployment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the model deployment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the model deployment.""")
 @cli_util.option('--model-deployment-configuration-details-model-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
 @cli_util.option('--description', help=u"""A short description of the model deployment.""")
@@ -4065,7 +4065,7 @@ def create_model_deployment_single_model_deployment_configuration_details(ctx, f
 
 @model_deployment_group.command(name=cli_util.override('data_science.create_model_deployment_model_group_deployment_configuration_details.command_name', 'create-model-deployment-model-group-deployment-configuration-details'), help=u"""Creates a new model deployment. \n[Command Reference](createModelDeployment)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model deployment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the model deployment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the model deployment.""")
 @cli_util.option('--model-deployment-configuration-details-model-group-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--model-deployment-configuration-details-infrastructure-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
@@ -4154,7 +4154,7 @@ def create_model_deployment_model_group_deployment_configuration_details(ctx, fr
 
 @model_group_group.command(name=cli_util.override('data_science.create_model_group.command_name', 'create'), help=u"""Create a new Model Group resource. \n[Command Reference](createModelGroup)""")
 @cli_util.option('--create-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CREATE", "CLONE"]), help=u"""The type of the model group create operation.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the modelGroup in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the modelGroup in.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the modelGroup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -4210,7 +4210,7 @@ def create_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @model_group_group.command(name=cli_util.override('data_science.create_model_group_clone_model_group_details.command_name', 'create-model-group-clone-model-group-details'), help=u"""Create a new Model Group resource. \n[Command Reference](createModelGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the modelGroup in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the modelGroup in.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the modelGroup.""")
 @cli_util.option('--model-group-clone-source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4269,7 +4269,7 @@ def create_model_group_clone_model_group_details(ctx, from_json, wait_for_state,
 
 
 @model_group_group.command(name=cli_util.override('data_science.create_model_group_create_model_group_details.command_name', 'create-model-group-create-model-group-details'), help=u"""Create a new Model Group resource. \n[Command Reference](createModelGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the modelGroup in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the modelGroup in.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the modelGroup.""")
 @cli_util.option('--model-group-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--member-model-entries', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4391,7 +4391,7 @@ def create_model_group_artifact(ctx, from_json, model_group_id, model_group_arti
 
 
 @model_group_version_history_group.command(name=cli_util.override('data_science.create_model_group_version_history.command_name', 'create'), help=u"""Creates a new modelGroupVersionHistory. \n[Command Reference](createModelGroupVersionHistory)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the model group version history in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the model group version history in.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model group version history.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the resource. It must be unique and can't be modified. Avoid entering confidential information. Example: `My model version history`""")
 @cli_util.option('--description', help=u"""A short description of the model version history.""")
@@ -4512,7 +4512,7 @@ def create_model_provenance(ctx, from_json, model_id, repository_url, git_branch
 
 
 @model_version_set_group.command(name=cli_util.override('data_science.create_model_version_set.command_name', 'create'), help=u"""Creates a new modelVersionSet. \n[Command Reference](createModelVersionSet)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the model version set in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the model version set in.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model version set.""")
 @cli_util.option('--name', required=True, help=u"""A user-friendly name for the resource. It must be unique and can't be modified. Avoid entering confidential information. Example: `My model version set`""")
 @cli_util.option('--description', help=u"""A short description of the model version set.""")
@@ -4578,7 +4578,7 @@ def create_model_version_set(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @notebook_session_group.command(name=cli_util.override('data_science.create_notebook_session.command_name', 'create'), help=u"""Creates a new notebook session. \n[Command Reference](createNotebookSession)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the notebook session.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the notebook session.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the notebook session.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information. Example: `My NotebookSession`""")
 @cli_util.option('--notebook-session-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--notebook-session-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4663,7 +4663,7 @@ def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @pipeline_group.command(name=cli_util.override('data_science.create_pipeline.command_name', 'create'), help=u"""Creates a new Pipeline. \n[Command Reference](createPipeline)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the pipeline with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the pipeline.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the pipeline.""")
 @cli_util.option('--step-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of step details for each step.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the pipeline.""")
@@ -4754,7 +4754,7 @@ def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 @pipeline_group.command(name=cli_util.override('data_science.create_pipeline_pipeline_default_configuration_details.command_name', 'create-pipeline-pipeline-default-configuration-details'), help=u"""Creates a new Pipeline. \n[Command Reference](createPipeline)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the pipeline with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the pipeline.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the pipeline.""")
 @cli_util.option('--step-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of step details for each step.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the pipeline.""")
@@ -4855,7 +4855,7 @@ def create_pipeline_pipeline_default_configuration_details(ctx, from_json, wait_
 
 
 @pipeline_run_group.command(name=cli_util.override('data_science.create_pipeline_run.command_name', 'create'), help=u"""Creates a new PipelineRun. \n[Command Reference](createPipelineRun)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the pipeline run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the pipeline run.""")
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline for which pipeline run is created.""")
 @cli_util.option('--project-id', help=u"""The [OCID] of the project to associate the pipeline run with.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
@@ -4957,7 +4957,7 @@ def create_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 
 @pipeline_run_group.command(name=cli_util.override('data_science.create_pipeline_run_pipeline_default_configuration_details.command_name', 'create-pipeline-run-pipeline-default-configuration-details'), help=u"""Creates a new PipelineRun. \n[Command Reference](createPipelineRun)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the pipeline run.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the pipeline run.""")
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline for which pipeline run is created.""")
 @cli_util.option('--project-id', help=u"""The [OCID] of the project to associate the pipeline run with.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
@@ -5070,7 +5070,7 @@ def create_pipeline_run_pipeline_default_configuration_details(ctx, from_json, w
 
 
 @project_group.command(name=cli_util.override('data_science.create_project.command_name', 'create'), help=u"""Creates a new project. \n[Command Reference](createProject)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the project in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the project in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the project.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5137,7 +5137,7 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @schedule_group.command(name=cli_util.override('data_science.create_schedule.command_name', 'create'), help=u"""Creates a new Schedule. \n[Command Reference](createSchedule)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Avoid entering confidential information.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the schedule with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the schedule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the schedule.""")
 @cli_util.option('--trigger', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--action', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A short description of the schedule.""")
@@ -5214,7 +5214,7 @@ def create_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @schedule_group.command(name=cli_util.override('data_science.create_schedule_schedule_i_cal_trigger.command_name', 'create-schedule-schedule-i-cal-trigger'), help=u"""Creates a new Schedule. \n[Command Reference](createSchedule)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Avoid entering confidential information.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the schedule with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the schedule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the schedule.""")
 @cli_util.option('--action', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trigger-recurrence', required=True, help=u"""This recurrence field conforms to RFC-5545 formatting""")
 @cli_util.option('--description', help=u"""A short description of the schedule.""")
@@ -5302,7 +5302,7 @@ def create_schedule_schedule_i_cal_trigger(ctx, from_json, wait_for_state, max_w
 @schedule_group.command(name=cli_util.override('data_science.create_schedule_schedule_interval_trigger.command_name', 'create-schedule-schedule-interval-trigger'), help=u"""Creates a new Schedule. \n[Command Reference](createSchedule)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Avoid entering confidential information.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the schedule with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the schedule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the schedule.""")
 @cli_util.option('--action', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trigger-frequency', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY"]), help=u"""The type of frequency""")
 @cli_util.option('--trigger-interval', required=True, type=click.INT, help=u"""The interval of frequency.""")
@@ -5396,7 +5396,7 @@ def create_schedule_schedule_interval_trigger(ctx, from_json, wait_for_state, ma
 @schedule_group.command(name=cli_util.override('data_science.create_schedule_schedule_cron_trigger.command_name', 'create-schedule-schedule-cron-trigger'), help=u"""Creates a new Schedule. \n[Command Reference](createSchedule)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Avoid entering confidential information.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the schedule with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the schedule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the schedule.""")
 @cli_util.option('--action', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trigger-cron-expression', required=True, help=u"""Schedule cron expression""")
 @cli_util.option('--description', help=u"""A short description of the schedule.""")
@@ -5484,7 +5484,7 @@ def create_schedule_schedule_cron_trigger(ctx, from_json, wait_for_state, max_wa
 @schedule_group.command(name=cli_util.override('data_science.create_schedule_schedule_http_action.command_name', 'create-schedule-schedule-http-action'), help=u"""Creates a new Schedule. \n[Command Reference](createSchedule)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Avoid entering confidential information.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the schedule with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the schedule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the schedule.""")
 @cli_util.option('--trigger', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--action-action-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A short description of the schedule.""")
@@ -8314,7 +8314,7 @@ def list_containers(ctx, from_json, all_pages, page_size, is_latest, display_nam
 
 
 @data_science_private_endpoint_group.command(name=cli_util.override('data_science.list_data_science_private_endpoints.command_name', 'list'), help=u"""Lists all Data Science private endpoints in the specified compartment. The query must include compartmentId. The query can also include one other parameter. If the query doesn't include compartmentId, or includes compartmentId with two or more other parameters, then an error is returned. \n[Command Reference](listDataSciencePrivateEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
 Example: `50`""")
@@ -8384,7 +8384,7 @@ def list_data_science_private_endpoints(ctx, from_json, all_pages, page_size, co
 
 
 @fast_launch_job_config_group.command(name=cli_util.override('data_science.list_fast_launch_job_configs.command_name', 'list'), help=u"""List fast launch capable job configs in the specified compartment. \n[Command Reference](listFastLaunchJobConfigs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
 Example: `50`""")
@@ -8436,7 +8436,7 @@ def list_fast_launch_job_configs(ctx, from_json, all_pages, page_size, compartme
 
 
 @job_run_group.command(name=cli_util.override('data_science.list_job_runs.command_name', 'list'), help=u"""List out job runs. \n[Command Reference](listJobRuns)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--job-id', help=u"""The [OCID] of the job.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
@@ -8509,7 +8509,7 @@ def list_job_runs(ctx, from_json, all_pages, page_size, compartment_id, id, job_
 
 
 @job_shape_group.command(name=cli_util.override('data_science.list_job_shapes.command_name', 'list'), help=u"""List job shapes available in the specified compartment. \n[Command Reference](listJobShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
 Example: `50`""")
@@ -8561,7 +8561,7 @@ def list_job_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit,
 
 
 @job_group.command(name=cli_util.override('data_science.list_jobs.command_name', 'list'), help=u"""List jobs in the specified compartment. \n[Command Reference](listJobs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -8695,7 +8695,7 @@ def list_ml_application_implementation_versions(ctx, from_json, all_pages, page_
 
 
 @ml_application_implementation_group.command(name=cli_util.override('data_science.list_ml_application_implementations.command_name', 'list'), help=u"""Returns a list of MlApplicationImplementations. \n[Command Reference](listMlApplicationImplementations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--ml-application-implementation-id', help=u"""unique MlApplicationImplementation identifier""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
 @cli_util.option('--ml-application-id', help=u"""unique MlApplication identifier""")
@@ -8768,7 +8768,7 @@ def list_ml_application_implementations(ctx, from_json, all_pages, page_size, co
 
 
 @ml_application_instance_view_group.command(name=cli_util.override('data_science.list_ml_application_instance_views.command_name', 'list'), help=u"""Returns a list of MlApplicationInstanceViews. \n[Command Reference](listMlApplicationInstanceViews)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--ml-application-id', help=u"""unique MlApplication identifier""")
 @cli_util.option('--ml-application-implementation-id', help=u"""unique MlApplicationImplementation identifier""")
@@ -8841,7 +8841,7 @@ def list_ml_application_instance_views(ctx, from_json, all_pages, page_size, com
 
 
 @ml_application_instance_group.command(name=cli_util.override('data_science.list_ml_application_instances.command_name', 'list'), help=u"""Returns a list of MlApplicationsInstances. \n[Command Reference](listMlApplicationInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--ml-application-id', help=u"""unique MlApplication identifier""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "NEEDS_ATTENTION", "FAILED"]), help=u"""A filter to return only resources matching the given lifecycleState.""")
@@ -8908,7 +8908,7 @@ def list_ml_application_instances(ctx, from_json, all_pages, page_size, compartm
 
 
 @ml_application_group.command(name=cli_util.override('data_science.list_ml_applications.command_name', 'list'), help=u"""Returns a list of MlApplications. \n[Command Reference](listMlApplications)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--ml-application-id', help=u"""unique MlApplication identifier""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If it is true search must include all results from descendant compartments. Value true is allowed only if compartmentId refers to root compartment.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
@@ -8979,7 +8979,7 @@ def list_ml_applications(ctx, from_json, all_pages, page_size, compartment_id, m
 
 @model_deployment_model_state_group.command(name=cli_util.override('data_science.list_model_deployment_model_states.command_name', 'list'), help=u"""Lists the status of models in a model group deployment. \n[Command Reference](listModelDeploymentModelStates)""")
 @cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--inference-key', help=u"""<b>Filter</b> results by the inference key.""")
@@ -9055,7 +9055,7 @@ def list_model_deployment_model_states(ctx, from_json, all_pages, page_size, mod
 
 
 @model_deployment_shape_group.command(name=cli_util.override('data_science.list_model_deployment_shapes.command_name', 'list'), help=u"""Lists the valid model deployment shapes. \n[Command Reference](listModelDeploymentShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
 Example: `50`""")
@@ -9107,7 +9107,7 @@ def list_model_deployment_shapes(ctx, from_json, all_pages, page_size, compartme
 
 
 @model_deployment_group.command(name=cli_util.override('data_science.list_model_deployments.command_name', 'list'), help=u"""Lists all model deployments in the specified compartment. Only one parameter other than compartmentId may also be included in a query. The query must include compartmentId. If the query does not include compartmentId, or includes compartmentId but two or more other parameters an error is returned. \n[Command Reference](listModelDeployments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -9181,7 +9181,7 @@ def list_model_deployments(ctx, from_json, all_pages, page_size, compartment_id,
 
 @model_group_group.command(name=cli_util.override('data_science.list_model_group_models.command_name', 'list-model-group-models'), help=u"""Lists all models associated with the modelGroup in the specified compartment. \n[Command Reference](listModelGroupModels)""")
 @cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
@@ -9257,7 +9257,7 @@ def list_model_group_models(ctx, from_json, all_pages, page_size, model_group_id
 
 
 @model_group_version_history_group.command(name=cli_util.override('data_science.list_model_group_version_histories.command_name', 'list'), help=u"""List all modelGroupVersionHistories in the specified compartment. The query must include compartmentId. \n[Command Reference](listModelGroupVersionHistories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -9330,7 +9330,7 @@ def list_model_group_version_histories(ctx, from_json, all_pages, page_size, com
 
 
 @model_group_group.command(name=cli_util.override('data_science.list_model_groups.command_name', 'list'), help=u"""Lists all the modelGroups in the specified compartment. The query must include compartmentId. \n[Command Reference](listModelGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -9406,7 +9406,7 @@ def list_model_groups(ctx, from_json, all_pages, page_size, compartment_id, proj
 
 
 @model_version_set_group.command(name=cli_util.override('data_science.list_model_version_sets.command_name', 'list'), help=u"""Lists model version sets in the specified compartment. \n[Command Reference](listModelVersionSets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["USER", "SERVICE"]), help=u"""Specifies the type of model version sets to list. By default, user model version sets are listed.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
@@ -9482,7 +9482,7 @@ def list_model_version_sets(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @model_group.command(name=cli_util.override('data_science.list_models.command_name', 'list'), help=u"""Lists models in the specified compartment. \n[Command Reference](listModels)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--model-version-set-name', help=u"""<b>Filter</b> results by the name of the model version set.""")
 @cli_util.option('--version-label', help=u"""<b>Filter</b> results by version label.""")
 @cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["USER", "SERVICE"]), help=u"""Specifies the type of models to list. By default, user models are listed.""")
@@ -9564,7 +9564,7 @@ def list_models(ctx, from_json, all_pages, page_size, compartment_id, model_vers
 
 
 @notebook_session_shape_group.command(name=cli_util.override('data_science.list_notebook_session_shapes.command_name', 'list'), help=u"""Lists the valid notebook session shapes. \n[Command Reference](listNotebookSessionShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
 Example: `50`""")
@@ -9616,7 +9616,7 @@ def list_notebook_session_shapes(ctx, from_json, all_pages, page_size, compartme
 
 
 @notebook_session_group.command(name=cli_util.override('data_science.list_notebook_sessions.command_name', 'list'), help=u"""Lists the notebook sessions in the specified compartment. \n[Command Reference](listNotebookSessions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -9689,7 +9689,7 @@ def list_notebook_sessions(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @pipeline_run_group.command(name=cli_util.override('data_science.list_pipeline_runs.command_name', 'list'), help=u"""Returns a list of PipelineRuns. \n[Command Reference](listPipelineRuns)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--pipeline-id', help=u"""The [OCID] of the pipeline.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -9762,7 +9762,7 @@ def list_pipeline_runs(ctx, from_json, all_pages, page_size, compartment_id, id,
 
 
 @pipeline_group.command(name=cli_util.override('data_science.list_pipelines.command_name', 'list'), help=u"""Returns a list of Pipelines. \n[Command Reference](listPipelines)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -9835,7 +9835,7 @@ def list_pipelines(ctx, from_json, all_pages, page_size, compartment_id, project
 
 
 @project_group.command(name=cli_util.override('data_science.list_projects.command_name', 'list'), help=u"""Lists projects in the specified compartment. \n[Command Reference](listProjects)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
@@ -9905,7 +9905,7 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, id, disp
 
 
 @schedule_group.command(name=cli_util.override('data_science.list_schedules.command_name', 'list'), help=u"""Returns a list of Schedules. \n[Command Reference](listSchedules)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -10085,7 +10085,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "ML_APPLICATION_PACKAGE_UPLOAD", "ML_APPLICATION_TRIGGER_START", "ML_APPLICATION_IMPLEMENTATION_DELETE", "ML_APPLICATION_IMPLEMENTATION_UPDATE", "ML_APPLICATION_IMPLEMENTATION_MOVE", "ML_APPLICATION_INSTANCE_CREATE", "ML_APPLICATION_INSTANCE_UPDATE", "ML_APPLICATION_INSTANCE_DELETE", "ML_APPLICATION_INSTANCE_MOVE", "ML_APPLICATION_INSTANCE_VIEW_CREATE", "ML_APPLICATION_INSTANCE_VIEW_UPDATE", "ML_APPLICATION_INSTANCE_VIEW_DELETE", "ML_APPLICATION_INSTANCE_VIEW_UPGRADE", "ML_APPLICATION_INSTANCE_VIEW_MOVE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "SCHEDULE_CREATE", "SCHEDULE_UPDATE", "SCHEDULE_DELETE", "SCHEDULE_MOVE", "SCHEDULE_ACTIVATE", "SCHEDULE_DEACTIVATE", "REGISTER_MODEL_ARTIFACT", "RESTORE_ARCHIVED_MODEL", "MODEL_GROUP_CREATE", "MODEL_GROUP_UPDATE", "MODEL_GROUP_DELETE", "MODEL_GROUP_VERSION_HISTORY_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")

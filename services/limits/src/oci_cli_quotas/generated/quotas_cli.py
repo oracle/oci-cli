@@ -98,7 +98,7 @@ def add_quota_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @quota_group.command(name=cli_util.override('quotas.create_quota.command_name', 'create'), help=u"""Creates a new quota with the details supplied. \n[Command Reference](createQuota)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the resource this quota applies to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment containing the resource this quota applies to.""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the quota.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the quota during creation. The name must be unique across all quotas in the tenancy and cannot be changed.""")
 @cli_util.option('--statements', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of quota statements written in the declarative quota statement language.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -256,7 +256,7 @@ def get_quota(ctx, from_json, quota_id):
 
 
 @quota_group.command(name=cli_util.override('quotas.list_quotas.command_name', 'list'), help=u"""Lists all quotas on resources from the given compartment. \n[Command Reference](listQuotas)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--name', help=u"""name""")

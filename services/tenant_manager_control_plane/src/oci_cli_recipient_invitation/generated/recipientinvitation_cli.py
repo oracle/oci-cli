@@ -161,7 +161,7 @@ def ignore_recipient_invitation(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @recipient_invitation_group.command(name=cli_util.override('recipient_invitation.list_recipient_invitations.command_name', 'list'), help=u"""Return a (paginated) list of recipient invitations. \n[Command Reference](listRecipientInvitations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--sender-tenancy-id', help=u"""The tenancy that sent the invitation.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "FAILED", "TERMINATED"]), help=u"""The lifecycle state of the resource.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "CANCELED", "ACCEPTED", "IGNORED", "EXPIRED", "FAILED"]), help=u"""The status of the recipient invitation.""")

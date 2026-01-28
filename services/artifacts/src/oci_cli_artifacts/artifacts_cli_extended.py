@@ -555,8 +555,8 @@ def list_container_images_extended(ctx, from_json, all_pages, page_size, compart
 @cli_util.option('--kms-key-id', required=True, help=u"""The [OCID] of the kmsKeyId used to sign the container image.""")
 @cli_util.option('--kms-key-version-id', required=True, help=u"""The [OCID] of the kmsKeyVersionId used to sign the container image.""")
 @cli_util.option('--signing-algorithm', required=True, type=custom_types.CliCaseInsensitiveChoice(["SHA_224_RSA_PKCS_PSS", "SHA_256_RSA_PKCS_PSS", "SHA_384_RSA_PKCS_PSS", "SHA_512_RSA_PKCS_PSS"]), help=u"""The algorithm to be used for signing. These are the only supported signing algorithms for container images.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the container repository exists.""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the container image.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the container repository exists.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the container image.""")
 @cli_util.option('--description', help="""The optional text of your choice to describe the image. The description is included as part of the signature, and is shown in the Console. For example, --description "Image for UAT testing" """)
 @cli_util.option('--metadata', help="""The optional information of your choice about the image, in a valid JSON format (alphanumeric characters only, with no whitespace or escape characters). For example, --metadata "{\"buildNumber\":\"123\"}" """)
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -644,7 +644,7 @@ def sign_and_upload_container_image_signature_metadata(ctx, from_json, kms_key_i
 
 
 @artifacts_cli.container_image_signature_group.command(name='get-verify', help=u"""Fetch a container image signature metadata and verity the signature. \n[Command Reference](GetAndVerifyImageSignatureMetadata)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the container repository exists.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the container repository exists.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed""")
 @cli_util.option('--repo-name', required=True, help=u"""The repository name in which the container image exists eg) busybox""")
 @cli_util.option('--image-digest', required=True, help=u"""The digest of the container image.""")

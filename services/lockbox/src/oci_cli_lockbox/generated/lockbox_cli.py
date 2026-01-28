@@ -131,7 +131,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @approval_template_group.command(name=cli_util.override('oma.change_approval_template_compartment.command_name', 'change-compartment'), help=u"""Moves an ApprovalTemplate resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeApprovalTemplateCompartment)""")
 @cli_util.option('--approval-template-id', required=True, help=u"""The unique identifier (OCID) of the approval template.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier (OCID) of the compartment where the resource is located.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier (OCID) of the compartment where the resource is located.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -162,7 +162,7 @@ def change_approval_template_compartment(ctx, from_json, approval_template_id, c
 
 @lockbox_group.command(name=cli_util.override('oma.change_lockbox_compartment.command_name', 'change-compartment'), help=u"""Moves a Lockbox resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeLockboxCompartment)""")
 @cli_util.option('--lockbox-id', required=True, help=u"""unique Lockbox identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier (OCID) of the compartment where the resource is located.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier (OCID) of the compartment where the resource is located.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -261,7 +261,7 @@ def create_access_request(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @approval_template_group.command(name=cli_util.override('oma.create_approval_template.command_name', 'create'), help=u"""Creates a new approval template. \n[Command Reference](createApprovalTemplate)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier (OCID) of the compartment where the resource is located.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier (OCID) of the compartment where the resource is located.""")
 @cli_util.option('--display-name', help=u"""approval template identifier""")
 @cli_util.option('--approver-levels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auto-approval-state', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The auto approval state of the lockbox.""")
@@ -331,7 +331,7 @@ def create_approval_template(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @lockbox_group.command(name=cli_util.override('oma.create_lockbox.command_name', 'create'), help=u"""Creates a new Lockbox. \n[Command Reference](createLockbox)""")
 @cli_util.option('--resource-id', required=True, help=u"""The unique identifier (OCID) of the customer's resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier (OCID) of the compartment where the resource is located.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier (OCID) of the compartment where the resource is located.""")
 @cli_util.option('--access-context-attributes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Lockbox Identifier""")
 @cli_util.option('--lockbox-partner', type=custom_types.CliCaseInsensitiveChoice(["FAAAS", "CANARY"]), help=u"""The partner using this lockbox to lock a resource.""")
@@ -897,7 +897,7 @@ def list_access_requests(ctx, from_json, all_pages, page_size, lockbox_id, id, d
 
 
 @approval_template_collection_group.command(name=cli_util.override('oma.list_approval_templates.command_name', 'list-approval-templates'), help=u"""Retrieves a list of ApprovalTemplateSummary objects in a compartment. \n[Command Reference](listApprovalTemplates)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""A generic Id query param used to filter lockbox, access request and approval template by Id.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources for which their lifecycleState matches the given lifecycleState.""")
@@ -959,7 +959,7 @@ def list_approval_templates(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @lockbox_collection_group.command(name=cli_util.override('oma.list_lockboxes.command_name', 'list-lockboxes'), help=u"""Returns a list of Lockboxes. \n[Command Reference](listLockboxes)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""unique Lockbox identifier""")
@@ -1144,7 +1144,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('oma.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")

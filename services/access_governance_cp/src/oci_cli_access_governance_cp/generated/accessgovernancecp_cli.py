@@ -47,7 +47,7 @@ access_governance_cp_root_group.add_command(governance_instance_group)
 
 @governance_instance_group.command(name=cli_util.override('access_governance_cp.change_governance_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a GovernanceInstance resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeGovernanceInstanceCompartment)""")
 @cli_util.option('--governance-instance-id', required=True, help=u"""The OCID of the GovernanceInstance""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the GovernanceInstance resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the GovernanceInstance resides.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -80,7 +80,7 @@ def change_governance_instance_compartment(ctx, from_json, governance_instance_i
 @cli_util.option('--display-name', required=True, help=u"""The name for the GovernanceInstance.""")
 @cli_util.option('--license-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NEW_LICENSE", "BRING_YOUR_OWN_LICENSE", "AG_ORACLE_WORKLOADS", "AG_OCI"]), help=u"""The licenseType being used.""")
 @cli_util.option('--tenancy-namespace', required=True, help=u"""The namespace for tenancy object storage.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the GovernanceInstance resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the GovernanceInstance resides.""")
 @cli_util.option('--idcs-access-token', required=True, help=u"""IDCS access token identifying a stripe and service administrator user.""")
 @cli_util.option('--description', help=u"""The description of the GovernanceInstance.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -236,7 +236,7 @@ def get_governance_instance(ctx, from_json, governance_instance_id):
 
 
 @governance_instance_configuration_group.command(name=cli_util.override('access_governance_cp.get_governance_instance_configuration.command_name', 'get'), help=u"""Gets the tenancy-wide configuration for GovernanceInstances \n[Command Reference](getGovernanceInstanceConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which resources are listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which resources are listed.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -255,7 +255,7 @@ def get_governance_instance_configuration(ctx, from_json, compartment_id):
 
 
 @governance_instance_collection_group.command(name=cli_util.override('access_governance_cp.list_governance_instances.command_name', 'list-governance-instances'), help=u"""Returns a list of Governance Instances. \n[Command Reference](listGovernanceInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which resources are listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which resources are listed.""")
 @cli_util.option('--lifecycle-state', help=u"""The lifecycle state to filter on.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The OCID of the GovernanceInstance""")
@@ -398,7 +398,7 @@ def update_governance_instance(ctx, from_json, force, wait_for_state, max_wait_s
 
 
 @governance_instance_group.command(name=cli_util.override('access_governance_cp.update_governance_instance_configuration.command_name', 'update-governance-instance-configuration'), help=u"""Updates the tenancy-wide configuration for GovernanceInstances \n[Command Reference](updateGovernanceInstanceConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which resources are listed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which resources are listed.""")
 @cli_util.option('--sender-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)

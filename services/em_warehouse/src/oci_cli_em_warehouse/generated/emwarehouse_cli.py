@@ -101,7 +101,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @em_warehouse_group.command(name=cli_util.override('em_warehouse.change_em_warehouse_compartment.command_name', 'change-compartment'), help=u"""Moves a EmWarehouse resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeEmWarehouseCompartment)""")
 @cli_util.option('--em-warehouse-id', required=True, help=u"""unique EmWarehouse identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -162,7 +162,7 @@ def change_em_warehouse_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 @em_warehouse_group.command(name=cli_util.override('em_warehouse.create_em_warehouse.command_name', 'create'), help=u"""Creates a new EmWarehouse. \n[Command Reference](createEmWarehouse)""")
 @cli_util.option('--em-bridge-id', required=True, help=u"""EMBridge Identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""operations Insights Warehouse Identifier""")
 @cli_util.option('--display-name', help=u"""EmWarehouse Identifier""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -352,7 +352,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @em_warehouse_collection_group.command(name=cli_util.override('em_warehouse.list_em_warehouses.command_name', 'list-em-warehouses'), help=u"""Returns a list of EmWarehouses. \n[Command Reference](listEmWarehouses)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--operations-insights-warehouse-id', help=u"""unique operationsInsightsWarehouseId identifier""")
@@ -418,7 +418,7 @@ def list_em_warehouses(ctx, from_json, all_pages, page_size, compartment_id, lif
 
 @etl_run_collection_group.command(name=cli_util.override('em_warehouse.list_etl_runs.command_name', 'list-etl-runs'), help=u"""Gets a list of runs of an EmWarehouseResource by identifier \n[Command Reference](listEtlRuns)""")
 @cli_util.option('--em-warehouse-id', required=True, help=u"""unique EmWarehouse identifier""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -594,7 +594,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('em_warehouse.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
@@ -657,7 +657,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 
 @em_warehouse_group.command(name=cli_util.override('em_warehouse.update_em_warehouse.command_name', 'update'), help=u"""Updates the EmWarehouse \n[Command Reference](updateEmWarehouse)""")
 @cli_util.option('--em-warehouse-id', required=True, help=u"""unique EmWarehouse identifier""")
-@cli_util.option('--compartment-id', help=u"""Compartment Identifier""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""Compartment Identifier""")
 @cli_util.option('--em-bridge-id', help=u"""EMBridge Identifier""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

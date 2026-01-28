@@ -180,7 +180,7 @@ def close_privileged_api_request(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.option('--reason-summary', required=True, help=u"""Summary comment by the operator creating the access request.""")
 @cli_util.option('--resource-id', required=True, help=u"""The OCID of the target resource associated with the access request. The operator raises an access request to get approval to access the target resource.""")
 @cli_util.option('--privileged-operation-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of api names, attributes for which approval is sought by the user.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sub-resource-name-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The subresource names requested for approval.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--notification-topic-id', help=u"""The OCID of the OCI Notification topic to publish messages related to this Privileged Api Request.""")
 @cli_util.option('--reason-detail', help=u"""Reason in detail for which the operator is requesting access on the target resource.""")
@@ -300,7 +300,7 @@ def get_privileged_api_request(ctx, from_json, privileged_api_request_id):
 
 
 @privileged_api_request_collection_group.command(name=cli_util.override('privileged_api_requests.list_privileged_api_requests.command_name', 'list-privileged-api-requests'), help=u"""Lists all privilegedApi requests in the compartment. \n[Command Reference](listPrivilegedApiRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The [OCID] of the PrivilegedApiRequest.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource .""")

@@ -34,8 +34,8 @@ subscription_service_root_group.add_command(subscription_group)
 
 @subscription_group.command(name=cli_util.override('subscription_service.authorize_subscription_payment.command_name', 'authorize-subscription-payment'), help=u"""PSD2 authorization for subscription payment \n[Command Reference](authorizeSubscriptionPayment)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--subscription-id', required=True, help=u"""Subscription id(OCID).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""Subscription id(OCID).""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--subscription', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language-code', required=True, help=u"""Language code""")
 @cli_util.option('--email', required=True, help=u"""User email""")
@@ -72,9 +72,9 @@ def authorize_subscription_payment(ctx, from_json, osp_home_region, subscription
 
 
 @subscription_group.command(name=cli_util.override('subscription_service.get_subscription.command_name', 'get'), help=u"""Get the subscription plan. \n[Command Reference](getSubscription)""")
-@cli_util.option('--subscription-id', required=True, help=u"""Subscription id(OCID).""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""Subscription id(OCID).""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -99,7 +99,7 @@ def get_subscription(ctx, from_json, subscription_id, osp_home_region, compartme
 
 @subscription_group.command(name=cli_util.override('subscription_service.list_subscriptions.command_name', 'list'), help=u"""Get the subscription data for the compartment \n[Command Reference](listSubscriptions)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["INVOICE_NO", "REF_NO", "STATUS", "TYPE", "INVOICE_DATE", "DUE_DATE", "PAYM_REF", "TOTAL_AMOUNT", "BALANCE_DUE"]), help=u"""The field to sort by. Only one field can be selected for sorting.""")
@@ -157,8 +157,8 @@ def list_subscriptions(ctx, from_json, all_pages, page_size, osp_home_region, co
 
 @subscription_group.command(name=cli_util.override('subscription_service.pay_subscription.command_name', 'pay'), help=u"""Pay a subscription \n[Command Reference](paySubscription)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--subscription-id', required=True, help=u"""Subscription id(OCID).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""Subscription id(OCID).""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--subscription', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language-code', required=True, help=u"""Language code""")
 @cli_util.option('--email', required=True, help=u"""User email""")
@@ -195,9 +195,9 @@ def pay_subscription(ctx, from_json, osp_home_region, subscription_id, compartme
 
 
 @subscription_group.command(name=cli_util.override('subscription_service.update_subscription.command_name', 'update'), help=u"""Update plan of the subscription. \n[Command Reference](updateSubscription)""")
-@cli_util.option('--subscription-id', required=True, help=u"""Subscription id(OCID).""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""Subscription id(OCID).""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--subscription', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--email', required=True, help=u"""User email""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

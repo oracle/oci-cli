@@ -57,7 +57,7 @@ autoscaling_root_group.add_command(auto_scaling_policy_group)
 
 When you move an autoscaling configuration to a different compartment, associated resources such as instance pools are not moved. \n[Command Reference](changeAutoScalingConfigurationCompartment)""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the autoscaling configuration to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the autoscaling configuration to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -87,7 +87,7 @@ def change_auto_scaling_configuration_compartment(ctx, from_json, auto_scaling_c
 
 
 @auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.create_auto_scaling_configuration.command_name', 'create'), help=u"""Creates an autoscaling configuration. \n[Command Reference](createAutoScalingConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the autoscaling configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the autoscaling configuration.""")
 @cli_util.option('--policies', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -140,7 +140,7 @@ def create_auto_scaling_configuration(ctx, from_json, compartment_id, policies, 
 
 
 @auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.create_auto_scaling_configuration_instance_pool_resource.command_name', 'create-auto-scaling-configuration-instance-pool-resource'), help=u"""Creates an autoscaling configuration. \n[Command Reference](createAutoScalingConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the autoscaling configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the autoscaling configuration.""")
 @cli_util.option('--policies', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-id', required=True, help=u"""The [OCID] of the resource that is managed by the autoscaling configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -448,7 +448,7 @@ def get_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, auto_
 
 
 @auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.list_auto_scaling_configurations.command_name', 'list'), help=u"""Lists autoscaling configurations in the specifed compartment. \n[Command Reference](listAutoScalingConfigurations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resource. Use tenancyId to search in the root compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the resource. Use tenancyId to search in the root compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")

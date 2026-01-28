@@ -813,7 +813,7 @@ def attach_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @catalog_group.command(name=cli_util.override('data_catalog.change_catalog_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeCatalogCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The identifier of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The identifier of the compartment where the resource should be moved.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -877,7 +877,7 @@ def change_catalog_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.change_catalog_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeCatalogPrivateEndpointCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The identifier of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The identifier of the compartment where the resource should be moved.""")
 @cli_util.option('--catalog-private-endpoint-id', required=True, help=u"""Unique private reverse connection identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -941,7 +941,7 @@ def change_catalog_private_endpoint_compartment(ctx, from_json, wait_for_state, 
 
 
 @metastore_group.command(name=cli_util.override('data_catalog.change_metastore_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeMetastoreCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the metastore should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the metastore should be moved.""")
 @cli_util.option('--metastore-id', required=True, help=u"""The metastore's OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -1210,7 +1210,7 @@ def create_attribute_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @catalog_group.command(name=cli_util.override('data_catalog.create_catalog.command_name', 'create'), help=u"""Creates a new data catalog instance that includes a console and an API URL for managing metadata operations. For more information, please see the documentation. \n[Command Reference](createCatalog)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment identifier.""")
 @cli_util.option('--display-name', help=u"""Data catalog identifier.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1276,8 +1276,8 @@ def create_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 @catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.create_catalog_private_endpoint.command_name', 'create'), help=u"""Create a new private reverse connection endpoint. \n[Command Reference](createCatalogPrivateEndpoint)""")
 @cli_util.option('--dns-zones', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of DNS zones to be used by the data assets to be harvested. Example: custpvtsubnet.oraclevcn.com for data asset: db.custpvtsubnet.oraclevcn.com""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of subnet to which the reverse connection is to be created""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of subnet to which the reverse connection is to be created""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment identifier.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Display name of the private endpoint resource being created.""")
@@ -2368,7 +2368,7 @@ def create_job_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @metastore_group.command(name=cli_util.override('data_catalog.create_metastore.command_name', 'create'), help=u"""Creates a new metastore. \n[Command Reference](createMetastore)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment which holds the metastore.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment which holds the metastore.""")
 @cli_util.option('--default-managed-table-location', required=True, help=u"""Location under which managed tables will be created by default. This references Object Storage using an HDFS URI format. Example: oci://bucket@namespace/sub-dir/""")
 @cli_util.option('--default-external-table-location', required=True, help=u"""Location under which external tables will be created by default. This references Object Storage using an HDFS URI format. Example: oci://bucket@namespace/sub-dir/""")
 @cli_util.option('--display-name', help=u"""Mutable name of the metastore.""")
@@ -5068,7 +5068,7 @@ def list_attributes(ctx, from_json, all_pages, page_size, catalog_id, data_asset
 
 
 @catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.list_catalog_private_endpoints.command_name', 'list'), help=u"""Returns a list of all the catalog private endpoints in the specified compartment. \n[Command Reference](listCatalogPrivateEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -5128,7 +5128,7 @@ def list_catalog_private_endpoints(ctx, from_json, all_pages, page_size, compart
 
 
 @catalog_group.command(name=cli_util.override('data_catalog.list_catalogs.command_name', 'list'), help=u"""Returns a list of all the data catalogs in the specified compartment. \n[Command Reference](listCatalogs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -6661,7 +6661,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, di
 
 
 @metastore_group.command(name=cli_util.override('data_catalog.list_metastores.command_name', 'list'), help=u"""Returns a list of all metastores in the specified compartment. \n[Command Reference](listMetastores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -7422,7 +7422,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('data_catalog.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")

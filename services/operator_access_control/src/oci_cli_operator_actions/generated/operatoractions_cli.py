@@ -62,7 +62,7 @@ def get_operator_action(ctx, from_json, operator_action_id):
 
 
 @operator_action_group.command(name=cli_util.override('operator_actions.list_operator_actions.command_name', 'list'), help=u"""Lists all the OperatorActions available in the system. \n[Command Reference](listOperatorActions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--resource-type', help=u"""A filter to return only lists of resources that match the entire given service type.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""A filter to return only resources whose lifecycleState matches the given OperatorAction lifecycleState.""")

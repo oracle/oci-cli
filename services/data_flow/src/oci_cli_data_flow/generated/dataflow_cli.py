@@ -165,7 +165,7 @@ def cascading_delete_application(ctx, from_json, wait_for_state, max_wait_second
 
 @application_group.command(name=cli_util.override('data_flow.change_application_compartment.command_name', 'change-compartment'), help=u"""Moves an application into a different compartment. When provided, If-Match is checked against ETag values of the resource. Associated resources, like runs, will not be automatically moved. \n[Command Reference](changeApplicationCompartment)""")
 @cli_util.option('--application-id', required=True, help=u"""The unique ID for an application.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of a compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -196,7 +196,7 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
 
 @pool_group.command(name=cli_util.override('data_flow.change_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a pool into a different compartment. When provided, If-Match is checked against ETag values of the resource. Associated resources, like historical metrics, will not be automatically moved. The pool must be in a terminal state (STOPPED, FAILED) in order for it to be moved to a different compartment \n[Command Reference](changePoolCompartment)""")
 @cli_util.option('--pool-id', required=True, help=u"""The unique ID for a pool.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of a compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -227,7 +227,7 @@ def change_pool_compartment(ctx, from_json, pool_id, compartment_id, if_match):
 
 @private_endpoint_group.command(name=cli_util.override('data_flow.change_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a private endpoint into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePrivateEndpointCompartment)""")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""The unique ID for a private endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of a compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -288,7 +288,7 @@ def change_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait
 
 @run_group.command(name=cli_util.override('data_flow.change_run_compartment.command_name', 'change-compartment'), help=u"""Moves a run into a different compartment. When provided, If-Match is checked against ETag values of the resource. Associated resources, like historical metrics, will not be automatically moved. The run must be in a terminal state (CANCELED, FAILED, SUCCEEDED) in order for it to be moved to a different compartment \n[Command Reference](changeRunCompartment)""")
 @cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of a compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -319,7 +319,7 @@ def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
 
 @sql_endpoint_group.command(name=cli_util.override('data_flow.change_sql_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves an Sql Endpoint from one compartment to another. When provided, If-Match is checked against ETag values of the Sql Endpoint. \n[Command Reference](changeSqlEndpointCompartment)""")
 @cli_util.option('--sql-endpoint-id', required=True, help=u"""The unique id of the SQL Endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -379,7 +379,7 @@ def change_sql_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @application_group.command(name=cli_util.override('data_flow.create_application.command_name', 'create'), help=u"""Creates an application. \n[Command Reference](createApplication)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of a compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--driver-shape', required=True, help=u"""The VM shape for the driver. Sets the driver cores and memory.""")
 @cli_util.option('--executor-shape', required=True, help=u"""The VM shape for the executors. Sets the executor cores and memory.""")
@@ -526,7 +526,7 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @pool_group.command(name=cli_util.override('data_flow.create_pool.command_name', 'create'), help=u"""Create a pool to be used by dataflow runs or applications. \n[Command Reference](createPool)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of a compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of PoolConfig items.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. Avoid entering confidential information.""")
@@ -605,9 +605,9 @@ def create_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 
 @private_endpoint_group.command(name=cli_util.override('data_flow.create_private_endpoint.command_name', 'create'), help=u"""Creates a private endpoint to be used by applications. \n[Command Reference](createPrivateEndpoint)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of a compartment.""")
 @cli_util.option('--dns-zones', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of DNS zone names. Example: `[ \"app.examplecorp.com\", \"app.examplecorp2.com\" ]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of a subnet.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of a subnet.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. Avoid entering confidential information.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
@@ -692,7 +692,7 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @run_group.command(name=cli_util.override('data_flow.create_run.command_name', 'create'), help=u"""Creates a run for an application. \n[Command Reference](createRun)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of a compartment.""")
 @cli_util.option('--application-log-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--application-id', help=u"""The OCID of the associated application. If this value is set, then no value for the execute parameter is required. If this value is not set, then a value for the execute parameter is required, and a new application is created and associated with the new run.""")
 @cli_util.option('--archive-uri', help=u"""A comma separated list of one or more archive files as Oracle Cloud Infrastructure URIs. For example, ``oci://path/to/a.zip,oci://path/to/b.zip``. An Oracle Cloud Infrastructure URI of an archive.zip file containing custom dependencies that may be used to support the execution of a Python, Java, or Scala application. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
@@ -838,7 +838,7 @@ def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 
 @sql_endpoint_group.command(name=cli_util.override('data_flow.create_sql_endpoint.command_name', 'create'), help=u"""Create a new Sql Endpoint. \n[Command Reference](createSqlEndpoint)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The identifier of the compartment used with the SQL Endpoint.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The identifier of the compartment used with the SQL Endpoint.""")
 @cli_util.option('--display-name', required=True, help=u"""The SQL Endpoint name, which can be changed.""")
 @cli_util.option('--sql-endpoint-version', required=True, help=u"""The version of the SQL Endpoint.""")
 @cli_util.option('--driver-shape', required=True, help=u"""The shape of the SQL Endpoint driver instance.""")
@@ -1533,7 +1533,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @application_group.command(name=cli_util.override('data_flow.list_applications.command_name', 'list'), help=u"""Lists all applications in the specified compartment. Only one parameter other than compartmentId may also be included in a query. The query must include compartmentId. If the query does not include compartmentId, or includes compartmentId but two or more other parameters an error is returned. \n[Command Reference](listApplications)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "language"]), help=u"""The field used to sort the results. Multiple fields are not supported.""")
@@ -1599,7 +1599,7 @@ def list_applications(ctx, from_json, all_pages, page_size, compartment_id, limi
 
 
 @pool_group.command(name=cli_util.override('data_flow.list_pools.command_name', 'list'), help=u"""Lists all pools in the specified compartment. The query must include compartmentId. The query may also include one other parameter. If the query does not include compartmentId, or includes compartmentId, but with two or more other parameters, an error is returned. \n[Command Reference](listPools)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "SCHEDULED", "CREATING", "ACTIVE", "STOPPING", "STOPPED", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The LifecycleState of the pool.""")
@@ -1665,7 +1665,7 @@ def list_pools(ctx, from_json, all_pages, page_size, compartment_id, limit, page
 
 
 @private_endpoint_group.command(name=cli_util.override('data_flow.list_private_endpoints.command_name', 'list'), help=u"""Lists all private endpoints in the specified compartment. The query must include compartmentId. The query may also include one other parameter. If the query does not include compartmentId, or includes compartmentId, but with two or more other parameters, an error is returned. \n[Command Reference](listPrivateEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The LifecycleState of the private endpoint.""")
@@ -1782,7 +1782,7 @@ def list_run_logs(ctx, from_json, all_pages, page_size, run_id, limit, page):
 
 
 @run_group.command(name=cli_util.override('data_flow.list_runs.command_name', 'list'), help=u"""Lists all runs of an application in the specified compartment.  Only one parameter other than compartmentId may also be included in a query. The query must include compartmentId. If the query does not include compartmentId, or includes compartmentId but two or more other parameters an error is returned. \n[Command Reference](listRuns)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--application-id', help=u"""The ID of the application.""")
 @cli_util.option('--pool-id', help=u"""The ID of the pool.""")
 @cli_util.option('--owner-principal-id', help=u"""The OCID of the user who created the resource.""")
@@ -1857,7 +1857,7 @@ def list_runs(ctx, from_json, all_pages, page_size, compartment_id, application_
 
 
 @sql_endpoint_collection_group.command(name=cli_util.override('data_flow.list_sql_endpoints.command_name', 'list-sql-endpoints'), help=u"""Lists all Sql Endpoints in the specified compartment. The query must include compartmentId or sqlEndpointId. If the query does not include either compartmentId or sqlEndpointId, an error is returned. \n[Command Reference](listSqlEndpoints)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to query resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to query resources.""")
 @cli_util.option('--sql-endpoint-id', help=u"""The unique id of the SQL Endpoint.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING", "NEEDS_ATTENTION", "INACTIVE"]), help=u"""A filter to return only those resources whose sqlEndpointLifecycleState matches the given sqlEndpointLifecycleState.""")
 @cli_util.option('--display-name', help=u"""The query parameter for the Spark application name.""")
@@ -2081,7 +2081,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('data_flow.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")

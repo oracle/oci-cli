@@ -34,9 +34,9 @@ multicloud_resources_root_group.add_command(multicloud_resource_collection_group
 
 @multicloud_resource_collection_group.command(name=cli_util.override('multicloud_resources.list_multicloud_resources.command_name', 'list-multicloud-resources'), help=u"""Gets a list of multicloud resources with multicloud base compartment and subscription across Cloud Service Providers. \n[Command Reference](listMulticloudResources)""")
 @cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
 @cli_util.option('--resource-anchor-id', help=u"""The [OCID] of the ResourceAnchor.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")

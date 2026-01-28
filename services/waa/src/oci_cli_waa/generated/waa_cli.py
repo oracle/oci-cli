@@ -47,7 +47,7 @@ waa_service_cli.waa_service_group.add_command(web_app_acceleration_group)
 
 @web_app_acceleration_group.command(name=cli_util.override('waa.change_web_app_acceleration_compartment.command_name', 'change-compartment'), help=u"""Moves a Web App Acceleration resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeWebAppAccelerationCompartment)""")
 @cli_util.option('--web-app-acceleration-id', required=True, help=u"""The [OCID] of the WebAppAcceleration.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -108,7 +108,7 @@ def change_web_app_acceleration_compartment(ctx, from_json, wait_for_state, max_
 
 @web_app_acceleration_policy_group.command(name=cli_util.override('waa.change_web_app_acceleration_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a WebAppAccelerationfPolicy resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeWebAppAccelerationPolicyCompartment)""")
 @cli_util.option('--web-app-acceleration-policy-id', required=True, help=u"""The [OCID] of the WebAppAccelerationPolicy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -169,7 +169,7 @@ def change_web_app_acceleration_policy_compartment(ctx, from_json, wait_for_stat
 
 @web_app_acceleration_group.command(name=cli_util.override('waa.create_web_app_acceleration.command_name', 'create'), help=u"""Creates a new WebAppAcceleration. \n[Command Reference](createWebAppAcceleration)""")
 @cli_util.option('--backend-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOAD_BALANCER"]), help=u"""Type of the WebAppFirewall, as example LOAD_BALANCER.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--web-app-acceleration-policy-id', required=True, help=u"""The [OCID] of WebAppAccelerationPolicy, which is attached to the resource.""")
 @cli_util.option('--display-name', help=u"""WebAppAcceleration display name, can be renamed.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -241,9 +241,9 @@ def create_web_app_acceleration(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @web_app_acceleration_group.command(name=cli_util.override('waa.create_web_app_acceleration_create_web_app_acceleration_load_balancer_details.command_name', 'create-web-app-acceleration-create-web-app-acceleration-load-balancer-details'), help=u"""Creates a new WebAppAcceleration. \n[Command Reference](createWebAppAcceleration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--web-app-acceleration-policy-id', required=True, help=u"""The [OCID] of WebAppAccelerationPolicy, which is attached to the resource.""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""LoadBalancer [OCID] to which the WebAppAccelerationPolicy is attached to.""")
+@cli_util.option('--load-balancer-id', required=True, type=custom_types.CLI_OCID, help=u"""LoadBalancer [OCID] to which the WebAppAccelerationPolicy is attached to.""")
 @cli_util.option('--display-name', help=u"""WebAppAcceleration display name, can be renamed.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -316,7 +316,7 @@ def create_web_app_acceleration_create_web_app_acceleration_load_balancer_detail
 
 
 @web_app_acceleration_policy_group.command(name=cli_util.override('waa.create_web_app_acceleration_policy.command_name', 'create'), help=u"""Creates a new WebAppAccelerationPolicy. \n[Command Reference](createWebAppAccelerationPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""WebAppAccelerationPolicy display name, can be renamed.""")
 @cli_util.option('--response-caching-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--response-compression-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -549,7 +549,7 @@ def get_web_app_acceleration_policy(ctx, from_json, web_app_acceleration_policy_
 
 
 @web_app_acceleration_policy_group.command(name=cli_util.override('waa.list_web_app_acceleration_policies.command_name', 'list'), help=u"""Gets a list of all WebAppAccelerationPolicies in a compartment. \n[Command Reference](listWebAppAccelerationPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""A filter to return only resources that match the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""A filter to return only the WebAppAccelerationPolicy with the given [OCID].""")
@@ -612,7 +612,7 @@ def list_web_app_acceleration_policies(ctx, from_json, all_pages, page_size, com
 
 
 @web_app_acceleration_group.command(name=cli_util.override('waa.list_web_app_accelerations.command_name', 'list'), help=u"""Gets a list of all WebAppAccelerations in a compartment. \n[Command Reference](listWebAppAccelerations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""A filter to return only the WebAppAcceleration with the given [OCID].""")
 @cli_util.option('--web-app-acceleration-policy-id', help=u"""A filter to return only the WebAppAcceleration with the given [OCID] of related WebAppAccelerationPolicy.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""A filter to return only resources that match the given lifecycleState.""")

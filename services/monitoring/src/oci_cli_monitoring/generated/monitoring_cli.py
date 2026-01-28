@@ -107,8 +107,8 @@ monitoring_root_group.add_command(alarm_suppression_group)
 
 
 @alarm_group.command(name=cli_util.override('monitoring.change_alarm_compartment.command_name', 'change-compartment'), help=u"""Moves an alarm into a different compartment within the same tenancy. For more information, see [Moving an Alarm]. \n[Command Reference](changeAlarmCompartment)""")
-@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the alarm to.""")
+@cli_util.option('--alarm-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the alarm to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -145,7 +145,7 @@ This call is subject to a Monitoring limit that applies to the total number of r
 This value determines the title of each alarm notification.
 
 Example: `High CPU Utilization`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the alarm.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the alarm.""")
 @cli_util.option('--metric-compartment-id', required=True, help=u"""The [OCID] of the compartment containing the metric being evaluated by the alarm.""")
 @cli_util.option('--namespace', required=True, help=u"""The source service or application emitting the metric that is evaluated by the alarm.
 
@@ -628,7 +628,7 @@ def create_alarm_suppression_alarm_suppression_compartment_target(ctx, from_json
 @alarm_group.command(name=cli_util.override('monitoring.delete_alarm.command_name', 'delete'), help=u"""Deletes the specified alarm. For more information, see [Deleting an Alarm]. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](deleteAlarm)""")
-@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--alarm-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of an alarm.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -762,7 +762,7 @@ def delete_alarm_suppression(ctx, from_json, wait_for_state, max_wait_seconds, w
 @alarm_group.command(name=cli_util.override('monitoring.get_alarm.command_name', 'get'), help=u"""Gets the specified alarm. For more information, see [Getting an Alarm]. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](getAlarm)""")
-@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--alarm-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of an alarm.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -786,7 +786,7 @@ def get_alarm(ctx, from_json, alarm_id):
 @alarm_history_collection_group.command(name=cli_util.override('monitoring.get_alarm_history.command_name', 'get-alarm-history'), help=u"""Get the history of the specified alarm. For more information, see [Getting History of an Alarm]. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](getAlarmHistory)""")
-@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--alarm-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of an alarm.""")
 @cli_util.option('--alarm-historytype', type=custom_types.CliCaseInsensitiveChoice(["STATE_HISTORY", "STATE_TRANSITION_HISTORY", "RULE_HISTORY", "RULE_TRANSITION_HISTORY"]), help=u"""The type of history entries to retrieve. State history (STATE_HISTORY), state transition history (STATE_TRANSITION_HISTORY), rule history (RULE_HISTORY) or rule transition history (RULE_TRANSITION_HISTORY). If not specified, entries of all types are retrieved.
 
 Example: `STATE_HISTORY`""")
@@ -863,11 +863,11 @@ def get_alarm_suppression(ctx, from_json, alarm_suppression_id):
 For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](listAlarmSuppressions)""")
-@cli_util.option('--alarm-id', help=u"""The [OCID] of the alarm that is the target of the alarm suppression.""")
+@cli_util.option('--alarm-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the alarm that is the target of the alarm suppression.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list an alarm suppression by name. Alternatively, when you know the alarm suppression OCID, use the GetAlarmSuppression operation.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly. When not specified, only resources in the ACTIVE lifecycle state are listed.""")
 @cli_util.option('--level', type=custom_types.CliCaseInsensitiveChoice(["ALARM", "DIMENSION"]), help=u"""The level of this alarm suppression. `ALARM` indicates a suppression of the entire alarm, regardless of dimension. `DIMENSION` indicates a suppression configured for specified dimensions.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment for searching. Use the tenancy OCID to search in the root compartment.
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment for searching. Use the tenancy OCID to search in the root compartment.
 
 If targetType is not specified, searches all suppressions defined under the compartment. If targetType is `COMPARTMENT`, searches suppressions in the specified compartment only.
 
@@ -955,7 +955,7 @@ def list_alarm_suppressions(ctx, from_json, all_pages, page_size, alarm_id, disp
 @alarm_group.command(name=cli_util.override('monitoring.list_alarms.command_name', 'list'), help=u"""Lists the alarms for the specified compartment. For more information, see [Listing Alarms]. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](listAlarms)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
 
 Example: `ocid1.compartment.oc1..exampleuniqueID`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1032,7 +1032,7 @@ def list_alarms(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 For more information, see [Listing Alarm Statuses]. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](listAlarmsStatus)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
 
 Example: `ocid1.compartment.oc1..exampleuniqueID`""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
@@ -1124,7 +1124,7 @@ def list_alarms_status(ctx, from_json, all_pages, page_size, compartment_id, com
 @metric_group.command(name=cli_util.override('monitoring.list_metrics.command_name', 'list'), help=u"""Returns metric definitions that match the criteria specified in the request. Compartment OCID required. For more information, see [Listing Metric Definitions]. For information about metrics, see [Metrics Overview]. For important limits information, see [Limits on Monitoring].
 
 Transactions Per Second (TPS) per-tenancy limit for this operation: 10. \n[Command Reference](listMetrics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
 
 Example: `ocid1.compartment.oc1..exampleuniqueID`""")
 @cli_util.option('--name', help=u"""The metric name to use when searching for metric definitions.
@@ -1275,7 +1275,7 @@ def post_metric_data(ctx, from_json, metric_data, batch_atomicity, content_encod
 @suppression_group.command(name=cli_util.override('monitoring.remove_alarm_suppression.command_name', 'remove'), help=u"""Removes any existing suppression for the specified alarm. For more information, see [Removing Suppression from an Alarm]. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](removeAlarmSuppression)""")
-@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--alarm-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of an alarm.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1306,7 +1306,7 @@ For more information, see [Listing Metric Stream Status in an Alarm].
 For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](retrieveDimensionStates)""")
-@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--alarm-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of an alarm.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -1354,7 +1354,7 @@ def retrieve_dimension_states(ctx, from_json, alarm_id, page, limit, dimension_f
 For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](summarizeAlarmSuppressionHistory)""")
-@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--alarm-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of an alarm.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -1414,7 +1414,7 @@ def summarize_alarm_suppression_history(ctx, from_json, alarm_id, page, limit, d
 @metric_data_group.command(name=cli_util.override('monitoring.summarize_metrics_data.command_name', 'summarize-metrics-data'), help=u"""Returns aggregated data that match the criteria specified in the request. Compartment OCID required. For more information, see [Querying Metric Data] and [Creating a Query]. For important limits information, see [Limits on Monitoring].
 
 Transactions Per Second (TPS) per-tenancy limit for this operation: 10. \n[Command Reference](summarizeMetricsData)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
 
 Example: `ocid1.compartment.oc1..exampleuniqueID`""")
 @cli_util.option('--namespace', required=True, help=u"""The source service or application to use when searching for metric data points to aggregate.
@@ -1482,13 +1482,13 @@ def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query_para
 @alarm_group.command(name=cli_util.override('monitoring.update_alarm.command_name', 'update'), help=u"""Updates the specified alarm. For more information, see [Updating an Alarm]. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](updateAlarm)""")
-@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--alarm-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of an alarm.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the alarm. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 This value determines the title of each alarm notification.
 
 Example: `High CPU Utilization`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the alarm.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the alarm.""")
 @cli_util.option('--metric-compartment-id', help=u"""The [OCID] of the compartment containing the metric being evaluated by the alarm.""")
 @cli_util.option('--metric-compartment-id-in-subtree', type=click.BOOL, help=u"""When true, the alarm evaluates metrics from all compartments and subcompartments. The parameter can only be set to true when metricCompartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, the alarm evaluates metrics from only the compartment specified in metricCompartmentId. Default is false.
 

@@ -126,7 +126,7 @@ def get_announcement_user_status(ctx, from_json, announcement_id):
 @announcements_collection_group.command(name=cli_util.override('announcement.list_announcements.command_name', 'list-announcements'), help=u"""Gets a list of announcements for the current tenancy.
 
 This call is subject to an Announcements limit that applies to the total number of requests across all read or write operations. Announcements might throttle this call to reject an otherwise valid request when the total rate of operations exceeds 20 requests per second for a given user. The service might also throttle this call to reject an otherwise valid request when the total rate of operations exceeds 100 requests per second for a given tenancy. \n[Command Reference](listAnnouncements)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--announcement-type', help=u"""The type of announcement.""")
@@ -217,7 +217,7 @@ def list_announcements(ctx, from_json, all_pages, page_size, compartment_id, lim
 This call is subject to an Announcements limit that applies to the total number of requests across all read or write operations. Announcements might throttle this call to reject an otherwise valid request when the total rate of operations exceeds 20 requests per second for a given user. The service might also throttle this call to reject an otherwise valid request when the total rate of operations exceeds 100 requests per second for a given tenancy. \n[Command Reference](updateAnnouncementUserStatus)""")
 @cli_util.option('--announcement-id', required=True, help=u"""The OCID of the announcement.""")
 @cli_util.option('--user-status-announcement-id', required=True, help=u"""The OCID of the announcement that this status is associated with.""")
-@cli_util.option('--user-id', required=True, help=u"""The OCID of the user that this status is associated with.""")
+@cli_util.option('--user-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the user that this status is associated with.""")
 @cli_util.option('--time-acknowledged', type=custom_types.CLI_DATETIME, help=u"""The date and time the announcement was acknowledged, expressed in [RFC 3339] timestamp format. Example: `2019-01-01T17:43:01.389+0000`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""The locking version, used for optimistic concurrency control.""")
 @json_skeleton_utils.get_cli_json_input_option({})

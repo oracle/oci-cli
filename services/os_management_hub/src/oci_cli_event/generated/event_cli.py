@@ -41,7 +41,7 @@ event_root_group.add_command(event_group)
 
 
 @event_group.command(name=cli_util.override('event.change_event_compartment.command_name', 'change-compartment'), help=u"""Moves an event into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeEventCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the event to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the event to.""")
 @cli_util.option('--event-id', required=True, help=u"""The [OCID] of the event.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -280,7 +280,7 @@ def import_event_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--event-summary-contains', help=u"""A filter to return only events with a summary that contains the value provided.""")
 @cli_util.option('--id', help=u"""The [OCID] of the event.""")
 @cli_util.option('--event-fingerprint', help=u"""The eventFingerprint of the KernelEventData.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only events that match the state provided. The state value is case-insensitive.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource. This filter returns resources associated with the specified resource.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["KERNEL_OOPS", "KERNEL_CRASH", "EXPLOIT_ATTEMPT", "SOFTWARE_UPDATE", "KSPLICE_UPDATE", "SOFTWARE_SOURCE", "AGENT", "MANAGEMENT_STATION", "SYSADMIN", "REBOOT"]), multiple=True, help=u"""A filter to return only resources whose type matches the given value.""")

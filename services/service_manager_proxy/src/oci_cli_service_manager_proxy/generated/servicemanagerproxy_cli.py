@@ -38,7 +38,7 @@ service_manager_proxy_root_group.add_command(service_environment_group)
 @cli_util.option('--service-environment-id', required=True, help=u"""The unique identifier associated with the service environment.
 
 **Note:** Not an [OCID].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] for the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -61,7 +61,7 @@ def get_service_environment(ctx, from_json, service_environment_id, compartment_
 
 
 @service_environment_group.command(name=cli_util.override('service_manager_proxy.list_service_environments.command_name', 'list'), help=u"""List the details of Software as a Service (SaaS) environments provisioned by Service Manager. Information includes the service instance endpoints and service definition details. \n[Command Reference](listServiceEnvironments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] for the compartment.""")
 @cli_util.option('--service-environment-id', help=u"""The unique identifier associated with the service environment.
 
 **Note:** Not an [OCID].""")

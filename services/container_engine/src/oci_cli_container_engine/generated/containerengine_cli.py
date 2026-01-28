@@ -239,8 +239,8 @@ def complete_credential_rotation(ctx, from_json, wait_for_state, max_wait_second
 
 @cluster_group.command(name=cli_util.override('ce.create_cluster.command_name', 'create'), help=u"""Create a new cluster. \n[Command Reference](createCluster)""")
 @cli_util.option('--name', required=True, help=u"""The name of the cluster. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the cluster.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the virtual cloud network (VCN) in which to create the cluster.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the cluster.""")
+@cli_util.option('--vcn-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the virtual cloud network (VCN) in which to create the cluster.""")
 @cli_util.option('--kubernetes-version', required=True, help=u"""The version of Kubernetes to install into the cluster masters.""")
 @cli_util.option('--endpoint-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The network configuration for access to the Cluster control plane.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key to be used as the master encryption key for Kubernetes secret encryption. When used, `kubernetesVersion` must be at least `v1.13.0`.""")
@@ -392,7 +392,7 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
 
 
 @node_pool_group.command(name=cli_util.override('ce.create_node_pool.command_name', 'create'), help=u"""Create a new node pool. \n[Command Reference](createNodePool)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the node pool exists.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which the node pool exists.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster to which this node pool is attached.""")
 @cli_util.option('--name', required=True, help=u"""The name of the node pool. Avoid entering confidential information.""")
 @cli_util.option('--node-shape', required=True, help=u"""The name of the node shape of the nodes in the node pool.""")
@@ -509,7 +509,7 @@ def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @node_pool_group.command(name=cli_util.override('ce.create_node_pool_node_source_via_image_details.command_name', 'create-node-pool-node-source-via-image-details'), help=u"""Create a new node pool. \n[Command Reference](createNodePool)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the node pool exists.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which the node pool exists.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster to which this node pool is attached.""")
 @cli_util.option('--name', required=True, help=u"""The name of the node pool. Avoid entering confidential information.""")
 @cli_util.option('--node-shape', required=True, help=u"""The name of the node shape of the nodes in the node pool.""")
@@ -631,7 +631,7 @@ def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_stat
 
 
 @virtual_node_pool_group.command(name=cli_util.override('ce.create_virtual_node_pool.command_name', 'create'), help=u"""Create a new virtual node pool. \n[Command Reference](createVirtualNodePool)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment of the virtual node pool.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment of the virtual node pool.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The cluster the virtual node pool is associated with. A virtual node pool can only be associated with one cluster.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the virtual node pool. This is a non-unique value.""")
 @cli_util.option('--size', required=True, type=click.INT, help=u"""The number of Virtual Nodes that should be in the Virtual Node Pool. The placement configurations determine where these virtual nodes are placed.""")
@@ -1231,7 +1231,7 @@ def get_cluster_migrate_to_native_vcn_status(ctx, from_json, cluster_id):
 
 @cluster_options_group.command(name=cli_util.override('ce.get_cluster_options.command_name', 'get'), help=u"""Get options available for clusters. \n[Command Reference](getClusterOptions)""")
 @cli_util.option('--cluster-option-id', required=True, help=u"""The id of the option set to retrieve. Use \"all\" get all options, or use a cluster ID to get options specific to the provided cluster.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--should-list-all-patch-versions', type=click.BOOL, help=u"""Option to show all kubernetes patch versions""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1303,7 +1303,7 @@ def get_node_pool(ctx, from_json, node_pool_id):
 
 @node_pool_options_group.command(name=cli_util.override('ce.get_node_pool_options.command_name', 'get'), help=u"""Get options available for node pools. \n[Command Reference](getNodePoolOptions)""")
 @cli_util.option('--node-pool-option-id', required=True, help=u"""The id of the option set to retrieve. Use \"all\" get all options, or use a cluster ID to get options specific to the provided cluster.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--should-list-all-patch-versions', type=click.BOOL, help=u"""Option to show all kubernetes patch versions""")
 @cli_util.option('--node-pool-os-type', type=custom_types.CliCaseInsensitiveChoice(["OL7", "OL8", "UBUNTU"]), help=u"""Filter node pool options by OS type.""")
 @cli_util.option('--node-pool-os-arch', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64"]), help=u"""Filter node pool options by OS architecture.""")
@@ -1629,7 +1629,7 @@ def list_addons(ctx, from_json, all_pages, page_size, cluster_id, limit, page, s
 
 
 @cluster_group.command(name=cli_util.override('ce.list_clusters.command_name', 'list'), help=u"""List all the cluster objects in a compartment. \n[Command Reference](listClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help=u"""A cluster lifecycle state to filter on. Can have multiple parameters of this name. For more information, see [Monitoring Clusters]""")
 @cli_util.option('--name', help=u"""The name to filter on.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
@@ -1689,7 +1689,7 @@ def list_clusters(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
 
 
 @node_pool_group.command(name=cli_util.override('ce.list_node_pools.command_name', 'list'), help=u"""List all the node pools in a compartment, and optionally filter by cluster. \n[Command Reference](listNodePools)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--cluster-id', help=u"""The OCID of the cluster.""")
 @cli_util.option('--name', help=u"""The name to filter on.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
@@ -1752,7 +1752,7 @@ def list_node_pools(ctx, from_json, all_pages, page_size, compartment_id, cluste
 
 
 @pod_shape_group.command(name=cli_util.override('ce.list_pod_shapes.command_name', 'list'), help=u"""List all the Pod Shapes in a compartment. \n[Command Reference](listPodShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain of the pod shape.""")
 @cli_util.option('--name', help=u"""The name to filter on.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
@@ -1814,7 +1814,7 @@ def list_pod_shapes(ctx, from_json, all_pages, page_size, compartment_id, availa
 
 
 @virtual_node_pool_group.command(name=cli_util.override('ce.list_virtual_node_pools.command_name', 'list'), help=u"""List all the virtual node pools in a compartment, and optionally filter by cluster. \n[Command Reference](listVirtualNodePools)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--cluster-id', help=u"""The OCID of the cluster.""")
 @cli_util.option('--name', help=u"""The name to filter on.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
@@ -1937,7 +1937,7 @@ def list_virtual_nodes(ctx, from_json, all_pages, page_size, virtual_node_pool_i
 
 
 @work_request_error_group.command(name=cli_util.override('ce.list_work_request_errors.command_name', 'list'), help=u"""Get the errors of a work request. \n[Command Reference](listWorkRequestErrors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1962,7 +1962,7 @@ def list_work_request_errors(ctx, from_json, all_pages, compartment_id, work_req
 
 
 @work_request_log_entry_group.command(name=cli_util.override('ce.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Get the logs of a work request. \n[Command Reference](listWorkRequestLogs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1987,7 +1987,7 @@ def list_work_request_logs(ctx, from_json, all_pages, compartment_id, work_reque
 
 
 @work_request_group.command(name=cli_util.override('ce.list_work_requests.command_name', 'list'), help=u"""List all work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--cluster-id', help=u"""The OCID of the cluster.""")
 @cli_util.option('--resource-id', help=u"""The OCID of the resource associated with a work request""")
 @cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["CLUSTER", "NODEPOOL"]), help=u"""Type of the resource associated with a work request""")

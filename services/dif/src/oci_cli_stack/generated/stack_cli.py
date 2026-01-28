@@ -200,7 +200,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @stack_group.command(name=cli_util.override('dif.change_stack_compartment.command_name', 'change-compartment'), help=u"""Moves a Stack into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeStackCompartment)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the Stack.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Stack to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Stack to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELLED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -261,7 +261,7 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @stack_group.command(name=cli_util.override('dif.create_stack.command_name', 'create'), help=u"""Creates a Stack. \n[Command Reference](createStack)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Should be unique per compartment. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the Stack in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the Stack in.""")
 @cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be onboarded for the stack.""")
 @cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be onboarded for the stack.""")
 @cli_util.option('--notification-email', help=u"""email id to which the stack notifications would be sent.""")
@@ -442,7 +442,7 @@ def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the Stack.""")
 @cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be onboarded for the stack.""")
 @cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be onboarded for the stack.""")
-@cli_util.option('--subnet-id', help=u"""Subnet id for the Private Endpoint creation for artifact deployment.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Subnet id for the Private Endpoint creation for artifact deployment.""")
 @cli_util.option('--adb', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ADB artifact details if adb is included in the services.
 
 This option is a JSON list with items of type AdbArtifactsDetail.  For documentation on AdbArtifactsDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/stack/20250830/datatypes/AdbArtifactsDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -580,7 +580,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @stack_collection_group.command(name=cli_util.override('dif.list_stacks.command_name', 'list-stacks'), help=u"""Gets a list of Stacks. \n[Command Reference](listStacks)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the Stack.""")
@@ -756,7 +756,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('dif.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELLED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

@@ -141,7 +141,7 @@ fleet_apps_management_service_cli.fleet_apps_management_service_group.add_comman
 
 @fleet_group.command(name=cli_util.override('fleet_apps_management.change_fleet_compartment.command_name', 'change-compartment'), help=u"""Moves a Fleet into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeFleetCompartment)""")
 @cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Fleet to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Fleet to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -201,7 +201,7 @@ def change_fleet_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @fleet_group.command(name=cli_util.override('fleet_apps_management.check_resource_tagging.command_name', 'check-resource-tagging'), help=u"""Check if Fleet Application Management tags can be added to the resources. \n[Command Reference](checkResourceTagging)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--resource-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resource OCIDS that need to be verified if a tag can be enabled for them.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fleet-display-name', help=u"""Fleet Display Name.""")
 @json_skeleton_utils.get_cli_json_input_option({'resource-ids': {'module': 'fleet_apps_management', 'class': 'list[string]'}})
@@ -291,7 +291,7 @@ def confirm_targets(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""compartment OCID""")
 @cli_util.option('--resource-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -406,7 +406,7 @@ def create_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""compartment OCID""")
 @cli_util.option('--resource-selection-rule-selection-criteria', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -524,7 +524,7 @@ def create_fleet_dynamic_resource_selection(ctx, from_json, wait_for_state, max_
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""compartment OCID""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -640,7 +640,7 @@ def create_fleet_manual_resource_selection(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""compartment OCID""")
 @cli_util.option('--resource-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -754,7 +754,7 @@ def create_fleet_group_fleet_details(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""compartment OCID""")
 @cli_util.option('--resource-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -868,7 +868,7 @@ def create_fleet_product_fleet_details(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""compartment OCID""")
 @cli_util.option('--resource-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -982,7 +982,7 @@ def create_fleet_generic_fleet_details(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""compartment OCID""")
 @cli_util.option('--resource-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1216,8 +1216,8 @@ def create_fleet_property(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @fleet_resource_group.command(name=cli_util.override('fleet_apps_management.create_fleet_resource.command_name', 'create'), help=u"""Add resource to a fleet in Fleet Application Management. \n[Command Reference](createFleetResource)""")
 @cli_util.option('--resource-id', required=True, help=u"""The OCID of the resource.""")
-@cli_util.option('--tenancy-id', required=True, help=u"""OCID of the tenancy to which the resource belongs to.""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--tenancy-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the tenancy to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--resource-region', help=u"""Associated region""")
 @cli_util.option('--resource-type', help=u"""Type of the Resource.""")
@@ -1706,7 +1706,7 @@ def get_fleet_resource(ctx, from_json, fleet_resource_id, fleet_id):
 
 
 @announcement_collection_group.command(name=cli_util.override('fleet_apps_management.list_announcements.command_name', 'list-announcements'), help=u"""Return a list of Announcement Summary items in a tenancy. \n[Command Reference](listAnnouncements)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--summary-contains', help=u"""Filter the list of announcements that contains the given summary value.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1842,7 +1842,7 @@ def list_fleet_credentials(ctx, from_json, all_pages, page_size, fleet_id, lifec
 
 @fleet_product_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_products.command_name', 'list-fleet-products'), help=u"""Returns a list of products associated with the confirmed targets. \n[Command Reference](listFleetProducts)""")
 @cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--resource-id', help=u"""Resource Identifier""")
 @cli_util.option('--resource-display-name', help=u"""Resource Display Name.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -2118,7 +2118,7 @@ def list_fleet_targets(ctx, from_json, all_pages, page_size, fleet_id, display_n
 
 @fleet_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleets.command_name', 'list-fleets'), help=u"""Returns a list of all the Fleets in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listFleets)""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return fleets whose lifecycleState matches the given lifecycleState.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--fleet-type', type=custom_types.CliCaseInsensitiveChoice(["GENERIC", "PRODUCT", "ENVIRONMENT", "GROUP"]), help=u"""A filter to return fleets whose fleetType matches the given fleetType.""")
 @cli_util.option('--application-type', help=u"""A filter to return resources that match the Application Type/Product Stack given..""")
 @cli_util.option('--product', help=u"""A filter to return resources that match the Product/Product Stack given.""")
@@ -2191,7 +2191,7 @@ def list_fleets(ctx, from_json, all_pages, page_size, lifecycle_state, compartme
 
 
 @inventory_resource_collection_group.command(name=cli_util.override('fleet_apps_management.list_inventory_resources.command_name', 'list-inventory-resources'), help=u"""Returns a list of Inventory Resources based on the criteria provided. instance, dbsystem, cloudvmcluster resources are supported. \n[Command Reference](listInventoryResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources whose base Compartment ID(TenancyId) matches the given base Compartment ID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources whose base Compartment ID(TenancyId) matches the given base Compartment ID.""")
 @cli_util.option('--resource-compartment-id', required=True, help=u"""A filter to return only resources whose resource Compartment ID matches the given resource Compartment ID.""")
 @cli_util.option('--lifecycle-state', help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -2914,8 +2914,8 @@ def update_fleet_property(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @fleet_resource_group.command(name=cli_util.override('fleet_apps_management.update_fleet_resource.command_name', 'update'), help=u"""Updates the FleetResource. \n[Command Reference](updateFleetResource)""")
 @cli_util.option('--fleet-resource-id', required=True, help=u"""unique FleetResource identifier""")
 @cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
-@cli_util.option('--tenancy-id', help=u"""OCID of the tenancy to which the resource belongs to.""")
-@cli_util.option('--compartment-id', help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--tenancy-id', type=custom_types.CLI_OCID, help=u"""OCID of the tenancy to which the resource belongs to.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")

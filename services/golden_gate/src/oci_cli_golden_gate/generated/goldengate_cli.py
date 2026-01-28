@@ -727,7 +727,7 @@ def cancel_snooze_deployment_upgrade_default_cancel_snooze_deployment_upgrade_de
 
 @connection_group.command(name=cli_util.override('goldengate.change_connection_compartment.command_name', 'change-compartment'), help=u"""Moves the Connection into a different compartment within the same tenancy. When provided, If-Match is checked against ETag values of the resource.  For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changeConnectionCompartment)""")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -791,7 +791,7 @@ def change_connection_compartment(ctx, from_json, wait_for_state, max_wait_secon
 
 @connection_group.command(name=cli_util.override('goldengate.change_connection_subscription.command_name', 'change-connection-subscription'), help=u"""Associate a GoldanGate connection with a different subscription. \n[Command Reference](changeConnectionSubscription)""")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates if the subscription is UCM or not.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -858,7 +858,7 @@ def change_connection_subscription(ctx, from_json, wait_for_state, max_wait_seco
 
 @database_registration_group.command(name=cli_util.override('goldengate.change_database_registration_compartment.command_name', 'change-compartment'), help=u"""Note: Deprecated. Use the /connections API instead. Moves the DatabaseRegistration into a different compartment within the same tenancy. When provided, If-Match is checked against ETag values of the resource.  For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changeDatabaseRegistrationCompartment)""")
 @cli_util.option('--database-registration-id', required=True, help=u"""A unique DatabaseRegistration identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -919,7 +919,7 @@ def change_database_registration_compartment(ctx, from_json, wait_for_state, max
 
 @deployment_backup_group.command(name=cli_util.override('goldengate.change_deployment_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a DeploymentBackup into a different compartment within the same tenancy.  When provided, If-Match is checked against ETag values of the resource.  For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changeDeploymentBackupCompartment)""")
 @cli_util.option('--deployment-backup-id', required=True, help=u"""A unique DeploymentBackup identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -953,7 +953,7 @@ def change_deployment_backup_compartment(ctx, from_json, deployment_backup_id, c
 
 @deployment_group.command(name=cli_util.override('goldengate.change_deployment_compartment.command_name', 'change-compartment'), help=u"""Moves the Deployment into a different compartment within the same tenancy.  When provided, If-Match is checked against ETag values of the resource.  For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changeDeploymentCompartment)""")
 @cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1017,7 +1017,7 @@ def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_secon
 
 @deployment_group.command(name=cli_util.override('goldengate.change_deployment_subscription.command_name', 'change-deployment-subscription'), help=u"""Associate a GoldanGate deployment with a different subscription. \n[Command Reference](changeDeploymentSubscription)""")
 @cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates if the subscription is UCM or not.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1084,7 +1084,7 @@ def change_deployment_subscription(ctx, from_json, wait_for_state, max_wait_seco
 
 @pipeline_group.command(name=cli_util.override('goldengate.change_pipeline_compartment.command_name', 'change-compartment'), help=u"""Moves the Pipeline into a different compartment within the same tenancy. When provided, If-Match is checked against ETag values of the resource.  For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changePipelineCompartment)""")
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1427,7 +1427,7 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @connection_group.command(name=cli_util.override('goldengate.create_connection.command_name', 'create'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--connection-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "ICEBERG"]), help=u"""The connection type.""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -1438,14 +1438,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1543,7 +1543,7 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_postgresql_connection_details.command_name', 'create-connection-create-postgresql-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The PostgreSQL technology type.""")
 @cli_util.option('--database-name', required=True, help=u"""The name of the database.""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
@@ -1558,14 +1558,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1585,7 +1585,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
-@cli_util.option('--db-system-id', help=u"""The [OCID] of the database system being referenced.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the database system being referenced.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1724,7 +1724,7 @@ def create_connection_create_postgresql_connection_details(ctx, from_json, wait_
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_kafka_schema_registry_connection_details.command_name', 'create-connection-create-kafka-schema-registry-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Kafka (e.g. Confluent) Schema Registry technology type.""")
 @cli_util.option('--url', required=True, help=u"""Kafka Schema Registry URL. e.g.: 'https://server1.us.oracle.com:8081'""")
 @cli_util.option('--authentication-type', required=True, help=u"""Used authentication mechanism to access Schema Registry.""")
@@ -1738,14 +1738,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1905,7 +1905,7 @@ def create_connection_create_kafka_schema_registry_connection_details(ctx, from_
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_microsoft_sqlserver_connection_details.command_name', 'create-connection-create-microsoft-sqlserver-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Microsoft SQL Server technology type.""")
 @cli_util.option('--database-name', required=True, help=u"""The name of the database.""")
 @cli_util.option('--host', required=True, help=u"""The name or address of a host.""")
@@ -1922,14 +1922,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2062,7 +2062,7 @@ def create_connection_create_microsoft_sqlserver_connection_details(ctx, from_js
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_amazon_kinesis_connection_details.command_name', 'create-connection-create-amazon-kinesis-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Amazon Kinesis technology type.""")
 @cli_util.option('--access-key-id', required=True, help=u"""Access key ID to access the Amazon Kinesis.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
@@ -2075,14 +2075,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2199,7 +2199,7 @@ def create_connection_create_amazon_kinesis_connection_details(ctx, from_json, w
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_azure_data_lake_storage_connection_details.command_name', 'create-connection-create-azure-data-lake-storage-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Azure Data Lake Storage technology type.""")
 @cli_util.option('--authentication-type', required=True, help=u"""Used authentication mechanism to access Azure Data Lake Storage.""")
 @cli_util.option('--account-name', required=True, help=u"""Sets the Azure storage account name.""")
@@ -2213,14 +2213,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2362,7 +2362,7 @@ def create_connection_create_azure_data_lake_storage_connection_details(ctx, fro
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_google_pub_sub_connection_details.command_name', 'create-connection-create-google-pub-sub-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Google PubSub technology type.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -2374,14 +2374,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2489,7 +2489,7 @@ def create_connection_create_google_pub_sub_connection_details(ctx, from_json, w
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_hdfs_connection_details.command_name', 'create-connection-create-hdfs-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Hadoop Distributed File System technology type.""")
 @cli_util.option('--core-site-xml', required=True, help=u"""The base64 encoded content of the Hadoop Distributed File System configuration file (core-site.xml). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
@@ -2502,14 +2502,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2610,7 +2610,7 @@ def create_connection_create_hdfs_connection_details(ctx, from_json, wait_for_st
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_oci_object_storage_connection_details.command_name', 'create-connection-create-oci-object-storage-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The OCI Object Storage technology type.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -2622,20 +2622,20 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--tenancy-id', help=u"""The [OCID] of the related OCI tenancy.""")
+@cli_util.option('--tenancy-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the related OCI tenancy.""")
 @cli_util.option('--region-parameterconflict', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
-@cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
+@cli_util.option('--user-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
 @cli_util.option('--private-key-file', help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Deprecated: This field is deprecated and replaced by \"privateKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key. Deprecated: This field is deprecated and replaced by \"privateKeyPassphraseSecretId\". This field will be removed after February 15 2026.""")
@@ -2765,7 +2765,7 @@ def create_connection_create_oci_object_storage_connection_details(ctx, from_jso
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_redis_connection_details.command_name', 'create-connection-create-redis-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Redis technology type.""")
 @cli_util.option('--security-protocol', required=True, help=u"""Security protocol for Redis.""")
 @cli_util.option('--authentication-type', required=True, help=u"""Authenticationentication type for the Redis database.""")
@@ -2779,14 +2779,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2940,7 +2940,7 @@ def create_connection_create_redis_connection_details(ctx, from_json, wait_for_s
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_microsoft_fabric_connection_details.command_name', 'create-connection-create-microsoft-fabric-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Microsoft Fabric technology type.""")
 @cli_util.option('--tenant-id', required=True, help=u"""Azure tenant ID of the application. e.g.: 14593954-d337-4a61-a364-9f758c64f97f""")
 @cli_util.option('--client-id', required=True, help=u"""Azure client ID of the application. e.g.: 06ecaabf-8b80-4ec8-a0ec-20cbf463703d""")
@@ -2954,14 +2954,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3075,7 +3075,7 @@ def create_connection_create_microsoft_fabric_connection_details(ctx, from_json,
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_google_cloud_storage_connection_details.command_name', 'create-connection-create-google-cloud-storage-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Google Cloud Storage technology type.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -3087,14 +3087,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3202,7 +3202,7 @@ def create_connection_create_google_cloud_storage_connection_details(ctx, from_j
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_kafka_connection_details.command_name', 'create-connection-create-kafka-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Kafka technology type.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -3214,18 +3214,18 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--stream-pool-id', help=u"""The [OCID] of the stream pool being referenced.""")
+@cli_util.option('--stream-pool-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the stream pool being referenced.""")
 @cli_util.option('--cluster-id', help=u"""The [OCID] of the Kafka cluster being referenced from OCI Streaming with Apache Kafka.""")
 @cli_util.option('--bootstrap-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Kafka bootstrap. Equivalent of bootstrap.servers configuration property in Kafka: list of KafkaBootstrapServer objects specified by host/port. Used for establishing the initial connection to the Kafka cluster. Example: `\"server1.example.com:9092,server2.example.com:9092\"`
 
@@ -3403,7 +3403,7 @@ def create_connection_create_kafka_connection_details(ctx, from_json, wait_for_s
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_oracle_nosql_connection_details.command_name', 'create-connection-create-oracle-nosql-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Oracle NoSQL technology type.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -3415,20 +3415,20 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--tenancy-id', help=u"""The [OCID] of the related OCI tenancy.""")
+@cli_util.option('--tenancy-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the related OCI tenancy.""")
 @cli_util.option('--region-parameterconflict', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
-@cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Oracle NoSQL database. The user must have write access to the table they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
+@cli_util.option('--user-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the OCI user who will access the Oracle NoSQL database. The user must have write access to the table they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
 @cli_util.option('--private-key-file', help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Deprecated: This field is deprecated and replaced by \"privateKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key. Deprecated: This field is deprecated and replaced by \"privateKeyPassphraseSecretId\". This field will be removed after February 15 2026.""")
@@ -3558,7 +3558,7 @@ def create_connection_create_oracle_nosql_connection_details(ctx, from_json, wai
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_java_message_service_connection_details.command_name', 'create-connection-create-java-message-service-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Java Message Service technology type.""")
 @cli_util.option('--should-use-jndi', required=True, type=click.BOOL, help=u"""If set to true, Java Naming and Directory Interface (JNDI) properties should be provided.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
@@ -3571,14 +3571,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3777,7 +3777,7 @@ def create_connection_create_java_message_service_connection_details(ctx, from_j
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_google_big_query_connection_details.command_name', 'create-connection-create-google-big-query-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Google BigQuery technology type.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -3789,14 +3789,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3904,7 +3904,7 @@ def create_connection_create_google_big_query_connection_details(ctx, from_json,
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_snowflake_connection_details.command_name', 'create-connection-create-snowflake-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Snowflake technology type.""")
 @cli_util.option('--connection-url', required=True, help=u"""JDBC connection URL. e.g.: 'jdbc:snowflake://<account_name>.snowflakecomputing.com/?warehouse=<warehouse-name>&db=<db-name>'""")
 @cli_util.option('--authentication-type', required=True, help=u"""Used authentication mechanism to access Snowflake.""")
@@ -3919,14 +3919,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4053,7 +4053,7 @@ def create_connection_create_snowflake_connection_details(ctx, from_json, wait_f
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_mongo_db_connection_details.command_name', 'create-connection-create-mongo-db-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The MongoDB technology type.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -4065,14 +4065,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4080,7 +4080,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to the database. This username must already exist and be available by the database to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated database. Deprecated: This field is deprecated and replaced by \"passwordSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret that stores the password Oracle GoldenGate uses to connect the associated database. Note: When provided, 'password' field must not be provided.""")
-@cli_util.option('--database-id', help=u"""The [OCID] of the Oracle Autonomous Json Database.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Autonomous Json Database.""")
 @cli_util.option('--security-protocol', help=u"""Security Type for MongoDB.""")
 @cli_util.option('--tls-ca-file', help=u"""Database Certificate - The base64 encoded content of a .pem file, containing the server public key (for 1 and 2-way SSL). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--tls-certificate-key-file', help=u"""Client Certificate - The base64 encoded content of a .pem file, containing the client public key (for 2-way SSL). Deprecated: This field is deprecated and replaced by \"tlsCertificateKeyFileSecretId\". This field will be removed after February 15 2026.""")
@@ -4216,7 +4216,7 @@ def create_connection_create_mongo_db_connection_details(ctx, from_json, wait_fo
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_oracle_ai_data_platform_connection_details.command_name', 'create-connection-create-oracle-ai-data-platform-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Oracle AI Data Platform technology type.""")
 @cli_util.option('--connection-url', required=True, help=u"""Connection URL. It must start with 'jdbc:spark://'""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
@@ -4229,20 +4229,20 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--tenancy-id', help=u"""The [OCID] of the related OCI tenancy.""")
+@cli_util.option('--tenancy-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the related OCI tenancy.""")
 @cli_util.option('--region-parameterconflict', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
-@cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
+@cli_util.option('--user-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
 @cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--public-key-fingerprint', help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
@@ -4365,7 +4365,7 @@ def create_connection_create_oracle_ai_data_platform_connection_details(ctx, fro
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_amazon_s3_connection_details.command_name', 'create-connection-create-amazon-s3-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Amazon S3 technology type.""")
 @cli_util.option('--access-key-id', required=True, help=u"""Access key ID to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\"""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
@@ -4378,14 +4378,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4502,7 +4502,7 @@ def create_connection_create_amazon_s3_connection_details(ctx, from_json, wait_f
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_databricks_connection_details.command_name', 'create-connection-create-databricks-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Databricks technology type.""")
 @cli_util.option('--authentication-type', required=True, help=u"""Used authentication mechanism to access Databricks.""")
 @cli_util.option('--connection-url', required=True, help=u"""Connection URL. e.g.: 'jdbc:databricks://adb-33934.4.azuredatabricks.net:443/default;transportMode=http;ssl=1;httpPath=sql/protocolv1/o/3393########44/0##3-7-hlrb'""")
@@ -4516,14 +4516,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4649,7 +4649,7 @@ def create_connection_create_databricks_connection_details(ctx, from_json, wait_
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_db2_connection_details.command_name', 'create-connection-create-db2-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The DB2 technology type.""")
 @cli_util.option('--database-name', required=True, help=u"""The name of the database.""")
 @cli_util.option('--host', required=True, help=u"""The name or address of a host.""")
@@ -4666,14 +4666,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4820,7 +4820,7 @@ def create_connection_create_db2_connection_details(ctx, from_json, wait_for_sta
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_elasticsearch_connection_details.command_name', 'create-connection-create-elasticsearch-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Elasticsearch technology type.""")
 @cli_util.option('--servers', required=True, help=u"""Comma separated list of Elasticsearch server addresses, specified as host:port entries, where :port is optional. If port is not specified, it defaults to 9200. Used for establishing the initial connection to the Elasticsearch cluster. Example: `\"server1.example.com:4000,server2.example.com:4000\"`""")
 @cli_util.option('--security-protocol', required=True, help=u"""Security protocol for Elasticsearch.""")
@@ -4835,14 +4835,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4961,7 +4961,7 @@ def create_connection_create_elasticsearch_connection_details(ctx, from_json, wa
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_azure_synapse_connection_details.command_name', 'create-connection-create-azure-synapse-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Azure Synapse Analytics technology type.""")
 @cli_util.option('--connection-string', required=True, help=u"""JDBC connection string. e.g.: 'jdbc:sqlserver://<synapse-workspace>.sql.azuresynapse.net:1433;database=<db-name>;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.sql.azuresynapse.net;loginTimeout=300;'""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
@@ -4975,14 +4975,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5092,7 +5092,7 @@ def create_connection_create_azure_synapse_connection_details(ctx, from_json, wa
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_iceberg_connection_details.command_name', 'create-connection-create-iceberg-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Iceberg technology type.""")
 @cli_util.option('--catalog', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--storage', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5106,14 +5106,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5215,7 +5215,7 @@ def create_connection_create_iceberg_connection_details(ctx, from_json, wait_for
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_mysql_connection_details.command_name', 'create-connection-create-mysql-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The MySQL technology type.""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--database-name', required=True, help=u"""The name of the database.""")
@@ -5230,14 +5230,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5257,7 +5257,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--db-system-id', help=u"""The [OCID] of the database system being referenced.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the database system being referenced.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5396,7 +5396,7 @@ def create_connection_create_mysql_connection_details(ctx, from_json, wait_for_s
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_generic_connection_details.command_name', 'create-connection-create-generic-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Generic technology type.""")
 @cli_util.option('--host', required=True, help=u"""Host and port separated by colon. Example: `\"server.example.com:1234\"`
 
@@ -5411,14 +5411,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5519,7 +5519,7 @@ def create_connection_create_generic_connection_details(ctx, from_json, wait_for
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_oracle_connection_details.command_name', 'create-connection-create-oracle-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Oracle technology type.""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
@@ -5532,14 +5532,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5553,7 +5553,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
-@cli_util.option('--database-id', help=u"""The [OCID] of the database being referenced.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the database being referenced.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5678,7 +5678,7 @@ def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_golden_gate_connection_details.command_name', 'create-connection-create-golden-gate-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The GoldenGate technology type.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -5690,14 +5690,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5827,7 +5827,7 @@ def create_connection_create_golden_gate_connection_details(ctx, from_json, wait
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_amazon_redshift_connection_details.command_name', 'create-connection-create-amazon-redshift-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Amazon Redshift technology type.""")
 @cli_util.option('--connection-url', required=True, help=u"""Connection URL. e.g.: 'jdbc:redshift://aws-redshift-instance.aaaaaaaaaaaa.us-east-2.redshift.amazonaws.com:5439/mydb'""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
@@ -5841,14 +5841,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6016,7 +6016,7 @@ def create_connection_assignment(ctx, from_json, wait_for_state, max_wait_second
 
 @database_registration_group.command(name=cli_util.override('goldengate.create_database_registration.command_name', 'create'), help=u"""Note: Deprecated. Use the /connections API instead. Creates a new DatabaseRegistration. \n[Command Reference](createDatabaseRegistration)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--fqdn', required=True, help=u"""A three-label Fully Qualified Domain Name (FQDN) for a resource.""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', required=True, help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. Deprecated: This field is deprecated and replaced by \"passwordSecretId\". This field will be removed after February 15 2026.""")
@@ -6029,13 +6029,13 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ip-address', help=u"""The private IP address in the customer's VCN of the customer's endpoint, typically a database.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
-@cli_util.option('--database-id', help=u"""The [OCID] of the database being referenced.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the database being referenced.""")
 @cli_util.option('--connection-string', help=u"""Connect descriptor or Easy Connect Naming method used to connect to a database.""")
 @cli_util.option('--session-mode', type=custom_types.CliCaseInsensitiveChoice(["DIRECT", "REDIRECT"]), help=u"""The mode of the database connection session to be established by the data client. 'REDIRECT' - for a RAC database, 'DIRECT' - for a non-RAC database. Connection to a RAC database involves a redirection received from the SCAN listeners to the database node to connect to. By default the mode would be DIRECT.""")
 @cli_util.option('--wallet', help=u"""The wallet contents Oracle GoldenGate uses to make connections to a database. This attribute is expected to be base64 encoded. Deprecated: This field is deprecated and replaced by \"walletSecretId\". This field will be removed after February 15 2026.""")
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--secret-compartment-id', help=u"""The OCID of the compartment where the GoldenGate Secret will be created. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -6131,8 +6131,8 @@ def create_database_registration(ctx, from_json, wait_for_state, max_wait_second
 
 @deployment_group.command(name=cli_util.override('goldengate.create_deployment.command_name', 'create'), help=u"""Creates a new Deployment. \n[Command Reference](createDeployment)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet of the deployment's private endpoint. The subnet must be a private subnet. For backward compatibility, public subnets are allowed until May 31 2025, after which the private subnet will be enforced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet of the deployment's private endpoint. The subnet must be a private subnet. For backward compatibility, public subnets are allowed until May 31 2025, after which the private subnet will be enforced.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
 @cli_util.option('--is-byol-cpu-core-count-limit-enabled', type=click.BOOL, help=u"""Flag to allow to configure the 'Bring Your Own License' (BYOL) license type CPU limit. If enabled, the exact number of CPUs must be provided via byolCpuCoreCountLimit.""")
 @cli_util.option('--byol-cpu-core-count-limit', type=click.INT, help=u"""The maximum number of CPUs allowed with a 'Bring Your Own License' (BYOL) license type. Any CPU usage above this limit is considered as License Included and billed.""")
@@ -6161,8 +6161,8 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The Minimum number of OCPUs to be made available for this Deployment.""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Deployment's CPU core count.""")
 @cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, which can be any one of the Allowed values. NOTE: Use of the value 'OGG' is maintained for backward compatibility purposes.     Its use is discouraged in favor of 'DATABASE_ORACLE'.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6306,7 +6306,7 @@ def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 @deployment_backup_group.command(name=cli_util.override('goldengate.create_deployment_backup.command_name', 'create'), help=u"""Creates a new DeploymentBackup. \n[Command Reference](createDeploymentBackup)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--deployment-id', required=True, help=u"""The [OCID] of the deployment being referenced.""")
 @cli_util.option('--namespace-name', required=True, help=u"""Name of namespace that serves as a container for all of your buckets""")
 @cli_util.option('--bucket-name', required=True, help=u"""Name of the bucket where the object is to be uploaded in the object storage""")
@@ -6392,7 +6392,7 @@ def create_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, w
 @pipeline_group.command(name=cli_util.override('goldengate.create_pipeline.command_name', 'create'), help=u"""Creates a new Pipeline. \n[Command Reference](createPipeline)""")
 @cli_util.option('--recipe-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ZERO_ETL"]), help=u"""The type of the recipe""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
 @cli_util.option('--source-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6406,7 +6406,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet of the pipeline's private endpoint. The subnet must be a private subnet.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet of the pipeline's private endpoint. The subnet must be a private subnet.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -6480,7 +6480,7 @@ def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 @pipeline_group.command(name=cli_util.override('goldengate.create_pipeline_create_zero_etl_pipeline_details.command_name', 'create-pipeline-create-zero-etl-pipeline-details'), help=u"""Creates a new Pipeline. \n[Command Reference](createPipeline)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
 @cli_util.option('--source-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6494,7 +6494,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet of the pipeline's private endpoint. The subnet must be a private subnet.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet of the pipeline's private endpoint. The subnet must be a private subnet.""")
 @cli_util.option('--process-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7050,7 +7050,7 @@ def deployment_wallet_exists_default_deployment_wallet_exists_details(ctx, from_
 
 @deployment_group.command(name=cli_util.override('goldengate.export_deployment_wallet.command_name', 'export-deployment-wallet'), help=u"""Export the OGG wallet from the deployment to OCI vault. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](exportDeploymentWallet)""")
 @cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
-@cli_util.option('--vault-id', required=True, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--vault-id', required=True, type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
 @cli_util.option('--master-encryption-key-id', required=True, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--secret-name', required=True, help=u"""Name of the secret with which secret is shown in vault""")
 @cli_util.option('--secret-compartment-id', help=u"""The [OCID] of the compartment, where the secret will be created in.""")
@@ -7391,7 +7391,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @deployment_group.command(name=cli_util.override('goldengate.import_deployment_wallet.command_name', 'import-deployment-wallet'), help=u"""Imports an OGG wallet from the OCI Vault to the Deployment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](importDeploymentWallet)""")
 @cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
-@cli_util.option('--vault-id', required=True, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--vault-id', required=True, type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
 @cli_util.option('--new-wallet-secret-id', required=True, help=u"""The OCID of the customer's GoldenGate Service Secret. If provided, it references a key that customers will be required to ensure the policies are established to permit GoldenGate to use this Secret.""")
 @cli_util.option('--wallet-backup-secret-name', help=u"""Name of the secret with which secret is shown in vault""")
 @cli_util.option('--wallet-backup-secret-compartment-id', help=u"""The [OCID] of the compartment, where the secret will be created in.""")
@@ -7532,7 +7532,7 @@ def list_certificates(ctx, from_json, all_pages, page_size, deployment_id, lifec
 
 
 @connection_assignment_group.command(name=cli_util.override('goldengate.list_connection_assignments.command_name', 'list'), help=u"""Lists the Connection Assignments in the compartment. \n[Command Reference](listConnectionAssignments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment in which to list resources.""")
 @cli_util.option('--connection-id', help=u"""The [OCID] of the connection.""")
 @cli_util.option('--name', help=u"""The name of the connection in the assignment (aliasName).""")
@@ -7598,7 +7598,7 @@ def list_connection_assignments(ctx, from_json, all_pages, page_size, compartmen
 
 
 @connection_group.command(name=cli_util.override('goldengate.list_connections.command_name', 'list'), help=u"""Lists the Connections in the compartment. \n[Command Reference](listConnections)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--technology-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "GENERIC", "OCI_AUTONOMOUS_DATABASE", "OCI_AUTONOMOUS_JSON_DATABASE", "OCI_CACHE_WITH_REDIS", "OCI_MYSQL", "OCI_OBJECT_STORAGE", "OCI_POSTGRESQL", "OCI_STREAMING", "OCI_STREAMING_WITH_APACHE_KAFKA", "ORACLE_DATABASE", "ORACLE_EXADATA", "ORACLE_EXADATA_DATABASE_AT_AZURE", "ORACLE_AUTONOMOUS_DATABASE_AT_AZURE", "ORACLE_JSON_COLLECTION", "ORACLE_EXADATA_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_AUTONOMOUS_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_EXADATA_DATABASE_AT_AWS", "ORACLE_AUTONOMOUS_DATABASE_AT_AWS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_NOSQL", "ORACLE_REST_DATA_SERVICES", "ORACLE_WEBLOGIC_JMS", "AMAZON_RDS_ORACLE", "AMAZON_RDS_SQLSERVER", "AMAZON_S3", "AMAZON_AURORA_MYSQL", "AMAZON_AURORA_POSTGRESQL", "AMAZON_DOCUMENT_DB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "AMAZON_RDS_MARIADB", "AMAZON_RDS_MYSQL", "AMAZON_RDS_POSTGRESQL", "APACHE_ICEBERG", "APACHE_KAFKA", "AZURE_COSMOS_DB_FOR_MONGODB", "AZURE_COSMOS_DB_FOR_POSTGRESQL", "AZURE_DATA_LAKE_STORAGE", "AZURE_EVENT_HUBS", "AZURE_MYSQL", "AZURE_POSTGRESQL", "AZURE_SQLSERVER_MANAGED_INSTANCE", "AZURE_SQLSERVER_NON_MANAGED_INSTANCE", "AZURE_SYNAPSE_ANALYTICS", "CONFLUENT_KAFKA", "CONFLUENT_SCHEMA_REGISTRY", "DATABRICKS", "DB2_I", "DB2_ZOS", "ELASTICSEARCH", "GOOGLE_ALLOY_DB_FOR_POSTGRESQL", "GOOGLE_BIGQUERY", "GOOGLE_CLOUD_STORAGE", "GOOGLE_CLOUD_SQL_MYSQL", "GOOGLE_CLOUD_SQL_POSTGRESQL", "GOOGLE_CLOUD_SQL_SQLSERVER", "GOOGLE_PUBSUB", "HDFS", "MARIADB", "MICROSOFT_SQLSERVER", "MICROSOFT_FABRIC_LAKEHOUSE", "MICROSOFT_FABRIC_MIRROR", "MONGODB", "MYSQL_SERVER", "MYSQL_HEATWAVE_ON_AZURE", "MYSQL_HEATWAVE_ON_AWS", "POSTGRESQL_SERVER", "REDIS", "SINGLESTOREDB", "SINGLESTOREDB_CLOUD", "SNOWFLAKE"]), multiple=True, help=u"""The array of technology types.""")
 @cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "ICEBERG"]), multiple=True, help=u"""The array of connection types.""")
 @cli_util.option('--assigned-deployment-id', help=u"""The OCID of the deployment which for the connection must be assigned.""")
@@ -7673,7 +7673,7 @@ def list_connections(ctx, from_json, all_pages, page_size, compartment_id, techn
 
 
 @database_registration_group.command(name=cli_util.override('goldengate.list_database_registrations.command_name', 'list'), help=u"""Note: Deprecated. Use the /connections API instead. Lists the DatabaseRegistrations in the compartment. \n[Command Reference](listDatabaseRegistrations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), help=u"""A filter to return only the resources that match the 'lifecycleState' given.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -7733,7 +7733,7 @@ def list_database_registrations(ctx, from_json, all_pages, page_size, compartmen
 
 
 @deployment_backup_group.command(name=cli_util.override('goldengate.list_deployment_backups.command_name', 'list'), help=u"""Lists the Backups in a compartment. \n[Command Reference](listDeploymentBackups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), help=u"""A filter to return only the resources that match the 'lifecycleState' given.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
@@ -7796,7 +7796,7 @@ def list_deployment_backups(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @deployment_environment_collection_group.command(name=cli_util.override('goldengate.list_deployment_environments.command_name', 'list-deployment-environments'), help=u"""Returns an array of DeploymentEnvironmentDescriptor \n[Command Reference](listDeploymentEnvironments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -7913,7 +7913,7 @@ def list_deployment_peers(ctx, from_json, all_pages, page_size, deployment_id, l
 
 
 @deployment_type_collection_group.command(name=cli_util.override('goldengate.list_deployment_types.command_name', 'list-deployment-types'), help=u"""Returns an array of DeploymentTypeDescriptor \n[Command Reference](listDeploymentTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
 @cli_util.option('--ogg-version', help=u"""Allows to query by a specific GoldenGate version.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
@@ -7976,7 +7976,7 @@ def list_deployment_types(ctx, from_json, all_pages, page_size, compartment_id, 
 
 
 @deployment_upgrade_group.command(name=cli_util.override('goldengate.list_deployment_upgrades.command_name', 'list'), help=u"""Lists the Deployment Upgrades in a compartment. \n[Command Reference](listDeploymentUpgrades)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), help=u"""A filter to return only the resources that match the 'lifecycleState' given.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
@@ -8039,7 +8039,7 @@ def list_deployment_upgrades(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @deployment_version_collection_group.command(name=cli_util.override('goldengate.list_deployment_versions.command_name', 'list-deployment-versions'), help=u"""Returns the list of available deployment versions. \n[Command Reference](listDeploymentVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment in which to list resources.""")
 @cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -8159,7 +8159,7 @@ def list_deployment_wallets_operations(ctx, from_json, all_pages, page_size, dep
 
 
 @deployment_group.command(name=cli_util.override('goldengate.list_deployments.command_name', 'list'), help=u"""Lists the Deployments in a compartment. \n[Command Reference](listDeployments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--supported-connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "ICEBERG"]), help=u"""The connection type which the deployment must support.""")
 @cli_util.option('--assigned-connection-id', help=u"""The OCID of the connection which for the deployment must be assigned.""")
 @cli_util.option('--assignable-connection-id', help=u"""Return the deployments to which the specified connectionId may be assigned.""")
@@ -8493,7 +8493,7 @@ def list_pipeline_schemas(ctx, from_json, all_pages, page_size, pipeline_id, dis
 
 
 @pipeline_group.command(name=cli_util.override('goldengate.list_pipelines.command_name', 'list'), help=u"""Lists the Pipelines in the compartment. \n[Command Reference](listPipelines)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""A filtered list of pipelines to return for a given lifecycleState.""")
 @cli_util.option('--lifecycle-sub-state', type=custom_types.CliCaseInsensitiveChoice(["STARTING", "STOPPING", "STOPPED", "MOVING", "RUNNING", "PAUSING", "PAUSED", "START_FAILED", "STOP_FAILED", "PAUSE_FAILED"]), help=u"""A filtered list of pipelines to return for a given lifecycleSubState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
@@ -8556,7 +8556,7 @@ def list_pipelines(ctx, from_json, all_pages, page_size, compartment_id, lifecyc
 
 
 @recipe_summary_collection_group.command(name=cli_util.override('goldengate.list_recipes.command_name', 'list-recipes'), help=u"""Returns an array of Recipe Summary. \n[Command Reference](listRecipes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--recipe-type', type=custom_types.CliCaseInsensitiveChoice(["ZERO_ETL"]), help=u"""The pipeline's recipe type. The default value is ZERO_ETL.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -8842,7 +8842,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('goldengate.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in the compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource in which to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -10528,10 +10528,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -10648,10 +10648,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -10795,10 +10795,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -10922,10 +10922,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -10942,7 +10942,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
-@cli_util.option('--database-id', help=u"""The [OCID] of the database being referenced.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the database being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -11083,10 +11083,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -11218,18 +11218,18 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--tenancy-id', help=u"""The [OCID] of the related OCI tenancy.""")
+@cli_util.option('--tenancy-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the related OCI tenancy.""")
 @cli_util.option('--region-parameterconflict', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
-@cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
+@cli_util.option('--user-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
 @cli_util.option('--private-key-file', help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Deprecated: This field is deprecated and replaced by \"privateKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key. Deprecated: This field is deprecated and replaced by \"privateKeyPassphraseSecretId\". This field will be removed after February 15 2026.""")
@@ -11373,10 +11373,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -11552,10 +11552,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -11565,7 +11565,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to the database. This username must already exist and be available by the database to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated database. Deprecated: This field is deprecated and replaced by \"passwordSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret that stores the password Oracle GoldenGate uses to connect the associated database. Note: When provided, 'password' field must not be provided.""")
-@cli_util.option('--database-id', help=u"""The [OCID] of the Oracle Autonomous Json Database.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Autonomous Json Database.""")
 @cli_util.option('--security-protocol', help=u"""Security Type for MongoDB.""")
 @cli_util.option('--tls-ca-file', help=u"""Database Certificate - The base64 encoded content of a .pem file, containing the server public key (for 1 and 2-way SSL). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--tls-certificate-key-file', help=u"""Client Certificate - The base64 encoded content of a .pem file, containing the client public key (for 2-way SSL). Deprecated: This field is deprecated and replaced by \"tlsCertificateKeyFileSecretId\". This field will be removed after February 15 2026.""")
@@ -11715,10 +11715,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -11842,19 +11842,19 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-url', help=u"""Connection URL. It must start with 'jdbc:spark://'""")
-@cli_util.option('--tenancy-id', help=u"""The [OCID] of the related OCI tenancy.""")
+@cli_util.option('--tenancy-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the related OCI tenancy.""")
 @cli_util.option('--region-parameterconflict', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
-@cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
+@cli_util.option('--user-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
 @cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--public-key-fingerprint', help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
@@ -11993,10 +11993,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -12132,10 +12132,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -12160,7 +12160,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
-@cli_util.option('--db-system-id', help=u"""The [OCID] of the database system being referenced.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the database system being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -12319,10 +12319,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -12486,10 +12486,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -12641,10 +12641,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -12764,10 +12764,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -12915,16 +12915,16 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--stream-pool-id', help=u"""The [OCID] of the stream pool being referenced.""")
+@cli_util.option('--stream-pool-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the stream pool being referenced.""")
 @cli_util.option('--cluster-id', help=u"""The [OCID] of the Kafka cluster being referenced from OCI Streaming with Apache Kafka.""")
 @cli_util.option('--bootstrap-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Kafka bootstrap. Equivalent of bootstrap.servers configuration property in Kafka: list of KafkaBootstrapServer objects specified by host/port. Used for establishing the initial connection to the Kafka cluster. Example: `\"server1.example.com:9092,server2.example.com:9092\"`
 
@@ -13116,10 +13116,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -13283,10 +13283,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -13422,10 +13422,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -13643,10 +13643,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -13792,10 +13792,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -13919,18 +13919,18 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--tenancy-id', help=u"""The [OCID] of the related OCI tenancy.""")
+@cli_util.option('--tenancy-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the related OCI tenancy.""")
 @cli_util.option('--region-parameterconflict', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
-@cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Oracle NoSQL database. The user must have write access to the table they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
+@cli_util.option('--user-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the OCI user who will access the Oracle NoSQL database. The user must have write access to the table they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
 @cli_util.option('--private-key-file', help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Deprecated: This field is deprecated and replaced by \"privateKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key. Deprecated: This field is deprecated and replaced by \"privateKeyPassphraseSecretId\". This field will be removed after February 15 2026.""")
@@ -14074,10 +14074,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -14259,10 +14259,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -14398,10 +14398,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -14426,7 +14426,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--db-system-id', help=u"""The [OCID] of the database system being referenced.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the database system being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -14585,10 +14585,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -14766,10 +14766,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -14893,10 +14893,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -15018,10 +15018,10 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
-@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', type=custom_types.CLI_OCID, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -15270,7 +15270,7 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet of the deployment's private endpoint. The subnet must be a private subnet. For backward compatibility, public subnets are allowed until May 31 2025, after which the private subnet will be enforced.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet of the deployment's private endpoint. The subnet must be a private subnet. For backward compatibility, public subnets are allowed until May 31 2025, after which the private subnet will be enforced.""")
 @cli_util.option('--load-balancer-subnet-id', help=u"""The [OCID] of a public subnet in the customer tenancy. Can be provided only for public deployments. If provided, the loadbalancer will be created in this subnet instead of the service tenancy. For backward compatibility, this is an optional property. It will become mandatory for public deployments after October 1, 2024.""")
 @cli_util.option('--is-public', type=click.BOOL, help=u"""True if this object is publicly available.""")
 @cli_util.option('--fqdn', help=u"""A three-label Fully Qualified Domain Name (FQDN) for a resource.""")
@@ -15501,7 +15501,7 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet of the pipeline's private endpoint. The subnet must be a private subnet.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet of the pipeline's private endpoint. The subnet must be a private subnet.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -15599,7 +15599,7 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet of the pipeline's private endpoint. The subnet must be a private subnet.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet of the pipeline's private endpoint. The subnet must be a private subnet.""")
 @cli_util.option('--process-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--mapping-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Mapping for source/target schema/tables for the pipeline data replication.
 

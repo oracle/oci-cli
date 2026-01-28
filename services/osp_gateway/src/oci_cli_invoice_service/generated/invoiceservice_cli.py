@@ -34,7 +34,7 @@ invoice_service_root_group.add_command(invoice_group)
 
 @invoice_group.command(name=cli_util.override('invoice_service.download_pdf_content.command_name', 'download-pdf-content'), help=u"""Returns an invoice in pdf format \n[Command Reference](downloadPdfContent)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--internal-invoice-id', required=True, help=u"""The identifier of the invoice.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -83,7 +83,7 @@ def download_pdf_content(ctx, from_json, file, osp_home_region, compartment_id, 
 
 @invoice_group.command(name=cli_util.override('invoice_service.get_invoice.command_name', 'get'), help=u"""Returns an invoice by invoice id \n[Command Reference](getInvoice)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--internal-invoice-id', required=True, help=u"""The identifier of the invoice.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -109,7 +109,7 @@ def get_invoice(ctx, from_json, osp_home_region, compartment_id, internal_invoic
 
 @invoice_group.command(name=cli_util.override('invoice_service.list_invoice_lines.command_name', 'list-invoice-lines'), help=u"""Returns the invoice product list by invoice id \n[Command Reference](listInvoiceLines)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--internal-invoice-id', required=True, help=u"""The identifier of the invoice.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call.""")
@@ -168,7 +168,7 @@ def list_invoice_lines(ctx, from_json, all_pages, page_size, osp_home_region, co
 
 @invoice_group.command(name=cli_util.override('invoice_service.list_invoices.command_name', 'list'), help=u"""Returns a list of invoices \n[Command Reference](listInvoices)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--invoice-id', help=u"""The invoice query param (not unique).""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["HARDWARE", "SUBSCRIPTION", "SUPPORT", "LICENSE", "EDUCATION", "CONSULTING", "SERVICE", "USAGE"]), multiple=True, help=u"""A filter to only return resources that match the given type exactly.""")
 @cli_util.option('--search-text', help=u"""A filter to only return resources that match the given value. Looking for partial matches in the following fileds: Invoice No., Reference No. (plan number), Payment Ref, Total Amount(plan number), Balance Due(plan number) and Party/Customer Name""")
@@ -251,7 +251,7 @@ def list_invoices(ctx, from_json, all_pages, page_size, osp_home_region, compart
 @invoice_group.command(name=cli_util.override('invoice_service.pay_invoice.command_name', 'pay'), help=u"""Pay an invoice \n[Command Reference](payInvoice)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
 @cli_util.option('--internal-invoice-id', required=True, help=u"""The identifier of the invoice.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--email', required=True, help=u"""User email""")
 @cli_util.option('--language-code', help=u"""Language code""")
 @cli_util.option('--return-url', help=u"""Callback URL""")

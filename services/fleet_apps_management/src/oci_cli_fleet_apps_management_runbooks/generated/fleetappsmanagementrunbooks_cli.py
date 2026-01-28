@@ -132,7 +132,7 @@ fleet_apps_management_runbooks_root_group.add_command(runbook_export_group)
 
 @runbook_group.command(name=cli_util.override('fleet_apps_management_runbooks.change_runbook_compartment.command_name', 'change-compartment'), help=u"""Moves a Runbook into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeRunbookCompartment)""")
 @cli_util.option('--runbook-id', required=True, help=u"""Unique Runbook identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Planner to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Planner to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -193,7 +193,7 @@ def change_runbook_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @task_record_group.command(name=cli_util.override('fleet_apps_management_runbooks.change_task_record_compartment.command_name', 'change-compartment'), help=u"""Moves a task record into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeTaskRecordCompartment)""")
 @cli_util.option('--task-record-id', required=True, help=u"""The OCID of the task record.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the task record to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the task record to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -258,7 +258,7 @@ def change_task_record_compartment(ctx, from_json, wait_for_state, max_wait_seco
 Example: `My new resource`""")
 @cli_util.option('--operation', required=True, help=u"""The lifecycle operation performed by the task.""")
 @cli_util.option('--runbook-version', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--os-type', type=custom_types.CliCaseInsensitiveChoice(["WINDOWS", "LINUX", "GENERIC"]), help=u"""The OS type for the runbook.""")
 @cli_util.option('--platform', help=u"""The platform of the runbook.""")
@@ -421,7 +421,7 @@ def create_runbook_version(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 Example: `My new resource`""")
 @cli_util.option('--details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1107,7 +1107,7 @@ def find_runbook_export_dependency(ctx, from_json, runbook_id, runbook_version_i
 
 
 @runbook_import_dependency_collection_group.command(name=cli_util.override('fleet_apps_management_runbooks.find_runbook_import_dependency.command_name', 'find-runbook-import-dependency'), help=u"""Find runbook import Dependencies \n[Command Reference](findRunbookImportDependency)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--content', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1138,7 +1138,7 @@ def find_runbook_import_dependency(ctx, from_json, compartment_id, content, limi
 
 
 @runbook_import_dependency_collection_group.command(name=cli_util.override('fleet_apps_management_runbooks.find_runbook_import_dependency_transfer_runbook_object_storage_bucket_content_details.command_name', 'find-runbook-import-dependency-transfer-runbook-object-storage-bucket-content-details'), help=u"""Find runbook import Dependencies \n[Command Reference](findRunbookImportDependency)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--content-namespace-name', required=True, help=u"""Namespace.""")
 @cli_util.option('--content-bucket-name', required=True, help=u"""Bucket Name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1182,7 +1182,7 @@ def find_runbook_import_dependency_transfer_runbook_object_storage_bucket_conten
 
 
 @runbook_import_dependency_collection_group.command(name=cli_util.override('fleet_apps_management_runbooks.find_runbook_import_dependency_transfer_runbook_par_url_content_details.command_name', 'find-runbook-import-dependency-transfer-runbook-par-url-content-details'), help=u"""Find runbook import Dependencies \n[Command Reference](findRunbookImportDependency)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--content-url', required=True, help=u"""PAR url.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1336,7 +1336,7 @@ def get_task_record(ctx, from_json, task_record_id):
 
 
 @import_runbook_details_group.command(name=cli_util.override('fleet_apps_management_runbooks.import_runbook.command_name', 'import-runbook'), help=u"""Import the specified version of the runbook. \n[Command Reference](importRunbook)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--content-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--content-destination', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--runbook-name', help=u"""The name of the runbook.""")
@@ -1414,7 +1414,7 @@ def import_runbook(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @import_runbook_precheck_details_group.command(name=cli_util.override('fleet_apps_management_runbooks.import_runbook_precheck.command_name', 'import-runbook-precheck'), help=u"""Precheck for import runbook. \n[Command Reference](importRunbookPrecheck)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--content-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--content-destination', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--import-as', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1484,7 +1484,7 @@ def import_runbook_precheck(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @import_runbook_version_details_group.command(name=cli_util.override('fleet_apps_management_runbooks.import_runbook_version.command_name', 'import-runbook-version'), help=u"""Export the specified version of the runbook. \n[Command Reference](importRunbookVersion)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--content-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--content-destination', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--runbook-id', help=u"""The OCID of the resource.""")
@@ -1562,7 +1562,7 @@ def import_runbook_version(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @runbook_export_status_collection_group.command(name=cli_util.override('fleet_apps_management_runbooks.list_runbook_export_statuses.command_name', 'list-runbook-export-statuses'), help=u"""Returns a list of all the Runbook export status in the specified compartment. The query parameter `compartmentId` is required. \n[Command Reference](listRunbookExportStatuses)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single Runbook by id. Either compartmentId or id must be provided.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1619,7 +1619,7 @@ def list_runbook_export_statuses(ctx, from_json, all_pages, page_size, compartme
 
 
 @runbook_import_status_collection_group.command(name=cli_util.override('fleet_apps_management_runbooks.list_runbook_import_statuses.command_name', 'list-runbook-import-statuses'), help=u"""Returns a list of all the Runbook import status in the specified compartment. The query parameter `compartmentId` is required. \n[Command Reference](listRunbookImportStatuses)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single Runbook by id. Either compartmentId or id must be provided.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1676,7 +1676,7 @@ def list_runbook_import_statuses(ctx, from_json, all_pages, page_size, compartme
 
 
 @runbook_version_collection_group.command(name=cli_util.override('fleet_apps_management_runbooks.list_runbook_versions.command_name', 'list-runbook-versions'), help=u"""List versions for a runbook in Fleet Application Management. \n[Command Reference](listRunbookVersions)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "NEEDS_ATTENTION", "INACTIVE", "CREATING", "DELETING", "UPDATING"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--runbook-id', help=u"""A filter to return only schedule definitions whose associated runbookId matches the given runbookId.""")
 @cli_util.option('--id', help=u"""A filter to return runbook versions whose identifier matches the given identifier.""")
@@ -1741,7 +1741,7 @@ def list_runbook_versions(ctx, from_json, all_pages, page_size, compartment_id, 
 
 
 @runbook_collection_group.command(name=cli_util.override('fleet_apps_management_runbooks.list_runbooks.command_name', 'list-runbooks'), help=u"""Returns a list of all the runbooks in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listRunbooks)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE", "CREATING", "DELETING", "UPDATING"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single Runbook by id. Either compartmentId or id must be provided.""")
@@ -1812,7 +1812,7 @@ def list_runbooks(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
 
 
 @task_record_collection_group.command(name=cli_util.override('fleet_apps_management_runbooks.list_task_records.command_name', 'list-task-records'), help=u"""Returns a list of all the task records in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listTaskRecords)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--platform', help=u"""The platform for the task record.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["USER_DEFINED", "ORACLE_DEFINED", "SYSTEM_DEFINED"]), help=u"""The type of the Task.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")

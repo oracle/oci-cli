@@ -37,7 +37,7 @@ operator_control_assignment_root_group.add_command(operator_control_assignment_g
 
 @operator_control_assignment_group.command(name=cli_util.override('operator_control_assignment.change_operator_control_assignment_compartment.command_name', 'change-compartment'), help=u"""Changes the compartment of the specified Operator Control assignment ID. \n[Command Reference](changeOperatorControlAssignmentCompartment)""")
 @cli_util.option('--operator-control-assignment-id', required=True, help=u"""unique OperatorControl identifier""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the new compartment to contain the operator contol assignment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the new compartment to contain the operator contol assignment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -74,7 +74,7 @@ def change_operator_control_assignment_compartment(ctx, from_json, operator_cont
 @cli_util.option('--resource-name', required=True, help=u"""Name of the target resource.""")
 @cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC", "EXADATAINFRASTRUCTURE", "AUTONOMOUSVMCLUSTER", "CLOUDAUTONOMOUSVMCLUSTER", "CCCINFRASTRUCTURE"]), help=u"""Type of the target resource.""")
 @cli_util.option('--resource-compartment-id', required=True, help=u"""The OCID of the compartment that contains the target resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the operator control assignment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the operator control assignment.""")
 @cli_util.option('--is-enforced-always', required=True, type=click.BOOL, help=u"""If set, then the target resource is always governed by the operator control.""")
 @cli_util.option('--time-assignment-from', type=custom_types.CLI_DATETIME, help=u"""The time at which the target resource will be brought under the governance of the operator control in [RFC 3339] timestamp format. Example: '2020-05-22T21:10:29.600Z'""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-assignment-to', type=custom_types.CLI_DATETIME, help=u"""The time at which the target resource will leave the governance of the operator control in [RFC 3339]timestamp format.Example: '2020-05-22T21:10:29.600Z'""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -285,7 +285,7 @@ def get_operator_control_assignment(ctx, from_json, operator_control_assignment_
 
 
 @operator_control_assignment_group.command(name=cli_util.override('operator_control_assignment.list_operator_control_assignments.command_name', 'list'), help=u"""Lists all Operator Control Assignments. \n[Command Reference](listOperatorControlAssignments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--operator-control-name', help=u"""A filter to return OperatorControl that match the given operatorControlName.""")
 @cli_util.option('--resource-name', help=u"""A filter to return only resources that match the given ResourceName.""")
 @cli_util.option('--resource-type', help=u"""A filter to return only lists of resources that match the entire given service type.""")

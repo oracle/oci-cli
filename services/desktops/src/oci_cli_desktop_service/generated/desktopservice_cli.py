@@ -87,7 +87,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @desktop_pool_group.command(name=cli_util.override('desktops.change_desktop_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a desktop pool into a different compartment within the same tenancy. You must provide the OCID of the desktop pool and the OCID of the compartment that you are moving the pool to. \n[Command Reference](changeDesktopPoolCompartment)""")
 @cli_util.option('--desktop-pool-id', required=True, help=u"""The OCID of the desktop pool.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment which will contain the desktop pool.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment which will contain the desktop pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -147,7 +147,7 @@ def change_desktop_pool_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @desktop_pool_group.command(name=cli_util.override('desktops.create_desktop_pool.command_name', 'create'), help=u"""Creates a desktop pool with the given configuration parameters. \n[Command Reference](createDesktopPool)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment which will contain the desktop pool.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment which will contain the desktop pool.""")
 @cli_util.option('--display-name', required=True, help=u"""A user friendly display name. Avoid entering confidential information.""")
 @cli_util.option('--maximum-size', required=True, type=click.INT, help=u"""The maximum number of desktops permitted in the desktop pool.""")
 @cli_util.option('--standby-size', required=True, type=click.INT, help=u"""The maximum number of standby desktops available in the desktop pool.""")
@@ -449,7 +449,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @desktop_pool_group.command(name=cli_util.override('desktops.list_desktop_pool_desktops.command_name', 'list-desktop-pool-desktops'), help=u"""Returns a list of desktops within a given desktop pool. You can limit the results to an availability domain, desktop name, or desktop state. You can limit the number of results returned, sort the results by time or name, and sort in ascending or descending order. \n[Command Reference](listDesktopPoolDesktops)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment of the desktop pool.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment of the desktop pool.""")
 @cli_util.option('--desktop-pool-id', required=True, help=u"""The OCID of the desktop pool.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.""")
 @cli_util.option('--display-name', help=u"""A filter to return only results with the given displayName.""")
@@ -525,7 +525,7 @@ def list_desktop_pool_desktops(ctx, from_json, all_pages, page_size, compartment
 
 @desktop_pool_group.command(name=cli_util.override('desktops.list_desktop_pool_volumes.command_name', 'list-desktop-pool-volumes'), help=u"""Returns a list of volumes within the given desktop pool. You can limit the results to an availability domain, volume name, or volume state. You can limit the number of results returned, sort the results by time or name, and sort in ascending or descending order. \n[Command Reference](listDesktopPoolVolumes)""")
 @cli_util.option('--desktop-pool-id', required=True, help=u"""The OCID of the desktop pool.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment of the desktop pool.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment of the desktop pool.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.""")
 @cli_util.option('--display-name', help=u"""A filter to return only results with the given displayName.""")
 @cli_util.option('--id', help=u"""A filter to return only results with the given OCID.""")
@@ -599,7 +599,7 @@ def list_desktop_pool_volumes(ctx, from_json, all_pages, page_size, desktop_pool
 
 
 @desktop_pool_group.command(name=cli_util.override('desktops.list_desktop_pools.command_name', 'list'), help=u"""Returns a list of desktop pools within the given compartment. You can limit the results to an availability domain, pool name, or pool state. You can limit the number of results returned, sort the results by time or name, and sort in ascending or descending order. \n[Command Reference](listDesktopPools)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment of the desktop pool.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment of the desktop pool.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.""")
 @cli_util.option('--display-name', help=u"""A filter to return only results with the given displayName.""")
 @cli_util.option('--id', help=u"""A filter to return only results with the given OCID.""")
@@ -667,7 +667,7 @@ def list_desktop_pools(ctx, from_json, all_pages, page_size, compartment_id, ava
 
 
 @desktop_group.command(name=cli_util.override('desktops.list_desktops.command_name', 'list'), help=u"""Returns a list of desktops filtered by the specified parameters. You can limit the results to an availability domain, desktop name, desktop OCID, desktop state, pool OCID, or compartment OCID. You can limit the number of results returned, sort the results by time or name, and sort in ascending or descending order. \n[Command Reference](listDesktops)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment of the desktop pool.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment of the desktop pool.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.""")
 @cli_util.option('--display-name', help=u"""A filter to return only results with the given displayName.""")
 @cli_util.option('--id', help=u"""A filter to return only results with the given OCID.""")
@@ -852,7 +852,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('desktops.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment of the desktop pool.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment of the desktop pool.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")

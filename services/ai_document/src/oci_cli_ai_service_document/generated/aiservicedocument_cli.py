@@ -219,7 +219,7 @@ def add_project_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @analyze_document_result_group.command(name=cli_util.override('ai_document.analyze_document.command_name', 'analyze-document'), help=u"""Perform different types of document analysis. \n[Command Reference](analyzeDocument)""")
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--document', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language', help=u"""The document language, abbreviated according to the BCP 47 syntax.""")
 @cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "HEALTH_INSURANCE_ID"]), help=u"""The document type.""")
@@ -269,7 +269,7 @@ def analyze_document(ctx, from_json, features, document, compartment_id, output_
 @cli_util.option('--document-namespace-name', required=True, help=u"""The Object Storage namespace.""")
 @cli_util.option('--document-bucket-name', required=True, help=u"""The Object Storage bucket name.""")
 @cli_util.option('--document-object-name', required=True, help=u"""The Object Storage object name.""")
-@cli_util.option('--compartment-id', help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language', help=u"""The document language, abbreviated according to the BCP 47 syntax.""")
 @cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "HEALTH_INSURANCE_ID"]), help=u"""The document type.""")
@@ -326,7 +326,7 @@ def analyze_document_object_storage_document_details(ctx, from_json, features, d
 @analyze_document_result_group.command(name=cli_util.override('ai_document.analyze_document_inline_document_details.command_name', 'analyze-document-inline-document-details'), help=u"""Perform different types of document analysis. \n[Command Reference](analyzeDocument)""")
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--document-data', required=True, help=u"""Raw document data with Base64 encoding.""")
-@cli_util.option('--compartment-id', help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language', help=u"""The document language, abbreviated according to the BCP 47 syntax.""")
 @cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "HEALTH_INSURANCE_ID"]), help=u"""The document type.""")
@@ -431,7 +431,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @model_group.command(name=cli_util.override('ai_document.change_model_compartment.command_name', 'change-compartment'), help=u"""Moves a model from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeModelCompartment)""")
 @cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -465,7 +465,7 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match,
 
 @project_group.command(name=cli_util.override('ai_document.change_project_compartment.command_name', 'change-compartment'), help=u"""Move a project from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeProjectCompartment)""")
 @cli_util.option('--project-id', required=True, help=u"""A unique project identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -499,7 +499,7 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 
 @model_group.command(name=cli_util.override('ai_document.create_model.command_name', 'create'), help=u"""Create a new model. \n[Command Reference](createModel)""")
 @cli_util.option('--model-type', required=True, help=u"""The type of the Document model.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project that contains the model.""")
 @cli_util.option('--display-name', help=u"""A human-friendly name for the model, which can be changed.""")
 @cli_util.option('--description', help=u"""An optional description of the model.""")
@@ -619,7 +619,7 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @processor_job_group.command(name=cli_util.override('ai_document.create_processor_job.command_name', 'create'), help=u"""Create a processor job for document analysis. \n[Command Reference](createProcessorJob)""")
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--processor-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name of the processor job.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -677,7 +677,7 @@ def create_processor_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 @processor_job_group.command(name=cli_util.override('ai_document.create_processor_job_inline_document_content.command_name', 'create-processor-job-inline-document-content'), help=u"""Create a processor job for document analysis. \n[Command Reference](createProcessorJob)""")
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--processor-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-data', required=True, help=u"""Raw document data with Base64 encoding.""")
 @cli_util.option('--display-name', help=u"""The display name of the processor job.""")
@@ -743,7 +743,7 @@ def create_processor_job_inline_document_content(ctx, from_json, wait_for_state,
 
 @processor_job_group.command(name=cli_util.override('ai_document.create_processor_job_object_storage_locations.command_name', 'create-processor-job-object-storage-locations'), help=u"""Create a processor job for document analysis. \n[Command Reference](createProcessorJob)""")
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--processor-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name of the processor job.""")
@@ -806,7 +806,7 @@ def create_processor_job_object_storage_locations(ctx, from_json, wait_for_state
 @processor_job_group.command(name=cli_util.override('ai_document.create_processor_job_invoice_processor_config.command_name', 'create-processor-job-invoice-processor-config'), help=u"""Create a processor job for document analysis. \n[Command Reference](createProcessorJob)""")
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--processor-config-normalization-fields', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name of the processor job.""")
 @cli_util.option('--processor-config-model-id', help=u"""Unique identifier custom model OCID that should be used for inference.""")
@@ -872,7 +872,7 @@ def create_processor_job_invoice_processor_config(ctx, from_json, wait_for_state
 @processor_job_group.command(name=cli_util.override('ai_document.create_processor_job_general_processor_config.command_name', 'create-processor-job-general-processor-config'), help=u"""Create a processor job for document analysis. \n[Command Reference](createProcessorJob)""")
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--processor-config-features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name of the processor job.""")
 @cli_util.option('--processor-config-document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "HEALTH_INSURANCE_ID"]), help=u"""The document type.""")
@@ -944,7 +944,7 @@ def create_processor_job_general_processor_config(ctx, from_json, wait_for_state
 
 
 @project_group.command(name=cli_util.override('ai_document.create_project.command_name', 'create'), help=u"""Create a new project. \n[Command Reference](createProject)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment identifier.""")
 @cli_util.option('--display-name', help=u"""A human-friendly name for the project, that can be changed.""")
 @cli_util.option('--description', help=u"""An optional description of the project.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1154,7 +1154,7 @@ def get_model(ctx, from_json, model_id):
 
 @model_type_info_group.command(name=cli_util.override('ai_document.get_model_type.command_name', 'get-model-type'), help=u"""Gets model capabilities \n[Command Reference](getModelType)""")
 @cli_util.option('--model-type', required=True, help=u"""The type of the Document model.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--model-sub-type', help=u"""The sub type based upon model selected.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1247,7 +1247,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @model_group.command(name=cli_util.override('ai_document.list_models.command_name', 'list'), help=u"""Returns a list of models in a compartment. \n[Command Reference](listModels)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--project-id', help=u"""The ID of the project for which to list the objects.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The filter to match models with the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -1312,7 +1312,7 @@ def list_models(ctx, from_json, all_pages, page_size, compartment_id, project_id
 
 
 @project_group.command(name=cli_util.override('ai_document.list_projects.command_name', 'list'), help=u"""Returns a list of projects. \n[Command Reference](listProjects)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The filter to match projects with the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The filter to find the project with the given identifier.""")
@@ -1488,7 +1488,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('ai_document.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources whose lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")

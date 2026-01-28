@@ -58,8 +58,8 @@ def get_subscribed_service(ctx, from_json, subscribed_service_id, fields):
 
 
 @subscribed_service_group.command(name=cli_util.override('subscribed_service.list_subscribed_services.command_name', 'list'), help=u"""This list API returns all subscribed services for given Subscription ID \n[Command Reference](listSubscribedServices)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--subscription-id', required=True, help=u"""Line level Subscription Id""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the root compartment.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""Line level Subscription Id""")
 @cli_util.option('--order-line-id', type=click.INT, help=u"""Order Line identifier at subscribed service level . This identifier is originated in Order Management module. Default is null.""")
 @cli_util.option('--status', help=u"""This param is used to filter subscribed services based on its status""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)

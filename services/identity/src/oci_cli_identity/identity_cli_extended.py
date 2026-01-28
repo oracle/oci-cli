@@ -133,8 +133,8 @@ cli_util.rename_command(identity_cli, identity_cli.tag_group, identity_cli.bulk_
 
 
 @identity_cli.user_group.command(name='list-groups', help="""Lists the groups for which the specified user is a member. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
-@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--user-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the user.""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -189,9 +189,9 @@ def list_groups_for_user(ctx, from_json, compartment_id, user_id, page, limit, a
 
 
 @identity_cli.group_group.command(name='list-users', help="""Lists the users in the specified group. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True,
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID,
                  help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
-@cli_util.option('--group-id', required=True, help="""The OCID of the group.""")
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the group.""")
 @cli_util.option('--page',
                  help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
@@ -247,8 +247,8 @@ def list_users_for_group(ctx, from_json, compartment_id, group_id, page, limit, 
 
 
 @identity_cli.group_group.command(name='add-user', help="""Adds the specified user to the specified group.""")
-@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
-@cli_util.option('--group-id', required=True, help="""The OCID of the group.""")
+@cli_util.option('--user-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the user.""")
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -262,9 +262,9 @@ def add_user_to_group(ctx, from_json, user_id, group_id):
 
 
 @identity_cli.group_group.command(name='remove-user', help="""Removes a user from a group.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
-@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
-@cli_util.option('--group-id', required=True, help="""The OCID of the group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--user-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the user.""")
+@cli_util.option('--group-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the group.""")
 @cli_util.option("--force", is_flag=True, help="Perform removal without prompting for confirmation.")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -290,7 +290,7 @@ def remove_user_from_group(ctx, from_json, compartment_id, user_id, group_id, fo
 @identity_cli.policy_group.command(name='update', help="""Updates the specified policy. You can update the description or the policy statements themselves.
 
 Policy changes take effect typically within 10 seconds.""")
-@cli_util.option('--policy-id', required=True, help="""The OCID of the policy.""")
+@cli_util.option('--policy-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the policy.""")
 @cli_util.option('--description', help="""The description you assign to the policy. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--statements', help="""A JSON array of policy statements written in the policy language. See [How Policies Work] and [Common Policies]. Example: '["statement 1","statement 2"]' (The single quotes are required.)""")
 @cli_util.option('--version-date', help="""The version of the policy. If set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")

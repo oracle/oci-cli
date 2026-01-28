@@ -54,7 +54,7 @@ oce_root_group.add_command(oce_instance_group)
 
 @oce_instance_group.command(name=cli_util.override('oce.change_oce_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a OceInstance into a different compartment \n[Command Reference](changeOceInstanceCompartment)""")
 @cli_util.option('--oce-instance-id', required=True, help=u"""unique OceInstance identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the OceInstance should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the OceInstance should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -114,9 +114,9 @@ def change_oce_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @oce_instance_group.command(name=cli_util.override('oce.create_oce_instance.command_name', 'create'), help=u"""Creates a new OceInstance. \n[Command Reference](createOceInstance)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier""")
 @cli_util.option('--name', required=True, help=u"""OceInstance Name""")
-@cli_util.option('--tenancy-id', required=True, help=u"""Tenancy Identifier""")
+@cli_util.option('--tenancy-id', required=True, type=custom_types.CLI_OCID, help=u"""Tenancy Identifier""")
 @cli_util.option('--idcs-access-token', required=True, help=u"""Identity Cloud Service access token identifying a stripe and service administrator user""")
 @cli_util.option('--tenancy-name', required=True, help=u"""Tenancy Name""")
 @cli_util.option('--object-storage-namespace', required=True, help=u"""Object Storage Namespace of Tenancy""")
@@ -323,8 +323,8 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @oce_instance_group.command(name=cli_util.override('oce.list_oce_instances.command_name', 'list'), help=u"""Returns a list of OceInstances. \n[Command Reference](listOceInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--tenancy-id', help=u"""The ID of the tenancy in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--tenancy-id', type=custom_types.CLI_OCID, help=u"""The ID of the tenancy in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -490,7 +490,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('oce.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--resource-id', help=u"""The resource Identifier for which to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

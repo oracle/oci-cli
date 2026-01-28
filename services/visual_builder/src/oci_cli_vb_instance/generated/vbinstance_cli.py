@@ -76,7 +76,7 @@ visual_builder_root_group.add_command(work_request_log_entry_collection_group)
 
 @vb_instance_group.command(name=cli_util.override('visual_builder.change_vb_instance_compartment.command_name', 'change-compartment'), help=u"""Change the compartment for an vb instance \n[Command Reference](changeVbInstanceCompartment)""")
 @cli_util.option('--vb-instance-id', required=True, help=u"""Unique Vb Instance identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -137,7 +137,7 @@ def change_vb_instance_compartment(ctx, from_json, wait_for_state, max_wait_seco
 
 @vb_instance_group.command(name=cli_util.override('visual_builder.create_vb_instance.command_name', 'create'), help=u"""Creates a new Vb Instance. \n[Command Reference](createVbInstance)""")
 @cli_util.option('--display-name', required=True, help=u"""Vb Instance Identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--node-count', required=True, type=click.INT, help=u"""The number of Nodes""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -228,7 +228,7 @@ def create_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @vb_instance_group.command(name=cli_util.override('visual_builder.create_vb_instance_private_endpoint_details.command_name', 'create-vb-instance-private-endpoint-details'), help=u"""Creates a new Vb Instance. \n[Command Reference](createVbInstance)""")
 @cli_util.option('--display-name', required=True, help=u"""Vb Instance Identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--node-count', required=True, type=click.INT, help=u"""The number of Nodes""")
 @cli_util.option('--network-endpoint-details-subnet-id', required=True, help=u"""The subnet OCID for the private endpoint.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -328,7 +328,7 @@ def create_vb_instance_private_endpoint_details(ctx, from_json, wait_for_state, 
 
 @vb_instance_group.command(name=cli_util.override('visual_builder.create_vb_instance_public_endpoint_details.command_name', 'create-vb-instance-public-endpoint-details'), help=u"""Creates a new Vb Instance. \n[Command Reference](createVbInstance)""")
 @cli_util.option('--display-name', required=True, help=u"""Vb Instance Identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier.""")
 @cli_util.option('--node-count', required=True, type=click.INT, help=u"""The number of Nodes""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -527,7 +527,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @vb_instance_summary_collection_group.command(name=cli_util.override('visual_builder.list_vb_instances.command_name', 'list-vb-instances'), help=u"""Returns a list of Vb Instances. \n[Command Reference](listVbInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -589,7 +589,7 @@ def list_vb_instances(ctx, from_json, all_pages, page_size, compartment_id, disp
 
 
 @work_request_error_collection_group.command(name=cli_util.override('visual_builder.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Get the errors of a work request. \n[Command Reference](listWorkRequestErrors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -644,7 +644,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @work_request_log_entry_collection_group.command(name=cli_util.override('visual_builder.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Get the logs of a work request. \n[Command Reference](listWorkRequestLogs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -699,7 +699,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @work_request_summary_collection_group.command(name=cli_util.override('visual_builder.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--vb-instance-id', help=u"""The Vb Instance identifier to use to filter results""")

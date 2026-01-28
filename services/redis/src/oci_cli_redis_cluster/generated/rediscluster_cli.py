@@ -163,7 +163,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @redis_cluster_group.command(name=cli_util.override('redis_cluster.change_redis_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves an OCI Cache cluster into a different compartment within the same tenancy. A cluster is a memory-based storage solution. For more information, see [OCI Cache]. \n[Command Reference](changeRedisClusterCompartment)""")
 @cli_util.option('--redis-cluster-id', required=True, help=u"""The [OCID] of the cluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the cluster should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the cluster should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -224,11 +224,11 @@ def change_redis_cluster_compartment(ctx, from_json, wait_for_state, max_wait_se
 
 @redis_cluster_group.command(name=cli_util.override('redis_cluster.create_redis_cluster.command_name', 'create'), help=u"""Creates a new OCI Cache cluster. A cluster is a memory-based storage solution. For more information, see [OCI Cache]. \n[Command Reference](createRedisCluster)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the cluster.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the cluster.""")
 @cli_util.option('--node-count', required=True, type=click.INT, help=u"""The number of nodes per shard in the cluster when clusterMode is SHARDED. This is the total number of nodes when clusterMode is NONSHARDED.""")
 @cli_util.option('--software-version', required=True, help=u"""The OCI Cache engine version that the cluster is running.""")
 @cli_util.option('--node-memory-in-gbs', required=True, type=click.FLOAT, help=u"""The amount of memory allocated to the cluster's nodes, in gigabytes.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the cluster's subnet.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the cluster's subnet.""")
 @cli_util.option('--oci-cache-config-set-id', help=u"""The ID of the corresponding OCI Cache Config Set for the cluster.""")
 @cli_util.option('--cluster-mode', help=u"""Specifies whether the cluster is sharded or non-sharded.""")
 @cli_util.option('--shard-count', type=click.INT, help=u"""The number of shards in sharded cluster. Only applicable when clusterMode is SHARDED.""")
@@ -478,7 +478,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @attached_oci_cache_user_group.command(name=cli_util.override('redis_cluster.list_attached_oci_cache_users.command_name', 'list'), help=u"""Gets a list of associated OCI cache users for a redis cluster. \n[Command Reference](listAttachedOciCacheUsers)""")
 @cli_util.option('--redis-cluster-id', required=True, help=u"""The [OCID] of the cluster.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -600,7 +600,7 @@ def list_redis_cluster_nodes(ctx, from_json, all_pages, page_size, redis_cluster
 
 
 @redis_cluster_summary_group.command(name=cli_util.override('redis_cluster.list_redis_clusters.command_name', 'list-redis-clusters'), help=u"""Lists the OCI Cache clusters in the specified compartment. A cluster is a memory-based storage solution. For more information, see [OCI Cache]. \n[Command Reference](listRedisClusters)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The [OCID] of the cluster.""")
@@ -776,7 +776,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('redis_cluster.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

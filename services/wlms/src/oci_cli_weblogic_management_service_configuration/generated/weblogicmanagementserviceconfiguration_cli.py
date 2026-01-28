@@ -35,7 +35,7 @@ weblogic_management_service_configuration_root_group.add_command(configuration_g
 
 
 @configuration_group.command(name=cli_util.override('weblogic_management_service_configuration.get_configuration.command_name', 'get'), help=u"""Gets service configuration. \n[Command Reference](getConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -54,7 +54,7 @@ def get_configuration(ctx, from_json, compartment_id):
 
 
 @configuration_group.command(name=cli_util.override('weblogic_management_service_configuration.update_configuration.command_name', 'update'), help=u"""Updates service configuration. \n[Command Reference](updateConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--discovery-interval', type=click.INT, help=u"""Frequency of domain discovery to be run on the service. The unit is in hours.""")
 @cli_util.option('--domain-search-paths', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The whitelisted paths which domain discovery are run against.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")

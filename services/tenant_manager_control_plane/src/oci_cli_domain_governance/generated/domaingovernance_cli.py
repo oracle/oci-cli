@@ -33,7 +33,7 @@ domain_governance_root_group.add_command(domain_governance_group)
 
 
 @domain_governance_group.command(name=cli_util.override('domain_governance.create_domain_governance.command_name', 'create'), help=u"""Adds domain governance to a claimed domain. \n[Command Reference](createDomainGovernance)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the tenancy.""")
 @cli_util.option('--domain-id', required=True, help=u"""OCID of the domain.""")
 @cli_util.option('--subscription-email', required=True, help=u"""Email address to be used to notify the user, and that the ONS subscription will be created with.""")
 @cli_util.option('--ons-topic-id', required=True, help=u"""The ONS topic associated with this domain governance entity.""")
@@ -184,7 +184,7 @@ def get_domain_governance(ctx, from_json, domain_governance_id):
 
 
 @domain_governance_group.command(name=cli_util.override('domain_governance.list_domain_governances.command_name', 'list'), help=u"""Return a (paginated) list of domain governance entities. \n[Command Reference](listDomainGovernances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--domain-id', help=u"""The domain OCID.""")
 @cli_util.option('--domain-governance-id', help=u"""The domain governance OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "FAILED", "TERMINATED"]), help=u"""The lifecycle state of the resource.""")

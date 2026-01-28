@@ -228,7 +228,7 @@ def change_rover_cluster_compartment(ctx, **kwargs):
 @rovercluster_cli.rover_cluster_group.command(name="add-workload", help=u"""Add workload information to Rover Cluster""")
 @cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BUCKET", "IMAGE"]), help=u"""Type of workload""")
-@cli_util.option('--image-id', help=u"""Object Store Image OCID for the workload""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Object Store Image OCID for the workload""")
 @cli_util.option('--bucket-name', help=u"""Object Store Bucket name for the workload""")
 @cli_util.option('--prefix', help=u"""List of objects with names matching this prefix would be part of this export job.""")
 @cli_util.option('--range-start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")
@@ -281,7 +281,7 @@ def get_rover_cluster_certificate_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(rovercluster_cli.create_rover_cluster, params_to_exclude=['customer_shipping_address', 'cluster_workloads', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected', 'cluster_size'])
 @rover_station_group.command(name=cli_util.override('rover_cluster.create_rover_cluster.command_name', 'create'), help=u"""Creates a new RoverStation Cluster. \n[Command Reference](createRoverStation)""")
-@cli_util.option('--subscription-id', required=True, help=u"""Subscription ID of RoverStation Cluster""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""Subscription ID of RoverStation Cluster""")
 @cli_util.option('--cluster-size', required=True, type=click.IntRange(15, 30), help=u"""Number of nodes desired in the RoverStation Cluster, between 15 and 30.""")
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")
 @cli_util.option('--care-of', help=u"""Place/person to direct the package to.""")
@@ -321,7 +321,7 @@ def show_rover_station_extended(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(rovercluster_cli.update_rover_cluster, params_to_exclude=['customer_shipping_address', 'rover_cluster_id', 'cluster_workloads', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
 @rover_station_group.command(name=cli_util.override('rover_cluster.update_rover_cluster.command_name', 'update'), help=u"""Update a RoverStation.""")
 @cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
-@cli_util.option('--subscription-id', help=u"""Subscription ID of cluster""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""Subscription ID of cluster""")
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")
 @cli_util.option('--care-of', help=u"""Place/person to direct the package to.""")
 @cli_util.option('--address1', help=u"""Address line 1.""")
@@ -343,7 +343,7 @@ def update_rover_station_extended(ctx, **kwargs):
 
 @rover_station_group.command(name="request-approval", help=u"""Submit request for Rover Station""")
 @cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
-@cli_util.option('--subscription-id', help=u"""Subscription ID of RoverStation Cluster""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""Subscription ID of RoverStation Cluster""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -391,7 +391,7 @@ def change_rover_station_compartment(ctx, **kwargs):
 @rover_station_group.command(name="add-workload", help=u"""Add workload information to Rover Station""")
 @cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BUCKET", "IMAGE"]), help=u"""Type of workload""")
-@cli_util.option('--image-id', help=u"""Object Store Image OCID for the workload""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Object Store Image OCID for the workload""")
 @cli_util.option('--bucket-name', help=u"""Object Store Bucket name for the workload""")
 @cli_util.option('--prefix', help=u"""List of objects with names matching this prefix would be part of this export job.""")
 @cli_util.option('--range-start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")

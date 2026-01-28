@@ -40,7 +40,7 @@ fleet_apps_management_maintenance_window_root_group.add_command(maintenance_wind
 
 
 @maintenance_window_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.create_maintenance_window.command_name', 'create'), help=u"""Create a maintenance window in Fleet Application Management. \n[Command Reference](createMaintenanceWindow)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment OCID""")
 @cli_util.option('--time-schedule-start', required=True, type=custom_types.CLI_DATETIME, help=u"""Specify the date and time of the day that the maintenance window starts.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--duration', required=True, help=u"""Duration of the maintenance window. Specify how long the maintenance window remains open.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
@@ -201,7 +201,7 @@ def get_maintenance_window(ctx, from_json, maintenance_window_id):
 
 
 @maintenance_window_collection_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.list_maintenance_windows.command_name', 'list-maintenance-windows'), help=u"""Returns a list of all the Maintenance Windows in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listMaintenanceWindows)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--time-schedule-start-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only resources whose timeScheduleStart is greater than or equal to the provided date and time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)

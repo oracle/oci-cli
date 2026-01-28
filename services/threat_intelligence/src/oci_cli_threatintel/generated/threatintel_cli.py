@@ -54,7 +54,7 @@ threat_intelligence_root_group.add_command(indicator_count_collection_group)
 
 @indicator_group.command(name=cli_util.override('threat_intelligence.get_indicator.command_name', 'get'), help=u"""Get detailed information about a threat indicator with a given identifier. \n[Command Reference](getIndicator)""")
 @cli_util.option('--indicator-id', required=True, help=u"""The unique identifier (OCID) of the threat indicator.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy (root compartment) that is used to filter results.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy (root compartment) that is used to filter results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -77,7 +77,7 @@ def get_indicator(ctx, from_json, indicator_id, compartment_id):
 
 
 @indicator_count_collection_group.command(name=cli_util.override('threat_intelligence.list_indicator_counts.command_name', 'list-indicator-counts'), help=u"""Get the current count of each threat indicator type. Indicator counts can be sorted in ascending or descending order. \n[Command Reference](listIndicatorCounts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy (root compartment) that is used to filter results.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy (root compartment) that is used to filter results.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -100,7 +100,7 @@ def list_indicator_counts(ctx, from_json, all_pages, compartment_id, sort_order)
 
 
 @indicator_summary_collection_group.command(name=cli_util.override('threat_intelligence.list_indicators.command_name', 'list-indicators'), help=u"""Get a list of threat indicator summaries based on the search criteria. \n[Command Reference](listIndicators)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy (root compartment) that is used to filter results.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy (root compartment) that is used to filter results.""")
 @cli_util.option('--threat-type-name', multiple=True, help=u"""The threat type of entites to be returned. To filter for multiple threat types, repeat this parameter.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["DOMAIN_NAME", "FILE_NAME", "MD5_HASH", "SHA1_HASH", "SHA256_HASH", "IP_ADDRESS", "URL"]), help=u"""The indicator type of entities to be returned.""")
 @cli_util.option('--value', help=u"""The indicator value of entities to be returned.""")
@@ -184,7 +184,7 @@ def list_indicators(ctx, from_json, all_pages, page_size, compartment_id, threat
 
 
 @threat_types_collection_group.command(name=cli_util.override('threat_intelligence.list_threat_types.command_name', 'list-threat-types'), help=u"""Gets a list of threat types that are available to use as parameters when querying indicators. The list is sorted by threat type name according to the sort order query param. \n[Command Reference](listThreatTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy (root compartment) that is used to filter results.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy (root compartment) that is used to filter results.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -235,7 +235,7 @@ def list_threat_types(ctx, from_json, all_pages, page_size, compartment_id, limi
 
 
 @indicator_group.command(name=cli_util.override('threat_intelligence.summarize_indicators.command_name', 'summarize'), help=u"""Get indicator summaries based on advanced search criteria. \n[Command Reference](summarizeIndicators)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy (root compartment) that is used to filter results.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy (root compartment) that is used to filter results.""")
 @cli_util.option('--indicator-type', type=custom_types.CliCaseInsensitiveChoice(["DOMAIN_NAME", "FILE_NAME", "MD5_HASH", "SHA1_HASH", "SHA256_HASH", "IP_ADDRESS", "URL"]), help=u"""The type of indicator this is""")
 @cli_util.option('--indicator-value', help=u"""The value for the type of indicator this is""")
 @cli_util.option('--threat-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The threat type of entites to be returned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

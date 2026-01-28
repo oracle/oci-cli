@@ -115,7 +115,7 @@ def get_certificate_authority_bundle(ctx, from_json, certificate_authority_id, v
 @certificate_bundle_group.command(name=cli_util.override('certificates.get_certificate_bundle.command_name', 'get'), help=u"""Gets a certificate bundle that matches either the specified `stage`, `versionName`, or `versionNumber` parameter. If none of these parameters are provided, the bundle for the certificate version marked as `CURRENT` is returned.
 
 By default, the private key is not included in the query result, and only the certificate bundle is returned. If you also need the private key, you can use the parameter `CertificateBundleTypeQueryParam` to indicate that you want a certificate bundle along with its private key as a response to your request. \n[Command Reference](getCertificateBundle)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--version-number', type=click.INT, help=u"""The version number of the certificate. The default value is 0, which means that this query parameter is ignored.""")
 @cli_util.option('--certificate-version-name', help=u"""The name of the certificate. (This might be referred to as the name of the certificate version, as every certificate consists of at least one version.) Names are unique across versions of a given certificate.""")
 @cli_util.option('--stage', type=custom_types.CliCaseInsensitiveChoice(["CURRENT", "PENDING", "LATEST", "PREVIOUS", "DEPRECATED"]), help=u"""The rotation state of the certificate version.""")
@@ -178,7 +178,7 @@ def list_certificate_authority_bundle_versions(ctx, from_json, all_pages, certif
 
 
 @certificate_bundle_version_summary_group.command(name=cli_util.override('certificates.list_certificate_bundle_versions.command_name', 'list-certificate-bundle-versions'), help=u"""Lists all certificate bundle versions for the specified certificate. \n[Command Reference](listCertificateBundleVersions)""")
-@cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
+@cli_util.option('--certificate-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the certificate.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["VERSION_NUMBER"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `VERSION_NUMBER` is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")

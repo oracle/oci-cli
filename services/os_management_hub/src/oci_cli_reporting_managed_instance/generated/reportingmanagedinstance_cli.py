@@ -42,7 +42,7 @@ reporting_managed_instance_root_group.add_command(managed_instance_analytic_coll
 
 @managed_instance_group.command(name=cli_util.override('reporting_managed_instance.get_managed_instance_analytic_content.command_name', 'get-managed-instance-analytic-content'), help=u"""Returns a report of managed instances matching the given filters. You can select CSV, XML, or JSON format. \n[Command Reference](getManagedInstanceAnalyticContent)""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--managed-instance-group-id', help=u"""The [OCID] of the managed instance group. This filter returns resources associated with this group.""")
 @cli_util.option('--lifecycle-environment-id', help=u"""The [OCID] of the lifecycle environment. This filter returns only resource contained with the specified lifecycle environment.""")
 @cli_util.option('--lifecycle-stage-id', help=u"""The [OCID] of the lifecycle stage. This resource returns resources associated with this lifecycle stage.""")
@@ -200,7 +200,7 @@ def get_managed_instance_content(ctx, from_json, file, managed_instance_id, vuln
 
 @managed_instance_analytic_collection_group.command(name=cli_util.override('reporting_managed_instance.summarize_managed_instance_analytics.command_name', 'summarize-managed-instance-analytics'), help=u"""Returns a list of user specified metrics for a collection of managed instances. \n[Command Reference](summarizeManagedInstanceAnalytics)""")
 @cli_util.option('--metric-names', required=True, type=custom_types.CliCaseInsensitiveChoice(["TOTAL_INSTANCE_COUNT", "INSTANCE_WITH_AVAILABLE_SECURITY_UPDATES_COUNT", "INSTANCE_WITH_AVAILABLE_BUGFIX_UPDATES_COUNT", "NORMAL_INSTANCE_COUNT", "ERROR_INSTANCE_COUNT", "WARNING_INSTANCE_COUNT", "UNREACHABLE_INSTANCE_COUNT", "REGISTRATION_FAILED_INSTANCE_COUNT", "DELETING_INSTANCE_COUNT", "ONBOARDING_INSTANCE_COUNT", "INSTANCE_SECURITY_UPDATES_COUNT", "INSTANCE_BUGFIX_UPDATES_COUNT", "INSTANCE_SECURITY_ADVISORY_COUNT", "INSTANCE_BUGFIX_ADVISORY_COUNT", "REBOOTING_INSTANCE_COUNT", "NEEDS_REBOOTING_INSTANCE_COUNT"]), multiple=True, help=u"""A filter to return only metrics whose name matches the given metric names.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--managed-instance-group-id', help=u"""The [OCID] of the managed instance group. This filter returns resources associated with this group.""")
 @cli_util.option('--lifecycle-environment-id', help=u"""The [OCID] of the lifecycle environment. This filter returns only resource contained with the specified lifecycle environment.""")
 @cli_util.option('--lifecycle-stage-id', help=u"""The [OCID] of the lifecycle stage. This resource returns resources associated with this lifecycle stage.""")

@@ -33,8 +33,8 @@ usagelimits_root_group.add_command(usage_limit_summary_group)
 
 
 @usage_limit_summary_group.command(name=cli_util.override('usagelimits.list_usage_limits.command_name', 'list-usage-limits'), help=u"""Returns the list of usage limit for the subscription ID and tenant ID. \n[Command Reference](listUsageLimits)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the root compartment.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--limit-type', help=u"""Hard or soft limit. Hard limits lead to breaches, soft to alerts.""")
 @cli_util.option('--resource-type', help=u"""Resource Name.""")
 @cli_util.option('--service-type', help=u"""Service Name.""")

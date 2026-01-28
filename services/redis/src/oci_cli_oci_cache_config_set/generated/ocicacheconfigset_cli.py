@@ -48,7 +48,7 @@ oci_cache_config_set_root_group.add_command(associated_oci_cache_cluster_summary
 
 @oci_cache_config_set_group.command(name=cli_util.override('oci_cache_config_set.change_oci_cache_config_set_compartment.command_name', 'change-compartment'), help=u"""Moves an OCI Cache Config Set into a different compartment within the same tenancy. \n[Command Reference](changeOciCacheConfigSetCompartment)""")
 @cli_util.option('--oci-cache-config-set-id', required=True, help=u"""Unique OCI Cache Config Set identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -109,7 +109,7 @@ def change_oci_cache_config_set_compartment(ctx, from_json, wait_for_state, max_
 
 @oci_cache_config_set_group.command(name=cli_util.override('oci_cache_config_set.create_oci_cache_config_set.command_name', 'create'), help=u"""Create a new OCI Cache Config Set for the given OCI cache engine version. \n[Command Reference](createOciCacheConfigSet)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the OCI Cache Config Set.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the OCI Cache Config Set.""")
 @cli_util.option('--software-version', required=True, help=u"""The OCI Cache engine version that the cluster is running.""")
 @cli_util.option('--configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Description for the custom OCI Cache Config Set.""")
@@ -314,7 +314,7 @@ def list_associated_oci_cache_clusters(ctx, from_json, all_pages, page_size, oci
 
 
 @oci_cache_config_set_summary_group.command(name=cli_util.override('oci_cache_config_set.list_oci_cache_config_sets.command_name', 'list-oci-cache-config-sets'), help=u"""Lists the OCI Cache Config Sets in the specified compartment. \n[Command Reference](listOciCacheConfigSets)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return the OCI Cache Config Set resources, whose lifecycle state matches with the given lifecycle state.""")
 @cli_util.option('--software-version', type=custom_types.CliCaseInsensitiveChoice(["V7_0_5", "REDIS_7_0", "VALKEY_7_2"]), help=u"""A filter to return the OCI Cache Config Set resources, whose software version matches with the given software version.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")

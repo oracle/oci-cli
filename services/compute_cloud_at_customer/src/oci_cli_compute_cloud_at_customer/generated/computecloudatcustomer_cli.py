@@ -55,7 +55,7 @@ ccc_root_group.add_command(ccc_infrastructure_collection_group)
 
 @ccc_infrastructure_group.command(name=cli_util.override('ccc.change_ccc_infrastructure_compartment.command_name', 'change-compartment'), help=u"""Moves a Compute Cloud@Customer infrastructure resource from one compartment to another. \n[Command Reference](changeCccInfrastructureCompartment)""")
 @cli_util.option('--ccc-infrastructure-id', required=True, help=u"""An [OCID] for a Compute Cloud@Customer Infrastructure.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -86,7 +86,7 @@ def change_ccc_infrastructure_compartment(ctx, from_json, ccc_infrastructure_id,
 
 @ccc_upgrade_schedule_group.command(name=cli_util.override('ccc.change_ccc_upgrade_schedule_compartment.command_name', 'change-compartment'), help=u"""Moves a Compute Cloud@Customer upgrade schedule from one compartment to another using the specified [OCID]. \n[Command Reference](changeCccUpgradeScheduleCompartment)""")
 @cli_util.option('--ccc-upgrade-schedule-id', required=True, help=u"""Compute Cloud@Customer upgrade schedule [OCID].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -117,8 +117,8 @@ def change_ccc_upgrade_schedule_compartment(ctx, from_json, ccc_upgrade_schedule
 
 @ccc_infrastructure_group.command(name=cli_util.override('ccc.create_ccc_infrastructure.command_name', 'create'), help=u"""Creates a Compute Cloud@Customer infrastructure. Once created, Oracle Services must connect the rack in the data center to this Oracle Cloud Infrastructure resource. \n[Command Reference](createCccInfrastructure)""")
 @cli_util.option('--display-name', required=True, help=u"""The name that will be used to display the Compute Cloud@Customer infrastructure in the Oracle Cloud Infrastructure console. Does not have to be unique and can be changed. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] associated with the infrastructure.""")
-@cli_util.option('--subnet-id', required=True, help=u"""Identifier for network subnet that will be used to communicate with Compute Cloud@Customer infrastructure.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] associated with the infrastructure.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""Identifier for network subnet that will be used to communicate with Compute Cloud@Customer infrastructure.""")
 @cli_util.option('--description', help=u"""A mutable client-meaningful text description of the Compute Cloud@Customer infrastructure. Avoid entering confidential information.""")
 @cli_util.option('--connection-state', help=u"""The current connection state of the Compute Cloud@Customer infrastructure. This value will default to REJECT if the value is not provided. The only valid value at creation time is REJECT.""")
 @cli_util.option('--connection-details', help=u"""A message describing the current connection state in more detail.""")
@@ -194,7 +194,7 @@ def create_ccc_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 @ccc_upgrade_schedule_group.command(name=cli_util.override('ccc.create_ccc_upgrade_schedule.command_name', 'create'), help=u"""Creates a new Compute Cloud@Customer upgrade schedule. \n[Command Reference](createCccUpgradeSchedule)""")
 @cli_util.option('--display-name', required=True, help=u"""Compute Cloud@Customer upgrade schedule display name. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment [OCID] for the Compute Cloud@Customer Upgrade Schedule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment [OCID] for the Compute Cloud@Customer Upgrade Schedule.""")
 @cli_util.option('--events', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of preferred times for Compute Cloud@Customer infrastructure to be upgraded.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""An optional description of the Compute Cloud@Customer upgrade schedule. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -430,7 +430,7 @@ def get_ccc_upgrade_schedule(ctx, from_json, ccc_upgrade_schedule_id):
 
 
 @ccc_infrastructure_collection_group.command(name=cli_util.override('ccc.list_ccc_infrastructures.command_name', 'list-ccc-infrastructures'), help=u"""Returns a list of Compute Cloud@Customer infrastructures. \n[Command Reference](listCccInfrastructures)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and sub-compartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED", "FAILED"]), help=u"""A filter used to return only resources that match the given lifecycleState.""")
@@ -502,7 +502,7 @@ def list_ccc_infrastructures(ctx, from_json, all_pages, page_size, compartment_i
 
 @ccc_upgrade_schedule_collection_group.command(name=cli_util.override('ccc.list_ccc_upgrade_schedules.command_name', 'list-ccc-upgrade-schedules'), help=u"""Returns a list of Compute Cloud@Customer upgrade schedules. \n[Command Reference](listCccUpgradeSchedules)""")
 @cli_util.option('--ccc-upgrade-schedule-id', help=u"""Compute Cloud@Customer upgrade schedule [OCID].""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and sub-compartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED", "FAILED"]), help=u"""A filter to return resources only when their lifecycleState matches the given lifecycleState.""")
@@ -575,7 +575,7 @@ def list_ccc_upgrade_schedules(ctx, from_json, all_pages, page_size, ccc_upgrade
 @cli_util.option('--ccc-infrastructure-id', required=True, help=u"""An [OCID] for a Compute Cloud@Customer Infrastructure.""")
 @cli_util.option('--display-name', help=u"""The name that will be used to display the Compute Cloud@Customer infrastructure in the Oracle Cloud Infrastructure console. Does not have to be unique and can be changed. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A mutable client-meaningful text description of the Compute Cloud@Customer infrastructure. Avoid entering confidential information.""")
-@cli_util.option('--subnet-id', help=u"""[OCID] for the network subnet that is used to communicate with Compute Cloud@Customer infrastructure.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""[OCID] for the network subnet that is used to communicate with Compute Cloud@Customer infrastructure.""")
 @cli_util.option('--connection-state', help=u"""An updated connection state of the Compute Cloud@Customer infrastructure.""")
 @cli_util.option('--connection-details', help=u"""A message describing the current connection state in more detail.""")
 @cli_util.option('--ccc-upgrade-schedule-id', help=u"""Schedule used for upgrades. If no schedule is associated with the infrastructure, it can be updated at any time.""")

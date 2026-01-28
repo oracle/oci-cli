@@ -36,8 +36,8 @@ notification_control_plane_root_group.add_command(notification_topic_group)
 @notification_topic_group.command(name=cli_util.override('notification_control_plane.change_topic_compartment.command_name', 'change-compartment'), help=u"""Moves a topic into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](changeTopicCompartment)""")
-@cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to move.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the specified topic or subscription to.""")
+@cli_util.option('--topic-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the topic to move.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the specified topic or subscription to.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -76,7 +76,7 @@ All Oracle Cloud Infrastructure resources, including topics, get an Oracle-assig
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](createTopic)""")
 @cli_util.option('--name', required=True, help=u"""The name of the topic being created. The topic name must be unique across the tenancy. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the topic in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the topic in.""")
 @cli_util.option('--description', help=u"""The description of the topic being created. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -118,7 +118,7 @@ def create_topic(ctx, from_json, name, compartment_id, description, freeform_tag
 @notification_topic_group.command(name=cli_util.override('notification_control_plane.delete_topic.command_name', 'delete-topic'), help=u"""Deletes the specified topic.
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](deleteTopic)""")
-@cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to delete.""")
+@cli_util.option('--topic-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the topic to delete.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -144,7 +144,7 @@ def delete_topic(ctx, from_json, topic_id, if_match):
 
 
 @notification_topic_group.command(name=cli_util.override('notification_control_plane.get_topic.command_name', 'get-topic'), help=u"""Gets the specified topic's configuration information. \n[Command Reference](getTopic)""")
-@cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to retrieve.
+@cli_util.option('--topic-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the topic to retrieve.
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 120.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -170,7 +170,7 @@ def get_topic(ctx, from_json, topic_id):
 @notification_topic_group.command(name=cli_util.override('notification_control_plane.list_topics.command_name', 'list-topics'), help=u"""Lists topics in the specified compartment.
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 120. \n[Command Reference](listTopics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""A filter to only return resources that match the given id exactly.""")
 @cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -235,7 +235,7 @@ def list_topics(ctx, from_json, all_pages, page_size, compartment_id, id, name, 
 @notification_topic_group.command(name=cli_util.override('notification_control_plane.update_topic.command_name', 'update-topic'), help=u"""Updates the specified topic's configuration.
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](updateTopic)""")
-@cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to update.""")
+@cli_util.option('--topic-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the topic to update.""")
 @cli_util.option('--description', required=True, help=u"""The description of the topic. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 

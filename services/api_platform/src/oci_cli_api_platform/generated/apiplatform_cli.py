@@ -61,7 +61,7 @@ api_platform_root_group.add_command(work_request_group)
 
 @api_platform_instance_group.command(name=cli_util.override('api_platform.change_api_platform_instance_compartment.command_name', 'change-compartment'), help=u"""Moves an API Platform Instance into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeApiPlatformInstanceCompartment)""")
 @cli_util.option('--api-platform-instance-id', required=True, help=u"""The [OCID] of the instance""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the instance to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -92,7 +92,7 @@ def change_api_platform_instance_compartment(ctx, from_json, api_platform_instan
 
 @api_platform_instance_group.command(name=cli_util.override('api_platform.create_api_platform_instance.command_name', 'create'), help=u"""Creates an API Platform Instance \n[Command Reference](createApiPlatformInstance)""")
 @cli_util.option('--name', required=True, help=u"""A regionally unique, non-changeable instance name provided by the user during creation""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the instance in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the instance in.""")
 @cli_util.option('--description', help=u"""User-provided changeable and non-unique description of the instance""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -258,7 +258,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @api_platform_instance_collection_group.command(name=cli_util.override('api_platform.list_api_platform_instances.command_name', 'list-api-platform-instances'), help=u"""Gets a list of API Platform Instances \n[Command Reference](listApiPlatformInstances)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly""")
 @cli_util.option('--id', help=u"""The [OCID] of the instance""")
@@ -434,7 +434,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('api_platform.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

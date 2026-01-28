@@ -68,7 +68,7 @@ multi_cloud_resource_discovery_root_group.add_command(multi_cloud_resource_disco
 
 @multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.change_multi_cloud_resource_discovery_compartment.command_name', 'change-compartment'), help=u"""Moves the Multicloud Resource Discovery resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeMultiCloudResourceDiscoveryCompartment)""")
 @cli_util.option('--multi-cloud-resource-discovery-id', required=True, help=u"""The [OCID] of the Multicloud Discovery Resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment that contains Multicloud Resource Discovery resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the new compartment that contains Multicloud Resource Discovery resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -148,7 +148,7 @@ def change_multi_cloud_resource_discovery_compartment(ctx, from_json, wait_for_s
 
 
 @multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.create_multi_cloud_resource_discovery.command_name', 'create'), help=u"""Discovers Multicloud Resource and their associated resources based on the information provided. \n[Command Reference](createMultiCloudResourceDiscovery)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Multicloud Resource Discovery resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains Multicloud Resource Discovery resource.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the Multicloud Resource Discovery resource.""")
 @cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Connector resource.""")
 @cli_util.option('--resource-type', required=True, help=u"""Resource Type to discover.""")
@@ -313,7 +313,7 @@ def get_multi_cloud_resource_discovery(ctx, from_json, multi_cloud_resource_disc
 
 
 @multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.list_multi_cloud_resource_discoveries.command_name', 'list'), help=u"""Lists all Multicloud Resource Discovery resources based on the specified filters. \n[Command Reference](listMultiCloudResourceDiscoveries)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB Multicloud Discovery resources that match the specified display name.""")
 @cli_util.option('--multi-cloud-resource-discovery-id', help=u"""The [OCID] of the Multicloud Discovery resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "UPDATING", "CANCELING", "CANCELED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources that match the specified lifecycle state. The state value is case-insensitive.""")
@@ -386,7 +386,7 @@ def list_multi_cloud_resource_discoveries(ctx, from_json, all_pages, page_size, 
 
 @multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.update_multi_cloud_resource_discovery.command_name', 'update'), help=u"""Modifies the properties of an Azure discovered resource identified by the specified resource [OCID]. \n[Command Reference](updateMultiCloudResourceDiscovery)""")
 @cli_util.option('--multi-cloud-resource-discovery-id', required=True, help=u"""The [OCID] of the Multicloud Discovery Resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains Multicloud Resource Discovery resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains Multicloud Resource Discovery resource.""")
 @cli_util.option('--display-name', help=u"""Display name of the Multicloud Resource Discovery resource.""")
 @cli_util.option('--oracle-db-connector-id', help=u"""The [OCID] of the Oracle DB Connector resource.""")
 @cli_util.option('--resource-type', help=u"""Resource Type to discover.""")

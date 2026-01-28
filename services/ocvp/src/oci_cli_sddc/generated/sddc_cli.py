@@ -120,7 +120,7 @@ def cancel_downgrade_hcx(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 @sddc_group.command(name=cli_util.override('sddc.change_sddc_compartment.command_name', 'change-compartment'), help=u"""Moves an SDDC into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeSddcCompartment)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the SDDC to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the SDDC to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -155,7 +155,7 @@ Use the [WorkRequest] operations to track the creation of the SDDC.
 
 **Important:** You must configure the SDDC's networking resources with the security rules detailed in [Security Rules for Oracle Cloud VMware Solution SDDCs]. Otherwise, provisioning the SDDC will fail. The rules are based on the requirements set by VMware. \n[Command Reference](createSddc)""")
 @cli_util.option('--vmware-software-version', required=True, help=u"""The VMware software bundle to install on the ESXi hosts in the SDDC. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the SDDC.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to contain the SDDC.""")
 @cli_util.option('--hcx-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ADVANCED", "ENTERPRISE"]), help=u"""HCX configuration of the SDDC.""")
 @cli_util.option('--initial-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssh-authorized-keys', required=True, help=u"""One or more public SSH keys to be included in the `~/.ssh/authorized_keys` file for the default user on each ESXi host. Use a newline character to separate multiple keys. The SSH keys must be in the format required for the `authorized_keys` file""")
@@ -380,7 +380,7 @@ def get_sddc(ctx, from_json, sddc_id):
 
 
 @sddc_summary_group.command(name=cli_util.override('sddc.list_sddcs.command_name', 'list-sddcs'), help=u"""Lists the SDDCs in the specified compartment. The list can be filtered by display name or availability domain. \n[Command Reference](listSddcs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compute-availability-domain', help=u"""The name of the availability domain that the Compute instances are running in.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -447,7 +447,7 @@ def list_sddcs(ctx, from_json, all_pages, page_size, compartment_id, compute_ava
 
 
 @supported_commitment_summary_group.command(name=cli_util.override('sddc.list_supported_commitments.command_name', 'list-supported-commitments'), help=u"""Lists supported Commitments. \n[Command Reference](listSupportedCommitments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--host-shape-name', help=u"""A filter to return only resources that match or support the given ESXi host shape.""")
@@ -498,7 +498,7 @@ def list_supported_commitments(ctx, from_json, all_pages, page_size, compartment
 
 
 @supported_host_shape_summary_group.command(name=cli_util.override('sddc.list_supported_host_shapes.command_name', 'list-supported-host-shapes'), help=u"""Lists supported compute shapes for ESXi hosts. \n[Command Reference](listSupportedHostShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
@@ -555,7 +555,7 @@ def list_supported_host_shapes(ctx, from_json, all_pages, page_size, compartment
 
 
 @supported_vmware_software_version_summary_group.command(name=cli_util.override('sddc.list_supported_vmware_software_versions.command_name', 'list-supported-vmware-software-versions'), help=u"""Lists the versions of bundled VMware software supported by the Oracle Cloud VMware Solution. \n[Command Reference](listSupportedVmwareSoftwareVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--version-parameterconflict', help=u"""A filter to return only resources that match the given VMware software version exactly.""")

@@ -32,8 +32,8 @@ osub_billing_schedule_root_group.add_command(billing_schedule_summary_group)
 
 
 @billing_schedule_summary_group.command(name=cli_util.override('osub_billing_schedule.list_billing_schedules.command_name', 'list-billing-schedules'), help=u"""This list API returns all billing schedules for given subscription id and for a particular Subscribed Service if provided \n[Command Reference](listBillingSchedules)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--subscription-id', required=True, help=u"""This param is used to get only the billing schedules for a particular Subscription Id""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""This param is used to get only the billing schedules for a particular Subscription Id""")
 @cli_util.option('--subscribed-service-id', help=u"""This param is used to get only the billing schedules for a particular Subscribed Service""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 

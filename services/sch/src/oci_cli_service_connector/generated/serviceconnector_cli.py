@@ -119,7 +119,7 @@ def activate_service_connector(ctx, from_json, wait_for_state, max_wait_seconds,
 
 When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeServiceConnectorCompartment)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the connector to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the connector to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -184,7 +184,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -265,7 +265,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-log-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The logs for this Logging source.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -349,7 +349,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-monitoring-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""One or more compartment-specific lists of metric namespaces to retrieve data from.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -433,7 +433,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-stream-id', required=True, help=u"""The [OCID] of the stream.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -521,7 +521,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-plugin-name', required=True, help=u"""The name of the connector plugin. This name indicates the service to be called by the connector plugin. For example, `QueueSource` indicates the Queue service. To find names of connector plugins, list the plugin using [ListConnectorPlugin].""")
 @cli_util.option('--source-config-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration map for the connector plugin. This map includes parameters specific to the connector plugin type. For example, for `QueueSource`, the map lists the OCID of the selected queue. To find the parameters for a connector plugin, get the plugin using [GetConnectorPlugin] and review its schema value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -607,7 +607,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-topic-id', required=True, help=u"""The [OCID] of the topic.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -695,7 +695,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-bucket-name', required=True, help=u"""The name of the bucket. Valid characters are letters (upper or lower case), numbers, hyphens (-), underscores(_), and periods (.). Bucket names must be unique within an Object Storage namespace. Avoid entering confidential information. Example: my-new-bucket1""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -795,7 +795,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-compartment-id', required=True, help=u"""The [OCID] of the compartment containing the metric.""")
 @cli_util.option('--target-metric-namespace', required=True, help=u"""The namespace of the metric. Example: `oci_computeagent`""")
@@ -889,7 +889,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-function-id', required=True, help=u"""The [OCID] of the function.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -985,7 +985,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-log-group-id', required=True, help=u"""The [OCID] of the Logging Analytics log group.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -1073,7 +1073,7 @@ For purposes of access control, you must provide the [OCID] of the compartment w
 
 After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-stream-id', required=True, help=u"""The [OCID] of the stream.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -1311,7 +1311,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @service_connector_group.command(name=cli_util.override('service_connector.list_service_connectors.command_name', 'list'), help=u"""Lists connectors in the specified compartment. For more information, see [Listing Connectors]. \n[Command Reference](listServiceConnectors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this request.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment for this request.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state.
 
 Example: `ACTIVE`""")
@@ -1477,7 +1477,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('service_connector.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in the specified compartment. For more information, see [Listing Work Requests]. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this request.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment for this request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")

@@ -97,7 +97,7 @@ def add_usage_plan_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 @usage_plan_group.command(name=cli_util.override('usage_plans.change_usage_plan_compartment.command_name', 'change-compartment'), help=u"""Changes the usage plan compartment. \n[Command Reference](changeUsagePlanCompartment)""")
 @cli_util.option('--usage-plan-id', required=True, help=u"""The ocid of the usage plan.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -163,7 +163,7 @@ def change_usage_plan_compartment(ctx, from_json, wait_for_state, max_wait_secon
 
 @usage_plan_group.command(name=cli_util.override('usage_plans.create_usage_plan.command_name', 'create'), help=u"""Creates a new usage plan. \n[Command Reference](createUsagePlan)""")
 @cli_util.option('--entitlements', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A collection of entitlements to assign to the newly created usage plan.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -326,7 +326,7 @@ def get_usage_plan(ctx, from_json, usage_plan_id):
 
 
 @usage_plan_group.command(name=cli_util.override('usage_plans.list_usage_plans.command_name', 'list'), help=u"""Returns a list of usage plans. \n[Command Reference](listUsagePlans)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")

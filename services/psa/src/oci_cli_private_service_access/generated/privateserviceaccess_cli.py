@@ -94,7 +94,7 @@ def cancel_psa_work_request(ctx, from_json, work_request_id, if_match):
 
 @private_service_access_group.command(name=cli_util.override('psa.change_private_service_access_compartment.command_name', 'change-compartment'), help=u"""Moves a PrivateServiceAccess into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changePrivateServiceAccessCompartment)""")
 @cli_util.option('--private-service-access-id', required=True, help=u"""The [OCID] of the PrivateServiceAccess.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the private service access should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the private service access should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELLED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -154,8 +154,8 @@ def change_private_service_access_compartment(ctx, from_json, wait_for_state, ma
 
 
 @private_service_access_group.command(name=cli_util.override('psa.create_private_service_access.command_name', 'create'), help=u"""Creates a private service access in the specified subnet (in the consumer's VCN) and the specified compartment for a particular service. \n[Command Reference](createPrivateServiceAccess)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the private service access.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the VCN's subnet where the private service access's VNIC will reside.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to contain the private service access.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the VCN's subnet where the private service access's VNIC will reside.""")
 @cli_util.option('--service-id', required=True, help=u"""A unique service identifier for which the private service access was created.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -345,11 +345,11 @@ def get_psa_work_request(ctx, from_json, work_request_id):
 
 
 @private_service_access_collection_group.command(name=cli_util.override('psa.list_private_service_accesses.command_name', 'list-private-service-accesses'), help=u"""List the private service accesses in the specified compartment. You can optionally filter the list by specifying the [OCID] of a subnet in the cunsumer's VCN. \n[Command Reference](listPrivateServiceAccesses)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the resource.""")
-@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--service-id', help=u"""The unique identifier of the OCI service.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -583,7 +583,7 @@ def list_psa_work_request_logs(ctx, from_json, all_pages, page_size, work_reques
 
 
 @work_request_group.command(name=cli_util.override('psa.list_psa_work_requests.command_name', 'list-psa'), help=u"""Lists the PrivateServiceAccess work requests in a compartment. \n[Command Reference](listPsaWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELLED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

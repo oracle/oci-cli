@@ -62,7 +62,7 @@ functions_management_root_group.add_command(pbf_listing_version_group)
 
 @application_group.command(name=cli_util.override('functions_management.change_application_compartment.command_name', 'change-compartment'), help=u"""Moves an application into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changeApplicationCompartment)""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of this application.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -92,7 +92,7 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
 
 
 @application_group.command(name=cli_util.override('functions_management.create_application.command_name', 'create'), help=u"""Creates a new application. \n[Command Reference](createApplication)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to create the application within.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to create the application within.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the application. The display name must be unique within the compartment containing the application. Avoid entering confidential information.""")
 @cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID]s of the subnets in which to run functions in the application.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Application configuration. These values are passed on to the function as environment variables, functions may override application configuration. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
@@ -1730,7 +1730,7 @@ def get_pbf_listing_version(ctx, from_json, pbf_listing_version_id):
 
 
 @application_group.command(name=cli_util.override('functions_management.list_applications.command_name', 'list'), help=u"""Lists applications for a compartment. \n[Command Reference](listApplications)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which this resource belongs.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to which this resource belongs.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum.
 
 Default: 10""")

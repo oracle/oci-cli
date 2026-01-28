@@ -123,7 +123,7 @@ def cascading_delete_oracle_db_azure_vault_association(ctx, from_json, wait_for_
 
 @oracle_db_azure_vault_association_group.command(name=cli_util.override('oracle_db_azure_vault_association.change_oracle_db_azure_vault_association_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle DB Azure Vault Association resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAzureVaultAssociationCompartment)""")
 @cli_util.option('--oracle-db-azure-vault-association-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Vault Association resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Oracle DB Azure Vault Association resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the new compartment to contain the Oracle DB Azure Vault Association resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -203,7 +203,7 @@ def change_oracle_db_azure_vault_association_compartment(ctx, from_json, wait_fo
 
 
 @oracle_db_azure_vault_association_group.command(name=cli_util.override('oracle_db_azure_vault_association.create_oracle_db_azure_vault_association.command_name', 'create'), help=u"""Creates Oracle DB Azure Vault Association resource. \n[Command Reference](createOracleDbAzureVaultAssociation)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Oracle DB Azure Vault Association resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains Oracle DB Azure Vault Association resource.""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle DB Azure Vault Association resource name.""")
 @cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Vault that contains Oracle DB Azure Vault Association resource.""")
 @cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Connector that contains Oracle DB Azure Vault Association resource.""")
@@ -364,7 +364,7 @@ def get_oracle_db_azure_vault_association(ctx, from_json, oracle_db_azure_vault_
 
 
 @oracle_db_azure_vault_association_group.command(name=cli_util.override('oracle_db_azure_vault_association.list_oracle_db_azure_vault_associations.command_name', 'list'), help=u"""Lists all Oracle DB Azure Associations based on the specified filters. \n[Command Reference](listOracleDbAzureVaultAssociations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--oracle-db-azure-vault-id', help=u"""A filter to return Oracle DB Azure Vault resources that match the specified [OCID] of the Oracle DB Azure Vault resource.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB Azure Vault Association resources that match the specified display name.""")
 @cli_util.option('--oracle-db-azure-vault-association-id', help=u"""A filter to return Oracle DB Azure Vault resources that match the specified OCID](/Content/General/Concepts/identifiers.htm) of the Oracle DB Azure Vault Association resource.""")
@@ -434,7 +434,7 @@ def list_oracle_db_azure_vault_associations(ctx, from_json, all_pages, page_size
 
 @oracle_db_azure_vault_association_group.command(name=cli_util.override('oracle_db_azure_vault_association.update_oracle_db_azure_vault_association.command_name', 'update'), help=u"""Modifies the properties of an Oracle DB Azure Vault Association resource identified by the specified resource [OCID]. \n[Command Reference](updateOracleDbAzureVaultAssociation)""")
 @cli_util.option('--oracle-db-azure-vault-association-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Vault Association resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains Oracle DB Azure Vault Association resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains Oracle DB Azure Vault Association resource.""")
 @cli_util.option('--display-name', help=u"""Oracle DB Azure Vault Association resource name.""")
 @cli_util.option('--oracle-db-azure-vault-id', help=u"""The [OCID] of the Oracle DB Azure Vault that contains Oracle DB Azure Vault Association resource.""")
 @cli_util.option('--oracle-db-azure-connector-id', help=u"""The [OCID] of the Oracle DB Azure Connector that contains Oracle DB Azure Vault Association resource.""")

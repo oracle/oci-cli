@@ -92,7 +92,7 @@ def cancel_hsm_cluster_deletion(ctx, from_json, wait_for_state, max_wait_seconds
 
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.change_hsm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a HSM Cluster resource to a different compartment within the same tenancy. \n[Command Reference](changeHsmClusterCompartment)""")
 @cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the hsm cluster to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the hsm cluster to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -122,7 +122,7 @@ def change_hsm_cluster_compartment(ctx, from_json, hsm_cluster_id, compartment_i
 
 
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.create_hsm_cluster.command_name', 'create'), help=u"""Creates a new HSM cluster resource. \n[Command Reference](createHsmCluster)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create this HSM cluster resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to create this HSM cluster resource.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the HSM cluster resource. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -281,7 +281,7 @@ def get_pre_co_user_credentials(ctx, from_json, hsm_cluster_id):
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.list_hsm_clusters.command_name', 'list'), help=u"""Lists all HSM cluster resources contained within the specified compartment.
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning read operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](listHsmClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `TIMECREATED` is descending. The default order for `DISPLAYNAME` is ascending.""")

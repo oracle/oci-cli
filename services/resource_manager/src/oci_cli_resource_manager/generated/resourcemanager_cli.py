@@ -187,7 +187,7 @@ def cancel_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 @configuration_source_provider_group.command(name=cli_util.override('resource_manager.change_configuration_source_provider_compartment.command_name', 'change-compartment'), help=u"""Moves a configuration source provider into a different compartment within the same tenancy. For more information, see [Moving a Configuration Source Provider]. \n[Command Reference](changeConfigurationSourceProviderCompartment)""")
 @cli_util.option('--configuration-source-provider-id', required=True, help=u"""The [OCID] of the configuration source provider.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the configuration source provider to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the configuration source provider to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -218,7 +218,7 @@ def change_configuration_source_provider_compartment(ctx, from_json, configurati
 
 @private_endpoint_group.command(name=cli_util.override('resource_manager.change_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a private endpoint to a different compartment within the same tenancy. For more information, see [Moving a Private Endpoint]. \n[Command Reference](changePrivateEndpointCompartment)""")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""The [OCID] of the private endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the private endpoint to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the private endpoint to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -249,7 +249,7 @@ def change_private_endpoint_compartment(ctx, from_json, private_endpoint_id, com
 
 @stack_group.command(name=cli_util.override('resource_manager.change_stack_compartment.command_name', 'change-compartment'), help=u"""Moves a stack (and its associated jobs) into a different compartment within the same tenancy. For more information, see [Moving a Stack]. \n[Command Reference](changeStackCompartment)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Stack should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the Stack should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -310,7 +310,7 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @template_group.command(name=cli_util.override('resource_manager.change_template_compartment.command_name', 'change-compartment'), help=u"""Moves a template into a different compartment within the same tenancy. For more information, see [Moving a Private Template]. \n[Command Reference](changeTemplateCompartment)""")
 @cli_util.option('--template-id', required=True, help=u"""The [OCID] of the template.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the configuration source provider to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the configuration source provider to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -341,7 +341,7 @@ def change_template_compartment(ctx, from_json, template_id, compartment_id, if_
 
 @configuration_source_provider_group.command(name=cli_util.override('resource_manager.create_configuration_source_provider.command_name', 'create'), help=u"""Creates a configuration source provider in the specified compartment. For more information, see [Creating a Configuration Source Provider]. \n[Command Reference](createConfigurationSourceProvider)""")
 @cli_util.option('--config-source-provider-type', required=True, help=u"""The type of configuration source provider. The `GITLAB_ACCESS_TOKEN` type corresponds to GitLab. The `GITHUB_ACCESS_TOKEN` type corresponds to GitHub. The `BITBUCKET_CLOUD_USERNAME_APPPASSWORD` type corresponds to Bitbucket Cloud. The `BITBUCKET_SERVER_ACCESS_TOKEN` type corresponds to Bitbucket Server.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
 @cli_util.option('--private-server-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -415,7 +415,7 @@ def create_configuration_source_provider(ctx, from_json, wait_for_state, max_wai
 @configuration_source_provider_group.command(name=cli_util.override('resource_manager.create_configuration_source_provider_create_gitlab_access_token_configuration_source_provider_details.command_name', 'create-configuration-source-provider-create-gitlab-access-token-configuration-source-provider-details'), help=u"""Creates a configuration source provider in the specified compartment. For more information, see [Creating a Configuration Source Provider]. \n[Command Reference](createConfigurationSourceProvider)""")
 @cli_util.option('--api-endpoint', required=True, help=u"""The Git service endpoint. Example: `https://gitlab.com`""")
 @cli_util.option('--access-token', required=True, help=u"""The personal access token to be configured on the GitLab repository. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
 @cli_util.option('--private-server-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -492,8 +492,8 @@ def create_configuration_source_provider_create_gitlab_access_token_configuratio
 @configuration_source_provider_group.command(name=cli_util.override('resource_manager.create_configuration_source_provider_create_bitbucket_cloud_username_app_password_configuration_source_provider_details.command_name', 'create-configuration-source-provider-create-bitbucket-cloud-username-app-password-configuration-source-provider-details'), help=u"""Creates a configuration source provider in the specified compartment. For more information, see [Creating a Configuration Source Provider]. \n[Command Reference](createConfigurationSourceProvider)""")
 @cli_util.option('--api-endpoint', required=True, help=u"""The Bitbucket cloud service endpoint. Example: `https://bitbucket.org/`""")
 @cli_util.option('--username', required=True, help=u"""The username for the user of the Bitbucket cloud repository.""")
-@cli_util.option('--secret-id', required=True, help=u"""The secret ocid which is used to authorize the user.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The secret ocid which is used to authorize the user.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
 @cli_util.option('--private-server-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -571,7 +571,7 @@ def create_configuration_source_provider_create_bitbucket_cloud_username_app_pas
 @configuration_source_provider_group.command(name=cli_util.override('resource_manager.create_configuration_source_provider_create_github_access_token_configuration_source_provider_details.command_name', 'create-configuration-source-provider-create-github-access-token-configuration-source-provider-details'), help=u"""Creates a configuration source provider in the specified compartment. For more information, see [Creating a Configuration Source Provider]. \n[Command Reference](createConfigurationSourceProvider)""")
 @cli_util.option('--api-endpoint', required=True, help=u"""The GitHub service endpoint. Example: `https://github.com/`""")
 @cli_util.option('--access-token', required=True, help=u"""The personal access token to be configured on the GitHub repository. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
 @cli_util.option('--private-server-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -646,9 +646,9 @@ def create_configuration_source_provider_create_github_access_token_configuratio
 
 
 @configuration_source_provider_group.command(name=cli_util.override('resource_manager.create_configuration_source_provider_create_bitbucket_server_access_token_configuration_source_provider_details.command_name', 'create-configuration-source-provider-create-bitbucket-server-access-token-configuration-source-provider-details'), help=u"""Creates a configuration source provider in the specified compartment. For more information, see [Creating a Configuration Source Provider]. \n[Command Reference](createConfigurationSourceProvider)""")
-@cli_util.option('--secret-id', required=True, help=u"""The secret ocid which is used to authorize the user.""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The secret ocid which is used to authorize the user.""")
 @cli_util.option('--api-endpoint', required=True, help=u"""The Bitbucket Server service endpoint Example: `https://bitbucket.org/`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
 @cli_util.option('--private-server-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1296,10 +1296,10 @@ def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_sta
 
 
 @private_endpoint_group.command(name=cli_util.override('resource_manager.create_private_endpoint.command_name', 'create'), help=u"""Creates a private endpoint in the specified compartment. For more information, see [Creating a Private Endpoint]. \n[Command Reference](createPrivateEndpoint)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing this private endpoint.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing this private endpoint.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN for the private endpoint.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet within the VCN for the private endpoint.""")
+@cli_util.option('--vcn-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the VCN for the private endpoint.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet within the VCN for the private endpoint.""")
 @cli_util.option('--description', help=u"""Description of the private endpoint. Avoid entering confidential information.""")
 @cli_util.option('--dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""DNS Proxy forwards any DNS FQDN queries over into the consumer DNS resolver if the DNS FQDN is included in the dns zones list otherwise it goes to service provider VCN resolver.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-id-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCIDs] of [network security groups (NSGs)] for the private endpoint. Order does not matter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1385,7 +1385,7 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @stack_group.command(name=cli_util.override('resource_manager.create_stack.command_name', 'create'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating a Stack]. \n[Command Reference](createStack)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
@@ -1468,7 +1468,7 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 
 @stack_group.command(name=cli_util.override('resource_manager.create_stack_create_dev_ops_config_source_details.command_name', 'create-stack-create-dev-ops-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating a Stack]. \n[Command Reference](createStack)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-project-id', required=True, help=u"""The [OCID] of the [DevOps project].""")
 @cli_util.option('--config-source-repository-id', required=True, help=u"""The [OCID] of the [DevOps repository].""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -1564,7 +1564,7 @@ def create_stack_create_dev_ops_config_source_details(ctx, from_json, wait_for_s
 
 
 @stack_group.command(name=cli_util.override('resource_manager.create_stack_create_bitbucket_cloud_config_source_details.command_name', 'create-stack-create-bitbucket-cloud-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating a Stack]. \n[Command Reference](createStack)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-configuration-source-provider-id', required=True, help=u"""The [OCID] of the Bitbucket Cloud configuration source.""")
 @cli_util.option('--config-source-repository-url', required=True, help=u"""The URL of the Bitbucket Cloud repository for the configuration source.""")
 @cli_util.option('--config-source-workspace-id', required=True, help=u"""The id of the workspace in Bitbucket Cloud for the configuration source""")
@@ -1662,7 +1662,7 @@ def create_stack_create_bitbucket_cloud_config_source_details(ctx, from_json, wa
 
 
 @stack_group.command(name=cli_util.override('resource_manager.create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating a Stack]. \n[Command Reference](createStack)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-zip-file-base64-encoded', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
@@ -1752,7 +1752,7 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
 
 
 @stack_group.command(name=cli_util.override('resource_manager.create_stack_create_bitbucket_server_config_source_details.command_name', 'create-stack-create-bitbucket-server-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating a Stack]. \n[Command Reference](createStack)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-configuration-source-provider-id', required=True, help=u"""Unique identifier ([OCID]) for the Bitbucket Server configuration source.""")
 @cli_util.option('--config-source-repository-url', required=True, help=u"""The URL of the Bitbucket Server repository.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -1856,7 +1856,7 @@ def create_stack_create_bitbucket_server_config_source_details(ctx, from_json, w
 
 
 @stack_group.command(name=cli_util.override('resource_manager.create_stack_create_git_config_source_details.command_name', 'create-stack-create-git-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating a Stack]. \n[Command Reference](createStack)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-configuration-source-provider-id', required=True, help=u"""Unique identifier ([OCID]) for the Git configuration source.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
@@ -1954,7 +1954,7 @@ def create_stack_create_git_config_source_details(ctx, from_json, wait_for_state
 
 
 @stack_group.command(name=cli_util.override('resource_manager.create_stack_create_object_storage_config_source_details.command_name', 'create-stack-create-object-storage-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating a Stack]. \n[Command Reference](createStack)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-region', required=True, help=u"""The name of the bucket's region. Example: `us-phoenix-1`""")
 @cli_util.option('--config-source-namespace', required=True, help=u"""The Object Storage namespace that contains the bucket.""")
 @cli_util.option('--config-source-bucket-name', required=True, help=u"""The name of the bucket that contains the Terraform configuration files.""")
@@ -2048,7 +2048,7 @@ def create_stack_create_object_storage_config_source_details(ctx, from_json, wai
 
 
 @stack_group.command(name=cli_util.override('resource_manager.create_stack_create_compartment_config_source_details.command_name', 'create-stack-create-compartment-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating a Stack]. \n[Command Reference](createStack)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-compartment-id', required=True, help=u"""The [OCID] of the compartment to use for creating the stack. The new stack will include definitions for supported resource types in scope of the specified compartment OCID (tenancy level for root compartment, compartment level otherwise).""")
 @cli_util.option('--config-source-region', required=True, help=u"""The region to use for creating the stack. The new stack will include definitions for supported resource types in this region.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -2144,7 +2144,7 @@ def create_stack_create_compartment_config_source_details(ctx, from_json, wait_f
 
 
 @stack_group.command(name=cli_util.override('resource_manager.create_stack_create_stack_template_config_source_details.command_name', 'create-stack-create-stack-template-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating a Stack]. \n[Command Reference](createStack)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-template-id', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
@@ -2234,7 +2234,7 @@ def create_stack_create_stack_template_config_source_details(ctx, from_json, wai
 
 
 @template_group.command(name=cli_util.override('resource_manager.create_template.command_name', 'create'), help=u"""Creates a private template in the specified compartment. For more information, see [Creating a Private Template]. \n[Command Reference](createTemplate)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing this template.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing this template.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', required=True, help=u"""Description of the template. Avoid entering confidential information.""")
 @cli_util.option('--template-config-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2305,7 +2305,7 @@ def create_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @template_group.command(name=cli_util.override('resource_manager.create_template_create_template_zip_upload_config_source_details.command_name', 'create-template-create-template-zip-upload-config-source-details'), help=u"""Creates a private template in the specified compartment. For more information, see [Creating a Private Template]. \n[Command Reference](createTemplate)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing this template.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing this template.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', required=True, help=u"""Description of the template. Avoid entering confidential information.""")
 @cli_util.option('--template-config-source-zip-file-base64-encoded', required=True, help=u"""""")
@@ -3255,7 +3255,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @configuration_source_provider_summary_group.command(name=cli_util.override('resource_manager.list_configuration_source_providers.command_name', 'list-configuration-source-providers'), help=u"""Lists configuration source providers according to the specified filter. For more information, see [Listing Configuration Source Providers]. - For `compartmentId`, lists all configuration source providers in the matching compartment. - For `configurationSourceProviderId`, lists the matching configuration source provider. \n[Command Reference](listConfigurationSourceProviders)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--configuration-source-provider-id', help=u"""A filter to return only configuration source providers that match the provided [OCID].""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list a resource by name. Requires `sortBy` set to `DISPLAYNAME`. Alternatively, when you know the resource OCID, use the related Get operation.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to use when sorting returned resources. By default, `TIMECREATED` is ordered descending. By default, `DISPLAYNAME` is ordered ascending. Note that you can sort only on one field.""")
@@ -3318,7 +3318,7 @@ def list_configuration_source_providers(ctx, from_json, all_pages, page_size, co
 
 @associated_resource_summary_group.command(name=cli_util.override('resource_manager.list_job_associated_resources.command_name', 'list-job-associated-resources'), help=u"""Gets the list of resources associated with the specified job. For more information, see [Listing Job Resources]. \n[Command Reference](listJobAssociatedResources)""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--terraform-resource-type', help=u"""A filter to return only specified resource types. For more information about resource types supported for the Oracle Cloud Infrastructure [OCI] provider, see [Oracle Cloud Infrastructure Provider].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
@@ -3375,7 +3375,7 @@ def list_job_associated_resources(ctx, from_json, all_pages, page_size, job_id, 
 
 @job_output_summary_group.command(name=cli_util.override('resource_manager.list_job_outputs.command_name', 'list-job-outputs'), help=u"""Gets the list of outputs associated with the specified job. For more information, see [Listing Job Outputs]. \n[Command Reference](listJobOutputs)""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -3430,7 +3430,7 @@ def list_job_outputs(ctx, from_json, all_pages, page_size, job_id, compartment_i
 @job_group.command(name=cli_util.override('resource_manager.list_jobs.command_name', 'list'), help=u"""Lists jobs according to the specified filter. By default, the list is ordered by time created. For more information, see [Listing Jobs].
 
 - To list all jobs in a stack, provide the stack [OCID]. - To list all jobs in a compartment, provide the compartment [OCID]. - To return a specific job, provide the job [OCID]. (Equivalent to [GetStack].) \n[Command Reference](listJobs)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--stack-id', help=u"""The stack [OCID] on which to filter.""")
 @cli_util.option('--id', help=u"""The [OCID] on which to query for jobs.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter that returns all resources that match the specified lifecycle state. The state value is case-insensitive.""")
@@ -3495,10 +3495,10 @@ def list_jobs(ctx, from_json, all_pages, page_size, compartment_id, stack_id, id
 
 
 @private_endpoint_summary_group.command(name=cli_util.override('resource_manager.list_private_endpoints.command_name', 'list-private-endpoints'), help=u"""Lists private endpoints according to the specified filter. For more information, see [Listing Private Endpoints]. - For `compartmentId`, lists all private endpoints in the matching compartment. - For `privateEndpointId`, lists the matching private endpoint. \n[Command Reference](listPrivateEndpoints)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--private-endpoint-id', help=u"""The [OCID] of the private endpoint.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list a resource by name. Requires `sortBy` set to `DISPLAYNAME`. Alternatively, when you know the resource OCID, use the related Get operation.""")
-@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to use when sorting returned resources. By default, `TIMECREATED` is ordered descending. By default, `DISPLAYNAME` is ordered ascending. Note that you can sort only on one field.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use when sorting returned resources. Ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -3557,7 +3557,7 @@ def list_private_endpoints(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @stack_group.command(name=cli_util.override('resource_manager.list_resource_discovery_services.command_name', 'list-resource-discovery-services'), help=u"""Returns a list of supported services for [Resource Discovery]. For reference on service names, see the [Terraform provider documentation]. For more information, see [Listing Resource Discovery Services]. \n[Command Reference](listResourceDiscoveryServices)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3580,7 +3580,7 @@ def list_resource_discovery_services(ctx, from_json, all_pages, compartment_id):
 @associated_resource_summary_group.command(name=cli_util.override('resource_manager.list_stack_associated_resources.command_name', 'list-stack-associated-resources'), help=u"""Gets the list of resources associated with the specified stack. For more information, see [Listing Stack Resources]. \n[Command Reference](listStackAssociatedResources)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--terraform-resource-type', help=u"""A filter to return only specified resource types. For more information about resource types supported for the Oracle Cloud Infrastructure [OCI] provider, see [Oracle Cloud Infrastructure Provider].""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -3692,7 +3692,7 @@ def list_stack_resource_drift_details(ctx, from_json, all_pages, page_size, stac
 
 
 @stack_group.command(name=cli_util.override('resource_manager.list_stacks.command_name', 'list'), help=u"""Lists stacks according to the specified filter. For more information, see [Listing Stacks]. - If called using the compartment ID, returns all stacks in the specified compartment. - If called using the stack ID, returns the specified stack. (See also [GetStack].) \n[Command Reference](listStacks)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--id', help=u"""The [OCID] on which to query for a stack.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter that returns only those resources that match the specified lifecycle state. The state value is case-insensitive. For more information about stack lifecycle states, see [Key Concepts].""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list a resource by name. Requires `sortBy` set to `DISPLAYNAME`. Alternatively, when you know the resource OCID, use the related Get operation.""")
@@ -3772,7 +3772,7 @@ def list_template_categories(ctx, from_json, all_pages, ):
 
 
 @template_group.command(name=cli_util.override('resource_manager.list_templates.command_name', 'list'), help=u"""Lists templates according to the specified filter. The attributes `compartmentId` and `templateCategoryId` are required unless `templateId` is specified. For more information, see [Listing Templates]. \n[Command Reference](listTemplates)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--template-category-id', help=u"""Unique identifier for the template category. Possible values are `0` (Quickstarts), `1` (Service), `2` (Architecture), and `3` (Private). Template category labels are displayed in the Console page listing templates. Quickstarts, Service, and Architecture templates (categories 0, 1, and 2) are available in all compartments. Each private template (category 3) is available in the compartment where it was created.""")
 @cli_util.option('--template-id', help=u"""The [OCID] of the template.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list a resource by name. Requires `sortBy` set to `DISPLAYNAME`. Alternatively, when you know the resource OCID, use the related Get operation.""")
@@ -3834,7 +3834,7 @@ def list_templates(ctx, from_json, all_pages, page_size, compartment_id, templat
 
 
 @stack_group.command(name=cli_util.override('resource_manager.list_terraform_versions.command_name', 'list-terraform-versions'), help=u"""Returns a list of supported Terraform versions for use with stacks. For more information, see [Listing Terraform Versions]. \n[Command Reference](listTerraformVersions)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3856,7 +3856,7 @@ def list_terraform_versions(ctx, from_json, all_pages, compartment_id):
 
 @work_request_group.command(name=cli_util.override('resource_manager.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Returns a paginated list of errors for the specified work request. For more information, see [Listing Errors for a Work Request]. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use when sorting returned resources. Ascending (`ASC`) or descending (`DESC`).""")
@@ -3913,7 +3913,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 
 @work_request_group.command(name=cli_util.override('resource_manager.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Returns a paginated list of logs for the specified work request. For more information, see [Listing Logs for a Work Request]. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use when sorting returned resources. Ascending (`ASC`) or descending (`DESC`).""")
@@ -3969,7 +3969,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('resource_manager.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in the specified compartment or for the specified resource. For more information, see [Listing Work Requests]. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
@@ -4112,7 +4112,7 @@ def update_configuration_source_provider(ctx, from_json, force, wait_for_state, 
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--api-endpoint', help=u"""The Bitbucket service endpoint. Example: `https://bitbucket.org/`""")
 @cli_util.option('--username', help=u"""The username for the user of the Bitbucket cloud repository.""")
-@cli_util.option('--secret-id', help=u"""The secret ocid which is used to authorize the user.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The secret ocid which is used to authorize the user.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4204,7 +4204,7 @@ def update_configuration_source_provider_update_bitbucket_cloud_username_app_pas
 @cli_util.option('--private-server-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--secret-id', help=u"""The secret ocid which is used to authorize the user.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The secret ocid which is used to authorize the user.""")
 @cli_util.option('--api-endpoint', help=u"""The Bitbucket server service endpoint Example: `https://bitbucket.org/`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -4543,8 +4543,8 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--private-endpoint-id', required=True, help=u"""The [OCID] of the private endpoint.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the private endpoint. Avoid entering confidential information.""")
-@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN for the private endpoint.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet within the VCN for the private endpoint.""")
+@cli_util.option('--vcn-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the VCN for the private endpoint.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet within the VCN for the private endpoint.""")
 @cli_util.option('--dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""DNS Proxy forwards any DNS FQDN queries over into the consumer DNS resolver if the DNS FQDN is included in the dns zones list otherwise it goes to service provider VCN resolver.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-id-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCIDs] of [network security groups (NSGs)] for the private endpoint. Order does not matter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-used-with-configuration-source-provider', type=click.BOOL, help=u"""When `true`, allows the private endpoint to be used with a configuration source provider.""")

@@ -73,7 +73,7 @@ def cancel_instance_agent_command(ctx, from_json, instance_agent_command_id, if_
 On Linux instances, the script runs in a bash shell. On Windows instances, the script runs in a batch shell.
 
 Commands that require administrator privileges will run only if Oracle Cloud Agent is running with administrator privileges. \n[Command Reference](createInstanceAgentCommand)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the command in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the command in.""")
 @cli_util.option('--execution-time-out-in-seconds', required=True, type=click.INT, help=u"""The amount of time that Oracle Cloud Agent is given to run the command on the instance before timing out. The timer starts when Oracle Cloud Agent starts the command. Zero means no timeout.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The target instance to run the command on.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--content', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The contents of the command.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -131,7 +131,7 @@ def get_instance_agent_command(ctx, from_json, instance_agent_command_id):
 
 @instance_agent_command_execution_group.command(name=cli_util.override('compute_instance_agent.get_instance_agent_command_execution.command_name', 'get'), help=u"""Gets information about the status of specified instance agent commandId for the given instanceId. \n[Command Reference](getInstanceAgentCommandExecution)""")
 @cli_util.option('--instance-agent-command-id', required=True, help=u"""The [OCID] of the command.""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -154,8 +154,8 @@ def get_instance_agent_command_execution(ctx, from_json, instance_agent_command_
 
 
 @instance_agent_command_execution_group.command(name=cli_util.override('compute_instance_agent.list_instance_agent_command_executions.command_name', 'list'), help=u"""Lists the execution details for Oracle Cloud Agent commands that run on the specified compute instance. \n[Command Reference](listInstanceAgentCommandExecutions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for `TIMECREATED` is descending.
@@ -217,7 +217,7 @@ def list_instance_agent_command_executions(ctx, from_json, all_pages, page_size,
 
 
 @instance_agent_command_group.command(name=cli_util.override('compute_instance_agent.list_instance_agent_commands.command_name', 'list'), help=u"""Lists the Oracle Cloud Agent commands issued in a compartment. \n[Command Reference](listInstanceAgentCommands)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for `TIMECREATED` is descending.

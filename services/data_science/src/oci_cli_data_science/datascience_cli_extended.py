@@ -279,7 +279,7 @@ def create_step_artifact_extended(ctx, pipeline_id, step_name, from_json, **kwar
 
 # Overrides list pipelines to set compartment id as optional when resource id is provided
 @datascience_cli.pipeline_group.command(name=cli_util.override('data_science.list_pipelines.command_name', 'list'), help=u"""Returns a list of Pipelines. \n[Command Reference](listPipelines)""")
-@cli_util.option('--compartment-id', help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -353,7 +353,7 @@ def list_pipelines(ctx, from_json, all_pages, page_size, compartment_id, project
 
 # Overrides list pipeline runs to set compartment id as optional when resource id is provided
 @datascience_cli.pipeline_run_group.command(name=cli_util.override('data_science.list_pipeline_runs.command_name', 'list'), help=u"""Returns a list of PipelineRuns. \n[Command Reference](listPipelineRuns)""")
-@cli_util.option('--compartment-id', help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--pipeline-id', help=u"""The [OCID] of the pipeline.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")

@@ -200,7 +200,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('work_requests.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a specified compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "OPERATION_TYPE", "STATUS", "TIME_ACCEPTED", "TIME_STARTED", "TIME_FINISHED"]), help=u"""The optional field to sort the results by.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use (ASC or DESC).""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated list call. For information about pagination, see [List Pagination].""")

@@ -150,7 +150,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @migration_group.command(name=cli_util.override('cloud_migrations.change_migration_compartment.command_name', 'change-compartment'), help=u"""Moves a migration resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMigrationCompartment)""")
 @cli_util.option('--migration-id', required=True, help=u"""Unique migration identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -211,7 +211,7 @@ def change_migration_compartment(ctx, from_json, wait_for_state, max_wait_second
 
 @migration_plan_group.command(name=cli_util.override('cloud_migrations.change_migration_plan_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMigrationPlanCompartment)""")
 @cli_util.option('--migration-plan-id', required=True, help=u"""Unique migration plan identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -272,7 +272,7 @@ def change_migration_plan_compartment(ctx, from_json, wait_for_state, max_wait_s
 
 @replication_schedule_group.command(name=cli_util.override('cloud_migrations.change_replication_schedule_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeReplicationScheduleCompartment)""")
 @cli_util.option('--replication-schedule-id', required=True, help=u"""Unique replication schedule identifier in path""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the replication schedule should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the replication schedule should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -333,7 +333,7 @@ def change_replication_schedule_compartment(ctx, from_json, wait_for_state, max_
 
 @migration_group.command(name=cli_util.override('cloud_migrations.create_migration.command_name', 'create'), help=u"""Creates a migration. \n[Command Reference](createMigration)""")
 @cli_util.option('--display-name', required=True, help=u"""Migration identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment identifier""")
 @cli_util.option('--replication-schedule-id', help=u"""Replication schedule identifier""")
 @cli_util.option('--is-completed', type=click.BOOL, help=u"""Indicates whether migration is marked as complete.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. It exists only for cross-compatibility. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -473,7 +473,7 @@ def create_migration_asset(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 @migration_plan_group.command(name=cli_util.override('cloud_migrations.create_migration_plan.command_name', 'create'), help=u"""Creates a migration plan. \n[Command Reference](createMigrationPlan)""")
 @cli_util.option('--display-name', required=True, help=u"""Migration plan identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment identifier""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the associated migration.""")
 @cli_util.option('--source-migration-plan-id', help=u"""Source migraiton plan ID to be cloned.""")
 @cli_util.option('--strategies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of strategies for the resources to be migrated.
@@ -553,7 +553,7 @@ def create_migration_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @replication_schedule_group.command(name=cli_util.override('cloud_migrations.create_replication_schedule.command_name', 'create'), help=u"""Creates a replication schedule. \n[Command Reference](createReplicationSchedule)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the replication schedule should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which the replication schedule should be created.""")
 @cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for replication schedule execution.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for a replication schedule. Does not have to be unique, and is mutable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. It exists only for cross-compatibility. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1340,7 +1340,7 @@ def import_migration_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @available_shapes_collection_group.command(name=cli_util.override('cloud_migrations.list_available_shapes.command_name', 'list-available-shapes'), help=u"""List of shapes by parameters. \n[Command Reference](listAvailableShapes)""")
 @cli_util.option('--migration-plan-id', required=True, help=u"""Unique migration plan identifier""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--dvh-host-id', help=u"""The ID of the Dvh in which to list resources.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain in which to list resources.""")
 @cli_util.option('--reserved-capacity-id', help=u"""The reserved capacity ID for which to list resources.""")
@@ -1472,7 +1472,7 @@ def list_migration_assets(ctx, from_json, all_pages, page_size, migration_id, di
 
 
 @migration_plan_collection_group.command(name=cli_util.override('cloud_migrations.list_migration_plans.command_name', 'list-migration-plans'), help=u"""Returns a list of migration plans. \n[Command Reference](listMigrationPlans)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--migration-id', help=u"""Unique migration identifier""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire given display name.""")
 @cli_util.option('--migration-plan-id', help=u"""Unique migration plan identifier""")
@@ -1537,7 +1537,7 @@ def list_migration_plans(ctx, from_json, all_pages, page_size, compartment_id, m
 
 
 @migration_collection_group.command(name=cli_util.override('cloud_migrations.list_migrations.command_name', 'list-migrations'), help=u"""Returns a list of migrations. \n[Command Reference](listMigrations)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "NEEDS_ATTENTION", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources where the resource's lifecycle state matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire given display name.""")
 @cli_util.option('--migration-id', help=u"""Unique migration identifier""")
@@ -1599,7 +1599,7 @@ def list_migrations(ctx, from_json, all_pages, page_size, compartment_id, lifecy
 
 
 @replication_schedule_collection_group.command(name=cli_util.override('cloud_migrations.list_replication_schedules.command_name', 'list-replication-schedules'), help=u"""Returns a list of replication schedules. \n[Command Reference](listReplicationSchedules)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "NEEDS_ATTENTION", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the replication schedule.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire given display name.""")
 @cli_util.option('--replication-schedule-id', help=u"""Unique replication schedule identifier in query""")
@@ -1837,7 +1837,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('cloud_migrations.list_work_requests.command_name', 'list'), help=u"""List of work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources where the resource's lifecycle state matches the given operation status.""")
 @cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_MIGRATION", "UPDATE_MIGRATION", "REFRESH_MIGRATION", "DELETE_MIGRATION", "MOVE_MIGRATION", "START_ASSET_REPLICATION", "START_MIGRATION_REPLICATION", "CREATE_REPLICATION_SCHEDULE", "UPDATE_REPLICATION_SCHEDULE", "DELETE_REPLICATION_SCHEDULE", "MOVE_REPLICATION_SCHEDULE", "CREATE_MIGRATION_PLAN", "UPDATE_MIGRATION_PLAN", "DELETE_MIGRATION_PLAN", "MOVE_MIGRATION_PLAN", "REFRESH_MIGRATION_PLAN", "EXECUTE_MIGRATION_PLAN", "REFRESH_MIGRATION_ASSET", "CREATE_MIGRATION_ASSET", "DELETE_MIGRATION_ASSET", "CREATE_TARGET_ASSET", "UPDATE_TARGET_ASSET", "DELETE_TARGET_ASSET"]), help=u"""A filter to return only resources where the resource's lifecycle state matches the given operation type.""")

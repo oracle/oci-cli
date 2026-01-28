@@ -88,7 +88,7 @@ def cancel_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @sender_invitation_group.command(name=cli_util.override('sender_invitation.create_sender_invitation.command_name', 'create'), help=u"""Creates a sender invitation and asynchronously sends the invitation to the recipient. \n[Command Reference](createSenderInvitation)""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the sender tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the sender tenancy.""")
 @cli_util.option('--recipient-tenancy-id', required=True, help=u"""OCID of the recipient tenancy.""")
 @cli_util.option('--recipient-email-address', help=u"""Email address of the recipient.""")
 @cli_util.option('--display-name', help=u"""A user-created name to describe the invitation. Avoid entering confidential information.""")
@@ -187,7 +187,7 @@ def get_sender_invitation(ctx, from_json, sender_invitation_id):
 
 
 @sender_invitation_group.command(name=cli_util.override('sender_invitation.list_sender_invitations.command_name', 'list'), help=u"""Return a (paginated) list of sender invitations. \n[Command Reference](listSenderInvitations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--recipient-tenancy-id', help=u"""The tenancy that the invitation is addressed to.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "FAILED", "TERMINATED"]), help=u"""The lifecycle state of the resource.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "CANCELED", "ACCEPTED", "EXPIRED", "FAILED"]), help=u"""The status of the sender invitation.""")

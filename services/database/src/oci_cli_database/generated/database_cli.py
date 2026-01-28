@@ -1033,7 +1033,7 @@ def add_virtual_machine_to_vm_cluster(ctx, from_json, wait_for_state, max_wait_s
 
 
 @autonomous_database_group.command(name=cli_util.override('db.autonomous_database_manual_refresh.command_name', 'autonomous-database-manual-refresh'), help=u"""Initiates a data refresh for an Autonomous AI Database refreshable clone. Data is refreshed from the source database to the point of a specified timestamp. \n[Command Reference](autonomousDatabaseManualRefresh)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--time-refresh-cutoff', type=custom_types.CLI_DATETIME, help=u"""The timestamp to which the Autonomous AI Database refreshable clone will be refreshed. Changes made in the primary database after this timestamp are not part of the data refresh.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -1095,7 +1095,7 @@ def autonomous_database_manual_refresh(ctx, from_json, wait_for_state, max_wait_
 
 
 @backup_group.command(name=cli_util.override('db.cancel_backup.command_name', 'cancel'), help=u"""Cancel automatic/standalone full/incremental create backup workrequests specified by the backup Id. \n[Command Reference](cancelBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""The backup [OCID].""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The backup [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1284,7 +1284,7 @@ def cascading_delete_scheduling_plan(ctx, from_json, wait_for_state, max_wait_se
 
 
 @autonomous_container_database_group.command(name=cli_util.override('db.change_autonomous_container_database_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous Container Database and its dependent resources to the specified compartment. For more information about moving Autonomous Container Databases, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeAutonomousContainerDatabaseCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1353,8 +1353,8 @@ def change_autonomous_container_database_compartment(ctx, from_json, wait_for_st
 
 
 @autonomous_database_group.command(name=cli_util.override('db.change_autonomous_database_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous AI Database and its dependent resources to the specified compartment. For more information about moving Autonomous AI Databases, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeAutonomousDatabaseCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1425,7 +1425,7 @@ def change_autonomous_database_compartment(ctx, from_json, wait_for_state, max_w
 
 
 @autonomous_database_software_image_group.command(name=cli_util.override('db.change_autonomous_database_software_image_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous AI Database Software Image and its dependent resources to the specified compartment. \n[Command Reference](changeAutonomousDatabaseSoftwareImageCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--autonomous-database-software-image-id', required=True, help=u"""The Autonomous AI Database Software Image [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1494,8 +1494,8 @@ def change_autonomous_database_software_image_compartment(ctx, from_json, wait_f
 
 
 @autonomous_database_group.command(name=cli_util.override('db.change_autonomous_database_subscription.command_name', 'change-autonomous-database-subscription'), help=u"""Associate an Autonomous AI Database with a different subscription. \n[Command Reference](changeAutonomousDatabaseSubscription)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates if the subscription is UCM or not.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -1572,7 +1572,7 @@ def change_autonomous_database_subscription(ctx, from_json, wait_for_state, max_
 
 
 @autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.change_autonomous_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""**Deprecated.** Use the [ChangeCloudExadataInfrastructureCompartment] operation to move an Exadata infrastructure resource to a different compartment and  [ChangeCloudAutonomousVmClusterCompartment] operation to move an Autonomous Exadata VM cluster to a different compartment. For more information, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeAutonomousExadataInfrastructureCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1641,7 +1641,7 @@ def change_autonomous_exadata_infrastructure_compartment(ctx, from_json, wait_fo
 
 
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.change_autonomous_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves an Autonomous VM cluster and its dependent resources to another compartment. Applies to Exadata Cloud@Customer  only. For systems in the Oracle cloud, see [ChangeAutonomousVmClusterCompartment]. \n[Command Reference](changeAutonomousVmClusterCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Autonomous VM cluster to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Autonomous VM cluster to.""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1710,7 +1710,7 @@ def change_autonomous_vm_cluster_compartment(ctx, from_json, wait_for_state, max
 
 
 @backup_destination_group.command(name=cli_util.override('db.change_backup_destination_compartment.command_name', 'change-compartment'), help=u"""Move the backup destination and its dependent resources to the specified compartment. For more information, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeBackupDestinationCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--backup-destination-id', required=True, help=u"""The [OCID] of the backup destination.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1779,7 +1779,7 @@ def change_backup_destination_compartment(ctx, from_json, wait_for_state, max_wa
 
 
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.change_cloud_autonomous_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves an Autonomous Exadata VM cluster in the Oracle cloud and its dependent resources to another compartment. For Exadata Cloud@Customer systems, see [ChangeAutonomousVmClusterCompartment]. \n[Command Reference](changeCloudAutonomousVmClusterCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1849,7 +1849,7 @@ def change_cloud_autonomous_vm_cluster_compartment(ctx, from_json, wait_for_stat
 
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.change_cloud_autonomous_vm_cluster_subscription.command_name', 'change-cloud-autonomous-vm-cluster-subscription'), help=u"""Associate a Cloud Autonomous VM cluster with a different subscription. \n[Command Reference](changeCloudAutonomousVmClusterSubscription)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates if the subscription is UCM or not.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1923,8 +1923,8 @@ def change_cloud_autonomous_vm_cluster_subscription(ctx, from_json, wait_for_sta
 
 
 @db_system_group.command(name=cli_util.override('db.change_cloud_db_system_subscription.command_name', 'change-cloud-db-system-subscription'), help=u"""Associate a cloud DB system with a different subscription. \n[Command Reference](changeCloudDbSystemSubscription)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates if the subscription is UCM or not.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1998,7 +1998,7 @@ def change_cloud_db_system_subscription(ctx, from_json, wait_for_state, max_wait
 
 
 @cloud_exadata_infrastructure_group.command(name=cli_util.override('db.change_cloud_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""Moves a cloud Exadata infrastructure resource and its dependent resources to another compartment. Applies to Exadata Cloud Service instances and Autonomous AI Database on dedicated Exadata infrastructure only.For more information about moving resources to a different compartment, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeCloudExadataInfrastructureCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2068,7 +2068,7 @@ def change_cloud_exadata_infrastructure_compartment(ctx, from_json, wait_for_sta
 
 @cloud_exadata_infrastructure_group.command(name=cli_util.override('db.change_cloud_exadata_infrastructure_subscription.command_name', 'change-cloud-exadata-infrastructure-subscription'), help=u"""Associate a cloud Exadata infrastructure with a different subscription. \n[Command Reference](changeCloudExadataInfrastructureSubscription)""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates if the subscription is UCM or not.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2142,7 +2142,7 @@ def change_cloud_exadata_infrastructure_subscription(ctx, from_json, wait_for_st
 
 
 @cloud_vm_cluster_group.command(name=cli_util.override('db.change_cloud_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a cloud VM cluster and its dependent resources to another compartment. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](changeCloudVmClusterCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The cloud VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2212,7 +2212,7 @@ def change_cloud_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait
 
 @cloud_vm_cluster_group.command(name=cli_util.override('db.change_cloud_vm_cluster_subscription.command_name', 'change-cloud-vm-cluster-subscription'), help=u"""Associate a cloud VM cluster with a different subscription. \n[Command Reference](changeCloudVmClusterSubscription)""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The cloud VM cluster [OCID].""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates if the subscription is UCM or not.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2286,7 +2286,7 @@ def change_cloud_vm_cluster_subscription(ctx, from_json, wait_for_state, max_wai
 
 
 @database_software_image_group.command(name=cli_util.override('db.change_database_software_image_compartment.command_name', 'change-compartment'), help=u"""Move the Database Software Image and its dependent resources to the specified compartment. For more information about moving Databse Software Images, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeDatabaseSoftwareImageCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--database-software-image-id', required=True, help=u"""The DB system [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2418,8 +2418,8 @@ def change_dataguard_role(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @db_system_group.command(name=cli_util.override('db.change_db_system_compartment.command_name', 'change-compartment'), help=u"""Moves the DB system and its dependent resources to the specified compartment. For more information about moving DB systems, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeDbSystemCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2487,7 +2487,7 @@ def change_db_system_compartment(ctx, from_json, wait_for_state, max_wait_second
 
 
 @autonomous_database_group.command(name=cli_util.override('db.change_disaster_recovery_configuration.command_name', 'change-disaster-recovery-configuration'), help=u"""This operation updates the cross-region disaster recovery (DR) details of the standby Autonomous AI Database Serverless database, and must be run on the standby side. \n[Command Reference](changeDisasterRecoveryConfiguration)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--disaster-recovery-type', type=custom_types.CliCaseInsensitiveChoice(["ADG", "BACKUP_BASED"]), help=u"""Indicates the disaster recovery (DR) type of the Autonomous AI Database Serverless instance. Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover. Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover.""")
 @cli_util.option('--time-snapshot-standby-enabled-till', type=custom_types.CLI_DATETIME, help=u"""Time and date stored as an RFC 3339 formatted timestamp string. For example, 2022-01-01T12:00:00.000Z would set a limit for the snapshot standby to be converted back to a cross-region standby database.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--is-snapshot-standby', type=click.BOOL, help=u"""Indicates if user wants to convert to a snapshot standby. For example, true would set a standby database to snapshot standby database. False would set a snapshot standby database back to regular standby database.""")
@@ -2561,7 +2561,7 @@ def change_disaster_recovery_configuration(ctx, from_json, wait_for_state, max_w
 
 
 @database_group.command(name=cli_util.override('db.change_encryption_key_location.command_name', 'change-encryption-key-location'), help=u"""Update the encryption key management location for the database \n[Command Reference](changeEncryptionKeyLocation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--provider-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXTERNAL", "AZURE", "GCP", "AWS"]), help=u"""Use 'EXTERNAL' for creating a new database or migrating a database key to an External HSM. Use 'AZURE' for creating a new database or migrating a database key to Azure. Use 'GCP' for creating a new database or migrating a database key to Google Cloud Provider. Use 'AWS' for creating a new database or migrating a database key to Aws.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2630,7 +2630,7 @@ def change_encryption_key_location(ctx, from_json, wait_for_state, max_wait_seco
 
 
 @database_group.command(name=cli_util.override('db.change_encryption_key_location_external_hsm_encryption_details.command_name', 'change-encryption-key-location-external-hsm-encryption-details'), help=u"""Update the encryption key management location for the database \n[Command Reference](changeEncryptionKeyLocation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--hsm-password', required=True, help=u"""Provide the HSM password as you would in RDBMS for External HSM.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2701,7 +2701,7 @@ def change_encryption_key_location_external_hsm_encryption_details(ctx, from_jso
 
 
 @database_group.command(name=cli_util.override('db.change_encryption_key_location_google_cloud_provider_encryption_key_details.command_name', 'change-encryption-key-location-google-cloud-provider-encryption-key-details'), help=u"""Update the encryption key management location for the database \n[Command Reference](changeEncryptionKeyLocation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--google-cloud-provider-encryption-key-id', required=True, help=u"""Provide the key OCID of a registered Google Cloud Provider key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2772,7 +2772,7 @@ def change_encryption_key_location_google_cloud_provider_encryption_key_details(
 
 
 @database_group.command(name=cli_util.override('db.change_encryption_key_location_azure_encryption_key_details.command_name', 'change-encryption-key-location-azure-encryption-key-details'), help=u"""Update the encryption key management location for the database \n[Command Reference](changeEncryptionKeyLocation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--azure-encryption-key-id', required=True, help=u"""Provide the key OCID of a registered Azure key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2843,7 +2843,7 @@ def change_encryption_key_location_azure_encryption_key_details(ctx, from_json, 
 
 
 @database_group.command(name=cli_util.override('db.change_encryption_key_location_aws_encryption_key_details.command_name', 'change-encryption-key-location-aws-encryption-key-details'), help=u"""Update the encryption key management location for the database \n[Command Reference](changeEncryptionKeyLocation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--aws-encryption-key-id', required=True, help=u"""Provide the key OCID of a registered AWS key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2914,7 +2914,7 @@ def change_encryption_key_location_aws_encryption_key_details(ctx, from_json, wa
 
 
 @exadata_infrastructure_group.command(name=cli_util.override('db.change_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""Moves an Exadata infrastructure resource and its dependent resources to another compartment. Applies to Exadata Cloud@Customer instances only. To move an Exadata Cloud Service infrastructure resource to another compartment, use the  [ChangeCloudExadataInfrastructureCompartment] operation. \n[Command Reference](changeExadataInfrastructureCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2983,7 +2983,7 @@ def change_exadata_infrastructure_compartment(ctx, from_json, wait_for_state, ma
 
 
 @exadb_vm_cluster_group.command(name=cli_util.override('db.change_exadb_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a Exadata VM cluster on Exascale Infrastructure and its dependent resources to another compartment. Applies to Exadata Database Service on Exascale Infrastructure only. \n[Command Reference](changeExadbVmClusterCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--exadb-vm-cluster-id', required=True, help=u"""The Exadata VM cluster [OCID] on Exascale Infrastructure.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3053,7 +3053,7 @@ def change_exadb_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait
 
 @exadb_vm_cluster_group.command(name=cli_util.override('db.change_exadb_vm_cluster_subscription.command_name', 'change-exadb-vm-cluster-subscription'), help=u"""Associate a Exadata VM cluster on Exascale Infrastructure with a different subscription. \n[Command Reference](changeExadbVmClusterSubscription)""")
 @cli_util.option('--exadb-vm-cluster-id', required=True, help=u"""The Exadata VM cluster [OCID] on Exascale Infrastructure.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates if the subscription is UCM or not.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3127,7 +3127,7 @@ def change_exadb_vm_cluster_subscription(ctx, from_json, wait_for_state, max_wai
 
 
 @exascale_db_storage_vault_group.command(name=cli_util.override('db.change_exascale_db_storage_vault_compartment.command_name', 'change-compartment'), help=u"""Moves a Exadata Database Storage Vault to another compartment. \n[Command Reference](changeExascaleDbStorageVaultCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--exascale-db-storage-vault-id', required=True, help=u"""The Exadata Database Storage Vault [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3197,7 +3197,7 @@ def change_exascale_db_storage_vault_compartment(ctx, from_json, wait_for_state,
 
 @exascale_db_storage_vault_group.command(name=cli_util.override('db.change_exascale_db_storage_vault_subscription.command_name', 'change-exascale-db-storage-vault-subscription'), help=u"""Associate a Exadata Database Storage Vault with a different subscription. \n[Command Reference](changeExascaleDbStorageVaultSubscription)""")
 @cli_util.option('--exascale-db-storage-vault-id', required=True, help=u"""The Exadata Database Storage Vault [OCID].""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates if the subscription is UCM or not.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3271,7 +3271,7 @@ def change_exascale_db_storage_vault_subscription(ctx, from_json, wait_for_state
 
 
 @external_container_database_group.command(name=cli_util.override('db.change_external_container_database_compartment.command_name', 'change-compartment'), help=u"""Move the [external container database] and its dependent resources to the specified compartment. For more information about moving external container databases, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeExternalContainerDatabaseCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--external-container-database-id', required=True, help=u"""The ExternalContainerDatabase [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3340,7 +3340,7 @@ def change_external_container_database_compartment(ctx, from_json, wait_for_stat
 
 
 @external_non_container_database_group.command(name=cli_util.override('db.change_external_non_container_database_compartment.command_name', 'change-compartment'), help=u"""Move the external non-container database and its dependent resources to the specified compartment. For more information about moving external non-container databases, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeExternalNonContainerDatabaseCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--external-non-container-database-id', required=True, help=u"""The external non-container database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3409,7 +3409,7 @@ def change_external_non_container_database_compartment(ctx, from_json, wait_for_
 
 
 @external_pluggable_database_group.command(name=cli_util.override('db.change_external_pluggable_database_compartment.command_name', 'change-compartment'), help=u"""Move the [external pluggable database] and its dependent resources to the specified compartment. For more information about moving external pluggable databases, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeExternalPluggableDatabaseCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--external-pluggable-database-id', required=True, help=u"""The ExternalPluggableDatabaseId [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3478,7 +3478,7 @@ def change_external_pluggable_database_compartment(ctx, from_json, wait_for_stat
 
 
 @key_store_group.command(name=cli_util.override('db.change_key_store_compartment.command_name', 'change-compartment'), help=u"""Move the key store resource to the specified compartment. For more information about moving key stores, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeKeyStoreCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the key store to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the key store to.""")
 @cli_util.option('--key-store-id', required=True, help=u"""The [OCID] of the key store.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3547,7 +3547,7 @@ def change_key_store_compartment(ctx, from_json, wait_for_state, max_wait_second
 
 
 @database_group.command(name=cli_util.override('db.change_key_store_type.command_name', 'change-key-store-type'), help=u"""Changes encryption key management type \n[Command Reference](changeKeyStoreType)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--key-store-id', required=True, help=u"""The [OCID] of the key store.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3616,7 +3616,7 @@ def change_key_store_type(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @oneoff_patch_group.command(name=cli_util.override('db.change_oneoff_patch_compartment.command_name', 'change-compartment'), help=u"""Move the one-off patch to the specified compartment. \n[Command Reference](changeOneoffPatchCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--oneoff-patch-id', required=True, help=u"""The one-off patch [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3685,7 +3685,7 @@ def change_oneoff_patch_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @scheduling_plan_group.command(name=cli_util.override('db.change_scheduling_plan_compartment.command_name', 'change-compartment'), help=u"""Moves an scheduling plan resource to another compartment. \n[Command Reference](changeSchedulingPlanCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--scheduling-plan-id', required=True, help=u"""The Schedule Plan [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3754,7 +3754,7 @@ def change_scheduling_plan_compartment(ctx, from_json, wait_for_state, max_wait_
 
 
 @scheduling_policy_group.command(name=cli_util.override('db.change_scheduling_policy_compartment.command_name', 'change-compartment'), help=u"""Moves an scheduling policy resource to another compartment. \n[Command Reference](changeSchedulingPolicyCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3823,7 +3823,7 @@ def change_scheduling_policy_compartment(ctx, from_json, wait_for_state, max_wai
 
 
 @vm_cluster_group.command(name=cli_util.override('db.change_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a VM cluster and its dependent resources to another compartment. Applies to Exadata Cloud@Customer instances only. To move a cloud VM cluster in an Exadata Cloud Service instance to another compartment, use the [ChangeCloudVmClusterCompartment ] operation. \n[Command Reference](changeVmClusterCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VM cluster to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the VM cluster to.""")
 @cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3957,7 +3957,7 @@ def check_external_database_connector_connection_status(ctx, from_json, wait_for
 @external_backup_job_group.command(name=cli_util.override('db.complete_external_backup_job.command_name', 'complete'), help=u"""Changes the status of the standalone backup resource to `ACTIVE` after the backup is created from the on-premises database and placed in Oracle Cloud Infrastructure Object Storage.
 
 **Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information. \n[Command Reference](completeExternalBackupJob)""")
-@cli_util.option('--backup-id', required=True, help=u"""The backup [OCID].""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The backup [OCID].""")
 @cli_util.option('--tde-wallet-path', help=u"""If the database being backed up is TDE enabled, this will be the path to the associated TDE wallet in Object Storage.""")
 @cli_util.option('--cf-backup-handle', help=u"""The handle of the control file backup.""")
 @cli_util.option('--spf-backup-handle', help=u"""The handle of the spfile backup.""")
@@ -4009,9 +4009,9 @@ def complete_external_backup_job(ctx, from_json, backup_id, tde_wallet_path, cf_
 
 
 @autonomous_database_group.command(name=cli_util.override('db.configure_autonomous_database_vault_key.command_name', 'configure-autonomous-database-vault-key'), help=u"""Configures the Autonomous AI Database Vault service [key]. \n[Command Reference](configureAutonomousDatabaseVaultKey)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--is-using-oracle-managed-keys', type=click.BOOL, help=u"""True if disable Customer Managed Keys and use Oracle Managed Keys.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -4205,9 +4205,9 @@ def configure_exascale_exadata_infrastructure(ctx, from_json, wait_for_state, ma
 
 
 @autonomous_database_group.command(name=cli_util.override('db.configure_saas_admin_user.command_name', 'configure-saas-admin-user'), help=u"""This operation updates SaaS administrative user configuration of the Autonomous AI Database. \n[Command Reference](configureSaasAdminUser)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--password', help=u"""A strong password for SaaS administrative user. The password must be a minimum of nine (9) characters and contain a minimum of two (2) uppercase, two (2) lowercase, two (2) numbers, and two (2) special characters from _ (underscore), \\# (hashtag), or - (dash).""")
-@cli_util.option('--secret-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
 @cli_util.option('--duration', type=click.INT, help=u"""How long, in hours, the SaaS administrative user will stay enabled. If no duration is specified, the default value 1 will be used.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates if the SaaS administrative user is enabled for the Autonomous AI Database.""")
@@ -4417,7 +4417,7 @@ def convert_standby_autonomous_container_database(ctx, from_json, wait_for_state
 @database_group.command(name=cli_util.override('db.convert_standby_database_type.command_name', 'convert-standby-database-type'), help=u"""Performs transition from standby database into a snapshot standby and vice versa. The transition performed based on the current role of the database, if the current role is standby then this operation will convert it to snapshot standby and if the current role is snapshot standby then this operation will convert it to standby.
 
 This operation should be performed on respective standby/snapshot standby database. \n[Command Reference](convertStandbyDatabaseType)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The administrator password of the primary database in this Data Guard association.
 
 **The password MUST be the same as the primary admin password.**""")
@@ -4486,7 +4486,7 @@ def convert_standby_database_type(ctx, from_json, wait_for_state, max_wait_secon
 
 
 @database_group.command(name=cli_util.override('db.convert_to_pdb.command_name', 'convert-to-pdb'), help=u"""Converts a non-container database to a pluggable database. \n[Command Reference](convertToPdb)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "CONVERT", "SYNC", "SYNC_ROLLBACK"]), help=u"""The operations used to convert a non-container database to a pluggable database. - Use `PRECHECK` to run a pre-check operation on non-container database prior to converting it into a pluggable database. - Use `CONVERT` to convert a non-container database into a pluggable database. - Use `SYNC` if the non-container database was manually converted into a pluggable database using the dbcli command-line utility. Databases may need to be converted manually if the CONVERT action fails when converting a non-container database using the API. - Use `SYNC_ROLLBACK` if the conversion of a non-container database into a pluggable database was manually rolled back using the dbcli command line utility. Conversions may need to be manually rolled back if the CONVERT action fails when converting a non-container database using the API.""")
 @cli_util.option('--convert-to-pdb-target-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4547,7 +4547,7 @@ def convert_to_pdb(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @database_group.command(name=cli_util.override('db.convert_to_pdb_pdb_conversion_to_new_database_details.command_name', 'convert-to-pdb-pdb-conversion-to-new-database-details'), help=u"""Converts a non-container database to a pluggable database. \n[Command Reference](convertToPdb)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "CONVERT", "SYNC", "SYNC_ROLLBACK"]), help=u"""The operations used to convert a non-container database to a pluggable database. - Use `PRECHECK` to run a pre-check operation on non-container database prior to converting it into a pluggable database. - Use `CONVERT` to convert a non-container database into a pluggable database. - Use `SYNC` if the non-container database was manually converted into a pluggable database using the dbcli command-line utility. Databases may need to be converted manually if the CONVERT action fails when converting a non-container database using the API. - Use `SYNC_ROLLBACK` if the conversion of a non-container database into a pluggable database was manually rolled back using the dbcli command line utility. Conversions may need to be manually rolled back if the CONVERT action fails when converting a non-container database using the API.""")
 @cli_util.option('--convert-to-pdb-target-details-cdb-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 8 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--convert-to-pdb-target-details-cdb-admin-password', required=True, help=u"""A strong password for SYS, SYSTEM, and the plugbable database ADMIN user of the container database after conversion. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numeric, and two special characters. The special characters must be _, \\#, or -.""")
@@ -4696,7 +4696,7 @@ def convert_to_regular_pluggable_database(ctx, from_json, wait_for_state, max_wa
 Convert the standby to a standalone database.
 
 This operation should be performed on respective standby database. \n[Command Reference](convertToStandalone)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The administrator password of the primary database in this Data Guard association.
 
 **The password MUST be the same as the primary admin password.**""")
@@ -4757,7 +4757,7 @@ def convert_to_standalone(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @application_vip_group.command(name=cli_util.override('db.create_application_vip.command_name', 'create'), help=u"""Creates a new application virtual IP (VIP) address in the specified cloud VM cluster based on the request parameters you provide. \n[Command Reference](createApplicationVip)""")
 @cli_util.option('--hostname-label', required=True, help=u"""The hostname of the application virtual IP (VIP) address.""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The [OCID] of the cloud VM cluster associated with the application virtual IP (VIP) address.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet associated with the application virtual IP (VIP) address.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet associated with the application virtual IP (VIP) address.""")
 @cli_util.option('--db-node-id', help=u"""The [OCID] of the DB node associated with the application virtual IP (VIP) address.""")
 @cli_util.option('--ip-address', help=u"""The application virtual IP (VIP) IPv4 address.""")
 @cli_util.option('--ipv6-address', help=u"""The application virtual IP (VIP) IPv6 address.""")
@@ -4845,7 +4845,7 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 @cli_util.option('--peer-db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` of the peer Autonomous Container Database in a Data Guard association is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
 @cli_util.option('--autonomous-vm-cluster-id', help=u"""The OCID of the Autonomous VM Cluster.""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', help=u"""The [OCID] of the cloud Autonomous Exadata VM Cluster.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--standby-maintenance-buffer-in-days', type=click.INT, help=u"""The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before scheduled maintenance of the primary database.""")
 @cli_util.option('--version-preference', type=custom_types.CliCaseInsensitiveChoice(["NEXT_RELEASE_UPDATE", "LATEST_RELEASE_UPDATE"]), help=u"""The next maintenance version preference.""")
@@ -4857,7 +4857,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
 @cli_util.option('--encryption-key-location-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
@@ -5050,7 +5050,7 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 @cli_util.option('--peer-db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` of the peer Autonomous Container Database in a Data Guard association is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
 @cli_util.option('--autonomous-vm-cluster-id', help=u"""The OCID of the Autonomous VM Cluster.""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', help=u"""The [OCID] of the cloud Autonomous Exadata VM Cluster.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--standby-maintenance-buffer-in-days', type=click.INT, help=u"""The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before scheduled maintenance of the primary database.""")
 @cli_util.option('--version-preference', type=custom_types.CliCaseInsensitiveChoice(["NEXT_RELEASE_UPDATE", "LATEST_RELEASE_UPDATE"]), help=u"""The next maintenance version preference.""")
@@ -5062,7 +5062,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
 @cli_util.option('--encryption-key-location-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
@@ -5255,7 +5255,7 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 @cli_util.option('--peer-db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` of the peer Autonomous Container Database in a Data Guard association is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
 @cli_util.option('--autonomous-vm-cluster-id', help=u"""The OCID of the Autonomous VM Cluster.""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', help=u"""The [OCID] of the cloud Autonomous Exadata VM Cluster.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--standby-maintenance-buffer-in-days', type=click.INT, help=u"""The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before scheduled maintenance of the primary database.""")
 @cli_util.option('--version-preference', type=custom_types.CliCaseInsensitiveChoice(["NEXT_RELEASE_UPDATE", "LATEST_RELEASE_UPDATE"]), help=u"""The next maintenance version preference.""")
@@ -5267,7 +5267,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
 @cli_util.option('--encryption-key-location-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
@@ -6335,8 +6335,8 @@ def create_autonomous_container_database_dataguard_association(ctx, from_json, w
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database.command_name', 'create'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -6370,7 +6370,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
@@ -6406,7 +6406,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -6450,7 +6450,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -6671,9 +6671,9 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_undelete_autonomous_database_details.command_name', 'create-autonomous-database-undelete-autonomous-database-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--source-id', required=True, help=u"""The [OCID] of the Autonomous AI Database that you want to undelete.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -6707,7 +6707,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
@@ -6743,7 +6743,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -6784,7 +6784,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -7005,10 +7005,10 @@ def create_autonomous_database_undelete_autonomous_database_details(ctx, from_js
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_autonomous_database_clone_details.command_name', 'create-autonomous-database-create-autonomous-database-clone-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous AI Database that you will clone to create a new Autonomous AI Database.""")
 @cli_util.option('--clone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "METADATA", "PARTIAL"]), help=u"""The Autonomous AI Database clone type.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -7042,7 +7042,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
@@ -7078,7 +7078,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -7119,7 +7119,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -7341,9 +7341,9 @@ def create_autonomous_database_create_autonomous_database_clone_details(ctx, fro
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_refreshable_autonomous_database_clone_details.command_name', 'create-autonomous-database-create-refreshable-autonomous-database-clone-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous AI Database that you will clone to create a new Autonomous AI Database.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -7377,7 +7377,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
@@ -7413,7 +7413,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -7454,7 +7454,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -7701,10 +7701,10 @@ def create_autonomous_database_create_refreshable_autonomous_database_clone_deta
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_autonomous_database_from_backup_details.command_name', 'create-autonomous-database-create-autonomous-database-from-backup-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--autonomous-database-backup-id', required=True, help=u"""The [OCID] of the source Autonomous AI Database Backup that you will clone to create a new Autonomous AI Database.""")
 @cli_util.option('--clone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "METADATA", "PARTIAL"]), help=u"""The Autonomous AI Database clone type.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -7738,7 +7738,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
@@ -7774,7 +7774,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -7815,7 +7815,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -8041,10 +8041,10 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_cross_region_disaster_recovery_details.command_name', 'create-autonomous-database-create-cross-region-disaster-recovery-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous AI Database that will be used to create a new peer database for the DR association.""")
 @cli_util.option('--remote-disaster-recovery-type', required=True, help=u"""Indicates the cross-region disaster recovery (DR) type of the standby Autonomous AI Database Serverless instance. Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover. Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -8078,7 +8078,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
@@ -8114,7 +8114,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -8155,7 +8155,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -8381,10 +8381,10 @@ def create_autonomous_database_create_cross_region_disaster_recovery_details(ctx
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details.command_name', 'create-autonomous-database-create-autonomous-database-from-backup-timestamp-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the source Autonomous AI Database that you will clone to create a new Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the source Autonomous AI Database that you will clone to create a new Autonomous AI Database.""")
 @cli_util.option('--clone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "METADATA", "PARTIAL"]), help=u"""The Autonomous AI Database clone type.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -8418,7 +8418,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
@@ -8454,7 +8454,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -8495,7 +8495,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -8729,10 +8729,10 @@ def create_autonomous_database_create_autonomous_database_from_backup_timestamp_
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_cross_tenancy_disaster_recovery_details.command_name', 'create-autonomous-database-create-cross-tenancy-disaster-recovery-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous AI Database that will be used to create a new peer database for the DR association.""")
 @cli_util.option('--disaster-recovery-type', required=True, help=u"""Indicates the disaster recovery (DR) type of the standby Autonomous AI Database Serverless instance. Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover. Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -8766,7 +8766,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
@@ -8802,7 +8802,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -8843,7 +8843,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -9069,9 +9069,9 @@ def create_autonomous_database_create_cross_tenancy_disaster_recovery_details(ct
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details.command_name', 'create-autonomous-database-create-cross-region-autonomous-database-data-guard-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous AI Database that will be used to create a new peer database for the Data Guard association.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -9105,7 +9105,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
@@ -9141,7 +9141,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -9182,7 +9182,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -9403,8 +9403,8 @@ def create_autonomous_database_create_cross_region_autonomous_database_data_guar
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_autonomous_database_details.command_name', 'create-autonomous-database-create-autonomous-database-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -9438,7 +9438,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
@@ -9474,7 +9474,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -9515,7 +9515,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -9735,12 +9735,12 @@ def create_autonomous_database_create_autonomous_database_details(ctx, from_json
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_okv_key_details.command_name', 'create-autonomous-database-okv-key-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--encryption-key-okv-uri', required=True, help=u"""URI of OKV server""")
 @cli_util.option('--encryption-key-okv-kms-key', required=True, help=u"""UUID of OKV KMS Key""")
 @cli_util.option('--encryption-key-directory-name', required=True, help=u"""OKV wallet directory name""")
 @cli_util.option('--encryption-key-certificate-directory-name', required=True, help=u"""OKV certificate directory name""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -9774,7 +9774,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -9809,7 +9809,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -9850,7 +9850,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -10076,10 +10076,10 @@ def create_autonomous_database_okv_key_details(ctx, from_json, wait_for_state, m
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_azure_key_details.command_name', 'create-autonomous-database-azure-key-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--encryption-key-vault-uri', required=True, help=u"""Azure vault URI""")
 @cli_util.option('--encryption-key-key-name', required=True, help=u"""Azure key name""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -10113,7 +10113,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -10148,7 +10148,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -10189,7 +10189,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -10409,10 +10409,10 @@ def create_autonomous_database_azure_key_details(ctx, from_json, wait_for_state,
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_aws_key_details.command_name', 'create-autonomous-database-aws-key-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--encryption-key-service-endpoint-uri', required=True, help=u"""AWS key service endpoint URI""")
 @cli_util.option('--encryption-key-key-arn', required=True, help=u"""AWS key ARN""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -10446,7 +10446,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -10481,7 +10481,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -10522,7 +10522,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -10750,10 +10750,10 @@ def create_autonomous_database_aws_key_details(ctx, from_json, wait_for_state, m
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_oci_key_details.command_name', 'create-autonomous-database-oci-key-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--encryption-key-kms-key-id', required=True, help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--encryption-key-vault-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -10787,7 +10787,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -10822,7 +10822,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -10863,7 +10863,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -11083,12 +11083,12 @@ def create_autonomous_database_oci_key_details(ctx, from_json, wait_for_state, m
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_gcp_key_details.command_name', 'create-autonomous-database-gcp-key-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
 @cli_util.option('--encryption-key-key-name', required=True, help=u"""GCP key name""")
 @cli_util.option('--encryption-key-project', required=True, help=u"""GCP project name""")
 @cli_util.option('--encryption-key-location', required=True, help=u"""GCP key ring location""")
 @cli_util.option('--encryption-key-key-ring', required=True, help=u"""GCP key ring""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -11122,7 +11122,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -11157,7 +11157,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -11198,7 +11198,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -11424,8 +11424,8 @@ def create_autonomous_database_gcp_key_details(ctx, from_json, wait_for_state, m
 
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_oracle_managed_key_details.command_name', 'create-autonomous-database-oracle-managed-key-details'), help=u"""Creates a new Autonomous AI Database. \n[Command Reference](createAutonomousDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Autonomous AI Database.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--character-set', help=u"""The character set for the Autonomous AI Database. The default is AL32UTF8. Allowed values for an Autonomous AI Database Serverless instance as as returned by [List Autonomous AI Database Character Sets]
 
 For an Autonomous AI Database on dedicated infrastructure, the allowed values are:
@@ -11459,7 +11459,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous AI Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -11494,7 +11494,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""**Deprecated.** Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--is-local-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous AI Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous AI Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -11535,7 +11535,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous AI Database is backup retention locked.""")
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID.
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
@@ -11753,7 +11753,7 @@ def create_autonomous_database_oracle_managed_key_details(ctx, from_json, wait_f
 
 
 @autonomous_database_backup_group.command(name=cli_util.override('db.create_autonomous_database_backup.command_name', 'create'), help=u"""Creates a new Autonomous AI Database backup for the specified database based on the provided request parameters. \n[Command Reference](createAutonomousDatabaseBackup)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous AI Database backup.""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Autonomous AI Database backup.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the backup. The name does not have to be unique.""")
 @cli_util.option('--retention-period-in-days', type=click.INT, help=u"""Retention period, in days, for long-term backups""")
 @cli_util.option('--is-long-term-backup', type=click.BOOL, help=u"""Indicates whether the backup is long-term""")
@@ -11821,7 +11821,7 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
 
 
 @autonomous_database_software_image_group.command(name=cli_util.override('db.create_autonomous_database_software_image.command_name', 'create'), help=u"""create Autonomous AI Database Software Image in the specified compartment. \n[Command Reference](createAutonomousDatabaseSoftwareImage)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Autonomous AI Database Software Image. The name does not have to be unique.""")
 @cli_util.option('--source-cdb-id', required=True, help=u"""The source Autonomous Container Database [OCID] from which to create Autonomous AI Database Software Image.""")
 @cli_util.option('--image-shape-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXADATA_SHAPE", "EXACC_SHAPE"]), help=u"""To what shape the image is meant for.""")
@@ -11886,7 +11886,7 @@ def create_autonomous_database_software_image(ctx, from_json, wait_for_state, ma
 
 
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.create_autonomous_vm_cluster.command_name', 'create'), help=u"""Creates an Autonomous VM cluster for Exadata Cloud@Customer. To create an Autonomous VM Cluster in the Oracle cloud, see [CreateCloudAutonomousVmCluster]. \n[Command Reference](createAutonomousVmCluster)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Autonomous VM cluster. The name does not need to be unique.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
 @cli_util.option('--vm-cluster-network-id', required=True, help=u"""The [OCID] of the VM cluster network.""")
@@ -12003,7 +12003,7 @@ def create_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_second
 
 
 @backup_group.command(name=cli_util.override('db.create_backup.command_name', 'create'), help=u"""Creates a new backup in the specified database based on the request parameters you provide. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work. \n[Command Reference](createBackup)""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the database.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the backup. The name does not have to be unique.""")
 @cli_util.option('--retention-period-in-days', type=click.INT, help=u"""The retention period of the long term backup in days.""")
 @cli_util.option('--retention-period-in-years', type=click.INT, help=u"""The retention period of the long term backup in years.""")
@@ -12062,7 +12062,7 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 @backup_destination_group.command(name=cli_util.override('db.create_backup_destination.command_name', 'create'), help=u"""Creates a backup destination in an Exadata Cloud@Customer system. \n[Command Reference](createBackupDestination)""")
 @cli_util.option('--display-name', required=True, help=u"""The user-provided name of the backup destination.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NFS", "RECOVERY_APPLIANCE"]), help=u"""Type of the backup destination.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -12125,7 +12125,7 @@ def create_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 @backup_destination_group.command(name=cli_util.override('db.create_backup_destination_create_nfs_backup_destination_details.command_name', 'create-backup-destination-create-nfs-backup-destination-details'), help=u"""Creates a backup destination in an Exadata Cloud@Customer system. \n[Command Reference](createBackupDestination)""")
 @cli_util.option('--display-name', required=True, help=u"""The user-provided name of the backup destination.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12196,7 +12196,7 @@ def create_backup_destination_create_nfs_backup_destination_details(ctx, from_js
 
 @backup_destination_group.command(name=cli_util.override('db.create_backup_destination_create_recovery_appliance_backup_destination_details.command_name', 'create-backup-destination-create-recovery-appliance-backup-destination-details'), help=u"""Creates a backup destination in an Exadata Cloud@Customer system. \n[Command Reference](createBackupDestination)""")
 @cli_util.option('--display-name', required=True, help=u"""The user-provided name of the backup destination.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--connection-string', required=True, help=u"""The connection string for connecting to the Recovery Appliance.""")
 @cli_util.option('--vpc-users', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Virtual Private Catalog (VPC) users that are used to access the Recovery Appliance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -12262,8 +12262,8 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
 
 
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.create_cloud_autonomous_vm_cluster.command_name', 'create'), help=u"""Creates an Autonomous Exadata VM cluster in the Oracle cloud. For Exadata Cloud@Customer systems, see [CreateAutonomousVmCluster]. \n[Command Reference](createCloudAutonomousVmCluster)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the cloud Autonomous VM Cluster is associated with.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the cloud Autonomous VM Cluster is associated with.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the cloud Autonomous VM cluster. The name does not need to be unique.""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
 @cli_util.option('--description', help=u"""User defined description of the cloud Autonomous VM cluster.""")
@@ -12287,7 +12287,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -12397,7 +12397,7 @@ def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_
 
 @cloud_exadata_infrastructure_group.command(name=cli_util.override('db.create_cloud_exadata_infrastructure.command_name', 'create'), help=u"""Creates a cloud Exadata infrastructure resource. This resource is used to create either an [Exadata Cloud Service] instance or an Autonomous AI Database on dedicated Exadata infrastructure. \n[Command Reference](createCloudExadataInfrastructure)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the cloud Exadata infrastructure is located.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the cloud Exadata infrastructure resource. The name does not need to be unique.""")
 @cli_util.option('--shape', required=True, help=u"""The shape of the cloud Exadata infrastructure resource.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the cloud Exadata infrastructure.""")
@@ -12407,8 +12407,8 @@ def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer contacts.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12498,8 +12498,8 @@ def create_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait
 
 
 @cloud_vm_cluster_group.command(name=cli_util.override('db.create_cloud_vm_cluster.command_name', 'create'), help=u"""Creates a cloud VM cluster. \n[Command Reference](createCloudVmCluster)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet associated with the cloud VM cluster.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet associated with the cloud VM cluster.""")
 @cli_util.option('--backup-subnet-id', required=True, help=u"""The [OCID] of the backup network subnet associated with the cloud VM cluster.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""For fixed shapes, this is the total number of OCPUs to enable across the VM cluster.
 
@@ -12525,7 +12525,7 @@ The maximum length of the combined hostname and domain is 63 characters.
 **Note:** The hostname must be unique within the subnet. If it is not unique, the cloud VM Cluster will fail to provision.""")
 @cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of one or more key pairs used for SSH access to the cloud VM cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--gi-version', required=True, help=u"""A valid Oracle Grid Infrastructure (GI) software version.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to enable for a cloud VM cluster. Only 1 decimal place is allowed for the fractional part.""")
 @cli_util.option('--memory-size-in-gbs', type=click.INT, help=u"""The memory to be allocated in GBs.""")
 @cli_util.option('--db-node-storage-size-in-gbs', type=click.INT, help=u"""The local node storage to be allocated in GBs.""")
@@ -12825,7 +12825,7 @@ def create_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association.command_name', 'create'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
 
 The password must contain no fewer than nine characters and include:
@@ -12926,7 +12926,7 @@ def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 @data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_create_data_guard_association_with_new_db_system_details.command_name', 'create-data-guard-association-create-data-guard-association-with-new-db-system-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
 
 The password must contain no fewer than nine characters and include:
@@ -12965,7 +12965,7 @@ To get a list of all shapes, use the [ListDbSystemShapes] operation.""")
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
 @cli_util.option('--node-count', type=click.INT, help=u"""The number of nodes to launch for the DB system of the standby in the Data Guard association. For a 2-node RAC virtual machine DB system, specify either 1 or 2. If you do not supply this parameter, the default is the node count of the primary DB system.""")
-@cli_util.option('--subnet-id', help=u"""The OCID of the subnet the DB system is associated with. **Subnet Restrictions:** - For 1- and 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.16.16/28
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The OCID of the subnet the DB system is associated with. **Subnet Restrictions:** - For 1- and 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.16.16/28
 
 These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and backup subnet.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] for the network security groups (NSGs) to which this resource belongs. Setting this to an empty list removes all resources from all NSGs. For more information about NSGs, see [Security Rules]. **NsgIds restrictions:** - A network security group (NSG) is optional for Autonomous AI Databases with private access. The nsgIds list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12995,8 +12995,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "UPGRADING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -13147,7 +13147,7 @@ def create_data_guard_association_create_data_guard_association_with_new_db_syst
 @data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_create_data_guard_association_to_existing_vm_cluster_details.command_name', 'create-data-guard-association-create-data-guard-association-to-existing-vm-cluster-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
 
 The password must contain no fewer than nine characters and include:
@@ -13256,7 +13256,7 @@ def create_data_guard_association_create_data_guard_association_to_existing_vm_c
 @data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_create_data_guard_association_to_existing_db_system_details.command_name', 'create-data-guard-association-create-data-guard-association-to-existing-db-system-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
 
 The password must contain no fewer than nine characters and include:
@@ -13365,7 +13365,7 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
 @data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_external_hsm_encryption_details.command_name', 'create-data-guard-association-external-hsm-encryption-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
 
 The password must contain no fewer than nine characters and include:
@@ -13465,7 +13465,7 @@ def create_data_guard_association_external_hsm_encryption_details(ctx, from_json
 @data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_google_cloud_provider_encryption_key_details.command_name', 'create-data-guard-association-google-cloud-provider-encryption-key-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
 
 The password must contain no fewer than nine characters and include:
@@ -13565,7 +13565,7 @@ def create_data_guard_association_google_cloud_provider_encryption_key_details(c
 @data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_azure_encryption_key_details.command_name', 'create-data-guard-association-azure-encryption-key-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
 
 The password must contain no fewer than nine characters and include:
@@ -13665,7 +13665,7 @@ def create_data_guard_association_azure_encryption_key_details(ctx, from_json, w
 @data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_aws_encryption_key_details.command_name', 'create-data-guard-association-aws-encryption-key-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
 
 The password must contain no fewer than nine characters and include:
@@ -13763,7 +13763,7 @@ def create_data_guard_association_aws_encryption_key_details(ctx, from_json, wai
 
 
 @database_group.command(name=cli_util.override('db.create_database.command_name', 'create'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--source', required=True, type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATABASE", "DATAGUARD"]), help=u"""The source of the database: Use `NONE` for creating a new database. Use `DB_BACKUP` for creating a new database by restoring from a backup. Use `DATAGUARD` for creating a new STANDBY database for a Data Guard setup.. The default is `NONE`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
@@ -13831,7 +13831,7 @@ def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_new_database_details.command_name', 'create-database-create-new-database-details'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
@@ -13901,7 +13901,7 @@ def create_database_create_new_database_details(ctx, from_json, wait_for_state, 
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_stand_by_database_details.command_name', 'create-database-create-stand-by-database-details'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
@@ -13971,7 +13971,7 @@ def create_database_create_stand_by_database_details(ctx, from_json, wait_for_st
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_database_from_database.command_name', 'create-database-create-database-from-database'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
@@ -14041,7 +14041,7 @@ def create_database_create_database_from_database(ctx, from_json, wait_for_state
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_database_from_backup.command_name', 'create-database-create-database-from-backup'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
@@ -14111,7 +14111,7 @@ def create_database_create_database_from_backup(ctx, from_json, wait_for_state, 
 
 
 @database_software_image_group.command(name=cli_util.override('db.create_database_software_image.command_name', 'create'), help=u"""create database software image in the specified compartment. \n[Command Reference](createDatabaseSoftwareImage)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the database software image  belongs in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment the database software image  belongs in.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the database software image. The name does not have to be unique.""")
 @cli_util.option('--database-version', help=u"""The database version with which the database software image is to be built.""")
 @cli_util.option('--image-shape-family', type=custom_types.CliCaseInsensitiveChoice(["VM_BM_SHAPE", "EXADATA_SHAPE", "EXACC_SHAPE", "EXADBXS_SHAPE"]), help=u"""To what shape the image is meant for.""")
@@ -14283,7 +14283,7 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_from_database_details.command_name', 'create-db-home-create-db-home-with-db-system-id-from-database-details'), help=u"""Creates a new Database Home in the specified database system based on the request parameters you provide. Applies to bare metal DB systems, Exadata systems, and Exadata Cloud@Customer systems. \n[Command Reference](createDbHome)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
@@ -14369,7 +14369,7 @@ def create_db_home_create_db_home_with_db_system_id_from_database_details(ctx, f
 
 
 @db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_from_backup_details.command_name', 'create-db-home-create-db-home-with-db-system-id-from-backup-details'), help=u"""Creates a new Database Home in the specified database system based on the request parameters you provide. Applies to bare metal DB systems, Exadata systems, and Exadata Cloud@Customer systems. \n[Command Reference](createDbHome)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
@@ -14627,7 +14627,7 @@ def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, fr
 
 
 @db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_details.command_name', 'create-db-home-create-db-home-with-db-system-id-details'), help=u"""Creates a new Database Home in the specified database system based on the request parameters you provide. Applies to bare metal DB systems, Exadata systems, and Exadata Cloud@Customer systems. \n[Command Reference](createDbHome)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.""")
@@ -14815,7 +14815,7 @@ def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wai
 
 
 @exadata_infrastructure_group.command(name=cli_util.override('db.create_exadata_infrastructure.command_name', 'create'), help=u"""Creates an Exadata infrastructure resource. Applies to Exadata Cloud@Customer instances only. To create an Exadata Cloud Service infrastructure resource, use the  [CreateCloudExadataInfrastructure] operation. \n[Command Reference](createExadataInfrastructure)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Exadata infrastructure. The name does not need to be unique.""")
 @cli_util.option('--shape', required=True, help=u"""The shape of the Exadata infrastructure. The shape determines the amount of CPU, storage, and memory resources allocated to the instance.""")
 @cli_util.option('--time-zone', required=True, help=u"""The time zone of the Exadata infrastructure. For details, see [Exadata Infrastructure Time Zones].""")
@@ -14942,9 +14942,9 @@ def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_secon
 
 
 @exadb_vm_cluster_group.command(name=cli_util.override('db.create_exadb_vm_cluster.command_name', 'create'), help=u"""Creates an Exadata VM cluster on Exascale Infrastructure \n[Command Reference](createExadbVmCluster)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain in which the Exadata VM cluster on Exascale Infrastructure is located.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet associated with the Exadata VM cluster on Exascale Infrastructure.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet associated with the Exadata VM cluster on Exascale Infrastructure.""")
 @cli_util.option('--backup-subnet-id', required=True, help=u"""The [OCID] of the backup network subnet associated with the Exadata VM cluster on Exascale Infrastructure.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Exadata VM cluster on Exascale Infrastructure. The name does not need to be unique.""")
 @cli_util.option('--hostname', required=True, help=u"""The hostname for the Exadata VM cluster on Exascale Infrastructure. The hostname must begin with an alphabetic character, and can contain alphanumeric characters and hyphens (-). For Exadata systems, the maximum length of the hostname is 12 characters.
@@ -14978,7 +14978,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--shape-attribute', type=custom_types.CliCaseInsensitiveChoice(["SMART_STORAGE", "BLOCK_STORAGE"]), help=u"""The type of Exascale storage used for Exadata VM cluster. The default is SMART_STORAGE which supports Oracle Database 23ai and later""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -15089,7 +15089,7 @@ def create_exadb_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @exascale_db_storage_vault_group.command(name=cli_util.override('db.create_exascale_db_storage_vault.command_name', 'create'), help=u"""Creates an Exadata Database Storage Vault \n[Command Reference](createExascaleDbStorageVault)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Exadata Database Storage Vault. The name does not need to be unique.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain in which the Exadata Database Storage Vault is located.""")
 @cli_util.option('--high-capacity-database-storage', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -15101,8 +15101,8 @@ def create_exadb_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--exadata-infrastructure-id', help=u"""The [OCID] of the Exadata infrastructure.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--is-autoscale-enabled', type=click.BOOL, help=u"""Indicates if autoscale feature is enabled for the Database Storage Vault. The default value is `FALSE`.""")
 @cli_util.option('--autoscale-limit-in-gbs', type=click.INT, help=u"""The maximum limit, in gigabytes, to which the Vault storage size can automatically scale when auto scaling is enabled for the Database Storage Vault""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -15188,7 +15188,7 @@ def create_exascale_db_storage_vault(ctx, from_json, wait_for_state, max_wait_se
 @execution_action_group.command(name=cli_util.override('db.create_execution_action.command_name', 'create'), help=u"""Creates an execution action resource. \n[Command Reference](createExecutionAction)""")
 @cli_util.option('--execution-window-id', required=True, help=u"""The [OCID] of the execution window resource the execution action belongs to.""")
 @cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE"]), help=u"""The action type of the execution action being performed""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--action-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<ParamName, ParamValue> where a key value pair describes the specific action parameter. Example: `{\"count\": \"3\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--action-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of action members of this execution action.
 
@@ -15261,7 +15261,7 @@ def create_execution_action(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @execution_window_group.command(name=cli_util.override('db.create_execution_window.command_name', 'create'), help=u"""Creates an execution window resource. \n[Command Reference](createExecutionWindow)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--execution-resource-id', required=True, help=u"""The [OCID] of the execution resource the execution window belongs to.""")
 @cli_util.option('--time-scheduled', required=True, type=custom_types.CLI_DATETIME, help=u"""The scheduled start date and time of the execution window.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--window-duration-in-mins', required=True, type=click.INT, help=u"""Duration window allows user to set a duration they plan to allocate for Scheduling window. The duration is in minutes.""")
@@ -15333,7 +15333,7 @@ def create_execution_window(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 **Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information. \n[Command Reference](createExternalBackupJob)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The targeted availability domain for the backup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where this backup should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where this backup should be created.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the backup. This name does not have to be unique.""")
 @cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version.""")
 @cli_util.option('--db-name', required=True, help=u"""The name of the database from which the backup is being taken.""")
@@ -15380,7 +15380,7 @@ def create_external_backup_job(ctx, from_json, availability_domain, compartment_
 
 
 @external_container_database_group.command(name=cli_util.override('db.create_external_container_database.command_name', 'create'), help=u"""Creates a new external container database resource. \n[Command Reference](createExternalContainerDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the external database. The name does not have to be unique.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -15575,7 +15575,7 @@ def create_external_database_connector_create_external_macs_connector_details(ct
 
 
 @external_non_container_database_group.command(name=cli_util.override('db.create_external_non_container_database.command_name', 'create'), help=u"""Creates a new ExternalNonContainerDatabase resource \n[Command Reference](createExternalNonContainerDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the external database. The name does not have to be unique.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -15637,7 +15637,7 @@ def create_external_non_container_database(ctx, from_json, wait_for_state, max_w
 
 @external_pluggable_database_group.command(name=cli_util.override('db.create_external_pluggable_database.command_name', 'create'), help=u"""Registers a new [ExternalPluggableDatabase] resource. \n[Command Reference](createExternalPluggableDatabase)""")
 @cli_util.option('--external-container-database-id', required=True, help=u"""The [OCID] of the [external container database] that contains the specified [external pluggable database] resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the external database. The name does not have to be unique.""")
 @cli_util.option('--source-id', help=u"""The [OCID] of the the non-container database that was converted to a pluggable database to create this resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -15703,7 +15703,7 @@ def create_external_pluggable_database(ctx, from_json, wait_for_state, max_wait_
 
 
 @key_store_group.command(name=cli_util.override('db.create_key_store.command_name', 'create'), help=u"""Creates a Key Store. \n[Command Reference](createKeyStore)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the key store. The name does not need to be unique.""")
 @cli_util.option('--type-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -15766,7 +15766,7 @@ def create_key_store(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @key_store_group.command(name=cli_util.override('db.create_key_store_key_store_type_from_oracle_key_vault_details.command_name', 'create-key-store-key-store-type-from-oracle-key-vault-details'), help=u"""Creates a Key Store. \n[Command Reference](createKeyStore)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the key store. The name does not need to be unique.""")
 @cli_util.option('--type-details-connection-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Oracle Key Vault connection IP addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--type-details-admin-username', required=True, help=u"""The administrator username to connect to Oracle Key Vault""")
@@ -15845,7 +15845,7 @@ def create_key_store_key_store_type_from_oracle_key_vault_details(ctx, from_json
 @cli_util.option('--patching-mode', type=custom_types.CliCaseInsensitiveChoice(["ROLLING", "NONROLLING"]), help=u"""Cloud Exadata infrastructure node patching method, either \"ROLLING\" or \"NONROLLING\". Default value is ROLLING.
 
 *IMPORTANT*: Non-rolling infrastructure patching involves system down time. See [Oracle-Managed Infrastructure Maintenance Updates] for more information.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Maintenance Run.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the Maintenance Run.""")
 @cli_util.option('--database-software-image-id', help=u"""The Autonomous AI Database Software Image [OCID]""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED", "CANCELED", "PARTIAL_SUCCESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -15909,7 +15909,7 @@ def create_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @oneoff_patch_group.command(name=cli_util.override('db.create_oneoff_patch.command_name', 'create'), help=u"""Creates one-off patch for specified database version to download. \n[Command Reference](createOneoffPatch)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""One-off patch name.""")
 @cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
@@ -16427,7 +16427,7 @@ def create_pluggable_database_snapshot(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_OS_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_GI_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_GI_OS_SOFTWARE_UPDATE"]), help=u"""The type of the scheduled action being performed""")
 @cli_util.option('--scheduling-plan-id', required=True, help=u"""The [OCID] of the Scheduling Plan.""")
 @cli_util.option('--scheduling-window-id', required=True, help=u"""The [OCID] of the Scheduling Window.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--action-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<ParamName, ParamValue> where a key value pair describes the specific action parameter. Example: `{\"count\": \"3\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--action-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of action members in a scheduled action.
 
@@ -16499,7 +16499,7 @@ def create_scheduled_action(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @scheduling_plan_group.command(name=cli_util.override('db.create_scheduling_plan.command_name', 'create'), help=u"""Creates a Scheduling Plan resource. \n[Command Reference](createSchedulingPlan)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--scheduling-policy-id', required=True, help=u"""The [OCID] of the Scheduling Policy.""")
 @cli_util.option('--resource-id', required=True, help=u"""The [OCID] of the resource.""")
 @cli_util.option('--service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC", "EXACS", "FPPPCS"]), help=u"""The service type of the Scheduling Plan.""")
@@ -16568,7 +16568,7 @@ def create_scheduling_plan(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @scheduling_policy_group.command(name=cli_util.override('db.create_scheduling_policy.command_name', 'create'), help=u"""Creates a Scheduling Policy resource. \n[Command Reference](createSchedulingPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Scheduling Policy. The name does not need to be unique.""")
 @cli_util.option('--cadence', required=True, type=custom_types.CliCaseInsensitiveChoice(["HALFYEARLY", "QUARTERLY", "MONTHLY"]), help=u"""The cadence period.""")
 @cli_util.option('--cadence-start-month', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Start of the month to be followed during the cadence period.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16637,7 +16637,7 @@ def create_scheduling_policy(ctx, from_json, wait_for_state, max_wait_seconds, w
 @scheduling_window_group.command(name=cli_util.override('db.create_scheduling_window.command_name', 'create'), help=u"""Creates a Scheduling Window resource. \n[Command Reference](createSchedulingWindow)""")
 @cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
 @cli_util.option('--window-preference', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16703,7 +16703,7 @@ def create_scheduling_window(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @vm_cluster_group.command(name=cli_util.override('db.create_vm_cluster.command_name', 'create'), help=u"""Creates an Exadata Cloud@Customer VM cluster. \n[Command Reference](createVmCluster)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the VM cluster. The name does not need to be unique.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of ECPUs (X11M and higher) or number of OCPUs (X10M and earlier) to enable for the VM cluster.""")
@@ -16841,7 +16841,7 @@ def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 @vm_cluster_network_group.command(name=cli_util.override('db.create_vm_cluster_network.command_name', 'create'), help=u"""Creates the VM cluster network. Applies to Exadata Cloud@Customer instances only. To create a cloud VM cluster in an Exadata Cloud Service instance, use the [CreateCloudVmCluster ] operation. \n[Command Reference](createVmClusterNetwork)""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Exadata Cloud@Customer VM cluster network. The name does not need to be unique.""")
 @cli_util.option('--scans', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The SCAN details.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vm-networks', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of the client and backup networks.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -17035,7 +17035,7 @@ def delete_application_vip(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @autonomous_database_group.command(name=cli_util.override('db.delete_autonomous_database.command_name', 'delete'), help=u"""Deletes the specified Autonomous AI Database. \n[Command Reference](deleteAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--must-delete-associated-long-term-backups', type=click.BOOL, help=u"""If set to true, terminating the Autonomous AI Database also deletes its associated long-term backups if the retention lock is not enabled.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -17272,7 +17272,7 @@ def delete_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_second
 
 
 @backup_group.command(name=cli_util.override('db.delete_backup.command_name', 'delete'), help=u"""Deletes a full backup. You cannot delete automatic backups using this API. \n[Command Reference](deleteBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""The backup [OCID].""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The backup [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -17691,7 +17691,7 @@ def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @database_group.command(name=cli_util.override('db.delete_database.command_name', 'delete'), help=u"""Deletes the specified database. Applies only to Exadata systems.
 
 The data in this database is local to the Exadata system and will be lost when the database is deleted. Oracle recommends that you back up any data in the Exadata system prior to deleting it. You can use the `performFinalBackup` parameter to have the Exadata system database backed up before it is deleted. \n[Command Reference](deleteDatabase)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--perform-final-backup', type=click.BOOL, help=u"""Whether to perform a final backup of the database or not. Default is false.
 
@@ -17813,7 +17813,7 @@ def delete_database_software_image(ctx, from_json, wait_for_state, max_wait_seco
 @db_home_group.command(name=cli_util.override('db.delete_db_home.command_name', 'delete'), help=u"""Deletes a Database Home. Applies to bare metal DB systems, Exadata Cloud Service, and Exadata Cloud@Customer systems.
 
 Oracle recommends that you use the `performFinalBackup` parameter to back up any data on a bare metal DB system before you delete a Database Home. On an Exadata Cloud@Customer system or an Exadata Cloud Service system, you can delete a Database Home only when there are no databases in it and therefore you cannot use the `performFinalBackup` parameter to back up data. \n[Command Reference](deleteDbHome)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The Database Home [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--perform-final-backup', type=click.BOOL, help=u"""Whether to perform a final backup of the database or not. Default is false.
 
@@ -19016,7 +19016,7 @@ def delete_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @autonomous_database_group.command(name=cli_util.override('db.deregister_autonomous_database_data_safe.command_name', 'deregister-autonomous-database-data-safe'), help=u"""Asynchronously deregisters this Autonomous AI Database with Data Safe. \n[Command Reference](deregisterAutonomousDatabaseDataSafe)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--pdb-admin-password', required=True, help=u"""The admin password provided during the creation of the database. This password is between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -19085,7 +19085,7 @@ def deregister_autonomous_database_data_safe(ctx, from_json, wait_for_state, max
 
 
 @autonomous_database_group.command(name=cli_util.override('db.disable_autonomous_database_management.command_name', 'disable-autonomous-database-management'), help=u"""Disables Database Management for the Autonomous AI Database resource. \n[Command Reference](disableAutonomousDatabaseManagement)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -19148,7 +19148,7 @@ def disable_autonomous_database_management(ctx, from_json, wait_for_state, max_w
 
 
 @autonomous_database_group.command(name=cli_util.override('db.disable_autonomous_database_operations_insights.command_name', 'disable-autonomous-database-operations-insights'), help=u"""Disables Operations Insights for the Autonomous AI Database resource. \n[Command Reference](disableAutonomousDatabaseOperationsInsights)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -19211,7 +19211,7 @@ def disable_autonomous_database_operations_insights(ctx, from_json, wait_for_sta
 
 
 @database_group.command(name=cli_util.override('db.disable_database_management.command_name', 'disable-database-management'), help=u"""Disables the Database Management service for the database. \n[Command Reference](disableDatabaseManagement)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -20108,7 +20108,7 @@ def edit_autonomous_container_database_dataguard(ctx, from_json, wait_for_state,
 
 
 @autonomous_database_group.command(name=cli_util.override('db.enable_autonomous_database_management.command_name', 'enable-autonomous-database-management'), help=u"""Enables Database Management for Autonomous AI Database. \n[Command Reference](enableAutonomousDatabaseManagement)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -20171,7 +20171,7 @@ def enable_autonomous_database_management(ctx, from_json, wait_for_state, max_wa
 
 
 @autonomous_database_group.command(name=cli_util.override('db.enable_autonomous_database_operations_insights.command_name', 'enable-autonomous-database-operations-insights'), help=u"""Enables the specified Autonomous AI Database with Operations Insights. \n[Command Reference](enableAutonomousDatabaseOperationsInsights)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -20234,7 +20234,7 @@ def enable_autonomous_database_operations_insights(ctx, from_json, wait_for_stat
 
 
 @database_group.command(name=cli_util.override('db.enable_database_management.command_name', 'enable-database-management'), help=u"""Enables the Database Management service for an Oracle Database located in Oracle Cloud Infrastructure. This service allows the database to access tools including Metrics and Performance hub. Database Management is enabled at the container database (CDB) level. \n[Command Reference](enableDatabaseManagement)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-end-point-id', required=True, help=u"""The [OCID] of the private endpoint.""")
 @cli_util.option('--service-name', required=True, help=u"""The name of the Oracle Database service that will be used to connect to the database.""")
@@ -20948,7 +20948,7 @@ def enable_pluggable_database_management(ctx, from_json, wait_for_state, max_wai
 
 
 @autonomous_database_group.command(name=cli_util.override('db.fail_over_autonomous_database.command_name', 'fail-over'), help=u"""Initiates a failover of the specified Autonomous AI Database to the associated peer database. Applicable only to databases with Disaster Recovery enabled. This API should be called in the remote region where the peer database resides. Below parameter is optional:   - `peerDbId`     Use this parameter to specify the database OCID of the Disaster Recovery peer, which is located in a different (remote) region from the current peer database.     If this parameter is not provided, the failover will happen in the same region. \n[Command Reference](failOverAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--peer-db-id', help=u"""The database OCID(/Content/General/Concepts/identifiers.htm) of the Disaster Recovery peer (source Primary) database, which is located in a different (remote) region from the current peer database.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -21117,7 +21117,7 @@ def failover_autonomous_container_database_dataguard_association(ctx, from_json,
 A failover might result in data loss depending on the protection mode in effect at the time of the primary database failure.
 
 This operation should be performed on respective standby database. \n[Command Reference](failoverDataGuard)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The administrator password of the primary database in this Data Guard association.
 
 **The password MUST be the same as the primary admin password.**""")
@@ -21178,7 +21178,7 @@ def failover_data_guard(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @data_guard_association_group.command(name=cli_util.override('db.failover_data_guard_association.command_name', 'failover'), help=u"""Performs a failover to transition the standby database identified by the `databaseId` parameter into the specified Data Guard association's primary role after the existing primary database fails or becomes unreachable.
 
 A failover might result in data loss depending on the protection mode in effect at the time of the primary database failure. \n[Command Reference](failoverDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help=u"""The Data Guard association's [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The DB system administrator password.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -21239,7 +21239,7 @@ def failover_data_guard_association(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @autonomous_database_group.command(name=cli_util.override('db.generate_autonomous_database_wallet.command_name', 'generate-autonomous-database-wallet'), help=u"""Creates and downloads a wallet for the specified Autonomous AI Database. \n[Command Reference](generateAutonomousDatabaseWallet)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--password', required=True, help=u"""The password to encrypt the keys inside the wallet. The password must be at least 8 characters long and must include at least 1 letter and either 1 numeric character or 1 special character.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--generate-type', type=custom_types.CliCaseInsensitiveChoice(["ALL", "SINGLE"]), help=u"""The type of wallet to generate.
@@ -21306,7 +21306,7 @@ def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_databas
 
 @exadata_infrastructure_group.command(name=cli_util.override('db.generate_recommended_vm_cluster_network.command_name', 'generate-recommended-vm-cluster-network'), help=u"""Generates a recommended Cloud@Customer VM cluster network configuration. \n[Command Reference](generateRecommendedVmClusterNetwork)""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the VM cluster network. The name does not need to be unique.""")
 @cli_util.option('--networks', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of parameters for generation of the client and backup networks.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Db server Ids to configure network.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -21462,7 +21462,7 @@ def get_autonomous_container_database_resource_usage(ctx, from_json, autonomous_
 
 
 @autonomous_database_group.command(name=cli_util.override('db.get_autonomous_database.command_name', 'get'), help=u"""Gets the details of the specified Autonomous AI Database. \n[Command Reference](getAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -21506,7 +21506,7 @@ def get_autonomous_database_backup(ctx, from_json, autonomous_database_backup_id
 
 
 @autonomous_database_dataguard_association_group.command(name=cli_util.override('db.get_autonomous_database_dataguard_association.command_name', 'get'), help=u"""*Deprecated.* Use the [GetAutonomousContainerDatabase] operation to gets an Autonomous Data Guard-enabled database associated with the specified Autonomous AI Database. \n[Command Reference](getAutonomousDatabaseDataguardAssociation)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--autonomous-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -21572,7 +21572,7 @@ def get_autonomous_database_software_image(ctx, from_json, autonomous_database_s
 
 
 @autonomous_database_wallet_group.command(name=cli_util.override('db.get_autonomous_database_wallet.command_name', 'get'), help=u"""Gets the wallet details for the specified Autonomous AI Database. \n[Command Reference](getAutonomousDatabaseWallet)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -21702,7 +21702,7 @@ def get_autonomous_vm_cluster_resource_usage(ctx, from_json, autonomous_vm_clust
 
 
 @backup_group.command(name=cli_util.override('db.get_backup.command_name', 'get'), help=u"""Gets information about the specified backup. \n[Command Reference](getBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""The backup [OCID].""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The backup [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -22037,7 +22037,7 @@ def get_console_history_content(ctx, from_json, file, db_node_id, console_histor
 
 
 @data_guard_association_group.command(name=cli_util.override('db.get_data_guard_association.command_name', 'get'), help=u"""Gets the specified Data Guard association's configuration information. \n[Command Reference](getDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help=u"""The Data Guard association's [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -22063,7 +22063,7 @@ def get_data_guard_association(ctx, from_json, database_id, data_guard_associati
 
 
 @database_group.command(name=cli_util.override('db.get_database.command_name', 'get'), help=u"""Gets information about the specified database. \n[Command Reference](getDatabase)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -22105,7 +22105,7 @@ def get_database_software_image(ctx, from_json, database_software_image_id):
 
 
 @database_upgrade_history_entry_group.command(name=cli_util.override('db.get_database_upgrade_history_entry.command_name', 'get'), help=u"""gets the upgrade history for a specified database. \n[Command Reference](getDatabaseUpgradeHistoryEntry)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--upgrade-history-entry-id', required=True, help=u"""The database/db system upgrade History [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -22154,7 +22154,7 @@ def get_db_connection_bundle(ctx, from_json, db_connection_bundle_id):
 
 
 @db_home_group.command(name=cli_util.override('db.get_db_home.command_name', 'get'), help=u"""Gets information about the specified Database Home. \n[Command Reference](getDbHome)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The Database Home [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -22175,7 +22175,7 @@ def get_db_home(ctx, from_json, db_home_id):
 
 
 @patch_group.command(name=cli_util.override('db.get_db_home_patch.command_name', 'get-db-home'), help=u"""Gets information about a specified patch package. \n[Command Reference](getDbHomePatch)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The Database Home [OCID].""")
 @cli_util.option('--patch-id', required=True, help=u"""The [OCID] of the patch.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -22201,7 +22201,7 @@ def get_db_home_patch(ctx, from_json, db_home_id, patch_id):
 
 
 @patch_history_entry_group.command(name=cli_util.override('db.get_db_home_patch_history_entry.command_name', 'get-db-home'), help=u"""Gets the patch history details for the specified patchHistoryEntryId \n[Command Reference](getDbHomePatchHistoryEntry)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The Database Home [OCID].""")
 @cli_util.option('--patch-history-entry-id', required=True, help=u"""The [OCID] of the patch history entry.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -22276,7 +22276,7 @@ def get_db_server(ctx, from_json, exadata_infrastructure_id, db_server_id):
 **Note:** Deprecated for Exadata Cloud Service systems. Use the [new resource model APIs] instead.
 
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model. \n[Command Reference](getDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -22297,7 +22297,7 @@ def get_db_system(ctx, from_json, db_system_id):
 
 
 @patch_group.command(name=cli_util.override('db.get_db_system_patch.command_name', 'get-db-system'), help=u"""Gets information the specified patch. \n[Command Reference](getDbSystemPatch)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--patch-id', required=True, help=u"""The [OCID] of the patch.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -22323,7 +22323,7 @@ def get_db_system_patch(ctx, from_json, db_system_id, patch_id):
 
 
 @patch_history_entry_group.command(name=cli_util.override('db.get_db_system_patch_history_entry.command_name', 'get-db-system'), help=u"""Gets the details of the specified patch operation on the specified DB system. \n[Command Reference](getDbSystemPatchHistoryEntry)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--patch-history-entry-id', required=True, help=u"""The [OCID] of the patch history entry.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -22349,7 +22349,7 @@ def get_db_system_patch_history_entry(ctx, from_json, db_system_id, patch_histor
 
 
 @db_system_upgrade_history_entry_group.command(name=cli_util.override('db.get_db_system_upgrade_history_entry.command_name', 'get'), help=u"""Gets the details of the specified operating system upgrade operation for the specified DB system. \n[Command Reference](getDbSystemUpgradeHistoryEntry)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--upgrade-history-entry-id', required=True, help=u"""The database/db system upgrade History [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -22476,7 +22476,7 @@ def get_exadata_infrastructure_un_allocated_resources(ctx, from_json, exadata_in
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model.
 
 The [GetCloudVmClusterIormConfig] API is used for this operation with Exadata systems using the new resource model. \n[Command Reference](getExadataIormConfig)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -22642,7 +22642,7 @@ def get_execution_window(ctx, from_json, execution_window_id):
 @external_backup_job_group.command(name=cli_util.override('db.get_external_backup_job.command_name', 'get'), help=u"""Gets information about the specified external backup job.
 
 **Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information. \n[Command Reference](getExternalBackupJob)""")
-@cli_util.option('--backup-id', required=True, help=u"""The backup [OCID].""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The backup [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -22751,7 +22751,7 @@ def get_external_pluggable_database(ctx, from_json, external_pluggable_database_
 
 
 @infrastructure_target_version_group.command(name=cli_util.override('db.get_infrastructure_target_versions.command_name', 'get'), help=u"""Gets details of the Exadata Infrastructure target system software versions that can be applied to the specified infrastructure resource for maintenance updates. Applies to Exadata Cloud@Customer and Exadata Cloud instances only. \n[Command Reference](getInfrastructureTargetVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--target-resource-id', help=u"""The target resource ID.""")
 @cli_util.option('--target-resource-type', type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_EXADATA_INFRASTRUCTURE", "AUTONOMOUS_CONTAINER_DATABASE", "EXADATA_DB_SYSTEM", "CLOUD_EXADATA_INFRASTRUCTURE", "EXACC_INFRASTRUCTURE", "AUTONOMOUS_VM_CLUSTER", "AUTONOMOUS_DATABASE", "CLOUD_AUTONOMOUS_VM_CLUSTER"]), help=u"""The type of the target resource.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -22862,7 +22862,7 @@ def get_oneoff_patch(ctx, from_json, oneoff_patch_id):
 
 
 @pdb_conversion_history_entry_group.command(name=cli_util.override('db.get_pdb_conversion_history_entry.command_name', 'get'), help=u"""Gets the details of operations performed to convert the specified database from non-container (non-CDB) to pluggable (PDB). \n[Command Reference](getPdbConversionHistoryEntry)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--pdb-conversion-history-entry-id', required=True, help=u"""The database conversion history [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -23240,9 +23240,9 @@ def import_transportable_tablespace(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.launch_autonomous_exadata_infrastructure.command_name', 'launch'), help=u"""**Deprecated** To create a new Autonomous AI Database system on dedicated Exadata Infrastructure, use the [CreateCloudExadataInfrastructure] and [CreateCloudAutonomousVmCluster] operations instead. Note that to create an Autonomous VM cluster, you must have an existing Exadata Infrastructure resource to contain the VM cluster. \n[Command Reference](launchAutonomousExadataInfrastructure)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the Autonomous Exadata Infrastructure belongs in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment the Autonomous Exadata Infrastructure belongs in.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the Autonomous Exadata Infrastructure is located.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the Autonomous Exadata Infrastructure is associated with.
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the Autonomous Exadata Infrastructure is associated with.
 
 **Subnet Restrictions:** - For Autonomous Exadata Infrastructures, do not use a subnet that overlaps with 192.168.128.0/20
 
@@ -23336,9 +23336,9 @@ An initial database is created on the DB system based on the request parameters 
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model.
 
 Use the [CreateCloudExadataInfrastructure] and [CreateCloudVmCluster] APIs to provision a new Exadata Cloud Service instance. \n[Command Reference](launchDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the DB system is located.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the DB system is associated with.
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the DB system is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
 
@@ -23391,8 +23391,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATABASE", "DB_SYSTEM"]), help=u"""The source of the database: Use `NONE` for creating a new database. Use `DB_BACKUP` for creating a new database by restoring from a backup. Use `DATABASE` for creating a new database from an existing database, including archive redo log data. The default is `NONE`.""")
 @cli_util.option('--private-ip', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.""")
 @cli_util.option('--private-ip-v6', help=u"""A private IPv6 address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value and the subnet is dual stack, Oracle automatically assigns a private IPv6 address from the subnet.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
@@ -23543,9 +23543,9 @@ An initial database is created on the DB system based on the request parameters 
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model.
 
 Use the [CreateCloudExadataInfrastructure] and [CreateCloudVmCluster] APIs to provision a new Exadata Cloud Service instance. \n[Command Reference](launchDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the DB system is located.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the DB system is associated with.
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the DB system is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
 
@@ -23599,8 +23599,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-ip', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.""")
 @cli_util.option('--private-ip-v6', help=u"""A private IPv6 address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value and the subnet is dual stack, Oracle automatically assigns a private IPv6 address from the subnet.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
@@ -23764,9 +23764,9 @@ An initial database is created on the DB system based on the request parameters 
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model.
 
 Use the [CreateCloudExadataInfrastructure] and [CreateCloudVmCluster] APIs to provision a new Exadata Cloud Service instance. \n[Command Reference](launchDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the DB system is located.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the DB system is associated with.
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the DB system is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
 
@@ -23820,8 +23820,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-ip', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.""")
 @cli_util.option('--private-ip-v6', help=u"""A private IPv6 address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value and the subnet is dual stack, Oracle automatically assigns a private IPv6 address from the subnet.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
@@ -23977,9 +23977,9 @@ An initial database is created on the DB system based on the request parameters 
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model.
 
 Use the [CreateCloudExadataInfrastructure] and [CreateCloudVmCluster] APIs to provision a new Exadata Cloud Service instance. \n[Command Reference](launchDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the DB system is located.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the DB system is associated with.
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the DB system is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
 
@@ -24033,8 +24033,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-ip', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.""")
 @cli_util.option('--private-ip-v6', help=u"""A private IPv6 address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value and the subnet is dual stack, Oracle automatically assigns a private IPv6 address from the subnet.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
@@ -24194,9 +24194,9 @@ An initial database is created on the DB system based on the request parameters 
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model.
 
 Use the [CreateCloudExadataInfrastructure] and [CreateCloudVmCluster] APIs to provision a new Exadata Cloud Service instance. \n[Command Reference](launchDbSystem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the DB system is located.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the DB system is associated with.
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the DB system is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
 
@@ -24250,8 +24250,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-ip', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.""")
 @cli_util.option('--private-ip-v6', help=u"""A private IPv6 address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value and the subnet is dual stack, Oracle automatically assigns a private IPv6 address from the subnet.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
-@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure or Db System.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
@@ -24403,7 +24403,7 @@ def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_f
 
 
 @application_vip_group.command(name=cli_util.override('db.list_application_vips.command_name', 'list'), help=u"""Gets a list of application virtual IP (VIP) addresses on a cloud VM cluster. \n[Command Reference](listApplicationVips)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The [OCID] of the cloud VM cluster associated with the application virtual IP (VIP) address.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -24464,7 +24464,7 @@ def list_application_vips(ctx, from_json, all_pages, page_size, compartment_id, 
 
 
 @autonomous_container_database_backup_group.command(name=cli_util.override('db.list_autonomous_container_database_backups.command_name', 'list'), help=u"""Gets a list of Autonomous Container Database backups by using either the 'autonomousDatabaseId' or 'compartmentId' as your query parameter. \n[Command Reference](listAutonomousContainerDatabaseBackups)""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--is-remote', type=click.BOOL, help=u"""call for all remote backups""")
 @cli_util.option('--infrastructure-type', type=custom_types.CliCaseInsensitiveChoice(["CLOUD", "CLOUD_AT_CUSTOMER"]), help=u"""A filter to return only resources that match the given Infrastructure Type.""")
@@ -24584,7 +24584,7 @@ def list_autonomous_container_database_dataguard_associations(ctx, from_json, al
 
 
 @autonomous_container_database_version_group.command(name=cli_util.override('db.list_autonomous_container_database_versions.command_name', 'list'), help=u"""Gets a list of supported Autonomous Container Database versions. \n[Command Reference](listAutonomousContainerDatabaseVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--service-component', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADBD", "EXACC"]), help=u"""The service component to use, either ADBD or EXACC.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -24639,7 +24639,7 @@ def list_autonomous_container_database_versions(ctx, from_json, all_pages, page_
 
 
 @autonomous_container_database_group.command(name=cli_util.override('db.list_autonomous_container_databases.command_name', 'list'), help=u"""Gets a list of the Autonomous Container Databases in the specified compartment. \n[Command Reference](listAutonomousContainerDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', help=u"""The Autonomous Exadata Infrastructure [OCID].""")
 @cli_util.option('--autonomous-vm-cluster-id', help=u"""The Autonomous VM Cluster [OCID].""")
 @cli_util.option('--infrastructure-type', type=custom_types.CliCaseInsensitiveChoice(["CLOUD", "CLOUD_AT_CUSTOMER"]), help=u"""A filter to return only resources that match the given Infrastructure Type.""")
@@ -24720,8 +24720,8 @@ def list_autonomous_container_databases(ctx, from_json, all_pages, page_size, co
 
 
 @autonomous_database_backup_group.command(name=cli_util.override('db.list_autonomous_database_backups.command_name', 'list'), help=u"""Gets a list of Autonomous AI Database backups based on either the `autonomousDatabaseId` or `compartmentId` specified as a query parameter. \n[Command Reference](listAutonomousDatabaseBackups)""")
-@cli_util.option('--autonomous-database-id', help=u"""The database [OCID].""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--autonomous-database-id', type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
@@ -24823,8 +24823,8 @@ def list_autonomous_database_character_sets(ctx, from_json, all_pages, is_shared
 
 
 @autonomous_database_group.command(name=cli_util.override('db.list_autonomous_database_clones.command_name', 'list-autonomous-database-clones'), help=u"""Lists the Autonomous AI Database clones for the specified Autonomous AI Database. \n[Command Reference](listAutonomousDatabaseClones)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -24895,7 +24895,7 @@ def list_autonomous_database_clones(ctx, from_json, all_pages, page_size, compar
 
 
 @autonomous_database_dataguard_association_group.command(name=cli_util.override('db.list_autonomous_database_dataguard_associations.command_name', 'list'), help=u"""*Deprecated.* Use the [GetAutonomousContainerDatabase] operation to get a list of the Autonomous Data Guard-enabled databases associated with the specified Autonomous AI Database. \n[Command Reference](listAutonomousDatabaseDataguardAssociations)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -24945,7 +24945,7 @@ def list_autonomous_database_dataguard_associations(ctx, from_json, all_pages, p
 
 
 @autonomous_database_group.command(name=cli_util.override('db.list_autonomous_database_peers.command_name', 'list-autonomous-database-peers'), help=u"""Lists the Autonomous AI Database peers for the specified Autonomous AI Database. \n[Command Reference](listAutonomousDatabasePeers)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -24996,7 +24996,7 @@ def list_autonomous_database_peers(ctx, from_json, all_pages, page_size, autonom
 
 
 @autonomous_database_group.command(name=cli_util.override('db.list_autonomous_database_refreshable_clones.command_name', 'list-autonomous-database-refreshable-clones'), help=u"""Lists the OCIDs of the Autonomous AI Database local and connected remote refreshable clones with the region where they exist for the specified source database. \n[Command Reference](listAutonomousDatabaseRefreshableClones)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -25047,7 +25047,7 @@ def list_autonomous_database_refreshable_clones(ctx, from_json, all_pages, page_
 
 
 @autonomous_database_software_image_group.command(name=cli_util.override('db.list_autonomous_database_software_images.command_name', 'list'), help=u"""Gets a list of the Autonomous AI Database Software Images in the specified compartment. \n[Command Reference](listAutonomousDatabaseSoftwareImages)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--image-shape-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC_SHAPE", "EXADATA_SHAPE"]), help=u"""A filter to return only resources that match the given image shape family exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -25111,7 +25111,7 @@ def list_autonomous_database_software_images(ctx, from_json, all_pages, page_siz
 
 
 @autonomous_database_group.command(name=cli_util.override('db.list_autonomous_databases.command_name', 'list'), help=u"""Gets a list of Autonomous AI Databases based on the query parameters specified. \n[Command Reference](listAutonomousDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -25203,7 +25203,7 @@ def list_autonomous_databases(ctx, from_json, all_pages, page_size, compartment_
 
 
 @autonomous_db_preview_version_group.command(name=cli_util.override('db.list_autonomous_db_preview_versions.command_name', 'list'), help=u"""Gets a list of supported Autonomous AI Database versions. Note that preview version software is only available for Autonomous AI Database Serverless (https://docs.oracle.com/en/cloud/paas/autonomous-database/index.html) databases. \n[Command Reference](listAutonomousDbPreviewVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DBWORKLOAD"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for DBWORKLOAD is ascending.
@@ -25259,7 +25259,7 @@ def list_autonomous_db_preview_versions(ctx, from_json, all_pages, page_size, co
 
 
 @autonomous_db_version_group.command(name=cli_util.override('db.list_autonomous_db_versions.command_name', 'list'), help=u"""Gets a list of supported Autonomous AI Database versions. \n[Command Reference](listAutonomousDbVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""A filter to return only Autonomous AI Database resources that match the specified workload type.""")
@@ -25314,7 +25314,7 @@ def list_autonomous_db_versions(ctx, from_json, all_pages, page_size, compartmen
 
 @autonomous_exadata_infrastructure_shape_group.command(name=cli_util.override('db.list_autonomous_exadata_infrastructure_shapes.command_name', 'list'), help=u"""**Deprecated.** \n[Command Reference](listAutonomousExadataInfrastructureShapes)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the Availability Domain.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -25365,7 +25365,7 @@ def list_autonomous_exadata_infrastructure_shapes(ctx, from_json, all_pages, pag
 
 
 @autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.list_autonomous_exadata_infrastructures.command_name', 'list'), help=u"""**Deprecated.** Use the [ListCloudExadataInfrastructures] operation to list Exadata Infrastructures in the Oracle cloud and the  [ListCloudAutonomousVmClusters] operation to list Autonomous Exadata VM clusters. \n[Command Reference](listAutonomousExadataInfrastructures)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
@@ -25431,7 +25431,7 @@ def list_autonomous_exadata_infrastructures(ctx, from_json, all_pages, page_size
 
 
 @autonomous_virtual_machine_group.command(name=cli_util.override('db.list_autonomous_virtual_machines.command_name', 'list'), help=u"""Lists the Autonomous Virtual Machines in the specified Autonomous VM Cluster and Compartment. \n[Command Reference](listAutonomousVirtualMachines)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The Autonomous Virtual machine [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -25487,7 +25487,7 @@ def list_autonomous_virtual_machines(ctx, from_json, all_pages, page_size, compa
 
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.list_autonomous_vm_cluster_acd_resource_usage.command_name', 'list-autonomous-vm-cluster-acd-resource-usage'), help=u"""Gets the list of resource usage details for all the Autonomous Container Database in the specified Autonomous Exadata VM cluster. \n[Command Reference](listAutonomousVmClusterAcdResourceUsage)""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -25540,7 +25540,7 @@ def list_autonomous_vm_cluster_acd_resource_usage(ctx, from_json, all_pages, pag
 
 
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.list_autonomous_vm_clusters.command_name', 'list'), help=u"""Gets a list of Exadata Cloud@Customer Autonomous VM clusters in the specified compartment. To list Autonomous VM Clusters in the Oracle Cloud, see [ListCloudAutonomousVmClusters]. \n[Command Reference](listAutonomousVmClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--exadata-infrastructure-id', help=u"""If provided, filters the results for the given Exadata Infrastructure.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -25603,7 +25603,7 @@ def list_autonomous_vm_clusters(ctx, from_json, all_pages, page_size, compartmen
 
 
 @backup_destination_summary_group.command(name=cli_util.override('db.list_backup_destination.command_name', 'list-backup-destination'), help=u"""Gets a list of backup destinations in the specified compartment. \n[Command Reference](listBackupDestination)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--type', help=u"""A filter to return only resources that match the given type of the Backup Destination.""")
@@ -25654,8 +25654,8 @@ def list_backup_destination(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @backup_group.command(name=cli_util.override('db.list_backups.command_name', 'list'), help=u"""Gets a list of backups based on the `databaseId` or `compartmentId` specified. Either one of these query parameters must be provided. \n[Command Reference](listBackups)""")
-@cli_util.option('--database-id', help=u"""The [OCID] of the database.""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the database.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--shape-family', type=custom_types.CliCaseInsensitiveChoice(["SINGLENODE", "YODA", "VIRTUALMACHINE", "EXADATA", "EXACC", "EXADB_XS"]), help=u"""If provided, filters the results to the set of database versions which are supported for the given shape family.""")
@@ -25725,7 +25725,7 @@ def list_backups(ctx, from_json, all_pages, page_size, database_id, compartment_
 
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.list_cloud_autonomous_vm_cluster_acd_resource_usage.command_name', 'list-cloud-autonomous-vm-cluster-acd-resource-usage'), help=u"""Gets the list of resource usage details for all the Cloud Autonomous Container Database in the specified Cloud Autonomous Exadata VM cluster. \n[Command Reference](listCloudAutonomousVmClusterAcdResourceUsage)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -25778,7 +25778,7 @@ def list_cloud_autonomous_vm_cluster_acd_resource_usage(ctx, from_json, all_page
 
 
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.list_cloud_autonomous_vm_clusters.command_name', 'list'), help=u"""Lists Autonomous Exadata VM clusters in the Oracle cloud. For Exadata Cloud@Customer systems, see [ListAutonomousVmClusters]. \n[Command Reference](listCloudAutonomousVmClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--cloud-exadata-infrastructure-id', help=u"""If provided, filters the results for the specified cloud Exadata infrastructure.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -25846,14 +25846,14 @@ def list_cloud_autonomous_vm_clusters(ctx, from_json, all_pages, page_size, comp
 
 
 @cloud_exadata_infrastructure_group.command(name=cli_util.override('db.list_cloud_exadata_infrastructures.command_name', 'list'), help=u"""Gets a list of the cloud Exadata infrastructure resources in the specified compartment. Applies to Exadata Cloud Service instances and Autonomous AI Database on dedicated Exadata infrastructure only. \n[Command Reference](listCloudExadataInfrastructures)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""A filter to return only resources that match the given cluster placement group ID exactly.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the given cluster placement group ID exactly.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -26017,7 +26017,7 @@ def list_cloud_vm_cluster_updates(ctx, from_json, all_pages, page_size, cloud_vm
 
 
 @cloud_vm_cluster_group.command(name=cli_util.override('db.list_cloud_vm_clusters.command_name', 'list'), help=u"""Gets a list of the cloud VM clusters in the specified compartment. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](listCloudVmClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--cloud-exadata-infrastructure-id', help=u"""If provided, filters the results for the specified cloud Exadata infrastructure.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -26169,7 +26169,7 @@ def list_console_histories(ctx, from_json, all_pages, page_size, db_node_id, lim
 
 @autonomous_patch_group.command(name=cli_util.override('db.list_container_database_patches.command_name', 'list-container-database-patches'), help=u"""Lists the patches applicable to the requested container database. \n[Command Reference](listContainerDatabasePatches)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--autonomous-patch-type', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "TIMEZONE"]), help=u"""Autonomous patch type, either \"QUARTERLY\" or \"TIMEZONE\".""")
@@ -26225,7 +26225,7 @@ def list_container_database_patches(ctx, from_json, all_pages, page_size, autono
 
 
 @data_guard_association_group.command(name=cli_util.override('db.list_data_guard_associations.command_name', 'list'), help=u"""Lists all Data Guard associations for the specified database. \n[Command Reference](listDataGuardAssociations)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -26275,7 +26275,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 
 
 @database_software_image_group.command(name=cli_util.override('db.list_database_software_images.command_name', 'list'), help=u"""Gets a list of the database software images in the specified compartment. \n[Command Reference](listDatabaseSoftwareImages)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "PATCHSET"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive. Default order for PATCHSET is descending.""")
@@ -26285,7 +26285,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @cli_util.option('--image-type', type=custom_types.CliCaseInsensitiveChoice(["GRID_IMAGE", "DATABASE_IMAGE"]), help=u"""A filter to return only resources that match the given image type exactly.""")
 @cli_util.option('--image-shape-family', type=custom_types.CliCaseInsensitiveChoice(["VM_BM_SHAPE", "EXADATA_SHAPE", "EXACC_SHAPE", "EXADBXS_SHAPE"]), help=u"""A filter to return only resources that match the given image shape family exactly.""")
 @cli_util.option('--patch-set-greater-than-or-equal-to', help=u"""A filter to return only resources with `patchSet` greater than or equal to given value.""")
-@cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--is-upgrade-supported', type=click.BOOL, help=u"""If provided, filters the results to the set of database versions which are supported for Upgrade.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -26349,7 +26349,7 @@ def list_database_software_images(ctx, from_json, all_pages, page_size, compartm
 
 
 @database_group.command(name=cli_util.override('db.list_database_upgrade_history_entries.command_name', 'list-database-upgrade-history-entries'), help=u"""Gets the upgrade history for a specified database in a bare metal or virtual machine DB system. \n[Command Reference](listDatabaseUpgradeHistoryEntries)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--upgrade-action', type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""A filter to return only upgradeHistoryEntries that match the specified Upgrade Action.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "IN_PROGRESS"]), help=u"""A filter to return only upgradeHistoryEntries that match the given lifecycle state exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMESTARTED"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is ascending.""")
@@ -26412,8 +26412,8 @@ def list_database_upgrade_history_entries(ctx, from_json, all_pages, page_size, 
 
 
 @database_group.command(name=cli_util.override('db.list_databases.command_name', 'list'), help=u"""Gets a list of the databases in the specified Database Home. \n[Command Reference](listDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
-@cli_util.option('--db-home-id', help=u"""A Database Home [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
+@cli_util.option('--db-home-id', type=custom_types.CLI_OCID, help=u"""A Database Home [OCID].""")
 @cli_util.option('--system-id', help=u"""The [OCID] of the Exadata DB system that you want to filter the database results by. Applies only to Exadata DB systems.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -26543,7 +26543,7 @@ def list_db_connection_bundles(ctx, from_json, all_pages, page_size, compartment
 
 
 @patch_history_entry_group.command(name=cli_util.override('db.list_db_home_patch_history_entries.command_name', 'list-db-home'), help=u"""Lists the history of patch operations on the specified Database Home. \n[Command Reference](listDbHomePatchHistoryEntries)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The Database Home [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -26593,7 +26593,7 @@ def list_db_home_patch_history_entries(ctx, from_json, all_pages, page_size, db_
 
 
 @patch_group.command(name=cli_util.override('db.list_db_home_patches.command_name', 'list-db-home'), help=u"""Lists patches applicable to the requested Database Home. \n[Command Reference](listDbHomePatches)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The Database Home [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -26643,10 +26643,10 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
 
 
 @db_home_group.command(name=cli_util.override('db.list_db_homes.command_name', 'list'), help=u"""Lists the Database Homes in the specified DB system and compartment. A Database Home is a directory where Oracle Database software is installed. \n[Command Reference](listDbHomes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
-@cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--vm-cluster-id', help=u"""The [OCID] of the VM cluster.""")
-@cli_util.option('--backup-id', help=u"""The [OCID] of the backup. Specify a backupId to list only the DB systems or DB homes that support creating a database using this backup in this compartment.""")
+@cli_util.option('--backup-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the backup. Specify a backupId to list only the DB systems or DB homes that support creating a database using this backup in this compartment.""")
 @cli_util.option('--db-version', help=u"""A filter to return only DB Homes that match the specified dbVersion.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -26714,8 +26714,8 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
 
 
 @db_node_group.command(name=cli_util.override('db.list_db_nodes.command_name', 'list'), help=u"""Lists the database nodes in the specified DB system and compartment. In addition to the other required parameters, either '--db-system-id' or '--vm-cluster-id' also must be provided, depending on the service being accessed. \n[Command Reference](listDbNodes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
-@cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--vm-cluster-id', help=u"""The [OCID] of the VM cluster.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -26779,7 +26779,7 @@ def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
 
 
 @db_server_group.command(name=cli_util.override('db.list_db_servers.command_name', 'list'), help=u"""Lists the Exadata DB servers in the ExadataInfrastructureId and specified compartment. \n[Command Reference](listDbServers)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The [OCID] of the ExadataInfrastructure.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -26864,7 +26864,7 @@ def list_db_system_compute_performances(ctx, from_json, all_pages, db_system_sha
 
 
 @patch_history_entry_group.command(name=cli_util.override('db.list_db_system_patch_history_entries.command_name', 'list-db-system'), help=u"""Gets the history of the patch actions performed on the specified DB system. \n[Command Reference](listDbSystemPatchHistoryEntries)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -26914,7 +26914,7 @@ def list_db_system_patch_history_entries(ctx, from_json, all_pages, page_size, d
 
 
 @patch_group.command(name=cli_util.override('db.list_db_system_patches.command_name', 'list-db-system'), help=u"""Lists the patches applicable to the specified DB system. \n[Command Reference](listDbSystemPatches)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -26964,7 +26964,7 @@ def list_db_system_patches(ctx, from_json, all_pages, page_size, db_system_id, l
 
 
 @db_system_shape_group.command(name=cli_util.override('db.list_db_system_shapes.command_name', 'list'), help=u"""Gets a list of the shapes that can be used to launch a new DB system. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. \n[Command Reference](listDbSystemShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--availability-domain', help=u"""The name of the Availability Domain.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -27020,7 +27020,7 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.option('--storage-management', required=True, type=custom_types.CliCaseInsensitiveChoice(["ASM", "LVM"]), help=u"""The DB system storage management option. Used to list database versions available for that storage manager. Valid values are `ASM` and `LVM`. * ASM specifies Oracle Automatic Storage Management * LVM specifies logical volume manager, sometimes called logical disk manager.""")
 @cli_util.option('--shape-type', help=u"""Optional. Filters the performance results by shape type.""")
 @cli_util.option('--database-edition', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE", "ENTERPRISE_EDITION_DEVELOPER"]), help=u"""The database edition of quota (STANDARD_EDITION/ENTERPRISE_EDITION/ENTERPRISE_EDITION_HIGH_PERFORMANCE/ENTERPRISE_EDITION_EXTREME_PERFORMANCE/ENTERPRISE_EDITION_DEVELOPER)""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -27046,7 +27046,7 @@ def list_db_system_storage_performances(ctx, from_json, all_pages, storage_manag
 
 
 @db_system_upgrade_history_entry_group.command(name=cli_util.override('db.list_db_system_upgrade_history_entries.command_name', 'list'), help=u"""Gets the history of the upgrade actions performed on the specified DB system. \n[Command Reference](listDbSystemUpgradeHistoryEntries)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -27109,7 +27109,7 @@ def list_db_system_upgrade_history_entries(ctx, from_json, all_pages, page_size,
 
 
 @db_system_upgrade_summary_group.command(name=cli_util.override('db.list_db_system_upgrades.command_name', 'list-db-system-upgrades'), help=u"""Lists the applicable upgrade components for a DB systems. \n[Command Reference](listDbSystemUpgrades)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -27163,10 +27163,10 @@ def list_db_system_upgrades(ctx, from_json, all_pages, page_size, db_system_id, 
 **Note:** Deprecated for Exadata Cloud Service systems. Use the [new resource model APIs] instead.
 
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model. \n[Command Reference](listDbSystems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
-@cli_util.option('--backup-id', help=u"""The [OCID] of the backup. Specify a backupId to list only the DB systems or DB homes that support creating a database using this backup in this compartment.""")
+@cli_util.option('--backup-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the backup. Specify a backupId to list only the DB systems or DB homes that support creating a database using this backup in this compartment.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** If you do not include the availability domain filter, the resources are grouped by availability domain, then sorted.""")
@@ -27232,11 +27232,11 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
 
 
 @db_version_group.command(name=cli_util.override('db.list_db_versions.command_name', 'list'), help=u"""Gets a list of supported Oracle Database versions. \n[Command Reference](listDbVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--db-system-shape', help=u"""If provided, filters the results to the set of database versions which are supported for the given shape.""")
-@cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["ASM", "LVM"]), help=u"""The DB system storage management option. Used to list database versions available for that storage manager. Valid values are `ASM` and `LVM`. * ASM specifies Oracle Automatic Storage Management * LVM specifies logical volume manager, sometimes called logical disk manager.""")
 @cli_util.option('--shape-attribute', help=u"""If provided and applicable, return DB System shape parameters based on the shapeAttribute provided""")
 @cli_util.option('--is-upgrade-supported', type=click.BOOL, help=u"""If provided, filters the results to the set of database versions which are supported for Upgrade.""")
@@ -27297,7 +27297,7 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
 
 
 @dbnode_snapshot_group.command(name=cli_util.override('db.list_dbnode_snapshots.command_name', 'list'), help=u"""Gets a list of the Exadata Database Node Snapshots in the specified compartment. \n[Command Reference](listDbnodeSnapshots)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for NAME is ascending. The NAME sort order is case sensitive.""")
@@ -27364,7 +27364,7 @@ def list_dbnode_snapshots(ctx, from_json, all_pages, page_size, compartment_id, 
 
 @autonomous_database_group.command(name=cli_util.override('db.list_estimate_cost_savings.command_name', 'list-estimate-cost-savings'), help=u"""Gets the estimate cost savings of the Autonomous AI Database. \n[Command Reference](listEstimateCostSavings)""")
 @cli_util.option('--is-cpu-autoscale', required=True, type=click.BOOL, help=u"""If provided as true, cost estimate with cpu autoscaling.""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -27418,7 +27418,7 @@ def list_estimate_cost_savings(ctx, from_json, all_pages, page_size, is_cpu_auto
 
 
 @exadata_infrastructure_group.command(name=cli_util.override('db.list_exadata_infrastructures.command_name', 'list'), help=u"""Lists the Exadata infrastructure resources in the specified compartment. Applies to Exadata Cloud@Customer instances only. To list the Exadata Cloud Service infrastructure resources in a compartment, use the  [ListCloudExadataInfrastructures] operation. \n[Command Reference](listExadataInfrastructures)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -27592,14 +27592,14 @@ def list_exadb_vm_cluster_updates(ctx, from_json, all_pages, page_size, exadb_vm
 
 
 @exadb_vm_cluster_group.command(name=cli_util.override('db.list_exadb_vm_clusters.command_name', 'list'), help=u"""Gets a list of the Exadata VM clusters on Exascale Infrastructure in the specified compartment. Applies to Exadata Database Service on Exascale Infrastructure only. \n[Command Reference](listExadbVmClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), help=u"""A filter to return only Exadata VM clusters on Exascale Infrastructure that match the given lifecycle state exactly.""")
 @cli_util.option('--exascale-db-storage-vault-id', help=u"""A filter to return only Exadata VM clusters on Exascale Infrastructure that match the given Exascale Database Storage Vault ID.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""A filter to return only resources that match the given cluster placement group ID exactly.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the given cluster placement group ID exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -27658,13 +27658,13 @@ def list_exadb_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @exascale_db_storage_vault_group.command(name=cli_util.override('db.list_exascale_db_storage_vaults.command_name', 'list'), help=u"""Gets a list of the Exadata Database Storage Vaults in the specified compartment. \n[Command Reference](listExascaleDbStorageVaults)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help=u"""A filter to return only Exadata Database Storage Vaults that match the given lifecycle state exactly.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""A filter to return only resources that match the given cluster placement group ID exactly.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the given cluster placement group ID exactly.""")
 @cli_util.option('--attached-shape-attributes-not-equal-to', help=u"""A filter to return only Exadata Database Storage Vaults which do not match the given attachedShapeAttributes""")
 @cli_util.option('--attached-shape-attributes', help=u"""A filter to return only Exadata Database Storage Vaults which match the given attachedShapeAttributes or has null attachedShapeAttributes""")
 @cli_util.option('--vm-cluster-count-less-than-or-equal-to', type=click.INT, help=u"""A filter to return only Exadata Database Storage Vaults with associated Exadata VM Clusters less than or equal to the given count""")
@@ -27736,7 +27736,7 @@ def list_exascale_db_storage_vaults(ctx, from_json, all_pages, page_size, compar
 
 
 @execution_action_group.command(name=cli_util.override('db.list_execution_actions.command_name', 'list'), help=u"""Lists the execution action resources in the specified compartment. \n[Command Reference](listExecutionActions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -27799,7 +27799,7 @@ def list_execution_actions(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @execution_window_group.command(name=cli_util.override('db.list_execution_windows.command_name', 'list'), help=u"""Lists the execution window resources in the specified compartment. \n[Command Reference](listExecutionWindows)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -27862,7 +27862,7 @@ def list_execution_windows(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @external_container_database_group.command(name=cli_util.override('db.list_external_container_databases.command_name', 'list'), help=u"""Gets a list of the external container databases in the specified compartment. \n[Command Reference](listExternalContainerDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DISPLAYNAME", "TIMECREATED"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -27922,7 +27922,7 @@ def list_external_container_databases(ctx, from_json, all_pages, page_size, comp
 
 
 @external_database_connector_group.command(name=cli_util.override('db.list_external_database_connectors.command_name', 'list'), help=u"""Gets a list of the external database connectors in the specified compartment. \n[Command Reference](listExternalDatabaseConnectors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--external-database-id', required=True, help=u"""The [OCID] of the external database whose connectors will be listed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -27986,7 +27986,7 @@ def list_external_database_connectors(ctx, from_json, all_pages, page_size, comp
 
 
 @external_non_container_database_group.command(name=cli_util.override('db.list_external_non_container_databases.command_name', 'list'), help=u"""Gets a list of the ExternalNonContainerDatabases in the specified compartment. \n[Command Reference](listExternalNonContainerDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DISPLAYNAME", "TIMECREATED"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -28046,7 +28046,7 @@ def list_external_non_container_databases(ctx, from_json, all_pages, page_size, 
 
 
 @external_pluggable_database_group.command(name=cli_util.override('db.list_external_pluggable_databases.command_name', 'list'), help=u"""Gets a list of the [ExternalPluggableDatabase] resources in the specified compartment. \n[Command Reference](listExternalPluggableDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--external-container-database-id', help=u"""The ExternalContainerDatabase [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -28109,7 +28109,7 @@ def list_external_pluggable_databases(ctx, from_json, all_pages, page_size, comp
 
 
 @flex_component_collection_group.command(name=cli_util.override('db.list_flex_components.command_name', 'list-flex-components'), help=u"""Gets a list of the flex components that can be used to launch a new DB system. The flex component determines resources to allocate to the DB system - Database Servers and Storage Servers. \n[Command Reference](listFlexComponents)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given. The match is not case sensitive.""")
 @cli_util.option('--shape', help=u"""A filter to return only resources that belong to the entire shape name given. The match is not case sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -28170,7 +28170,7 @@ def list_flex_components(ctx, from_json, all_pages, page_size, compartment_id, n
 @gi_minor_version_summary_group.command(name=cli_util.override('db.list_gi_version_minor_versions.command_name', 'list-gi-version-minor-versions'), help=u"""Gets a list of supported Oracle Grid Infrastructure minor versions for the given major version and shape family. \n[Command Reference](listGiVersionMinorVersions)""")
 @cli_util.option('--version-parameterconflict', required=True, help=u"""The Oracle Grid Infrastructure major version.""")
 @cli_util.option('--availability-domain', help=u"""The target availability domain. Only passed if the limit is AD-specific.""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--shape-family', type=custom_types.CliCaseInsensitiveChoice(["SINGLENODE", "YODA", "VIRTUALMACHINE", "EXADATA", "EXACC", "EXADB_XS"]), help=u"""If provided, filters the results to the set of database versions which are supported for the given shape family.""")
 @cli_util.option('--is-gi-version-for-provisioning', type=click.BOOL, help=u"""If true, returns the Grid Infrastructure versions that can be used for provisioning a cluster""")
 @cli_util.option('--shape', help=u"""If provided, filters the results for the given shape.""")
@@ -28242,7 +28242,7 @@ def list_gi_version_minor_versions(ctx, from_json, all_pages, page_size, version
 
 
 @gi_version_group.command(name=cli_util.override('db.list_gi_versions.command_name', 'list'), help=u"""Gets a list of supported GI versions. \n[Command Reference](listGiVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -28304,7 +28304,7 @@ def list_gi_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
 
 
 @key_store_summary_group.command(name=cli_util.override('db.list_key_stores.command_name', 'list-key-stores'), help=u"""Gets a list of key stores in the specified compartment. \n[Command Reference](listKeyStores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -28352,7 +28352,7 @@ def list_key_stores(ctx, from_json, all_pages, page_size, compartment_id, limit,
 
 
 @maintenance_run_history_group.command(name=cli_util.override('db.list_maintenance_run_history.command_name', 'list'), help=u"""Gets a list of the maintenance run histories in the specified compartment. \n[Command Reference](listMaintenanceRunHistory)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--target-resource-id', help=u"""The target resource ID.""")
 @cli_util.option('--target-resource-type', type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_EXADATA_INFRASTRUCTURE", "AUTONOMOUS_CONTAINER_DATABASE", "EXADATA_DB_SYSTEM", "CLOUD_EXADATA_INFRASTRUCTURE", "EXACC_INFRASTRUCTURE", "AUTONOMOUS_VM_CLUSTER", "AUTONOMOUS_DATABASE", "CLOUD_AUTONOMOUS_VM_CLUSTER"]), help=u"""The type of the target resource.""")
 @cli_util.option('--maintenance-type', type=custom_types.CliCaseInsensitiveChoice(["PLANNED", "UNPLANNED"]), help=u"""The maintenance type.""")
@@ -28427,7 +28427,7 @@ def list_maintenance_run_history(ctx, from_json, all_pages, page_size, compartme
 
 
 @maintenance_run_group.command(name=cli_util.override('db.list_maintenance_runs.command_name', 'list'), help=u"""Gets a list of the maintenance runs in the specified compartment. \n[Command Reference](listMaintenanceRuns)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--target-resource-id', help=u"""The target resource ID.""")
 @cli_util.option('--target-resource-type', type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_EXADATA_INFRASTRUCTURE", "AUTONOMOUS_CONTAINER_DATABASE", "EXADATA_DB_SYSTEM", "CLOUD_EXADATA_INFRASTRUCTURE", "EXACC_INFRASTRUCTURE", "AUTONOMOUS_VM_CLUSTER", "AUTONOMOUS_DATABASE", "CLOUD_AUTONOMOUS_VM_CLUSTER"]), help=u"""The type of the target resource.""")
 @cli_util.option('--maintenance-type', type=custom_types.CliCaseInsensitiveChoice(["PLANNED", "UNPLANNED"]), help=u"""The maintenance type.""")
@@ -28505,7 +28505,7 @@ def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, 
 
 
 @oneoff_patch_group.command(name=cli_util.override('db.list_oneoff_patches.command_name', 'list'), help=u"""Lists one-off patches in the specified compartment. \n[Command Reference](listOneoffPatches)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -28613,7 +28613,7 @@ def list_params_for_action_type(ctx, from_json, all_pages, page_size, type, limi
 
 
 @database_group.command(name=cli_util.override('db.list_pdb_conversion_history_entries.command_name', 'list-pdb-conversion-history-entries'), help=u"""Gets the pluggable database conversion history for a specified database in a bare metal or virtual machine DB system. \n[Command Reference](listPdbConversionHistoryEntries)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--pdb-conversion-action', type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "CONVERT", "SYNC", "SYNC_ROLLBACK"]), help=u"""A filter to return only the pluggable database conversion history entries that match the specified conversion action. For example, you can use this filter to return only entries for the precheck operation.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "IN_PROGRESS"]), help=u"""A filter to return only the pluggable database conversion history entries that match the specified lifecycle state. For example, you can use this filter to return only entries in the \"failed\" lifecycle state.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMESTARTED"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). The default order for `TIMECREATED` is ascending.""")
@@ -28676,7 +28676,7 @@ def list_pdb_conversion_history_entries(ctx, from_json, all_pages, page_size, da
 
 
 @pluggable_database_snapshot_group.command(name=cli_util.override('db.list_pluggable_database_snapshots.command_name', 'list'), help=u"""Gets a list of the Exadata Pluggable Database Snapshots in the specified compartment. \n[Command Reference](listPluggableDatabaseSnapshots)""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.""")
@@ -28741,8 +28741,8 @@ def list_pluggable_database_snapshots(ctx, from_json, all_pages, page_size, comp
 
 
 @pluggable_database_group.command(name=cli_util.override('db.list_pluggable_databases.command_name', 'list'), help=u"""Gets a list of the pluggable databases in a database or compartment. You must provide either a `databaseId` or `compartmentId` value. \n[Command Reference](listPluggableDatabases)""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
-@cli_util.option('--database-id', help=u"""The [OCID] of the database.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the database.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["PDBNAME", "TIMECREATED"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for PDBNAME is ascending. The PDBNAME sort order is case sensitive.""")
@@ -28861,7 +28861,7 @@ def list_recommended_scheduled_actions(ctx, from_json, all_pages, page_size, sch
 
 
 @autonomous_database_group.command(name=cli_util.override('db.list_resource_pool_members.command_name', 'list-resource-pool-members'), help=u"""Lists the OCIDs of the Autonomous AI Database resource pool members for the specified Autonomous AI Database leader. \n[Command Reference](listResourcePoolMembers)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -28912,7 +28912,7 @@ def list_resource_pool_members(ctx, from_json, all_pages, page_size, autonomous_
 
 
 @scheduled_action_group.command(name=cli_util.override('db.list_scheduled_actions.command_name', 'list'), help=u"""Lists the Scheduled Action resources in the specified compartment. \n[Command Reference](listScheduledActions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -28981,7 +28981,7 @@ def list_scheduled_actions(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @scheduling_plan_group.command(name=cli_util.override('db.list_scheduling_plans.command_name', 'list'), help=u"""Lists the Scheduling Plan resources in the specified compartment. \n[Command Reference](listSchedulingPlans)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.""")
@@ -29050,7 +29050,7 @@ def list_scheduling_plans(ctx, from_json, all_pages, page_size, compartment_id, 
 
 
 @scheduling_policy_group.command(name=cli_util.override('db.list_scheduling_policies.command_name', 'list'), help=u"""Lists the Scheduling Policy resources in the specified compartment. \n[Command Reference](listSchedulingPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -29111,7 +29111,7 @@ def list_scheduling_policies(ctx, from_json, all_pages, page_size, compartment_i
 
 @scheduling_window_group.command(name=cli_util.override('db.list_scheduling_windows.command_name', 'list'), help=u"""Lists the Scheduling Window resources in the specified compartment. \n[Command Reference](listSchedulingWindows)""")
 @cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -29177,7 +29177,7 @@ def list_scheduling_windows(ctx, from_json, all_pages, page_size, scheduling_pol
 
 @system_version_minor_version_collection_group.command(name=cli_util.override('db.list_system_version_minor_versions.command_name', 'list-system-version-minor-versions'), help=u"""Retrieves a list of supported minor versions for the specified Exadata System Software major version. You must provide either a `shape` or `resourceId` value. \n[Command Reference](listSystemVersionMinorVersions)""")
 @cli_util.option('--major-version', required=True, help=u"""The System major version.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--gi-version', required=True, help=u"""Specifies gi version query parameter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -29247,7 +29247,7 @@ def list_system_version_minor_versions(ctx, from_json, all_pages, page_size, maj
 
 
 @system_version_collection_group.command(name=cli_util.override('db.list_system_versions.command_name', 'list-system-versions'), help=u"""Gets a list of supported Exadata system versions for a given shape and GI version. \n[Command Reference](listSystemVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--gi-version', required=True, help=u"""Specifies gi version query parameter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -29312,7 +29312,7 @@ def list_system_versions(ctx, from_json, all_pages, page_size, compartment_id, g
 
 @vm_cluster_network_group.command(name=cli_util.override('db.list_vm_cluster_networks.command_name', 'list'), help=u"""Gets a list of the VM cluster networks in the specified compartment. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](listVmClusterNetworks)""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -29592,7 +29592,7 @@ def list_vm_cluster_updates(ctx, from_json, all_pages, page_size, vm_cluster_id,
 
 
 @vm_cluster_group.command(name=cli_util.override('db.list_vm_clusters.command_name', 'list'), help=u"""Lists the VM clusters in the specified compartment. Applies to Exadata Cloud@Customer instances only. To list the cloud VM clusters in an Exadata Cloud Service instance, use the [ListCloudVmClusters ] operation. \n[Command Reference](listVmClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
 @cli_util.option('--exadata-infrastructure-id', help=u"""If provided, filters the results for the given Exadata Infrastructure.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -29785,7 +29785,7 @@ def migrate_autonomous_container_database_dataguard_association(ctx, from_json, 
 @data_guard_association_group.command(name=cli_util.override('db.migrate_data_guard_association_to_multi_data_guards.command_name', 'migrate-data-guard-association-to-multi-data-guards'), help=u"""Migrates the existing Data Guard association to new Data Guard model to support multiple standby databases functionality.
 
 This operation should always be performed on primary. \n[Command Reference](migrateDataGuardAssociationToMultiDataGuards)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help=u"""The Data Guard association's [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -29841,7 +29841,7 @@ def migrate_data_guard_association_to_multi_data_guards(ctx, from_json, wait_for
 
 
 @db_system_group.command(name=cli_util.override('db.migrate_exadata_db_system_resource_model.command_name', 'migrate-exadata-db-system-resource-model'), help=u"""Migrates the Exadata DB system to the new [Exadata resource model]. All related resources will be migrated. \n[Command Reference](migrateExadataDbSystemResourceModel)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -29866,10 +29866,10 @@ def migrate_exadata_db_system_resource_model(ctx, from_json, db_system_id, if_ma
 
 
 @database_group.command(name=cli_util.override('db.migrate_vault_key.command_name', 'migrate-vault-key'), help=u"""Changes encryption key management from customer-managed, using the [Vault service], to Oracle-managed. \n[Command Reference](migrateVaultKey)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--kms-key-id', required=True, help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--tde-wallet-password', help=u"""The existing TDE wallet password of the database.""")
 @cli_util.option('--admin-password', help=u"""The existing admin password of the database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -29939,7 +29939,7 @@ def migrate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @database_group.command(name=cli_util.override('db.modify_database_management.command_name', 'modify-database-management'), help=u"""Updates one or more attributes of the Database Management service for the database. \n[Command Reference](modifyDatabaseManagement)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-end-point-id', help=u"""The [OCID] of the private endpoint.""")
 @cli_util.option('--management-type', type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The Database Management type.""")
@@ -30243,7 +30243,7 @@ def move_execution_action_member(ctx, from_json, wait_for_state, max_wait_second
 
 
 @database_group.command(name=cli_util.override('db.refresh_data_guard_health_status.command_name', 'refresh-data-guard-health-status'), help=u"""Refreshes the Data Guard health status for the specified database. This operation is supported on both primary and standby databases. \n[Command Reference](refreshDataGuardHealthStatus)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -30345,7 +30345,7 @@ def refresh_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @autonomous_database_group.command(name=cli_util.override('db.register_autonomous_database_data_safe.command_name', 'register-autonomous-database-data-safe'), help=u"""Asynchronously registers this Autonomous AI Database with Data Safe. \n[Command Reference](registerAutonomousDatabaseDataSafe)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--pdb-admin-password', required=True, help=u"""The admin password provided during the creation of the database. This password is between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -30660,7 +30660,7 @@ def reinstate_autonomous_container_database_dataguard_association(ctx, from_json
 @database_group.command(name=cli_util.override('db.reinstate_data_guard.command_name', 'reinstate-data-guard'), help=u"""Reinstates the database identified by the `databaseId` parameter into the standby role in a Data Guard association.
 
 This operation should be performed on disabled standby database. \n[Command Reference](reinstateDataGuard)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The administrator password of the primary database in this Data Guard association.
 
 **The password MUST be the same as the primary admin password.**""")
@@ -30721,7 +30721,7 @@ def reinstate_data_guard(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @data_guard_association_group.command(name=cli_util.override('db.reinstate_data_guard_association.command_name', 'reinstate'), help=u"""Reinstates the database identified by the `databaseId` parameter into the standby role in a Data Guard association. \n[Command Reference](reinstateDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help=u"""The Data Guard association's [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The DB system administrator password.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -31297,7 +31297,7 @@ def restart_autonomous_container_database(ctx, from_json, wait_for_state, max_wa
 
 
 @autonomous_database_group.command(name=cli_util.override('db.restart_autonomous_database.command_name', 'restart'), help=u"""Restarts the specified Autonomous AI Database. \n[Command Reference](restartAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-online-restart', type=click.BOOL, help=u"""If provided, an online restart will be triggered.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -31353,7 +31353,7 @@ def restart_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @autonomous_database_group.command(name=cli_util.override('db.restore_autonomous_database.command_name', 'restore'), help=u"""Restores an Autonomous AI Database based on the provided request parameters. \n[Command Reference](restoreAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--timestamp', type=custom_types.CLI_DATETIME, help=u"""The time to restore the database to.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-scn', help=u"""Restores using the backup with the System Change Number (SCN) specified.""")
 @cli_util.option('--latest', type=click.BOOL, help=u"""Restores to the last known good state with the least possible data loss.""")
@@ -31422,7 +31422,7 @@ def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @database_group.command(name=cli_util.override('db.restore_database.command_name', 'restore'), help=u"""Restore a Database based on the request parameters you provide. \n[Command Reference](restoreDatabase)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-scn', help=u"""Restores using the backup with the System Change Number (SCN) specified. This field is applicable for both use cases - Restoring Container Database or Restoring specific Pluggable Database.""")
 @cli_util.option('--timestamp', type=custom_types.CLI_DATETIME, help=u"""Restores to the timestamp specified.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--latest', type=click.BOOL, help=u"""Restores to the last known good state with the least possible data loss.""")
@@ -31551,7 +31551,7 @@ def rotate_autonomous_container_database_encryption_key(ctx, from_json, wait_for
 
 
 @autonomous_database_group.command(name=cli_util.override('db.rotate_autonomous_database_encryption_key.command_name', 'rotate-autonomous-database-encryption-key'), help=u"""Rotate existing AutonomousDatabase [Vault service] key. \n[Command Reference](rotateAutonomousDatabaseEncryptionKey)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--key-version-id', help=u"""Key version ocid of the key provided by the user for rotate operation. [OCID].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE", "STANDBY", "TRANSPORTING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -31612,7 +31612,7 @@ def rotate_autonomous_database_encryption_key(ctx, from_json, wait_for_state, ma
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_autonomous_vm_cluster_ords_certs.command_name', 'rotate-autonomous-vm-cluster-ords-certs'), help=u"""Rotates the Oracle REST Data Services (ORDS) certificates for Autonomous Exadata VM cluster. \n[Command Reference](rotateAutonomousVmClusterOrdsCerts)""")
 @cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM to use Oracle-managed certificates. Specify BYOC when you want to bring your own certificate.""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the certificate to use.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the certificate to use.""")
 @cli_util.option('--certificate-authority-id', help=u"""The [OCID] of the certificate authority.""")
 @cli_util.option('--ca-bundle-id', help=u"""The [OCID] of the certificate bundle.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -31693,7 +31693,7 @@ def rotate_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state, max_
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_autonomous_vm_cluster_ssl_certs.command_name', 'rotate-autonomous-vm-cluster-ssl-certs'), help=u"""Rotates the SSL certificates for Autonomous Exadata VM cluster. \n[Command Reference](rotateAutonomousVmClusterSslCerts)""")
 @cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM to use Oracle-managed certificates. Specify BYOC when you want to bring your own certificate.""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the certificate to use.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the certificate to use.""")
 @cli_util.option('--certificate-authority-id', help=u"""The [OCID] of the certificate authority.""")
 @cli_util.option('--ca-bundle-id', help=u"""The [OCID] of the certificate bundle.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -31774,7 +31774,7 @@ def rotate_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state, max_w
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ords_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ords-certs'), help=u"""Rotates the Oracle REST Data Services (ORDS) certificates for a cloud Autonomous Exadata VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterOrdsCerts)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
 @cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM to use Oracle-managed certificates. Specify BYOC when you want to bring your own certificate.""")
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the certificate to use.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the certificate to use.""")
 @cli_util.option('--certificate-authority-id', help=u"""The [OCID] of the certificate authority.""")
 @cli_util.option('--ca-bundle-id', help=u"""The [OCID] of the certificate bundle.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -31855,7 +31855,7 @@ def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ssl_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ssl-certs'), help=u"""Rotates the SSL certficates for a cloud Autonomous Exadata VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterSslCerts)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
 @cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM to use Oracle-managed certificates. Specify BYOC when you want to bring your own certificate.""")
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the certificate to use.""")
+@cli_util.option('--certificate-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the certificate to use.""")
 @cli_util.option('--certificate-authority-id', help=u"""The [OCID] of the certificate authority.""")
 @cli_util.option('--ca-bundle-id', help=u"""The [OCID] of the certificate bundle.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -32123,7 +32123,7 @@ def rotate_ssl_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @database_group.command(name=cli_util.override('db.rotate_vault_key.command_name', 'rotate-vault-key'), help=u"""Creates a new version of an existing [Vault service] key. \n[Command Reference](rotateVaultKey)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -32241,7 +32241,7 @@ def run_data_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @autonomous_database_group.command(name=cli_util.override('db.saas_admin_user_status.command_name', 'saas-admin-user-status'), help=u"""This operation gets SaaS administrative user status of the Autonomous AI Database. \n[Command Reference](saasAdminUserStatus)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -32325,7 +32325,7 @@ def scan_external_container_database_pluggable_databases(ctx, from_json, wait_fo
 
 
 @database_group.command(name=cli_util.override('db.set_db_key_version.command_name', 'set-db-key-version'), help=u"""Sets a new version of an existing [Vault service] key. \n[Command Reference](setDbKeyVersion)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--provider', required=True, type=custom_types.CliCaseInsensitiveChoice(["OCI"]), help=u"""Source of key version.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -32382,7 +32382,7 @@ def set_db_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @database_group.command(name=cli_util.override('db.set_db_key_version_oci_provider_set_key_version_details.command_name', 'set-db-key-version-oci-provider-set-key-version-details'), help=u"""Sets a new version of an existing [Vault service] key. \n[Command Reference](setDbKeyVersion)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--kms-key-version-id', required=True, help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -32557,7 +32557,7 @@ def set_pdb_key_version_oci_provider_set_key_version_details(ctx, from_json, wai
 
 
 @autonomous_database_group.command(name=cli_util.override('db.shrink_autonomous_database.command_name', 'shrink'), help=u"""This operation shrinks the current allocated storage down to the current actual used data storage (actualUsedDataStorageSizeInTBs). The if the base storage value for the database (dataStorageSizeInTBs) is larger than the actualUsedDataStorageSizeInTBs value, you are billed for the base storage value. \n[Command Reference](shrinkAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE", "STANDBY", "TRANSPORTING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -32610,7 +32610,7 @@ def shrink_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @autonomous_database_group.command(name=cli_util.override('db.start_autonomous_database.command_name', 'start'), help=u"""Starts the specified Autonomous AI Database. \n[Command Reference](startAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE", "STANDBY", "TRANSPORTING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -32714,7 +32714,7 @@ def start_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @autonomous_database_group.command(name=cli_util.override('db.stop_autonomous_database.command_name', 'stop'), help=u"""Stops the specified Autonomous AI Database. \n[Command Reference](stopAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE", "STANDBY", "TRANSPORTING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -32823,7 +32823,7 @@ def stop_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wa
 A switchover guarantees no data loss.
 
 This operation should be performed on respective standby database. \n[Command Reference](switchOverDataGuard)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The administrator password of the primary database in this Data Guard association.
 
 **The password MUST be the same as the primary admin password.**""")
@@ -32990,7 +32990,7 @@ def switchover_autonomous_container_database_dataguard_association(ctx, from_jso
 
 
 @autonomous_database_group.command(name=cli_util.override('db.switchover_autonomous_database.command_name', 'switchover'), help=u"""Initiates a switchover of the specified Autonomous AI Database to the associated peer database. Applicable only to databases with Disaster Recovery enabled. This API should be called in the remote region where the peer database resides. Below parameter is optional:   - `peerDbId`     Use this parameter to specify the database OCID of the Disaster Recovery peer, which is located in a different (remote) region from the current peer database.     If this parameter is not provided, the switchover will happen in the same region. \n[Command Reference](switchoverAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--peer-db-id', help=u"""The database OCID(/Content/General/Concepts/identifiers.htm) of the Disaster Recovery peer (source Primary) database, which is located in a different (remote) region from the current peer database.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -33049,7 +33049,7 @@ def switchover_autonomous_database(ctx, from_json, wait_for_state, max_wait_seco
 @data_guard_association_group.command(name=cli_util.override('db.switchover_data_guard_association.command_name', 'switchover'), help=u"""Performs a switchover to transition the primary database of a Data Guard association into a standby role. The standby database associated with the `dataGuardAssociationId` assumes the primary database role.
 
 A switchover guarantees no data loss. \n[Command Reference](switchoverDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help=u"""The Data Guard association's [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The DB system administrator password.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -33226,7 +33226,7 @@ def terminate_autonomous_exadata_infrastructure(ctx, from_json, wait_for_state, 
 **Note:** Deprecated for Exadata Cloud Service systems. Use the [new resource model APIs] instead.
 
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model. \n[Command Reference](terminateDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -33656,7 +33656,7 @@ def update_autonomous_container_database_dataguard_association(ctx, from_json, w
 
 
 @autonomous_database_group.command(name=cli_util.override('db.update_autonomous_database.command_name', 'update'), help=u"""Updates one or more attributes of the specified Autonomous AI Database. See the UpdateAutonomousDatabaseDetails resource for a full list of attributes that can be updated. \n[Command Reference](updateAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--backup-retention-period-in-days', type=click.INT, help=u"""Retention period, in days, for long-term backups""")
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model of the Autonomous AI Database. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. ECPU compute model is the recommended model and OCPU compute model is legacy.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous AI Database. This property is applicable only to Autonomous AI Databases on the Exadata Cloud@Customer platform.""")
@@ -33759,7 +33759,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--permission-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "UNRESTRICTED"]), help=u"""The Autonomous AI Database permission level. Restricted mode allows access only by admin users.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -33806,7 +33806,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
@@ -34061,7 +34061,7 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 
 
 @autonomous_database_group.command(name=cli_util.override('db.update_autonomous_database_okv_key_details.command_name', 'update-autonomous-database-okv-key-details'), help=u"""Updates one or more attributes of the specified Autonomous AI Database. See the UpdateAutonomousDatabaseDetails resource for a full list of attributes that can be updated. \n[Command Reference](updateAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--encryption-key-okv-uri', required=True, help=u"""URI of OKV server""")
 @cli_util.option('--encryption-key-okv-kms-key', required=True, help=u"""UUID of OKV KMS Key""")
 @cli_util.option('--encryption-key-directory-name', required=True, help=u"""OKV wallet directory name""")
@@ -34168,7 +34168,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--permission-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "UNRESTRICTED"]), help=u"""The Autonomous AI Database permission level. Restricted mode allows access only by admin users.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -34215,7 +34215,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
 @cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
 
@@ -34477,7 +34477,7 @@ def update_autonomous_database_okv_key_details(ctx, from_json, force, wait_for_s
 
 
 @autonomous_database_group.command(name=cli_util.override('db.update_autonomous_database_azure_key_details.command_name', 'update-autonomous-database-azure-key-details'), help=u"""Updates one or more attributes of the specified Autonomous AI Database. See the UpdateAutonomousDatabaseDetails resource for a full list of attributes that can be updated. \n[Command Reference](updateAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--encryption-key-vault-uri', required=True, help=u"""Azure vault URI""")
 @cli_util.option('--encryption-key-key-name', required=True, help=u"""Azure key name""")
 @cli_util.option('--backup-retention-period-in-days', type=click.INT, help=u"""Retention period, in days, for long-term backups""")
@@ -34582,7 +34582,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--permission-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "UNRESTRICTED"]), help=u"""The Autonomous AI Database permission level. Restricted mode allows access only by admin users.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -34629,7 +34629,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
 @cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
 
@@ -34885,7 +34885,7 @@ def update_autonomous_database_azure_key_details(ctx, from_json, force, wait_for
 
 
 @autonomous_database_group.command(name=cli_util.override('db.update_autonomous_database_aws_key_details.command_name', 'update-autonomous-database-aws-key-details'), help=u"""Updates one or more attributes of the specified Autonomous AI Database. See the UpdateAutonomousDatabaseDetails resource for a full list of attributes that can be updated. \n[Command Reference](updateAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--encryption-key-service-endpoint-uri', required=True, help=u"""AWS key service endpoint URI""")
 @cli_util.option('--encryption-key-key-arn', required=True, help=u"""AWS key ARN""")
 @cli_util.option('--backup-retention-period-in-days', type=click.INT, help=u"""Retention period, in days, for long-term backups""")
@@ -34990,7 +34990,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--permission-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "UNRESTRICTED"]), help=u"""The Autonomous AI Database permission level. Restricted mode allows access only by admin users.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -35037,7 +35037,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
 @cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
 
@@ -35301,7 +35301,7 @@ def update_autonomous_database_aws_key_details(ctx, from_json, force, wait_for_s
 
 
 @autonomous_database_group.command(name=cli_util.override('db.update_autonomous_database_oci_key_details.command_name', 'update-autonomous-database-oci-key-details'), help=u"""Updates one or more attributes of the specified Autonomous AI Database. See the UpdateAutonomousDatabaseDetails resource for a full list of attributes that can be updated. \n[Command Reference](updateAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--encryption-key-kms-key-id', required=True, help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--encryption-key-vault-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--backup-retention-period-in-days', type=click.INT, help=u"""Retention period, in days, for long-term backups""")
@@ -35406,7 +35406,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--permission-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "UNRESTRICTED"]), help=u"""The Autonomous AI Database permission level. Restricted mode allows access only by admin users.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -35453,7 +35453,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
 @cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
 
@@ -35709,7 +35709,7 @@ def update_autonomous_database_oci_key_details(ctx, from_json, force, wait_for_s
 
 
 @autonomous_database_group.command(name=cli_util.override('db.update_autonomous_database_gcp_key_details.command_name', 'update-autonomous-database-gcp-key-details'), help=u"""Updates one or more attributes of the specified Autonomous AI Database. See the UpdateAutonomousDatabaseDetails resource for a full list of attributes that can be updated. \n[Command Reference](updateAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--encryption-key-key-name', required=True, help=u"""GCP key name""")
 @cli_util.option('--encryption-key-project', required=True, help=u"""GCP project name""")
 @cli_util.option('--encryption-key-location', required=True, help=u"""GCP key ring location""")
@@ -35816,7 +35816,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--permission-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "UNRESTRICTED"]), help=u"""The Autonomous AI Database permission level. Restricted mode allows access only by admin users.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -35863,7 +35863,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
 @cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
 
@@ -36125,7 +36125,7 @@ def update_autonomous_database_gcp_key_details(ctx, from_json, force, wait_for_s
 
 
 @autonomous_database_group.command(name=cli_util.override('db.update_autonomous_database_oracle_managed_key_details.command_name', 'update-autonomous-database-oracle-managed-key-details'), help=u"""Updates one or more attributes of the specified Autonomous AI Database. See the UpdateAutonomousDatabaseDetails resource for a full list of attributes that can be updated. \n[Command Reference](updateAutonomousDatabase)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--backup-retention-period-in-days', type=click.INT, help=u"""Retention period, in days, for long-term backups""")
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model of the Autonomous AI Database. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. ECPU compute model is the recommended model and OCPU compute model is legacy.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous AI Database. This property is applicable only to Autonomous AI Databases on the Exadata Cloud@Customer platform.""")
@@ -36228,7 +36228,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--permission-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "UNRESTRICTED"]), help=u"""The Autonomous AI Database permission level. Restricted mode allows access only by admin users.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous AI Database, setting this will disable public secure access to the database.
 
@@ -36275,7 +36275,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
+@cli_util.option('--secret-id', type=custom_types.CLI_OCID, help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
 @cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
 
@@ -36731,7 +36731,7 @@ def update_autonomous_database_software_image(ctx, from_json, force, wait_for_st
 
 
 @autonomous_database_wallet_group.command(name=cli_util.override('db.update_autonomous_database_wallet.command_name', 'update'), help=u"""Updates the wallet for the specified Autonomous AI Database. \n[Command Reference](updateAutonomousDatabaseWallet)""")
-@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--autonomous-database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--should-rotate', type=click.BOOL, help=u"""Indicates whether to rotate the wallet or not. If `false`, the wallet will not be rotated. The default is `false`.""")
 @cli_util.option('--grace-period', type=click.INT, help=u"""The number of hours that the old wallet can be used after it has been rotated. The old wallet will no longer be valid after the number of hours in the wallet rotation grace period has passed. During the grace period, both the old wallet and the current wallet can be used.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -36977,7 +36977,7 @@ def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait
 
 
 @backup_group.command(name=cli_util.override('db.update_backup.command_name', 'update'), help=u"""Updates database backup details. \n[Command Reference](updateBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""The backup [OCID].""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The backup [OCID].""")
 @cli_util.option('--retention-period-in-days', type=click.INT, help=u"""The retention period of the long term backup in days.""")
 @cli_util.option('--retention-period-in-years', type=click.INT, help=u"""The retention period of the long term backup in years.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -37689,7 +37689,7 @@ def update_console_history(ctx, from_json, force, wait_for_state, max_wait_secon
 
 
 @database_group.command(name=cli_util.override('db.update_data_guard.command_name', 'update-data-guard'), help=u"""Update an existing Data Guard member. A Data Guard member represents the replication relationship between the specified database and a standby database. For more information, see [Using Oracle Data Guard]. \n[Command Reference](updateDataGuard)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--database-admin-password', help=u"""The administrator password of the primary database in this Data Guard association.
 
 **The password MUST be the same as the primary admin password.**""")
@@ -37768,7 +37768,7 @@ def update_data_guard(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @data_guard_association_group.command(name=cli_util.override('db.update_data_guard_association.command_name', 'update'), help=u"""Updates the Data Guard association the specified database. This API can be used to change the `protectionMode` and `transportType` of the Data Guard association. \n[Command Reference](updateDataGuardAssociation)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help=u"""The Data Guard association's [OCID].""")
 @cli_util.option('--database-admin-password', help=u"""A strong password for the 'SYS', 'SYSTEM', and 'PDB Admin' users to apply during standby creation.
 
@@ -37858,9 +37858,9 @@ def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 
 
 @database_group.command(name=cli_util.override('db.update_database.command_name', 'update'), help=u"""Update the specified database based on the request parameters provided. \n[Command Reference](updateDatabase)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--db-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--db-home-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--new-admin-password', help=u"""A new strong password for SYS, SYSTEM, and the plugbable database ADMIN user. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numeric, and two special characters. The special characters must be _, \\#, or -.""")
 @cli_util.option('--old-tde-wallet-password', help=u"""The existing TDE wallet password. You must provide the existing password in order to set a new TDE wallet password.""")
 @cli_util.option('--new-tde-wallet-password', help=u"""The new password to open the TDE wallet. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numeric, and two special characters. The special characters must be _, \\#, or -.""")
@@ -38028,7 +38028,7 @@ def update_database_software_image(ctx, from_json, force, wait_for_state, max_wa
 
 
 @db_home_group.command(name=cli_util.override('db.update_db_home.command_name', 'update'), help=u"""Patches the specified Database Home. \n[Command Reference](updateDbHome)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The Database Home [OCID].""")
 @cli_util.option('--db-version', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--one-off-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of one-off patches for Database Homes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -38179,7 +38179,7 @@ def update_db_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 **Note:** Deprecated for Exadata Cloud Service systems. Use the [new resource model APIs] instead.
 
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model. \n[Command Reference](updateDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The new number of CPU cores to set for the DB system. Not applicable for INTEL based virtual machine DB systems.""")
 @cli_util.option('--version-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 40,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -38463,7 +38463,7 @@ def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wai
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model.
 
 The [UpdateCloudVmClusterIormConfig] API is used for Exadata systems using the new resource model. \n[Command Reference](updateExadataIormConfig)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--objective', type=custom_types.CliCaseInsensitiveChoice(["LOW_LATENCY", "HIGH_THROUGHPUT", "BALANCED", "AUTO", "BASIC"]), help=u"""Value for the IORM objective Default is \"Auto\"""")
 @cli_util.option('--db-plans', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of IORM Setting for all the database in this Exadata DB System
 
@@ -40153,7 +40153,7 @@ def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_se
 
 
 @database_group.command(name=cli_util.override('db.upgrade_database.command_name', 'upgrade'), help=u"""Upgrades the specified Oracle Database instance. \n[Command Reference](upgradeDatabase)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""The database upgrade action.""")
 @cli_util.option('--database-upgrade-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -40214,7 +40214,7 @@ def upgrade_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @database_group.command(name=cli_util.override('db.upgrade_database_database_upgrade_with_db_home_details.command_name', 'upgrade-database-database-upgrade-with-db-home-details'), help=u"""Upgrades the specified Oracle Database instance. \n[Command Reference](upgradeDatabase)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""The database upgrade action.""")
 @cli_util.option('--database-upgrade-source-details-db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -40280,7 +40280,7 @@ def upgrade_database_database_upgrade_with_db_home_details(ctx, from_json, wait_
 
 
 @database_group.command(name=cli_util.override('db.upgrade_database_database_upgrade_with_database_software_image_details.command_name', 'upgrade-database-database-upgrade-with-database-software-image-details'), help=u"""Upgrades the specified Oracle Database instance. \n[Command Reference](upgradeDatabase)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""The database upgrade action.""")
 @cli_util.option('--database-upgrade-source-details-database-software-image-id', required=True, help=u"""The database software image [OCID] of the image to be used to upgrade a database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -40346,7 +40346,7 @@ def upgrade_database_database_upgrade_with_database_software_image_details(ctx, 
 
 
 @database_group.command(name=cli_util.override('db.upgrade_database_database_upgrade_with_db_version_details.command_name', 'upgrade-database-database-upgrade-with-db-version-details'), help=u"""Upgrades the specified Oracle Database instance. \n[Command Reference](upgradeDatabase)""")
-@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The database [OCID].""")
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""The database upgrade action.""")
 @cli_util.option('--database-upgrade-source-details-db-version', required=True, help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
@@ -40414,7 +40414,7 @@ def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wa
 
 
 @db_system_group.command(name=cli_util.override('db.upgrade_db_system.command_name', 'upgrade'), help=u"""Upgrades the operating system and grid infrastructure of the DB system. \n[Command Reference](upgradeDbSystem)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The DB system [OCID].""")
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "ROLLBACK", "UPDATE_SNAPSHOT_RETENTION_DAYS", "UPGRADE"]), help=u"""The operating system upgrade action.""")
 @cli_util.option('--snapshot-retention-period-in-days', type=click.INT, help=u"""The retention period, in days, for the snapshot that allows you to perform a rollback of the upgrade operation. After this number of days passes, you cannot roll back the upgrade.""")
 @cli_util.option('--new-gi-version', help=u"""A valid Oracle Grid Infrastructure (GI) software version.""")

@@ -43,7 +43,7 @@ fleet_apps_management_provision_root_group.add_command(provision_collection_grou
 
 @provision_group.command(name=cli_util.override('fleet_apps_management_provision.change_provision_compartment.command_name', 'change-compartment'), help=u"""Moves a Provision into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeProvisionCompartment)""")
 @cli_util.option('--provision-id', required=True, help=u"""The [OCID] of the FamProvision.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the FamProvision to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the FamProvision to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -103,7 +103,7 @@ def change_provision_compartment(ctx, from_json, wait_for_state, max_wait_second
 
 
 @provision_group.command(name=cli_util.override('fleet_apps_management_provision.create_provision.command_name', 'create'), help=u"""Creates a Provision. \n[Command Reference](createProvision)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the FamProvision in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the FamProvision in.""")
 @cli_util.option('--package-catalog-item-id', required=True, help=u"""The [OCID] of the Catalog Item.""")
 @cli_util.option('--config-catalog-item-id', required=True, help=u"""A [OCID] of the Catalog Item to a file with key/value pairs to set up variables for createStack API.""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
@@ -268,7 +268,7 @@ def get_provision(ctx, from_json, provision_id):
 
 
 @provision_collection_group.command(name=cli_util.override('fleet_apps_management_provision.list_provisions.command_name', 'list-provisions'), help=u"""Returns a list of all the Provisions in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` or `fleetId` is specified. \n[Command Reference](listProvisions)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single provision by id. Either compartmentId or id must be provided.""")

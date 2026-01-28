@@ -74,7 +74,7 @@ gdd_root_group.add_command(work_request_group)
 
 
 @private_endpoint_group.command(name=cli_util.override('gdd.change_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Move the private endpoint to the specified compartment. \n[Command Reference](changePrivateEndpointCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""Oracle Sharded Database PrivateEndpoint identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -135,7 +135,7 @@ def change_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait
 
 
 @sharded_database_group.command(name=cli_util.override('gdd.change_sharded_database_compartment.command_name', 'change-compartment'), help=u"""Move the sharded database database and its dependent resources to the specified compartment. \n[Command Reference](changeShardedDatabaseCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--sharded-database-id', required=True, help=u"""Sharded Database identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -317,8 +317,8 @@ def configure_sharding(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @private_endpoint_group.command(name=cli_util.override('gdd.create_private_endpoint.command_name', 'create'), help=u"""Creates a PrivateEndpoint. \n[Command Reference](createPrivateEndpoint)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Identifier of the compartment where private endpoint is to be created.""")
-@cli_util.option('--subnet-id', required=True, help=u"""Identifier of the customer subnet against which private endpoint is to be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Identifier of the compartment where private endpoint is to be created.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""Identifier of the customer subnet against which private endpoint is to be created.""")
 @cli_util.option('--display-name', required=True, help=u"""Private endpoint display name.""")
 @cli_util.option('--description', help=u"""PrivateEndpoint description.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the network security groups that the private endpoint belongs to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -390,7 +390,7 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @sharded_database_group.command(name=cli_util.override('gdd.create_sharded_database.command_name', 'create'), help=u"""Creates a Sharded Database. \n[Command Reference](createShardedDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Identifier of the compartment where sharded database is to be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Identifier of the compartment where sharded database is to be created.""")
 @cli_util.option('--db-deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEDICATED"]), help=u"""The database deployment type.""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle sharded database display name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -455,7 +455,7 @@ def create_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @sharded_database_group.command(name=cli_util.override('gdd.create_sharded_database_create_dedicated_sharded_database.command_name', 'create-sharded-database-create-dedicated-sharded-database'), help=u"""Creates a Sharded Database. \n[Command Reference](createShardedDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Identifier of the compartment where sharded database is to be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Identifier of the compartment where sharded database is to be created.""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle sharded database display name.""")
 @cli_util.option('--db-workload', required=True, type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW"]), help=u"""Possible workload types.""")
 @cli_util.option('--sharding-method', required=True, type=custom_types.CliCaseInsensitiveChoice(["USER", "SYSTEM"]), help=u"""Sharding Method.""")
@@ -749,7 +749,7 @@ def fetch_connection_string(ctx, from_json, sharded_database_id, if_match):
 
 
 @sharded_database_group.command(name=cli_util.override('gdd.fetch_shardable_cloud_autonomous_vm_clusters.command_name', 'fetch-shardable-cloud-autonomous-vm-clusters'), help=u"""List of cloudAutonomousVMClusters for the given tenancy, that can be sharded. \n[Command Reference](fetchShardableCloudAutonomousVmClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment id of cloud autonomous vm clusters.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment id of cloud autonomous vm clusters.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "NEEDS_ATTENTION", "INACTIVE", "DELETING", "DELETED", "UPDATING", "CREATING", "UNAVAILABLE"]), help=u"""Lifecycle states for shardable Cloud autonomous vm cluster.""")
 @cli_util.option('--lifecycle-state-details', help=u"""Detailed message for the lifecycle state.""")
 @cli_util.option('--minimum-available-cdb-count', type=click.INT, help=u"""List only clusters for which atleast given minimum CDB count is available.""")
@@ -979,7 +979,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @private_endpoint_collection_group.command(name=cli_util.override('gdd.list_private_endpoints.command_name', 'list-private-endpoints'), help=u"""List of PrivateEndpoints. \n[Command Reference](listPrivateEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "INACTIVE", "DELETING", "DELETED", "UPDATING", "CREATING"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1039,7 +1039,7 @@ def list_private_endpoints(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @sharded_database_collection_group.command(name=cli_util.override('gdd.list_sharded_databases.command_name', 'list-sharded-databases'), help=u"""List of Sharded databases. \n[Command Reference](listShardedDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "NEEDS_ATTENTION", "INACTIVE", "DELETING", "DELETED", "UPDATING", "CREATING", "UNAVAILABLE"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1213,7 +1213,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('gdd.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
@@ -1341,7 +1341,7 @@ def patch_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @sharded_database_group.command(name=cli_util.override('gdd.prevalidate_sharded_database.command_name', 'prevalidate'), help=u"""Sharded database pre-validation request. \n[Command Reference](prevalidateShardedDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--prevalidate-sharded-database-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'prevalidate-sharded-database-details': {'module': 'globally_distributed_database', 'class': 'PrevalidatePayload'}})
 @cli_util.help_option
@@ -1366,7 +1366,7 @@ def prevalidate_sharded_database(ctx, from_json, compartment_id, prevalidate_sha
 
 
 @sharded_database_group.command(name=cli_util.override('gdd.prevalidate_sharded_database_prevalidate_patch_payload.command_name', 'prevalidate-sharded-database-prevalidate-patch-payload'), help=u"""Sharded database pre-validation request. \n[Command Reference](prevalidateShardedDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--prevalidate-sharded-database-details-prevalidate-payload', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--prevalidate-sharded-database-details-sharded-database-id', required=True, help=u"""Sharded database identifier""")
 @json_skeleton_utils.get_cli_json_input_option({'prevalidate-sharded-database-details-prevalidate-payload': {'module': 'globally_distributed_database', 'class': 'PatchShardedDatabaseDetails'}})
@@ -1396,7 +1396,7 @@ def prevalidate_sharded_database_prevalidate_patch_payload(ctx, from_json, compa
 
 
 @sharded_database_group.command(name=cli_util.override('gdd.prevalidate_sharded_database_prevalidate_create_payload.command_name', 'prevalidate-sharded-database-prevalidate-create-payload'), help=u"""Sharded database pre-validation request. \n[Command Reference](prevalidateShardedDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--prevalidate-sharded-database-details-prevalidate-payload', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'prevalidate-sharded-database-details-prevalidate-payload': {'module': 'globally_distributed_database', 'class': 'CreateShardedDatabaseDetails'}})
 @cli_util.help_option

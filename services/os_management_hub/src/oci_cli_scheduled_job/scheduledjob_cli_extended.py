@@ -60,7 +60,7 @@ def create_scheduled_job_extended(ctx, **kwargs):
 @scheduledjob_cli.scheduled_job_group.command(name=scheduledjob_cli.list_scheduled_jobs.name, help=scheduledjob_cli.list_scheduled_jobs.help)
 @cli_util.option('--is-managed-by-alx', type=click.BOOL, help="""Indicates whether to list only resources managed by the Autonomous Linux service.""")
 @cli_util.option('--location-ne', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help="""A filter to return only resources whose location does not match the given value.""")
-@cli_util.option('--group-id', help=u"""The OCID of the managed instance group for which to list resources.""")
+@cli_util.option('--group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the managed instance group for which to list resources.""")
 @cli_util.option('--stage-id', help=u"""The OCID of the lifecycle stage for which to list resources.""")
 @cli_util.option('--scheduled-job-id', help=u"""The OCID of the scheduled job.""")
 @click.pass_context

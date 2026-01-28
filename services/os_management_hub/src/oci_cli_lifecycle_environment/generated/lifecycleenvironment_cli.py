@@ -103,7 +103,7 @@ def attach_managed_instances_to_lifecycle_stage(ctx, from_json, wait_for_state, 
 
 @lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.change_lifecycle_environment_compartment.command_name', 'change-compartment'), help=u"""Moves a lifecycle environment into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeLifecycleEnvironmentCompartment)""")
 @cli_util.option('--lifecycle-environment-id', required=True, help=u"""The [OCID] of the lifecycle environment.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment to move the lifecycle environment to.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the lifecycle environment to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -135,7 +135,7 @@ def change_lifecycle_environment_compartment(ctx, from_json, lifecycle_environme
 
 
 @lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.create_lifecycle_environment.command_name', 'create'), help=u"""Creates a lifecycle environment. A lifecycle environment is a user-defined pipeline to deliver curated, versioned content in a prescribed, methodical manner. \n[Command Reference](createLifecycleEnvironment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the lifecycle environment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the lifecycle environment.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the lifecycle environment. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--stages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""User-specified list of ranked lifecycle stages used within the lifecycle environment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""The CPU architecture of the managed instances in the lifecycle environment.""")
@@ -379,7 +379,7 @@ def get_lifecycle_stage(ctx, from_json, lifecycle_stage_id):
 
 
 @lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.list_lifecycle_environments.command_name', 'list'), help=u"""Lists lifecycle environments that match the specified compartment or lifecycle environment OCID. Filter the list against a variety of criteria including but not limited to its name, status, architecture, and OS family. \n[Command Reference](listLifecycleEnvironments)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--lifecycle-environment-id', help=u"""The [OCID] of the lifecycle environment.""")
@@ -461,7 +461,7 @@ def list_lifecycle_environments(ctx, from_json, all_pages, page_size, compartmen
 
 @lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.list_lifecycle_stage_installed_packages.command_name', 'list-lifecycle-stage-installed-packages'), help=u"""Lists installed packages on managed instances in a specified lifecycle stage. Filter the list against a variety of criteria including but not limited to the package name. \n[Command Reference](listLifecycleStageInstalledPackages)""")
 @cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -533,7 +533,7 @@ def list_lifecycle_stage_installed_packages(ctx, from_json, all_pages, page_size
 
 
 @lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.list_lifecycle_stages.command_name', 'list'), help=u"""Lists lifecycle stages that match the specified compartment or lifecycle stage [OCID]. Filter the list against \n[Command Reference](listLifecycleStages)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--lifecycle-stage-id', help=u"""The [OCID] of the lifecycle stage.""")

@@ -83,7 +83,7 @@ opensearch_cluster_root_group.add_command(work_request_log_entry_collection_grou
 
 @opensearch_cluster_group.command(name=cli_util.override('opensearch_cluster.backup_opensearch_cluster.command_name', 'backup'), help=u"""Backup the opensearch cluster details. \n[Command Reference](backupOpensearchCluster)""")
 @cli_util.option('--opensearch-cluster-id', required=True, help=u"""unique OpensearchCluster identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the cluster backup is located.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the cluster backup is located.""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the cluster backup. Avoid entering confidential information.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -207,7 +207,7 @@ def configure_outbound_cluster(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @opensearch_cluster_group.command(name=cli_util.override('opensearch_cluster.create_opensearch_cluster.command_name', 'create'), help=u"""Creates a new OpensearchCluster. \n[Command Reference](createOpensearchCluster)""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the cluster. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to create the cluster in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to create the cluster in.""")
 @cli_util.option('--software-version', required=True, help=u"""The version of the software the cluster is running.""")
 @cli_util.option('--master-node-count', required=True, type=click.INT, help=u"""The number of master nodes to configure for the cluster.""")
 @cli_util.option('--master-node-host-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FLEX", "BM"]), help=u"""The instance type for the cluster's master nodes.""")
@@ -221,8 +221,8 @@ def configure_outbound_cluster(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--opendashboard-node-count', required=True, type=click.INT, help=u"""The number of OpenSearch Dashboard nodes to configure for the cluster.""")
 @cli_util.option('--opendashboard-node-host-ocpu-count', required=True, type=click.INT, help=u"""The number of OCPUs to configure for the cluster's OpenSearch Dashboard nodes.""")
 @cli_util.option('--opendashboard-node-host-memory-gb', required=True, type=click.INT, help=u"""The amount of memory in GB, to configure for the cluster's OpenSearch Dashboard nodes.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the cluster's VCN.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the cluster's subnet.""")
+@cli_util.option('--vcn-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the cluster's VCN.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the cluster's subnet.""")
 @cli_util.option('--vcn-compartment-id', required=True, help=u"""The OCID for the compartment where the cluster's VCN is located.""")
 @cli_util.option('--subnet-compartment-id', required=True, help=u"""The OCID for the compartment where the cluster's subnet is located.""")
 @cli_util.option('--master-node-host-bare-metal-shape', help=u"""The bare metal shape for the cluster's master nodes.""")
@@ -505,7 +505,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @shapes_details_group.command(name=cli_util.override('opensearch_cluster.list_opensearch_cluster_shapes.command_name', 'list-opensearch-cluster-shapes'), help=u"""Retrieves available OpenSearch Cluster node shapes. \n[Command Reference](listOpensearchClusterShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -524,7 +524,7 @@ def list_opensearch_cluster_shapes(ctx, from_json, all_pages, compartment_id):
 
 
 @opensearch_cluster_collection_group.command(name=cli_util.override('opensearch_cluster.list_opensearch_clusters.command_name', 'list-opensearch-clusters'), help=u"""Returns a list of OpensearchClusters. \n[Command Reference](listOpensearchClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only OpensearchClusters their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""unique OpensearchCluster identifier""")
@@ -587,7 +587,7 @@ def list_opensearch_clusters(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @opensearch_versions_collection_group.command(name=cli_util.override('opensearch_cluster.list_opensearch_versions.command_name', 'list-opensearch-versions'), help=u"""Lists the supported Opensearch versions \n[Command Reference](listOpensearchVersions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -736,7 +736,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_collection_group.command(name=cli_util.override('opensearch_cluster.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--source-resource-id', help=u"""The ID of the source resource to list work requests.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -792,7 +792,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @opensearch_cluster_group.command(name=cli_util.override('opensearch_cluster.opensearch_cluster_restore.command_name', 'opensearch-cluster-restore'), help=u"""Restore the opensearch cluster details. \n[Command Reference](opensearchClusterRestore)""")
 @cli_util.option('--opensearch-cluster-id', required=True, help=u"""unique OpensearchCluster identifier""")
 @cli_util.option('--opensearch-cluster-backup-id', required=True, help=u"""The OCID of the cluster backup to restore.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the cluster backup is located.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the cluster backup is located.""")
 @cli_util.option('--prefix', help=u"""The prefix for the indices in the cluster backup.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

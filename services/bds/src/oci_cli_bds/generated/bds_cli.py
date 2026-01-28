@@ -259,7 +259,7 @@ def activate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wai
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--identity-configuration-id', required=True, help=u"""The OCID of the identity configuration""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
-@cli_util.option('--vault-id', required=True, help=u"""OCID of the vault to store token exchange service principal keyta, required for creating UPST configb""")
+@cli_util.option('--vault-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the vault to store token exchange service principal keyta, required for creating UPST configb""")
 @cli_util.option('--master-encryption-key-id', required=True, help=u"""OCID of the master encryption key in vault for encrypting token exchange service principal keytab, required for creating UPST config""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1412,7 +1412,7 @@ def certificate_service_info(ctx, from_json, bds_instance_id, services, if_match
 
 @bds_instance_group.command(name=cli_util.override('bds.change_bds_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a Big Data Service cluster into a different compartment. \n[Command Reference](changeBdsInstanceCompartment)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1536,7 +1536,7 @@ def change_shape(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @bds_api_key_group.command(name=cli_util.override('bds.create_bds_api_key.command_name', 'create'), help=u"""Create an API key on behalf of the specified user. \n[Command Reference](createBdsApiKey)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--user-id', required=True, help=u"""The OCID of the user for whom this new generated API key pair will be created.""")
+@cli_util.option('--user-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the user for whom this new generated API key pair will be created.""")
 @cli_util.option('--passphrase', required=True, help=u"""Base64 passphrase used to secure the private key which will be created on user behalf.""")
 @cli_util.option('--key-alias', required=True, help=u"""User friendly identifier used to uniquely differentiate between different API keys associated with this Big Data Service cluster. Only ASCII alphanumeric characters with no spaces allowed.""")
 @cli_util.option('--default-region', help=u"""The name of the region to establish the Object Storage endpoint. See https://docs.oracle.com/en-us/iaas/api/#/en/identity/20160918/Region/ for additional information.""")
@@ -1605,7 +1605,7 @@ def create_bds_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @bds_capacity_report_group.command(name=cli_util.override('bds.create_bds_capacity_report.command_name', 'create'), help=u"""Create a detailed capacity report for BDS service \n[Command Reference](createBdsCapacityReport)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment. This should always be the root compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID for the compartment. This should always be the root compartment.""")
 @cli_util.option('--shape-availabilities', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information about the shapes in the capacity report.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'shape-availabilities': {'module': 'bds', 'class': 'list[CreateCapacityReportShapeAvailabilityDetails]'}})
 @cli_util.help_option
@@ -1630,7 +1630,7 @@ def create_bds_capacity_report(ctx, from_json, compartment_id, shape_availabilit
 
 
 @bds_instance_group.command(name=cli_util.override('bds.create_bds_instance.command_name', 'create'), help=u"""Creates a Big Data Service cluster. \n[Command Reference](createBdsInstance)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""Name of the Big Data Service cluster.""")
 @cli_util.option('--cluster-version', required=True, help=u"""Version of the Hadoop distribution.""")
 @cli_util.option('--cluster-public-key', required=True, help=u"""The SSH public key used to authenticate the cluster connection.""")
@@ -4101,7 +4101,7 @@ def install_software_updates(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @bds_instance_group.command(name=cli_util.override('bds.list_auto_scaling_configurations.command_name', 'list-auto-scaling-configurations'), help=u"""Returns information about the autoscaling configurations for a cluster. \n[Command Reference](listAutoScalingConfigurations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -4170,7 +4170,7 @@ def list_auto_scaling_configurations(ctx, from_json, all_pages, page_size, compa
 @bds_api_key_group.command(name=cli_util.override('bds.list_bds_api_keys.command_name', 'list'), help=u"""Returns a list of all API keys associated with this Big Data Service cluster. \n[Command Reference](listBdsApiKeys)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The state of the API key.""")
-@cli_util.option('--user-id', help=u"""The OCID of the user for whom the API key belongs.""")
+@cli_util.option('--user-id', type=custom_types.CLI_OCID, help=u"""The OCID of the user for whom the API key belongs.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
@@ -4284,7 +4284,7 @@ def list_bds_cluster_versions(ctx, from_json, all_pages, page_size, page, limit,
 
 
 @bds_instance_group.command(name=cli_util.override('bds.list_bds_instances.command_name', 'list'), help=u"""Returns a list of all Big Data Service clusters in a compartment. \n[Command Reference](listBdsInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "SUSPENDING", "SUSPENDED", "RESUMING", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""The state of the cluster.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -4417,7 +4417,7 @@ def list_bds_metastore_configurations(ctx, from_json, all_pages, page_size, bds_
 
 @identity_configuration_group.command(name=cli_util.override('bds.list_identity_configurations.command_name', 'list'), help=u"""Returns a list of all identity configurations associated with this Big Data Service cluster. \n[Command Reference](listIdentityConfigurations)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
@@ -5089,7 +5089,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('bds.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--resource-id', help=u"""The OCID of the resource.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

@@ -105,7 +105,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @kafka_cluster_group.command(name=cli_util.override('kafka.change_kafka_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a KafkaCluster into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeKafkaClusterCompartment)""")
 @cli_util.option('--kafka-cluster-id', required=True, help=u"""The [OCID] of the KafkaCluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the KafkaCluster to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the KafkaCluster to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -166,7 +166,7 @@ def change_kafka_cluster_compartment(ctx, from_json, wait_for_state, max_wait_se
 
 @kafka_cluster_config_group.command(name=cli_util.override('kafka.change_kafka_cluster_config_compartment.command_name', 'change-compartment'), help=u"""Moves a KafkaClusterConfig into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeKafkaClusterConfigCompartment)""")
 @cli_util.option('--kafka-cluster-config-id', required=True, help=u"""The [OCID] of the KafkaClusterConfig.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the KafkaClusterConfig to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the KafkaClusterConfig to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -196,7 +196,7 @@ def change_kafka_cluster_config_compartment(ctx, from_json, kafka_cluster_config
 
 
 @kafka_cluster_group.command(name=cli_util.override('kafka.create_kafka_cluster.command_name', 'create'), help=u"""Creates a KafkaCluster. \n[Command Reference](createKafkaCluster)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the KafkaCluster in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the KafkaCluster in.""")
 @cli_util.option('--access-subnets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Subnets where broker/coordinator VNICs will be created.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kafka-version', required=True, help=u"""Version of Kafka to use to spin up the cluster""")
 @cli_util.option('--cluster-type', required=True, help=u"""Type of the cluster to spin up. DEVELOPMENT - setting that allows to sacrifice HA and spin up cluster on single node PRODUCTION - Minimum allowed broker count is 3""")
@@ -283,7 +283,7 @@ def create_kafka_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @kafka_cluster_config_group.command(name=cli_util.override('kafka.create_kafka_cluster_config.command_name', 'create'), help=u"""Creates a KafkaClusterConfig. \n[Command Reference](createKafkaClusterConfig)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the KafkaClusterConfig in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to create the KafkaClusterConfig in.""")
 @cli_util.option('--latest-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -557,8 +557,8 @@ def disable_superuser(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 @kafka_cluster_group.command(name=cli_util.override('kafka.enable_superuser.command_name', 'enable-superuser'), help=u"""Adds a SASL superuser to the Kafka cluster. A generated password will be updated to the specified vault. \n[Command Reference](enableSuperuser)""")
 @cli_util.option('--kafka-cluster-id', required=True, help=u"""The [OCID] of the KafkaCluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the superuser secret.""")
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the secret that will be populated with the generated superuser password.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the superuser secret.""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the secret that will be populated with the generated superuser password.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -769,7 +769,7 @@ def list_kafka_cluster_config_versions(ctx, from_json, all_pages, page_size, kaf
 
 
 @kafka_cluster_config_group.command(name=cli_util.override('kafka.list_kafka_cluster_configs.command_name', 'list'), help=u"""Gets a list of KafkaClusterConfigs. \n[Command Reference](listKafkaClusterConfigs)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the KafkaClusterConfig.""")
@@ -831,7 +831,7 @@ def list_kafka_cluster_configs(ctx, from_json, all_pages, page_size, compartment
 
 
 @kafka_cluster_group.command(name=cli_util.override('kafka.list_kafka_clusters.command_name', 'list'), help=u"""Gets a list of KafkaClusters. \n[Command Reference](listKafkaClusters)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the KafkaCluster.""")
@@ -1063,7 +1063,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('kafka.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")

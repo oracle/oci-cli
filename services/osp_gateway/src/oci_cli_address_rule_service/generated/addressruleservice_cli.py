@@ -34,7 +34,7 @@ address_rule_service_root_group.add_command(address_rule_group)
 
 @address_rule_group.command(name=cli_util.override('address_rule_service.get_address_rule.command_name', 'get'), help=u"""Get the address rule for the compartment based on the country code \n[Command Reference](getAddressRule)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--country-code', required=True, help=u"""Country code for the address rule in ISO-3166-1 2-letter format.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

@@ -166,7 +166,7 @@ def attach_software_sources_to_profile(ctx, from_json, profile_id, software_sour
 
 @profile_group.command(name=cli_util.override('onboarding.change_profile_compartment.command_name', 'change-compartment'), help=u"""Moves the profile to a different compartment. \n[Command Reference](changeProfileCompartment)""")
 @cli_util.option('--profile-id', required=True, help=u"""The [OCID] of the registration profile.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment to move the profile to.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the profile to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -199,7 +199,7 @@ def change_profile_compartment(ctx, from_json, profile_id, compartment_id, if_ma
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile.command_name', 'create'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the registration profile.""")
 @cli_util.option('--profile-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SOFTWARESOURCE", "GROUP", "LIFECYCLE", "STATION", "WINDOWS_STANDALONE"]), help=u"""The type of profile.""")
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
 @cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is required when creating a profile for non-OCI instances.""")
@@ -276,7 +276,7 @@ def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile_create_group_profile_details.command_name', 'create-profile-create-group-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the registration profile.""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""The [OCID] of the managed instance group that the instance will join after registration.""")
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
 @cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is required when creating a profile for non-OCI instances.""")
@@ -355,7 +355,7 @@ def create_profile_create_group_profile_details(ctx, from_json, wait_for_state, 
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile_create_windows_stand_alone_profile_details.command_name', 'create-profile-create-windows-stand-alone-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the registration profile.""")
 @cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""The vendor of the operating system for the instance.""")
 @cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""The operating system family.""")
 @cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""The architecture type.""")
@@ -438,7 +438,7 @@ def create_profile_create_windows_stand_alone_profile_details(ctx, from_json, wa
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile_create_station_profile_details.command_name', 'create-profile-create-station-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the registration profile.""")
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
 @cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is required when creating a profile for non-OCI instances.""")
 @cli_util.option('--registration-type', help=u"""The type of instance to register.""")
@@ -527,7 +527,7 @@ def create_profile_create_station_profile_details(ctx, from_json, wait_for_state
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile_create_software_source_profile_details.command_name', 'create-profile-create-software-source-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the registration profile.""")
 @cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""The vendor of the operating system for the instance.""")
 @cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""The operating system family.""")
 @cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""The architecture type.""")
@@ -614,7 +614,7 @@ def create_profile_create_software_source_profile_details(ctx, from_json, wait_f
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile_create_lifecycle_profile_details.command_name', 'create-profile-create-lifecycle-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the registration profile.""")
 @cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage that the instance will be associated with.""")
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
 @cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is required when creating a profile for non-OCI instances.""")
@@ -839,7 +839,7 @@ def get_profile_version(ctx, from_json, profile_id, profile_version):
 @cli_util.option('--profile-id', required=True, help=u"""The [OCID] of the registration profile.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -906,7 +906,7 @@ def list_profile_available_software_sources(ctx, from_json, all_pages, page_size
 
 
 @profile_group.command(name=cli_util.override('onboarding.list_profiles.command_name', 'list'), help=u"""Lists registration profiles that match the specified compartment or profile OCID. Filter the list against a variety of criteria including but not limited to its name, status, vendor name, and architecture type. \n[Command Reference](listProfiles)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--profile-type', type=custom_types.CliCaseInsensitiveChoice(["SOFTWARESOURCE", "GROUP", "LIFECYCLE", "STATION", "WINDOWS_STANDALONE"]), multiple=True, help=u"""A filter to return registration profiles that match the given profile type.""")

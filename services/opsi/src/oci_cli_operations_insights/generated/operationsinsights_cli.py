@@ -774,7 +774,7 @@ def change_autonomous_database_insight_advanced_features_credential_by_iam(ctx, 
 
 @awr_hub_sources_group.command(name=cli_util.override('opsi.change_awr_hub_source_compartment.command_name', 'change'), help=u"""Moves an AwrHubSource resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeAwrHubSourceCompartment)""")
 @cli_util.option('--awr-hub-source-id', required=True, help=u"""Unique Awr Hub Source identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -835,7 +835,7 @@ def change_awr_hub_source_compartment(ctx, from_json, wait_for_state, max_wait_s
 
 @database_insights_group.command(name=cli_util.override('opsi.change_database_insight_compartment.command_name', 'change'), help=u"""Moves a DatabaseInsight resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeDatabaseInsightCompartment)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -896,7 +896,7 @@ def change_database_insight_compartment(ctx, from_json, wait_for_state, max_wait
 
 @enterprise_manager_bridges_group.command(name=cli_util.override('opsi.change_enterprise_manager_bridge_compartment.command_name', 'change'), help=u"""Moves a EnterpriseManagerBridge resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeEnterpriseManagerBridgeCompartment)""")
 @cli_util.option('--enterprise-manager-bridge-id', required=True, help=u"""Unique Enterprise Manager bridge identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -957,7 +957,7 @@ def change_enterprise_manager_bridge_compartment(ctx, from_json, wait_for_state,
 
 @exadata_insights_group.command(name=cli_util.override('opsi.change_exadata_insight_compartment.command_name', 'change'), help=u"""Moves an Exadata insight resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeExadataInsightCompartment)""")
 @cli_util.option('--exadata-insight-id', required=True, help=u"""Unique Exadata insight identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1079,7 +1079,7 @@ def change_external_mysql_database_insight_connection(ctx, from_json, wait_for_s
 
 @host_insights_group.command(name=cli_util.override('opsi.change_host_insight_compartment.command_name', 'change'), help=u"""Moves a HostInsight resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeHostInsightCompartment)""")
 @cli_util.option('--host-insight-id', required=True, help=u"""Unique host insight identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1870,7 +1870,7 @@ def change_macs_managed_cloud_database_insight_connection_credential_by_iam(ctx,
 
 @news_reports_group.command(name=cli_util.override('opsi.change_news_report_compartment.command_name', 'change'), help=u"""Moves a news report resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeNewsReportCompartment)""")
 @cli_util.option('--news-report-id', required=True, help=u"""Unique news report identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the resource will be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment into which the resource will be moved.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1931,7 +1931,7 @@ def change_news_report_compartment(ctx, from_json, wait_for_state, max_wait_seco
 
 @operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.change_operations_insights_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a private endpoint from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeOperationsInsightsPrivateEndpointCompartment)""")
 @cli_util.option('--operations-insights-private-endpoint-id', required=True, help=u"""The [OCID] of the Operation Insights private endpoint.""")
-@cli_util.option('--compartment-id', help=u"""The new compartment [OCID] of the Private service accessed database.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The new compartment [OCID] of the Private service accessed database.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1994,7 +1994,7 @@ def change_operations_insights_private_endpoint_compartment(ctx, from_json, wait
 
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.change_operations_insights_warehouse_compartment.command_name', 'change'), help=u"""Moves a Operations Insights Warehouse resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeOperationsInsightsWarehouseCompartment)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Ops Insights Warehouse identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2055,7 +2055,7 @@ def change_operations_insights_warehouse_compartment(ctx, from_json, wait_for_st
 
 @opsi_configurations_group.command(name=cli_util.override('opsi.change_opsi_configuration_compartment.command_name', 'change'), help=u"""Moves an OpsiConfiguration resource from one compartment to another. \n[Command Reference](changeOpsiConfigurationCompartment)""")
 @cli_util.option('--opsi-configuration-id', required=True, help=u"""[OCID] of OPSI configuration resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""[OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2501,7 +2501,7 @@ def change_pe_comanaged_database_insight_credential_by_iam(ctx, from_json, wait_
 
 @awr_hubs_group.command(name=cli_util.override('opsi.create_awr_hub.command_name', 'create'), help=u"""Create a AWR hub resource for the tenant in Operations Insights. This resource will be created in root compartment. \n[Command Reference](createAwrHub)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""OPSI Warehouse OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""User-friedly name of AWR Hub that does not have to be unique.""")
 @cli_util.option('--object-storage-bucket-name', help=u"""Object Storage Bucket Name""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2571,7 +2571,7 @@ def create_awr_hub(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @awr_hub_sources_group.command(name=cli_util.override('opsi.create_awr_hub_source.command_name', 'create'), help=u"""Register Awr Hub source \n[Command Reference](createAwrHubSource)""")
 @cli_util.option('--name', required=True, help=u"""The name of the Awr Hub source database.""")
 @cli_util.option('--awr-hub-id', required=True, help=u"""AWR Hub OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADW_S", "ATP_S", "ADW_D", "ATP_D", "EXTERNAL_PDB", "EXTERNAL_NONCDB", "COMANAGED_VM_CDB", "COMANAGED_VM_PDB", "COMANAGED_VM_NONCDB", "COMANAGED_BM_CDB", "COMANAGED_BM_PDB", "COMANAGED_BM_NONCDB", "COMANAGED_EXACS_CDB", "COMANAGED_EXACS_PDB", "COMANAGED_EXACS_NONCDB", "UNDEFINED"]), help=u"""source type of the database""")
 @cli_util.option('--associated-resource-id', help=u"""The [OCID] of the database id.""")
 @cli_util.option('--associated-opsi-id', help=u"""The [OCID] of the database id.""")
@@ -2645,7 +2645,7 @@ def create_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @database_insights_group.command(name=cli_util.override('opsi.create_database_insight.command_name', 'create'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
 @cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["EM_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE", "MDS_MYSQL_DATABASE_SYSTEM", "EXTERNAL_MYSQL_DATABASE_SYSTEM", "MACS_MANAGED_CLOUD_DATABASE", "MACS_MANAGED_AUTONOMOUS_DATABASE"]), help=u"""Source of the database entity.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of database""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2707,8 +2707,8 @@ def create_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @database_insights_group.command(name=cli_util.override('opsi.create_database_insight_create_macs_managed_cloud_database_insight_details.command_name', 'create-database-insight-create-macs-managed-cloud-database-insight-details'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of database""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the database.""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2786,8 +2786,8 @@ def create_database_insight_create_macs_managed_cloud_database_insight_details(c
 
 
 @database_insights_group.command(name=cli_util.override('opsi.create_database_insight_create_external_mysql_database_insight_details.command_name', 'create-database-insight-create-external-mysql-database-insight-details'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of database""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the database.""")
 @cli_util.option('--database-connector-id', required=True, help=u"""The DBM owned database connector [OCID] mapping to the database credentials and connection details.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2853,8 +2853,8 @@ def create_database_insight_create_external_mysql_database_insight_details(ctx, 
 
 
 @database_insights_group.command(name=cli_util.override('opsi.create_database_insight_create_autonomous_database_insight_details.command_name', 'create-database-insight-create-autonomous-database-insight-details'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of database""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the database.""")
 @cli_util.option('--database-resource-type', required=True, help=u"""OCI database resource type""")
 @cli_util.option('--is-advanced-features-enabled', required=True, type=click.BOOL, help=u"""Flag is to identify if advanced features for autonomous database is enabled or not""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2938,8 +2938,8 @@ def create_database_insight_create_autonomous_database_insight_details(ctx, from
 
 
 @database_insights_group.command(name=cli_util.override('opsi.create_database_insight_create_macs_managed_autonomous_database_insight_details.command_name', 'create-database-insight-create-macs-managed-autonomous-database-insight-details'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of database""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the database.""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3017,8 +3017,8 @@ def create_database_insight_create_macs_managed_autonomous_database_insight_deta
 
 
 @database_insights_group.command(name=cli_util.override('opsi.create_database_insight_create_mds_my_sql_database_insight_details.command_name', 'create-database-insight-create-mds-my-sql-database-insight-details'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of database""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the database.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3082,7 +3082,7 @@ def create_database_insight_create_mds_my_sql_database_insight_details(ctx, from
 
 
 @database_insights_group.command(name=cli_util.override('opsi.create_database_insight_create_em_managed_external_database_insight_details.command_name', 'create-database-insight-create-em-managed-external-database-insight-details'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of database""")
 @cli_util.option('--enterprise-manager-identifier', required=True, help=u"""Enterprise Manager Unique Identifier""")
 @cli_util.option('--enterprise-manager-bridge-id', required=True, help=u"""OPSI Enterprise Manager Bridge OCID""")
 @cli_util.option('--enterprise-manager-entity-identifier', required=True, help=u"""Enterprise Manager Entity Unique Identifier""")
@@ -3155,8 +3155,8 @@ def create_database_insight_create_em_managed_external_database_insight_details(
 
 
 @database_insights_group.command(name=cli_util.override('opsi.create_database_insight_create_pe_comanaged_database_insight_details.command_name', 'create-database-insight-create-pe-comanaged-database-insight-details'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
-@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of database""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the database.""")
 @cli_util.option('--database-resource-type', required=True, help=u"""OCI database resource type""")
 @cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
 @cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3244,7 +3244,7 @@ def create_database_insight_create_pe_comanaged_database_insight_details(ctx, fr
 
 
 @enterprise_manager_bridges_group.command(name=cli_util.override('opsi.create_enterprise_manager_bridge.command_name', 'create'), help=u"""Create a Enterprise Manager bridge in Operations Insights. \n[Command Reference](createEnterpriseManagerBridge)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier of the Enterprise Manager bridge""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment identifier of the Enterprise Manager bridge""")
 @cli_util.option('--display-name', required=True, help=u"""User-friedly name of Enterprise Manager Bridge that does not have to be unique.""")
 @cli_util.option('--object-storage-bucket-name', required=True, help=u"""Object Storage Bucket Name""")
 @cli_util.option('--description', help=u"""Description of Enterprise Manager Bridge""")
@@ -3314,7 +3314,7 @@ def create_enterprise_manager_bridge(ctx, from_json, wait_for_state, max_wait_se
 
 @exadata_insights_group.command(name=cli_util.override('opsi.create_exadata_insight.command_name', 'create'), help=u"""Create an Exadata insight resource for an Exadata system in Operations Insights. The Exadata system will be enabled in Operations Insights. Exadata-related metric collection and analysis will be started. \n[Command Reference](createExadataInsight)""")
 @cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["EM_MANAGED_EXTERNAL_EXADATA", "PE_COMANAGED_EXADATA", "MACS_MANAGED_CLOUD_EXADATA"]), help=u"""Source of the Exadata system.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of Exadata insight""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of Exadata insight""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3376,7 +3376,7 @@ def create_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @exadata_insights_group.command(name=cli_util.override('opsi.create_exadata_insight_create_em_managed_external_exadata_insight_details.command_name', 'create-exadata-insight-create-em-managed-external-exadata-insight-details'), help=u"""Create an Exadata insight resource for an Exadata system in Operations Insights. The Exadata system will be enabled in Operations Insights. Exadata-related metric collection and analysis will be started. \n[Command Reference](createExadataInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of Exadata insight""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of Exadata insight""")
 @cli_util.option('--enterprise-manager-identifier', required=True, help=u"""Enterprise Manager Unique Identifier""")
 @cli_util.option('--enterprise-manager-bridge-id', required=True, help=u"""OPSI Enterprise Manager Bridge OCID""")
 @cli_util.option('--enterprise-manager-entity-identifier', required=True, help=u"""Enterprise Manager Entity Unique Identifier""")
@@ -3455,7 +3455,7 @@ def create_exadata_insight_create_em_managed_external_exadata_insight_details(ct
 
 
 @exadata_insights_group.command(name=cli_util.override('opsi.create_exadata_insight_create_macs_managed_cloud_exadata_insight_details.command_name', 'create-exadata-insight-create-macs-managed-cloud-exadata-insight-details'), help=u"""Create an Exadata insight resource for an Exadata system in Operations Insights. The Exadata system will be enabled in Operations Insights. Exadata-related metric collection and analysis will be started. \n[Command Reference](createExadataInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of Exadata insight""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of Exadata insight""")
 @cli_util.option('--exadata-infra-id', required=True, help=u"""The [OCID] of the Exadata Infrastructure.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3526,7 +3526,7 @@ def create_exadata_insight_create_macs_managed_cloud_exadata_insight_details(ctx
 
 
 @exadata_insights_group.command(name=cli_util.override('opsi.create_exadata_insight_create_pe_comanaged_exadata_insight_details.command_name', 'create-exadata-insight-create-pe-comanaged-exadata-insight-details'), help=u"""Create an Exadata insight resource for an Exadata system in Operations Insights. The Exadata system will be enabled in Operations Insights. Exadata-related metric collection and analysis will be started. \n[Command Reference](createExadataInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of Exadata insight""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of Exadata insight""")
 @cli_util.option('--exadata-infra-id', required=True, help=u"""The [OCID] of the Exadata Infrastructure.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3598,7 +3598,7 @@ def create_exadata_insight_create_pe_comanaged_exadata_insight_details(ctx, from
 
 @host_insights_group.command(name=cli_util.override('opsi.create_host_insight.command_name', 'create'), help=u"""Create a Host Insight resource for a host in Ops Insights. The host will be enabled in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
 @cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS_MANAGED_EXTERNAL_HOST", "EM_MANAGED_EXTERNAL_HOST", "MACS_MANAGED_CLOUD_HOST", "PE_COMANAGED_HOST", "MACS_MANAGED_CLOUD_DB_HOST"]), help=u"""Source of the host entity.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of host""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of host""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3660,7 +3660,7 @@ def create_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 
 @host_insights_group.command(name=cli_util.override('opsi.create_host_insight_create_macs_managed_cloud_host_insight_details.command_name', 'create-host-insight-create-macs-managed-cloud-host-insight-details'), help=u"""Create a Host Insight resource for a host in Ops Insights. The host will be enabled in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of host""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of host""")
 @cli_util.option('--compute-id', required=True, help=u"""The [OCID] of the Compute Instance""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3725,7 +3725,7 @@ def create_host_insight_create_macs_managed_cloud_host_insight_details(ctx, from
 
 
 @host_insights_group.command(name=cli_util.override('opsi.create_host_insight_create_macs_managed_external_host_insight_details.command_name', 'create-host-insight-create-macs-managed-external-host-insight-details'), help=u"""Create a Host Insight resource for a host in Ops Insights. The host will be enabled in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of host""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of host""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3790,7 +3790,7 @@ def create_host_insight_create_macs_managed_external_host_insight_details(ctx, f
 
 
 @host_insights_group.command(name=cli_util.override('opsi.create_host_insight_create_em_managed_external_host_insight_details.command_name', 'create-host-insight-create-em-managed-external-host-insight-details'), help=u"""Create a Host Insight resource for a host in Ops Insights. The host will be enabled in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of host""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier of host""")
 @cli_util.option('--enterprise-manager-identifier', required=True, help=u"""Enterprise Manager Unique Identifier""")
 @cli_util.option('--enterprise-manager-bridge-id', required=True, help=u"""OPSI Enterprise Manager Bridge OCID""")
 @cli_util.option('--enterprise-manager-entity-identifier', required=True, help=u"""Enterprise Manager Entity Unique Identifier""")
@@ -3867,7 +3867,7 @@ def create_host_insight_create_em_managed_external_host_insight_details(ctx, fro
 @cli_util.option('--news-frequency', required=True, type=custom_types.CliCaseInsensitiveChoice(["WEEKLY", "DAILY", "HOURLY"]), help=u"""News report frequency.""")
 @cli_util.option('--description', required=True, help=u"""The description of the news report.""")
 @cli_util.option('--ons-topic-id', required=True, help=u"""The [OCID] of the ONS topic.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the news report will be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier where the news report will be created.""")
 @cli_util.option('--content-types', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--locale', required=True, type=custom_types.CliCaseInsensitiveChoice(["EN"]), help=u"""Language of the news report.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3957,9 +3957,9 @@ def create_news_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.create_operations_insights_private_endpoint.command_name', 'create'), help=u"""Create a private endpoint resource for the tenant in Ops Insights. This resource will be created in customer compartment. \n[Command Reference](createOperationsInsightsPrivateEndpoint)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name for the private endpoint. It is changeable.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] of the Private service accessed database.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The VCN [OCID] of the Private service accessed database.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The Subnet [OCID] of the Private service accessed database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] of the Private service accessed database.""")
+@cli_util.option('--vcn-id', required=True, type=custom_types.CLI_OCID, help=u"""The VCN [OCID] of the Private service accessed database.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The Subnet [OCID] of the Private service accessed database.""")
 @cli_util.option('--is-used-for-rac-dbs', required=True, type=click.BOOL, help=u"""This flag was previously used to create a private endpoint with scan proxy. Setting this to true will now create a private endpoint with a DNS proxy causing `isProxyEnabled` flag to be true; this is used exclusively for full feature support for dedicated Autonomous Databases.""")
 @cli_util.option('--description', help=u"""The description of the private endpoint.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID] of the network security groups that the private endpoint belongs to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4033,7 +4033,7 @@ def create_operations_insights_private_endpoint(ctx, from_json, wait_for_state, 
 
 
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.create_operations_insights_warehouse.command_name', 'create'), help=u"""Create a Ops Insights Warehouse resource for the tenant in Ops Insights. New ADW will be provisioned for this tenant. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. If the 'opsi-warehouse-type' header is passed to the API, a warehouse resource without ADW or Schema provisioning is created. \n[Command Reference](createOperationsInsightsWarehouse)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""User-friedly name of Ops Insights Warehouse that does not have to be unique.""")
 @cli_util.option('--cpu-allocated', required=True, help=u"""Number of CPUs allocated to OPSI Warehouse ADW.""")
 @cli_util.option('--compute-model', help=u"""The compute model for the OPSI warehouse ADW (OCPU or ECPU)""")
@@ -4107,7 +4107,7 @@ def create_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wai
 
 @operations_insights_warehouse_users_group.command(name=cli_util.override('opsi.create_operations_insights_warehouse_user.command_name', 'create'), help=u"""Create a Operations Insights Warehouse user resource for the tenant in Operations Insights. This resource will be created in root compartment. \n[Command Reference](createOperationsInsightsWarehouseUser)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""OPSI Warehouse OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--name', required=True, help=u"""Username for schema which would have access to AWR Data,  Enterprise Manager Data and Ops Insights OPSI Hub.""")
 @cli_util.option('--connection-password', required=True, help=u"""User provided connection password for the AWR Data,  Enterprise Manager Data and Ops Insights OPSI Hub.""")
 @cli_util.option('--is-awr-data-access', required=True, type=click.BOOL, help=u"""Indicate whether user has access to AWR data.""")
@@ -4184,7 +4184,7 @@ def create_operations_insights_warehouse_user(ctx, from_json, wait_for_state, ma
 
 @opsi_configurations_group.command(name=cli_util.override('opsi.create_opsi_configuration.command_name', 'create'), help=u"""Create an OPSI configuration resource. \n[Command Reference](createOpsiConfiguration)""")
 @cli_util.option('--opsi-config-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["UX_CONFIGURATION"]), help=u"""OPSI configuration type.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""User-friendly display name for the OPSI configuration. The name does not have to be unique.""")
 @cli_util.option('--description', help=u"""Description of OPSI configuration.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4278,7 +4278,7 @@ def create_opsi_configuration(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @opsi_configurations_group.command(name=cli_util.override('opsi.create_opsi_configuration_create_opsi_ux_configuration_details.command_name', 'create-opsi-configuration-create-opsi-ux-configuration-details'), help=u"""Create an OPSI configuration resource. \n[Command Reference](createOpsiConfiguration)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""User-friendly display name for the OPSI configuration. The name does not have to be unique.""")
 @cli_util.option('--description', help=u"""Description of OPSI configuration.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5959,7 +5959,7 @@ def enable_database_insight_enable_mds_my_sql_database_insight_details(ctx, from
 
 
 @database_insights_group.command(name=cli_util.override('opsi.enable_database_insight_enable_macs_managed_autonomous_database_insight_details.command_name', 'enable-database-insight-enable-macs-managed-autonomous-database-insight-details'), help=u"""Enables a database in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](enableDatabaseInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] of the Autonomous Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] of the Autonomous Database.""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6194,7 +6194,7 @@ def enable_database_insight_enable_autonomous_database_insight_details(ctx, from
 
 
 @database_insights_group.command(name=cli_util.override('opsi.enable_database_insight_enable_macs_managed_cloud_database_insight_details.command_name', 'enable-database-insight-enable-macs-managed-cloud-database-insight-details'), help=u"""Enables a database in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](enableDatabaseInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] of the External Database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] of the External Database.""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6275,7 +6275,7 @@ def enable_database_insight_enable_macs_managed_cloud_database_insight_details(c
 
 
 @database_insights_group.command(name=cli_util.override('opsi.enable_database_insight_enable_pe_comanaged_database_insight_details.command_name', 'enable-database-insight-enable-pe-comanaged-database-insight-details'), help=u"""Enables a database in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](enableDatabaseInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] of the Private service accessed database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] of the Private service accessed database.""")
 @cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
 @cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7283,7 +7283,7 @@ def get_opsi_configuration(ctx, from_json, opsi_configuration_id, opsi_config_fi
 
 
 @opsi_data_objects_group.command(name=cli_util.override('opsi.get_opsi_data_object.command_name', 'get'), help=u"""Gets details of an OPSI data object. \n[Command Reference](getOpsiDataObject)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--opsi-data-object-identifier', required=True, help=u"""Unique OPSI data object identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -7357,7 +7357,7 @@ def head_awr_hub_object(ctx, from_json, awr_hub_source_id, object_name):
 
 @database_insights_group.command(name=cli_util.override('opsi.ingest_addm_reports.command_name', 'ingest-addm-reports'), help=u"""This endpoint takes in a JSON payload, persists it in Operation Insights ingest pipeline. Either databaseId or id must be specified. \n[Command Reference](ingestAddmReports)""")
 @cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Addm reports""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'opsi', 'class': 'list[AddmReport]'}})
@@ -7389,7 +7389,7 @@ def ingest_addm_reports(ctx, from_json, items, database_id, id, if_match):
 
 @database_insights_group.command(name=cli_util.override('opsi.ingest_database_configuration.command_name', 'ingest-database-configuration'), help=u"""This is a generic ingest endpoint for all database configuration metrics. \n[Command Reference](ingestDatabaseConfiguration)""")
 @cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of one or more database configuration metrics objects.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'opsi', 'class': 'list[DatabaseConfigurationMetricGroup]'}})
@@ -7479,7 +7479,7 @@ def ingest_host_metrics(ctx, from_json, id, items, if_match):
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MySql SQL Stats Metric Entries.
 
 This option is a JSON list with items of type MySqlSqlStats.  For documentation on MySqlSqlStats please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/MySqlSqlStats.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'opsi', 'class': 'list[MySqlSqlStats]'}})
@@ -7515,8 +7515,8 @@ def ingest_my_sql_sql_stats(ctx, from_json, items, database_id, id, if_match):
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of SQL Text Entries.
 
 This option is a JSON list with items of type MySqlSqlText.  For documentation on MySqlSqlText please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/MySqlSqlText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'opsi', 'class': 'list[MySqlSqlText]'}})
@@ -7554,8 +7554,8 @@ def ingest_my_sql_sql_text(ctx, from_json, items, compartment_id, database_id, i
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of SQL Bucket Metric Entries.
 
 This option is a JSON list with items of type SqlBucket.  For documentation on SqlBucket please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/SqlBucket.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'opsi', 'class': 'list[SqlBucket]'}})
@@ -7593,8 +7593,8 @@ def ingest_sql_bucket(ctx, from_json, items, compartment_id, database_id, id, if
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of SQL Plan Line Entries.
 
 This option is a JSON list with items of type SqlPlanLine.  For documentation on SqlPlanLine please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/SqlPlanLine.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'opsi', 'class': 'list[SqlPlanLine]'}})
@@ -7632,7 +7632,7 @@ def ingest_sql_plan_lines(ctx, from_json, items, compartment_id, database_id, id
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of SQL Stats Metric Entries.
 
 This option is a JSON list with items of type SqlStats.  For documentation on SqlStats please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/SqlStats.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'opsi', 'class': 'list[SqlStats]'}})
@@ -7668,8 +7668,8 @@ def ingest_sql_stats(ctx, from_json, items, database_id, id, if_match):
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of SQL Text Entries.
 
 This option is a JSON list with items of type SqlText.  For documentation on SqlText please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/SqlText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'opsi', 'class': 'list[SqlText]'}})
@@ -7704,8 +7704,8 @@ def ingest_sql_text(ctx, from_json, items, compartment_id, database_id, id, if_m
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_addm_db_finding_categories.command_name', 'list-addm-db-finding-categories'), help=u"""Gets list of ADDM finding categories. \n[Command Reference](listAddmDbFindingCategories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -7779,8 +7779,8 @@ def list_addm_db_finding_categories(ctx, from_json, all_pages, page_size, compar
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_addm_db_findings_time_series.command_name', 'list-addm-db-findings-time-series'), help=u"""Get the ADDM findings time series for the specified databases for a given time period. \n[Command Reference](listAddmDbFindingsTimeSeries)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -7866,8 +7866,8 @@ def list_addm_db_findings_time_series(ctx, from_json, all_pages, page_size, comp
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_addm_db_parameter_categories.command_name', 'list-addm-db-parameter-categories'), help=u"""Gets list of ADDM database parameter categories for the specified databases. \n[Command Reference](listAddmDbParameterCategories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -7941,8 +7941,8 @@ def list_addm_db_parameter_categories(ctx, from_json, all_pages, page_size, comp
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_addm_db_recommendation_categories.command_name', 'list-addm-db-recommendation-categories'), help=u"""Gets list of ADDM recommendation categories for the specified databases. \n[Command Reference](listAddmDbRecommendationCategories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -8016,8 +8016,8 @@ def list_addm_db_recommendation_categories(ctx, from_json, all_pages, page_size,
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_addm_db_recommendations_time_series.command_name', 'list-addm-db-recommendations-time-series'), help=u"""Gets time series data for ADDM recommendations for the specified databases. \n[Command Reference](listAddmDbRecommendationsTimeSeries)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8115,8 +8115,8 @@ def list_addm_db_recommendations_time_series(ctx, from_json, all_pages, page_siz
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_addm_dbs.command_name', 'list-addm-dbs'), help=u"""Gets a list of ADDM database information \n[Command Reference](listAddmDbs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8408,7 +8408,7 @@ def list_awr_hub_objects(ctx, from_json, all_pages, page_size, awr_hub_source_id
 
 @awr_hub_sources_group.command(name=cli_util.override('opsi.list_awr_hub_sources.command_name', 'list'), help=u"""Gets a list of Awr Hub source objects. \n[Command Reference](listAwrHubSources)""")
 @cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--awr-hub-source-id', help=u"""Awr Hub source identifier""")
 @cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["ADW_S", "ATP_S", "ADW_D", "ATP_D", "EXTERNAL_PDB", "EXTERNAL_NONCDB", "COMANAGED_VM_CDB", "COMANAGED_VM_PDB", "COMANAGED_VM_NONCDB", "COMANAGED_BM_CDB", "COMANAGED_BM_PDB", "COMANAGED_BM_NONCDB", "COMANAGED_EXACS_CDB", "COMANAGED_EXACS_PDB", "COMANAGED_EXACS_NONCDB", "UNDEFINED"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--name', help=u"""Awr Hub source database name""")
@@ -8480,7 +8480,7 @@ def list_awr_hub_sources(ctx, from_json, all_pages, page_size, awr_hub_id, compa
 
 @awr_hubs_group.command(name=cli_util.override('opsi.list_awr_hubs.command_name', 'list'), help=u"""Gets a list of AWR hubs. Either compartmentId or id must be specified. All these resources are expected to be in root compartment. \n[Command Reference](listAwrHubs)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
 @cli_util.option('--id', help=u"""Unique Awr Hub identifier""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Lifecycle states""")
@@ -8612,10 +8612,10 @@ def list_awr_snapshots(ctx, from_json, all_pages, page_size, awr_hub_id, awr_sou
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_database_configurations.command_name', 'list-database-configurations'), help=u"""Gets a list of database insight configurations based on the query parameters specified. Either compartmentId or databaseInsightId query parameter must be specified. When both compartmentId and compartmentIdInSubtree are specified, a list of database insight configurations in that compartment and in all sub-compartments will be returned. \n[Command Reference](listDatabaseConfigurations)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--enterprise-manager-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--cdb-name', multiple=True, help=u"""Filter by one or more cdb name.""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
@@ -8704,13 +8704,13 @@ def list_database_configurations(ctx, from_json, all_pages, page_size, compartme
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_database_insights.command_name', 'list'), help=u"""Gets a list of database insights based on the query parameters specified. Either compartmentId or id query parameter must be specified. When both compartmentId and compartmentIdInSubtree are specified, a list of database insights in that compartment and in all sub-compartments will be returned. \n[Command Reference](listDatabaseInsights)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--enterprise-manager-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["compartmentId", "databaseName", "databaseDisplayName", "databaseType", "databaseVersion", "databaseHostNames", "freeformTags", "definedTags"]), multiple=True, help=u"""Specifies the fields to return in a database summary response. By default all fields are returned if omitted.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -8787,7 +8787,7 @@ def list_database_insights(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @enterprise_manager_bridges_group.command(name=cli_util.override('opsi.list_enterprise_manager_bridges.command_name', 'list'), help=u"""Gets a list of Ops Insights Enterprise Manager bridges. Either compartmentId or id must be specified. When both compartmentId and compartmentIdInSubtree are specified, a list of bridges in that compartment and in all sub-compartments will be returned. \n[Command Reference](listEnterpriseManagerBridges)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
 @cli_util.option('--id', help=u"""Unique Enterprise Manager bridge identifier""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
@@ -8852,7 +8852,7 @@ def list_enterprise_manager_bridges(ctx, from_json, all_pages, page_size, compar
 
 
 @exadata_insights_group.command(name=cli_util.override('opsi.list_exadata_configurations.command_name', 'list-exadata-configurations'), help=u"""Gets a list of exadata insight configurations. Either compartmentId or exadataInsightsId query parameter must be specified. \n[Command Reference](listExadataConfigurations)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--exadata-type', multiple=True, help=u"""Filter by one or more Exadata types. Possible value are DBMACHINE, EXACS, and EXACC.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
@@ -8926,7 +8926,7 @@ def list_exadata_configurations(ctx, from_json, all_pages, page_size, compartmen
 
 
 @exadata_insights_group.command(name=cli_util.override('opsi.list_exadata_insights.command_name', 'list'), help=u"""Gets a list of Exadata insights based on the query parameters specified. Either compartmentId or id query parameter must be specified. When both compartmentId and compartmentIdInSubtree are specified, a list of Exadata insights in that compartment and in all sub-compartments will be returned. \n[Command Reference](listExadataInsights)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--enterprise-manager-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of Exadata insight resource [OCIDs].""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
@@ -8997,7 +8997,7 @@ def list_exadata_insights(ctx, from_json, all_pages, page_size, compartment_id, 
 
 
 @host_insights_group.command(name=cli_util.override('opsi.list_host_configurations.command_name', 'list-host-configurations'), help=u"""Gets a list of host insight configurations based on the query parameters specified. Either compartmentId or hostInsightId query parameter must be specified. When both compartmentId and compartmentIdInSubtree are specified, a list of host insight configurations in that compartment and in all sub-compartments will be returned. \n[Command Reference](listHostConfigurations)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--enterprise-manager-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -9089,7 +9089,7 @@ def list_host_configurations(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @host_insights_group.command(name=cli_util.override('opsi.list_host_insights.command_name', 'list'), help=u"""Gets a list of host insights based on the query parameters specified. Either compartmentId or id query parameter must be specified. When both compartmentId and compartmentIdInSubtree are specified, a list of host insights in that compartment and in all sub-compartments will be returned. \n[Command Reference](listHostInsights)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
@@ -9166,7 +9166,7 @@ def list_host_insights(ctx, from_json, all_pages, page_size, compartment_id, id,
 
 
 @host_insights_group.command(name=cli_util.override('opsi.list_hosted_entities.command_name', 'list-hosted-entities'), help=u"""Get a list of hosted entities details. \n[Command Reference](listHostedEntities)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -9248,7 +9248,7 @@ def list_hosted_entities(ctx, from_json, all_pages, page_size, compartment_id, i
 
 
 @host_insights_group.command(name=cli_util.override('opsi.list_importable_agent_entities.command_name', 'list-importable-agent-entities'), help=u"""Gets a list of agent entities available to add a new hostInsight.  An agent entity is \"available\" and will be shown if all the following conditions are true:    1.  The agent OCID is not already being used for an existing hostInsight.    2.  The agent availabilityStatus = 'ACTIVE'    3.  The agent lifecycleState = 'ACTIVE' \n[Command Reference](listImportableAgentEntities)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -9302,7 +9302,7 @@ def list_importable_agent_entities(ctx, from_json, all_pages, page_size, compart
 
 
 @host_insights_group.command(name=cli_util.override('opsi.list_importable_compute_entities.command_name', 'list-importable-compute-entities'), help=u"""Gets a list of available compute intances running cloud agent to add a new hostInsight.  An Compute entity is \"available\" and will be shown if all the following conditions are true:    1. Compute is running OCA    2. OCI Management Agent is not enabled or If OCI Management Agent is enabled       2.1 The agent OCID is not already being used for an existing hostInsight.       2.2 The agent availabilityStatus = 'ACTIVE'       2.3 The agent lifecycleState = 'ACTIVE' \n[Command Reference](listImportableComputeEntities)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -9416,7 +9416,7 @@ def list_importable_enterprise_manager_entities(ctx, from_json, all_pages, page_
 
 
 @news_reports_group.command(name=cli_util.override('opsi.list_news_reports.command_name', 'list'), help=u"""Gets a list of news reports based on the query parameters specified. Either compartmentId or id query parameter must be specified. \n[Command Reference](listNewsReports)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--news-report-id', help=u"""Unique Ops Insights news report identifier""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
@@ -9481,11 +9481,11 @@ def list_news_reports(ctx, from_json, all_pages, page_size, compartment_id, news
 
 
 @operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.list_operations_insights_private_endpoints.command_name', 'list'), help=u"""Gets a list of Operation Insights private endpoints. \n[Command Reference](listOperationsInsightsPrivateEndpoints)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
 @cli_util.option('--opsi-private-endpoint-id', help=u"""Unique Operations Insights PrivateEndpoint identifier""")
 @cli_util.option('--is-used-for-rac-dbs', type=click.BOOL, help=u"""The option to filter OPSI private endpoints that can used for RAC. Should be used along with vcnId query parameter.""")
-@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -9553,7 +9553,7 @@ def list_operations_insights_private_endpoints(ctx, from_json, all_pages, page_s
 
 @operations_insights_warehouse_users_group.command(name=cli_util.override('opsi.list_operations_insights_warehouse_users.command_name', 'list'), help=u"""Gets a list of Operations Insights Warehouse users. Either compartmentId or id must be specified. All these resources are expected to be in root compartment. \n[Command Reference](listOperationsInsightsWarehouseUsers)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
 @cli_util.option('--id', help=u"""Unique Operations Insights Warehouse User identifier""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Lifecycle states""")
@@ -9618,7 +9618,7 @@ def list_operations_insights_warehouse_users(ctx, from_json, all_pages, page_siz
 
 
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.list_operations_insights_warehouses.command_name', 'list'), help=u"""Gets a list of Ops Insights warehouses. Either compartmentId or id must be specified. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](listOperationsInsightsWarehouses)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
 @cli_util.option('--id', help=u"""Unique Ops Insights Warehouse identifier""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Lifecycle states""")
@@ -9680,7 +9680,7 @@ def list_operations_insights_warehouses(ctx, from_json, all_pages, page_size, co
 
 
 @opsi_configurations_group.command(name=cli_util.override('opsi.list_opsi_configurations.command_name', 'list'), help=u"""Gets a list of OPSI configuration resources based on the query parameters specified. \n[Command Reference](listOpsiConfigurations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""Filter to return based on resources that match the entire display name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Filter to return based on Lifecycle state of OPSI configuration.""")
 @cli_util.option('--opsi-config-type', type=custom_types.CliCaseInsensitiveChoice(["UX_CONFIGURATION"]), multiple=True, help=u"""Filter to return based on configuration type of OPSI configuration.""")
@@ -9743,7 +9743,7 @@ def list_opsi_configurations(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @opsi_data_objects_group.command(name=cli_util.override('opsi.list_opsi_data_objects.command_name', 'list'), help=u"""Gets a list of OPSI data objects based on the query parameters specified. CompartmentId id query parameter must be specified. \n[Command Reference](listOpsiDataObjects)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--data-object-type', type=custom_types.CliCaseInsensitiveChoice(["DATABASE_INSIGHTS_DATA_OBJECT", "HOST_INSIGHTS_DATA_OBJECT", "EXADATA_INSIGHTS_DATA_OBJECT"]), multiple=True, help=u"""OPSI data object types.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
@@ -9809,10 +9809,10 @@ def list_opsi_data_objects(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_sql_plans.command_name', 'list-sql-plans'), help=u"""Query SQL Warehouse to list the plan xml for a given SQL execution plan. This returns a SqlPlanCollection object, but is currently limited to a single plan. Either databaseId or id must be specified. \n[Command Reference](listSqlPlans)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
 @cli_util.option('--plan-hash', required=True, multiple=True, help=u"""Unique plan hash for a SQL Plan of a particular SQL Statement. Example: `9820154385`""")
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -9851,7 +9851,7 @@ def list_sql_plans(ctx, from_json, all_pages, compartment_id, sql_identifier, pl
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_sql_searches.command_name', 'list-sql-searches'), help=u"""Search SQL by SQL Identifier across databases in a compartment and in all sub-compartments if specified. And get the SQL Text and the details of the databases executing the SQL for a given time period. \n[Command Reference](listSqlSearches)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -9908,9 +9908,9 @@ def list_sql_searches(ctx, from_json, all_pages, compartment_id, sql_identifier,
 
 
 @database_insights_group.command(name=cli_util.override('opsi.list_sql_texts.command_name', 'list-sql-texts'), help=u"""Query SQL Warehouse to get the full SQL Text for a SQL in a compartment and in all sub-compartments if specified. \n[Command Reference](listSqlTexts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, multiple=True, help=u"""One or more unique SQL_IDs for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the assosicated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the assosicated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database [OCIDs] of the database insight resource.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
@@ -10154,7 +10154,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_requests_group.command(name=cli_util.override('opsi.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. Either compartmentId or id must be specified. Only one of id, resourceId or relatedResourceId can be specified optionally. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
@@ -10253,7 +10253,7 @@ def put_awr_hub_object(ctx, from_json, put_awr_hub_object_body, awr_hub_source_i
 
 
 @opsi_data_objects_group.command(name=cli_util.override('opsi.query_opsi_data_object_data.command_name', 'query'), help=u"""Queries an OPSI data object with the inputs provided and sends the result set back. Either analysisTimeInterval or timeIntervalStart and timeIntervalEnd parameters need to be passed as well. \n[Command Reference](queryOpsiDataObjectData)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--query-parameterconflict', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-object-identifier', help=u"""Unique OPSI data object identifier.""")
 @cli_util.option('--data-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of OPSI data objects used in the query.
@@ -10298,7 +10298,7 @@ def query_opsi_data_object_data(ctx, from_json, compartment_id, query_parameterc
 
 
 @opsi_data_objects_group.command(name=cli_util.override('opsi.query_opsi_data_object_data_data_object_standard_query.command_name', 'query-opsi-data-object-data-data-object-standard-query'), help=u"""Queries an OPSI data object with the inputs provided and sends the result set back. Either analysisTimeInterval or timeIntervalStart and timeIntervalEnd parameters need to be passed as well. \n[Command Reference](queryOpsiDataObjectData)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--data-object-identifier', help=u"""Unique OPSI data object identifier.""")
 @cli_util.option('--data-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of OPSI data objects used in the query.
 
@@ -10362,7 +10362,7 @@ def query_opsi_data_object_data_data_object_standard_query(ctx, from_json, compa
 
 
 @opsi_data_objects_group.command(name=cli_util.override('opsi.query_opsi_data_object_data_data_object_templatized_query.command_name', 'query-opsi-data-object-data-data-object-templatized-query'), help=u"""Queries an OPSI data object with the inputs provided and sends the result set back. Either analysisTimeInterval or timeIntervalStart and timeIntervalEnd parameters need to be passed as well. \n[Command Reference](queryOpsiDataObjectData)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--data-object-identifier', help=u"""Unique OPSI data object identifier.""")
 @cli_util.option('--data-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of OPSI data objects used in the query.
 
@@ -10676,8 +10676,8 @@ def rotate_operations_insights_warehouse_wallet(ctx, from_json, wait_for_state, 
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_addm_db_findings.command_name', 'summarize-addm-db-findings'), help=u"""Summarizes ADDM findings for the specified databases. \n[Command Reference](summarizeAddmDbFindings)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -10740,9 +10740,9 @@ def summarize_addm_db_findings(ctx, from_json, compartment_id, database_id, id, 
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_addm_db_parameter_changes.command_name', 'summarize-addm-db-parameter-changes'), help=u"""Summarizes the AWR database parameter change history for the specified parameter. There will be one element for each time that parameter changed during the specified time period. This API is limited to only one parameter per request. \n[Command Reference](summarizeAddmDbParameterChanges)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--name', required=True, help=u"""Required filter to return only changes for the specified parameter. The match is case sensitive.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -10806,8 +10806,8 @@ def summarize_addm_db_parameter_changes(ctx, from_json, compartment_id, name, da
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_addm_db_parameters.command_name', 'summarize-addm-db-parameters'), help=u"""Summarizes database parameter history information for the specified databases. Return a list of parameters with information on whether the parameter values were changed or not within the specified time period. The response does not include the individual parameter changes within the time period. \n[Command Reference](summarizeAddmDbParameters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -10882,8 +10882,8 @@ def summarize_addm_db_parameters(ctx, from_json, compartment_id, database_id, id
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_addm_db_recommendations.command_name', 'summarize-addm-db-recommendations'), help=u"""Summarizes ADDM recommendations for the specified databases. \n[Command Reference](summarizeAddmDbRecommendations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -10961,9 +10961,9 @@ def summarize_addm_db_recommendations(ctx, from_json, compartment_id, database_i
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_addm_db_schema_objects.command_name', 'summarize-addm-db-schema-objects'), help=u"""Summarizes Schema objects for the specified databases for the specified objectIdentifiers \n[Command Reference](summarizeAddmDbSchemaObjects)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--object-identifier', required=True, multiple=True, help=u"""One or more unique Object id (from RDBMS)""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -11015,9 +11015,9 @@ def summarize_addm_db_schema_objects(ctx, from_json, compartment_id, object_iden
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_addm_db_sql_statements.command_name', 'summarize-addm-db-sql-statements'), help=u"""Summarizes SQL Statements for the specified databases for the specified sqlIdentifiers \n[Command Reference](summarizeAddmDbSqlStatements)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, multiple=True, help=u"""One or more unique SQL_IDs for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -11566,7 +11566,7 @@ def summarize_awr_database_wait_events(ctx, from_json, awr_hub_id, awr_source_da
 
 @awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_sources_summaries.command_name', 'summarize-awr-sources-summaries'), help=u"""Gets a list of summary of AWR Sources. \n[Command Reference](summarizeAwrSourcesSummaries)""")
 @cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--name', help=u"""Name for an Awr source database""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -11605,7 +11605,7 @@ def summarize_awr_sources_summaries(ctx, from_json, awr_hub_id, compartment_id, 
 
 
 @opsi_configurations_group.command(name=cli_util.override('opsi.summarize_configuration_items.command_name', 'summarize-configuration-items'), help=u"""Gets the applicable configuration items based on the query parameters specified. Configuration items for an opsiConfigType with respect to a compartmentId can be fetched. Values specified in configItemField param will determine what fields for each configuration items have to be returned. \n[Command Reference](summarizeConfigurationItems)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--opsi-config-type', type=custom_types.CliCaseInsensitiveChoice(["UX_CONFIGURATION"]), help=u"""Filter to return configuration items based on configuration type of OPSI configuration.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -11643,13 +11643,13 @@ def summarize_configuration_items(ctx, from_json, compartment_id, opsi_config_ty
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_database_insight_resource_capacity_trend.command_name', 'summarize-database-insight-resource-capacity-trend'), help=u"""Returns response with time series data (endTimestamp, capacity, baseCapacity) for the time period specified. The maximum time range for analysis is 2 years, hence this is intentionally not paginated. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeDatabaseInsightResourceCapacityTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY and IO.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--cdb-name', multiple=True, help=u"""Filter by one or more cdb name.""")
@@ -11733,13 +11733,13 @@ def summarize_database_insight_resource_capacity_trend(ctx, from_json, compartme
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_database_insight_resource_forecast_trend.command_name', 'summarize-database-insight-resource-forecast-trend'), help=u"""Get Forecast predictions for CPU and Storage resources since a time in the past. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeDatabaseInsightResourceForecastTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY and IO.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--cdb-name', multiple=True, help=u"""Filter by one or more cdb name.""")
@@ -11829,13 +11829,13 @@ def summarize_database_insight_resource_forecast_trend(ctx, from_json, compartme
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_database_insight_resource_statistics.command_name', 'summarize-database-insight-resource-statistics'), help=u"""Lists the Resource statistics (usage,capacity, usage change percent, utilization percent, base capacity, isAutoScalingEnabled) for each database filtered by utilization level in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeDatabaseInsightResourceStatistics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY and IO.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--cdb-name', multiple=True, help=u"""Filter by one or more cdb name.""")
@@ -11925,13 +11925,13 @@ def summarize_database_insight_resource_statistics(ctx, from_json, compartment_i
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_database_insight_resource_usage.command_name', 'summarize-database-insight-resource-usage'), help=u"""A cumulative distribution function is used to rank the usage data points per database within the specified time period. For each database, the minimum data point with a ranking > the percentile value is included in the summation. Linear regression functions are used to calculate the usage change percentage. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeDatabaseInsightResourceUsage)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY and IO.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--host-name', multiple=True, help=u"""Filter by one or more hostname.""")
@@ -12000,13 +12000,13 @@ def summarize_database_insight_resource_usage(ctx, from_json, compartment_id, re
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_database_insight_resource_usage_trend.command_name', 'summarize-database-insight-resource-usage-trend'), help=u"""Returns response with time series data (endTimestamp, usage, capacity) for the time period specified. The maximum time range for analysis is 2 years, hence this is intentionally not paginated. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeDatabaseInsightResourceUsageTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY and IO.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -12078,13 +12078,13 @@ def summarize_database_insight_resource_usage_trend(ctx, from_json, compartment_
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_database_insight_resource_utilization_insight.command_name', 'summarize-database-insight-resource-utilization-insight'), help=u"""Gets resources with current utilization (high and low) and projected utilization (high and low) for a resource type over specified time period. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeDatabaseInsightResourceUtilizationInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY and IO.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--forecast-days', type=click.INT, help=u"""Number of days used for utilization forecast analysis.""")
@@ -12159,11 +12159,11 @@ def summarize_database_insight_resource_utilization_insight(ctx, from_json, comp
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_database_insight_tablespace_usage_trend.command_name', 'summarize-database-insight-tablespace-usage-trend'), help=u"""Returns response with usage time series data (endTimestamp, usage, capacity) with breakdown by tablespaceName for the time period specified. The maximum time range for analysis is 2 years, hence this is intentionally not paginated. Either databaseId or id must be specified. \n[Command Reference](summarizeDatabaseInsightTablespaceUsageTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
@@ -12202,7 +12202,7 @@ def summarize_database_insight_tablespace_usage_trend(ctx, from_json, compartmen
 @cli_util.option('--resource-type', required=True, help=u"""Filter by resource. Supported values are HOST , STORAGE_SERVER and DATABASE""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY, IO, IOPS, THROUGHPUT""")
 @cli_util.option('--exadata-insight-id', required=True, help=u"""[OCID] of exadata insight resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -12266,7 +12266,7 @@ def summarize_exadata_insight_resource_capacity_trend(ctx, from_json, resource_t
 @exadata_insights_group.command(name=cli_util.override('opsi.summarize_exadata_insight_resource_capacity_trend_aggregated.command_name', 'summarize-exadata-insight-resource-capacity-trend-aggregated'), help=u"""Returns response with time series data (endTimestamp, capacity) for the time period specified for an exadata system or fleet aggregation for a resource metric. The maximum time range for analysis is 2 years, hence this is intentionally not paginated. Valid values for ResourceType DATABASE are CPU,MEMORY,IO and STORAGE. Valid values for ResourceType HOST are CPU and MEMORY. Valid values for ResourceType STORAGE_SERVER are STORAGE, IOPS and THROUGHPUT. \n[Command Reference](summarizeExadataInsightResourceCapacityTrendAggregated)""")
 @cli_util.option('--resource-type', required=True, help=u"""Filter by resource. Supported values are HOST , STORAGE_SERVER and DATABASE""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY, IO, IOPS, THROUGHPUT""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -12412,7 +12412,7 @@ def summarize_exadata_insight_resource_forecast_trend(ctx, from_json, resource_t
 @exadata_insights_group.command(name=cli_util.override('opsi.summarize_exadata_insight_resource_forecast_trend_aggregated.command_name', 'summarize-exadata-insight-resource-forecast-trend-aggregated'), help=u"""Get aggregated historical usage and forecast predictions for resources. Either compartmentId or exadataInsightsId query parameter must be specified. Valid values for ResourceType DATABASE are CPU,MEMORY,IO and STORAGE. Valid values for ResourceType HOST are CPU and MEMORY. Valid values for ResourceType STORAGE_SERVER are STORAGE, IOPS and THROUGHPUT. \n[Command Reference](summarizeExadataInsightResourceForecastTrendAggregated)""")
 @cli_util.option('--resource-type', required=True, help=u"""Filter by resource. Supported values are HOST , STORAGE_SERVER and DATABASE""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY, IO, IOPS, THROUGHPUT""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -12544,7 +12544,7 @@ def summarize_exadata_insight_resource_statistics(ctx, from_json, exadata_insigh
 
 
 @exadata_insights_group.command(name=cli_util.override('opsi.summarize_exadata_insight_resource_usage.command_name', 'summarize-exadata-insight-resource-usage'), help=u"""A cumulative distribution function is used to rank the usage data points per resource within the specified time period. For each resource, the minimum data point with a ranking > the percentile value is included in the summation. Linear regression functions are used to calculate the usage change percentage. Valid values for ResourceType DATABASE are CPU,MEMORY,IO and STORAGE. Valid values for ResourceType HOST are CPU and MEMORY. Valid values for ResourceType STORAGE_SERVER are STORAGE, IOPS and THROUGHPUT. \n[Command Reference](summarizeExadataInsightResourceUsage)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-type', required=True, help=u"""Filter by resource. Supported values are HOST , STORAGE_SERVER and DATABASE""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY, IO, IOPS, THROUGHPUT""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
@@ -12618,7 +12618,7 @@ def summarize_exadata_insight_resource_usage(ctx, from_json, compartment_id, res
 
 
 @exadata_insights_group.command(name=cli_util.override('opsi.summarize_exadata_insight_resource_usage_aggregated.command_name', 'summarize-exadata-insight-resource-usage-aggregated'), help=u"""A cumulative distribution function is used to rank the usage data points per database within the specified time period. For each database, the minimum data point with a ranking > the percentile value is included in the summation. Linear regression functions are used to calculate the usage change percentage. Valid values for ResourceType DATABASE are CPU,MEMORY,IO and STORAGE. Valid values for ResourceType HOST are CPU and MEMORY. Valid values for ResourceType STORAGE_SERVER are STORAGE, IOPS and THROUGHPUT. \n[Command Reference](summarizeExadataInsightResourceUsageAggregated)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-type', required=True, help=u"""Filter by resource. Supported values are HOST , STORAGE_SERVER and DATABASE""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY, IO, IOPS, THROUGHPUT""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
@@ -12683,7 +12683,7 @@ def summarize_exadata_insight_resource_usage_aggregated(ctx, from_json, compartm
 
 
 @exadata_insights_group.command(name=cli_util.override('opsi.summarize_exadata_insight_resource_utilization_insight.command_name', 'summarize-exadata-insight-resource-utilization-insight'), help=u"""Gets current utilization, projected utilization and days to reach projectedUtilization for an exadata system over specified time period. Valid values for ResourceType DATABASE are CPU,MEMORY,IO and STORAGE. Valid values for ResourceType HOST are CPU and MEMORY. Valid values for ResourceType STORAGE_SERVER are STORAGE, IOPS and THROUGHPUT. \n[Command Reference](summarizeExadataInsightResourceUtilizationInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-type', required=True, help=u"""Filter by resource. Supported values are HOST , STORAGE_SERVER and DATABASE""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by resource metric. Supported values are CPU , STORAGE, MEMORY, IO, IOPS, THROUGHPUT""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
@@ -12794,7 +12794,7 @@ def summarize_exadata_members(ctx, from_json, exadata_insight_id, exadata_type, 
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_disk_statistics.command_name', 'summarize-host-insight-disk-statistics'), help=u"""Returns response with disk(s) statistics for a host. \n[Command Reference](summarizeHostInsightDiskStatistics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -12833,7 +12833,7 @@ def summarize_host_insight_disk_statistics(ctx, from_json, compartment_id, id, a
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_host_recommendation.command_name', 'summarize-host-insight-host-recommendation'), help=u"""Returns response with some recommendations if apply for a host. \n[Command Reference](summarizeHostInsightHostRecommendation)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
@@ -12874,7 +12874,7 @@ def summarize_host_insight_host_recommendation(ctx, from_json, compartment_id, i
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_io_usage_trend.command_name', 'summarize-host-insight-io-usage-trend'), help=u"""Returns response with usage time series data with breakdown by IO interface for the time period specified. \n[Command Reference](summarizeHostInsightIoUsageTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -12919,7 +12919,7 @@ def summarize_host_insight_io_usage_trend(ctx, from_json, compartment_id, id, an
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_network_usage_trend.command_name', 'summarize-host-insight-network-usage-trend'), help=u"""Returns response with usage time series data with breakdown by network interface for the time period specified. \n[Command Reference](summarizeHostInsightNetworkUsageTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -12964,7 +12964,7 @@ def summarize_host_insight_network_usage_trend(ctx, from_json, compartment_id, i
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_capacity_trend.command_name', 'summarize-host-insight-resource-capacity-trend'), help=u"""Returns response with time series data (endTimestamp, capacity) for the time period specified. The maximum time range for analysis is 2 years, hence this is intentionally not paginated. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceCapacityTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -13048,7 +13048,7 @@ def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_i
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_forecast_trend.command_name', 'summarize-host-insight-resource-forecast-trend'), help=u"""Get Forecast predictions for CPU or memory resources since a time in the past. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceForecastTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -13147,7 +13147,7 @@ def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_i
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_statistics.command_name', 'summarize-host-insight-resource-statistics'), help=u"""Lists the resource statistics (usage, capacity, usage change percent, utilization percent, load) for each host filtered by utilization level in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeHostInsightResourceStatistics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -13240,7 +13240,7 @@ def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, r
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_usage.command_name', 'summarize-host-insight-resource-usage'), help=u"""A cumulative distribution function is used to rank the usage data points per host within the specified time period. For each host, the minimum data point with a ranking > the percentile value is included in the summation. Linear regression functions are used to calculate the usage change percentage. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceUsage)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -13312,7 +13312,7 @@ def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resour
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_usage_trend.command_name', 'summarize-host-insight-resource-usage-trend'), help=u"""Returns response with time series data (endTimestamp, usage, capacity) for the time period specified. The maximum time range for analysis is 2 years, hence this is intentionally not paginated. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceUsageTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -13387,7 +13387,7 @@ def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, 
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_utilization_insight.command_name', 'summarize-host-insight-resource-utilization-insight'), help=u"""Gets resources with current utilization (high and low) and projected utilization (high and low) for a resource type over specified time period. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceUtilizationInsight)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -13465,7 +13465,7 @@ def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartm
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_storage_usage_trend.command_name', 'summarize-host-insight-storage-usage-trend'), help=u"""Returns response with usage time series data with breakdown by filesystem for the time period specified. \n[Command Reference](summarizeHostInsightStorageUsageTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -13510,7 +13510,7 @@ def summarize_host_insight_storage_usage_trend(ctx, from_json, compartment_id, i
 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_top_processes_usage_trend.command_name', 'summarize-host-insight-top-processes-usage-trend'), help=u"""Returns response with aggregated time series data (timeIntervalstart, timeIntervalEnd, commandArgs, usageData) for top processes. Data is aggregated for the time period specified and proceses are sorted descendent by the proces metric specified (CPU, MEMORY, VIRTUAL_MEMORY). HostInsight Id and Process metric must be specified \n[Command Reference](summarizeHostInsightTopProcessesUsageTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
 @cli_util.option('--resource-metric', required=True, help=u"""Host top processes resource metric sort options. Supported values are CPU, MEMORY, VIIRTUAL_MEMORY.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
@@ -13582,9 +13582,9 @@ def summarize_operations_insights_warehouse_resource_usage(ctx, from_json, opera
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_insights.command_name', 'summarize-sql-insights'), help=u"""Query SQL Warehouse to get the performance insights for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlInsights)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--cdb-name', multiple=True, help=u"""Filter by one or more cdb name.""")
@@ -13652,9 +13652,9 @@ def summarize_sql_insights(ctx, from_json, compartment_id, database_type, databa
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_plan_insights.command_name', 'summarize-sql-plan-insights'), help=u"""Query SQL Warehouse to get the performance insights on the execution plans for a given SQL for a given time period. Either databaseId or id must be specified. \n[Command Reference](summarizeSqlPlanInsights)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -13691,9 +13691,9 @@ def summarize_sql_plan_insights(ctx, from_json, compartment_id, sql_identifier, 
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_response_time_distributions.command_name', 'summarize-sql-response-time-distributions'), help=u"""Query SQL Warehouse to summarize the response time distribution of query executions for a given SQL for a given time period. Either databaseId or id must be specified. \n[Command Reference](summarizeSqlResponseTimeDistributions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -13730,9 +13730,9 @@ def summarize_sql_response_time_distributions(ctx, from_json, compartment_id, sq
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics.command_name', 'summarize-sql-statistics'), help=u"""Query SQL Warehouse to get the performance statistics for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlStatistics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--cdb-name', multiple=True, help=u"""Filter by one or more cdb name.""")
@@ -13815,9 +13815,9 @@ def summarize_sql_statistics(ctx, from_json, compartment_id, database_type, data
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics_time_series.command_name', 'summarize-sql-statistics-time-series'), help=u"""Query SQL Warehouse to get the performance statistics time series for a given SQL across given databases for a given time period in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlStatisticsTimeSeries)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
-@cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database [OCIDs] of the database insight resource.""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--cdb-name', multiple=True, help=u"""Filter by one or more cdb name.""")
@@ -13881,9 +13881,9 @@ def summarize_sql_statistics_time_series(ctx, from_json, compartment_id, sql_ide
 
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics_time_series_by_plan.command_name', 'summarize-sql-statistics-time-series-by-plan'), help=u"""Query SQL Warehouse to get the performance statistics time series for a given SQL by execution plans for a given time period. Either databaseId or id must be specified. \n[Command Reference](summarizeSqlStatisticsTimeSeriesByPlan)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -13920,9 +13920,9 @@ def summarize_sql_statistics_time_series_by_plan(ctx, from_json, compartment_id,
 
 
 @database_insights_group.command(name=cli_util.override('opsi.synchronize_autonomous_database_to_exadata.command_name', 'synchronize-autonomous-database-to-exadata'), help=u"""Synchronize infrastructure details that has been missing when autonomous database onboarded in Operations Insights. Onboarded Opsi ExadataInsight resource need to be provided with compartmentId for searching infrastruture details. The query parameters, DatabaseId and DatabaseInsightId, are mutually exclusive and provided for searching Opsi resources that have been onboarded. \n[Command Reference](synchronizeAutonomousDatabaseToExadata)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_DATABASE", "EM_MANAGED_EXTERNAL_DATABASE", "MACS_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE", "MDS_MYSQL_DATABASE_SYSTEM", "EXTERNAL_MYSQL_DATABASE_SYSTEM", "MACS_MANAGED_CLOUD_DATABASE", "MACS_MANAGED_AUTONOMOUS_DATABASE"]), help=u"""Source of the database entity. Currently only AUTONOMOUS_DATABASE source is supported.""")
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--exadata-insight-id', help=u"""[OCID] of exadata insight resource.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -13990,7 +13990,7 @@ def synchronize_autonomous_database_to_exadata(ctx, from_json, wait_for_state, m
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -14052,7 +14052,7 @@ def test_macs_managed_autonomous_database_insight_connection(ctx, from_json, wai
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials.command_name', 'test-macs-managed-autonomous-database-insight-connection-credential-by-named-credentials'), help=u"""Test the connection details of a MACS-managed autonomous database. \n[Command Reference](testMacsManagedAutonomousDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--connection-credential-details-named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
@@ -14124,7 +14124,7 @@ def test_macs_managed_autonomous_database_insight_connection_credential_by_named
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_autonomous_database_insight_connection_credentials_by_source.command_name', 'test-macs-managed-autonomous-database-insight-connection-credentials-by-source'), help=u"""Test the connection details of a MACS-managed autonomous database. \n[Command Reference](testMacsManagedAutonomousDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -14192,7 +14192,7 @@ def test_macs_managed_autonomous_database_insight_connection_credentials_by_sour
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_autonomous_database_insight_connection_credential_by_vault.command_name', 'test-macs-managed-autonomous-database-insight-connection-credential-by-vault'), help=u"""Test the connection details of a MACS-managed autonomous database. \n[Command Reference](testMacsManagedAutonomousDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--connection-credential-details-user-name', help=u"""database user name.""")
@@ -14276,7 +14276,7 @@ def test_macs_managed_autonomous_database_insight_connection_credential_by_vault
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_autonomous_database_insight_connection_credential_by_iam.command_name', 'test-macs-managed-autonomous-database-insight-connection-credential-by-iam'), help=u"""Test the connection details of a MACS-managed autonomous database. \n[Command Reference](testMacsManagedAutonomousDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -14345,7 +14345,7 @@ def test_macs_managed_autonomous_database_insight_connection_credential_by_iam(c
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -14407,7 +14407,7 @@ def test_macs_managed_cloud_database_insight_connection(ctx, from_json, wait_for
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_cloud_database_insight_connection_credential_by_named_credentials.command_name', 'test-macs-managed-cloud-database-insight-connection-credential-by-named-credentials'), help=u"""Test the connection details of a Cloud MACS-managed database. \n[Command Reference](testMacsManagedCloudDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--connection-credential-details-named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
@@ -14479,7 +14479,7 @@ def test_macs_managed_cloud_database_insight_connection_credential_by_named_cred
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_cloud_database_insight_connection_credentials_by_source.command_name', 'test-macs-managed-cloud-database-insight-connection-credentials-by-source'), help=u"""Test the connection details of a Cloud MACS-managed database. \n[Command Reference](testMacsManagedCloudDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -14547,7 +14547,7 @@ def test_macs_managed_cloud_database_insight_connection_credentials_by_source(ct
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_cloud_database_insight_connection_credential_by_vault.command_name', 'test-macs-managed-cloud-database-insight-connection-credential-by-vault'), help=u"""Test the connection details of a Cloud MACS-managed database. \n[Command Reference](testMacsManagedCloudDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--connection-credential-details-user-name', help=u"""database user name.""")
@@ -14631,7 +14631,7 @@ def test_macs_managed_cloud_database_insight_connection_credential_by_vault(ctx,
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_cloud_database_insight_connection_credential_by_iam.command_name', 'test-macs-managed-cloud-database-insight-connection-credential-by-iam'), help=u"""Test the connection details of a Cloud MACS-managed database. \n[Command Reference](testMacsManagedCloudDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--database-id', type=custom_types.CLI_OCID, help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

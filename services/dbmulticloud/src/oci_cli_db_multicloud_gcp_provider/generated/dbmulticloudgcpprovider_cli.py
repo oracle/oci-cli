@@ -82,7 +82,7 @@ db_multicloud_gcp_provider_root_group.add_command(oracle_db_gcp_key_group)
 
 @oracle_db_gcp_identity_connector_group.command(name=cli_util.override('db_multicloud_gcp_provider.change_oracle_db_gcp_identity_connector_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle DB GCP Identity Connector resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbGcpIdentityConnectorCompartment)""")
 @cli_util.option('--oracle-db-gcp-identity-connector-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Identity Configuration Resource.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the Oracle DB GCP Identity Connector resource.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the Oracle DB GCP Identity Connector resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -145,7 +145,7 @@ def change_oracle_db_gcp_identity_connector_compartment(ctx, from_json, wait_for
 
 @oracle_db_gcp_key_ring_group.command(name=cli_util.override('db_multicloud_gcp_provider.change_oracle_db_gcp_key_ring_compartment.command_name', 'change-compartment'), help=u"""Moves the GCP Key Ring resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbGcpKeyRingCompartment)""")
 @cli_util.option('--oracle-db-gcp-key-ring-id', required=True, help=u"""The [OCID] of the Oracle DB GCP Key-Ring resource.""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID] where the Oracle DB GCP Key Ring resource resides.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment [OCID] where the Oracle DB GCP Key Ring resource resides.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -208,7 +208,7 @@ def change_oracle_db_gcp_key_ring_compartment(ctx, from_json, wait_for_state, ma
 
 @oracle_db_gcp_identity_connector_group.command(name=cli_util.override('db_multicloud_gcp_provider.create_oracle_db_gcp_identity_connector.command_name', 'create'), help=u"""Creates Oracle DB GCP Identity Connector resource. \n[Command Reference](createOracleDbGcpIdentityConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle DB Google GCP Identity Connector resource name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the Oracle DB GCP Identity Connector resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the Oracle DB GCP Identity Connector resource.""")
 @cli_util.option('--issuer-url', required=True, help=u"""OIDC token issuer Url""")
 @cli_util.option('--project-id', required=True, help=u"""Project id of the customer project.""")
 @cli_util.option('--resource-id', required=True, help=u"""The [OCID] of the GCP VM Cluster resource.""")
@@ -288,7 +288,7 @@ def create_oracle_db_gcp_identity_connector(ctx, from_json, wait_for_state, max_
 
 
 @oracle_db_gcp_key_ring_group.command(name=cli_util.override('db_multicloud_gcp_provider.create_oracle_db_gcp_key_ring.command_name', 'create'), help=u"""Creates DB GCP Key Rings based on the provided information and retrieves the associated keys. \n[Command Reference](createOracleDbGcpKeyRing)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] where the Oracle DB GCP Key Ring resource resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] where the Oracle DB GCP Key Ring resource resides.""")
 @cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of the compartment where the Oracle DB GCP Identity Connector resource resides.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of DB GCP Key Ring resource.""")
 @cli_util.option('--gcp-key-ring-id', help=u"""GCP Key Ring ID.""")
@@ -563,7 +563,7 @@ def get_oracle_db_gcp_key_ring(ctx, from_json, oracle_db_gcp_key_ring_id, limit,
 
 
 @oracle_db_gcp_identity_connector_group.command(name=cli_util.override('db_multicloud_gcp_provider.list_oracle_db_gcp_identity_connectors.command_name', 'list'), help=u"""Lists all Oracle DB GCP Identity Connectors based on the specified filters. \n[Command Reference](listOracleDbGcpIdentityConnectors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB GCP Identity Connector resources that match the specified display name.""")
 @cli_util.option('--resource-id', help=u"""A filter to return Oracle DB Identity Connector resource that match the given resource [OCID].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the specified lifecycle state. The state value is case-insensitive.""")
@@ -626,7 +626,7 @@ def list_oracle_db_gcp_identity_connectors(ctx, from_json, all_pages, page_size,
 
 
 @oracle_db_gcp_key_ring_group.command(name=cli_util.override('db_multicloud_gcp_provider.list_oracle_db_gcp_key_rings.command_name', 'list'), help=u"""Lists the all DB GCP Key Rings based on filters. \n[Command Reference](listOracleDbGcpKeyRings)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB GCP Key Ring resources that match the specified display name.""")
 @cli_util.option('--oracle-db-gcp-key-ring-id', help=u"""A filter to return Oracle DB GCP Key Rings.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
@@ -692,7 +692,7 @@ def list_oracle_db_gcp_key_rings(ctx, from_json, all_pages, page_size, compartme
 
 
 @oracle_db_gcp_key_group.command(name=cli_util.override('db_multicloud_gcp_provider.list_oracle_db_gcp_keys.command_name', 'list'), help=u"""Lists all Oracle DB Google Cloud Keys based on the specified filters. \n[Command Reference](listOracleDbGcpKeys)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB Google Cloud Key resources that match the specified display name.""")
 @cli_util.option('--oracle-db-gcp-key-ring-id', help=u"""A filter to return Oracle DB GCP Key Rings.""")
 @cli_util.option('--oracle-db-gcp-key-id', help=u"""A filter to return Oracle DB Google Cloud Key resources.""")

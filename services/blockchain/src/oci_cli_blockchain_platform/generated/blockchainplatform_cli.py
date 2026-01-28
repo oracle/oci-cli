@@ -68,7 +68,7 @@ blockchain_root_group.add_command(work_request_group)
 
 @blockchain_platform_group.command(name=cli_util.override('blockchain.change_blockchain_platform_compartment.command_name', 'change-compartment'), help=u"""Change Blockchain Platform Compartment \n[Command Reference](changeBlockchainPlatformCompartment)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the new compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -129,7 +129,7 @@ def change_blockchain_platform_compartment(ctx, from_json, wait_for_state, max_w
 
 @blockchain_platform_group.command(name=cli_util.override('blockchain.create_blockchain_platform.command_name', 'create'), help=u"""Creates a new Blockchain Platform. \n[Command Reference](createBlockchainPlatform)""")
 @cli_util.option('--display-name', required=True, help=u"""Platform Instance Display name, can be renamed""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Compartment Identifier""")
 @cli_util.option('--platform-role', required=True, help=u"""Role of platform - founder or participant""")
 @cli_util.option('--compute-shape', required=True, help=u"""Compute shape - STANDARD or ENTERPRISE_SMALL or ENTERPRISE_MEDIUM or ENTERPRISE_LARGE or ENTERPRISE_EXTRA_LARGE""")
 @cli_util.option('--idcs-access-token', required=True, help=u"""IDCS access token with Identity Domain Administrator role""")
@@ -731,7 +731,7 @@ def list_blockchain_platform_patches(ctx, from_json, all_pages, page_size, block
 
 
 @blockchain_platform_group.command(name=cli_util.override('blockchain.list_blockchain_platforms.command_name', 'list'), help=u"""Returns a list Blockchain Platform Instances in a compartment \n[Command Reference](listBlockchainPlatforms)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Example: `My new resource`""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1013,7 +1013,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('blockchain.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeStarted", "workRequestId"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMESTARTED is descending. Default order for WORKREQUESTID is ascending. If no value is specified TIMESTARTED is default.""")

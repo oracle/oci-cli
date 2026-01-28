@@ -47,7 +47,7 @@ management_dashboard_root_group.add_command(management_dashboard_group)
 
 @management_dashboard_group.command(name=cli_util.override('management_dashboard.change_management_dashboards_compartment.command_name', 'change-compartment'), help=u"""Moves the dashboard from the existing compartment to a new compartment. \n[Command Reference](changeManagementDashboardsCompartment)""")
 @cli_util.option('--management-dashboard-id', required=True, help=u"""A unique dashboard identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the dashboard is being moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the dashboard is being moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -104,7 +104,7 @@ def change_management_dashboards_compartment(ctx, from_json, wait_for_state, max
 
 @management_saved_search_group.command(name=cli_util.override('management_dashboard.change_management_saved_searches_compartment.command_name', 'change-compartment'), help=u"""Moves the saved search from the existing compartment to a new compartment. \n[Command Reference](changeManagementSavedSearchesCompartment)""")
 @cli_util.option('--management-saved-search-id', required=True, help=u"""A unique saved search identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the saved search is being moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment to which the saved search is being moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -166,7 +166,7 @@ def change_management_saved_searches_compartment(ctx, from_json, wait_for_state,
 @cli_util.option('--tiles', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of dashboard tiles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', required=True, help=u"""Display name of the dashboard.""")
 @cli_util.option('--description', required=True, help=u"""Description of the dashboard.""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment in which the dashboard resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment in which the dashboard resides.""")
 @cli_util.option('--is-oob-dashboard', required=True, type=click.BOOL, help=u"""Determines whether the dashboard is an Out-of-the-Box (OOB) dashboard. Note that OOB dashboards are only provided by Oracle and cannot be modified.""")
 @cli_util.option('--is-show-in-home', required=True, type=click.BOOL, help=u"""Determines whether the dashboard will be displayed in Dashboard Home.""")
 @cli_util.option('--metadata-version', required=True, help=u"""The version of the metadata defined in the API. This is maintained and enforced by dashboard server. Currently it is 2.0.""")
@@ -269,7 +269,7 @@ def create_management_dashboard(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.option('--provider-id', required=True, help=u"""ID of the service (for example log-analytics) that owns the saved search. Each service has a unique ID.""")
 @cli_util.option('--provider-version', required=True, help=u"""The version of the metadata of the provider. This is useful for provider to version its features and metadata. Any newly created saved search (or dashboard) should use providerVersion 3.0.0.""")
 @cli_util.option('--provider-name', required=True, help=u"""The user friendly name of the service (for example, Logging Analytics) that owns the saved search.""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment in which the saved search resides.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the compartment in which the saved search resides.""")
 @cli_util.option('--is-oob-saved-search', required=True, type=click.BOOL, help=u"""Determines whether the saved search is an Out-of-the-Box (OOB) saved search. Note that OOB saved searches are only provided by Oracle and cannot be modified.""")
 @cli_util.option('--description', required=True, help=u"""Description of the saved search.""")
 @cli_util.option('--nls', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""JSON that contains internationalization options.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -650,7 +650,7 @@ def import_dashboard(ctx, from_json, dashboards, freeform_tags, defined_tags, if
 
 
 @management_dashboard_group.command(name=cli_util.override('management_dashboard.list_management_dashboards.command_name', 'list'), help=u"""Gets the list of dashboards in a compartment with pagination.  Returned properties are the summary. \n[Command Reference](listManagementDashboards)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page on which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -707,7 +707,7 @@ def list_management_dashboards(ctx, from_json, all_pages, page_size, compartment
 
 
 @management_saved_search_group.command(name=cli_util.override('management_dashboard.list_management_saved_searches.command_name', 'list'), help=u"""Gets the list of saved searches in a compartment with pagination.  Returned properties are the summary. \n[Command Reference](listManagementSavedSearches)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page on which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -764,7 +764,7 @@ def list_management_saved_searches(ctx, from_json, all_pages, page_size, compart
 
 
 @management_dashboard_group.command(name=cli_util.override('management_dashboard.list_oob_management_dashboards.command_name', 'list-oob'), help=u"""Gets the list of out-of-the-box dashboards with pagination. Returned properties are the summary. \n[Command Reference](listOobManagementDashboards)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page on which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -821,7 +821,7 @@ def list_oob_management_dashboards(ctx, from_json, all_pages, page_size, compart
 
 
 @management_saved_search_group.command(name=cli_util.override('management_dashboard.list_oob_management_saved_searches.command_name', 'list-oob'), help=u"""Gets the list of out-of-the-box saved searches in a compartment with pagination.  Returned properties are the summary. \n[Command Reference](listOobManagementSavedSearches)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page on which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -887,7 +887,7 @@ def list_oob_management_saved_searches(ctx, from_json, all_pages, page_size, com
 This option is a JSON list with items of type ManagementDashboardTileDetails.  For documentation on ManagementDashboardTileDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/dashxapis/20200901/datatypes/ManagementDashboardTileDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Display name of the dashboard.""")
 @cli_util.option('--description', help=u"""Description of the dashboard.""")
-@cli_util.option('--compartment-id', help=u"""OCID of the compartment in which the dashboard resides.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""OCID of the compartment in which the dashboard resides.""")
 @cli_util.option('--is-oob-dashboard', type=click.BOOL, help=u"""Determines whether the dashboard is an Out-of-the-Box (OOB) dashboard. Note that OOB dashboards are only provided by Oracle and cannot be modified.""")
 @cli_util.option('--is-show-in-home', type=click.BOOL, help=u"""Determines whether the dashboard will be displayed in Dashboard Home.""")
 @cli_util.option('--metadata-version', help=u"""The version of the metadata defined in the API. This is maintained and enforced by dashboard server. Currently it is 2.0.""")
@@ -1033,7 +1033,7 @@ def update_management_dashboard(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.option('--provider-id', help=u"""ID of the service (for example log-analytics) that owns the saved search. Each service has a unique ID.""")
 @cli_util.option('--provider-version', help=u"""The version of the metadata of the provider. This is useful for provider to version its features and metadata. Any newly created saved search (or dashboard) should use providerVersion 3.0.0.""")
 @cli_util.option('--provider-name', help=u"""The user friendly name of the service (for example, Logging Analytics) that owns the saved search.""")
-@cli_util.option('--compartment-id', help=u"""OCID of the compartment in which the saved search resides.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""OCID of the compartment in which the saved search resides.""")
 @cli_util.option('--is-oob-saved-search', type=click.BOOL, help=u"""Determines whether the saved search is an Out-of-the-Box (OOB) saved search. Note that OOB saved searches are only provided by Oracle and cannot be modified.""")
 @cli_util.option('--description', help=u"""Description of the saved search.""")
 @cli_util.option('--nls', type=custom_types.CLI_COMPLEX_TYPE, help=u"""JSON that contains internationalization options.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

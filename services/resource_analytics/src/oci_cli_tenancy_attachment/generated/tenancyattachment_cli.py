@@ -43,7 +43,7 @@ tenancy_attachment_root_group.add_command(tenancy_attachment_group)
 
 @tenancy_attachment_group.command(name=cli_util.override('tenancy_attachment.create_tenancy_attachment.command_name', 'create'), help=u"""Creates a TenancyAttachment. \n[Command Reference](createTenancyAttachment)""")
 @cli_util.option('--resource-analytics-instance-id', required=True, help=u"""The [OCID] of the ResourceAnalyticsInstance associated with this TenancyAttachment.""")
-@cli_util.option('--tenancy-id', required=True, help=u"""The [OCID] of the tenancy associated with this TenancyAttachment.""")
+@cli_util.option('--tenancy-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the tenancy associated with this TenancyAttachment.""")
 @cli_util.option('--description', help=u"""A description of the tenancy.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")

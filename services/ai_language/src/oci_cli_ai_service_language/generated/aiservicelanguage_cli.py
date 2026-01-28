@@ -190,7 +190,7 @@ Limitations: - A batch may have up to 100 records. - A record may be up to 5000 
 @cli_util.option('--should-ignore-transliteration', type=click.BOOL, help=u"""Specifies whether to consider or ignore transliteration. For example \"hi, aap kaise ho? sab kuch teek hai? I will call you tomorrow.\" would be detected as English when ignore transliteration=true, Hindi when ignoreTransliteration=false.""")
 @cli_util.option('--chars-to-consider', type=click.INT, help=u"""default value is None. Specifies maximum number of characters to consider for determining the dominant language. If unspecified, then optimum number characters will be considered. If 0 is specified then all the characters are used to determine the language. If the value is greater than 0, then specified number of characters will be considered from the beginning of the text.""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'ai_language', 'class': 'list[DominantLanguageDocument]'}})
 @cli_util.help_option
 @click.pass_context
@@ -281,7 +281,7 @@ def batch_detect_health_entity(ctx, from_json, endpoint_id, documents, alias, li
 Limitations: - A batch may have up to 100 records. - A record may be up to 5000 characters long. - The total of characters to process in a request can be up to 20,000 characters. \n[Command Reference](batchDetectLanguageEntities)""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Documents for detect entities.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
 @cli_util.help_option
@@ -319,7 +319,7 @@ Limitations: - A batch may have up to 100 records. - A record may be up to 5000 
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Documents for detect keyPhrases.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
 @cli_util.help_option
 @click.pass_context
@@ -356,7 +356,7 @@ Limitations: - A batch may have up to 100 records. - A record may be up to 5000 
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of documents to detect personal identification information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @cli_util.option('--masking', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Mask recognized PII entities with different modes.
 
 This option is a JSON dictionary of type dict(str, PiiEntityMasking).  For documentation on PiiEntityMasking please see our API reference: https://docs.cloud.oracle.com/api/#/en/aiservicelanguage/20221001/datatypes/PiiEntityMasking.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -409,7 +409,7 @@ Limitations:  - A batch may have up to 100 records.  - A record may be up to 500
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Documents for detect sentiments.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @cli_util.option('--level', type=custom_types.CliCaseInsensitiveChoice(["ASPECT", "SENTENCE"]), multiple=True, help=u"""Set this parameter for sentence and aspect level sentiment analysis. Allowed values are:    - ASPECT    - SENTENCE""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
 @cli_util.help_option
@@ -452,7 +452,7 @@ Learn more about text classification [here].
 Limitations: - A batch may have up to 100 records. - A record may be up to 5000 characters long. - The total of characters to process in a request can be up to 20,000 characters. \n[Command Reference](batchDetectLanguageTextClassification)""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Documents for detect text classification.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
 @cli_util.help_option
@@ -489,7 +489,7 @@ def batch_detect_language_text_classification(ctx, from_json, documents, alias, 
 @cli_util.option('--alias', help=u"""Unique name to identify an endpoint to be used for inferencing""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint that has to be used for inferencing.""")
 @cli_util.option('--no-translate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of words not to be translated""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @cli_util.option('--target-language-code', help=u"""Language code supported Arabic - ar Brazilian Portuguese -  pt-BR Canadian French - fr-CA Croatian - hr Czech - cs Danish - da Dutch - nl English - en Finnish - fi French - fr German - de Greek - el Hebrew - he Hungarian - hu Italian - it Japanese - ja Korean - ko Norwegian - no Polish - pl Portuguese - pt Romanian - ro Russian - ru Simplified Chinese - zh-CN Slovak - sk Slovenian - sl Spanish - es Swedish - sv Thai - th Traditional Chinese - zh-TW Turkish - tr Vietnamese - vi""")
 @json_skeleton_utils.get_cli_json_input_option({'no-translate': {'module': 'ai_language', 'class': 'list[string]'}, 'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
 @cli_util.help_option
@@ -554,7 +554,7 @@ def cancel_job(ctx, from_json, job_id, if_match):
 
 @endpoint_group.command(name=cli_util.override('ai.change_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a Endpoint into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeEndpointCompartment)""")
 @cli_util.option('--endpoint-id', required=True, help=u"""The OCID of the endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -585,7 +585,7 @@ def change_endpoint_compartment(ctx, from_json, endpoint_id, compartment_id, if_
 
 @job_group.command(name=cli_util.override('ai.change_job_compartment.command_name', 'change-compartment'), help=u"""Moves a Job into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeJobCompartment)""")
 @cli_util.option('--job-id', required=True, help=u"""unique job OCID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -616,7 +616,7 @@ def change_job_compartment(ctx, from_json, job_id, compartment_id, if_match):
 
 @model_group.command(name=cli_util.override('ai.change_model_compartment.command_name', 'change-compartment'), help=u"""Moves a Model into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeModelCompartment)""")
 @cli_util.option('--model-id', required=True, help=u"""unique model OCID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -647,7 +647,7 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
 
 @project_group.command(name=cli_util.override('ai.change_project_compartment.command_name', 'change-compartment'), help=u"""Moves a Project into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeProjectCompartment)""")
 @cli_util.option('--project-id', required=True, help=u"""The OCID of the project.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -677,7 +677,7 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 
 
 @endpoint_group.command(name=cli_util.override('ai.create_endpoint.command_name', 'create'), help=u"""Creates a new endpoint and deploy the trained model \n[Command Reference](createEndpoint)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] compartment identifier for the endpoint""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] compartment identifier for the endpoint""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model to associate with the endpoint.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It should be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
@@ -756,7 +756,7 @@ def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @job_group.command(name=cli_util.override('ai.create_job.command_name', 'create'), help=u"""Creates a new language service async job. \n[Command Reference](createJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--model-metadata-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""training model details For this release only one model is allowed to be input here. One of the three modelType, ModelId, endpointId should be given other wise error will be thrown from API""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -827,7 +827,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 
 @job_group.command(name=cli_util.override('ai.create_job_object_storage_prefix_location.command_name', 'create-job-object-storage-prefix-location'), help=u"""Creates a new language service async job. \n[Command Reference](createJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--model-metadata-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""training model details For this release only one model is allowed to be input here. One of the three modelType, ModelId, endpointId should be given other wise error will be thrown from API""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-namespace-name', required=True, help=u"""Object Storage namespace name.""")
@@ -907,7 +907,7 @@ def create_job_object_storage_prefix_location(ctx, from_json, wait_for_state, ma
 
 
 @job_group.command(name=cli_util.override('ai.create_job_object_storage_file_name_location.command_name', 'create-job-object-storage-file-name-location'), help=u"""Creates a new language service async job. \n[Command Reference](createJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--model-metadata-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""training model details For this release only one model is allowed to be input here. One of the three modelType, ModelId, endpointId should be given other wise error will be thrown from API""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-namespace-name', required=True, help=u"""Object Storage namespace name.""")
@@ -985,7 +985,7 @@ def create_job_object_storage_file_name_location(ctx, from_json, wait_for_state,
 
 
 @model_group.command(name=cli_util.override('ai.create_model.command_name', 'create'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--model-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
@@ -1066,7 +1066,7 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_key_phrase_extraction_model_details.command_name', 'create-model-pre-trained-key-phrase-extraction-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -1156,7 +1156,7 @@ def create_model_pre_trained_key_phrase_extraction_model_details(ctx, from_json,
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_translation_model_details.command_name', 'create-model-pre-trained-translation-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -1246,7 +1246,7 @@ def create_model_pre_trained_translation_model_details(ctx, from_json, wait_for_
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_health_nlu_model_details.command_name', 'create-model-pre-trained-health-nlu-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -1336,7 +1336,7 @@ def create_model_pre_trained_health_nlu_model_details(ctx, from_json, wait_for_s
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_universal_model.command_name', 'create-model-pre-trained-universal-model'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -1426,7 +1426,7 @@ def create_model_pre_trained_universal_model(ctx, from_json, wait_for_state, max
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_language_detection_model_details.command_name', 'create-model-pre-trained-language-detection-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -1516,7 +1516,7 @@ def create_model_pre_trained_language_detection_model_details(ctx, from_json, wa
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_sentiment_analysis_model_details.command_name', 'create-model-pre-trained-sentiment-analysis-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -1606,7 +1606,7 @@ def create_model_pre_trained_sentiment_analysis_model_details(ctx, from_json, wa
 
 
 @model_group.command(name=cli_util.override('ai.create_model_text_classification_model_details.command_name', 'create-model-text-classification-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -1696,7 +1696,7 @@ def create_model_text_classification_model_details(ctx, from_json, wait_for_stat
 
 
 @model_group.command(name=cli_util.override('ai.create_model_health_nlu_model_details.command_name', 'create-model-health-nlu-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -1786,7 +1786,7 @@ def create_model_health_nlu_model_details(ctx, from_json, wait_for_state, max_wa
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_summarization.command_name', 'create-model-pre-trained-summarization'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -1876,7 +1876,7 @@ def create_model_pre_trained_summarization(ctx, from_json, wait_for_state, max_w
 
 
 @model_group.command(name=cli_util.override('ai.create_model_named_entity_recognition_model_details.command_name', 'create-model-named-entity-recognition-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -1966,7 +1966,7 @@ def create_model_named_entity_recognition_model_details(ctx, from_json, wait_for
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pii_model_details.command_name', 'create-model-pii-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -2056,7 +2056,7 @@ def create_model_pii_model_details(ctx, from_json, wait_for_state, max_wait_seco
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_named_entity_recognition_model_details.command_name', 'create-model-pre-trained-named-entity-recognition-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -2146,7 +2146,7 @@ def create_model_pre_trained_named_entity_recognition_model_details(ctx, from_js
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_text_classification_model_details.command_name', 'create-model-pre-trained-text-classification-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -2236,7 +2236,7 @@ def create_model_pre_trained_text_classification_model_details(ctx, from_json, w
 
 
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_pii_model_details.command_name', 'create-model-pre-trained-pii-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the a model.""")
@@ -2326,7 +2326,7 @@ def create_model_pre_trained_pii_model_details(ctx, from_json, wait_for_state, m
 
 
 @model_group.command(name=cli_util.override('ai.create_model_data_science_labeling_dataset.command_name', 'create-model-data-science-labeling-dataset'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--model-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--training-dataset-dataset-id', required=True, help=u"""Data Science Labelling Service OCID""")
@@ -2408,7 +2408,7 @@ def create_model_data_science_labeling_dataset(ctx, from_json, wait_for_state, m
 
 
 @model_group.command(name=cli_util.override('ai.create_model_object_storage_dataset.command_name', 'create-model-object-storage-dataset'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--model-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--training-dataset-location-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2490,7 +2490,7 @@ def create_model_object_storage_dataset(ctx, from_json, wait_for_state, max_wait
 
 
 @model_group.command(name=cli_util.override('ai.create_model_test_and_validation_dataset_strategy.command_name', 'create-model-test-and-validation-dataset-strategy'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--model-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--test-strategy-testing-dataset', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2576,7 +2576,7 @@ def create_model_test_and_validation_dataset_strategy(ctx, from_json, wait_for_s
 
 
 @project_group.command(name=cli_util.override('ai.create_project.command_name', 'create'), help=u"""Creates a new Project. \n[Command Reference](createProject)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the project's compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] for the project's compartment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the project.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3150,7 +3150,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @endpoint_group.command(name=cli_util.override('ai.list_endpoints.command_name', 'list'), help=u"""Returns a list of Endpoints. \n[Command Reference](listEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--endpoint-id', help=u"""The OCID of the endpoint.""")
 @cli_util.option('--project-id', help=u"""The ID of the project for which to list the objects.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -3270,7 +3270,7 @@ def list_evaluation_results(ctx, from_json, all_pages, page_size, model_id, limi
 
 
 @job_group.command(name=cli_util.override('ai.list_jobs.command_name', 'list'), help=u"""Returns a list of language service async Jobs. \n[Command Reference](listJobs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique identifier(OCID).""")
@@ -3333,7 +3333,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_st
 
 
 @model_group.command(name=cli_util.override('ai.list_models.command_name', 'list'), help=u"""Returns a list of models. \n[Command Reference](listModels)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--model-id', help=u"""unique model OCID.""")
 @cli_util.option('--project-id', help=u"""The ID of the project for which to list the objects.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "CREATING", "ACTIVE", "UPDATING"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
@@ -3399,7 +3399,7 @@ def list_models(ctx, from_json, all_pages, page_size, compartment_id, model_id, 
 
 
 @project_group.command(name=cli_util.override('ai.list_projects.command_name', 'list'), help=u"""Returns a list of  Projects. \n[Command Reference](listProjects)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "CREATING", "ACTIVE", "UPDATING"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3576,7 +3576,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('ai.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

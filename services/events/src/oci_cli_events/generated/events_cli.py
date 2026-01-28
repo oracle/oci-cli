@@ -34,7 +34,7 @@ events_root_group.add_command(rule_group)
 
 @rule_group.command(name=cli_util.override('events.change_rule_compartment.command_name', 'change-compartment'), help=u"""Moves a rule into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeRuleCompartment)""")
 @cli_util.option('--rule-id', required=True, help=u"""The [OCID] of this rule.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -79,7 +79,7 @@ Example: `true`""")
   For examples of wildcard matching, see [Matching Events with Filters]
 
 Example: `\\\"eventType\\\": \\\"com.oraclecloud.databaseservice.autonomous.database.backup.end\\\"`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which this rule belongs.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to which this rule belongs.""")
 @cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A string that describes the details of the rule. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
@@ -235,7 +235,7 @@ def get_rule(ctx, from_json, rule_id):
 
 
 @rule_group.command(name=cli_util.override('events.list_rules.command_name', 'list'), help=u"""Lists rules for this compartment. \n[Command Reference](listRules)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which this rule belongs.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to which this rule belongs.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum. Default: 10""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only rules that match the lifecycle state in this parameter.

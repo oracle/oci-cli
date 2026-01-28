@@ -427,7 +427,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @fleet_group.command(name=cli_util.override('jms.change_fleet_compartment.command_name', 'change-compartment'), help=u"""Move a specified Fleet into the compartment identified in the POST form. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeFleetCompartment)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Fleet should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the Fleet should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -589,7 +589,7 @@ def create_drs_file(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 `inventoryLog` is now a required parameter for CreateFleet API. Update existing applications using this API before July 15, 2022 to ensure the applications continue to work. See the [Service Change Notice] for more details. Migrate existing fleets using the `UpdateFleet` API to set the `inventoryLog` parameter. \n[Command Reference](createFleet)""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the Fleet. The displayName must be unique for Fleets in the same compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Fleet.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment of the Fleet.""")
 @cli_util.option('--inventory-log', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The Fleet's description. If nothing is provided, the Fleet description will be null.""")
 @cli_util.option('--operation-log', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -666,7 +666,7 @@ def create_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @jms_plugin_group.command(name=cli_util.override('jms.create_jms_plugin.command_name', 'create'), help=u"""Registers an agent's JmsPlugin, optionally attaching to an existing fleet of the tenancy. JmsPlugins registered fleet-less are created with lifecycle state INACTIVE. For the operation to be authorized, the agent must exist, and the authorized user requires JMS_PLUGIN_CREATE permission for the agent's compartment. \n[Command Reference](createJmsPlugin)""")
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the Management Agent (OMA), the Oracle Cloud Agent (OCA), or the Oracle Container Management Agent (OCMA) instance where the JMS plugin is deployed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OMA/OCA/OCMA agent's compartment [OCID].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OMA/OCA/OCMA agent's compartment [OCID].""")
 @cli_util.option('--agent-type', type=custom_types.CliCaseInsensitiveChoice(["OMA", "OCA", "OCMA"]), help=u"""The agent type.""")
 @cli_util.option('--fleet-id', help=u"""The [OCID] of the fleet.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. (See [Understanding Free-form Tags]).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2398,7 +2398,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @agent_installer_summary_group.command(name=cli_util.override('jms.list_agent_installers.command_name', 'list-agent-installers'), help=u"""Returns a list of the agent installer information. \n[Command Reference](listAgentInstallers)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--fleet-id', help=u"""The ID of the Fleet.""")
 @cli_util.option('--platform-architecture', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "X86", "AARCH64"]), help=u"""The platform architecture for the agent installer.""")
 @cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "MACOS", "UNKNOWN"]), help=u"""The OS family for the agent installer.""")
@@ -2852,7 +2852,7 @@ def list_fleet_diagnoses(ctx, from_json, all_pages, page_size, fleet_id, limit, 
 
 
 @fleet_error_summary_group.command(name=cli_util.override('jms.list_fleet_errors.command_name', 'list-fleet-errors'), help=u"""Returns a list of fleet errors that describe all detected errors. \n[Command Reference](listFleetErrors)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
 @cli_util.option('--fleet-id', help=u"""The ID of the Fleet.""")
 @cli_util.option('--time-first-seen-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only errors with a first seen time earlier than this parameter will be included in the search (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -2923,7 +2923,7 @@ def list_fleet_errors(ctx, from_json, all_pages, page_size, compartment_id, comp
 
 
 @fleet_group.command(name=cli_util.override('jms.list_fleets.command_name', 'list'), help=u"""Returns a list of all the Fleets contained by a compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listFleets)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The ID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "NEEDS_ATTENTION", "UPDATING"]), help=u"""The state of the lifecycle.""")
 @cli_util.option('--display-name', help=u"""The display name.""")
@@ -3274,7 +3274,7 @@ def list_java_releases(ctx, from_json, all_pages, page_size, release_version, fa
 
 
 @jms_plugin_group.command(name=cli_util.override('jms.list_jms_plugins.command_name', 'list'), help=u"""Lists the JmsPlugins. \n[Command Reference](listJmsPlugins)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
 @cli_util.option('--id', help=u"""The [OCID] of the JmsPlugin.""")
 @cli_util.option('--fleet-id', help=u"""The ID of the Fleet.""")
@@ -3357,7 +3357,7 @@ def list_jms_plugins(ctx, from_json, all_pages, page_size, compartment_id, compa
 
 
 @jre_usage_group.command(name=cli_util.override('jms.list_jre_usage.command_name', 'list'), help=u"""List Java Runtime usage in a specified host filtered by query parameters. \n[Command Reference](listJreUsage)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--host-id', help=u"""The host [OCID] of the managed instance.""")
 @cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the application.""")
 @cli_util.option('--application-name', help=u"""The name of the application.""")
@@ -3664,7 +3664,7 @@ def list_performance_tuning_analysis_results(ctx, from_json, all_pages, page_siz
 
 
 @plugin_error_summary_group.command(name=cli_util.override('jms.list_plugin_errors.command_name', 'list-plugin-errors'), help=u"""Returns a list of plugin errors that describe all detected errors. \n[Command Reference](listPluginErrors)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
 @cli_util.option('--time-first-seen-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only errors with a first seen time earlier than this parameter will be included in the search (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -4177,7 +4177,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('jms.list_work_requests.command_name', 'list'), help=u"""List the work requests in a compartment. The query parameter `compartmentId` is required unless the query parameter `id` or `fleetId` is specified. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The ID of an asynchronous work request.""")
 @cli_util.option('--fleet-id', help=u"""The [OCID] of the fleet.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
@@ -5055,7 +5055,7 @@ def summarize_deployed_application_usage(ctx, from_json, fleet_id, server_key, s
 
 
 @fleet_error_aggregation_group.command(name=cli_util.override('jms.summarize_fleet_errors.command_name', 'summarize-fleet-errors'), help=u"""Returns a high level summary of FleetErrors. \n[Command Reference](summarizeFleetErrors)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
@@ -5502,7 +5502,7 @@ def summarize_managed_instance_usage(ctx, from_json, fleet_id, managed_instance_
 
 
 @plugin_error_aggregation_group.command(name=cli_util.override('jms.summarize_plugin_errors.command_name', 'summarize-plugin-errors'), help=u"""Returns a high level summary of PluginErrors. \n[Command Reference](summarizePluginErrors)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
@@ -5531,7 +5531,7 @@ def summarize_plugin_errors(ctx, from_json, compartment_id, compartment_id_in_su
 
 
 @fleet_group.command(name=cli_util.override('jms.summarize_resource_inventory.command_name', 'summarize-resource-inventory'), help=u"""Retrieve the inventory of JMS resources in the specified compartment: a list of the number of _active_ fleets, managed instances, Java Runtimes, Java installations, and applications. \n[Command Reference](summarizeResourceInventory)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)

@@ -62,9 +62,9 @@ limits_service_cli.limits_service_group.add_command(resource_availability_group)
 @resource_availability_group.command(name=cli_util.override('limits.get_resource_availability.command_name', 'get'), help=u"""For a given compartmentId, resource limit name, and scope, returns the following:   * The number of available resources associated with the given limit.   * The usage in the selected compartment for the given limit. If the subscription ID is provided, then usage for resource created in that subscription will be returned. Note that not all resource limits support this API. If the value is not available, the API returns a 404 response. \n[Command Reference](getResourceAvailability)""")
 @cli_util.option('--service-name', required=True, help=u"""The service name of the target quota.""")
 @cli_util.option('--limit-name', required=True, help=u"""The limit name for which to fetch the data.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for which data is being fetched.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for which data is being fetched.""")
 @cli_util.option('--availability-domain', help=u"""This field is mandatory if the scopeType of the target resource limit is AD. Otherwise, this field should be omitted. If the above requirements are not met, the API returns a 400 - InvalidParameter response.""")
-@cli_util.option('--subscription-id', help=u"""The subscription OCID assigned to the tenant.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The subscription OCID assigned to the tenant.""")
 @cli_util.option('--external-location', help=u"""External cloud provider location""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -98,8 +98,8 @@ def get_resource_availability(ctx, from_json, service_name, limit_name, compartm
 
 
 @limit_definition_group.command(name=cli_util.override('limits.list_limit_definitions.command_name', 'list'), help=u"""Includes a list of resource limits that are currently supported. If the subscription ID is provided, then only resource limits supported by the subscription will be returned. If the `areQuotasSupported` property is true, you can create quota policies on top of this limit at the compartment level. \n[Command Reference](listLimitDefinitions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
-@cli_util.option('--subscription-id', help=u"""The subscription OCID assigned to the tenant.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The subscription OCID assigned to the tenant.""")
 @cli_util.option('--service-name', help=u"""The target service name.""")
 @cli_util.option('--name', help=u"""Optional field, filter for a specific resource limit.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "description"]), help=u"""The field to sort by.""")
@@ -161,9 +161,9 @@ def list_limit_definitions(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @limit_value_group.command(name=cli_util.override('limits.list_limit_values.command_name', 'list'), help=u"""Includes a full list of resource limits belonging to a given service. If the subscription ID is provided, the limit value for the subscription will be returned. \n[Command Reference](listLimitValues)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--service-name', required=True, help=u"""The target service name.""")
-@cli_util.option('--subscription-id', help=u"""The subscription OCID assigned to the tenant.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The subscription OCID assigned to the tenant.""")
 @cli_util.option('--external-location', help=u"""External cloud provider location""")
 @cli_util.option('--scope-type', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "REGION", "AD"]), help=u"""Filter entries by scope type.""")
 @cli_util.option('--availability-domain', help=u"""Filter entries by availability domain. This implies that only AD-specific values are returned.""")
@@ -236,12 +236,12 @@ def list_limit_values(ctx, from_json, all_pages, page_size, compartment_id, serv
 
 
 @service_group.command(name=cli_util.override('limits.list_services.command_name', 'list'), help=u"""Returns the list of supported services. If subscription ID is provided then only services supported by subscription will be returned. This includes the programmatic service name, along with the friendly service name. \n[Command Reference](listServices)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "description"]), help=u"""The field to sort by.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. By default, it is ascending.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--subscription-id', help=u"""The subscription OCID assigned to the tenant.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""The subscription OCID assigned to the tenant.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})

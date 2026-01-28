@@ -222,7 +222,7 @@ def bulk_apply_recommendations(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @profile_group.command(name=cli_util.override('optimizer.create_profile.command_name', 'create'), help=u"""Creates a new profile. \n[Command Reference](createProfile)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy. The tenancy is the root compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy. The tenancy is the root compartment.""")
 @cli_util.option('--name', required=True, help=u"""The name assigned to the profile. Avoid entering confidential information.""")
 @cli_util.option('--description', required=True, help=u"""Text describing the profile. Avoid entering confidential information.""")
 @cli_util.option('--levels-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -369,7 +369,7 @@ def delete_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @resource_action_summary_group.command(name=cli_util.override('optimizer.filter_resource_actions.command_name', 'filter-resource-actions'), help=u"""Queries the Cloud Advisor resource actions that are supported. \n[Command Reference](filterResourceActions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
@@ -566,7 +566,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @category_summary_group.command(name=cli_util.override('optimizer.list_categories.command_name', 'list-categories'), help=u"""Lists the supported Cloud Advisor categories. \n[Command Reference](listCategories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
@@ -648,7 +648,7 @@ def list_categories(ctx, from_json, all_pages, page_size, compartment_id, compar
 
 
 @enrollment_status_summary_group.command(name=cli_util.override('optimizer.list_enrollment_statuses.command_name', 'list-enrollment-statuses'), help=u"""Lists the Cloud Advisor enrollment statuses. \n[Command Reference](listEnrollmentStatuses)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -708,7 +708,7 @@ def list_enrollment_statuses(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @history_summary_group.command(name=cli_util.override('optimizer.list_histories.command_name', 'list-histories'), help=u"""Lists changes to the recommendations based on user activity. For example, lists when recommendations have been implemented, dismissed, postponed, or reactivated. \n[Command Reference](listHistories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
@@ -789,7 +789,7 @@ def list_histories(ctx, from_json, all_pages, page_size, compartment_id, compart
 
 
 @profile_level_summary_group.command(name=cli_util.override('optimizer.list_profile_levels.command_name', 'list-profile-levels'), help=u"""Lists the existing profile levels. \n[Command Reference](listProfileLevels)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
@@ -855,7 +855,7 @@ def list_profile_levels(ctx, from_json, all_pages, page_size, compartment_id, co
 
 
 @profile_summary_group.command(name=cli_util.override('optimizer.list_profiles.command_name', 'list-profiles'), help=u"""Lists the existing profiles. \n[Command Reference](listProfiles)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--name', help=u"""Optional. A filter that returns results that match the name specified.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -915,7 +915,7 @@ def list_profiles(ctx, from_json, all_pages, page_size, compartment_id, name, li
 
 
 @recommendation_strategy_summary_group.command(name=cli_util.override('optimizer.list_recommendation_strategies.command_name', 'list-recommendation-strategies'), help=u"""Lists the existing strategies. \n[Command Reference](listRecommendationStrategies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
@@ -981,7 +981,7 @@ def list_recommendation_strategies(ctx, from_json, all_pages, page_size, compart
 
 
 @recommendation_summary_group.command(name=cli_util.override('optimizer.list_recommendations.command_name', 'list-recommendations'), help=u"""Lists the Cloud Advisor recommendations that are currently supported. \n[Command Reference](listRecommendations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
@@ -1072,7 +1072,7 @@ def list_recommendations(ctx, from_json, all_pages, page_size, compartment_id, c
 
 
 @queryable_field_summary_group.command(name=cli_util.override('optimizer.list_resource_action_queryable_fields.command_name', 'list-resource-action-queryable-fields'), help=u"""Lists the fields that are indexed for querying and their associated value types. \n[Command Reference](listResourceActionQueryableFields)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
@@ -1126,7 +1126,7 @@ def list_resource_action_queryable_fields(ctx, from_json, all_pages, page_size, 
 
 
 @resource_action_summary_group.command(name=cli_util.override('optimizer.list_resource_actions.command_name', 'list-resource-actions'), help=u"""Lists the Cloud Advisor resource actions that are supported. \n[Command Reference](listResourceActions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
@@ -1325,7 +1325,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('optimizer.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in the tenancy. The tenancy is the root compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")

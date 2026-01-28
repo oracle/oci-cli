@@ -214,7 +214,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @knowledge_base_group.command(name=cli_util.override('adm.change_knowledge_base_compartment.command_name', 'change-compartment'), help=u"""Moves a Knowledge Base from one compartment to another. \n[Command Reference](changeKnowledgeBaseCompartment)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Knowledge Base, as a URL path parameter.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) to which the resource must be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) to which the resource must be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -275,7 +275,7 @@ def change_knowledge_base_compartment(ctx, from_json, wait_for_state, max_wait_s
 
 @remediation_recipe_group.command(name=cli_util.override('adm.change_remediation_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves a Remediation Recipe from one compartment to another. \n[Command Reference](changeRemediationRecipeCompartment)""")
 @cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) to which the resource must be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) to which the resource must be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -336,7 +336,7 @@ def change_remediation_recipe_compartment(ctx, from_json, wait_for_state, max_wa
 
 @remediation_run_group.command(name=cli_util.override('adm.change_remediation_run_compartment.command_name', 'change-compartment'), help=u"""Moves a remediation run from one compartment to another. \n[Command Reference](changeRemediationRunCompartment)""")
 @cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) to which the resource must be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) to which the resource must be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -367,7 +367,7 @@ def change_remediation_run_compartment(ctx, from_json, remediation_run_id, compa
 
 @vulnerability_audit_group.command(name=cli_util.override('adm.change_vulnerability_audit_compartment.command_name', 'change-compartment'), help=u"""Moves a Vulnerability Audit from one compartment to another. \n[Command Reference](changeVulnerabilityAuditCompartment)""")
 @cli_util.option('--vulnerability-audit-id', required=True, help=u"""Unique Vulnerability Audit identifier path parameter.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the resource must be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to which the resource must be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -397,7 +397,7 @@ def change_vulnerability_audit_compartment(ctx, from_json, vulnerability_audit_i
 
 
 @knowledge_base_group.command(name=cli_util.override('adm.create_knowledge_base.command_name', 'create'), help=u"""Creates a new Knowledge Base. \n[Command Reference](createKnowledgeBase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
 @cli_util.option('--display-name', help=u"""The name of the knowledge base.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -462,7 +462,7 @@ def create_knowledge_base(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe.command_name', 'create'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
 @cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--verify-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -539,7 +539,7 @@ def create_remediation_recipe(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_oci_code_repository_configuration.command_name', 'create-remediation-recipe-oci-code-repository-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
 @cli_util.option('--verify-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -627,7 +627,7 @@ def create_remediation_recipe_oci_code_repository_configuration(ctx, from_json, 
 
 
 @remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_external_scm_configuration.command_name', 'create-remediation-recipe-external-scm-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
 @cli_util.option('--verify-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -723,7 +723,7 @@ def create_remediation_recipe_external_scm_configuration(ctx, from_json, wait_fo
 
 
 @remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_jenkins_pipeline_configuration.command_name', 'create-remediation-recipe-jenkins-pipeline-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
 @cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -813,7 +813,7 @@ def create_remediation_recipe_jenkins_pipeline_configuration(ctx, from_json, wai
 
 
 @remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_none_verify_configuration.command_name', 'create-remediation-recipe-none-verify-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
 @cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -891,7 +891,7 @@ def create_remediation_recipe_none_verify_configuration(ctx, from_json, wait_for
 
 
 @remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_oci_dev_ops_build_configuration.command_name', 'create-remediation-recipe-oci-dev-ops-build-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
 @cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -975,7 +975,7 @@ def create_remediation_recipe_oci_dev_ops_build_configuration(ctx, from_json, wa
 
 
 @remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_git_hub_actions_configuration.command_name', 'create-remediation-recipe-git-hub-actions-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
 @cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1065,7 +1065,7 @@ def create_remediation_recipe_git_hub_actions_configuration(ctx, from_json, wait
 
 
 @remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_git_lab_pipeline_configuration.command_name', 'create-remediation-recipe-git-lab-pipeline-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
 @cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1217,7 +1217,7 @@ def create_remediation_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 @vulnerability_audit_group.command(name=cli_util.override('adm.create_vulnerability_audit.command_name', 'create'), help=u"""Creates a new Vulnerability Audit by providing a tree of Application Dependencies. \n[Command Reference](createVulnerabilityAudit)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the knowledge base.""")
-@cli_util.option('--compartment-id', help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
 @cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of application dependencies (without vulnerabilities).
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1310,7 +1310,7 @@ def create_vulnerability_audit(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--usage-data-bucket-name', required=True, help=u"""The Object Storage bucket to read the usage data from.""")
 @cli_util.option('--usage-data-namespace-name', required=True, help=u"""The Object Storage namespace to read the usage data from.""")
 @cli_util.option('--usage-data-object-name', required=True, help=u"""The Object Storage object name to read the usage data from.""")
-@cli_util.option('--compartment-id', help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
 @cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of application dependencies (without vulnerabilities).
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1402,7 +1402,7 @@ def create_vulnerability_audit_usage_data_via_object_storage_tuple_details(ctx, 
 
 @vulnerability_audit_group.command(name=cli_util.override('adm.create_vulnerability_audit_unknown_source_vulnerability_audit_source.command_name', 'create-vulnerability-audit-unknown-source-vulnerability-audit-source'), help=u"""Creates a new Vulnerability Audit by providing a tree of Application Dependencies. \n[Command Reference](createVulnerabilityAudit)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the knowledge base.""")
-@cli_util.option('--compartment-id', help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
 @cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of application dependencies (without vulnerabilities).
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1492,7 +1492,7 @@ def create_vulnerability_audit_unknown_source_vulnerability_audit_source(ctx, fr
 @vulnerability_audit_group.command(name=cli_util.override('adm.create_vulnerability_audit_oci_resource_vulnerability_audit_source.command_name', 'create-vulnerability-audit-oci-resource-vulnerability-audit-source'), help=u"""Creates a new Vulnerability Audit by providing a tree of Application Dependencies. \n[Command Reference](createVulnerabilityAudit)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the knowledge base.""")
 @cli_util.option('--source-oci-resource-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the OCI resource that triggered the vulnerability audit.""")
-@cli_util.option('--compartment-id', help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
 @cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of application dependencies (without vulnerabilities).
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1582,7 +1582,7 @@ def create_vulnerability_audit_oci_resource_vulnerability_audit_source(ctx, from
 
 @vulnerability_audit_group.command(name=cli_util.override('adm.create_vulnerability_audit_external_resource_vulnerability_audit_source.command_name', 'create-vulnerability-audit-external-resource-vulnerability-audit-source'), help=u"""Creates a new Vulnerability Audit by providing a tree of Application Dependencies. \n[Command Reference](createVulnerabilityAudit)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the knowledge base.""")
-@cli_util.option('--compartment-id', help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
 @cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of application dependencies (without vulnerabilities).
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2257,7 +2257,7 @@ def list_application_dependency_vulnerabilities(ctx, from_json, all_pages, page_
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2319,7 +2319,7 @@ def list_knowledge_bases(ctx, from_json, all_pages, page_size, id, sort_by, life
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2380,7 +2380,7 @@ def list_remediation_recipes(ctx, from_json, all_pages, page_size, id, sort_by, 
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeFinished", "timeStarted", "displayName", "lifecycleState", "currentStageType"]), help=u"""The field used to sort Remediation Runs. Only one sort order is allowed. Default order for _timeCreated_ is **descending**. Default order for _timeFinished_ is **descending**. Default order for _timeStarted_ is **descending**. Default order for _displayName_ is **ascending alphabetical order**. Default order for _lifecycleState_ is the following sequence: **CREATING, ACTIVE, UPDATING, DELETING, DELETED, and FAILED**. Default order for currentStageType is the following sequence: **DETECT, RECOMMEND, VERIFY, and APPLY**.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2503,7 +2503,7 @@ def list_stages(ctx, from_json, all_pages, page_size, remediation_run_id, type, 
 
 @vulnerability_audit_group.command(name=cli_util.override('adm.list_vulnerability_audits.command_name', 'list'), help=u"""Returns a list of Vulnerability Audits based on the specified query parameters. At least one of id, compartmentId query parameter must be provided. \n[Command Reference](listVulnerabilityAudits)""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the specified identifier. Required only if the compartmentId query parameter is not specified.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
 @cli_util.option('--knowledge-base-id', help=u"""A filter to return only Vulnerability Audits that were created against the specified knowledge base.""")
 @cli_util.option('--is-success', type=click.BOOL, help=u"""A filter to return only successful or failed Vulnerability Audits.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help=u"""A filter to return only Vulnerability Audits that match the specified lifecycleState.""")
@@ -2693,7 +2693,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('adm.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
 @cli_util.option('--work-request-id', help=u"""The identifier of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources that match the specified OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The Oracle Cloud Identifier ([OCID]) of the resource affected by the work request.""")

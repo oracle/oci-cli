@@ -157,7 +157,7 @@ nlb_root_group.add_command(network_load_balancer_health_group)
 
 @network_load_balancer_group.command(name=cli_util.override('nlb.change_network_load_balancer_compartment.command_name', 'change-compartment'), help=u"""Moves a network load balancer into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeNetworkLoadBalancerCompartment)""")
 @cli_util.option('--network-load-balancer-id', required=True, help=u"""The [OCID] of the network load balancer to update.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which to move the network load balancer.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to which to move the network load balancer.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the current etag value of the resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -519,9 +519,9 @@ def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @network_load_balancer_group.command(name=cli_util.override('nlb.create_network_load_balancer.command_name', 'create'), help=u"""Creates a network load balancer. \n[Command Reference](createNetworkLoadBalancer)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the network load balancer.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the network load balancer.""")
 @cli_util.option('--display-name', required=True, help=u"""Network load balancer identifier, which can be renamed.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The subnet in which the network load balancer is spawned [OCIDs].""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The subnet in which the network load balancer is spawned [OCIDs].""")
 @cli_util.option('--is-preserve-source-destination', type=click.BOOL, help=u"""This parameter can be enabled only if backends are compute OCIDs. When enabled, the skipSourceDestinationCheck parameter is automatically enabled on the load balancer VNIC, and packets are sent to the backend with the entire IP header intact.""")
 @cli_util.option('--is-symmetric-hash-enabled', type=click.BOOL, help=u"""This can only be enabled when NLB is working in transparent mode with source destination header preservation enabled. This removes the additional dependency from NLB backends(like Firewalls) to perform SNAT.""")
 @cli_util.option('--reserved-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of reserved Ips.
@@ -1422,7 +1422,7 @@ def list_listeners(ctx, from_json, all_pages, page_size, network_load_balancer_i
 
 
 @network_load_balancer_health_group.command(name=cli_util.override('nlb.list_network_load_balancer_healths.command_name', 'list'), help=u"""Lists the summary health statuses for all network load balancers in the specified compartment. \n[Command Reference](listNetworkLoadBalancerHealths)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the network load balancers to list.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the network load balancers to list.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' (ascending) or 'desc' (descending).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. The default order for timeCreated is descending. The default order for displayName is ascending. If no value is specified, then timeCreated is the default.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page or items to return, in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1476,7 +1476,7 @@ def list_network_load_balancer_healths(ctx, from_json, all_pages, page_size, com
 
 
 @network_load_balancer_group.command(name=cli_util.override('nlb.list_network_load_balancers.command_name', 'list'), help=u"""Returns a list of network load balancers. \n[Command Reference](listNetworkLoadBalancers)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the network load balancers to list.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the network load balancers to list.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page or items to return, in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1637,7 +1637,7 @@ def list_network_load_balancers_protocols(ctx, from_json, all_pages, page_size, 
 
 @work_request_error_group.command(name=cli_util.override('nlb.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The identifier of the asynchronous request.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the network load balancers to list.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the network load balancers to list.""")
 @cli_util.option('--page', help=u"""The page token representing the page from which to start retrieving results. For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page or items to return, in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1692,7 +1692,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 
 @work_request_log_entry_group.command(name=cli_util.override('nlb.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Returns a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The identifier of the asynchronous request.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the network load balancers to list.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the network load balancers to list.""")
 @cli_util.option('--page', help=u"""The page token representing the page from which to start retrieving results. For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page or items to return, in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1746,7 +1746,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('nlb.list_work_requests.command_name', 'list'), help=u"""Lists all work requests. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the network load balancers to list.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the network load balancers to list.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page or items to return, in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The page token representing the page from which to start retrieving results. For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")

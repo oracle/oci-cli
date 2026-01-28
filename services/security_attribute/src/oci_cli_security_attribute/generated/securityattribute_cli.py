@@ -101,7 +101,7 @@ def bulk_delete_security_attributes(ctx, from_json, security_attribute_ids):
   * Add a security attribute when it does not already exist on the resource.   * Update the value for a security attribute when it is present on the resource.   * Add a security attribute when it does not already exist on the resource or update the value when it is present on the resource.   * Remove a security attribute from a resource. The security attribute is removed from the resource regardless of the value.
 
 The edits can include a combination of operations and attributes. However, multiple operations cannot apply to the same attribute in the same request. \n[Command Reference](bulkEditSecurityAttributes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the bulk edit request is submitted.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the bulk edit request is submitted.""")
 @cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The resources to be updated.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--bulk-edit-operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The operations associated with the request to bulk edit tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'security_attribute', 'class': 'list[BulkEditResource]'}, 'bulk-edit-operations': {'module': 'security_attribute', 'class': 'list[BulkEditSecurityAttributeOperationDetails]'}})
@@ -170,7 +170,7 @@ To move the security attribute namespace, you must have the manage security-attr
 
 Moving a security attribute namespace moves all the security attributes contained in the security attribute namespace. \n[Command Reference](changeSecurityAttributeNamespaceCompartment)""")
 @cli_util.option('--security-attribute-namespace-id', required=True, help=u"""The OCID of the security attribute namespace.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The Oracle Cloud ID (OCID) of the destination compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The Oracle Cloud ID (OCID) of the destination compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -412,7 +412,7 @@ You must specify the compartment ID in the request object (remember that the ten
 You must also specify a *name* for the namespace, which must be unique across all namespaces in your tenancy and cannot be changed. The only valid characters for security attribute names are: \u00A00-9, A-Z, a-z, -, _ characters. Names are case insensitive. That means, for example, \"myNamespace\" and \"mynamespace\" are not allowed in the same tenancy. Once you created a namespace, you cannot change the name. If you specify a name that's already in use in the tenancy, a 409 error is returned.
 
 You must also specify a *description* for the namespace. It does not have to be unique, and you can change it with [UpdateSecurityAttributeNamespace]. \n[Command Reference](createSecurityAttributeNamespace)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the security attribute namespace.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy containing the security attribute namespace.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the security attribute namespace during creation. The name must be unique across all namespaces in the tenancy and cannot be changed.""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the security attribute namespace during creation.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -651,7 +651,7 @@ def get_security_attribute_work_request(ctx, from_json, work_request_id):
 
 
 @security_attribute_namespace_group.command(name=cli_util.override('security_attribute.list_security_attribute_namespaces.command_name', 'list'), help=u"""Lists the security attribute namespaces in the specified compartment. \n[Command Reference](listSecurityAttributeNamespaces)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -817,7 +817,7 @@ def list_security_attribute_work_request_logs(ctx, from_json, all_pages, page_si
 
 
 @security_attribute_work_request_group.command(name=cli_util.override('security_attribute.list_security_attribute_work_requests.command_name', 'list'), help=u"""Lists the security attribute work requests in compartment. \n[Command Reference](listSecurityAttributeWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--resource-identifier', help=u"""The identifier of the resource the work request affects.""")

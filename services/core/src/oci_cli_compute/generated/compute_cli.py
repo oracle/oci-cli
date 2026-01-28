@@ -362,7 +362,7 @@ compute_root_group.add_command(console_history_group)
 
 
 @measured_boot_report_group.command(name=cli_util.override('compute.accept_shielded_integrity_policy.command_name', 'accept-shielded-integrity-policy'), help=u"""Accept the changes to the PCR values in the measured boot report. \n[Command Reference](acceptShieldedIntegrityPolicy)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -387,7 +387,7 @@ def accept_shielded_integrity_policy(ctx, from_json, instance_id, if_match):
 
 
 @image_shape_compatibility_entry_group.command(name=cli_util.override('compute.add_image_shape_compatibility_entry.command_name', 'add'), help=u"""Adds a shape to the compatible shapes list for the image. \n[Command Reference](addImageShapeCompatibilityEntry)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
 @cli_util.option('--shape-name', required=True, help=u"""Shape name.""")
 @cli_util.option('--memory-constraints', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ocpu-constraints', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -455,8 +455,8 @@ def apply_host_configuration(ctx, from_json, compute_host_id, if_match):
 
 
 @boot_volume_attachment_group.command(name=cli_util.override('compute.attach_boot_volume.command_name', 'attach'), help=u"""Attaches the specified boot volume to the specified instance. \n[Command Reference](attachBootVolume)""")
-@cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the  boot volume.""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--boot-volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the  boot volume.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the instance.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--encryption-in-transit-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "BM_ENCRYPTION_IN_TRANSIT"]), help=u"""Refer the top-level definition of encryptionInTransitType. The default value is NONE.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -545,7 +545,7 @@ def attach_compute_host_group_host(ctx, from_json, compute_host_id, compute_host
 
 @vnic_attachment_group.command(name=cli_util.override('compute.attach_vnic.command_name', 'attach'), help=u"""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)]. \n[Command Reference](attachVnic)""")
 @cli_util.option('--create-vnic-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the instance.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--nic-index', type=click.INT, help=u"""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use. For more information, see [Virtual Network Interface Cards (VNICs)].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -602,9 +602,9 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 
 @volume_attachment_group.command(name=cli_util.override('compute.attach_volume.command_name', 'attach'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance. For AttachVolume operation, this is a required field for the request, see [AttachVolume].""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the instance. For AttachVolume operation, this is a required field for the request, see [AttachVolume].""")
 @cli_util.option('--type', required=True, help=u"""The type of volume. The only supported values are \"iscsi\" and \"paravirtualized\".""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.""")
 @cli_util.option('--device', help=u"""The device name. To retrieve a list of devices for a given instance, see [ListInstanceDevices].""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
@@ -670,8 +670,8 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_service_determined_volume_details.command_name', 'attach-volume-attach-service-determined-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance. For AttachVolume operation, this is a required field for the request, see [AttachVolume].""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the instance. For AttachVolume operation, this is a required field for the request, see [AttachVolume].""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.""")
 @cli_util.option('--device', help=u"""The device name. To retrieve a list of devices for a given instance, see [ListInstanceDevices].""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
@@ -738,8 +738,8 @@ def attach_volume_attach_service_determined_volume_details(ctx, from_json, wait_
 
 
 @volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_emulated_volume_details.command_name', 'attach-volume-attach-emulated-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance. For AttachVolume operation, this is a required field for the request, see [AttachVolume].""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the instance. For AttachVolume operation, this is a required field for the request, see [AttachVolume].""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.""")
 @cli_util.option('--device', help=u"""The device name. To retrieve a list of devices for a given instance, see [ListInstanceDevices].""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
@@ -806,8 +806,8 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
 
 
 @volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_i_scsi_volume_details.command_name', 'attach-volume-attach-i-scsi-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance. For AttachVolume operation, this is a required field for the request, see [AttachVolume].""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the instance. For AttachVolume operation, this is a required field for the request, see [AttachVolume].""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.""")
 @cli_util.option('--device', help=u"""The device name. To retrieve a list of devices for a given instance, see [ListInstanceDevices].""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
@@ -886,8 +886,8 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 
 
 @volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_paravirtualized_volume_details.command_name', 'attach-volume-attach-paravirtualized-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance. For AttachVolume operation, this is a required field for the request, see [AttachVolume].""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the instance. For AttachVolume operation, this is a required field for the request, see [AttachVolume].""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.""")
 @cli_util.option('--device', help=u"""The device name. To retrieve a list of devices for a given instance, see [ListInstanceDevices].""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
@@ -962,7 +962,7 @@ def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for
 The `CaptureConsoleHistory` operation works with the other console history operations as described below.
 
 1. Use `CaptureConsoleHistory` to request the capture of up to a megabyte of the most recent console history. This call returns a `ConsoleHistory` object. The object will have a state of REQUESTED. 2. Wait for the capture operation to succeed by polling `GetConsoleHistory` with the identifier of the console history metadata. The state of the `ConsoleHistory` object will go from REQUESTED to GETTING-HISTORY and then SUCCEEDED (or FAILED). 3. Use `GetConsoleHistoryContent` to get the actual console history data (not the metadata). 4. Optionally, use `DeleteConsoleHistory` to delete the console history metadata and the console history data. \n[Command Reference](captureConsoleHistory)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance to get the console history from.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the instance to get the console history from.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1026,8 +1026,8 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @compute_capacity_reservation_group.command(name=cli_util.override('compute.change_compute_capacity_reservation_compartment.command_name', 'change-compartment'), help=u"""Moves a compute capacity reservation into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeCapacityReservationCompartment)""")
-@cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute capacity reservation to.""")
+@cli_util.option('--capacity-reservation-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the compute capacity reservation to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1096,7 +1096,7 @@ def change_compute_capacity_reservation_compartment(ctx, from_json, wait_for_sta
 
 @compute_capacity_topology_group.command(name=cli_util.override('compute.change_compute_capacity_topology_compartment.command_name', 'change-compartment'), help=u"""Moves a compute capacity topology into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeCapacityTopologyCompartment)""")
 @cli_util.option('--compute-capacity-topology-id', required=True, help=u"""The [OCID] of the compute capacity topology.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute capacity topology to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the compute capacity topology to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1166,8 +1166,8 @@ def change_compute_capacity_topology_compartment(ctx, from_json, wait_for_state,
 @compute_cluster_group.command(name=cli_util.override('compute.change_compute_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a compute cluster into a different compartment within the same tenancy. A [compute cluster] is a remote direct memory access (RDMA) network group.
 
 For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeClusterCompartment)""")
-@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute cluster to.""")
+@cli_util.option('--compute-cluster-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the compute cluster to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1198,7 +1198,7 @@ def change_compute_cluster_compartment(ctx, from_json, compute_cluster_id, compa
 
 @compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.change_compute_gpu_memory_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a compute GPU memory cluster into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeGpuMemoryClusterCompartment)""")
 @cli_util.option('--compute-gpu-memory-cluster-id', required=True, help=u"""The OCID of the compute GPU memory cluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute GPU memory cluster to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the compute GPU memory cluster to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1229,7 +1229,7 @@ def change_compute_gpu_memory_cluster_compartment(ctx, from_json, compute_gpu_me
 
 @compute_gpu_memory_fabric_group.command(name=cli_util.override('compute.change_compute_gpu_memory_fabric_compartment.command_name', 'change-compartment'), help=u"""Moves a compute GPU memory fabric into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeGpuMemoryFabricCompartment)""")
 @cli_util.option('--compute-gpu-memory-fabric-id', required=True, help=u"""The OCID of the compute GPU memory fabric.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute GPU memory fabric to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the compute GPU memory fabric to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1260,7 +1260,7 @@ def change_compute_gpu_memory_fabric_compartment(ctx, from_json, compute_gpu_mem
 
 @compute_host_group.command(name=cli_util.override('compute.change_compute_host_compartment.command_name', 'change-compartment'), help=u"""Moves a compute host into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeHostCompartment)""")
 @cli_util.option('--compute-host-id', required=True, help=u"""The [OCID] of the compute host.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute host to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the compute host to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1329,7 +1329,7 @@ def change_compute_host_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 @compute_host_group_group.command(name=cli_util.override('compute.change_compute_host_group_compartment.command_name', 'change-compartment'), help=u"""Moves a compute host group into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeHostGroupCompartment)""")
 @cli_util.option('--compute-host-group-id', required=True, help=u"""The [OCID] of the compute host group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute host group to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the compute host group to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1398,7 +1398,7 @@ def change_compute_host_group_compartment(ctx, from_json, wait_for_state, max_wa
 
 @compute_image_capability_schema_group.command(name=cli_util.override('compute.change_compute_image_capability_schema_compartment.command_name', 'change-compartment'), help=u"""Moves a compute image capability schema into a different compartment within the same tenancy. For information about moving resources between compartments, see         [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeImageCapabilitySchemaCompartment)""")
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance configuration to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the instance configuration to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1428,8 +1428,8 @@ def change_compute_image_capability_schema_compartment(ctx, from_json, compute_i
 
 
 @dedicated_vm_host_group.command(name=cli_util.override('compute.change_dedicated_vm_host_compartment.command_name', 'change-compartment'), help=u"""Moves a dedicated virtual machine host from one compartment to another. \n[Command Reference](changeDedicatedVmHostCompartment)""")
-@cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the dedicated virtual machine host to.""")
+@cli_util.option('--dedicated-vm-host-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the dedicated virtual machine host to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1497,8 +1497,8 @@ def change_dedicated_vm_host_compartment(ctx, from_json, wait_for_state, max_wai
 
 
 @image_group.command(name=cli_util.override('compute.change_image_compartment.command_name', 'change-compartment'), help=u"""Moves an image into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeImageCompartment)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the image to.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the image to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1530,8 +1530,8 @@ def change_image_compartment(ctx, from_json, image_id, compartment_id, if_match)
 @instance_group.command(name=cli_util.override('compute.change_instance_compartment.command_name', 'change-compartment'), help=u"""Moves an instance into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
 When you move an instance to a different compartment, associated resources such as boot volumes and VNICs are not moved. \n[Command Reference](changeInstanceCompartment)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance to.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the instance to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1624,7 +1624,7 @@ def check_host_configuration(ctx, from_json, compute_host_id, if_match):
 
 
 @app_catalog_subscription_group.command(name=cli_util.override('compute.create_app_catalog_subscription.command_name', 'create'), help=u"""Create a subscription for listing resource version for a compartment. It will take some time to propagate to all regions. \n[Command Reference](createAppCatalogSubscription)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartmentID for the subscription.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartmentID for the subscription.""")
 @cli_util.option('--listing-id', required=True, help=u"""The OCID of the listing.""")
 @cli_util.option('--listing-resource-version', required=True, help=u"""Listing resource version.""")
 @cli_util.option('--oracle-terms-of-use-link', required=True, help=u"""Oracle TOU link""")
@@ -1662,7 +1662,7 @@ def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, 
 @compute_capacity_report_group.command(name=cli_util.override('compute.create_compute_capacity_report.command_name', 'create'), help=u"""Generates a report of the host capacity within an availability domain that is available for you to create compute instances. Host capacity is the physical infrastructure that resources such as compute instances run on.
 
 Use the capacity report to determine whether sufficient capacity is available for a shape before you create an instance or change the shape of an instance. \n[Command Reference](createComputeCapacityReport)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the compartment. This should always be the root compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] for the compartment. This should always be the root compartment.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain for the capacity report.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -1691,7 +1691,7 @@ def create_compute_capacity_report(ctx, from_json, compartment_id, availability_
 
 
 @compute_capacity_reservation_group.command(name=cli_util.override('compute.create_compute_capacity_reservation.command_name', 'create'), help=u"""Creates a new compute capacity reservation in the specified compartment and availability domain. Compute capacity reservations let you reserve instances in a compartment. When you launch an instance using this reservation, you are assured that you have enough space for your instance, and you won't get out of capacity errors. For more information, see [Reserved Capacity]. \n[Command Reference](createComputeCapacityReservation)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the capacity reservation.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the capacity reservation.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of this compute capacity reservation.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -1780,7 +1780,7 @@ Compute capacity topologies report the health status of your bare metal hosts. \
 
 Example: `Uocm:US-CHICAGO-1-AD-2`""")
 @cli_util.option('--capacity-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains this compute capacity topology.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains this compute capacity topology.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1854,7 +1854,7 @@ Compute capacity topologies report the health status of your bare metal hosts. \
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of this compute capacity topology.
 
 Example: `Uocm:US-CHICAGO-1-AD-2`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains this compute capacity topology.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains this compute capacity topology.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1936,7 +1936,7 @@ If you want predictable capacity for a specific number of identical instances th
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain to place the compute cluster in.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2003,9 +2003,9 @@ def create_compute_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 @compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.create_compute_gpu_memory_cluster.command_name', 'create'), help=u"""Create a compute GPU memory cluster instance on a specific compute GPU memory fabric \n[Command Reference](createComputeGpuMemoryCluster)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the GPU memory cluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the compute GPU memory cluster. compartment.""")
-@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster.""")
-@cli_util.option('--instance-configuration-id', required=True, help=u"""Instance Configuration to be used for this GPU Memory Cluster""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that contains the compute GPU memory cluster. compartment.""")
+@cli_util.option('--compute-cluster-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compute cluster.""")
+@cli_util.option('--instance-configuration-id', required=True, type=custom_types.CLI_OCID, help=u"""Instance Configuration to be used for this GPU Memory Cluster""")
 @cli_util.option('--gpu-memory-fabric-id', help=u"""The [OCID] of the GPU memory fabric.""")
 @cli_util.option('--size', type=click.INT, help=u"""The number of instances currently running in the GpuMemoryCluster""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2085,7 +2085,7 @@ def create_compute_gpu_memory_cluster(ctx, from_json, wait_for_state, max_wait_s
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains host group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains host group.""")
 @cli_util.option('--is-targeted-placement-required', required=True, type=click.BOOL, help=u"""A flag that allows customers to restrict placement for hosts attached to the group. If true, the only way to place on hosts is to target the specific host group.""")
 @cli_util.option('--configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of HostGroupConfiguration objects
 
@@ -2156,9 +2156,9 @@ def create_compute_host_group(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @compute_image_capability_schema_group.command(name=cli_util.override('compute.create_compute_image_capability_schema.command_name', 'create'), help=u"""Creates compute image capability schema. \n[Command Reference](createComputeImageCapabilitySchema)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the resource.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resource.""")
 @cli_util.option('--compute-global-image-capability-schema-version-name', required=True, help=u"""The name of the compute global image capability schema version""")
-@cli_util.option('--image-id', required=True, help=u"""The ocid of the image""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the image""")
 @cli_util.option('--schema-data', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of each capability name to its ImageCapabilitySchemaDescriptor.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -2229,7 +2229,7 @@ def create_compute_image_capability_schema(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the dedicated virtual machine host.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--dedicated-vm-host-shape', required=True, help=u"""The dedicated virtual machine host shape. The shape determines the number of CPUs and other resources available for VM instances launched on the dedicated virtual machine host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2320,7 +2320,7 @@ def create_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the dedicated virtual machine host.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--dedicated-vm-host-shape', required=True, help=u"""The dedicated virtual machine host shape. The shape determines the number of CPUs and other resources available for VM instances launched on the dedicated virtual machine host.""")
 @cli_util.option('--placement-constraint-details-compute-host-group-id', required=True, help=u"""The OCID of the compute host group. This is only available for dedicated capacity customers.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2412,7 +2412,7 @@ def create_dedicated_vm_host_host_group_placement_constraint_details(ctx, from_j
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the dedicated virtual machine host.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--dedicated-vm-host-shape', required=True, help=u"""The dedicated virtual machine host shape. The shape determines the number of CPUs and other resources available for VM instances launched on the dedicated virtual machine host.""")
 @cli_util.option('--placement-constraint-details-compute-bare-metal-host-id', required=True, help=u"""The OCID of the compute bare metal host. This is only available for dedicated capacity customers.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2513,7 +2513,7 @@ When importing an image based on the Object Storage URL, use [ImageSourceViaObje
 For more information about importing exported images, see [Image Import/Export].
 
 You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information. \n[Command Reference](createImage)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment you want the image to be created in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment you want the image to be created in.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2526,7 +2526,7 @@ Example: `My Oracle Linux image`""")
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--image-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--instance-id', help=u"""The OCID of the instance you want to use as the basis for the image.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help=u"""The OCID of the instance you want to use as the basis for the image.""")
 @cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with iSCSI boot and VFIO devices. The default value for platform images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using VirtIO drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2605,7 +2605,7 @@ When importing an image based on the Object Storage URL, use [ImageSourceViaObje
 For more information about importing exported images, see [Image Import/Export].
 
 You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information. \n[Command Reference](createImage)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment you want the image to be created in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment you want the image to be created in.""")
 @cli_util.option('--image-source-details-bucket-name', required=True, help=u"""The Object Storage bucket for the image.""")
 @cli_util.option('--image-source-details-namespace-name', required=True, help=u"""The Object Storage namespace for the image.""")
 @cli_util.option('--image-source-details-object-name', required=True, help=u"""The Object Storage name for the image.""")
@@ -2620,7 +2620,7 @@ Example: `My Oracle Linux image`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--instance-id', help=u"""The OCID of the instance you want to use as the basis for the image.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help=u"""The OCID of the instance you want to use as the basis for the image.""")
 @cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with iSCSI boot and VFIO devices. The default value for platform images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using VirtIO drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
 @cli_util.option('--image-source-details-operating-system', help=u"""""")
 @cli_util.option('--image-source-details-operating-system-version', help=u"""""")
@@ -2714,7 +2714,7 @@ When importing an image based on the Object Storage URL, use [ImageSourceViaObje
 For more information about importing exported images, see [Image Import/Export].
 
 You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information. \n[Command Reference](createImage)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment you want the image to be created in.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment you want the image to be created in.""")
 @cli_util.option('--image-source-details-source-uri', required=True, help=u"""The Object Storage URL for the image.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2727,7 +2727,7 @@ Example: `My Oracle Linux image`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--instance-id', help=u"""The OCID of the instance you want to use as the basis for the image.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help=u"""The OCID of the instance you want to use as the basis for the image.""")
 @cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with iSCSI boot and VFIO devices. The default value for platform images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using VirtIO drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
 @cli_util.option('--image-source-details-operating-system', help=u"""""")
 @cli_util.option('--image-source-details-operating-system-version', help=u"""""")
@@ -2809,7 +2809,7 @@ def create_image_image_source_via_object_storage_uri_details(ctx, from_json, wai
 @instance_console_connection_group.command(name=cli_util.override('compute.create_instance_console_connection.command_name', 'create'), help=u"""Creates a new console connection to the specified instance. After the console connection has been created and is available, you connect to the console using SSH.
 
 For more information about instance console connections, see [Troubleshooting Instances Using Instance Console Connections]. \n[Command Reference](createInstanceConsoleConnection)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance to create the console connection to.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the instance to create the console connection to.""")
 @cli_util.option('--public-key', required=True, help=u"""The SSH public key used to authenticate the console connection.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2872,7 +2872,7 @@ def create_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
 
 @app_catalog_subscription_group.command(name=cli_util.override('compute.delete_app_catalog_subscription.command_name', 'delete'), help=u"""Delete a subscription for a listing resource version for a compartment. \n[Command Reference](deleteAppCatalogSubscription)""")
 @cli_util.option('--listing-id', required=True, help=u"""The OCID of the listing.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-version', required=True, help=u"""Listing Resource Version.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2894,7 +2894,7 @@ def delete_app_catalog_subscription(ctx, from_json, listing_id, compartment_id, 
 
 
 @compute_capacity_reservation_group.command(name=cli_util.override('compute.delete_compute_capacity_reservation.command_name', 'delete'), help=u"""Deletes the specified compute capacity reservation. \n[Command Reference](deleteComputeCapacityReservation)""")
-@cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--capacity-reservation-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3010,7 +3010,7 @@ def delete_compute_capacity_topology(ctx, from_json, wait_for_state, max_wait_se
 @compute_cluster_group.command(name=cli_util.override('compute.delete_compute_cluster.command_name', 'delete'), help=u"""Deletes a compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.
 
 Before you delete a compute cluster, first delete all instances in the cluster by using the [TerminateInstance] operation. \n[Command Reference](deleteComputeCluster)""")
-@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
+@cli_util.option('--compute-cluster-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3323,7 +3323,7 @@ def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @dedicated_vm_host_group.command(name=cli_util.override('compute.delete_dedicated_vm_host.command_name', 'delete'), help=u"""Deletes the specified dedicated virtual machine host.
 
 If any VM instances are assigned to the dedicated virtual machine host, the delete operation will fail and the service will return a 409 response code. \n[Command Reference](deleteDedicatedVmHost)""")
-@cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated VM host.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3377,7 +3377,7 @@ def delete_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @image_group.command(name=cli_util.override('compute.delete_image.command_name', 'delete'), help=u"""Deletes an image. \n[Command Reference](deleteImage)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3773,7 +3773,7 @@ For more information about exporting images, see [Image Import/Export].
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
 See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export. \n[Command Reference](exportImage)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
 @cli_util.option('--destination-type', required=True, help=u"""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL.""")
 @cli_util.option('--export-format', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK", "OCI", "VHD", "VDI"]), help=u"""The format to export the image to. The default value is `OCI`.
 
@@ -3843,7 +3843,7 @@ For more information about exporting images, see [Image Import/Export].
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
 See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export. \n[Command Reference](exportImage)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
 @cli_util.option('--destination-uri', required=True, help=u"""The Object Storage URL to export the image to. See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
 @cli_util.option('--export-format', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK", "OCI", "VHD", "VDI"]), help=u"""The format to export the image to. The default value is `OCI`.
 
@@ -3915,7 +3915,7 @@ For more information about exporting images, see [Image Import/Export].
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
 See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export. \n[Command Reference](exportImage)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The Object Storage bucket to export the image to.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace to export the image to.""")
 @cli_util.option('--object-name', required=True, help=u"""The Object Storage object name for the exported image.""")
@@ -4079,7 +4079,7 @@ def get_boot_volume_attachment(ctx, from_json, boot_volume_attachment_id):
 
 
 @compute_capacity_reservation_group.command(name=cli_util.override('compute.get_compute_capacity_reservation.command_name', 'get'), help=u"""Gets information about the specified compute capacity reservation. \n[Command Reference](getComputeCapacityReservation)""")
-@cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--capacity-reservation-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4123,7 +4123,7 @@ def get_compute_capacity_topology(ctx, from_json, compute_capacity_topology_id):
 
 
 @compute_cluster_group.command(name=cli_util.override('compute.get_compute_cluster.command_name', 'get'), help=u"""Gets information about a compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group. \n[Command Reference](getComputeCluster)""")
-@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
+@cli_util.option('--compute-cluster-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4353,7 +4353,7 @@ def get_console_history_content(ctx, from_json, file, instance_console_history_i
 
 
 @dedicated_vm_host_group.command(name=cli_util.override('compute.get_dedicated_vm_host.command_name', 'get'), help=u"""Gets information about the specified dedicated virtual machine host. \n[Command Reference](getDedicatedVmHost)""")
-@cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated VM host.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4397,7 +4397,7 @@ def get_firmware_bundle(ctx, from_json, firmware_bundle_id):
 
 
 @image_group.command(name=cli_util.override('compute.get_image.command_name', 'get'), help=u"""Gets the specified image. \n[Command Reference](getImage)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4418,7 +4418,7 @@ def get_image(ctx, from_json, image_id):
 
 
 @image_shape_compatibility_entry_group.command(name=cli_util.override('compute.get_image_shape_compatibility_entry.command_name', 'get'), help=u"""Retrieves an image shape compatibility entry. \n[Command Reference](getImageShapeCompatibilityEntry)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
 @cli_util.option('--shape-name', required=True, help=u"""Shape name.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4447,7 +4447,7 @@ def get_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name):
 @instance_group.command(name=cli_util.override('compute.get_instance.command_name', 'get'), help=u"""Gets information about the specified instance.
 
 **Note:** To retrieve public and private IP addresses for an instance, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID. \n[Command Reference](getInstance)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4511,7 +4511,7 @@ def get_instance_maintenance_event(ctx, from_json, instance_maintenance_event_id
 
 
 @instance_maintenance_reboot_group.command(name=cli_util.override('compute.get_instance_maintenance_reboot.command_name', 'get'), help=u"""Gets the maximum possible date that a maintenance reboot can be extended. For more information, see [Infrastructure Maintenance]. \n[Command Reference](getInstanceMaintenanceReboot)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4533,7 +4533,7 @@ def get_instance_maintenance_reboot(ctx, from_json, instance_id):
 
 
 @measured_boot_report_group.command(name=cli_util.override('compute.get_measured_boot_report.command_name', 'get'), help=u"""Gets the measured boot report for this shielded instance. \n[Command Reference](getMeasuredBootReport)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4597,7 +4597,7 @@ def get_volume_attachment(ctx, from_json, volume_attachment_id):
 
 
 @instance_credentials_group.command(name=cli_util.override('compute.get_windows_instance_initial_credentials.command_name', 'get-windows-instance-initial-credentials'), help=u"""Gets the generated credentials for the instance. Only works for instances that require a password to log in, such as Windows. For certain operating systems, users will be forced to change the initial credentials. \n[Command Reference](getWindowsInstanceInitialCredentials)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4638,7 +4638,7 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
  - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on. For more information, see [Infrastructure Maintenance].
 
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP, SENDDIAGNOSTICINTERRUPT, DIAGNOSTICREBOOT, REBOOTMIGRATE""")
 @cli_util.option('--action-type', required=True, help=u"""The type of power action to perform.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4716,7 +4716,7 @@ def instance_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
  - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on. For more information, see [Infrastructure Maintenance].
 
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP, SENDDIAGNOSTICINTERRUPT, DIAGNOSTICREBOOT, REBOOTMIGRATE""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--allow-dense-reboot-migration', type=click.BOOL, help=u"""For instances that use a DenseIO shape, the flag denoting whether [reboot migration] is performed for the instance. The default value is `false`.
@@ -4804,7 +4804,7 @@ def instance_action_reset_action_details(ctx, from_json, wait_for_state, max_wai
  - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on. For more information, see [Infrastructure Maintenance].
 
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP, SENDDIAGNOSTICINTERRUPT, DIAGNOSTICREBOOT, REBOOTMIGRATE""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--delete-local-storage', type=click.BOOL, help=u"""For bare metal instances that have local storage, this must be set to true to verify that the local storage will be deleted during the migration.  For instances without, this parameter has no effect.""")
@@ -4892,7 +4892,7 @@ def instance_action_reboot_migrate_action_details(ctx, from_json, wait_for_state
  - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on. For more information, see [Infrastructure Maintenance].
 
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP, SENDDIAGNOSTICINTERRUPT, DIAGNOSTICREBOOT, REBOOTMIGRATE""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--allow-dense-reboot-migration', type=click.BOOL, help=u"""For instances that use a DenseIO shape, the flag denoting whether [reboot migration] is performed for the instance. The default value is `false`.
@@ -4981,10 +4981,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5004,13 +5004,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -5061,7 +5061,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5069,7 +5069,7 @@ This option is a JSON list with items of type LaunchAttachVolumeDetails.  For do
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5235,10 +5235,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5258,13 +5258,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -5314,7 +5314,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5322,7 +5322,7 @@ This option is a JSON list with items of type LaunchAttachVolumeDetails.  For do
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5514,11 +5514,11 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--source-details-boot-volume-id', required=True, help=u"""The OCID of the boot volume used to boot the instance.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5538,13 +5538,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -5594,7 +5594,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5602,7 +5602,7 @@ This option is a JSON list with items of type LaunchAttachVolumeDetails.  For do
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5769,10 +5769,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5792,13 +5792,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -5849,14 +5849,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6064,10 +6064,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6087,13 +6087,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -6144,14 +6144,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6365,10 +6365,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6388,13 +6388,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -6445,14 +6445,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6658,10 +6658,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6681,13 +6681,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -6738,14 +6738,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6933,10 +6933,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6956,13 +6956,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -7013,14 +7013,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7208,10 +7208,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7231,13 +7231,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -7288,14 +7288,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7501,10 +7501,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7524,13 +7524,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -7581,14 +7581,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7802,10 +7802,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7825,13 +7825,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -7882,14 +7882,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8103,10 +8103,10 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8126,13 +8126,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -8183,14 +8183,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8398,11 +8398,11 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--placement-constraint-details-compute-host-group-id', required=True, help=u"""The OCID of the compute host group. This is only available for dedicated capacity customers.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8422,13 +8422,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -8479,14 +8479,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8653,11 +8653,11 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--placement-constraint-details-compute-bare-metal-host-id', required=True, help=u"""The OCID of the compute bare metal host. This is only available for dedicated capacity customers.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8677,13 +8677,13 @@ If you do not specify the fault domain, the system selects one for you.
  To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The OCID of the cluster placement group of the instance.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The OCID of the cluster placement group of the instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
@@ -8734,14 +8734,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--subnet-id', type=custom_types.CLI_OCID, help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--launch-volume-attachments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Volume attachments to create as part of the launch instance operation.
 
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
 This option is a JSON list with items of type LaunchInstanceLicensingConfig.  For documentation on LaunchInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8999,7 +8999,7 @@ def list_app_catalog_listings(ctx, from_json, all_pages, page_size, limit, page,
 
 
 @app_catalog_subscription_group.command(name=cli_util.override('compute.list_app_catalog_subscriptions.command_name', 'list'), help=u"""Lists subscriptions for a compartment. \n[Command Reference](listAppCatalogSubscriptions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -9062,13 +9062,13 @@ def list_app_catalog_subscriptions(ctx, from_json, all_pages, page_size, compart
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--instance-id', help=u"""The OCID of the instance.""")
-@cli_util.option('--boot-volume-id', help=u"""The OCID of the boot volume.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help=u"""The OCID of the instance.""")
+@cli_util.option('--boot-volume-id', type=custom_types.CLI_OCID, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -9120,7 +9120,7 @@ def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availabil
 
 
 @compute_capacity_reservation_instance_shape_group.command(name=cli_util.override('compute.list_compute_capacity_reservation_instance_shapes.command_name', 'list'), help=u"""Lists the shapes that can be reserved within the specified compartment. \n[Command Reference](listComputeCapacityReservationInstanceShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -9188,11 +9188,11 @@ def list_compute_capacity_reservation_instance_shapes(ctx, from_json, all_pages,
 
 
 @capacity_reservation_instance_group.command(name=cli_util.override('compute.list_compute_capacity_reservation_instances.command_name', 'list-compute'), help=u"""Lists the instances launched under a capacity reservation. You can filter results by specifying criteria. \n[Command Reference](listComputeCapacityReservationInstances)""")
-@cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--capacity-reservation-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -9261,7 +9261,7 @@ def list_compute_capacity_reservation_instances(ctx, from_json, all_pages, page_
 @compute_capacity_reservation_group.command(name=cli_util.override('compute.list_compute_capacity_reservations.command_name', 'list'), help=u"""Lists the compute capacity reservations that match the specified criteria and compartment.
 
 You can limit the list by specifying a compute capacity reservation display name (the list will include all the identically-named compute capacity reservations in the compartment). \n[Command Reference](listComputeCapacityReservations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -9332,7 +9332,7 @@ def list_compute_capacity_reservations(ctx, from_json, all_pages, page_size, com
 
 
 @compute_capacity_topology_group.command(name=cli_util.override('compute.list_compute_capacity_topologies.command_name', 'list'), help=u"""Lists the compute capacity topologies in the specified compartment. You can filter the list by a compute capacity topology display name. \n[Command Reference](listComputeCapacityTopologies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -9404,7 +9404,7 @@ def list_compute_capacity_topologies(ctx, from_json, all_pages, page_size, compa
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compute-hpc-island-id', help=u"""The [OCID] of the compute HPC island.""")
 @cli_util.option('--compute-network-block-id', help=u"""The [OCID] of the compute network block.""")
 @cli_util.option('--compute-local-block-id', help=u"""The [OCID] of the compute local block.""")
@@ -9484,7 +9484,7 @@ def list_compute_capacity_topology_compute_bare_metal_hosts(ctx, from_json, all_
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -9555,7 +9555,7 @@ def list_compute_capacity_topology_compute_hpc_islands(ctx, from_json, all_pages
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compute-hpc-island-id', help=u"""The [OCID] of the compute HPC island.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -9625,7 +9625,7 @@ def list_compute_capacity_topology_compute_network_blocks(ctx, from_json, all_pa
 
 
 @compute_cluster_group.command(name=cli_util.override('compute.list_compute_clusters.command_name', 'list'), help=u"""Lists the compute clusters in the specified compartment. A [compute cluster] is a remote direct memory access (RDMA) network group. \n[Command Reference](listComputeClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -9756,7 +9756,7 @@ def list_compute_global_image_capability_schema_versions(ctx, from_json, all_pag
 
 
 @compute_global_image_capability_schema_group.command(name=cli_util.override('compute.list_compute_global_image_capability_schemas.command_name', 'list'), help=u"""Lists Compute Global Image Capability Schema in the specified compartment. \n[Command Reference](listComputeGlobalImageCapabilitySchemas)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the given compartment OCID exactly.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the given compartment OCID exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -9876,13 +9876,13 @@ def list_compute_gpu_memory_cluster_instances(ctx, from_json, all_pages, page_si
 
 
 @compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.list_compute_gpu_memory_clusters.command_name', 'list'), help=u"""List all of the compute GPU memory clusters. \n[Command Reference](listComputeGpuMemoryClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compute-gpu-memory-cluster-id', help=u"""A filter to return only the listings that matches the given GPU memory cluster id.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
@@ -9950,7 +9950,7 @@ def list_compute_gpu_memory_clusters(ctx, from_json, all_pages, page_size, compa
 
 
 @compute_gpu_memory_fabric_group.command(name=cli_util.override('compute.list_compute_gpu_memory_fabrics.command_name', 'list'), help=u"""Lists the compute GPU memory fabrics that match the specified criteria and compartmentId. \n[Command Reference](listComputeGpuMemoryFabrics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compute-gpu-memory-fabric-id', help=u"""A filter to return only the listings that matches the given GPU memory fabric id.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -10033,7 +10033,7 @@ def list_compute_gpu_memory_fabrics(ctx, from_json, all_pages, page_size, compar
 
 
 @compute_host_group_group.command(name=cli_util.override('compute.list_compute_host_groups.command_name', 'list'), help=u"""Lists the compute host groups that match the specified criteria and compartment. \n[Command Reference](listComputeHostGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -10083,7 +10083,7 @@ def list_compute_host_groups(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @compute_host_group.command(name=cli_util.override('compute.list_compute_hosts.command_name', 'list'), help=u"""Generates a list of summary host details \n[Command Reference](listComputeHosts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -10166,8 +10166,8 @@ def list_compute_hosts(ctx, from_json, all_pages, page_size, compartment_id, ava
 
 
 @compute_image_capability_schema_group.command(name=cli_util.override('compute.list_compute_image_capability_schemas.command_name', 'list'), help=u"""Lists Compute Image Capability Schema in the specified compartment. You can also query by a specific imageId. \n[Command Reference](listComputeImageCapabilitySchemas)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the given compartment OCID exactly.""")
-@cli_util.option('--image-id', help=u"""The [OCID] of an image.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the given compartment OCID exactly.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of an image.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -10228,7 +10228,7 @@ def list_compute_image_capability_schemas(ctx, from_json, all_pages, page_size, 
 
 
 @console_history_group.command(name=cli_util.override('compute.list_console_histories.command_name', 'list'), help=u"""Lists the console history metadata for the specified compartment or instance. \n[Command Reference](listConsoleHistories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -10236,7 +10236,7 @@ Example: `Uocm:PHX-AD-1`""")
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--instance-id', help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help=u"""The OCID of the instance.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
@@ -10298,7 +10298,7 @@ def list_console_histories(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @dedicated_vm_host_instance_shape_group.command(name=cli_util.override('compute.list_dedicated_vm_host_instance_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch a virtual machine instance on a dedicated virtual machine host within the specified compartment. You can filter the list by compatibility with a specific dedicated virtual machine host shape. \n[Command Reference](listDedicatedVmHostInstanceShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -10356,8 +10356,8 @@ def list_dedicated_vm_host_instance_shapes(ctx, from_json, all_pages, page_size,
 
 
 @dedicated_vm_host_instance_group.command(name=cli_util.override('compute.list_dedicated_vm_host_instances.command_name', 'list'), help=u"""Returns the list of instances on the dedicated virtual machine hosts that match the specified criteria. \n[Command Reference](listDedicatedVmHostInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--dedicated-vm-host-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -10431,7 +10431,7 @@ def list_dedicated_vm_host_instances(ctx, from_json, all_pages, page_size, compa
 
 
 @dedicated_vm_host_shape_group.command(name=cli_util.override('compute.list_dedicated_vm_host_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch a dedicated virtual machine host within the specified compartment. \n[Command Reference](listDedicatedVmHostShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -10491,7 +10491,7 @@ def list_dedicated_vm_host_shapes(ctx, from_json, all_pages, page_size, compartm
 @dedicated_vm_host_group.command(name=cli_util.override('compute.list_dedicated_vm_hosts.command_name', 'list'), help=u"""Returns the list of dedicated virtual machine hosts that match the specified criteria in the specified compartment.
 
 You can limit the list by specifying a dedicated virtual machine host display name. The list will include all the identically-named dedicated virtual machine hosts in the compartment. \n[Command Reference](listDedicatedVmHosts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -10575,7 +10575,7 @@ def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id
 
 @firmware_bundles_collection_group.command(name=cli_util.override('compute.list_firmware_bundles.command_name', 'list-firmware-bundles'), help=u"""Gets a list of all Firmware Bundles in a compartment for specified platform. Can filter results to include only the default (recommended) Firmware Bundle for the given platform. \n[Command Reference](listFirmwareBundles)""")
 @cli_util.option('--platform', required=True, help=u"""platform name""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--is-default-bundle', type=click.BOOL, help=u"""If true, return only the default firmware bundle for a given platform. Default is false.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -10633,7 +10633,7 @@ def list_firmware_bundles(ctx, from_json, all_pages, page_size, platform, compar
 
 
 @image_shape_compatibility_entry_group.command(name=cli_util.override('compute.list_image_shape_compatibility_entries.command_name', 'list'), help=u"""Lists the compatible shapes for the specified image. \n[Command Reference](listImageShapeCompatibilityEntries)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -10690,7 +10690,7 @@ def list_image_shape_compatibility_entries(ctx, from_json, all_pages, page_size,
 The list of images returned is ordered to first show the recent platform images, then all of the custom images.
 
 **Caution:** Platform images are refreshed regularly. When new images are released, older versions are replaced. The image OCIDs remain available, but when the platform image is replaced, the image OCIDs are no longer returned as part of the platform image list. \n[Command Reference](listImages)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--operating-system', help=u"""The image's operating system.
 
@@ -10768,8 +10768,8 @@ def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_na
 @instance_console_connection_group.command(name=cli_util.override('compute.list_instance_console_connections.command_name', 'list'), help=u"""Lists the console connections for the specified compartment or instance.
 
 For more information about instance console connections, see [Troubleshooting Instances Using Instance Console Connections]. \n[Command Reference](listInstanceConsoleConnections)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--instance-id', help=u"""The OCID of the instance.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help=u"""The OCID of the instance.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -10820,7 +10820,7 @@ def list_instance_console_connections(ctx, from_json, all_pages, page_size, comp
 
 
 @device_group.command(name=cli_util.override('compute.list_instance_devices.command_name', 'list-instance'), help=u"""Gets a list of all the devices for given instance. You can optionally filter results by device availability. \n[Command Reference](listInstanceDevices)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--is-available', type=click.BOOL, help=u"""A filter to return only available devices or only used devices.""")
 @cli_util.option('--name', help=u"""A filter to return only devices that match the given name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -10887,8 +10887,8 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
 
 
 @instance_maintenance_event_group.command(name=cli_util.override('compute.list_instance_maintenance_events.command_name', 'list'), help=u"""Gets a list of all the maintenance events for the given compartment. \n[Command Reference](listInstanceMaintenanceEvents)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--instance-id', help=u"""The OCID of the instance.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help=u"""The OCID of the instance.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "STARTED", "PROCESSING", "SUCCEEDED", "FAILED", "CANCELED"]), help=u"""A filter to only return resources that match the given lifecycle state.""")
 @cli_util.option('--correlation-token', help=u"""A filter to only return resources that have a matching correlationToken.""")
 @cli_util.option('--instance-action', help=u"""A filter to only return resources that match the given instance action.""")
@@ -10965,12 +10965,12 @@ def list_instance_maintenance_events(ctx, from_json, all_pages, page_size, compa
 @instance_group.command(name=cli_util.override('compute.list_instances.command_name', 'list'), help=u"""Lists the instances in the specified compartment and the specified availability domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment).
 
 **Note:** To retrieve public and private IP addresses for an instance, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID. \n[Command Reference](listInstances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation.""")
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--compute-cluster-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -11041,7 +11041,7 @@ def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availab
 
 
 @shape_group.command(name=cli_util.override('compute.list_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch an instance within the specified compartment. You can filter the list by compatibility with a specific image. \n[Command Reference](listShapes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -11049,7 +11049,7 @@ Example: `Uocm:PHX-AD-1`""")
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--image-id', help=u"""The [OCID] of an image.""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of an image.""")
 @cli_util.option('--shape', help=u"""Shape name.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -11101,11 +11101,11 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availabili
 
 
 @vnic_attachment_group.command(name=cli_util.override('compute.list_vnic_attachments.command_name', 'list'), help=u"""Lists the VNIC attachments in the specified compartment. A VNIC attachment resides in the same compartment as the attached instance. The list can be filtered by instance, VNIC, or availability domain. \n[Command Reference](listVnicAttachments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--instance-id', help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help=u"""The OCID of the instance.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -11163,7 +11163,7 @@ def list_vnic_attachments(ctx, from_json, all_pages, page_size, compartment_id, 
 @volume_attachment_group.command(name=cli_util.override('compute.list_volume_attachments.command_name', 'list'), help=u"""Lists the volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, volume OCID, or both.
 
 Currently, the only supported volume attachment type are [IScsiVolumeAttachment] and [ParavirtualizedVolumeAttachment]. \n[Command Reference](listVolumeAttachments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -11171,8 +11171,8 @@ Example: `Uocm:PHX-AD-1`""")
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--instance-id', help=u"""The OCID of the instance.""")
-@cli_util.option('--volume-id', help=u"""The OCID of the volume.""")
+@cli_util.option('--instance-id', type=custom_types.CLI_OCID, help=u"""The OCID of the instance.""")
+@cli_util.option('--volume-id', type=custom_types.CLI_OCID, help=u"""The OCID of the volume.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11223,7 +11223,7 @@ def list_volume_attachments(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @image_shape_compatibility_entry_group.command(name=cli_util.override('compute.remove_image_shape_compatibility_entry.command_name', 'remove'), help=u"""Removes a shape from the compatible shapes list for the image. \n[Command Reference](removeImageShapeCompatibilityEntry)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
 @cli_util.option('--shape-name', required=True, help=u"""Shape name.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11256,7 +11256,7 @@ To preserve the boot volume associated with the instance, specify `true` for `Pr
 To preserve data volumes created with the instance, specify `true` or do not specify a value for `PreserveDataVolumesQueryParam`. To delete the data volumes when the instance itself is deleted, specify `false` for `PreserveDataVolumesQueryParam`.
 
 This is an asynchronous operation. The instance's `lifecycleState` changes to TERMINATING temporarily until the instance is completely deleted. After the instance is deleted, the record remains visible in the list of instances with the state TERMINATED for at least 12 hours, but no further action is needed. \n[Command Reference](terminateInstance)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--preserve-boot-volume', type=click.BOOL, help=u"""Specifies whether to delete or preserve the boot volume when terminating an instance. When set to `true`, the boot volume is preserved. The default value is `false`.""")
 @cli_util.option('--preserve-data-volumes-created-at-launch', type=click.BOOL, help=u"""Specifies whether to delete or preserve the data volumes created during launch when terminating an instance. When set to `true`, the data volumes are preserved. The default value is `true`.""")
@@ -11328,7 +11328,7 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @compute_capacity_reservation_group.command(name=cli_util.override('compute.update_compute_capacity_reservation.command_name', 'update'), help=u"""Updates the specified capacity reservation and its associated capacity configurations. Fields that are not provided in the request will not be updated. Capacity configurations that are not included will be deleted. Avoid entering confidential information. \n[Command Reference](updateComputeCapacityReservation)""")
-@cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--capacity-reservation-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -11615,7 +11615,7 @@ def update_compute_capacity_topology_update_dedicated_capacity_source_details(ct
 To create instances within a compute cluster, use the [LaunchInstance] operation.
 
 To delete instances from a compute cluster, use the [TerminateInstance] operation. \n[Command Reference](updateComputeCluster)""")
-@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
+@cli_util.option('--compute-cluster-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -11692,7 +11692,7 @@ def update_compute_cluster(ctx, from_json, force, wait_for_state, max_wait_secon
 
 @compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.update_compute_gpu_memory_cluster.command_name', 'update'), help=u"""Updates a compute gpu memory cluster resource. \n[Command Reference](updateComputeGpuMemoryCluster)""")
 @cli_util.option('--compute-gpu-memory-cluster-id', required=True, help=u"""The OCID of the compute GPU memory cluster.""")
-@cli_util.option('--instance-configuration-id', help=u"""Instance Configuration to be used for this GPU Memory Cluster""")
+@cli_util.option('--instance-configuration-id', type=custom_types.CLI_OCID, help=u"""Instance Configuration to be used for this GPU Memory Cluster""")
 @cli_util.option('--size', type=click.INT, help=u"""The number of instances currently running in the GpuMemoryCluster""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -12185,7 +12185,7 @@ def update_console_history(ctx, from_json, force, wait_for_state, max_wait_secon
 
 
 @dedicated_vm_host_group.command(name=cli_util.override('compute.update_dedicated_vm_host.command_name', 'update'), help=u"""Updates the displayName, freeformTags, and definedTags attributes for the specified dedicated virtual machine host. If an attribute value is not included, it will not be updated. \n[Command Reference](updateDedicatedVmHost)""")
-@cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12261,7 +12261,7 @@ def update_dedicated_vm_host(ctx, from_json, force, wait_for_state, max_wait_sec
 
 
 @image_group.command(name=cli_util.override('compute.update_image.command_name', 'update'), help=u"""Updates the display name of the image. Avoid entering confidential information. \n[Command Reference](updateImage)""")
-@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--image-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the image.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12352,9 +12352,9 @@ def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 Changes to metadata fields will be reflected in the instance metadata service (this may take up to a minute).
 
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12411,7 +12411,7 @@ To reboot migrate a bare metal instance, use the [InstanceAction] operation.
 For more information, see [Infrastructure Maintenance].
 
 Example: `2018-05-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of liscensing configurations with target update values.
 
@@ -12541,10 +12541,10 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 Changes to metadata fields will be reflected in the instance metadata service (this may take up to a minute).
 
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--source-details-boot-volume-id', required=True, help=u"""The OCID of the boot volume used to boot the instance.""")
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12600,7 +12600,7 @@ To reboot migrate a bare metal instance, use the [InstanceAction] operation.
 For more information, see [Infrastructure Maintenance].
 
 Example: `2018-05-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of liscensing configurations with target update values.
 
@@ -12735,10 +12735,10 @@ def update_instance_update_instance_source_via_boot_volume_details(ctx, from_jso
 Changes to metadata fields will be reflected in the instance metadata service (this may take up to a minute).
 
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--source-details-image-id', required=True, help=u"""The OCID of the image used to boot the instance.""")
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12794,7 +12794,7 @@ To reboot migrate a bare metal instance, use the [InstanceAction] operation.
 For more information, see [Infrastructure Maintenance].
 
 Example: `2018-05-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of liscensing configurations with target update values.
 
@@ -12937,9 +12937,9 @@ def update_instance_update_instance_source_via_image_details(ctx, from_json, for
 Changes to metadata fields will be reflected in the instance metadata service (this may take up to a minute).
 
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12996,7 +12996,7 @@ To reboot migrate a bare metal instance, use the [InstanceAction] operation.
 For more information, see [Infrastructure Maintenance].
 
 Example: `2018-05-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of liscensing configurations with target update values.
 
 This option is a JSON list with items of type UpdateInstanceLicensingConfig.  For documentation on UpdateInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/UpdateInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13131,9 +13131,9 @@ def update_instance_amd_vm_update_instance_platform_config(ctx, from_json, force
 Changes to metadata fields will be reflected in the instance metadata service (this may take up to a minute).
 
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
-@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--instance-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
-@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--capacity-reservation-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13190,7 +13190,7 @@ To reboot migrate a bare metal instance, use the [InstanceAction] operation.
 For more information, see [Infrastructure Maintenance].
 
 Example: `2018-05-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
+@cli_util.option('--dedicated-vm-host-id', type=custom_types.CLI_OCID, help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of liscensing configurations with target update values.
 
 This option is a JSON list with items of type UpdateInstanceLicensingConfig.  For documentation on UpdateInstanceLicensingConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/UpdateInstanceLicensingConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

@@ -459,7 +459,7 @@ def delete_rover_node_extended(ctx, **kwargs):
 @rovernode_cli.rover_node_group.command(name="add-workload", help=u"""Add workload information to Rover Node""")
 @cli_util.option('--node-id', required=True, help=u"""Unique RoverNode identifier""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BUCKET", "IMAGE"]), help=u"""Type of workload""")
-@cli_util.option('--image-id', help=u"""Object Store Image OCID for the workload""")
+@cli_util.option('--image-id', type=custom_types.CLI_OCID, help=u"""Object Store Image OCID for the workload""")
 @cli_util.option('--bucket-name', help=u"""Object Store Bucket name for the workload""")
 @cli_util.option('--prefix', help=u"""List of objects with names matching this prefix would be part of this export job.""")
 @cli_util.option('--range-start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")

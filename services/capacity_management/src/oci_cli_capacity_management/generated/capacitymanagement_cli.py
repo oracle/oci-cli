@@ -118,7 +118,7 @@ capacity_management_service_cli.capacity_management_service_group.add_command(oc
 @occ_availability_catalog_group.command(name=cli_util.override('capacity_management.create_occ_availability_catalog.command_name', 'create'), help=u"""Create availability catalog \n[Command Reference](createOccAvailabilityCatalog)""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The OCID of the customer group.""")
 @cli_util.option('--namespace', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The name of the OCI service in consideration. For example, Compute, Exadata, and so on.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Since all resources are at tenancy level hence this will be the ocid of the tenancy where operation is to be performed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Since all resources are at tenancy level hence this will be the ocid of the tenancy where operation is to be performed.""")
 @cli_util.option('--base64-encoded-catalog-details', required=True, help=u"""The base 64 encoded string corresponding to the catalog file contents.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the availability catalog.""")
 @cli_util.option('--metadata-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -189,7 +189,7 @@ def create_occ_availability_catalog(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @occ_capacity_request_group.command(name=cli_util.override('capacity_management.create_occ_capacity_request.command_name', 'create'), help=u"""Create Capacity Request. \n[Command Reference](createOccCapacityRequest)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Since all resources are at tenancy level hence this will be the ocid of the tenancy where operation is to be performed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Since all resources are at tenancy level hence this will be the ocid of the tenancy where operation is to be performed.""")
 @cli_util.option('--namespace', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The name of the OCI service in consideration. For example, Compute, Exadata, and so on.""")
 @cli_util.option('--region-parameterconflict', required=True, help=u"""The name of the region for which the capacity request is made.""")
 @cli_util.option('--display-name', required=True, help=u"""An user-friendly name for the capacity request. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -280,7 +280,7 @@ def create_occ_capacity_request(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @occ_customer_group.command(name=cli_util.override('capacity_management.create_occ_customer.command_name', 'create'), help=u"""Create customer. \n[Command Reference](createOccCustomer)""")
-@cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy belonging to the customer.""")
+@cli_util.option('--tenancy-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy belonging to the customer.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name for the customer.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The OCID of the customer group.""")
 @cli_util.option('--description', help=u"""The description about the customer group.""")
@@ -318,7 +318,7 @@ def create_occ_customer(ctx, from_json, tenancy_id, display_name, occ_customer_g
 
 
 @occ_customer_group_group.command(name=cli_util.override('capacity_management.create_occ_customer_group.command_name', 'create'), help=u"""Create customer group. \n[Command Reference](createOccCustomerGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Since all resources are at tenancy level hence this will be the ocid of the tenancy where operation is to be performed.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""Since all resources are at tenancy level hence this will be the ocid of the tenancy where operation is to be performed.""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the customer group.""")
 @cli_util.option('--description', help=u"""A description about the customer group.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -733,7 +733,7 @@ def get_occ_customer_group(ctx, from_json, occ_customer_group_id):
 
 @occ_overview_collection_group.command(name=cli_util.override('capacity_management.list_internal_namespace_occ_overviews.command_name', 'list-internal-namespace-occ-overviews'), help=u"""Lists an overview of all resources in that namespace in a given time interval. \n[Command Reference](listInternalNamespaceOccOverviews)""")
 @cli_util.option('--namespace', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--workload-type', help=u"""Workload type using the resources in an availability catalog can be filtered.""")
 @cli_util.option('---from', type=custom_types.CLI_DATETIME, help=u"""The month corresponding to this date would be considered as the starting point of the time period against which we would like to perform an aggregation.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -864,7 +864,7 @@ def list_internal_occ_handover_resource_block_details(ctx, from_json, all_pages,
 
 @occ_handover_resource_block_collection_group.command(name=cli_util.override('capacity_management.list_internal_occ_handover_resource_blocks.command_name', 'list-internal'), help=u"""List Occ Handover Resource blocks. \n[Command Reference](listInternalOccHandoverResourceBlocks)""")
 @cli_util.option('--namespace', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace enum value that needs to be passed as a required query parameter.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--handover-resource-name', help=u"""A filter to return only the list of resources that match the name provided in this filter.""")
 @cli_util.option('--handover-date-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""This filter helps in fetching all handed over resources for which the recordDate is greater than or equal to the startDate.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1006,7 +1006,7 @@ def list_occ_availabilities(ctx, from_json, all_pages, page_size, occ_availabili
 
 
 @occ_availability_catalog_collection_group.command(name=cli_util.override('capacity_management.list_occ_availability_catalogs.command_name', 'list-occ-availability-catalogs'), help=u"""Lists all availability catalogs. \n[Command Reference](listOccAvailabilityCatalogs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--namespace', type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
 @cli_util.option('--id', help=u"""The OCID of the availability catalog to filter the list of availability catalogs.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name. The match is not case sensitive.""")
@@ -1072,7 +1072,7 @@ def list_occ_availability_catalogs(ctx, from_json, all_pages, page_size, compart
 
 
 @occ_availability_catalog_collection_group.command(name=cli_util.override('capacity_management.list_occ_availability_catalogs_internal.command_name', 'list-occ-availability-catalogs-internal'), help=u"""An internal api to list availability catalogs. \n[Command Reference](listOccAvailabilityCatalogsInternal)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--namespace', type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
 @cli_util.option('--id', help=u"""The OCID of the availability catalog to filter the list of availability catalogs.""")
@@ -1142,7 +1142,7 @@ def list_occ_availability_catalogs_internal(ctx, from_json, all_pages, page_size
 
 
 @occ_capacity_request_collection_group.command(name=cli_util.override('capacity_management.list_occ_capacity_requests.command_name', 'list-occ-capacity-requests'), help=u"""Lists all capacity requests. \n[Command Reference](listOccCapacityRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--occ-availability-catalog-id', help=u"""A filter to return the list of capacity requests based on the OCID of the availability catalog against which they were created.""")
 @cli_util.option('--namespace', type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
 @cli_util.option('--request-type', type=custom_types.CliCaseInsensitiveChoice(["NEW", "TRANSFER"]), help=u"""A filter to return only the resources that match the request type. The match is not case sensitive.""")
@@ -1211,7 +1211,7 @@ def list_occ_capacity_requests(ctx, from_json, all_pages, page_size, compartment
 
 
 @occ_capacity_request_collection_group.command(name=cli_util.override('capacity_management.list_occ_capacity_requests_internal.command_name', 'list-occ-capacity-requests-internal'), help=u"""An internal api to list all capacity requests. \n[Command Reference](listOccCapacityRequestsInternal)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--occ-availability-catalog-id', help=u"""A filter to return the list of capacity requests based on the OCID of the availability catalog against which they were created.""")
 @cli_util.option('--namespace', type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
@@ -1284,7 +1284,7 @@ def list_occ_capacity_requests_internal(ctx, from_json, all_pages, page_size, co
 
 
 @occ_customer_group_collection_group.command(name=cli_util.override('capacity_management.list_occ_customer_groups.command_name', 'list-occ-customer-groups'), help=u"""Lists all the customer groups. \n[Command Reference](listOccCustomerGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""A query filter to return the list result based on status.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name. The match is not case sensitive.""")
 @cli_util.option('--id', help=u"""A query filter to return the list result based on the customer group OCID. This is done for users who have INSPECT permission but do not have READ permission.""")
@@ -1405,7 +1405,7 @@ def list_occ_handover_resource_block_details(ctx, from_json, all_pages, page_siz
 
 @occ_handover_resource_block_collection_group.command(name=cli_util.override('capacity_management.list_occ_handover_resource_blocks.command_name', 'list'), help=u"""List Occ Handover Resource blocks. \n[Command Reference](listOccHandoverResourceBlocks)""")
 @cli_util.option('--namespace', type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment or tenancy in which resources are to be listed.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment or tenancy in which resources are to be listed.""")
 @cli_util.option('--handover-resource-name', help=u"""A filter to return only the list of resources that match the name provided in this filter.""")
 @cli_util.option('--handover-date-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""This filter helps in fetching all handed over resources for which the recordDate is greater than or equal to the startDate.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--handover-date-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""This filter helps in fetching all handed over resources for which the recordDate is less than or equal to the endDate.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1473,7 +1473,7 @@ def list_occ_handover_resource_blocks(ctx, from_json, all_pages, page_size, name
 
 @occ_overview_collection_group.command(name=cli_util.override('capacity_management.list_occ_overviews.command_name', 'list-occ-overviews'), help=u"""Lists an overview of all resources in that namespace in a given time interval. \n[Command Reference](listOccOverviews)""")
 @cli_util.option('--namespace', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
 @cli_util.option('---from', type=custom_types.CLI_DATETIME, help=u"""The month corresponding to this date would be considered as the starting point of the time period against which we would like to perform an aggregation.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--to', type=custom_types.CLI_DATETIME, help=u"""The month corresponding to this date would be considered as the ending point of the time period against which we would like to perform an aggregation.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--workload-type', help=u"""Workload type using the resources in an availability catalog can be filtered.""")

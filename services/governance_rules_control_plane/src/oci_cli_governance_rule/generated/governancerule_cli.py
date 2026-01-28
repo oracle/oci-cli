@@ -54,7 +54,7 @@ governance_rule_root_group.add_command(inclusion_criterion_group)
 
 
 @governance_rule_group.command(name=cli_util.override('governance_rule.create_governance_rule.command_name', 'create'), help=u"""Create governance rule in the root compartment only. Either relatedResourceId or template must be supplied. \n[Command Reference](createGovernanceRule)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The Oracle ID ([OCID]) of the root compartment containing the governance rule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The Oracle ID ([OCID]) of the root compartment containing the governance rule.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the governance rule.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["QUOTA", "TAG", "ALLOWED_REGIONS"]), help=u"""Type of the governance rule, can be one of QUOTA, TAG, ALLOWED_REGIONS.
 
@@ -135,7 +135,7 @@ def create_governance_rule(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @governance_rule_group.command(name=cli_util.override('governance_rule.create_governance_rule_tag_template.command_name', 'create-governance-rule-tag-template'), help=u"""Create governance rule in the root compartment only. Either relatedResourceId or template must be supplied. \n[Command Reference](createGovernanceRule)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The Oracle ID ([OCID]) of the root compartment containing the governance rule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The Oracle ID ([OCID]) of the root compartment containing the governance rule.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the governance rule.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["QUOTA", "TAG", "ALLOWED_REGIONS"]), help=u"""Type of the governance rule, can be one of QUOTA, TAG, ALLOWED_REGIONS.
 
@@ -235,7 +235,7 @@ def create_governance_rule_tag_template(ctx, from_json, wait_for_state, max_wait
 
 
 @governance_rule_group.command(name=cli_util.override('governance_rule.create_governance_rule_quota_template.command_name', 'create-governance-rule-quota-template'), help=u"""Create governance rule in the root compartment only. Either relatedResourceId or template must be supplied. \n[Command Reference](createGovernanceRule)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The Oracle ID ([OCID]) of the root compartment containing the governance rule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The Oracle ID ([OCID]) of the root compartment containing the governance rule.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the governance rule.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["QUOTA", "TAG", "ALLOWED_REGIONS"]), help=u"""Type of the governance rule, can be one of QUOTA, TAG, ALLOWED_REGIONS.
 
@@ -325,7 +325,7 @@ def create_governance_rule_quota_template(ctx, from_json, wait_for_state, max_wa
 
 
 @governance_rule_group.command(name=cli_util.override('governance_rule.create_governance_rule_allowed_regions_template.command_name', 'create-governance-rule-allowed-regions-template'), help=u"""Create governance rule in the root compartment only. Either relatedResourceId or template must be supplied. \n[Command Reference](createGovernanceRule)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The Oracle ID ([OCID]) of the root compartment containing the governance rule.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The Oracle ID ([OCID]) of the root compartment containing the governance rule.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the governance rule.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["QUOTA", "TAG", "ALLOWED_REGIONS"]), help=u"""Type of the governance rule, can be one of QUOTA, TAG, ALLOWED_REGIONS.
 
@@ -734,7 +734,7 @@ def get_tenancy_attachment(ctx, from_json, tenancy_attachment_id):
 
 
 @enforced_governance_rule_group.command(name=cli_util.override('governance_rule.list_enforced_governance_rules.command_name', 'list'), help=u"""List enforced governance rules. Either compartment id or enforced governance rule id must be supplied. An optional governance rule type or a display name can also be supplied. \n[Command Reference](listEnforcedGovernanceRules)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--enforced-governance-rule-id', help=u"""Unique enforced governance rule identifier.""")
 @cli_util.option('--governance-rule-type', type=custom_types.CliCaseInsensitiveChoice(["QUOTA", "TAG", "ALLOWED_REGIONS"]), help=u"""A filter to return only resources that match the type given.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire name given.""")
@@ -796,7 +796,7 @@ def list_enforced_governance_rules(ctx, from_json, all_pages, page_size, compart
 
 
 @governance_rule_group.command(name=cli_util.override('governance_rule.list_governance_rules.command_name', 'list'), help=u"""List governance rules. Either compartment id or governance rule id must be supplied. An optional lifecycle state, display name or a governance rule type can also be supplied. \n[Command Reference](listGovernanceRules)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--governance-rule-id', help=u"""Unique governance rule identifier.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return only resources whose lifecycle state matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire name given.""")
@@ -921,7 +921,7 @@ def list_inclusion_criteria(ctx, from_json, all_pages, page_size, governance_rul
 
 
 @tenancy_attachment_group.command(name=cli_util.override('governance_rule.list_tenancy_attachments.command_name', 'list'), help=u"""List tenancy attachments. Either compartment id, governance rule id or tenancy attachment id must be supplied. An optional lifecycle state or a child tenancy id can also be supplied. \n[Command Reference](listTenancyAttachments)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--tenancy-attachment-id', help=u"""Unique tenancy attachment identifier.""")
 @cli_util.option('--governance-rule-id', help=u"""Unique governance rule identifier.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "NEEDS_ATTENTION", "DELETING", "DELETED"]), help=u"""A filter to return only resources when their lifecycle state matches the given lifecycle state.""")

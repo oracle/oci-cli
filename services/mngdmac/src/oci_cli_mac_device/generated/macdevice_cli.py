@@ -68,7 +68,7 @@ def get_mac_device(ctx, from_json, mac_device_id, mac_order_id):
 
 @mac_device_collection_group.command(name=cli_util.override('mac_device.list_mac_devices.command_name', 'list-mac-devices'), help=u"""Gets a list of MacDevices assigned to this order. \n[Command Reference](listMacDevices)""")
 @cli_util.option('--mac-order-id', required=True, help=u"""The [OCID] of the MacOrder.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The UUID of the MacDevice.""")
 @cli_util.option('--serial-number', help=u"""The serial number of the MacDevice.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")

@@ -38,7 +38,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.option('--type', required=True, help=u"""The entity type, which specifies a model that either creates new announcement email preferences or updates existing preferences.""")
 @cli_util.option('--preference-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPT_IN_TENANT_ANNOUNCEMENTS", "OPT_IN_TENANT_AND_INFORMATIONAL_ANNOUNCEMENTS", "OPT_OUT_ALL_ANNOUNCEMENTS"]), help=u"""The string representing the user's preference, whether to opt in to only required announcements, to opt in to all announcements, including informational announcements, or to opt out of all announcements.""")
 @cli_util.option('--is-unsubscribed', type=click.BOOL, help=u"""A Boolean value to indicate whether the specified compartment chooses to not to receive informational announcements by email. (Manage preferences for receiving announcements by email by specifying the `preferenceType` attribute instead.)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment for which you want to manage announcement email preferences. (Specify the tenancy by providing the root compartment OCID.)""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for which you want to manage announcement email preferences. (Specify the tenancy by providing the root compartment OCID.)""")
 @cli_util.option('--preferred-time-zone', help=u"""The time zone in which the user prefers to receive announcements. Specify the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -100,7 +100,7 @@ def get_announcements_preference(ctx, from_json, preference_id):
 @announcements_preferences_group.command(name=cli_util.override('announcements_preferences.list_announcements_preferences.command_name', 'list'), help=u"""Gets the current preferences of the tenancy regarding receiving announcements by email.
 
 This call is subject to an Announcements limit that applies to the total number of requests across all read or write operations. Announcements might throttle this call to reject an otherwise valid request when the total rate of operations exceeds 20 requests per second for a given user. The service might also throttle this call to reject an otherwise valid request when the total rate of operations exceeds 100 requests per second for a given tenancy. \n[Command Reference](listAnnouncementsPreferences)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -154,7 +154,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.option('--type', required=True, help=u"""The entity type, which specifies a model that either creates new announcement email preferences or updates existing preferences.""")
 @cli_util.option('--preference-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPT_IN_TENANT_ANNOUNCEMENTS", "OPT_IN_TENANT_AND_INFORMATIONAL_ANNOUNCEMENTS", "OPT_OUT_ALL_ANNOUNCEMENTS"]), help=u"""The string representing the user's preference, whether to opt in to only required announcements, to opt in to all announcements, including informational announcements, or to opt out of all announcements.""")
 @cli_util.option('--is-unsubscribed', type=click.BOOL, help=u"""A Boolean value to indicate whether the specified compartment chooses to not to receive informational announcements by email. (Manage preferences for receiving announcements by email by specifying the `preferenceType` attribute instead.)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment for which you want to manage announcement email preferences. (Specify the tenancy by providing the root compartment OCID.)""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment for which you want to manage announcement email preferences. (Specify the tenancy by providing the root compartment OCID.)""")
 @cli_util.option('--preferred-time-zone', help=u"""The time zone in which the user prefers to receive announcements. Specify the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
 @cli_util.option('--if-match', help=u"""The locking version, used for optimistic concurrency control.""")
 @json_skeleton_utils.get_cli_json_input_option({})

@@ -83,7 +83,7 @@ queue_admin_root_group.add_command(work_request_log_entry_collection_group)
 
 @queue_group.command(name=cli_util.override('queue_admin.change_queue_compartment.command_name', 'change-compartment'), help=u"""Moves a queue from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeQueueCompartment)""")
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -219,7 +219,7 @@ def create_consumer_group(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @queue_group.command(name=cli_util.override('queue_admin.create_queue.command_name', 'create'), help=u"""Creates a new queue. \n[Command Reference](createQueue)""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name of the queue.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the queue.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the queue.""")
 @cli_util.option('--retention-in-seconds', type=click.INT, help=u"""The retention period of messages in the queue, in seconds.""")
 @cli_util.option('--visibility-in-seconds', type=click.INT, help=u"""The default visibility timeout of the messages consumed from the queue, in seconds.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The default polling timeout of the messages in the queue, in seconds.""")
@@ -551,7 +551,7 @@ def list_consumer_groups(ctx, from_json, all_pages, page_size, lifecycle_state, 
 
 
 @queue_collection_group.command(name=cli_util.override('queue_admin.list_queues.command_name', 'list-queues'), help=u"""Returns a list of queues. \n[Command Reference](listQueues)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The unique queue identifier.""")
@@ -715,7 +715,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_summary_collection_group.command(name=cli_util.override('queue_admin.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")

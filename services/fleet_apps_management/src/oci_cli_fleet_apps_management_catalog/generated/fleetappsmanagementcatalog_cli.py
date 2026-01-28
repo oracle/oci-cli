@@ -50,7 +50,7 @@ fleet_apps_management_catalog_root_group.add_command(catalog_item_collection_gro
 
 @catalog_item_group.command(name=cli_util.override('fleet_apps_management_catalog.change_catalog_item_compartment.command_name', 'change-compartment'), help=u"""Moves a CatalogItem into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeCatalogItemCompartment)""")
 @cli_util.option('--catalog-item-id', required=True, help=u"""The [OCID] of the CatalogItem.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the CatalogItem to""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the CatalogItem to""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -111,7 +111,7 @@ def change_catalog_item_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 @catalog_item_group.command(name=cli_util.override('fleet_apps_management_catalog.clone_catalog_item.command_name', 'clone'), help=u"""Clones a CatalogItem into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](cloneCatalogItem)""")
 @cli_util.option('--catalog-item-id', required=True, help=u"""The [OCID] of the CatalogItem.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to clone the CatalogItem to""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to clone the CatalogItem to""")
 @cli_util.option('--version-description', help=u"""Version description about the catalog item.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -178,7 +178,7 @@ def clone_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--catalog-item-id', required=True, help=u"""The [OCID] of the CatalogItem.""")
 @cli_util.option('--storage-namespace', required=True, help=u"""The Oracle Cloud Object Storage namespace where the artifact or variables are stored.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the Object Storage bucket that contains the catalog item configuration object.""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the Compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the Compartment.""")
 @cli_util.option('--input-variables', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of key value pairs specifying variables or parameters to be used when configuring the catalog item.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-name', help=u"""The name of the object file in the specified bucket containing catalog item configuration details.""")
 @cli_util.option('--catalog-listing-id', help=u"""The unique identifier of the catalog listing to which configuration applies.""")
@@ -266,7 +266,7 @@ def configure_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @catalog_item_group.command(name=cli_util.override('fleet_apps_management_catalog.create_catalog_item.command_name', 'create'), help=u"""Creates a CatalogItem. \n[Command Reference](createCatalogItem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--config-source-type', required=True, help=u"""Config source type Eg: STACK_TEMPLATE_CATALOG_SOURCE, PAR_CATALOG_SOURCE, GIT_CATALOG_SOURCE, MARKETPLACE_CATALOG_SOURCE.""")
 @cli_util.option('--description', required=True, help=u"""The description of the CatalogItem.""")
 @cli_util.option('--display-name', required=True, help=u"""The CatalogItem name.""")
@@ -363,7 +363,7 @@ def create_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 
 @catalog_item_group.command(name=cli_util.override('fleet_apps_management_catalog.create_catalog_item_catalog_git_source_config.command_name', 'create-catalog-item-catalog-git-source-config'), help=u"""Creates a CatalogItem. \n[Command Reference](createCatalogItem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--config-source-type', required=True, help=u"""Config source type Eg: STACK_TEMPLATE_CATALOG_SOURCE, PAR_CATALOG_SOURCE, GIT_CATALOG_SOURCE, MARKETPLACE_CATALOG_SOURCE.""")
 @cli_util.option('--description', required=True, help=u"""The description of the CatalogItem.""")
 @cli_util.option('--display-name', required=True, help=u"""The CatalogItem name.""")
@@ -475,7 +475,7 @@ def create_catalog_item_catalog_git_source_config(ctx, from_json, wait_for_state
 
 
 @catalog_item_group.command(name=cli_util.override('fleet_apps_management_catalog.create_catalog_item_catalog_source_template_config.command_name', 'create-catalog-item-catalog-source-template-config'), help=u"""Creates a CatalogItem. \n[Command Reference](createCatalogItem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--config-source-type', required=True, help=u"""Config source type Eg: STACK_TEMPLATE_CATALOG_SOURCE, PAR_CATALOG_SOURCE, GIT_CATALOG_SOURCE, MARKETPLACE_CATALOG_SOURCE.""")
 @cli_util.option('--description', required=True, help=u"""The description of the CatalogItem.""")
 @cli_util.option('--display-name', required=True, help=u"""The CatalogItem name.""")
@@ -591,7 +591,7 @@ def create_catalog_item_catalog_source_template_config(ctx, from_json, wait_for_
 
 
 @catalog_item_group.command(name=cli_util.override('fleet_apps_management_catalog.create_catalog_item_catalog_par_source_config.command_name', 'create-catalog-item-catalog-par-source-config'), help=u"""Creates a CatalogItem. \n[Command Reference](createCatalogItem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--config-source-type', required=True, help=u"""Config source type Eg: STACK_TEMPLATE_CATALOG_SOURCE, PAR_CATALOG_SOURCE, GIT_CATALOG_SOURCE, MARKETPLACE_CATALOG_SOURCE.""")
 @cli_util.option('--description', required=True, help=u"""The description of the CatalogItem.""")
 @cli_util.option('--display-name', required=True, help=u"""The CatalogItem name.""")
@@ -713,7 +713,7 @@ def create_catalog_item_catalog_par_source_config(ctx, from_json, wait_for_state
 
 
 @catalog_item_group.command(name=cli_util.override('fleet_apps_management_catalog.create_catalog_item_catalog_marketplace_source_config.command_name', 'create-catalog-item-catalog-marketplace-source-config'), help=u"""Creates a CatalogItem. \n[Command Reference](createCatalogItem)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--config-source-type', required=True, help=u"""Config source type Eg: STACK_TEMPLATE_CATALOG_SOURCE, PAR_CATALOG_SOURCE, GIT_CATALOG_SOURCE, MARKETPLACE_CATALOG_SOURCE.""")
 @cli_util.option('--description', required=True, help=u"""The description of the CatalogItem.""")
 @cli_util.option('--display-name', required=True, help=u"""The CatalogItem name.""")
@@ -921,7 +921,7 @@ def get_catalog_item_variables_definition(ctx, from_json, catalog_item_id):
 
 
 @catalog_item_collection_group.command(name=cli_util.override('fleet_apps_management_catalog.list_catalog_items.command_name', 'list-catalog-items'), help=u"""Gets a list of Catalog Items in a compartment. \n[Command Reference](listCatalogItems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--config-source-type', help=u"""The [ConfigSourceType] Eg: STACK_TEMPLATE_CATALOG_SOURCE, PAR_CATALOG_SOURCE, URL_CATALOG_SOURCE, MARKETPLACE_CATALOG_SOURCE.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")

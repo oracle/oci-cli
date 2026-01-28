@@ -41,7 +41,7 @@ rover_cluster_root_group.add_command(rover_cluster_certificate_group)
 
 @rover_cluster_group.command(name=cli_util.override('rover_cluster.change_rover_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a cluster into a different compartment. \n[Command Reference](changeRoverClusterCompartment)""")
 @cli_util.option('--rover-cluster-id', required=True, help=u"""Unique RoverCluster identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  of the compartment into which the resources should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID]  of the compartment into which the resources should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -72,7 +72,7 @@ def change_rover_cluster_compartment(ctx, from_json, rover_cluster_id, compartme
 
 @rover_cluster_group.command(name=cli_util.override('rover_cluster.create_rover_cluster.command_name', 'create'), help=u"""Creates a new RoverCluster. \n[Command Reference](createRoverCluster)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the RoverCluster.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment containing the RoverCluster.""")
 @cli_util.option('--cluster-size', required=True, type=click.INT, help=u"""Number of nodes desired in the cluster, in standalone clusters, between 5 and 15 inclusive. In station clusters, between 15 and 30 inclusive.""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cluster-workloads', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of existing workloads that should be provisioned on the nodes.
@@ -88,7 +88,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.option('--shipping-vendor', help=u"""Shipping vendor of choice for orace to customer shipping.""")
 @cli_util.option('--time-pickup-expected', type=custom_types.CLI_DATETIME, help=u"""Expected date when customer wants to pickup the cluster if they chose customer pickup.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--oracle-shipping-tracking-url', help=u"""Tracking Url for the shipped Rover Cluster.""")
-@cli_util.option('--subscription-id', help=u"""ID provided to customer after successful subscription to Rover Stations.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""ID provided to customer after successful subscription to Rover Stations.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the RoverCluster.""")
 @cli_util.option('--lifecycle-state-details', help=u"""A property that can contain details on the lifecycle.""")
 @cli_util.option('--is-import-requested', type=click.BOOL, help=u"""The flag indicating that customer requests data to be imported to OCI upon Rover cluster return.""")
@@ -326,7 +326,7 @@ def get_rover_cluster_certificate(ctx, from_json, rover_cluster_id):
 
 
 @rover_cluster_group.command(name=cli_util.override('rover_cluster.list_rover_clusters.command_name', 'list'), help=u"""Returns a list of RoverClusters. \n[Command Reference](listRoverClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--cluster-type', type=custom_types.CliCaseInsensitiveChoice(["STANDALONE", "STATION"]), help=u"""A filter to return only Clusters of type matched with the given cluster type.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -468,7 +468,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.option('--point-of-contact-phone-number', help=u"""Phone number of point of contact for this order if customer is picking up.""")
 @cli_util.option('--shipping-preference', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SHIPPED", "CUSTOMER_PICKUP"]), help=u"""Preference for device delivery.""")
 @cli_util.option('--oracle-shipping-tracking-url', help=u"""Tracking Url for the shipped Rover Cluster.""")
-@cli_util.option('--subscription-id', help=u"""ID provided to customer after successful subscription to Rover Stations.""")
+@cli_util.option('--subscription-id', type=custom_types.CLI_OCID, help=u"""ID provided to customer after successful subscription to Rover Stations.""")
 @cli_util.option('--shipping-vendor', help=u"""Shipping vendor of choice for orace to customer shipping.""")
 @cli_util.option('--time-pickup-expected', type=custom_types.CLI_DATETIME, help=u"""Expected date when customer wants to pickup the device if they chose customer pickup.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--is-import-requested', type=click.BOOL, help=u"""The flag indicating that customer requests data to be imported to OCI upon Rover cluster return.""")

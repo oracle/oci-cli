@@ -781,7 +781,7 @@ def add_masking_columns_from_sdm(ctx, from_json, wait_for_state, max_wait_second
 
 @alert_group.command(name=cli_util.override('data_safe.alerts_update.command_name', 'alerts-update'), help=u"""Updates alerts in the specified compartment. \n[Command Reference](alertsUpdate)""")
 @cli_util.option('--status', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPEN", "CLOSED"]), help=u"""The status of the alert.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the alerts.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the alerts.""")
 @cli_util.option('--target-id', help=u"""The OCID of the target database associated with the alerts.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
@@ -1269,7 +1269,7 @@ def bulk_create_sql_firewall_allowed_sqls_scim_query_selection_mode(ctx, from_js
 @unified_audit_policy_group.command(name=cli_util.override('data_safe.bulk_create_unified_audit_policy.command_name', 'bulk-create'), help=u"""Bulk create unified audit policies. \n[Command Reference](bulkCreateUnifiedAuditPolicy)""")
 @cli_util.option('--security-policy-id', required=True, help=u"""The OCID of the security policy corresponding to the unified audit policy.""")
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the target database.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the unified audit policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the unified audit policy.""")
 @cli_util.option('--unified-audit-policy-definition-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of unified audit policy definition ocids. If unified audit policy definition ids are provided, the imported audit policy will be associated to the specified unified audit policy definition based on the policy name. Else, for every audit policy that gets imported, a new unified audit policy definition will be created.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of unified audit policy names to be imported.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--should-preserve-casing', type=click.BOOL, help=u"""Indicates whether the casing of the policy names provided in the request payload should be preserved during creation. By default all policy names will be converted to upper case.""")
@@ -1672,7 +1672,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @alert_group.command(name=cli_util.override('data_safe.change_alert_compartment.command_name', 'change-compartment'), help=u"""Moves the specified alert into a different compartment. \n[Command Reference](changeAlertCompartment)""")
 @cli_util.option('--alert-id', required=True, help=u"""The OCID of alert.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment to move the alert to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the new compartment to move the alert to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1703,7 +1703,7 @@ def change_alert_compartment(ctx, from_json, alert_id, compartment_id, if_match)
 
 @alert_policy_group.command(name=cli_util.override('data_safe.change_alert_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the specified alert policy into a different compartment. \n[Command Reference](changeAlertPolicyCompartment)""")
 @cli_util.option('--alert-policy-id', required=True, help=u"""The OCID of the alert policy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the alert policy has to be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the alert policy has to be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1764,7 +1764,7 @@ def change_alert_policy_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 @attribute_set_group.command(name=cli_util.override('data_safe.change_attribute_set_compartment.command_name', 'change-compartment'), help=u"""Moves the attribute set to the specified compartment. When provided, if-Match is checked against ETag value of the resource. \n[Command Reference](changeAttributeSetCompartment)""")
 @cli_util.option('--attribute-set-id', required=True, help=u"""OCID of an attribute set.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the new compartment were attribute set resource would move.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the new compartment were attribute set resource would move.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1825,7 +1825,7 @@ def change_attribute_set_compartment(ctx, from_json, wait_for_state, max_wait_se
 
 @audit_archive_retrieval_group.command(name=cli_util.override('data_safe.change_audit_archive_retrieval_compartment.command_name', 'change-compartment'), help=u"""Moves the archive retreival to the specified compartment. When provided, if-Match is checked against ETag value of the resource. \n[Command Reference](changeAuditArchiveRetrievalCompartment)""")
 @cli_util.option('--audit-archive-retrieval-id', required=True, help=u"""OCID of the archive retrieval.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the new compartment were achieve retrieval resource would move.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the new compartment were achieve retrieval resource would move.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1886,7 +1886,7 @@ def change_audit_archive_retrieval_compartment(ctx, from_json, wait_for_state, m
 
 @audit_policy_group.command(name=cli_util.override('data_safe.change_audit_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the specified audit policy and its dependent resources into a different compartment. \n[Command Reference](changeAuditPolicyCompartment)""")
 @cli_util.option('--audit-policy-id', required=True, help=u"""Unique audit policy identifier.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the audit policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the audit policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1947,7 +1947,7 @@ def change_audit_policy_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 @audit_profile_group.command(name=cli_util.override('data_safe.change_audit_profile_compartment.command_name', 'change-compartment'), help=u"""Moves the specified audit profile and its dependent resources into a different compartment. \n[Command Reference](changeAuditProfileCompartment)""")
 @cli_util.option('--audit-profile-id', required=True, help=u"""The OCID of the audit.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the audit profile.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the audit profile.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2008,7 +2008,7 @@ def change_audit_profile_compartment(ctx, from_json, wait_for_state, max_wait_se
 
 @data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.change_data_safe_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves the Data Safe private endpoint and its dependent resources to the specified compartment. \n[Command Reference](changeDataSafePrivateEndpointCompartment)""")
 @cli_util.option('--data-safe-private-endpoint-id', required=True, help=u"""The OCID of the private endpoint.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the new compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the new compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2071,7 +2071,7 @@ def change_data_safe_private_endpoint_compartment(ctx, from_json, wait_for_state
 
 @database_security_config_group.command(name=cli_util.override('data_safe.change_database_security_config_compartment.command_name', 'change-compartment'), help=u"""Moves the specified database security configuration and its dependent resources into a different compartment. \n[Command Reference](changeDatabaseSecurityConfigCompartment)""")
 @cli_util.option('--database-security-config-id', required=True, help=u"""The OCID of the database security configuration resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the database security config.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the database security config.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2132,7 +2132,7 @@ def change_database_security_config_compartment(ctx, from_json, wait_for_state, 
 
 @discovery_job_group.command(name=cli_util.override('data_safe.change_discovery_job_compartment.command_name', 'change-compartment'), help=u"""Moves the specified discovery job and its dependent resources into a different compartment. \n[Command Reference](changeDiscoveryJobCompartment)""")
 @cli_util.option('--discovery-job-id', required=True, help=u"""The OCID of the discovery job.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the discovery job should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the discovery job should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2163,7 +2163,7 @@ def change_discovery_job_compartment(ctx, from_json, discovery_job_id, compartme
 
 @library_masking_format_group.command(name=cli_util.override('data_safe.change_library_masking_format_compartment.command_name', 'change-compartment'), help=u"""Moves the specified library masking format into a different compartment. \n[Command Reference](changeLibraryMaskingFormatCompartment)""")
 @cli_util.option('--library-masking-format-id', required=True, help=u"""The OCID of the library masking format.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the library masking format should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the library masking format should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2194,7 +2194,7 @@ def change_library_masking_format_compartment(ctx, from_json, library_masking_fo
 
 @masking_policy_group.command(name=cli_util.override('data_safe.change_masking_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the specified masking policy and its dependent resources into a different compartment. \n[Command Reference](changeMaskingPolicyCompartment)""")
 @cli_util.option('--masking-policy-id', required=True, help=u"""The OCID of the masking policy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the masking policy should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the masking policy should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2225,7 +2225,7 @@ def change_masking_policy_compartment(ctx, from_json, masking_policy_id, compart
 
 @masking_policy_health_report_group.command(name=cli_util.override('data_safe.change_masking_policy_health_report_compartment.command_name', 'change-compartment'), help=u"""Moves the specified masking policy health report and its dependent resources into a different compartment. \n[Command Reference](changeMaskingPolicyHealthReportCompartment)""")
 @cli_util.option('--masking-policy-health-report-id', required=True, help=u"""The OCID of the masking health report.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the masking policy should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the masking policy should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2256,7 +2256,7 @@ def change_masking_policy_health_report_compartment(ctx, from_json, masking_poli
 
 @on_prem_connector_group.command(name=cli_util.override('data_safe.change_on_prem_connector_compartment.command_name', 'change-compartment'), help=u"""Moves the specified on-premises connector into a different compartment. \n[Command Reference](changeOnPremConnectorCompartment)""")
 @cli_util.option('--on-prem-connector-id', required=True, help=u"""The OCID of the on-premises connector.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment where you want to move the on-premises connector.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the new compartment where you want to move the on-premises connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2287,7 +2287,7 @@ def change_on_prem_connector_compartment(ctx, from_json, on_prem_connector_id, c
 
 @report_group.command(name=cli_util.override('data_safe.change_report_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeReportCompartment)""")
 @cli_util.option('--report-id', required=True, help=u"""Unique report identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2348,7 +2348,7 @@ def change_report_compartment(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 @report_definition_group.command(name=cli_util.override('data_safe.change_report_definition_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeReportDefinitionCompartment)""")
 @cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2480,7 +2480,7 @@ def change_retention(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 @sdm_masking_policy_difference_group.command(name=cli_util.override('data_safe.change_sdm_masking_policy_difference_compartment.command_name', 'change-compartment'), help=u"""Moves the specified SDM masking policy difference into a different compartment. \n[Command Reference](changeSdmMaskingPolicyDifferenceCompartment)""")
 @cli_util.option('--sdm-masking-policy-difference-id', required=True, help=u"""The OCID of the SDM masking policy difference.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the SDM masking policy difference should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the SDM masking policy difference should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2515,7 +2515,7 @@ To start, call first the operation ListSecurityAssessments with filters \"type =
 
 The existing saved security assessments created due to the schedule are not moved. However, all new saves will be associated with the new compartment. \n[Command Reference](changeSecurityAssessmentCompartment)""")
 @cli_util.option('--security-assessment-id', required=True, help=u"""The OCID of the security assessment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the security assessment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the security assessment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2546,7 +2546,7 @@ def change_security_assessment_compartment(ctx, from_json, security_assessment_i
 
 @security_policy_group.command(name=cli_util.override('data_safe.change_security_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the specified security policy and its dependent resources into a different compartment. \n[Command Reference](changeSecurityPolicyCompartment)""")
 @cli_util.option('--security-policy-id', required=True, help=u"""The OCID of the security policy resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the security policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the security policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2607,7 +2607,7 @@ def change_security_policy_compartment(ctx, from_json, wait_for_state, max_wait_
 
 @security_policy_config_group.command(name=cli_util.override('data_safe.change_security_policy_config_compartment.command_name', 'change-compartment'), help=u"""Moves the specified security policy configuration and its dependent resources into a different compartment. \n[Command Reference](changeSecurityPolicyConfigCompartment)""")
 @cli_util.option('--security-policy-config-id', required=True, help=u"""The OCID of the security policy configuration resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the security policy configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the security policy configuration.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2668,7 +2668,7 @@ def change_security_policy_config_compartment(ctx, from_json, wait_for_state, ma
 
 @security_policy_deployment_group.command(name=cli_util.override('data_safe.change_security_policy_deployment_compartment.command_name', 'change-compartment'), help=u"""Moves the specified security policy deployment and its dependent resources into a different compartment. \n[Command Reference](changeSecurityPolicyDeploymentCompartment)""")
 @cli_util.option('--security-policy-deployment-id', required=True, help=u"""The OCID of the security policy deployment resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the security policy deployment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the security policy deployment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2729,7 +2729,7 @@ def change_security_policy_deployment_compartment(ctx, from_json, wait_for_state
 
 @sensitive_data_model_group.command(name=cli_util.override('data_safe.change_sensitive_data_model_compartment.command_name', 'change-compartment'), help=u"""Moves the specified sensitive data model and its dependent resources into a different compartment. \n[Command Reference](changeSensitiveDataModelCompartment)""")
 @cli_util.option('--sensitive-data-model-id', required=True, help=u"""The OCID of the sensitive data model.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the sensitive data model should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the sensitive data model should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2760,7 +2760,7 @@ def change_sensitive_data_model_compartment(ctx, from_json, sensitive_data_model
 
 @sensitive_type_group.command(name=cli_util.override('data_safe.change_sensitive_type_compartment.command_name', 'change-compartment'), help=u"""Moves the specified sensitive type into a different compartment. \n[Command Reference](changeSensitiveTypeCompartment)""")
 @cli_util.option('--sensitive-type-id', required=True, help=u"""The OCID of the sensitive type.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the sensitive type should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the sensitive type should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2791,7 +2791,7 @@ def change_sensitive_type_compartment(ctx, from_json, sensitive_type_id, compart
 
 @sensitive_type_group_group.command(name=cli_util.override('data_safe.change_sensitive_type_group_compartment.command_name', 'change-compartment'), help=u"""Moves the sensitive type group to the specified compartment. \n[Command Reference](changeSensitiveTypeGroupCompartment)""")
 @cli_util.option('--sensitive-type-group-id', required=True, help=u"""The OCID of the sensitive type group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the sensitive type group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the sensitive type group.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2822,7 +2822,7 @@ def change_sensitive_type_group_compartment(ctx, from_json, sensitive_type_group
 
 @sensitive_types_export_group.command(name=cli_util.override('data_safe.change_sensitive_types_export_compartment.command_name', 'change-compartment'), help=u"""Moves the specified sensitive types export into a different compartment. \n[Command Reference](changeSensitiveTypesExportCompartment)""")
 @cli_util.option('--sensitive-types-export-id', required=True, help=u"""The OCID of the sensitive types export.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the sensitive types export.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the sensitive types export.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2853,7 +2853,7 @@ def change_sensitive_types_export_compartment(ctx, from_json, sensitive_types_ex
 
 @sql_collection_group.command(name=cli_util.override('data_safe.change_sql_collection_compartment.command_name', 'change-compartment'), help=u"""Moves the specified SQL collection and its dependent resources into a different compartment. \n[Command Reference](changeSqlCollectionCompartment)""")
 @cli_util.option('--sql-collection-id', required=True, help=u"""The OCID of the SQL collection resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the SQL collection.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the SQL collection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2914,7 +2914,7 @@ def change_sql_collection_compartment(ctx, from_json, wait_for_state, max_wait_s
 
 @sql_firewall_policy_group.command(name=cli_util.override('data_safe.change_sql_firewall_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the specified SQL Firewall policy and its dependent resources into a different compartment. \n[Command Reference](changeSqlFirewallPolicyCompartment)""")
 @cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL Firewall policy resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the SQL Firewall policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the SQL Firewall policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2975,7 +2975,7 @@ def change_sql_firewall_policy_compartment(ctx, from_json, wait_for_state, max_w
 
 @target_alert_policy_association_group.command(name=cli_util.override('data_safe.change_target_alert_policy_association_compartment.command_name', 'change-compartment'), help=u"""Moves the specified target-alert policy Association into a different compartment. \n[Command Reference](changeTargetAlertPolicyAssociationCompartment)""")
 @cli_util.option('--target-alert-policy-association-id', required=True, help=u"""The OCID of the target-alert policy association.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the target-alert policy association to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to move the target-alert policy association to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3006,7 +3006,7 @@ def change_target_alert_policy_association_compartment(ctx, from_json, target_al
 
 @target_database_group.command(name=cli_util.override('data_safe.change_target_database_compartment.command_name', 'change-compartment'), help=u"""Moves the Data Safe target database to the specified compartment. \n[Command Reference](changeTargetDatabaseCompartment)""")
 @cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment you want to move the Data Safe target database to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment you want to move the Data Safe target database to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3037,7 +3037,7 @@ def change_target_database_compartment(ctx, from_json, target_database_id, compa
 
 @target_database_group_group.command(name=cli_util.override('data_safe.change_target_database_group_compartment.command_name', 'change-compartment'), help=u"""Moves the target database group to the specified compartment. \n[Command Reference](changeTargetDatabaseGroupCompartment)""")
 @cli_util.option('--target-database-group-id', required=True, help=u"""The OCID of the specified target database group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which the target database group should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to which the target database group should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3098,7 +3098,7 @@ def change_target_database_group_compartment(ctx, from_json, wait_for_state, max
 
 @unified_audit_policy_group.command(name=cli_util.override('data_safe.change_unified_audit_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the specified Unified Audit policy and its dependent resources into a different compartment. \n[Command Reference](changeUnifiedAuditPolicyCompartment)""")
 @cli_util.option('--unified-audit-policy-id', required=True, help=u"""The OCID of the Unified Audit policy resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the unified audit policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the unified audit policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3159,7 +3159,7 @@ def change_unified_audit_policy_compartment(ctx, from_json, wait_for_state, max_
 
 @unified_audit_policy_definition_group.command(name=cli_util.override('data_safe.change_unified_audit_policy_definition_compartment.command_name', 'change-compartment'), help=u"""Moves the specified unified audit policy definition and its dependent resources into a different compartment. \n[Command Reference](changeUnifiedAuditPolicyDefinitionCompartment)""")
 @cli_util.option('--unified-audit-policy-definition-id', required=True, help=u"""The OCID of the unified audit policy definition resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the unified audit policy definition.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the unified audit policy definition.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3220,7 +3220,7 @@ def change_unified_audit_policy_definition_compartment(ctx, from_json, wait_for_
 
 @user_assessment_group.command(name=cli_util.override('data_safe.change_user_assessment_compartment.command_name', 'change-compartment'), help=u"""Moves the specified saved user assessment or future scheduled assessments into a different compartment. To start storing scheduled user assessments on a different compartment, first call the operation ListUserAssessments with the filters \"type = save_schedule\". That call returns the scheduleAssessmentId. Then call ChangeUserAssessmentCompartment with the scheduleAssessmentId. The existing saved user assessments created per the schedule are not be moved. However, all new saves will be associated with the new compartment. \n[Command Reference](changeUserAssessmentCompartment)""")
 @cli_util.option('--user-assessment-id', required=True, help=u"""The OCID of the user assessment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the user assessment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to move the user assessment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3435,7 +3435,7 @@ def compare_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @alert_policy_group.command(name=cli_util.override('data_safe.create_alert_policy.command_name', 'create'), help=u"""Creates a new user-defined alert policy. \n[Command Reference](createAlertPolicy)""")
 @cli_util.option('--alert-policy-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["AUDITING", "SECURITY_ASSESSMENT", "USER_ASSESSMENT"]), help=u"""Indicates the Data Safe feature the alert policy belongs to""")
 @cli_util.option('--severity', required=True, type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW", "EVALUATE"]), help=u"""Severity level of the alert raised by this policy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the alert policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to create the alert policy.""")
 @cli_util.option('--display-name', help=u"""The display name of the alert policy. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""The description of the alert policy.""")
 @cli_util.option('--alert-policy-rule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the alert policy rule.
@@ -3581,7 +3581,7 @@ def create_alert_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @attribute_set_group.command(name=cli_util.override('data_safe.create_attribute_set.command_name', 'create'), help=u"""Creates an attribute set. \n[Command Reference](createAttributeSet)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the attribute set. The name is unique and changeable.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the attribute set.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the attribute set.""")
 @cli_util.option('--attribute-set-type', required=True, help=u"""The type of attribute set.""")
 @cli_util.option('--attribute-set-values', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of values in an attribute set""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Description of the attribute set.""")
@@ -3653,7 +3653,7 @@ def create_attribute_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @audit_archive_retrieval_group.command(name=cli_util.override('data_safe.create_audit_archive_retrieval.command_name', 'create'), help=u"""Creates a work request to retrieve archived audit data. This asynchronous process will usually take over an hour to complete. Save the id from the response of this operation. Call GetAuditArchiveRetrieval operation after an hour, passing the id to know the status of this operation. \n[Command Reference](createAuditArchiveRetrieval)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the archival retrieval.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the archival retrieval.""")
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the target associated with the archive retrieval.""")
 @cli_util.option('--start-date', required=True, type=custom_types.CLI_DATETIME, help=u"""Start month of the archive retrieval, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--end-date', required=True, type=custom_types.CLI_DATETIME, help=u"""End month of the archive retrieval, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -3730,7 +3730,7 @@ def create_audit_archive_retrieval(ctx, from_json, wait_for_state, max_wait_seco
 
 
 @audit_profile_group.command(name=cli_util.override('data_safe.create_audit_profile.command_name', 'create'), help=u"""Create a new audit profile resource. \n[Command Reference](createAuditProfile)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the audit profile.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to create the audit profile.""")
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the target database or target database group for which the audit profile is created.""")
 @cli_util.option('--target-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TARGET_DATABASE", "TARGET_DATABASE_GROUP"]), help=u"""The resource type that is represented by the audit profile.""")
 @cli_util.option('--display-name', help=u"""The display name of the audit profile. The name does not have to be unique, and it's updatable.""")
@@ -3822,9 +3822,9 @@ def create_audit_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 @data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.create_data_safe_private_endpoint.command_name', 'create'), help=u"""Creates a new Data Safe private endpoint. \n[Command Reference](createDataSafePrivateEndpoint)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name for the private endpoint. The name does not have to be unique, and it's changeable.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
+@cli_util.option('--vcn-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the VCN.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the subnet.""")
 @cli_util.option('--private-endpoint-ip', help=u"""The private IP address of the private endpoint.""")
 @cli_util.option('--description', help=u"""The description of the private endpoint.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the network security groups that the private endpoint belongs to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3903,7 +3903,7 @@ def create_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_s
 
 @discovery_job_group.command(name=cli_util.override('data_safe.create_discovery_job.command_name', 'create'), help=u"""Performs incremental data discovery for the specified sensitive data model. It uses the target database associated with the sensitive data model. After performing data discovery, you can use ListDiscoveryJobResults to view the discovery results, PatchDiscoveryJobResults to specify the action you want perform on these results, and then ApplyDiscoveryJobResults to process the results and apply them to the sensitive data model. \n[Command Reference](createDiscoveryJob)""")
 @cli_util.option('--sensitive-data-model-id', required=True, help=u"""The OCID of the sensitive data model.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the discovery job resource should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the discovery job resource should be created.""")
 @cli_util.option('--discovery-type', help=u"""The type of the discovery job. It defines the job's scope. NEW identifies new sensitive columns in the target database that are not in the sensitive data model. DELETED identifies columns that are present in the sensitive data model but have been deleted from the target database. MODIFIED identifies columns that are present in the target database as well as the sensitive data model but some of their attributes have been modified. ALL covers all the above three scenarios and reports new, deleted and modified columns.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the discovery job. Does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--schemas-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas to be scanned by the discovery job. If not provided, the schemasForDiscovery attribute of the sensitive data model is used to get the list of schemas.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4009,7 +4009,7 @@ def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @library_masking_format_group.command(name=cli_util.override('data_safe.create_library_masking_format.command_name', 'create'), help=u"""Creates a new library masking format. A masking format can have one or more format entries. The combined output of all the format entries is used for masking. It provides the flexibility to define a masking format that can generate different parts of a data value separately and then combine them to get the final data value for masking. Note that you cannot define masking condition in a library masking format. \n[Command Reference](createLibraryMaskingFormat)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the library masking format should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the library masking format should be created.""")
 @cli_util.option('--format-entries', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of format entries. The combined output of all the format entries is used for masking.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name of the library masking format. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""The description of the library masking format.""")
@@ -4180,7 +4180,7 @@ To use a sensitive data model as the source of masking columns, set the columnSo
 You can also create a masking policy without using a sensitive data model. In this case, you need to associate your masking policy with a target database by setting the columnSource attribute to TARGET and providing the targetId attribute. The specified target database is used for column and masking format validations.
 
 After creating a masking policy, you can use the CreateMaskingColumn or PatchMaskingColumns operation to manually add columns to the policy. You need to add the parent columns only, and it automatically adds the child columns (in referential relationship with the parent columns) from the associated sensitive data model or target database. \n[Command Reference](createMaskingPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the masking policy should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the masking policy should be created.""")
 @cli_util.option('--column-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name of the masking policy. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""The description of the masking policy.""")
@@ -4287,7 +4287,7 @@ To use a sensitive data model as the source of masking columns, set the columnSo
 You can also create a masking policy without using a sensitive data model. In this case, you need to associate your masking policy with a target database by setting the columnSource attribute to TARGET and providing the targetId attribute. The specified target database is used for column and masking format validations.
 
 After creating a masking policy, you can use the CreateMaskingColumn or PatchMaskingColumns operation to manually add columns to the policy. You need to add the parent columns only, and it automatically adds the child columns (in referential relationship with the parent columns) from the associated sensitive data model or target database. \n[Command Reference](createMaskingPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the masking policy should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the masking policy should be created.""")
 @cli_util.option('--column-source-target-id', required=True, help=u"""The OCID of the target database to be associated as the column source with the masking policy.""")
 @cli_util.option('--display-name', help=u"""The display name of the masking policy. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""The description of the masking policy.""")
@@ -4397,7 +4397,7 @@ To use a sensitive data model as the source of masking columns, set the columnSo
 You can also create a masking policy without using a sensitive data model. In this case, you need to associate your masking policy with a target database by setting the columnSource attribute to TARGET and providing the targetId attribute. The specified target database is used for column and masking format validations.
 
 After creating a masking policy, you can use the CreateMaskingColumn or PatchMaskingColumns operation to manually add columns to the policy. You need to add the parent columns only, and it automatically adds the child columns (in referential relationship with the parent columns) from the associated sensitive data model or target database. \n[Command Reference](createMaskingPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the masking policy should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the masking policy should be created.""")
 @cli_util.option('--column-source-sensitive-data-model-id', required=True, help=u"""The OCID of the sensitive data model to be associated as the column source with the masking policy.""")
 @cli_util.option('--display-name', help=u"""The display name of the masking policy. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""The description of the masking policy.""")
@@ -4501,7 +4501,7 @@ def create_masking_policy_create_column_source_from_sdm_details(ctx, from_json, 
 
 
 @on_prem_connector_group.command(name=cli_util.override('data_safe.create_on_prem_connector.command_name', 'create'), help=u"""Creates a new on-premises connector. \n[Command Reference](createOnPremConnector)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the on-premises connector.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where you want to create the on-premises connector.""")
 @cli_util.option('--display-name', help=u"""The display name of the on-premises connector. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""The description of the on-premises connector.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
@@ -4989,7 +4989,7 @@ def create_referential_relation(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @report_definition_group.command(name=cli_util.override('data_safe.create_report_definition.command_name', 'create'), help=u"""Creates a new report definition with parameters specified in the body. The report definition is stored in the specified compartment. \n[Command Reference](createReportDefinition)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the report definition.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment containing the report definition.""")
 @cli_util.option('--display-name', required=True, help=u"""Specifies the name of the report definition.""")
 @cli_util.option('--parent-id', required=True, help=u"""The OCID of the parent report definition.""")
 @cli_util.option('--column-info', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of column objects in the order (left to right) displayed in the report. A column object stores all information about a column, including the name displayed on the UI, corresponding field name in the data source, data type of the column, and column visibility (if the column is visible to the user).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5069,7 +5069,7 @@ def create_report_definition(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @sdm_masking_policy_difference_group.command(name=cli_util.override('data_safe.create_sdm_masking_policy_difference.command_name', 'create'), help=u"""Creates SDM masking policy difference for the specified masking policy. It finds the difference between masking columns of the masking policy and sensitive columns of the SDM. After performing this operation, you can use ListDifferenceColumns to view the difference columns, PatchSdmMaskingPolicyDifferenceColumns to specify the action you want perform on these columns, and then ApplySdmMaskingPolicyDifference to process the difference columns and apply them to the masking policy. \n[Command Reference](createSdmMaskingPolicyDifference)""")
 @cli_util.option('--masking-policy-id', required=True, help=u"""The OCID of the masking policy. Note that if the masking policy is not associated with an SDM, CreateSdmMaskingPolicyDifference operation won't be allowed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the SDM masking policy difference resource should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the SDM masking policy difference resource should be created.""")
 @cli_util.option('--difference-type', help=u"""The type of the SDM masking policy difference. It defines the difference scope. NEW identifies new sensitive columns in the sensitive data model that are not in the masking policy. DELETED identifies columns that are present in the masking policy but have been deleted from the sensitive data model. MODIFIED identifies columns that are present in the sensitive data model as well as the masking policy but some of their attributes have been modified. ALL covers all the above three scenarios and reports new, deleted and modified columns.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the SDM masking policy difference. Does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
@@ -5141,7 +5141,7 @@ def create_sdm_masking_policy_difference(ctx, from_json, wait_for_state, max_wai
 
 
 @security_assessment_group.command(name=cli_util.override('data_safe.create_security_assessment.command_name', 'create'), help=u"""Creates a new saved security assessment for one or multiple targets in a compartment. When this operation is performed, it will save the latest assessments in the specified compartment. If a schedule is passed, it will persist the latest assessments, at the defined date and time, in the format defined by [RFC3339]. \n[Command Reference](createSecurityAssessment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the security assessment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the security assessment.""")
 @cli_util.option('--display-name', help=u"""The display name of the security assessment.""")
 @cli_util.option('--description', help=u"""Description of the security assessment.""")
 @cli_util.option('--target-id', help=u"""The OCID of the target database or target database group on which security assessment is to be run.""")
@@ -5242,7 +5242,7 @@ def create_security_assessment(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @security_policy_group.command(name=cli_util.override('data_safe.create_security_policy.command_name', 'create'), help=u"""Creates a Data Safe security policy. \n[Command Reference](createSecurityPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the security policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the security policy.""")
 @cli_util.option('--display-name', help=u"""The display name of the security policy. The name does not have to be unique, and it is changeable.""")
 @cli_util.option('--description', help=u"""The description of the security policy.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
@@ -5313,7 +5313,7 @@ def create_security_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @security_policy_config_group.command(name=cli_util.override('data_safe.create_security_policy_config.command_name', 'create'), help=u"""Creates a new security policy configuration resource. \n[Command Reference](createSecurityPolicyConfig)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the security policy configuration.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment containing the security policy configuration.""")
 @cli_util.option('--security-policy-id', required=True, help=u"""The OCID of the security policy corresponding to the security policy configuration.""")
 @cli_util.option('--display-name', help=u"""The display name of the security policy configuration. The name does not have to be unique, and it is changeable.""")
 @cli_util.option('--description', help=u"""The description of the security policy.""")
@@ -5394,7 +5394,7 @@ def create_security_policy_config(ctx, from_json, wait_for_state, max_wait_secon
 
 
 @security_policy_deployment_group.command(name=cli_util.override('data_safe.create_security_policy_deployment.command_name', 'create'), help=u"""Creates a Data Safe security policy deployment in the Data Safe Console. \n[Command Reference](createSecurityPolicyDeployment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the unified audit policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the unified audit policy.""")
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the target where the security policy is deployed.""")
 @cli_util.option('--target-type', required=True, help=u"""Indicates whether the security policy deployment is for a target database or a target database group.""")
 @cli_util.option('--security-policy-id', required=True, help=u"""The OCID of the security policy corresponding to the security policy deployment.""")
@@ -5569,7 +5569,7 @@ def create_sensitive_column(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @sensitive_data_model_group.command(name=cli_util.override('data_safe.create_sensitive_data_model.command_name', 'create'), help=u"""Creates a new sensitive data model. If schemas and sensitive types are provided, it automatically runs data discovery and adds the discovered columns to the sensitive data model. Otherwise, it creates an empty sensitive data model that can be updated later. \n[Command Reference](createSensitiveDataModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the sensitive data model should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the sensitive data model should be created.""")
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the reference target database to be associated with the sensitive data model. All operations such as performing data discovery and adding columns manually are done in the context of the associated target database.""")
 @cli_util.option('--display-name', help=u"""The display name of the sensitive data model. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--app-suite-name', help=u"""The application suite name identifying a collection of applications. It's useful only if maintaining a sensitive data model for a suite of applications.""")
@@ -5681,7 +5681,7 @@ def create_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds
 
 @sensitive_type_group.command(name=cli_util.override('data_safe.create_sensitive_type.command_name', 'create'), help=u"""Creates a new sensitive type, which can be a basic sensitive type with regular expressions or a sensitive category. While sensitive types are used for data discovery, sensitive categories are used for logically grouping the related or similar sensitive types. \n[Command Reference](createSensitiveType)""")
 @cli_util.option('--entity-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SENSITIVE_TYPE", "SENSITIVE_CATEGORY"]), help=u"""The entity type. It can be either a sensitive type with regular expressions or a sensitive category used for grouping similar sensitive types.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the sensitive type should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the sensitive type should be created.""")
 @cli_util.option('--display-name', help=u"""The display name of the sensitive type. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--short-name', help=u"""The short name of the sensitive type.""")
 @cli_util.option('--description', help=u"""The description of the sensitive type.""")
@@ -5761,7 +5761,7 @@ def create_sensitive_type(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @sensitive_type_group.command(name=cli_util.override('data_safe.create_sensitive_type_create_sensitive_category_details.command_name', 'create-sensitive-type-create-sensitive-category-details'), help=u"""Creates a new sensitive type, which can be a basic sensitive type with regular expressions or a sensitive category. While sensitive types are used for data discovery, sensitive categories are used for logically grouping the related or similar sensitive types. \n[Command Reference](createSensitiveType)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the sensitive type should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the sensitive type should be created.""")
 @cli_util.option('--display-name', help=u"""The display name of the sensitive type. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--short-name', help=u"""The short name of the sensitive type.""")
 @cli_util.option('--description', help=u"""The description of the sensitive type.""")
@@ -5842,7 +5842,7 @@ def create_sensitive_type_create_sensitive_category_details(ctx, from_json, wait
 
 
 @sensitive_type_group.command(name=cli_util.override('data_safe.create_sensitive_type_create_sensitive_type_pattern_details.command_name', 'create-sensitive-type-create-sensitive-type-pattern-details'), help=u"""Creates a new sensitive type, which can be a basic sensitive type with regular expressions or a sensitive category. While sensitive types are used for data discovery, sensitive categories are used for logically grouping the related or similar sensitive types. \n[Command Reference](createSensitiveType)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the sensitive type should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the sensitive type should be created.""")
 @cli_util.option('--display-name', help=u"""The display name of the sensitive type. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--short-name', help=u"""The short name of the sensitive type.""")
 @cli_util.option('--description', help=u"""The description of the sensitive type.""")
@@ -5943,7 +5943,7 @@ def create_sensitive_type_create_sensitive_type_pattern_details(ctx, from_json, 
 
 
 @sensitive_type_group_group.command(name=cli_util.override('data_safe.create_sensitive_type_group.command_name', 'create'), help=u"""Creates a new sensitive type group. \n[Command Reference](createSensitiveTypeGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the sensitive type group should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the sensitive type group should be created.""")
 @cli_util.option('--display-name', help=u"""The display name of the sensitive type group. The name does not have to be unique.""")
 @cli_util.option('--description', help=u"""The description of the sensitive type group.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
@@ -6014,7 +6014,7 @@ def create_sensitive_type_group(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @sensitive_types_export_group.command(name=cli_util.override('data_safe.create_sensitive_types_export.command_name', 'create'), help=u"""Generates a downloadable file corresponding to the specified list of sensitive types. It's a prerequisite for the DownloadSensitiveTypesExport operation. Use this endpoint to generate a sensitive Types Export file and then use DownloadSensitiveTypesExport to download the generated file. \n[Command Reference](createSensitiveTypesExport)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the sensitive types export should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the sensitive types export should be created.""")
 @cli_util.option('--display-name', help=u"""The display name of the sensitive types export. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""The description of the sensitive types export.""")
 @cli_util.option('--sensitive-type-ids-for-export', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the sensitive types used to create sensitive types export.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6093,7 +6093,7 @@ def create_sensitive_types_export(ctx, from_json, wait_for_state, max_wait_secon
 
 
 @sql_collection_group.command(name=cli_util.override('data_safe.create_sql_collection.command_name', 'create'), help=u"""Creates a new SQL collection resource. \n[Command Reference](createSqlCollection)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the SQL collection.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment containing the SQL collection.""")
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the target corresponding to the security policy deployment.""")
 @cli_util.option('--db-user-name', required=True, help=u"""The database user name.""")
 @cli_util.option('--display-name', help=u"""The display name of the SQL collection. The name does not have to be unique, and it is changeable.""")
@@ -6176,9 +6176,9 @@ def create_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @target_alert_policy_association_group.command(name=cli_util.override('data_safe.create_target_alert_policy_association.command_name', 'create'), help=u"""Creates a new target-alert policy association to track a alert policy applied on target. \n[Command Reference](createTargetAlertPolicyAssociation)""")
-@cli_util.option('--policy-id', required=True, help=u"""The OCID of the alert policy.""")
+@cli_util.option('--policy-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the alert policy.""")
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the target.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the target-alert policy association is created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the target-alert policy association is created.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Indicates if the target-alert policy association is enabled or disabled by user.""")
 @cli_util.option('--display-name', help=u"""The display name of the target-alert policy association.""")
 @cli_util.option('--description', help=u"""Describes the target-alert policy association.""")
@@ -6253,7 +6253,7 @@ def create_target_alert_policy_association(ctx, from_json, wait_for_state, max_w
 
 
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database.command_name', 'create'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
@@ -6344,7 +6344,7 @@ def create_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database_installed_database_details.command_name', 'create-target-database-installed-database-details'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
 @cli_util.option('--database-details-listener-port', required=True, type=click.INT, help=u"""The port number of the database listener.""")
 @cli_util.option('--database-details-service-name', required=True, help=u"""The service name of the database registered as target database.""")
@@ -6450,7 +6450,7 @@ def create_target_database_installed_database_details(ctx, from_json, wait_for_s
 
 
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database_autonomous_database_details.command_name', 'create-target-database-autonomous-database-details'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
 @cli_util.option('--database-details-autonomous-database-id', required=True, help=u"""The OCID of the Autonomous Database registered as a target database in Data Safe.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.""")
@@ -6546,7 +6546,7 @@ def create_target_database_autonomous_database_details(ctx, from_json, wait_for_
 
 
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database_database_cloud_service_details.command_name', 'create-target-database-database-cloud-service-details'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
@@ -6660,7 +6660,7 @@ def create_target_database_database_cloud_service_details(ctx, from_json, wait_f
 
 
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database_private_endpoint.command_name', 'create-target-database-private-endpoint'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-option-datasafe-private-endpoint-id', required=True, help=u"""The OCID of the Data Safe private endpoint.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.""")
@@ -6752,7 +6752,7 @@ def create_target_database_private_endpoint(ctx, from_json, wait_for_state, max_
 
 
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database_on_premise_connector.command_name', 'create-target-database-on-premise-connector'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-option-on-prem-connector-id', required=True, help=u"""The OCID of the on-premises connector.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.""")
@@ -6844,7 +6844,7 @@ def create_target_database_on_premise_connector(ctx, from_json, wait_for_state, 
 
 
 @target_database_group_group.command(name=cli_util.override('data_safe.create_target_database_group.command_name', 'create'), help=u"""Creates a new target database group. \n[Command Reference](createTargetDatabaseGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to create the target database group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment to create the target database group.""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the target database group.""")
 @cli_util.option('--matching-criteria', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Description of the target database group (optional).""")
@@ -6917,7 +6917,7 @@ def create_target_database_group(ctx, from_json, wait_for_state, max_wait_second
 @unified_audit_policy_group.command(name=cli_util.override('data_safe.create_unified_audit_policy.command_name', 'create'), help=u"""Creates the specified unified audit policy. \n[Command Reference](createUnifiedAuditPolicy)""")
 @cli_util.option('--security-policy-id', required=True, help=u"""The OCID of the security policy corresponding to the unified audit policy.""")
 @cli_util.option('--unified-audit-policy-definition-id', required=True, help=u"""The OCID of the associated unified audit policy definition.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the unified audit policy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which to create the unified audit policy.""")
 @cli_util.option('--status', required=True, help=u"""Indicates whether the unified audit policy has been enabled or disabled.""")
 @cli_util.option('--conditions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Lists the audit policy provisioning conditions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name of the unified audit policy in Data Safe. The name is modifiable and does not need to be unique.""")
@@ -6994,7 +6994,7 @@ def create_unified_audit_policy(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @user_assessment_group.command(name=cli_util.override('data_safe.create_user_assessment.command_name', 'create'), help=u"""Creates a new saved user assessment for one or multiple targets in a compartment. It saves the latest assessments in the specified compartment. If a scheduled is passed in, this operation persists the latest assessments that exist at the defined date and time, in the format defined by [RFC3339]. \n[Command Reference](createUserAssessment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the user assessment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the user assessment.""")
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the target database or target database group on which user assessment is to be run.""")
 @cli_util.option('--description', help=u"""The description of the user assessment.""")
 @cli_util.option('--display-name', help=u"""The display name of the user assessment.""")
@@ -9730,7 +9730,7 @@ def download_user_assessment_report(ctx, from_json, file, user_assessment_id, fo
 
 @data_safe_configuration_group.command(name=cli_util.override('data_safe.enable_data_safe_configuration.command_name', 'enable'), help=u"""Enables Data Safe in the tenancy and region. \n[Command Reference](enableDataSafeConfiguration)""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Indicates if Data Safe is enabled.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -9853,7 +9853,7 @@ def generate_discovery_report_for_download(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--masking-policy-id', required=True, help=u"""The OCID of the masking policy.""")
 @cli_util.option('--check-type', type=custom_types.CliCaseInsensitiveChoice(["ALL"]), help=u"""The type of health check. The default behaviour is to perform all health checks.""")
 @cli_util.option('--target-id', help=u"""The OCID of the target database to use for the masking policy health check. The targetId associated with the masking policy is used if this is not passed.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment where the health report resource should be created.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment where the health report resource should be created.""")
 @cli_util.option('--tablespace', help=u"""The tablespace that should be used to estimate space. If no tablespace is provided, the DEFAULT tablespace is used.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
@@ -10108,7 +10108,7 @@ def generate_on_prem_connector_configuration(ctx, from_json, file, password, on_
 @report_definition_group.command(name=cli_util.override('data_safe.generate_report.command_name', 'generate-report'), help=u"""Generates a .xls or .pdf report based on parameters and report definition. \n[Command Reference](generateReport)""")
 @cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the report to be generated""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS", "JSON"]), help=u"""Specifies the format of report to be .xls or .pdf or .json""")
 @cli_util.option('--target-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of database target OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of target group OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -10647,7 +10647,7 @@ def get_compatible_formats_for_data_types(ctx, from_json, limit, page):
 
 
 @masking_column_group.command(name=cli_util.override('data_safe.get_compatible_formats_for_sensitive_types.command_name', 'get-compatible-formats-for-sensitive-types'), help=u"""Gets a list of library masking formats compatible with the existing sensitive types. For each sensitive type, it returns the assigned default masking format as well as the other library masking formats that have the sensitiveTypeIds attribute containing the OCID of the sensitive type. \n[Command Reference](getCompatibleFormatsForSensitiveTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -10678,7 +10678,7 @@ def get_compatible_formats_for_sensitive_types(ctx, from_json, compartment_id, c
 
 
 @data_safe_configuration_group.command(name=cli_util.override('data_safe.get_data_safe_configuration.command_name', 'get'), help=u"""Gets the details of the Data Safe configuration. \n[Command Reference](getDataSafeConfiguration)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return the Data Safe configuration for the specified tenancy OCID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return the Data Safe configuration for the specified tenancy OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -11796,7 +11796,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @alert_summary_group.command(name=cli_util.override('data_safe.list_alert_analytics.command_name', 'list-alert-analytics'), help=u"""Returns the aggregation details of the alerts. \n[Command Reference](listAlertAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -11879,7 +11879,7 @@ def list_alert_analytics(ctx, from_json, all_pages, page_size, compartment_id, c
 
 
 @alert_policy_group.command(name=cli_util.override('data_safe.list_alert_policies.command_name', 'list'), help=u"""Gets a list of all alert policies. \n[Command Reference](listAlertPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--alert-policy-id', help=u"""A filter to return policy by it's OCID.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["AUDITING", "SECURITY_ASSESSMENT", "USER_ASSESSMENT"]), help=u"""An optional filter to return only alert policies of a certain type.""")
 @cli_util.option('--is-user-defined', type=click.BOOL, help=u"""An optional filter to return only alert policies that are user-defined or not.""")
@@ -12015,7 +12015,7 @@ def list_alert_policy_rules(ctx, from_json, all_pages, page_size, alert_policy_i
 
 
 @alert_summary_group.command(name=cli_util.override('data_safe.list_alerts.command_name', 'list-alerts'), help=u"""Gets a list of all alerts. \n[Command Reference](listAlerts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--id', help=u"""A filter to return alert by it's OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -12152,7 +12152,7 @@ The ListAttributeSets operation returns only the attribute sets in the specified
 The parameter `accessLevel` specifies whether to return only those compartments for which the requester has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListAttributeSet on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listAttributeSets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -12230,7 +12230,7 @@ def list_attribute_sets(ctx, from_json, all_pages, page_size, compartment_id, co
 
 
 @audit_archive_retrieval_group.command(name=cli_util.override('data_safe.list_audit_archive_retrievals.command_name', 'list'), help=u"""Returns the list of audit archive retrieval. \n[Command Reference](listAuditArchiveRetrievals)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
@@ -12314,7 +12314,7 @@ def list_audit_archive_retrievals(ctx, from_json, all_pages, page_size, compartm
 /auditEventAnalytics?timeStarted=2022-08-18T11:02:26.000Z&timeEnded=2022-08-24T11:02:26.000Z This will give number of events grouped by periods. Period can be 1 day, 1 week, etc.
 
 /auditEventAnalytics?summaryField=targetName&groupBy=targetName This will give the number of events group by targetName. Only targetName summary column would be returned. \n[Command Reference](listAuditEventAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -12401,7 +12401,7 @@ def list_audit_event_analytics(ctx, from_json, all_pages, page_size, compartment
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListAuditEvents on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listAuditEvents)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For details about how pagination works, see [List Pagination].""")
@@ -12472,7 +12472,7 @@ The ListAuditPolicies operation returns only the audit policies in the specified
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListAuditPolicies on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listAuditPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -12553,7 +12553,7 @@ The parameter `accessLevel` specifies whether to return only those compartments 
 The parameter `compartmentIdInSubtree` applies when you perform SummarizedAuditPolicyInfo on the specified `compartmentId` and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE.
 
 **Example:** ListAuditPolicyAnalytics?groupBy=auditPolicyCategory \n[Command Reference](listAuditPolicyAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -12629,7 +12629,7 @@ def list_audit_policy_analytics(ctx, from_json, all_pages, page_size, compartmen
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform AuditProfileAnalytics on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listAuditProfileAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -12695,7 +12695,7 @@ The ListAuditProfiles operation returns only the audit profiles in the specified
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListAuditProfiles on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listAuditProfiles)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--audit-profile-id', help=u"""A optional filter to return only resources that match the specified id.""")
@@ -12786,7 +12786,7 @@ def list_audit_profiles(ctx, from_json, all_pages, page_size, compartment_id, co
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform AuditTrailAnalytics on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listAuditTrailAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -12862,7 +12862,7 @@ def list_audit_trail_analytics(ctx, from_json, all_pages, page_size, compartment
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListAuditTrails on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listAuditTrails)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--audit-trail-id', help=u"""A optional filter to return only resources that match the specified id.""")
@@ -13238,9 +13238,9 @@ def list_columns(ctx, from_json, all_pages, page_size, target_database_id, limit
 
 
 @data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.list_data_safe_private_endpoints.command_name', 'list'), help=u"""Gets a list of Data Safe private endpoints. \n[Command Reference](listDataSafePrivateEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
-@cli_util.option('--vcn-id', help=u"""A filter to return only resources that match the specified VCN OCID.""")
+@cli_util.option('--vcn-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified VCN OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NA"]), help=u"""A filter to return only resources that match the specified lifecycle state.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -13313,7 +13313,7 @@ The ListDatabaseSecurityConfigs operation returns only the database security con
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListDatabaseSecurityConfigs on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listDatabaseSecurityConfigs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -13604,7 +13604,7 @@ def list_difference_columns(ctx, from_json, all_pages, page_size, sdm_masking_po
 
 
 @sensitive_data_model_group.command(name=cli_util.override('data_safe.list_discovery_analytics.command_name', 'list-discovery-analytics'), help=u"""Gets consolidated discovery analytics data based on the specified query parameters. If CompartmentIdInSubtreeQueryParam is specified as true, the behaviour is equivalent to accessLevel \"ACCESSIBLE\" by default. \n[Command Reference](listDiscoveryAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["targetId", "sensitiveDataModelId", "sensitiveTypeId", "targetIdAndSensitiveDataModelId", "sensitiveTypeIdAndTargetId", "sensitiveTypeIdAndSensitiveDataModelId"]), help=u"""Attribute by which the discovery analytics data should be grouped.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
@@ -13760,7 +13760,7 @@ def list_discovery_job_results(ctx, from_json, all_pages, page_size, discovery_j
 
 
 @discovery_job_group.command(name=cli_util.override('data_safe.list_discovery_jobs.command_name', 'list'), help=u"""Gets a list of incremental discovery jobs based on the specified query parameters. \n[Command Reference](listDiscoveryJobs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -13837,7 +13837,7 @@ def list_discovery_jobs(ctx, from_json, all_pages, page_size, compartment_id, co
 @security_assessment_group.command(name=cli_util.override('data_safe.list_finding_analytics.command_name', 'list-finding-analytics'), help=u"""Gets a list of findings aggregated details in the specified compartment. This provides information about the overall state of security assessment findings. You can use groupBy to get the count of findings under a certain risk level and with a certain findingKey, and as well as get the list of the targets that match the condition. This data is especially useful content for the statistic chart or to support analytics.
 
 When you perform the ListFindingAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns statistics from the compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned. \n[Command Reference](listFindingAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--is-top-finding', type=click.BOOL, help=u"""A filter to return only the findings that are marked as top findings.""")
@@ -13938,7 +13938,7 @@ def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--contains-references', type=custom_types.CliCaseInsensitiveChoice(["STIG", "CIS", "GDPR"]), multiple=True, help=u"""An optional filter to return only findings that match the specified references. Use containsReferences param if need to filter by multiple references.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
@@ -14261,7 +14261,7 @@ def list_grouped_sensitive_types(ctx, from_json, all_pages, page_size, sensitive
 
 
 @library_masking_format_summary_group.command(name=cli_util.override('data_safe.list_library_masking_formats.command_name', 'list-library-masking-formats'), help=u"""Gets a list of library masking formats based on the specified query parameters. \n[Command Reference](listLibraryMaskingFormats)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--library-masking-format-id', help=u"""A filter to return only the resources that match the specified library masking format OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
@@ -14418,7 +14418,7 @@ def list_masked_columns(ctx, from_json, all_pages, page_size, masking_report_id,
 
 
 @masking_policy_group.command(name=cli_util.override('data_safe.list_masking_analytics.command_name', 'list-masking-analytics'), help=u"""Gets consolidated masking analytics data based on the specified query parameters. If CompartmentIdInSubtreeQueryParam is specified as true, the behaviour is equivalent to accessLevel \"ACCESSIBLE\" by default. \n[Command Reference](listMaskingAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["targetId", "policyId", "targetIdAndPolicyId", "sensitiveTypeId"]), help=u"""Attribute by which the masking analytics data should be grouped.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
@@ -14719,7 +14719,7 @@ def list_masking_objects(ctx, from_json, all_pages, page_size, masking_policy_id
 
 
 @masking_policy_group.command(name=cli_util.override('data_safe.list_masking_policies.command_name', 'list'), help=u"""Gets a list of masking policies based on the specified query parameters. \n[Command Reference](listMaskingPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--masking-policy-id', help=u"""A filter to return only the resources that match the specified masking policy OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -14864,7 +14864,7 @@ def list_masking_policy_health_report_logs(ctx, from_json, all_pages, page_size,
 
 
 @masking_policy_health_report_group.command(name=cli_util.override('data_safe.list_masking_policy_health_reports.command_name', 'list'), help=u"""Gets a list of masking policy health reports based on the specified query parameters. \n[Command Reference](listMaskingPolicyHealthReports)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--masking-policy-health-report-id', help=u"""A filter to return only the resources that match the specified masking policy health report OCID.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -15008,7 +15008,7 @@ def list_masking_policy_referential_relations(ctx, from_json, all_pages, page_si
 
 
 @masking_policy_group.command(name=cli_util.override('data_safe.list_masking_reports.command_name', 'list-masking-reports'), help=u"""Gets a list of masking reports based on the specified query parameters. \n[Command Reference](listMaskingReports)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--masking-policy-id', help=u"""A filter to return only the resources that match the specified masking policy OCID.""")
@@ -15137,7 +15137,7 @@ def list_masking_schemas(ctx, from_json, all_pages, page_size, masking_policy_id
 
 
 @on_prem_connector_group.command(name=cli_util.override('data_safe.list_on_prem_connectors.command_name', 'list'), help=u"""Gets a list of on-premises connectors. \n[Command Reference](listOnPremConnectors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--on-prem-connector-id', help=u"""A filter to return only the on-premises connector that matches the specified id.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only on-premises connector resources that match the specified lifecycle state.""")
@@ -15306,7 +15306,7 @@ The parameter compartmentIdInSubtree applies when you perform ListProfileAnalyti
 
 To use ListProfileAnalytics to get a full list of all compartments and subcompartments in the tenancy from the root compartment, set the parameter compartmentIdInSubtree to true and accessLevel to ACCESSIBLE. \n[Command Reference](listProfileAnalytics)""")
 @cli_util.option('--user-assessment-id', required=True, help=u"""The OCID of the user assessment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
@@ -15385,7 +15385,7 @@ The parameter 'accessLevel' specifies whether to return only those compartments 
 
 The parameter 'compartmentIdInSubtree' applies when you perform ListUserProfiles on the 'compartmentId' belonging to the assessmentId passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter 'compartmentIdInSubtree' to true and 'accessLevel' to ACCESSIBLE. \n[Command Reference](listProfileSummaries)""")
 @cli_util.option('--user-assessment-id', required=True, help=u"""The OCID of the user assessment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
@@ -15565,7 +15565,7 @@ def list_referential_relations(ctx, from_json, all_pages, page_size, sensitive_d
 
 
 @report_definition_group.command(name=cli_util.override('data_safe.list_report_definitions.command_name', 'list'), help=u"""Gets a list of report definitions. The ListReportDefinitions operation returns only the report definitions in the specified `compartmentId`. It also returns the seeded report definitions which are available to all the compartments. \n[Command Reference](listReportDefinitions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""The name of the report definition to query.""")
@@ -15640,7 +15640,7 @@ def list_report_definitions(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @report_summary_group.command(name=cli_util.override('data_safe.list_reports.command_name', 'list-reports'), help=u"""Gets a list of all the reports in the compartment. It contains information such as report generation time. \n[Command Reference](listReports)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""The name of the report definition to query.""")
@@ -15924,7 +15924,7 @@ def list_schemas(ctx, from_json, all_pages, page_size, target_database_id, limit
 
 
 @sdm_masking_policy_difference_group.command(name=cli_util.override('data_safe.list_sdm_masking_policy_differences.command_name', 'list'), help=u"""Gets a list of SDM and masking policy difference resources based on the specified query parameters. \n[Command Reference](listSdmMaskingPolicyDifferences)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--difference-access-level', type=custom_types.CliCaseInsensitiveChoice(["ACCESSIBLE"]), help=u"""Valid value is ACCESSIBLE. Default is ACCESSIBLE. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment).""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -16002,7 +16002,7 @@ The ListSecurityAssessments operation returns only the assessments in the specif
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSecurityAssessments on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSecurityAssessments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -16107,7 +16107,7 @@ def list_security_assessments(ctx, from_json, all_pages, page_size, compartment_
 @security_assessment_group.command(name=cli_util.override('data_safe.list_security_feature_analytics.command_name', 'list-security-feature-analytics'), help=u"""Gets a list of Database security feature usage aggregated details in the specified compartment. This provides information about the overall security controls, by returning the counting number of the target databases using the security features.
 
 When you perform the ListSecurityFeatureAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns statistics from the compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned. \n[Command Reference](listSecurityFeatureAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
@@ -16139,7 +16139,7 @@ def list_security_feature_analytics(ctx, from_json, all_pages, compartment_id, c
 
 
 @security_assessment_group.command(name=cli_util.override('data_safe.list_security_features.command_name', 'list-security-features'), help=u"""Lists the usage of Database security features for a given compartment or a target level, based on the filters provided. \n[Command Reference](listSecurityFeatures)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
@@ -16238,7 +16238,7 @@ The ListSecurityPolicies operation returns only the security policies in the spe
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSecurityPolicies on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSecurityPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -16316,7 +16316,7 @@ The ListSecurityPolicyConfigs operation returns only the security policy configu
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSecurityPolicyConfigs on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSecurityPolicyConfigs)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--security-policy-config-id', help=u"""An optional filter to return only resources that match the specified OCID of the security policy configuration resource.""")
 @cli_util.option('--security-policy-id', help=u"""An optional filter to return only resources that match the specified OCID of the security policy resource.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
@@ -16404,7 +16404,7 @@ The ListSecurityPolicyDeployments operation returns only the security policy dep
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSecurityPolicyDeployments on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSecurityPolicyDeployments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -16553,7 +16553,7 @@ The ListSecurityPolicyReports operation returns only the security policy reports
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSecurityPolicyReports on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSecurityPolicyReports)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -16629,7 +16629,7 @@ def list_security_policy_reports(ctx, from_json, all_pages, page_size, compartme
 When you perform the ListSensitiveColumnAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned.
 
 To use ListSensitiveColumnAnalytics to get a full list of all compartments and subcompartments in the tenancy from the root compartment, set the parameter compartmentIdInSubtree to true and accessLevel to ACCESSIBLE. \n[Command Reference](listSensitiveColumnAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
@@ -16885,7 +16885,7 @@ def list_sensitive_data_model_sensitive_types(ctx, from_json, all_pages, page_si
 
 
 @sensitive_data_model_group.command(name=cli_util.override('data_safe.list_sensitive_data_models.command_name', 'list'), help=u"""Gets a list of sensitive data models based on the specified query parameters. \n[Command Reference](listSensitiveDataModels)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -17093,7 +17093,7 @@ def list_sensitive_schemas(ctx, from_json, all_pages, page_size, sensitive_data_
 
 
 @sensitive_type_group_summary_group.command(name=cli_util.override('data_safe.list_sensitive_type_groups.command_name', 'list-sensitive-type-groups'), help=u"""Gets a list of sensitive type groups based on the specified query parameters. \n[Command Reference](listSensitiveTypeGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -17172,7 +17172,7 @@ def list_sensitive_type_groups(ctx, from_json, all_pages, page_size, compartment
 
 
 @sensitive_type_group.command(name=cli_util.override('data_safe.list_sensitive_types.command_name', 'list'), help=u"""Gets a list of sensitive types based on the specified query parameters. \n[Command Reference](listSensitiveTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -17266,7 +17266,7 @@ def list_sensitive_types(ctx, from_json, all_pages, page_size, compartment_id, c
 
 
 @sensitive_types_export_collection_group.command(name=cli_util.override('data_safe.list_sensitive_types_exports.command_name', 'list-sensitive-types-exports'), help=u"""Retrieves a list of all sensitive types export in Data Safe based on the specified query parameters. The ListSensitiveTypesExports operation returns only the sensitive types export in the specified `compartmentId`. \n[Command Reference](listSensitiveTypesExports)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -17351,7 +17351,7 @@ The ListSqlCollectionAnalytics operation returns only the analytics for the SQL 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSqlCollections on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSqlCollectionAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -17491,7 +17491,7 @@ The ListSqlCollections operation returns only the SQL collections in the specifi
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSqlCollections on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSqlCollections)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -17585,7 +17585,7 @@ The ListSqlFirewallAllowedSqlAnalytics operation returns the aggregates of the S
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSqlFirewallAllowedSqlAnalytics on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSqlFirewallAllowedSqlAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -17653,7 +17653,7 @@ The ListSqlFirewallAllowedSqls operation returns only the SQL Firewall allowed S
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSqlFirewallPolicies on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSqlFirewallAllowedSqls)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -17724,7 +17724,7 @@ The ListSqlFirewallPolicies operation returns only the SQL Firewall policies in 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSqlFirewallPolicies on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSqlFirewallPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -17816,7 +17816,7 @@ def list_sql_firewall_policies(ctx, from_json, all_pages, page_size, compartment
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform SummarizedSqlFirewallPolicyInfo on the specified `compartmentId` and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSqlFirewallPolicyAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -17885,7 +17885,7 @@ def list_sql_firewall_policy_analytics(ctx, from_json, all_pages, page_size, com
 
 
 @sql_firewall_violation_summary_group.command(name=cli_util.override('data_safe.list_sql_firewall_violation_analytics.command_name', 'list-sql-firewall-violation-analytics'), help=u"""Returns the aggregation details of the SQL Firewall violations. \n[Command Reference](listSqlFirewallViolationAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -17965,7 +17965,7 @@ def list_sql_firewall_violation_analytics(ctx, from_json, all_pages, page_size, 
 
 
 @sql_firewall_violation_summary_group.command(name=cli_util.override('data_safe.list_sql_firewall_violations.command_name', 'list-sql-firewall-violations'), help=u"""Gets a list of all the SQL Firewall violations captured by the firewall. \n[Command Reference](listSqlFirewallViolations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -18099,7 +18099,7 @@ def list_tables(ctx, from_json, all_pages, page_size, target_database_id, limit,
 
 
 @target_alert_policy_association_summary_group.command(name=cli_util.override('data_safe.list_target_alert_policy_associations.command_name', 'list-target-alert-policy-associations'), help=u"""Gets a list of all target-alert policy associations. \n[Command Reference](listTargetAlertPolicyAssociations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--target-alert-policy-association-id', help=u"""A filter to return only items related to a specific target-alert policy association ID.""")
 @cli_util.option('--alert-policy-id', help=u"""A filter to return policy by it's OCID.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
@@ -18181,7 +18181,7 @@ def list_target_alert_policy_associations(ctx, from_json, all_pages, page_size, 
 
 
 @target_database_group_summary_group.command(name=cli_util.override('data_safe.list_target_database_groups.command_name', 'list-target-database-groups'), help=u"""Retrieves a list of target database groups according to the specified query parameters. \n[Command Reference](listTargetDatabaseGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
 @cli_util.option('--filter', help=u"""The scim query filter parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.) Ex:** filter=(targetDatabaseId eq 'ocid1.datasafetargetdatabase.oc1.iad.abuwcljr3u2va4ba5wek53idpe5qq5kkbigzclscc6mysfecxzjt5dgmxqza')""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "lifecycleState", "membershipUpdateTime"]), help=u"""The sorting field for your request. You can only specify a single sorting order (sortOrder). The default order for timeCreated is descending.""")
@@ -18263,7 +18263,7 @@ def list_target_database_groups(ctx, from_json, all_pages, page_size, compartmen
 
 
 @target_database_group.command(name=cli_util.override('data_safe.list_target_databases.command_name', 'list'), help=u"""Returns the list of registered target databases in Data Safe. \n[Command Reference](listTargetDatabases)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--associated-resource-id', help=u"""A filter to return the target databases that are associated to the resource id passed in as a parameter value.""")
 @cli_util.option('--target-database-id', help=u"""A filter to return the target database that matches the specified OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -18403,7 +18403,7 @@ def list_target_overrides(ctx, from_json, all_pages, page_size, audit_profile_id
 @security_assessment_group.command(name=cli_util.override('data_safe.list_template_analytics.command_name', 'list-template-analytics'), help=u"""Gets a list of template aggregated details in the specified compartment. This provides information about the overall template usage, by returning the count of the target databases/target groups using the templates. It also provides information about the statistics for the template baseline and the comparison related. If the comparison is done, it will show if there is any drift, and how many checks have drifts. The dimension field - isGroup identifies if the targetId belongs to a target group or a individual target. The dimension field - isCompared identifies if the comparison between the latest assessment and the template baseline assessment is done or not. The dimension field - isCompliant identifies if the latest assessment is compliant with the template baseline assessment or not. The dimension field - totalChecksFailed identifies how many checks in the template have drifts in the comparison.
 
 When you perform the ListTemplateAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns statistics from the compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned. \n[Command Reference](listTemplateAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--template-assessment-id', help=u"""The OCID of the security assessment of type TEMPLATE.""")
@@ -18484,7 +18484,7 @@ If the template baseline is created for a target group which contains several ta
 By leveraging the targetId filter, you will be able to know all the template or template baseline that this target has something to do with. No matter if they are directly applied or created for this target, or they are for the target group the target belongs to.
 
 When you perform the ListTemplateAssociationAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns statistics from the compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned. \n[Command Reference](listTemplateAssociationAnalytics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--template-assessment-id', help=u"""The OCID of the security assessment of type TEMPLATE.""")
@@ -18556,7 +18556,7 @@ The ListUnifiedAuditPolicies operation returns only the Unified Audit policies i
 The parameter `accessLevel` specifies whether to return only those compartments for which the requester has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a sub-compartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListUnifiedAuditPolicies on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and sub-compartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listUnifiedAuditPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--security-policy-id', help=u"""An optional filter to return only resources that match the specified OCID of the security policy resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "FAILED", "DELETING", "NEEDS_ATTENTION", "DELETED"]), help=u"""The current state of the Unified Audit policy.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
@@ -18650,7 +18650,7 @@ The ListUnifiedAuditPolicyDefinitions operation returns only the unified audit p
 The parameter `accessLevel` specifies whether to return only those compartments for which the requester has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListUnifiedAuditPolicyDefinitions on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listUnifiedAuditPolicyDefinitions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "FAILED", "DELETING", "NEEDS_ATTENTION"]), help=u"""The current state of the unified audit policy definition.""")
 @cli_util.option('--unified-audit-policy-definition-id', help=u"""An optional filter to return only resources that match the specified OCID of the unified audit policy definition resource.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
@@ -18908,7 +18908,7 @@ The ListUserAssessments operation returns only the assessments in the specified 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListUserAssessments on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listUserAssessments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
@@ -19236,7 +19236,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('data_safe.list_work_requests.command_name', 'list'), help=u"""Gets a list of work requests. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--operation-type', help=u"""A filter to return only work requests that match the specific operation type.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["STARTTIME", "FINISHTIME", "ACCEPTEDTIME"]), help=u"""The field used for sorting. Only one sorting parameter can be specified. The default order is descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sorting order for the work requests, either ascending (ASC) or descending (DESC).""")
@@ -19421,7 +19421,7 @@ def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 
 
 @data_safe_configuration_group.command(name=cli_util.override('data_safe.modify_global_settings.command_name', 'modify-global-settings'), help=u"""Modifies Global Settings in Data Safe in the tenancy and region. \n[Command Reference](modifyGlobalSettings)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--is-paid-usage', type=click.BOOL, help=u"""The paid usage option chosen by the customer admin.""")
 @cli_util.option('--online-retention-period', type=click.INT, help=u"""The online retention period in months.""")
 @cli_util.option('--offline-retention-period', type=click.INT, help=u"""The offline retention period in months.""")
@@ -19493,7 +19493,7 @@ def modify_global_settings(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 @alert_group.command(name=cli_util.override('data_safe.patch_alerts.command_name', 'patch'), help=u"""Updates the status of one or more alert specified by the alert IDs. \n[Command Reference](patchAlerts)""")
 @cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of alert detail to update the status of the alert specified by the alert ID.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the alerts.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the alerts.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
@@ -20070,7 +20070,7 @@ def patch_sql_firewall_allowed_sql(ctx, from_json, wait_for_state, max_wait_seco
 
 @target_alert_policy_association_group.command(name=cli_util.override('data_safe.patch_target_alert_policy_association.command_name', 'patch'), help=u"""Creates new target-alert policy associations that will be applied on the target database. \n[Command Reference](patchTargetAlertPolicyAssociation)""")
 @cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of patch instructions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the alerts.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the alerts.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -20303,7 +20303,7 @@ def refresh_database_security_configuration(ctx, from_json, wait_for_state, max_
 
 @security_assessment_group.command(name=cli_util.override('data_safe.refresh_security_assessment.command_name', 'refresh'), help=u"""Runs a security assessment, refreshes the latest assessment, and saves it for future reference. The assessment runs with a securityAssessmentId of type LATEST. Before you start, first call the ListSecurityAssessments operation with filter \"type = latest\" to get the security assessment id for the target's latest assessment. \n[Command Reference](refreshSecurityAssessment)""")
 @cli_util.option('--security-assessment-id', required=True, help=u"""The OCID of the security assessment.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the security assessment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the security assessment.""")
 @cli_util.option('--display-name', help=u"""The display name of the security assessment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
@@ -20545,7 +20545,7 @@ def refresh_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @user_assessment_group.command(name=cli_util.override('data_safe.refresh_user_assessment.command_name', 'refresh'), help=u"""Refreshes the latest assessment and saves it for future reference. This operation runs with a userAssessmentId of type LATEST. Before you start, first call the ListUserAssessments operation with filter \"type = latest\" to get the user assessment ID for the target's latest assessment. \n[Command Reference](refreshUserAssessment)""")
 @cli_util.option('--user-assessment-id', required=True, help=u"""The OCID of the user assessment.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the user assessment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the user assessment.""")
 @cli_util.option('--description', help=u"""The description of the user assessment.""")
 @cli_util.option('--display-name', help=u"""The display name of the user assessment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
@@ -20875,7 +20875,7 @@ def retrieve_audit_policies(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) 4. <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) No constraint introduced when it is '*'. When not, day of week must equal the given value 5. <day-of-month> can be either '*' (without quotes or a number between 1 and 28) No constraint introduced when it is '*'. When not, day of month must equal the given value""")
 @cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS", "JSON"]), help=u"""Specifies if the report will be in .xls or .pdf or .json format""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the resource should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which the resource should be created.""")
 @cli_util.option('--report-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -20948,7 +20948,7 @@ def schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) 4. <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) No constraint introduced when it is '*'. When not, day of week must equal the given value 5. <day-of-month> can be either '*' (without quotes or a number between 1 and 28) No constraint introduced when it is '*'. When not, day of month must equal the given value""")
 @cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS", "JSON"]), help=u"""Specifies if the report will be in .xls or .pdf or .json format""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the resource should be created.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment in which the resource should be created.""")
 @cli_util.option('--report-details-record-time-span', required=True, help=u"""The time span of records in report to be scheduled. <period-value><period> Allowed period strings - \"H\",\"D\",\"M\",\"Y\" Each of the above fields potentially introduce constraints. A workRequest is created only when period-value satisfies all the constraints. Constraints introduced: 1. period = H (The allowed range for period-value is [1, 23]) 2. period = D (The allowed range for period-value is [1, 30]) 3. period = M (The allowed range for period-value is [1, 11]) 4. period = Y (The minimum period-value is 1)""")
 @cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

@@ -48,7 +48,7 @@ dashboard_group_root_group.add_command(dashboard_group_group)
 
 @dashboard_group_group.command(name=cli_util.override('dashboard_group.change_dashboard_group_compartment.command_name', 'change-compartment'), help=u"""Moves a DashboardGroup resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeDashboardGroupCompartment)""")
 @cli_util.option('--dashboard-group-id', required=True, help=u"""The [OCID] of the dashboard group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -80,7 +80,7 @@ def change_dashboard_group_compartment(ctx, from_json, dashboard_group_id, compa
 @dashboard_group_group.command(name=cli_util.override('dashboard_group.create_dashboard_group.command_name', 'create'), help=u"""Creates a new dashboard group using the details provided in request body.
 
 **Caution:** Resources for the Dashboard service are created in the tenacy's home region. Although it is possible to create dashboard group resource in regions other than the home region, you won't be able to view those resources in the Console. Therefore, creating resources outside of the home region is not recommended. \n[Command Reference](createDashboardGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the dashboard group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment containing the dashboard group.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the dashboard. Does not have to be unique, and it can be changed. Avoid entering confidential information. Leading and trailing spaces and the following special characters are not allowed: <>()=/'\"&\\""")
 @cli_util.option('--description', help=u"""A short description of the dashboard group. It can be changed. Avoid entering confidential information. The following special characters are not allowed: <>()=/'\"&\\""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -240,7 +240,7 @@ def get_dashboard_group(ctx, from_json, dashboard_group_id, opc_cross_region):
 
 
 @dashboard_group_collection_group.command(name=cli_util.override('dashboard_group.list_dashboard_groups.command_name', 'list-dashboard-groups'), help=u"""Returns a list of dashboard groups with a specific compartment ID. \n[Command Reference](listDashboardGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter that returns dashboard groups that match the lifecycle state specified.""")
 @cli_util.option('--display-name', help=u"""A case-sensitive filter that returns resources that match the entire display name specified.""")
 @cli_util.option('--id', help=u"""The [OCID] of the dashboard group.""")

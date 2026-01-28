@@ -77,7 +77,7 @@ weblogic_management_service_root_group.add_command(work_request_group)
 
 @wls_domain_group.command(name=cli_util.override('weblogic_management_service.change_wls_domain_compartment.command_name', 'change-compartment'), help=u"""Moves a WebLogic domain into a different compartment within the same tenancy. \n[Command Reference](changeWlsDomainCompartment)""")
 @cli_util.option('--wls-domain-id', required=True, help=u"""The [OCID] of the WebLogic domain.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the WebLogic domain should be moved.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment into which the WebLogic domain should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -354,7 +354,7 @@ def get_wls_domain_server(ctx, from_json, wls_domain_id, server_id):
 @cli_util.option('--server-id', required=True, help=u"""The unique identifier of a server.
 
 **Note:** Not an [OCID].""")
-@cli_util.option('--backup-id', required=True, help=u"""The unique identifier of the backup.
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier of the backup.
 
 **Note:** Not an [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -390,7 +390,7 @@ def get_wls_domain_server_backup(ctx, from_json, wls_domain_id, server_id, backu
 @cli_util.option('--server-id', required=True, help=u"""The unique identifier of a server.
 
 **Note:** Not an [OCID].""")
-@cli_util.option('--backup-id', required=True, help=u"""The unique identifier of the backup.
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The unique identifier of the backup.
 
 **Note:** Not an [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -814,7 +814,7 @@ def list_managed_instance_servers(ctx, from_json, all_pages, page_size, managed_
 
 
 @managed_instance_group.command(name=cli_util.override('weblogic_management_service.list_managed_instances.command_name', 'list'), help=u"""Lists managed instances that match the specified compartment or managed instance OCID. Filter the list against a variety of criteria including but not limited to its name, status and compartment. \n[Command Reference](listManagedInstances)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', help=u"""The display name.""")
 @cli_util.option('--id', help=u"""The [OCID] of the instance.""")
 @cli_util.option('--plugin-status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The plugin status of the managed instance.""")
@@ -1169,7 +1169,7 @@ def list_wls_domain_servers(ctx, from_json, all_pages, page_size, wls_domain_id,
 
 
 @wls_domain_group.command(name=cli_util.override('weblogic_management_service.list_wls_domains.command_name', 'list'), help=u"""Gets all WebLogic domains in a given compartment. \n[Command Reference](listWlsDomains)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "NEEDS_ATTENTION", "UPDATING"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""The display name.""")
 @cli_util.option('--id', help=u"""The [OCID] of the WebLogic domain.""")
@@ -1411,7 +1411,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('weblogic_management_service.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")
@@ -1868,7 +1868,7 @@ def stop_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @resource_inventory_group.command(name=cli_util.override('weblogic_management_service.summarize_resource_inventory.command_name', 'summarize'), help=u"""Gets the data to be shown in the Overview page of the service in a given compartment. \n[Command Reference](summarizeResourceInventory)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

@@ -57,7 +57,7 @@ support_root_group.add_command(incident_group)
 
 
 @incident_group.command(name=cli_util.override('support.create_incident.command_name', 'create'), help=u"""Creates a support request in the specified tenancy. For more information, see [Creating Support Requests]. \n[Command Reference](createIncident)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--ticket', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--problem-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMIT", "LEGACY_LIMIT", "TECH", "ACCOUNT", "TAXONOMY"]), help=u"""The kind of support request (type of support request). For information about `ACCOUNT` support requests, see [Creating a Billing Support Request]. For information about `LIMIT` support requests, see [Creating a Service Limit Increase Request]. For information about `TECH` support requests, see [Creating a Technical Support Request].""")
 @cli_util.option('--csi', help=u"""Deprecated. The Customer Support Identifier (CSI) number associated with the support account. The CSI is optional for all support request types.""")
@@ -121,7 +121,7 @@ def create_incident(ctx, from_json, compartment_id, ticket, problem_type, csi, u
 
 @incident_group.command(name=cli_util.override('support.get_incident.command_name', 'get'), help=u"""Gets the specified support request. For more information, see [Getting Details for a Support Request]. \n[Command Reference](getIncident)""")
 @cli_util.option('--incident-key', required=True, help=u"""Unique identifier for the support request.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) number associated with the support account. The CSI is optional for all support request types.""")
 @cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account. User OCID is mandatory for OCI Users and optional for Multicloud users.""")
 @cli_util.option('--homeregion', help=u"""The region of the tenancy.""")
@@ -169,7 +169,7 @@ def get_incident(ctx, from_json, incident_key, compartment_id, csi, ocid, homere
 
 @incident_resource_type_group.command(name=cli_util.override('support.list_incident_resource_types.command_name', 'list'), help=u"""Depending on the selected `productType`, either lists available products (service groups, services, service categories, and subcategories) for technical support requests or lists limits and current usage for limit increase tickets. This operation is called during creation of technical support and limit increase tickets. For more information about listing products, see [Listing Products for Support Requests]. For more information about listing limits, see [Listing Limits for Service Limit Increase Requests]. \n[Command Reference](listIncidentResourceTypes)""")
 @cli_util.option('--problem-type', required=True, help=u"""The kind of support request.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["dateUpdated", "severity"]), help=u"""The key to use to sort the returned items.""")
@@ -241,7 +241,7 @@ def list_incident_resource_types(ctx, from_json, all_pages, page_size, problem_t
 
 
 @incident_group.command(name=cli_util.override('support.list_incidents.command_name', 'list'), help=u"""Lists support requests for the specified tenancy. For more information, see [Listing Support Requests]. \n[Command Reference](listIncidents)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) number associated with the support account. The CSI is optional for all support request types.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["dateUpdated", "severity"]), help=u"""The key to use to sort the returned items.""")
@@ -325,7 +325,7 @@ def list_incidents(ctx, from_json, all_pages, page_size, compartment_id, csi, li
 @cli_util.option('--put-attachment-details', required=True, help=u"""File to be uploaded as attachment to the Service Request.""")
 @cli_util.option('--incident-key', required=True, help=u"""Unique identifier for the support request.""")
 @cli_util.option('--attachment-name', required=True, help=u"""The name of the file to attach to the support request. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--is-restricted-flag', required=True, type=click.BOOL, help=u"""Set to `true` when the attachment contains personal information (PI) or protected health information (PHI).""")
 @cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) number associated with the support account. The CSI is optional for all support request types.""")
 @cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account. User OCID is mandatory for OCI Users and optional for Multicloud users.""")
@@ -385,7 +385,7 @@ def put_attachment(ctx, from_json, put_attachment_details, incident_key, attachm
 @update_incident_group.command(name=cli_util.override('support.update_incident.command_name', 'update-incident'), help=u"""Updates the specified support request. For more information, see [Updating Support Requests]. \n[Command Reference](updateIncident)""")
 @cli_util.option('--incident-key', required=True, help=u"""Unique identifier for the support request.""")
 @cli_util.option('--ticket', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--problem-type', type=custom_types.CliCaseInsensitiveChoice(["LIMIT", "LEGACY_LIMIT", "TECH", "ACCOUNT", "TAXONOMY"]), help=u"""The kind of support request (type of support request). For information about `ACCOUNT` support requests, see [Creating a Billing Support Request]. For information about `LIMIT` support requests, see [Creating a Service Limit Increase Request]. For information about `TECH` support requests, see [Creating a Technical Support Request].""")
 @cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) number associated with the support account. The CSI is optional for all support request types.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

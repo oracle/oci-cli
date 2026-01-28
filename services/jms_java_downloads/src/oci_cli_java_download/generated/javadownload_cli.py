@@ -121,7 +121,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 
 @java_download_report_group.command(name=cli_util.override('jms_java_downloads.create_java_download_report.command_name', 'create'), help=u"""Create a new report in the specified format containing the download details for the tenancy. \n[Command Reference](createJavaDownloadReport)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] here should be the tenancy OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] here should be the tenancy OCID.""")
 @cli_util.option('--format', required=True, type=custom_types.CliCaseInsensitiveChoice(["CSV"]), help=u"""The format of the report that is generated.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start time from when download records have to be included (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end time until when the download records have to be included (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -202,7 +202,7 @@ def create_java_download_report(ctx, from_json, wait_for_state, max_wait_seconds
 @java_download_token_group.command(name=cli_util.override('jms_java_downloads.create_java_download_token.command_name', 'create'), help=u"""Creates a new JavaDownloadToken in the tenancy with specified attributes. Ensure that you review the license terms before token generation. Visit the <a href=\"https://www.oracle.com/java/technologies/downloads\"/>Oracle Java Downloads</a> page to understand the license terms of the Java version for which you are generating a token. By generating a token, you agree to the associated license terms. See <a href=\"https://www.oracle.com/cis/java/technologies/javase/jdk-faqs.html\">Oracle JDK Licensing - FAQs</a> for detailed information. \n[Command Reference](createJavaDownloadToken)""")
 @cli_util.option('--display-name', required=True, help=u"""User provided display name of the JavaDownloadToken.""")
 @cli_util.option('--description', required=True, help=u"""User provided description of the JavaDownloadToken.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy scoped to the JavaDownloadToken.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the tenancy scoped to the JavaDownloadToken.""")
 @cli_util.option('--time-expires', required=True, type=custom_types.CLI_DATETIME, help=u"""Expiry time of the token.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--java-version', required=True, help=u"""The Java version associated with the token.""")
 @cli_util.option('--license-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The license type(s) associated with the JavaDownloadToken.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -275,7 +275,7 @@ def create_java_download_token(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @java_license_acceptance_record_group.command(name=cli_util.override('jms_java_downloads.create_java_license_acceptance_record.command_name', 'create'), help=u"""Creates a Java license acceptance record for the specified license type in a tenancy. \n[Command Reference](createJavaLicenseAcceptanceRecord)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The tenancy [OCID] of the user accepting the license.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The tenancy [OCID] of the user accepting the license.""")
 @cli_util.option('--license-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "BCL", "RESTRICTED"]), help=u"""License type for the Java version.""")
 @cli_util.option('--license-acceptance-status', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "REVOKED"]), help=u"""Status of license acceptance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`. (See [Managing Tags and Tag Namespaces].)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -515,7 +515,7 @@ def delete_java_license_acceptance_record(ctx, from_json, wait_for_state, max_wa
 
 Use the [GetJavaRelease] API to get information about available artifacts for a specific release. Each artifact is uniquely identified by an `artifactId`. Refer [JavaArtifact] for more details. \n[Command Reference](generateArtifactDownloadUrl)""")
 @cli_util.option('--artifact-id', required=True, type=click.INT, help=u"""Unique identifier for the Java runtime artifact.""")
-@cli_util.option('--compartment-id', help=u"""The tenancy [OCID] of the user initiating the download.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The tenancy [OCID] of the user initiating the download.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -696,7 +696,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @java_download_record_group.command(name=cli_util.override('jms_java_downloads.list_java_download_records.command_name', 'list'), help=u"""Returns a list of Java download records in a tenancy based on specified parameters. See [JavaReleases API] for possible values of `javaFamilyVersion` and `javaReleaseVersion` parameters. \n[Command Reference](listJavaDownloadRecords)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the tenancy.""")
 @cli_util.option('--family-version', help=u"""Unique Java family version identifier.""")
 @cli_util.option('--release-version', help=u"""Unique Java release version identifier.""")
 @cli_util.option('--os-family', help=u"""Target Operating System family of the artifact.""")
@@ -771,7 +771,7 @@ def list_java_download_records(ctx, from_json, all_pages, page_size, compartment
 
 
 @java_download_report_group.command(name=cli_util.override('jms_java_downloads.list_java_download_reports.command_name', 'list'), help=u"""Returns a list of JavaDownloadReports. \n[Command Reference](listJavaDownloadReports)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the tenancy.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "NEEDS_ATTENTION", "UPDATING"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the display name.""")
 @cli_util.option('--java-download-report-id', help=u"""Unique Java download report identifier.""")
@@ -834,7 +834,7 @@ def list_java_download_reports(ctx, from_json, all_pages, page_size, compartment
 
 
 @java_download_token_group.command(name=cli_util.override('jms_java_downloads.list_java_download_tokens.command_name', 'list'), help=u"""Returns a list of JavaDownloadTokens. \n[Command Reference](listJavaDownloadTokens)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the tenancy.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "NEEDS_ATTENTION", "UPDATING"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique JavaDownloadToken identifier.""")
@@ -906,7 +906,7 @@ def list_java_download_tokens(ctx, from_json, all_pages, page_size, compartment_
 
 
 @java_license_acceptance_record_group.command(name=cli_util.override('jms_java_downloads.list_java_license_acceptance_records.command_name', 'list'), help=u"""Returns a list of all the Java license acceptance records in a tenancy. \n[Command Reference](listJavaLicenseAcceptanceRecords)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the tenancy.""")
 @cli_util.option('--search-by-user', help=u"""A filter to return only resources that match the user principal detail. The search string can be any of the property values from the [Principal] object. This object is used as a response datatype for the `createdBy` and `lastUpdatedBy` fields in applicable resource.""")
 @cli_util.option('--id', help=u"""Unique Java license acceptance record identifier.""")
 @cli_util.option('--license-type', type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "BCL", "RESTRICTED"]), help=u"""Unique Java license type.""")
@@ -1142,7 +1142,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('jms_java_downloads.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a tenancy. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the tenancy.""")
 @cli_util.option('--id', help=u"""The ID of an asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
@@ -1205,7 +1205,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
 
 
 @java_download_count_aggregation_group.command(name=cli_util.override('jms_java_downloads.request_summarized_java_download_counts.command_name', 'request-summarized-java-download-counts'), help=u"""Returns list of download counts grouped by the specified property. \n[Command Reference](requestSummarizedJavaDownloadCounts)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] here should be the tenancy OCID.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID] here should be the tenancy OCID.""")
 @cli_util.option('--group-as', required=True, type=custom_types.CliCaseInsensitiveChoice(["JAVA_FAMILY", "JAVA_RELEASE", "PLATFORM"]), help=u"""The property that specifies the aggregation type for the download counts.""")
 @cli_util.option('--family-version', help=u"""Unique Java family version identifier.""")
 @cli_util.option('--release-version', help=u"""Unique Java release version identifier.""")

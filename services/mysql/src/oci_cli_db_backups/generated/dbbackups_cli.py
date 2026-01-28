@@ -35,7 +35,7 @@ db_backups_root_group.add_command(backup_group)
 
 
 @backup_group.command(name=cli_util.override('db_backups.cancel_backup_deletion.command_name', 'cancel-backup-deletion'), help=u"""Cancels the scheduled deletion of a backup and moves it to ACTIVE state. \n[Command Reference](cancelBackupDeletion)""")
-@cli_util.option('--backup-id', required=True, help=u"""The OCID of the Backup""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the Backup""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -92,8 +92,8 @@ def cancel_backup_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @backup_group.command(name=cli_util.override('db_backups.change_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a DB System Backup into a different compartment. When provided, If-Match is checked against ETag values of the Backup. \n[Command Reference](changeBackupCompartment)""")
-@cli_util.option('--backup-id', required=True, help=u"""The OCID of the Backup""")
-@cli_util.option('--compartment-id', required=True, help=u"""OCID of the target compartment.""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the Backup""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""OCID of the target compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -155,7 +155,7 @@ def change_backup_compartment(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @backup_group.command(name=cli_util.override('db_backups.copy_backup.command_name', 'copy'), help=u"""Creates a copy of a DB system backup available in the specified source region. \n[Command Reference](copyBackup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the DB system backup is to be copied to.
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment the DB system backup is to be copied to.
 
 **Note:** The compartment must be the same as the compartment of the DB system backup in the source region.""")
 @cli_util.option('--source-backup-id', required=True, help=u"""The OCID of DB system backup to be copied.""")
@@ -237,7 +237,7 @@ def copy_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 
 @backup_group.command(name=cli_util.override('db_backups.create_backup.command_name', 'create'), help=u"""Create a backup of a DB System. \n[Command Reference](createBackup)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The OCID of the DB System the Backup is associated with.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the DB System the Backup is associated with.""")
 @cli_util.option('--display-name', help=u"""A user-supplied display name for the backup.""")
 @cli_util.option('--description', help=u"""A user-supplied description for the backup.""")
 @cli_util.option('--soft-delete', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Retains the backup to be deleted due to the retention policy in DELETE SCHEDULED state for 7 days before permanently deleting it.""")
@@ -320,7 +320,7 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @backup_group.command(name=cli_util.override('db_backups.delete_backup.command_name', 'delete'), help=u"""Delete a Backup. \n[Command Reference](deleteBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""The OCID of the Backup""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the Backup""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -448,7 +448,7 @@ def export_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @backup_group.command(name=cli_util.override('db_backups.get_backup.command_name', 'get'), help=u"""Get information about the specified Backup \n[Command Reference](getBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""The OCID of the Backup""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the Backup""")
 @cli_util.option('--if-none-match', help=u"""For conditional requests. In the GET call for a resource, set the `If-None-Match` header to the value of the ETag from a previous GET (or POST or PUT) response for that resource. The server will return with either a 304 Not Modified response if the resource has not changed, or a 200 OK response with the updated representation.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -473,10 +473,10 @@ def get_backup(ctx, from_json, backup_id, if_none_match):
 
 
 @backup_group.command(name=cli_util.override('db_backups.list_backups.command_name', 'list'), help=u"""Get a list of DB System backups. \n[Command Reference](listBackups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
-@cli_util.option('--backup-id', help=u"""Backup OCID""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The compartment [OCID].""")
+@cli_util.option('--backup-id', type=custom_types.CLI_OCID, help=u"""Backup OCID""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "DELETE_SCHEDULED"]), help=u"""Backup Lifecycle State""")
-@cli_util.option('--db-system-id', help=u"""The DB System [OCID].""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help=u"""The DB System [OCID].""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resource matching the given display name exactly.""")
 @cli_util.option('--soft-delete', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Backup Soft Delete""")
 @cli_util.option('--backup-preparation-status', type=custom_types.CliCaseInsensitiveChoice(["PREPARED", "NOT_PREPARED"]), help=u"""Indicates whether the backup has been prepared successfully.""")
@@ -551,7 +551,7 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, backup_id
 
 
 @backup_group.command(name=cli_util.override('db_backups.update_backup.command_name', 'update'), help=u"""Update the metadata of a Backup. Metadata such as the displayName or description \n[Command Reference](updateBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""The OCID of the Backup""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the Backup""")
 @cli_util.option('--display-name', help=u"""A user-supplied display name for the backup.""")
 @cli_util.option('--description', help=u"""A user-supplied description for the backup.""")
 @cli_util.option('--soft-delete', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Retains the backup to be deleted due to the retention policy in DELETE SCHEDULED state for 7 days before permanently deleting it.""")
@@ -635,7 +635,7 @@ def update_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
 
 @backup_group.command(name=cli_util.override('db_backups.validate_backup.command_name', 'validate'), help=u"""Request to validate the backup by checking the data consistency. \n[Command Reference](validateBackup)""")
-@cli_util.option('--backup-id', required=True, help=u"""The OCID of the Backup""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the Backup""")
 @cli_util.option('--is-prepared-backup-required', required=True, type=click.BOOL, help=u"""Specifies whether the backup needs to be prepared for fast restore or not. Set to true to prepare the backup, set to false (default) if not required. Note: The prepared backup will replace the original backup and will not generate a new backup copy. The cost associated with the backup may vary, as the prepared backup will consistently be a full backup, it may also change the storage size of the original backup.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

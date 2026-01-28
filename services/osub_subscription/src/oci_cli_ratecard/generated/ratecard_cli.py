@@ -33,8 +33,8 @@ ratecard_root_group.add_command(rate_card_group)
 
 
 @rate_card_group.command(name=cli_util.override('ratecard.list_rate_cards.command_name', 'list'), help=u"""List API that returns all ratecards for given Subscription Id and Account ID (if provided) and for a particular date range \n[Command Reference](listRateCards)""")
-@cli_util.option('--subscription-id', required=True, help=u"""Line level Subscription Id""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--subscription-id', required=True, type=custom_types.CLI_OCID, help=u"""Line level Subscription Id""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--time-from', type=custom_types.CLI_DATETIME, help=u"""This param is used to get the rate card(s) whose effective start date starts on or after a particular date""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-to', type=custom_types.CLI_DATETIME, help=u"""This param is used to get the rate card(s) whose effective end date ends on or before a particular date""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--part-number', help=u"""This param is used to get the rate card(s) filterd by the partNumber""")

@@ -301,7 +301,7 @@ def list_imported_packages(ctx, from_json, all_pages, page_size, oda_instance_id
 If the `opc-next-page` header appears in the response, then there are more items to retrieve. To get the next page in the subsequent GET request, include the header's value as the `page` query parameter. \n[Command Reference](listPackages)""")
 @cli_util.option('--oda-instance-id', help=u"""List only the information for this Digital Assistant instance.""")
 @cli_util.option('--resource-type', help=u"""Resource type identifier. Used to limit query results to the items which are applicable to the given type.""")
-@cli_util.option('--compartment-id', help=u"""List the packages that belong to this compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""List the packages that belong to this compartment.""")
 @cli_util.option('--name', help=u"""List only the information for the package with this name. Package names are unique to a publisher and may not change.
 
 Example: `My Package`""")

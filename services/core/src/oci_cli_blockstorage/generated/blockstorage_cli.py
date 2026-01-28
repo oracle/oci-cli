@@ -156,7 +156,7 @@ blockstorage_root_group.add_command(volume_kms_key_group)
 
 @boot_volume_backup_group.command(name=cli_util.override('blockstorage.change_boot_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a boot volume backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeBootVolumeBackupCompartment)""")
 @cli_util.option('--boot-volume-backup-id', required=True, help=u"""The OCID of the boot volume backup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the boot volume backup to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the boot volume backup to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -183,8 +183,8 @@ def change_boot_volume_backup_compartment(ctx, from_json, boot_volume_backup_id,
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.change_boot_volume_compartment.command_name', 'change-compartment'), help=u"""Moves a boot volume into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeBootVolumeCompartment)""")
-@cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the boot volume to.""")
+@cli_util.option('--boot-volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the boot volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the boot volume to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -212,7 +212,7 @@ def change_boot_volume_compartment(ctx, from_json, boot_volume_id, compartment_i
 
 @volume_backup_group.command(name=cli_util.override('blockstorage.change_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a volume backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeVolumeBackupCompartment)""")
 @cli_util.option('--volume-backup-id', required=True, help=u"""The OCID of the volume backup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume backup to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the volume backup to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -239,8 +239,8 @@ def change_volume_backup_compartment(ctx, from_json, volume_backup_id, compartme
 
 
 @volume_group.command(name=cli_util.override('blockstorage.change_volume_compartment.command_name', 'change-compartment'), help=u"""Moves a volume into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeVolumeCompartment)""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume to.""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the volume to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -268,7 +268,7 @@ def change_volume_compartment(ctx, from_json, volume_id, compartment_id):
 
 @volume_group_backup_group.command(name=cli_util.override('blockstorage.change_volume_group_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a volume group backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeVolumeGroupBackupCompartment)""")
 @cli_util.option('--volume-group-backup-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume group backup to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the volume group backup to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -296,7 +296,7 @@ def change_volume_group_backup_compartment(ctx, from_json, volume_group_backup_i
 
 @volume_group_group.command(name=cli_util.override('blockstorage.change_volume_group_compartment.command_name', 'change-compartment'), help=u"""Moves a volume group into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeVolumeGroupCompartment)""")
 @cli_util.option('--volume-group-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume group to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the volume group to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -521,7 +521,7 @@ def copy_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume.command_name', 'create'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
 
@@ -536,7 +536,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
@@ -643,7 +643,7 @@ def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_backup_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-backup-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the boot volume backup.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
 
@@ -658,7 +658,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
@@ -768,7 +768,7 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, f
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
 
@@ -783,7 +783,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
@@ -893,7 +893,7 @@ def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_jso
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_replica_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-replica-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the boot volume replica.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
 
@@ -908,7 +908,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
@@ -1018,7 +1018,7 @@ def create_boot_volume_boot_volume_source_from_boot_volume_replica_details(ctx, 
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_backup_delta_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-backup-delta-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details-first-backup-id', required=True, help=u"""The OCID of the first boot volume backup.""")
 @cli_util.option('--source-details-second-backup-id', required=True, help=u"""The OCID of the second boot volume backup.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
@@ -1034,7 +1034,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
@@ -1151,7 +1151,7 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_delta_details(
 @boot_volume_backup_group.command(name=cli_util.override('blockstorage.create_boot_volume_backup.command_name', 'create'), help=u"""Creates a new boot volume backup of the specified boot volume. For general information about boot volume backups, see [Overview of Boot Volume Backups]
 
 When the request is received, the backup object is in a REQUEST_RECEIVED state. When the data is imaged, it goes into a CREATING state. After the backup is fully uploaded to the cloud, it goes into an AVAILABLE state. \n[Command Reference](createBootVolumeBackup)""")
-@cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume that needs to be backed up.""")
+@cli_util.option('--boot-volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the boot volume that needs to be backed up.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1227,7 +1227,7 @@ def create_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the volume.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -1253,7 +1253,7 @@ Allowed values:
   * `30`-`120`: Represents the Ultra High Performance option.
 
 For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1369,7 +1369,7 @@ def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the block volume replica.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
 
@@ -1396,7 +1396,7 @@ Allowed values:
   * `30`-`120`: Represents the Ultra High Performance option.
 
 For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
@@ -1512,7 +1512,7 @@ def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
 
@@ -1539,7 +1539,7 @@ Allowed values:
   * `30`-`120`: Represents the Ultra High Performance option.
 
 For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
@@ -1655,7 +1655,7 @@ def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_sta
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the volume backup.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
 
@@ -1682,7 +1682,7 @@ Allowed values:
   * `30`-`120`: Represents the Ultra High Performance option.
 
 For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
@@ -1798,7 +1798,7 @@ def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the volume.""")
 @cli_util.option('--source-details-first-backup-id', required=True, help=u"""The OCID of the first volume backup.""")
 @cli_util.option('--source-details-second-backup-id', required=True, help=u"""The OCID of the second volume backup.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
@@ -1826,7 +1826,7 @@ Allowed values:
   * `30`-`120`: Represents the Ultra High Performance option.
 
 For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
@@ -1945,7 +1945,7 @@ def create_volume_volume_source_from_volume_backup_delta_details(ctx, from_json,
 @volume_backup_group.command(name=cli_util.override('blockstorage.create_volume_backup.command_name', 'create'), help=u"""Creates a new backup of the specified volume. For general information about volume backups, see [Overview of Block Volume Service Backups]
 
 When the request is received, the backup object is in a REQUEST_RECEIVED state. When the data is imaged, it goes into a CREATING state. After the backup is fully uploaded to the cloud, it goes into an AVAILABLE state. \n[Command Reference](createVolumeBackup)""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume that needs to be backed up.""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume that needs to be backed up.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume backup. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2019,7 +2019,7 @@ def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @volume_backup_policy_group.command(name=cli_util.override('blockstorage.create_volume_backup_policy.command_name', 'create'), help=u"""Creates a new user defined backup policy.
 
 For more information about Oracle defined backup policies and user defined backup policies, see [Policy-Based Backups]. \n[Command Reference](createVolumeBackupPolicy)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--destination-region', help=u"""The paired destination region for copying scheduled backups to. Example: `us-ashburn-1`. See [Region Pairs] for details about paired regions.""")
 @cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules for the volume backup policy. See see [Schedules] in [Policy-Based Backups] for more information.
@@ -2069,7 +2069,7 @@ def create_volume_backup_policy(ctx, from_json, compartment_id, display_name, de
 
 @volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.create_volume_backup_policy_assignment.command_name', 'create'), help=u"""Assigns a volume backup policy to the specified volume. Note that a given volume can only have one backup policy assigned to it. If this operation is used for a volume that already has a different backup policy assigned, the prior backup policy will be silently unassigned. \n[Command Reference](createVolumeBackupPolicyAssignment)""")
 @cli_util.option('--asset-id', required=True, help=u"""The OCID of the volume to assign the policy to.""")
-@cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy to assign to the volume.""")
+@cli_util.option('--policy-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume backup policy to assign to the volume.""")
 @cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the block / boot volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2099,7 +2099,7 @@ def create_volume_backup_policy_assignment(ctx, from_json, asset_id, policy_id, 
 
 For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the volume group.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume group. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2112,7 +2112,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
 @cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2187,7 +2187,7 @@ def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the volume group.""")
 @cli_util.option('--source-details-volume-group-replica-id', required=True, help=u"""The OCID of the volume group replica.""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume group. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2200,7 +2200,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
 @cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2278,7 +2278,7 @@ def create_volume_group_volume_group_source_from_volume_group_replica_details(ct
 
 For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the volume group.""")
 @cli_util.option('--source-details-volume-group-id', required=True, help=u"""The OCID of the volume group to clone from.""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume group. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2291,7 +2291,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
 @cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2369,7 +2369,7 @@ def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_
 
 For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the volume group.""")
 @cli_util.option('--source-details-volume-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCIDs for the volumes in this volume group.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume group. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2382,7 +2382,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
 @cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2460,7 +2460,7 @@ def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json,
 
 For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume group.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that contains the volume group.""")
 @cli_util.option('--source-details-volume-group-backup-id', required=True, help=u"""The OCID of the volume group backup to restore from.""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume group. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2473,7 +2473,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
 @cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2549,7 +2549,7 @@ def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx
 
 @volume_group_backup_group.command(name=cli_util.override('blockstorage.create_volume_group_backup.command_name', 'create'), help=u"""Creates a new backup volume group of the specified volume group. For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroupBackup)""")
 @cli_util.option('--volume-group-id', required=True, help=u"""The OCID of the volume group that needs to be backed up.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that will contain the volume group backup. This parameter is optional, by default backup will be created in the same compartment and source volume group.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment that will contain the volume group backup. This parameter is optional, by default backup will be created in the same compartment and source volume group.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2620,7 +2620,7 @@ def create_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.delete_boot_volume.command_name', 'delete'), help=u"""Deletes the specified boot volume. The volume cannot have an active connection to an instance. To disconnect the boot volume from a connected instance, see [Disconnecting From a Boot Volume]. **Warning:** All data on the boot volume will be permanently lost when the boot volume is deleted. \n[Command Reference](deleteBootVolume)""")
-@cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
+@cli_util.option('--boot-volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2746,7 +2746,7 @@ def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_boot_volume_kms_key.command_name', 'delete'), help=u"""Removes the specified boot volume's assigned Vault Service encryption key. \n[Command Reference](deleteBootVolumeKmsKey)""")
-@cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
+@cli_util.option('--boot-volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2771,7 +2771,7 @@ def delete_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
 
 
 @volume_group.command(name=cli_util.override('blockstorage.delete_volume.command_name', 'delete'), help=u"""Deletes the specified volume. The volume cannot have an active connection to an instance. To disconnect the volume from a connected instance, see [Disconnecting From a Volume]. **Warning:** All data on the volume will be permanently lost when the volume is deleted. \n[Command Reference](deleteVolume)""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2899,7 +2899,7 @@ def delete_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @volume_backup_policy_group.command(name=cli_util.override('blockstorage.delete_volume_backup_policy.command_name', 'delete'), help=u"""Deletes a user defined backup policy.  For more information about user defined backup policies,  see [Policy-Based Backups].
 
  Avoid entering confidential information. \n[Command Reference](deleteVolumeBackupPolicy)""")
-@cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
+@cli_util.option('--policy-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume backup policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3076,7 +3076,7 @@ def delete_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_volume_kms_key.command_name', 'delete'), help=u"""Removes the specified volume's assigned Vault service encryption key. \n[Command Reference](deleteVolumeKmsKey)""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3122,7 +3122,7 @@ def get_block_volume_replica(ctx, from_json, block_volume_replica_id):
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.get_boot_volume.command_name', 'get'), help=u"""Gets information for the specified boot volume. \n[Command Reference](getBootVolume)""")
-@cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
+@cli_util.option('--boot-volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the boot volume.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3164,7 +3164,7 @@ def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
 
 
 @boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.get_boot_volume_kms_key.command_name', 'get'), help=u"""Gets the Vault service encryption key assigned to the specified boot volume. \n[Command Reference](getBootVolumeKmsKey)""")
-@cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
+@cli_util.option('--boot-volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3209,7 +3209,7 @@ def get_boot_volume_replica(ctx, from_json, boot_volume_replica_id):
 
 
 @volume_group.command(name=cli_util.override('blockstorage.get_volume.command_name', 'get'), help=u"""Gets information for the specified volume. \n[Command Reference](getVolume)""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3251,7 +3251,7 @@ def get_volume_backup(ctx, from_json, volume_backup_id):
 
 
 @volume_backup_policy_group.command(name=cli_util.override('blockstorage.get_volume_backup_policy.command_name', 'get'), help=u"""Gets information for the specified volume backup policy. \n[Command Reference](getVolumeBackupPolicy)""")
-@cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
+@cli_util.option('--policy-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume backup policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3382,7 +3382,7 @@ def get_volume_group_replica(ctx, from_json, volume_group_replica_id):
 
 
 @volume_kms_key_group.command(name=cli_util.override('blockstorage.get_volume_kms_key.command_name', 'get'), help=u"""Gets the Vault service encryption key assigned to the specified volume. \n[Command Reference](getVolumeKmsKey)""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3409,7 +3409,7 @@ def get_volume_kms_key(ctx, from_json, volume_id, if_match):
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--volume-group-replica-id', help=u"""The OCID of the volume group replica.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -3478,8 +3478,8 @@ def list_block_volume_replicas(ctx, from_json, all_pages, page_size, availabilit
 
 
 @boot_volume_backup_group.command(name=cli_util.override('blockstorage.list_boot_volume_backups.command_name', 'list'), help=u"""Lists the boot volume backups in the specified compartment. You can filter the results by boot volume. \n[Command Reference](listBootVolumeBackups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--boot-volume-id', help=u"""The OCID of the boot volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--boot-volume-id', type=custom_types.CLI_OCID, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3550,7 +3550,7 @@ def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--volume-group-replica-id', help=u"""The OCID of the volume group replica.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -3622,7 +3622,7 @@ def list_boot_volume_replicas(ctx, from_json, all_pages, page_size, availability
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3681,7 +3681,7 @@ For more information about Oracle defined backup policies and user defined backu
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment. If no compartment is specified, the Oracle defined backup policies are listed.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The OCID of the compartment. If no compartment is specified, the Oracle defined backup policies are listed.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3725,8 +3725,8 @@ def list_volume_backup_policies(ctx, from_json, all_pages, page_size, limit, pag
 
 
 @volume_backup_group.command(name=cli_util.override('blockstorage.list_volume_backups.command_name', 'list'), help=u"""Lists the volume backups in the specified compartment. You can filter the results by volume. \n[Command Reference](listVolumeBackups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--volume-id', help=u"""The OCID of the volume.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--volume-id', type=custom_types.CLI_OCID, help=u"""The OCID of the volume.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3794,7 +3794,7 @@ def list_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, vo
 
 
 @volume_group_backup_group.command(name=cli_util.override('blockstorage.list_volume_group_backups.command_name', 'list'), help=u"""Lists the volume group backups in the specified compartment. You can filter the results by volume group. For more information, see [Volume Groups]. \n[Command Reference](listVolumeGroupBackups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--volume-group-id', help=u"""The OCID of the volume group.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -3860,7 +3860,7 @@ def list_volume_group_backups(ctx, from_json, all_pages, page_size, compartment_
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3928,7 +3928,7 @@ def list_volume_group_replicas(ctx, from_json, all_pages, page_size, availabilit
 
 
 @volume_group_group.command(name=cli_util.override('blockstorage.list_volume_groups.command_name', 'list'), help=u"""Lists the volume groups in the specified compartment and availability domain. For more information, see [Volume Groups]. \n[Command Reference](listVolumeGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -4001,7 +4001,7 @@ def list_volume_groups(ctx, from_json, all_pages, page_size, compartment_id, ava
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4012,7 +4012,7 @@ Example: `50`""")
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--volume-group-id', help=u"""The OCID of the volume group.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""A filter to return only resources that match the given cluster placement group Id exactly.""")
+@cli_util.option('--cluster-placement-group-id', type=custom_types.CLI_OCID, help=u"""A filter to return only resources that match the given cluster placement group Id exactly.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4073,7 +4073,7 @@ def list_volumes(ctx, from_json, all_pages, page_size, availability_domain, comp
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.update_boot_volume.command_name', 'update'), help=u"""Updates the specified boot volume's display name, defined tags, and free-form tags. \n[Command Reference](updateBootVolume)""")
-@cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
+@cli_util.option('--boot-volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4261,7 +4261,7 @@ def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_se
 
 
 @boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.update_boot_volume_kms_key.command_name', 'update'), help=u"""Updates the specified volume with a new Vault service master encryption key. \n[Command Reference](updateBootVolumeKmsKey)""")
-@cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
+@cli_util.option('--boot-volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the new Vault service key to assign to protect the specified volume. This key has to be a valid Vault service key, and policies must exist to allow the user and the Block Volume service to access this key. If you specify the same OCID as the previous key's OCID, the Block Volume service will use it to regenerate a volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4293,7 +4293,7 @@ def update_boot_volume_kms_key(ctx, from_json, boot_volume_id, kms_key_id, if_ma
 
 
 @volume_group.command(name=cli_util.override('blockstorage.update_volume.command_name', 'update'), help=u"""Updates the specified volume's display name. Avoid entering confidential information. \n[Command Reference](updateVolume)""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4489,7 +4489,7 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
 @volume_backup_policy_group.command(name=cli_util.override('blockstorage.update_volume_backup_policy.command_name', 'update'), help=u"""Updates a user defined backup policy.  For more information about user defined backup policies,  see [Policy-Based Backups].
 
  Avoid entering confidential information. \n[Command Reference](updateVolumeBackupPolicy)""")
-@cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
+@cli_util.option('--policy-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume backup policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--destination-region', help=u"""The paired destination region for copying scheduled backups to. Example: `us-ashburn-1`. Specify `none` to reset the `destinationRegion` parameter. See [Region Pairs] for details about paired regions.""")
 @cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules for the volume backup policy. See see [Schedules] in [Policy-Based Backups] for more information.
@@ -4714,7 +4714,7 @@ def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_s
 
 
 @volume_kms_key_group.command(name=cli_util.override('blockstorage.update_volume_kms_key.command_name', 'update'), help=u"""Updates the specified volume with a new Key Management master encryption key. \n[Command Reference](updateVolumeKmsKey)""")
-@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
+@cli_util.option('--volume-id', required=True, type=custom_types.CLI_OCID, help=u"""The OCID of the volume.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the new Vault service key to assign to protect the specified volume. This key has to be a valid Vault service key, and policies must exist to allow the user and the Block Volume service to access this key. If you specify the same OCID as the previous key's OCID, the Block Volume service will use it to regenerate a volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})

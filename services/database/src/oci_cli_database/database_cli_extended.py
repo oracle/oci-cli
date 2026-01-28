@@ -162,7 +162,7 @@ def upgrade_database_database_upgrade_with_db_version_details_extended(ctx, **kw
 
 # Rename the command upgrade_database_database_upgrade_with_db_home_details and the parameter database-upgrade-source-details-db-home-id to db-home-id and database_upgrade_source_details_options to options.
 @cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_home_details, params_to_exclude=['database_upgrade_source_details_db_home_id', 'database_upgrade_source_details_options'])
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--db-home-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--options', help=u"""Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: \"-upgradeTimezone false -keepEvents\"""")
 @database_cli.database_group.command(name='upgrade-with-db-home', help=database_cli.database_group.help)
 @click.pass_context
@@ -377,7 +377,7 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
 @cli_util.option('--database-software-image-id', required=False, help="""The OCID of database software image. This Custom Database Software Image will be used to create the database instead of Oracle-published Database Software Images""")
 @cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
-@cli_util.option('--vault-id', required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
 @cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
 @cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
 @cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
@@ -512,7 +512,7 @@ def launch_db_system_extended(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_backup_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys', 'storage_volume_performance_mode', 'data_collection_options'])
 @database_cli.db_system_group.command(name='launch-from-backup', help=database_cli.launch_db_system_launch_db_system_from_backup_details.help)
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
-@cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help="""The backup OCID.""")
 @cli_util.option('--backup-tde-password', required=False, help="""The password to open the TDE wallet.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
@@ -641,8 +641,8 @@ def launch_db_system_from_database_extended(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version'])
 @database_cli.database_group.command(name='create', help="""Creates a new database in the given DB System.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
-@cli_util.option('--db-home-id', required=False, help="""The Db Home Id to create this database under.""")
-@cli_util.option('--db-system-id', required=False, help="""The Db System Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
+@cli_util.option('--db-home-id', type=custom_types.CLI_OCID, required=False, help="""The Db Home Id to create this database under.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, required=False, help="""The Db System Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--vm-cluster-id', required=False, help="""The Vm Cluster Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSC5601, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P1, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
 @cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
@@ -663,7 +663,7 @@ def launch_db_system_from_database_extended(ctx, **kwargs):
 @cli_util.option('--auto-full-backup-window', required=False, help="""Specifying a two hour slot when the full backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
 @cli_util.option('--run-immediate-full-backup', type=click.BOOL, required=False, help="""If set to true, configures automatic full backups in the local region (the region of the DB system) for the first backup run immediately.""")
 @cli_util.option('--backup-destination', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""backup destination list""")
-@cli_util.option('--vault-id', required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
 @cli_util.option('--hsm-password', required=False, help=u"""Provide the HSM password as you would in RDBMS for External HSM.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Provide the DATA storage size, in gigabytes, that is applicable for the database.""")
 @cli_util.option('--reco-storage-size-in-gbs', type=click.INT, help=u"""Provide the RECO storage size, in gigabytes, that is applicable for the database.""")
@@ -851,9 +851,9 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version', 'source'])
 @database_cli.database_group.command(name='create-from-backup', help="""Creates a new database in the given DB System from a backup.""")
 @cli_util.option('--vm-cluster-id', required=False, help="""The Vm Cluster Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
-@cli_util.option('--db-system-id', required=False, help="""The Db System Id to restore this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, required=False, help="""The Db System Id to restore this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
-@cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
+@cli_util.option('--backup-id', required=True, type=custom_types.CLI_OCID, help="""The backup OCID.""")
 @cli_util.option('--backup-tde-password', required=False, help="""The password to open the TDE wallet.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
@@ -1021,9 +1021,9 @@ def update_database_extended(ctx, **kwargs):
 # Db home is not exposed to the end user.
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version', 'source'])
 @database_cli.database_group.command(name='create-from-database', help="""Creates a new database in the given DB System from another database.""")
-@cli_util.option('--db-system-id', required=False, help="""The Db System Id to clone this database under.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, required=False, help="""The Db System Id to clone this database under.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
-@cli_util.option('--database-id', required=True, help="""The OCID of the from-database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the from-database.""")
 @cli_util.option('--backup-tde-password', required=False, help="""The password to open the TDE wallet.""")
 @cli_util.option('--point-in-time-recovery-timestamp', required=False, help="""The point in time of the original database from which the new database is created. If not specifed, the latest backup is used to create the database.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
@@ -1108,7 +1108,7 @@ def create_database_from_another_database(ctx, wait_for_state, max_wait_seconds,
 
 
 @database_cli.database_group.command(name='patch', help="""Perform a patch action for a given patch and database.""")
-@cli_util.option('--database-id', required=True, help="""The OCID of the database.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the database.""")
 @cli_util.option('--patch-action', required=False, help="""The action to perform on the patch.""")
 @cli_util.option('--patch-id', required=False, help="""The OCID of the patch.""")
 @cli_util.option('--one-off-patches', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""The list of one-off patches.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1159,7 +1159,7 @@ def patch_database(ctx, **kwargs):
 
 
 @database_cli.database_group.command(name='delete', help="""Deletes a database.""")
-@cli_util.option('--database-id', required=True, help="""The OCID of the database to delete.""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the database to delete.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1211,7 +1211,7 @@ def delete_database(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.list_db_homes, params_to_exclude=['db_home_id', 'page', 'all_pages', 'page_size', 'db_system_id', 'db_version'])
 @database_cli.database_group.command(name='list', help="""Lists all databases in a given DB System.""")
 @click.pass_context
-@cli_util.option('--db-system-id', help="""The OCID of the db system to list within.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, help="""The OCID of the db system to list within.""")
 @cli_util.option('--vm-cluster-id', help="""The OCID of the vm cluster to list within.""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseSummary]'})
 @cli_util.wrap_exceptions
@@ -1360,7 +1360,7 @@ def update_db_system_extended(ctx, **kwargs):
 
 
 @database_cli.db_system_group.command(name='patch', help="""Perform an action on a Patch for a DB System.""")
-@cli_util.option('--db-system-id', required=True, help="""The OCID of the DB System.""")
+@cli_util.option('--db-system-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the DB System.""")
 @cli_util.option('--patch-action', required=True, type=custom_types.CliCaseInsensitiveChoice(["APPLY", "PRECHECK"]), help="""The action to perform on the patch.""")
 @cli_util.option('--patch-id', required=True, help="""The OCID of the patch.""")
 @click.pass_context
@@ -1514,7 +1514,7 @@ All Oracle Cloud Infrastructue resources, including Data Guard associations, get
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
 @cli_util.option('--shape', help=u"""The shape of the DB system to launch to set up the Data Guard association. The shape determines the number of CPU cores and the amount of memory available for the DB system. Only virtual machine shapes are valid shapes. If you do not supply this parameter, the default shape is the shape of the primary DB system. To get a list of all shapes, use the [ListDbSystemShapes] operation.""")
-@cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet the DB System is associated with. **Subnet Restrictions:** - For 1- and 2-node RAC DB Systems, do not use a subnet that overlaps with 192.168.16.16/28
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help="""The OCID of the subnet the DB System is associated with. **Subnet Restrictions:** - For 1- and 2-node RAC DB Systems, do not use a subnet that overlaps with 192.168.16.16/28
 
 These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and backup subnet.""")
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
@@ -1680,7 +1680,7 @@ def patch_history_list_group():
 
 @cli_util.copy_params_from_generated_command(database_cli.get_db_home_patch, params_to_exclude=['db_home_id'])
 @patch_get_group.command('by-database', help="""Get patch for a given database""")
-@cli_util.option('--database-id', required=True, help="""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help="""The database [OCID].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Patch'})
 @cli_util.wrap_exceptions
@@ -1698,7 +1698,7 @@ def get_patch_by_database(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.list_db_home_patches, params_to_exclude=['db_home_id'])
 @patch_list_group.command('by-database', help="""List patches for a given database""")
-@cli_util.option('--database-id', required=True, help="""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help="""The database [OCID].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchSummary]'})
 @cli_util.wrap_exceptions
@@ -1716,7 +1716,7 @@ def list_patch_by_database(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.get_db_home_patch_history_entry, params_to_exclude=['db_home_id'])
 @patch_history_get_group.command('by-database', help="""Get patch history for a given database""")
-@cli_util.option('--database-id', required=True, help="""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help="""The database [OCID].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PatchHistoryEntry'})
 @cli_util.wrap_exceptions
@@ -1734,7 +1734,7 @@ def get_patch_history_entry_by_database(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.list_db_home_patch_history_entries, params_to_exclude=['db_home_id'])
 @patch_history_list_group.command('by-database', help="""List patch history entries for a given database""")
-@cli_util.option('--database-id', required=True, help="""The database [OCID].""")
+@cli_util.option('--database-id', required=True, type=custom_types.CLI_OCID, help="""The database [OCID].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchHistoryEntrySummary]'})
 @cli_util.wrap_exceptions
@@ -1790,7 +1790,7 @@ def add_storage_capacity_cloud_exadata_infrastructure(ctx, **kwargs):
 @cli_util.option('--is-sparse-diskgroup', type=click.BOOL, help=u"""If true, the sparse disk group is configured for the cloud VM cluster. If false, the sparse disk group is not created.""")
 @cli_util.option('--is-local-backup', type=click.BOOL, help=u"""If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster.""")
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the Cloud VM Cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
-@cli_util.option('--vault-id', help=u"""The [OCID] of the Exadata Database Storage Vault.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""The [OCID] of the Exadata Database Storage Vault.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
@@ -2143,7 +2143,7 @@ def update_cloud_exadata_infrastructure(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'db_version'])
 @database_cli.db_home_group.command(name='create', help="""Creates a new database in the given DB System or VM Cluster.""")
 @cli_util.option('--vm-cluster-id', required=False, help="""The Vm Cluster Id to create this Db Home under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
-@cli_util.option('--db-system-id', required=False, help="""The Db System Id to restore this Db Home under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
+@cli_util.option('--db-system-id', type=custom_types.CLI_OCID, required=False, help="""The Db System Id to restore this Db Home under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--db-version', required=False, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
@@ -2307,8 +2307,8 @@ database_cli.key_store_group.add_command(database_cli.list_key_stores)
 @cli_util.copy_params_from_generated_command(database_cli.create_key_store_key_store_type_from_oracle_key_vault_details, params_to_exclude=['type_details_connection_ips', 'type_details_admin_username', 'type_details_vault_id', 'type_details_secret_id'])
 @cli_util.option('--connection-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Oracle Key Vault connection IP addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-username', required=True, help=u"""The administrator username to connect to Oracle Key Vault""")
-@cli_util.option('--vault-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
+@cli_util.option('--vault-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
 @database_cli.key_store_group.command(name='create-oracle-key-vault-details', help=database_cli.create_key_store_key_store_type_from_oracle_key_vault_details.help)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'connection-ips': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'KeyStore'})
@@ -2341,8 +2341,8 @@ def create_okv_keystore(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.update_key_store_key_store_type_from_oracle_key_vault_details, params_to_exclude=['type_details_connection_ips', 'type_details_admin_username', 'type_details_vault_id', 'type_details_secret_id'])
 @cli_util.option('--connection-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Oracle Key Vault connection IP addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-username', required=True, help=u"""The administrator username to connect to Oracle Key Vault""")
-@cli_util.option('--vault-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
-@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
+@cli_util.option('--vault-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
+@cli_util.option('--secret-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
 @database_cli.key_store_group.command(name='update-oracle-key-vault-details', help=database_cli.update_key_store_key_store_type_from_oracle_key_vault_details.help)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'connection-ips': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'KeyStore'})
@@ -4061,7 +4061,7 @@ def update_exascale_db_storage_vault_extended(ctx, **kwargs):
 @database_cli.exadb_vm_cluster_group.command('create', help=database_cli.create_exadb_vm_cluster.help)
 @cli_util.option('--scan-listener-port-tcps', type=click.INT, help=u"""The Secured Communication (TCPS) protocol Single Client Access Name (SCAN) port. The default port is 2484.""")
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the Exadb VM Cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
-@cli_util.option('--vault-id', required=True, help=u"""The [OCID] of the Exadata Database Storage Vault.""")
+@cli_util.option('--vault-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the Exadata Database Storage Vault.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'vm-file-system-storage': {'module': 'database', 'class': 'ExadbVmClusterStorageDetails'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'ExadbVmCluster'})
 @cli_util.wrap_exceptions
@@ -4102,7 +4102,7 @@ def update_exadb_vm_cluster_extended(ctx, **kwargs):
 # Renaming the parameter exascale-db-storage-vault-id to vault-id
 @cli_util.copy_params_from_generated_command(database_cli.list_exadb_vm_clusters, params_to_exclude=['exascale_db_storage_vault_id'])
 @database_cli.exadb_vm_cluster_group.command('list', help=database_cli.list_exadb_vm_clusters.help)
-@cli_util.option('--vault-id', help=u"""A filter to return only Exadata VM clusters on Exascale Infrastructure that match the given Exascale Database Storage Vault ID.""")
+@cli_util.option('--vault-id', type=custom_types.CLI_OCID, help=u"""A filter to return only Exadata VM clusters on Exascale Infrastructure that match the given Exascale Database Storage Vault ID.""")
 @click.pass_context
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.wrap_exceptions

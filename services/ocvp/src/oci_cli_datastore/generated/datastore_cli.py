@@ -98,7 +98,7 @@ def add_block_volume_to_datastore(ctx, from_json, wait_for_state, max_wait_secon
 
 @datastore_group.command(name=cli_util.override('datastore.change_datastore_compartment.command_name', 'change-compartment'), help=u"""Moves an Datastore into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDatastoreCompartment)""")
 @cli_util.option('--datastore-id', required=True, help=u"""The [OCID] of the Datastore.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Datastore to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to move the Datastore to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -130,7 +130,7 @@ def change_datastore_compartment(ctx, from_json, datastore_id, compartment_id, i
 @datastore_group.command(name=cli_util.override('datastore.create_datastore.command_name', 'create'), help=u"""Creates a Oracle Cloud VMware Solution Datastore.
 
 Use the [WorkRequest] operations to track the creation of the Datastore. \n[Command Reference](createDatastore)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the Datastore.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment to contain the Datastore.""")
 @cli_util.option('--block-volume-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The List of Block volume [OCID]s that belong to the Datastore.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', required=True, help=u"""A descriptive name for the Datastore. It must be unique within a SDDC, start with a letter, and contain only letters, digits, whitespaces, dashes and underscores. Avoid entering confidential information.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain to create the Datastore in.""")
@@ -285,7 +285,7 @@ def get_datastore(ctx, from_json, datastore_id):
 
 
 @datastore_group.command(name=cli_util.override('datastore.list_datastores.command_name', 'list'), help=u"""List the Datastores in the specified compartment. The list can be filtered by compartment, datastore id, display name and lifecycle state. \n[Command Reference](listDatastores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--cluster-id', help=u"""The [OCID] of the SDDC Cluster.""")
 @cli_util.option('--datastore-id', help=u"""The [OCID] of the Datastore.""")

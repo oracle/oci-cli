@@ -229,7 +229,7 @@ def cascading_delete_skill_custom_entities(ctx, from_json, wait_for_state, max_w
 
 To monitor the status of the job, take the `opc-work-request-id` response header value and use it to call `GET /workRequests/{workRequestID}`. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeOdaPrivateEndpointCompartment)""")
 @cli_util.option('--oda-private-endpoint-id', required=True, help=u"""Unique ODA Private Endpoint identifier which is the [OCID].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that the ODA private endpoint belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that the ODA private endpoint belongs to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control in a PUT or DELETE call for a Digital Assistant instance, set the `if-match` query parameter to the value of the `ETAG` header from a previous GET or POST response for that instance. The service updates or deletes the instance only if the etag that you provide matches the instance's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -950,7 +950,7 @@ def create_channel_create_app_event_channel_details(ctx, from_json, oda_instance
 @cli_util.option('--sasl-mechanism', required=True, help=u"""The SASL mechanmism to use when conecting to the Oracle Streaming Service. See Oracle Streaming Service documentation for a list of valid values.""")
 @cli_util.option('--tenancy-name', required=True, help=u"""The tenancy to use when connecting to the Oracle Streaming Service.""")
 @cli_util.option('--user-name', required=True, help=u"""The user name to use when connecting to the Oracle Streaming Service.""")
-@cli_util.option('--stream-pool-id', required=True, help=u"""The stream pool OCI to use when connecting to the Oracle Streaming Service.""")
+@cli_util.option('--stream-pool-id', required=True, type=custom_types.CLI_OCID, help=u"""The stream pool OCI to use when connecting to the Oracle Streaming Service.""")
 @cli_util.option('--auth-token', required=True, help=u"""The authentication token to use when connecting to the Oracle Streaming Service.""")
 @cli_util.option('--description', help=u"""A short description of the Channel.""")
 @cli_util.option('--session-expiry-duration-in-milliseconds', type=click.INT, help=u"""The number of milliseconds before a session expires.""")
@@ -1759,8 +1759,8 @@ def create_digital_assistant_extend_digital_assistant_details(ctx, from_json, wa
 @oda_private_endpoint_group.command(name=cli_util.override('management.create_oda_private_endpoint.command_name', 'create'), help=u"""Starts an asynchronous job to create an ODA Private Endpoint.
 
 To monitor the status of the job, take the `opc-work-request-id` response header value and use it to call `GET /workRequests/{workRequestID}`. \n[Command Reference](createOdaPrivateEndpoint)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that the ODA private endpoint belongs to.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet that the private endpoint belongs to.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the compartment that the ODA private endpoint belongs to.""")
+@cli_util.option('--subnet-id', required=True, type=custom_types.CLI_OCID, help=u"""The [OCID] of the subnet that the private endpoint belongs to.""")
 @cli_util.option('--display-name', help=u"""User-defined name for the ODA private endpoint. Avoid entering confidential information. You can change this value.""")
 @cli_util.option('--description', help=u"""Description of the ODA private endpoint.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of [OCIDs] of [network security groups]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3754,7 +3754,7 @@ def list_digital_assistants(ctx, from_json, all_pages, page_size, oda_instance_i
 
 If the `opc-next-page` header appears in the response, then there are more items to retrieve. To get the next page in the subsequent GET request, include the header's value as the `page` query parameter. \n[Command Reference](listOdaPrivateEndpointAttachments)""")
 @cli_util.option('--oda-private-endpoint-id', required=True, help=u"""The [OCID] of ODA Private Endpoint.""")
-@cli_util.option('--compartment-id', required=True, help=u"""List the ODA Private Endpoint Attachments that belong to this compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""List the ODA Private Endpoint Attachments that belong to this compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.
 
@@ -3890,7 +3890,7 @@ def list_oda_private_endpoint_scan_proxies(ctx, from_json, all_pages, page_size,
 @oda_private_endpoint_group.command(name=cli_util.override('management.list_oda_private_endpoints.command_name', 'list'), help=u"""Returns a page of ODA Private Endpoints that belong to the specified compartment.
 
 If the `opc-next-page` header appears in the response, then there are more items to retrieve. To get the next page in the subsequent GET request, include the header's value as the `page` query parameter. \n[Command Reference](listOdaPrivateEndpoints)""")
-@cli_util.option('--compartment-id', required=True, help=u"""List the ODA Private Endpoints that belong to this compartment.""")
+@cli_util.option('--compartment-id', required=True, type=custom_types.CLI_OCID, help=u"""List the ODA Private Endpoints that belong to this compartment.""")
 @cli_util.option('--display-name', help=u"""List only the information for the Digital Assistant instance with this user-friendly name. These names don't have to be unique and may change.
 
 Example: `My new resource`""")
@@ -4868,7 +4868,7 @@ def update_channel_update_osvc_channel_details(ctx, from_json, force, wait_for_s
 @cli_util.option('--sasl-mechanism', help=u"""The SASL mechanmism to use when conecting to the Oracle Streaming Service. See Oracle Streaming Service documentation for a list of valid values.""")
 @cli_util.option('--tenancy-name', help=u"""The tenancy to use when connecting to the Oracle Streaming Service.""")
 @cli_util.option('--user-name', help=u"""The user name to use when connecting to the Oracle Streaming Service.""")
-@cli_util.option('--stream-pool-id', help=u"""The stream pool OCI to use when connecting to the Oracle Streaming Service.""")
+@cli_util.option('--stream-pool-id', type=custom_types.CLI_OCID, help=u"""The stream pool OCI to use when connecting to the Oracle Streaming Service.""")
 @cli_util.option('--auth-token', help=u"""The authentication token to use when connecting to the Oracle Streaming Service.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control in a PUT or DELETE call for a Digital Assistant instance, set the `if-match` query parameter to the value of the `ETAG` header from a previous GET or POST response for that instance. The service updates or deletes the instance only if the etag that you provide matches the instance's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
