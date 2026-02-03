@@ -624,15 +624,16 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'generative_ai', 'class': 'list[string]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'generative_ai', 'class': 'list[string]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'generative_ai', 'class': 'list[string]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'GenerativeAiPrivateEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'generative_ai', 'class': 'list[string]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'GenerativeAiPrivateEndpoint'})
 @cli_util.wrap_exceptions
-def create_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, dns_prefix, description, display_name, nsg_ids, is_allow_on_demand, freeform_tags, defined_tags):
+def create_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, dns_prefix, description, display_name, nsg_ids, is_allow_on_demand, freeform_tags, defined_tags, security_attributes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -659,6 +660,9 @@ def create_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
     result = client.create_generative_ai_private_endpoint(
@@ -704,7 +708,7 @@ The header contains an opc-work-request-id, which is the id for the WorkRequest 
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
 @cli_util.option('--vendor', help=u"""The provider of the imported model.""")
 @cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
-@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -795,7 +799,7 @@ The header contains an opc-work-request-id, which is the id for the WorkRequest 
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
 @cli_util.option('--vendor', help=u"""The provider of the imported model.""")
 @cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
-@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -893,7 +897,7 @@ The header contains an opc-work-request-id, which is the id for the WorkRequest 
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
 @cli_util.option('--vendor', help=u"""The provider of the imported model.""")
 @cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
-@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1833,7 +1837,7 @@ def list_generative_ai_private_endpoints(ctx, from_json, all_pages, page_size, c
 @imported_model_collection_group.command(name=cli_util.override('generative_ai.list_imported_models.command_name', 'list-imported-models'), help=u"""Lists imported models in a specific compartment. \n[Command Reference](listImportedModels)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--vendor', help=u"""A filter to return only resources that match the entire vendor given.""")
-@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
+@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The ID of the importedModel.""")
@@ -1902,7 +1906,7 @@ def list_imported_models(ctx, from_json, all_pages, page_size, compartment_id, v
 @model_collection_group.command(name=cli_util.override('generative_ai.list_models.command_name', 'list-models'), help=u"""Lists the models in a specific compartment. Includes pretrained base models and fine-tuned custom models. \n[Command Reference](listModels)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--vendor', help=u"""A filter to return only resources that match the entire vendor given.""")
-@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_GENERATION", "TEXT_SUMMARIZATION", "TEXT_EMBEDDINGS", "FINE_TUNE", "CHAT", "TEXT_RERANK"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
+@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_GENERATION", "TEXT_SUMMARIZATION", "TEXT_EMBEDDINGS", "FINE_TUNE", "CHAT", "TEXT_RERANK", "TEXT_TO_IMAGE"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The ID of the model.""")
@@ -2566,23 +2570,24 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'generative_ai', 'class': 'list[string]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'generative_ai', 'class': 'list[string]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'generative_ai', 'class': 'list[string]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'GenerativeAiPrivateEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'generative_ai', 'class': 'list[string]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'GenerativeAiPrivateEndpoint'})
 @cli_util.wrap_exceptions
-def update_generative_ai_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_private_endpoint_id, description, display_name, dns_prefix, nsg_ids, is_allow_on_demand, freeform_tags, defined_tags, if_match):
+def update_generative_ai_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_private_endpoint_id, description, display_name, dns_prefix, nsg_ids, is_allow_on_demand, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(generative_ai_private_endpoint_id, six.string_types) and len(generative_ai_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-private-endpoint-id cannot be whitespace or empty string')
     if not force:
-        if nsg_ids or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if nsg_ids or freeform_tags or defined_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2612,6 +2617,9 @@ def update_generative_ai_private_endpoint(ctx, from_json, force, wait_for_state,
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
     result = client.update_generative_ai_private_endpoint(

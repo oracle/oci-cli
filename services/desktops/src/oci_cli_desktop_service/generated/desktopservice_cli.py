@@ -172,6 +172,7 @@ def change_desktop_pool_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of network security groups for the private access.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-access-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--boot-volume-size-in-gbs', type=click.INT, help=u"""The size in GBs of the boot volume for the desktop pool.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -180,7 +181,7 @@ def change_desktop_pool_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'desktops', 'class': 'CreateDesktopPoolShapeConfigDetails'}, 'device-policy': {'module': 'desktops', 'class': 'DesktopDevicePolicy'}, 'availability-policy': {'module': 'desktops', 'class': 'DesktopAvailabilityPolicy'}, 'image': {'module': 'desktops', 'class': 'DesktopImage'}, 'network-configuration': {'module': 'desktops', 'class': 'DesktopNetworkConfiguration'}, 'session-lifecycle-actions': {'module': 'desktops', 'class': 'CreateDesktopPoolDesktopSessionLifecycleActions'}, 'freeform-tags': {'module': 'desktops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'desktops', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'desktops', 'class': 'list[string]'}, 'private-access-details': {'module': 'desktops', 'class': 'CreateDesktopPoolPrivateAccessDetails'}}, output_type={'module': 'desktops', 'class': 'DesktopPool'})
 @cli_util.wrap_exceptions
-def create_desktop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, maximum_size, standby_size, shape_name, is_storage_enabled, storage_size_in_gbs, storage_backup_policy_id, device_policy, availability_policy, image, network_configuration, contact_details, are_privileged_users, availability_domain, description, shape_config, use_dedicated_vm_host, session_lifecycle_actions, time_start_scheduled, time_stop_scheduled, freeform_tags, defined_tags, nsg_ids, private_access_details):
+def create_desktop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, maximum_size, standby_size, shape_name, is_storage_enabled, storage_size_in_gbs, storage_backup_policy_id, device_policy, availability_policy, image, network_configuration, contact_details, are_privileged_users, availability_domain, description, shape_config, use_dedicated_vm_host, session_lifecycle_actions, time_start_scheduled, time_stop_scheduled, freeform_tags, defined_tags, nsg_ids, private_access_details, boot_volume_size_in_gbs):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -231,6 +232,9 @@ def create_desktop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if private_access_details is not None:
         _details['privateAccessDetails'] = cli_util.parse_json_parameter("private_access_details", private_access_details)
+
+    if boot_volume_size_in_gbs is not None:
+        _details['bootVolumeSizeInGBs'] = boot_volume_size_in_gbs
 
     client = cli_util.build_client('desktops', 'desktop_service', ctx)
     result = client.create_desktop_pool(
@@ -1227,23 +1231,25 @@ def update_desktop(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--session-lifecycle-actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--image', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--boot-volume-size-in-gbs', type=click.INT, help=u"""The size in GBs of the boot volume for the desktop pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'device-policy': {'module': 'desktops', 'class': 'DesktopDevicePolicy'}, 'availability-policy': {'module': 'desktops', 'class': 'DesktopAvailabilityPolicy'}, 'freeform-tags': {'module': 'desktops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'desktops', 'class': 'dict(str, dict(str, object))'}, 'session-lifecycle-actions': {'module': 'desktops', 'class': 'UpdateDesktopPoolDesktopSessionLifecycleActions'}})
+@json_skeleton_utils.get_cli_json_input_option({'device-policy': {'module': 'desktops', 'class': 'DesktopDevicePolicy'}, 'availability-policy': {'module': 'desktops', 'class': 'DesktopAvailabilityPolicy'}, 'freeform-tags': {'module': 'desktops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'desktops', 'class': 'dict(str, dict(str, object))'}, 'session-lifecycle-actions': {'module': 'desktops', 'class': 'UpdateDesktopPoolDesktopSessionLifecycleActions'}, 'image': {'module': 'desktops', 'class': 'UpdateDesktopImage'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'device-policy': {'module': 'desktops', 'class': 'DesktopDevicePolicy'}, 'availability-policy': {'module': 'desktops', 'class': 'DesktopAvailabilityPolicy'}, 'freeform-tags': {'module': 'desktops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'desktops', 'class': 'dict(str, dict(str, object))'}, 'session-lifecycle-actions': {'module': 'desktops', 'class': 'UpdateDesktopPoolDesktopSessionLifecycleActions'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'device-policy': {'module': 'desktops', 'class': 'DesktopDevicePolicy'}, 'availability-policy': {'module': 'desktops', 'class': 'DesktopAvailabilityPolicy'}, 'freeform-tags': {'module': 'desktops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'desktops', 'class': 'dict(str, dict(str, object))'}, 'session-lifecycle-actions': {'module': 'desktops', 'class': 'UpdateDesktopPoolDesktopSessionLifecycleActions'}, 'image': {'module': 'desktops', 'class': 'UpdateDesktopImage'}})
 @cli_util.wrap_exceptions
-def update_desktop_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_pool_id, display_name, description, maximum_size, standby_size, device_policy, availability_policy, contact_details, time_start_scheduled, time_stop_scheduled, freeform_tags, defined_tags, session_lifecycle_actions, if_match):
+def update_desktop_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_pool_id, display_name, description, maximum_size, standby_size, device_policy, availability_policy, contact_details, time_start_scheduled, time_stop_scheduled, freeform_tags, defined_tags, session_lifecycle_actions, image, boot_volume_size_in_gbs, if_match):
 
     if isinstance(desktop_pool_id, six.string_types) and len(desktop_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-pool-id cannot be whitespace or empty string')
     if not force:
-        if device_policy or availability_policy or freeform_tags or defined_tags or session_lifecycle_actions:
-            if not click.confirm("WARNING: Updates to device-policy and availability-policy and freeform-tags and defined-tags and session-lifecycle-actions will replace any existing values. Are you sure you want to continue?"):
+        if device_policy or availability_policy or freeform_tags or defined_tags or session_lifecycle_actions or image:
+            if not click.confirm("WARNING: Updates to device-policy and availability-policy and freeform-tags and defined-tags and session-lifecycle-actions and image will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1288,6 +1294,12 @@ def update_desktop_pool(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
     if session_lifecycle_actions is not None:
         _details['sessionLifecycleActions'] = cli_util.parse_json_parameter("session_lifecycle_actions", session_lifecycle_actions)
+
+    if image is not None:
+        _details['image'] = cli_util.parse_json_parameter("image", image)
+
+    if boot_volume_size_in_gbs is not None:
+        _details['bootVolumeSizeInGBs'] = boot_volume_size_in_gbs
 
     client = cli_util.build_client('desktops', 'desktop_service', ctx)
     result = client.update_desktop_pool(

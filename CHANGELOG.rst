@@ -6,6 +6,142 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.73.2 - 2026-02-03
+-------------------
+Added
+~~~~~
+*  Generative AI Service
+  * Support for the new model capability.
+    * ``oci generative-ai imported-model create-from-huggingface --capabilites``
+    * ``oci generative-ai imported-model create-from-objectstorage --capabilities``
+    * ``oci generative-ai imported-model-collection list-imported-models --capability``
+    * ``oci generative-ai model-collection list-models --capability``
+
+  * Support for new optional parameter ``--security-attributes`` for the following commands
+      * ``oci generative-ai generative-ai-private-endpoint create``
+      * ``oci generative-ai generative-ai-private-endpoint update``
+
+* Database service
+  * Support for VM backup storage on Exascale
+    * ``oci db advanced-cluster-file-system update``
+    * ``oci db advanced-cluster-file-system unmount``
+    * ``oci db advanced-cluster-file-system mount``
+    * ``oci db advanced-cluster-file-system list``
+    * ``oci db advanced-cluster-file-system get``
+    * ``oci db advanced-cluster-file-system delete``
+    * ``oci db advanced-cluster-file-system create``
+
+* Secure Desktops Service
+  * Support for pool image update in the Secure Desktops service
+    * ``oci desktops desktop-pool update -—image``
+
+  * New disconnect lifecycle action, DELETE
+    * ``oci desktop-pool create --session-lifecycle-actions``
+
+  * Support for connection status in Secure Desktops service
+    * ``oci desktops desktop-pool list-desktops``
+    * ``oci desktops desktop list``
+    * ``oci desktops desktop get``
+
+  * Support for non persistent desktops in Secure Desktops service
+
+  * Support for boot volume sizing in the Secure Desktops service
+    * ``oci desktops desktop-pool create --boot-volume-size-in-gbs``
+
+  * Support for Video Input in Desktop as a Service
+    * ``oci desktops desktop-pool create --device-policy``
+    * ``oci desktops desktop-pool update --device-policy``
+
+
+* Core Service
+  *  Support for customers to view host correlation ID in compute host API list response
+    * ``oci compute compute-host list``
+
+* Management Dashboard service
+  * Add support of compartmentIdInSubtree to List APIs.
+    * ``oci management-dashboard dashboard list --compartment-id-in-subtree``
+    * ``oci management-dashboard saved-search list --compartment-id-in-subtree``
+
+* Log Analytics service
+  * Support for new optional parameter ``--source-name`` for the following commands
+    * ``oci log-analytics assoc list-entity-source-assocs``
+    * ``oci log-analytics assoc list-associated-entities``
+
+  * Support for new optional parameter ``--entity-name`` for the following command
+    * ``oci log-analytics assoc list-source-assocs``
+
+  * Support for new optional parameter ``--cloud-resource-id`` for the following command
+    * ``oci log-analytics entity update``
+
+  * Support for new optional parameter ``--is-compartment-delete`` for the following command
+    * ``oci log-analytics namespace list``
+
+  * Support for new optional parameter ``--variables`` for the following command
+    * ``oci log-analytics query search``
+
+  * Support for new optional parameter ``--description`` for the following commands
+    * ``oci log-analytics scheduled-task update``
+    * ``oci log-analytics scheduled-task create-standard-task``
+    * ``oci log-analytics scheduled-task create-acceleration-task``
+
+  * Support for new optional parameter ``--lifecycle-state`` for the following commands
+    * ``oci log-analytics source validate-source-extfield-details``
+    * ``oci log-analytics source list-sources``
+
+  * Support for new optional parameter ``--collection-id`` for the following commands
+    * ``oci log-analytics storage estimate-release-data-size``
+    * ``oci log-analytics storage estimate-recall-data-size``
+
+* Network Firewall Service
+  * Support for new optional parameter ``--description`` for the following commands
+    * ``oci network-firewall address-list create``
+    * ``oci network-firewall address-list update``
+    * ``oci network-firewall address-list update-address-list-update-fqdn-address-list-details``
+    * ``oci network-firewall address-list update-address-list-update-ip-address-list-details``
+    * ``oci network-firewall application create``
+    * ``oci network-firewall application update``
+    * ``oci network-firewall application-group create``
+    * ``oci network-firewall application-group update``
+    * ``oci network-firewall decryption-profile create``
+    * ``oci network-firewall decryption-profile update``
+    * ``oci network-firewall decryption-rule create``
+    * ``oci network-firewall decryption-rule update``
+    * ``oci network-firewall mapped-secret create``
+    * ``oci network-firewall mapped-secret update``
+    * ``oci network-firewall network-firewall-policy clone``
+    * ``oci network-firewall network-firewall-policy create``
+    * ``oci network-firewall network-firewall-policy update``
+    * ``oci network-firewall security-rule create``
+    * ``oci network-firewall security-rule update``
+    * ``oci network-firewall service create``
+    * ``oci network-firewall service update``
+    * ``oci network-firewall service-list create``
+    * ``oci network-firewall service-list update``
+    * ``oci network-firewall tunnel-inspection-rule create``
+    * ``oci network-firewall tunnel-inspection-rule update``
+    * ``oci network-firewall url-list create``
+    * ``oci network-firewall url-list update``
+
+  * Support for new optional parameter ``--shape`` for the following commands
+      * ``oci network-firewall network-firewall update``
+      * ``oci network-firewall network-firewall create``
+
+* Database service
+  * Support for new optional parameter ``--total-vm-storage-in-gbs`` for the following commands
+    * ``oci db cloud-exa-infra configure-exascale``
+    * ``oci db exadata-infrastructure configure-exascale``
+
+  * Support for new optional parameter ``--vm-file-system-storage-type`` for the following commands
+    * ``oci db vm-cluster create``
+    * ``oci db cloud-vm-cluster create``
+
+  * Support for new optional parameter ``--vm-backup-storage-type`` for the following commands
+    * ``oci db cloud-vm-cluster create``
+    * ``oci db cloud-vm-cluster update``
+    * ``oci db vm-cluster create``
+    * ``oci db vm-cluster update``
+
+
 3.73.1 - 2026-01-27
 -------------------
 Added

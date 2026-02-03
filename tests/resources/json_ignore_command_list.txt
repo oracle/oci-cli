@@ -582,3 +582,4 @@ queue, queue-admin, queue, create
 queue, queue-admin, queue, update
 compute, compute-host, get
 compute, compute-host, update
+log-analytics, query, search

@@ -343,11 +343,6 @@ service_mapping = {
         "Fusion Applications Environment Management",
         "Others"
     ],
-    "gdd": [
-        "globally_distributed_database",
-        "Globally Distributed Database",
-        "Others"
-    ],
     "generative-ai": [
         "generative_ai",
         "Generative AI Service Management",
@@ -549,7 +544,7 @@ service_mapping = {
         "Databases"
     ],
     "occ": [
-        "occ",
+        "oci_control_center",
         "OCI Control Center",
         "Others"
     ],

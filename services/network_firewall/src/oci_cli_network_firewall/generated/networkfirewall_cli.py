@@ -106,7 +106,7 @@ def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('network_firewall.nat_rule_group.command_name', 'nat-rule'), cls=CommandGroupWithAlias, help="""A Nat Rule is used to define to which traffic NAT should be applied by the firewall.""")
+@click.command(cli_util.override('network_firewall.nat_rule_group.command_name', 'nat-rule'), cls=CommandGroupWithAlias, help="""A [NAT rule] defines which traffic NAT should be applied to by the firewall.""")
 @cli_util.help_option_group
 def nat_rule_group():
     pass
@@ -572,9 +572,9 @@ def bulk_upload_mapped_secrets(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@nat_rule_group.command(name=cli_util.override('network_firewall.bulk_upload_nat_rules.command_name', 'bulk-upload'), help=u"""Creates a new NAT Rule at bulk for the Network Firewall Policy. \n[Command Reference](bulkUploadNatRules)""")
+@nat_rule_group.command(name=cli_util.override('network_firewall.bulk_upload_nat_rules.command_name', 'bulk-upload'), help=u"""Creates a new [NAT rule] at bulk for the Network Firewall policy. \n[Command Reference](bulkUploadNatRules)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
-@cli_util.option('--bulk-upload-nat-rules-details', required=True, help=u"""Request Details to create the NAT Rule for the Network Firewall Policy Resource.""")
+@cli_util.option('--bulk-upload-nat-rules-details', required=True, help=u"""Request details to create the NAT rule for the Network Firewall policy resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "NEEDS_ATTENTION", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1060,6 +1060,7 @@ def change_network_firewall_policy_compartment(ctx, from_json, network_firewall_
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly optional name for the cloned firewall policy. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the NetworkFirewall Policy.""")
+@cli_util.option('--description', help=u"""The description of the network firewall policy. This field can be used to add additional info.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1071,7 +1072,7 @@ def change_network_firewall_policy_compartment(ctx, from_json, network_firewall_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'network_firewall', 'class': 'NetworkFirewallPolicy'})
 @cli_util.wrap_exceptions
-def clone_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, display_name, compartment_id, freeform_tags, defined_tags, if_match):
+def clone_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, display_name, compartment_id, description, freeform_tags, defined_tags, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1088,6 +1089,9 @@ def clone_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_secon
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
+
+    if description is not None:
+        _details['description'] = description
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1136,12 +1140,13 @@ def clone_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--name', required=True, help=u"""Unique name to identify the group of addresses to be used in the policy rules.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FQDN", "IP"]), help=u"""Type of address List. The accepted values are - * FQDN * IP""")
 @cli_util.option('--addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the address list. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({'addresses': {'module': 'network_firewall', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'addresses': {'module': 'network_firewall', 'class': 'list[string]'}}, output_type={'module': 'network_firewall', 'class': 'AddressList'})
 @cli_util.wrap_exceptions
-def create_address_list(ctx, from_json, network_firewall_policy_id, name, type, addresses):
+def create_address_list(ctx, from_json, network_firewall_policy_id, name, type, addresses, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1153,6 +1158,9 @@ def create_address_list(ctx, from_json, network_firewall_policy_id, name, type, 
     _details['name'] = name
     _details['type'] = type
     _details['addresses'] = cli_util.parse_json_parameter("addresses", addresses)
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_address_list(
@@ -1167,12 +1175,13 @@ def create_address_list(ctx, from_json, network_firewall_policy_id, name, type, 
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the application""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ICMP", "ICMP_V6"]), help=u"""Describes the type of Application.""")
+@cli_util.option('--description', help=u"""The description of the application. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application(ctx, from_json, network_firewall_policy_id, name, type):
+def create_application(ctx, from_json, network_firewall_policy_id, name, type, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1185,6 +1194,9 @@ def create_application(ctx, from_json, network_firewall_policy_id, name, type):
 
     if type is not None:
         _details['type'] = type
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_application(
@@ -1199,13 +1211,14 @@ def create_application(ctx, from_json, network_firewall_policy_id, name, type):
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the application""")
 @cli_util.option('--icmp-type', required=True, type=click.INT, help=u"""The value of the ICMP message Type field as defined by [RFC 792].""")
+@cli_util.option('--description', help=u"""The description of the application. This field can be used to add additional info.""")
 @cli_util.option('--icmp-code', type=click.INT, help=u"""The value of the ICMP message Code (subtype) field as defined by [RFC 792].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application_create_icmp_application_details(ctx, from_json, network_firewall_policy_id, name, icmp_type, icmp_code):
+def create_application_create_icmp_application_details(ctx, from_json, network_firewall_policy_id, name, icmp_type, description, icmp_code):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1216,6 +1229,9 @@ def create_application_create_icmp_application_details(ctx, from_json, network_f
     _details = {}
     _details['name'] = name
     _details['icmpType'] = icmp_type
+
+    if description is not None:
+        _details['description'] = description
 
     if icmp_code is not None:
         _details['icmpCode'] = icmp_code
@@ -1235,13 +1251,14 @@ def create_application_create_icmp_application_details(ctx, from_json, network_f
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the application""")
 @cli_util.option('--icmp-type', required=True, type=click.INT, help=u"""The value of the ICMP6 message Type field as defined by [RFC 4443].""")
+@cli_util.option('--description', help=u"""The description of the application. This field can be used to add additional info.""")
 @cli_util.option('--icmp-code', type=click.INT, help=u"""The value of the ICMP6 message Code (subtype) field as defined by [RFC 4443].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application_create_icmp6_application_details(ctx, from_json, network_firewall_policy_id, name, icmp_type, icmp_code):
+def create_application_create_icmp6_application_details(ctx, from_json, network_firewall_policy_id, name, icmp_type, description, icmp_code):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1252,6 +1269,9 @@ def create_application_create_icmp6_application_details(ctx, from_json, network_
     _details = {}
     _details['name'] = name
     _details['icmpType'] = icmp_type
+
+    if description is not None:
+        _details['description'] = description
 
     if icmp_code is not None:
         _details['icmpCode'] = icmp_code
@@ -1271,12 +1291,13 @@ def create_application_create_icmp6_application_details(ctx, from_json, network_
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the application Group.""")
 @cli_util.option('--apps', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of application names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the application list. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({'apps': {'module': 'network_firewall', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apps': {'module': 'network_firewall', 'class': 'list[string]'}}, output_type={'module': 'network_firewall', 'class': 'ApplicationGroup'})
 @cli_util.wrap_exceptions
-def create_application_group(ctx, from_json, network_firewall_policy_id, name, apps):
+def create_application_group(ctx, from_json, network_firewall_policy_id, name, apps, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1287,6 +1308,9 @@ def create_application_group(ctx, from_json, network_firewall_policy_id, name, a
     _details = {}
     _details['name'] = name
     _details['apps'] = cli_util.parse_json_parameter("apps", apps)
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_application_group(
@@ -1301,12 +1325,13 @@ def create_application_group(ctx, from_json, network_firewall_policy_id, name, a
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SSL_INBOUND_INSPECTION", "SSL_FORWARD_PROXY"]), help=u"""Describes the type of Decryption Profile SslForwardProxy or SslInboundInspection.""")
 @cli_util.option('--name', required=True, help=u"""Name of the decryption profile.""")
+@cli_util.option('--description', help=u"""The description of the decryption profile. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'DecryptionProfile'})
 @cli_util.wrap_exceptions
-def create_decryption_profile(ctx, from_json, network_firewall_policy_id, type, name):
+def create_decryption_profile(ctx, from_json, network_firewall_policy_id, type, name, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1317,6 +1342,9 @@ def create_decryption_profile(ctx, from_json, network_firewall_policy_id, type, 
     _details = {}
     _details['type'] = type
     _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_decryption_profile(
@@ -1330,6 +1358,7 @@ def create_decryption_profile(ctx, from_json, network_firewall_policy_id, type, 
 @decryption_profile_group.command(name=cli_util.override('network_firewall.create_decryption_profile_create_ssl_inbound_inspection_profile_details.command_name', 'create-decryption-profile-create-ssl-inbound-inspection-profile-details'), help=u"""Creates a new Decryption Profile for the Network Firewall Policy. \n[Command Reference](createDecryptionProfile)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the decryption profile.""")
+@cli_util.option('--description', help=u"""The description of the decryption profile. This field can be used to add additional info.""")
 @cli_util.option('--is-unsupported-version-blocked', type=click.BOOL, help=u"""Whether to block sessions if SSL version is not supported.""")
 @cli_util.option('--is-unsupported-cipher-blocked', type=click.BOOL, help=u"""Whether to block sessions if SSL cipher suite is not supported.""")
 @cli_util.option('--is-out-of-capacity-blocked', type=click.BOOL, help=u"""Whether to block sessions if the firewall is temporarily unable to decrypt their traffic.""")
@@ -1338,7 +1367,7 @@ def create_decryption_profile(ctx, from_json, network_firewall_policy_id, type, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'DecryptionProfile'})
 @cli_util.wrap_exceptions
-def create_decryption_profile_create_ssl_inbound_inspection_profile_details(ctx, from_json, network_firewall_policy_id, name, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_out_of_capacity_blocked):
+def create_decryption_profile_create_ssl_inbound_inspection_profile_details(ctx, from_json, network_firewall_policy_id, name, description, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_out_of_capacity_blocked):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1348,6 +1377,9 @@ def create_decryption_profile_create_ssl_inbound_inspection_profile_details(ctx,
 
     _details = {}
     _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
 
     if is_unsupported_version_blocked is not None:
         _details['isUnsupportedVersionBlocked'] = is_unsupported_version_blocked
@@ -1372,6 +1404,7 @@ def create_decryption_profile_create_ssl_inbound_inspection_profile_details(ctx,
 @decryption_profile_group.command(name=cli_util.override('network_firewall.create_decryption_profile_create_ssl_forward_proxy_profile_details.command_name', 'create-decryption-profile-create-ssl-forward-proxy-profile-details'), help=u"""Creates a new Decryption Profile for the Network Firewall Policy. \n[Command Reference](createDecryptionProfile)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the decryption profile.""")
+@cli_util.option('--description', help=u"""The description of the decryption profile. This field can be used to add additional info.""")
 @cli_util.option('--is-expired-certificate-blocked', type=click.BOOL, help=u"""Whether to block sessions if server's certificate is expired.""")
 @cli_util.option('--is-untrusted-issuer-blocked', type=click.BOOL, help=u"""Whether to block sessions if server's certificate is issued by an untrusted certificate authority (CA).""")
 @cli_util.option('--is-revocation-status-timeout-blocked', type=click.BOOL, help=u"""Whether to block sessions if the revocation status check for server's certificate does not succeed within the maximum allowed time (defaulting to 5 seconds).""")
@@ -1386,7 +1419,7 @@ def create_decryption_profile_create_ssl_inbound_inspection_profile_details(ctx,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'DecryptionProfile'})
 @cli_util.wrap_exceptions
-def create_decryption_profile_create_ssl_forward_proxy_profile_details(ctx, from_json, network_firewall_policy_id, name, is_expired_certificate_blocked, is_untrusted_issuer_blocked, is_revocation_status_timeout_blocked, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_unknown_revocation_status_blocked, are_certificate_extensions_restricted, is_auto_include_alt_name, is_out_of_capacity_blocked):
+def create_decryption_profile_create_ssl_forward_proxy_profile_details(ctx, from_json, network_firewall_policy_id, name, description, is_expired_certificate_blocked, is_untrusted_issuer_blocked, is_revocation_status_timeout_blocked, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_unknown_revocation_status_blocked, are_certificate_extensions_restricted, is_auto_include_alt_name, is_out_of_capacity_blocked):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1396,6 +1429,9 @@ def create_decryption_profile_create_ssl_forward_proxy_profile_details(ctx, from
 
     _details = {}
     _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
 
     if is_expired_certificate_blocked is not None:
         _details['isExpiredCertificateBlocked'] = is_expired_certificate_blocked
@@ -1442,6 +1478,7 @@ def create_decryption_profile_create_ssl_forward_proxy_profile_details(ctx, from
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["NO_DECRYPT", "DECRYPT"]), help=u"""Action:
 
 * NO_DECRYPT - Matching traffic is not decrypted. * DECRYPT - Matching traffic is decrypted with the specified `secret` according to the specified `decryptionProfile`.""")
+@cli_util.option('--description', help=u"""The description of the decryption rule. This field can be used to add additional info.""")
 @cli_util.option('--decryption-profile', help=u"""The name of the decryption profile to use.""")
 @cli_util.option('--secret', help=u"""The name of a mapped secret. Its `type` must match that of the specified decryption profile.""")
 @cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1450,7 +1487,7 @@ def create_decryption_profile_create_ssl_forward_proxy_profile_details(ctx, from
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'condition': {'module': 'network_firewall', 'class': 'DecryptionRuleMatchCriteria'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'DecryptionRule'})
 @cli_util.wrap_exceptions
-def create_decryption_rule(ctx, from_json, network_firewall_policy_id, name, condition, action, decryption_profile, secret, position):
+def create_decryption_rule(ctx, from_json, network_firewall_policy_id, name, condition, action, description, decryption_profile, secret, position):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1462,6 +1499,9 @@ def create_decryption_rule(ctx, from_json, network_firewall_policy_id, name, con
     _details['name'] = name
     _details['condition'] = cli_util.parse_json_parameter("condition", condition)
     _details['action'] = action
+
+    if description is not None:
+        _details['description'] = description
 
     if decryption_profile is not None:
         _details['decryptionProfile'] = decryption_profile
@@ -1488,12 +1528,13 @@ def create_decryption_rule(ctx, from_json, network_firewall_policy_id, name, con
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SSL_INBOUND_INSPECTION", "SSL_FORWARD_PROXY"]), help=u"""Type of the secrets mapped based on the policy.
 
 * `SSL_INBOUND_INSPECTION`: For Inbound inspection of SSL traffic. * `SSL_FORWARD_PROXY`: For forward proxy certificates for SSL inspection.""")
+@cli_util.option('--description', help=u"""The description of the mapped secret. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'MappedSecret'})
 @cli_util.wrap_exceptions
-def create_mapped_secret(ctx, from_json, network_firewall_policy_id, name, source, type):
+def create_mapped_secret(ctx, from_json, network_firewall_policy_id, name, source, type, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1505,6 +1546,9 @@ def create_mapped_secret(ctx, from_json, network_firewall_policy_id, name, sourc
     _details['name'] = name
     _details['source'] = source
     _details['type'] = type
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_mapped_secret(
@@ -1523,12 +1567,13 @@ def create_mapped_secret(ctx, from_json, network_firewall_policy_id, name, sourc
 * `SSL_INBOUND_INSPECTION`: For Inbound inspection of SSL traffic. * `SSL_FORWARD_PROXY`: For forward proxy certificates for SSL inspection.""")
 @cli_util.option('--vault-secret-id', required=True, help=u"""OCID for the Vault Secret to be used.""")
 @cli_util.option('--version-number', required=True, type=click.INT, help=u"""Version number of the secret to be used.""")
+@cli_util.option('--description', help=u"""The description of the mapped secret. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'MappedSecret'})
 @cli_util.wrap_exceptions
-def create_mapped_secret_create_vault_mapped_secret_details(ctx, from_json, network_firewall_policy_id, name, type, vault_secret_id, version_number):
+def create_mapped_secret_create_vault_mapped_secret_details(ctx, from_json, network_firewall_policy_id, name, type, vault_secret_id, version_number, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1542,6 +1587,9 @@ def create_mapped_secret_create_vault_mapped_secret_details(ctx, from_json, netw
     _details['vaultSecretId'] = vault_secret_id
     _details['versionNumber'] = version_number
 
+    if description is not None:
+        _details['description'] = description
+
     _details['source'] = 'OCI_VAULT'
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
@@ -1553,7 +1601,7 @@ def create_mapped_secret_create_vault_mapped_secret_details(ctx, from_json, netw
     cli_util.render_response(result, ctx)
 
 
-@nat_rule_group.command(name=cli_util.override('network_firewall.create_nat_rule.command_name', 'create'), help=u"""Creates a new NAT Rule for the Network Firewall Policy. \n[Command Reference](createNatRule)""")
+@nat_rule_group.command(name=cli_util.override('network_firewall.create_nat_rule.command_name', 'create'), help=u"""Creates a new [NAT rule] for the Network Firewall policy. \n[Command Reference](createNatRule)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name for the NAT rule, must be unique within the policy.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NATV4"]), help=u"""NAT type:
@@ -1593,7 +1641,7 @@ def create_nat_rule(ctx, from_json, network_firewall_policy_id, name, type, desc
     cli_util.render_response(result, ctx)
 
 
-@nat_rule_group.command(name=cli_util.override('network_firewall.create_nat_rule_create_nat_v4_rule_details.command_name', 'create-nat-rule-create-nat-v4-rule-details'), help=u"""Creates a new NAT Rule for the Network Firewall Policy. \n[Command Reference](createNatRule)""")
+@nat_rule_group.command(name=cli_util.override('network_firewall.create_nat_rule_create_nat_v4_rule_details.command_name', 'create-nat-rule-create-nat-v4-rule-details'), help=u"""Creates a new [NAT rule] for the Network Firewall policy. \n[Command Reference](createNatRule)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name for the NAT rule, must be unique within the policy.""")
 @cli_util.option('--condition', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1647,6 +1695,7 @@ def create_nat_rule_create_nat_v4_rule_details(ctx, from_json, network_firewall_
 @cli_util.option('--ipv6-address', help=u"""IPv6 address for the Network Firewall.""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security groups [OCID] associated with the Network Firewall.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nat-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of a firewall to determine the bandwidth that the firewall allows.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "NEEDS_ATTENTION", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1657,7 +1706,7 @@ def create_nat_rule_create_nat_v4_rule_details(ctx, from_json, network_firewall_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'network_firewall', 'class': 'NetworkFirewall'})
 @cli_util.wrap_exceptions
-def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, network_firewall_policy_id, display_name, availability_domain, ipv4_address, ipv6_address, network_security_group_ids, nat_configuration, freeform_tags, defined_tags):
+def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, network_firewall_policy_id, display_name, availability_domain, ipv4_address, ipv6_address, network_security_group_ids, nat_configuration, shape, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1684,6 +1733,9 @@ def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if nat_configuration is not None:
         _details['natConfiguration'] = cli_util.parse_json_parameter("nat_configuration", nat_configuration)
+
+    if shape is not None:
+        _details['shape'] = shape
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1729,6 +1781,7 @@ def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @network_firewall_policy_group.command(name=cli_util.override('network_firewall.create_network_firewall_policy.command_name', 'create'), help=u"""Creates a new Network Firewall Policy. \n[Command Reference](createNetworkFirewallPolicy)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the NetworkFirewall Policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly optional name for the firewall policy. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""The description of the network firewall policy. This field can be used to add additional info.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "NEEDS_ATTENTION", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1739,7 +1792,7 @@ def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'network_firewall', 'class': 'NetworkFirewallPolicy'})
 @cli_util.wrap_exceptions
-def create_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, freeform_tags, defined_tags):
+def create_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1749,6 +1802,9 @@ def create_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seco
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1802,12 +1858,13 @@ def create_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seco
 
   * INTRUSION_DETECTION - Intrusion Detection.   * INTRUSION_PREVENTION - Intrusion Detection and Prevention. Traffic classified as potentially malicious will be rejected as described in `type`.""")
 @cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the security rule. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({'condition': {'module': 'network_firewall', 'class': 'SecurityRuleMatchCriteria'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'condition': {'module': 'network_firewall', 'class': 'SecurityRuleMatchCriteria'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'SecurityRule'})
 @cli_util.wrap_exceptions
-def create_security_rule(ctx, from_json, network_firewall_policy_id, name, condition, action, inspection, position):
+def create_security_rule(ctx, from_json, network_firewall_policy_id, name, condition, action, inspection, position, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1826,6 +1883,9 @@ def create_security_rule(ctx, from_json, network_firewall_policy_id, name, condi
     if position is not None:
         _details['position'] = cli_util.parse_json_parameter("position", position)
 
+    if description is not None:
+        _details['description'] = description
+
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_security_rule(
         network_firewall_policy_id=network_firewall_policy_id,
@@ -1839,12 +1899,13 @@ def create_security_rule(ctx, from_json, network_firewall_policy_id, name, condi
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the service""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["TCP_SERVICE", "UDP_SERVICE"]), help=u"""Describes the type of Service.""")
+@cli_util.option('--description', help=u"""The description of the service. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'Service'})
 @cli_util.wrap_exceptions
-def create_service(ctx, from_json, network_firewall_policy_id, name, type):
+def create_service(ctx, from_json, network_firewall_policy_id, name, type, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1857,6 +1918,9 @@ def create_service(ctx, from_json, network_firewall_policy_id, name, type):
 
     if type is not None:
         _details['type'] = type
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_service(
@@ -1871,12 +1935,13 @@ def create_service(ctx, from_json, network_firewall_policy_id, name, type):
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the service""")
 @cli_util.option('--port-ranges', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of port-ranges to be used.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the service. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({'port-ranges': {'module': 'network_firewall', 'class': 'list[PortRange]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'port-ranges': {'module': 'network_firewall', 'class': 'list[PortRange]'}}, output_type={'module': 'network_firewall', 'class': 'Service'})
 @cli_util.wrap_exceptions
-def create_service_create_udp_service_details(ctx, from_json, network_firewall_policy_id, name, port_ranges):
+def create_service_create_udp_service_details(ctx, from_json, network_firewall_policy_id, name, port_ranges, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1887,6 +1952,9 @@ def create_service_create_udp_service_details(ctx, from_json, network_firewall_p
     _details = {}
     _details['name'] = name
     _details['portRanges'] = cli_util.parse_json_parameter("port_ranges", port_ranges)
+
+    if description is not None:
+        _details['description'] = description
 
     _details['type'] = 'UDP_SERVICE'
 
@@ -1903,12 +1971,13 @@ def create_service_create_udp_service_details(ctx, from_json, network_firewall_p
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the service""")
 @cli_util.option('--port-ranges', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of port-ranges used.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the service. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({'port-ranges': {'module': 'network_firewall', 'class': 'list[PortRange]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'port-ranges': {'module': 'network_firewall', 'class': 'list[PortRange]'}}, output_type={'module': 'network_firewall', 'class': 'Service'})
 @cli_util.wrap_exceptions
-def create_service_create_tcp_service_details(ctx, from_json, network_firewall_policy_id, name, port_ranges):
+def create_service_create_tcp_service_details(ctx, from_json, network_firewall_policy_id, name, port_ranges, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1919,6 +1988,9 @@ def create_service_create_tcp_service_details(ctx, from_json, network_firewall_p
     _details = {}
     _details['name'] = name
     _details['portRanges'] = cli_util.parse_json_parameter("port_ranges", port_ranges)
+
+    if description is not None:
+        _details['description'] = description
 
     _details['type'] = 'TCP_SERVICE'
 
@@ -1935,12 +2007,13 @@ def create_service_create_tcp_service_details(ctx, from_json, network_firewall_p
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the service Group.""")
 @cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of service names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the service list. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({'services': {'module': 'network_firewall', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'services': {'module': 'network_firewall', 'class': 'list[string]'}}, output_type={'module': 'network_firewall', 'class': 'ServiceList'})
 @cli_util.wrap_exceptions
-def create_service_list(ctx, from_json, network_firewall_policy_id, name, services):
+def create_service_list(ctx, from_json, network_firewall_policy_id, name, services, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1951,6 +2024,9 @@ def create_service_list(ctx, from_json, network_firewall_policy_id, name, servic
     _details = {}
     _details['name'] = name
     _details['services'] = cli_util.parse_json_parameter("services", services)
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_service_list(
@@ -1971,12 +2047,13 @@ def create_service_list(ctx, from_json, network_firewall_policy_id, name, servic
 
   * INSPECT - Inspect the traffic.   * INSPECT_AND_CAPTURE_LOG - Inspect and capture logs for the traffic.""")
 @cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the tunnel inspect rule. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({'position': {'module': 'network_firewall', 'class': 'RulePosition'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'TunnelInspectionRule'})
 @cli_util.wrap_exceptions
-def create_tunnel_inspection_rule(ctx, from_json, network_firewall_policy_id, name, protocol, action, position):
+def create_tunnel_inspection_rule(ctx, from_json, network_firewall_policy_id, name, protocol, action, position, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1993,6 +2070,9 @@ def create_tunnel_inspection_rule(ctx, from_json, network_firewall_policy_id, na
 
     if position is not None:
         _details['position'] = cli_util.parse_json_parameter("position", position)
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_tunnel_inspection_rule(
@@ -2011,13 +2091,14 @@ def create_tunnel_inspection_rule(ctx, from_json, network_firewall_policy_id, na
 
   * INSPECT - Inspect the traffic.   * INSPECT_AND_CAPTURE_LOG - Inspect and capture logs for the traffic.""")
 @cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the tunnel inspect rule. This field can be used to add additional info.""")
 @cli_util.option('--profile-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'position': {'module': 'network_firewall', 'class': 'RulePosition'}, 'condition': {'module': 'network_firewall', 'class': 'VxlanInspectionRuleMatchCriteria'}, 'profile-parameterconflict': {'module': 'network_firewall', 'class': 'VxlanInspectionRuleProfile'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'position': {'module': 'network_firewall', 'class': 'RulePosition'}, 'condition': {'module': 'network_firewall', 'class': 'VxlanInspectionRuleMatchCriteria'}, 'profile-parameterconflict': {'module': 'network_firewall', 'class': 'VxlanInspectionRuleProfile'}}, output_type={'module': 'network_firewall', 'class': 'TunnelInspectionRule'})
 @cli_util.wrap_exceptions
-def create_tunnel_inspection_rule_create_vxlan_inspection_rule_details(ctx, from_json, network_firewall_policy_id, name, condition, action, position, profile_parameterconflict):
+def create_tunnel_inspection_rule_create_vxlan_inspection_rule_details(ctx, from_json, network_firewall_policy_id, name, condition, action, position, description, profile_parameterconflict):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -2034,6 +2115,9 @@ def create_tunnel_inspection_rule_create_vxlan_inspection_rule_details(ctx, from
 
     if position is not None:
         _details['position'] = cli_util.parse_json_parameter("position", position)
+
+    if description is not None:
+        _details['description'] = description
 
     if profile_parameterconflict is not None:
         _details['profile'] = cli_util.parse_json_parameter("profile_parameterconflict", profile_parameterconflict)
@@ -2053,12 +2137,13 @@ def create_tunnel_inspection_rule_create_vxlan_inspection_rule_details(ctx, from
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Unique name to identify the group of urls to be used in the policy rules.""")
 @cli_util.option('--urls', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of urls.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the Url list. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({'urls': {'module': 'network_firewall', 'class': 'list[UrlPattern]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'urls': {'module': 'network_firewall', 'class': 'list[UrlPattern]'}}, output_type={'module': 'network_firewall', 'class': 'UrlList'})
 @cli_util.wrap_exceptions
-def create_url_list(ctx, from_json, network_firewall_policy_id, name, urls):
+def create_url_list(ctx, from_json, network_firewall_policy_id, name, urls, description):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -2069,6 +2154,9 @@ def create_url_list(ctx, from_json, network_firewall_policy_id, name, urls):
     _details = {}
     _details['name'] = name
     _details['urls'] = cli_util.parse_json_parameter("urls", urls)
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_url_list(
@@ -2265,9 +2353,9 @@ def delete_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secr
     cli_util.render_response(result, ctx)
 
 
-@nat_rule_group.command(name=cli_util.override('network_firewall.delete_nat_rule.command_name', 'delete'), help=u"""Deletes a NAT Rule resource with the given identifier. \n[Command Reference](deleteNatRule)""")
+@nat_rule_group.command(name=cli_util.override('network_firewall.delete_nat_rule.command_name', 'delete'), help=u"""Deletes a [NAT rule] resource with the given identifier. \n[Command Reference](deleteNatRule)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
-@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT Rules in the network firewall policy.""")
+@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT rules in the Network Firewall policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2743,9 +2831,9 @@ def get_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secret_
     cli_util.render_response(result, ctx)
 
 
-@nat_rule_group.command(name=cli_util.override('network_firewall.get_nat_rule.command_name', 'get'), help=u"""Get NAT Rule by the given name in the context of network firewall policy. \n[Command Reference](getNatRule)""")
+@nat_rule_group.command(name=cli_util.override('network_firewall.get_nat_rule.command_name', 'get'), help=u"""Get a [NAT rule] by the given name in the context of Network Firewall policy. \n[Command Reference](getNatRule)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
-@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT Rules in the network firewall policy.""")
+@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT rules in the Network Firewall policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3340,14 +3428,14 @@ def list_mapped_secrets(ctx, from_json, all_pages, page_size, network_firewall_p
     cli_util.render_response(result, ctx)
 
 
-@nat_rule_group.command(name=cli_util.override('network_firewall.list_nat_rules.command_name', 'list'), help=u"""Returns a list of NAT Rules for the Network Firewall Policy. \n[Command Reference](listNatRules)""")
+@nat_rule_group.command(name=cli_util.override('network_firewall.list_nat_rules.command_name', 'list'), help=u"""Returns a list of [NAT rules] for the Network Firewall policy. \n[Command Reference](listNatRules)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` or `opc-prev-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--nat-rule-priority-order', type=click.INT, help=u"""Unique priority order for NAT Rules in the network firewall policy.""")
+@cli_util.option('--nat-rule-priority-order', type=click.INT, help=u"""Unique priority order for NAT rules in the Network Firewall policy.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4079,13 +4167,14 @@ def migrate_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--address-list-name', required=True, help=u"""Unique identifier for address lists.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FQDN", "IP"]), help=u"""Type of address List. The accepted values are - * FQDN * IP""")
+@cli_util.option('--description', help=u"""The description of the address list. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'AddressList'})
 @cli_util.wrap_exceptions
-def update_address_list(ctx, from_json, network_firewall_policy_id, address_list_name, type, if_match):
+def update_address_list(ctx, from_json, network_firewall_policy_id, address_list_name, type, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4101,6 +4190,9 @@ def update_address_list(ctx, from_json, network_firewall_policy_id, address_list
     _details = {}
     _details['type'] = type
 
+    if description is not None:
+        _details['description'] = description
+
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_address_list(
         network_firewall_policy_id=network_firewall_policy_id,
@@ -4115,6 +4207,7 @@ def update_address_list(ctx, from_json, network_firewall_policy_id, address_list
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--address-list-name', required=True, help=u"""Unique identifier for address lists.""")
 @cli_util.option('--addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of FQDN addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the address list. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'addresses': {'module': 'network_firewall', 'class': 'list[string]'}})
@@ -4122,7 +4215,7 @@ def update_address_list(ctx, from_json, network_firewall_policy_id, address_list
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'addresses': {'module': 'network_firewall', 'class': 'list[string]'}}, output_type={'module': 'network_firewall', 'class': 'AddressList'})
 @cli_util.wrap_exceptions
-def update_address_list_update_fqdn_address_list_details(ctx, from_json, force, network_firewall_policy_id, address_list_name, addresses, if_match):
+def update_address_list_update_fqdn_address_list_details(ctx, from_json, force, network_firewall_policy_id, address_list_name, addresses, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4141,6 +4234,9 @@ def update_address_list_update_fqdn_address_list_details(ctx, from_json, force, 
 
     _details = {}
     _details['addresses'] = cli_util.parse_json_parameter("addresses", addresses)
+
+    if description is not None:
+        _details['description'] = description
 
     _details['type'] = 'FQDN'
 
@@ -4158,6 +4254,7 @@ def update_address_list_update_fqdn_address_list_details(ctx, from_json, force, 
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--address-list-name', required=True, help=u"""Unique identifier for address lists.""")
 @cli_util.option('--addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of IP addresses which could be IPv4 or IPv6 addresses or CIDR blocks.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the address list. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'addresses': {'module': 'network_firewall', 'class': 'list[string]'}})
@@ -4165,7 +4262,7 @@ def update_address_list_update_fqdn_address_list_details(ctx, from_json, force, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'addresses': {'module': 'network_firewall', 'class': 'list[string]'}}, output_type={'module': 'network_firewall', 'class': 'AddressList'})
 @cli_util.wrap_exceptions
-def update_address_list_update_ip_address_list_details(ctx, from_json, force, network_firewall_policy_id, address_list_name, addresses, if_match):
+def update_address_list_update_ip_address_list_details(ctx, from_json, force, network_firewall_policy_id, address_list_name, addresses, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4185,6 +4282,9 @@ def update_address_list_update_ip_address_list_details(ctx, from_json, force, ne
     _details = {}
     _details['addresses'] = cli_util.parse_json_parameter("addresses", addresses)
 
+    if description is not None:
+        _details['description'] = description
+
     _details['type'] = 'IP'
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
@@ -4201,13 +4301,14 @@ def update_address_list_update_ip_address_list_details(ctx, from_json, force, ne
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--application-name', required=True, help=u"""Unique identifier for Applications.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ICMP", "ICMP_V6"]), help=u"""Describes the type of Application.""")
+@cli_util.option('--description', help=u"""The description of the application. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application(ctx, from_json, network_firewall_policy_id, application_name, type, if_match):
+def update_application(ctx, from_json, network_firewall_policy_id, application_name, type, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4223,6 +4324,9 @@ def update_application(ctx, from_json, network_firewall_policy_id, application_n
     _details = {}
     _details['type'] = type
 
+    if description is not None:
+        _details['description'] = description
+
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_application(
         network_firewall_policy_id=network_firewall_policy_id,
@@ -4237,6 +4341,7 @@ def update_application(ctx, from_json, network_firewall_policy_id, application_n
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--application-name', required=True, help=u"""Unique identifier for Applications.""")
 @cli_util.option('--icmp-type', required=True, type=click.INT, help=u"""The value of the ICMP6 message Type field as defined by [RFC 4443].""")
+@cli_util.option('--description', help=u"""The description of the application. This field can be used to add additional info.""")
 @cli_util.option('--icmp-code', type=click.INT, help=u"""The value of the ICMP6 message Code (subtype) field as defined by [RFC 4443].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4244,7 +4349,7 @@ def update_application(ctx, from_json, network_firewall_policy_id, application_n
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application_update_icmp6_application_details(ctx, from_json, network_firewall_policy_id, application_name, icmp_type, icmp_code, if_match):
+def update_application_update_icmp6_application_details(ctx, from_json, network_firewall_policy_id, application_name, icmp_type, description, icmp_code, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4259,6 +4364,9 @@ def update_application_update_icmp6_application_details(ctx, from_json, network_
 
     _details = {}
     _details['icmpType'] = icmp_type
+
+    if description is not None:
+        _details['description'] = description
 
     if icmp_code is not None:
         _details['icmpCode'] = icmp_code
@@ -4279,6 +4387,7 @@ def update_application_update_icmp6_application_details(ctx, from_json, network_
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--application-name', required=True, help=u"""Unique identifier for Applications.""")
 @cli_util.option('--icmp-type', required=True, type=click.INT, help=u"""The value of the ICMP message Type field as defined by [RFC 792].""")
+@cli_util.option('--description', help=u"""The description of the application. This field can be used to add additional info.""")
 @cli_util.option('--icmp-code', type=click.INT, help=u"""The value of the ICMP message Code (subtype) field as defined by [RFC 792].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4286,7 +4395,7 @@ def update_application_update_icmp6_application_details(ctx, from_json, network_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application_update_icmp_application_details(ctx, from_json, network_firewall_policy_id, application_name, icmp_type, icmp_code, if_match):
+def update_application_update_icmp_application_details(ctx, from_json, network_firewall_policy_id, application_name, icmp_type, description, icmp_code, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4301,6 +4410,9 @@ def update_application_update_icmp_application_details(ctx, from_json, network_f
 
     _details = {}
     _details['icmpType'] = icmp_type
+
+    if description is not None:
+        _details['description'] = description
 
     if icmp_code is not None:
         _details['icmpCode'] = icmp_code
@@ -4321,6 +4433,7 @@ def update_application_update_icmp_application_details(ctx, from_json, network_f
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--application-group-name', required=True, help=u"""Unique name identifier for Application Lists in the scope of Network Firewall Policy.""")
 @cli_util.option('--apps', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of application names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the application list. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'apps': {'module': 'network_firewall', 'class': 'list[string]'}})
@@ -4328,7 +4441,7 @@ def update_application_update_icmp_application_details(ctx, from_json, network_f
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apps': {'module': 'network_firewall', 'class': 'list[string]'}}, output_type={'module': 'network_firewall', 'class': 'ApplicationGroup'})
 @cli_util.wrap_exceptions
-def update_application_group(ctx, from_json, force, network_firewall_policy_id, application_group_name, apps, if_match):
+def update_application_group(ctx, from_json, force, network_firewall_policy_id, application_group_name, apps, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4348,6 +4461,9 @@ def update_application_group(ctx, from_json, force, network_firewall_policy_id, 
     _details = {}
     _details['apps'] = cli_util.parse_json_parameter("apps", apps)
 
+    if description is not None:
+        _details['description'] = description
+
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_application_group(
         network_firewall_policy_id=network_firewall_policy_id,
@@ -4362,13 +4478,14 @@ def update_application_group(ctx, from_json, force, network_firewall_policy_id, 
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--decryption-profile-name', required=True, help=u"""Unique identifier for Decryption Profiles.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SSL_INBOUND_INSPECTION", "SSL_FORWARD_PROXY"]), help=u"""Describes the type of Decryption Profile SslForwardProxy or SslInboundInspection.""")
+@cli_util.option('--description', help=u"""The description of the decryption profile. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'DecryptionProfile'})
 @cli_util.wrap_exceptions
-def update_decryption_profile(ctx, from_json, network_firewall_policy_id, decryption_profile_name, type, if_match):
+def update_decryption_profile(ctx, from_json, network_firewall_policy_id, decryption_profile_name, type, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4384,6 +4501,9 @@ def update_decryption_profile(ctx, from_json, network_firewall_policy_id, decryp
     _details = {}
     _details['type'] = type
 
+    if description is not None:
+        _details['description'] = description
+
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_decryption_profile(
         network_firewall_policy_id=network_firewall_policy_id,
@@ -4397,6 +4517,7 @@ def update_decryption_profile(ctx, from_json, network_firewall_policy_id, decryp
 @decryption_profile_group.command(name=cli_util.override('network_firewall.update_decryption_profile_update_ssl_inbound_inspection_profile_details.command_name', 'update-decryption-profile-update-ssl-inbound-inspection-profile-details'), help=u"""Updates the Decryption Profile with the given name in the network firewall policy. \n[Command Reference](updateDecryptionProfile)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--decryption-profile-name', required=True, help=u"""Unique identifier for Decryption Profiles.""")
+@cli_util.option('--description', help=u"""The description of the decryption profile. This field can be used to add additional info.""")
 @cli_util.option('--is-unsupported-version-blocked', type=click.BOOL, help=u"""Whether to block sessions if SSL version is not supported.""")
 @cli_util.option('--is-unsupported-cipher-blocked', type=click.BOOL, help=u"""Whether to block sessions if SSL cipher suite is not supported.""")
 @cli_util.option('--is-out-of-capacity-blocked', type=click.BOOL, help=u"""Whether to block sessions if the firewall is temporarily unable to decrypt their traffic.""")
@@ -4406,7 +4527,7 @@ def update_decryption_profile(ctx, from_json, network_firewall_policy_id, decryp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'DecryptionProfile'})
 @cli_util.wrap_exceptions
-def update_decryption_profile_update_ssl_inbound_inspection_profile_details(ctx, from_json, network_firewall_policy_id, decryption_profile_name, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_out_of_capacity_blocked, if_match):
+def update_decryption_profile_update_ssl_inbound_inspection_profile_details(ctx, from_json, network_firewall_policy_id, decryption_profile_name, description, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_out_of_capacity_blocked, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4420,6 +4541,9 @@ def update_decryption_profile_update_ssl_inbound_inspection_profile_details(ctx,
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+
+    if description is not None:
+        _details['description'] = description
 
     if is_unsupported_version_blocked is not None:
         _details['isUnsupportedVersionBlocked'] = is_unsupported_version_blocked
@@ -4445,6 +4569,7 @@ def update_decryption_profile_update_ssl_inbound_inspection_profile_details(ctx,
 @decryption_profile_group.command(name=cli_util.override('network_firewall.update_decryption_profile_update_ssl_forward_proxy_profile_details.command_name', 'update-decryption-profile-update-ssl-forward-proxy-profile-details'), help=u"""Updates the Decryption Profile with the given name in the network firewall policy. \n[Command Reference](updateDecryptionProfile)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--decryption-profile-name', required=True, help=u"""Unique identifier for Decryption Profiles.""")
+@cli_util.option('--description', help=u"""The description of the decryption profile. This field can be used to add additional info.""")
 @cli_util.option('--is-expired-certificate-blocked', type=click.BOOL, help=u"""Whether to block sessions if server's certificate is expired.""")
 @cli_util.option('--is-untrusted-issuer-blocked', type=click.BOOL, help=u"""Whether to block sessions if server's certificate is issued by an untrusted certificate authority (CA).""")
 @cli_util.option('--is-revocation-status-timeout-blocked', type=click.BOOL, help=u"""Whether to block sessions if the revocation status check for server's certificate does not succeed within the maximum allowed time (defaulting to 5 seconds).""")
@@ -4460,7 +4585,7 @@ def update_decryption_profile_update_ssl_inbound_inspection_profile_details(ctx,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'DecryptionProfile'})
 @cli_util.wrap_exceptions
-def update_decryption_profile_update_ssl_forward_proxy_profile_details(ctx, from_json, network_firewall_policy_id, decryption_profile_name, is_expired_certificate_blocked, is_untrusted_issuer_blocked, is_revocation_status_timeout_blocked, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_unknown_revocation_status_blocked, are_certificate_extensions_restricted, is_auto_include_alt_name, is_out_of_capacity_blocked, if_match):
+def update_decryption_profile_update_ssl_forward_proxy_profile_details(ctx, from_json, network_firewall_policy_id, decryption_profile_name, description, is_expired_certificate_blocked, is_untrusted_issuer_blocked, is_revocation_status_timeout_blocked, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_unknown_revocation_status_blocked, are_certificate_extensions_restricted, is_auto_include_alt_name, is_out_of_capacity_blocked, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4474,6 +4599,9 @@ def update_decryption_profile_update_ssl_forward_proxy_profile_details(ctx, from
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+
+    if description is not None:
+        _details['description'] = description
 
     if is_expired_certificate_blocked is not None:
         _details['isExpiredCertificateBlocked'] = is_expired_certificate_blocked
@@ -4521,6 +4649,7 @@ def update_decryption_profile_update_ssl_forward_proxy_profile_details(ctx, from
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["NO_DECRYPT", "DECRYPT"]), help=u"""Action:
 
 * NO_DECRYPT - Matching traffic is not decrypted. * DECRYPT - Matching traffic is decrypted with the specified `secret` according to the specified `decryptionProfile`.""")
+@cli_util.option('--description', help=u"""The description of the decryption rule. This field can be used to add additional info.""")
 @cli_util.option('--decryption-profile', help=u"""The name of the decryption profile to use.""")
 @cli_util.option('--secret', help=u"""The name of a mapped secret. Its `type` must match that of the specified decryption profile.""")
 @cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4531,7 +4660,7 @@ def update_decryption_profile_update_ssl_forward_proxy_profile_details(ctx, from
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'condition': {'module': 'network_firewall', 'class': 'DecryptionRuleMatchCriteria'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'DecryptionRule'})
 @cli_util.wrap_exceptions
-def update_decryption_rule(ctx, from_json, force, network_firewall_policy_id, decryption_rule_name, condition, action, decryption_profile, secret, position, if_match):
+def update_decryption_rule(ctx, from_json, force, network_firewall_policy_id, decryption_rule_name, condition, action, description, decryption_profile, secret, position, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4551,6 +4680,9 @@ def update_decryption_rule(ctx, from_json, force, network_firewall_policy_id, de
     _details = {}
     _details['condition'] = cli_util.parse_json_parameter("condition", condition)
     _details['action'] = action
+
+    if description is not None:
+        _details['description'] = description
 
     if decryption_profile is not None:
         _details['decryptionProfile'] = decryption_profile
@@ -4578,13 +4710,14 @@ def update_decryption_rule(ctx, from_json, force, network_firewall_policy_id, de
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SSL_INBOUND_INSPECTION", "SSL_FORWARD_PROXY"]), help=u"""Type of the secrets mapped based on the policy.
 
  * `SSL_INBOUND_INSPECTION`: For Inbound inspection of SSL traffic.  * `SSL_FORWARD_PROXY`: For forward proxy certificates for SSL inspection.""")
+@cli_util.option('--description', help=u"""The description of the mapped secret. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'MappedSecret'})
 @cli_util.wrap_exceptions
-def update_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secret_name, source, type, if_match):
+def update_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secret_name, source, type, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4600,6 +4733,9 @@ def update_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secr
     _details = {}
     _details['source'] = source
     _details['type'] = type
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_mapped_secret(
@@ -4619,13 +4755,14 @@ def update_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secr
  * `SSL_INBOUND_INSPECTION`: For Inbound inspection of SSL traffic.  * `SSL_FORWARD_PROXY`: For forward proxy certificates for SSL inspection.""")
 @cli_util.option('--vault-secret-id', required=True, help=u"""OCID for the Vault Secret to be used.""")
 @cli_util.option('--version-number', required=True, type=click.INT, help=u"""Version number of the secret to be used.""")
+@cli_util.option('--description', help=u"""The description of the mapped secret. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'MappedSecret'})
 @cli_util.wrap_exceptions
-def update_mapped_secret_update_vault_mapped_secret_details(ctx, from_json, network_firewall_policy_id, mapped_secret_name, type, vault_secret_id, version_number, if_match):
+def update_mapped_secret_update_vault_mapped_secret_details(ctx, from_json, network_firewall_policy_id, mapped_secret_name, type, vault_secret_id, version_number, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4643,6 +4780,9 @@ def update_mapped_secret_update_vault_mapped_secret_details(ctx, from_json, netw
     _details['vaultSecretId'] = vault_secret_id
     _details['versionNumber'] = version_number
 
+    if description is not None:
+        _details['description'] = description
+
     _details['source'] = 'OCI_VAULT'
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
@@ -4655,9 +4795,9 @@ def update_mapped_secret_update_vault_mapped_secret_details(ctx, from_json, netw
     cli_util.render_response(result, ctx)
 
 
-@nat_rule_group.command(name=cli_util.override('network_firewall.update_nat_rule.command_name', 'update'), help=u"""Updates the NAT Rule with the given name in the network firewall policy. \n[Command Reference](updateNatRule)""")
+@nat_rule_group.command(name=cli_util.override('network_firewall.update_nat_rule.command_name', 'update'), help=u"""Updates the [NAT rule] with the given name in the Network Firewall policy. \n[Command Reference](updateNatRule)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
-@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT Rules in the network firewall policy.""")
+@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT rules in the Network Firewall policy.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NATV4"]), help=u"""NAT type:
 
 * NATV4 - NATV4 type NAT.""")
@@ -4706,9 +4846,9 @@ def update_nat_rule(ctx, from_json, force, network_firewall_policy_id, nat_rule_
     cli_util.render_response(result, ctx)
 
 
-@nat_rule_group.command(name=cli_util.override('network_firewall.update_nat_rule_update_nat_v4_rule_details.command_name', 'update-nat-rule-update-nat-v4-rule-details'), help=u"""Updates the NAT Rule with the given name in the network firewall policy. \n[Command Reference](updateNatRule)""")
+@nat_rule_group.command(name=cli_util.override('network_firewall.update_nat_rule_update_nat_v4_rule_details.command_name', 'update-nat-rule-update-nat-v4-rule-details'), help=u"""Updates the [NAT rule] with the given name in the Network Firewall policy. \n[Command Reference](updateNatRule)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
-@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT Rules in the network firewall policy.""")
+@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT rules in the Network Firewall policy.""")
 @cli_util.option('--condition', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["DIPP_SRC_NAT"]), help=u"""action:
 
@@ -4767,6 +4907,7 @@ def update_nat_rule_update_nat_v4_rule_details(ctx, from_json, force, network_fi
 @cli_util.option('--network-firewall-policy-id', help=u"""The [OCID] of the Network Firewall Policy.""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security groups [OCID] associated with the Network Firewall.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nat-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of a firewall to determine the bandwidth that the firewall allows.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4779,7 +4920,7 @@ def update_nat_rule_update_nat_v4_rule_details(ctx, from_json, force, network_fi
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_id, display_name, network_firewall_policy_id, network_security_group_ids, nat_configuration, freeform_tags, defined_tags, if_match):
+def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_id, display_name, network_firewall_policy_id, network_security_group_ids, nat_configuration, shape, freeform_tags, defined_tags, if_match):
 
     if isinstance(network_firewall_id, six.string_types) and len(network_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-id cannot be whitespace or empty string')
@@ -4806,6 +4947,9 @@ def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if nat_configuration is not None:
         _details['natConfiguration'] = cli_util.parse_json_parameter("nat_configuration", nat_configuration)
+
+    if shape is not None:
+        _details['shape'] = shape
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -4852,6 +4996,7 @@ def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seco
 @network_firewall_policy_group.command(name=cli_util.override('network_firewall.update_network_firewall_policy.command_name', 'update'), help=u"""Updates the NetworkFirewallPolicy \n[Command Reference](updateNetworkFirewallPolicy)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the firewall. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""The description of the network firewall policy. This field can be used to add additional info.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4864,7 +5009,7 @@ def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seco
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_network_firewall_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, display_name, freeform_tags, defined_tags, if_match):
+def update_network_firewall_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, display_name, description, freeform_tags, defined_tags, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4882,6 +5027,9 @@ def update_network_firewall_policy(ctx, from_json, force, wait_for_state, max_wa
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -4936,6 +5084,7 @@ def update_network_firewall_policy(ctx, from_json, force, wait_for_state, max_wa
 
   * INTRUSION_DETECTION - Intrusion Detection.   * INTRUSION_PREVENTION - Intrusion Detection and Prevention. Traffic classified as potentially malicious will be rejected as described in `type`.""")
 @cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the security rule. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'condition': {'module': 'network_firewall', 'class': 'SecurityRuleMatchCriteria'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}})
@@ -4943,7 +5092,7 @@ def update_network_firewall_policy(ctx, from_json, force, wait_for_state, max_wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'condition': {'module': 'network_firewall', 'class': 'SecurityRuleMatchCriteria'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'SecurityRule'})
 @cli_util.wrap_exceptions
-def update_security_rule(ctx, from_json, force, network_firewall_policy_id, security_rule_name, condition, action, inspection, position, if_match):
+def update_security_rule(ctx, from_json, force, network_firewall_policy_id, security_rule_name, condition, action, inspection, position, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4970,6 +5119,9 @@ def update_security_rule(ctx, from_json, force, network_firewall_policy_id, secu
     if position is not None:
         _details['position'] = cli_util.parse_json_parameter("position", position)
 
+    if description is not None:
+        _details['description'] = description
+
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_security_rule(
         network_firewall_policy_id=network_firewall_policy_id,
@@ -4984,13 +5136,14 @@ def update_security_rule(ctx, from_json, force, network_firewall_policy_id, secu
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--service-name', required=True, help=u"""Unique identifier for Services.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TCP_SERVICE", "UDP_SERVICE"]), help=u"""Describes the type of Service.""")
+@cli_util.option('--description', help=u"""The description of the service. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'Service'})
 @cli_util.wrap_exceptions
-def update_service(ctx, from_json, network_firewall_policy_id, service_name, type, if_match):
+def update_service(ctx, from_json, network_firewall_policy_id, service_name, type, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -5006,6 +5159,9 @@ def update_service(ctx, from_json, network_firewall_policy_id, service_name, typ
     _details = {}
     _details['type'] = type
 
+    if description is not None:
+        _details['description'] = description
+
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_service(
         network_firewall_policy_id=network_firewall_policy_id,
@@ -5020,6 +5176,7 @@ def update_service(ctx, from_json, network_firewall_policy_id, service_name, typ
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--service-name', required=True, help=u"""Unique identifier for Services.""")
 @cli_util.option('--port-ranges', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of port-ranges to be used.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the service. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'port-ranges': {'module': 'network_firewall', 'class': 'list[PortRange]'}})
@@ -5027,7 +5184,7 @@ def update_service(ctx, from_json, network_firewall_policy_id, service_name, typ
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'port-ranges': {'module': 'network_firewall', 'class': 'list[PortRange]'}}, output_type={'module': 'network_firewall', 'class': 'Service'})
 @cli_util.wrap_exceptions
-def update_service_update_tcp_service_details(ctx, from_json, force, network_firewall_policy_id, service_name, port_ranges, if_match):
+def update_service_update_tcp_service_details(ctx, from_json, force, network_firewall_policy_id, service_name, port_ranges, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -5046,6 +5203,9 @@ def update_service_update_tcp_service_details(ctx, from_json, force, network_fir
 
     _details = {}
     _details['portRanges'] = cli_util.parse_json_parameter("port_ranges", port_ranges)
+
+    if description is not None:
+        _details['description'] = description
 
     _details['type'] = 'TCP_SERVICE'
 
@@ -5063,6 +5223,7 @@ def update_service_update_tcp_service_details(ctx, from_json, force, network_fir
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--service-name', required=True, help=u"""Unique identifier for Services.""")
 @cli_util.option('--port-ranges', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of port-ranges to be used.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the service. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'port-ranges': {'module': 'network_firewall', 'class': 'list[PortRange]'}})
@@ -5070,7 +5231,7 @@ def update_service_update_tcp_service_details(ctx, from_json, force, network_fir
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'port-ranges': {'module': 'network_firewall', 'class': 'list[PortRange]'}}, output_type={'module': 'network_firewall', 'class': 'Service'})
 @cli_util.wrap_exceptions
-def update_service_update_udp_service_details(ctx, from_json, force, network_firewall_policy_id, service_name, port_ranges, if_match):
+def update_service_update_udp_service_details(ctx, from_json, force, network_firewall_policy_id, service_name, port_ranges, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -5090,6 +5251,9 @@ def update_service_update_udp_service_details(ctx, from_json, force, network_fir
     _details = {}
     _details['portRanges'] = cli_util.parse_json_parameter("port_ranges", port_ranges)
 
+    if description is not None:
+        _details['description'] = description
+
     _details['type'] = 'UDP_SERVICE'
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
@@ -5106,6 +5270,7 @@ def update_service_update_udp_service_details(ctx, from_json, force, network_fir
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--service-list-name', required=True, help=u"""Unique name identifier for Service Lists in the scope of Network Firewall Policy.""")
 @cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of service names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the service list. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'services': {'module': 'network_firewall', 'class': 'list[string]'}})
@@ -5113,7 +5278,7 @@ def update_service_update_udp_service_details(ctx, from_json, force, network_fir
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'services': {'module': 'network_firewall', 'class': 'list[string]'}}, output_type={'module': 'network_firewall', 'class': 'ServiceList'})
 @cli_util.wrap_exceptions
-def update_service_list(ctx, from_json, force, network_firewall_policy_id, service_list_name, services, if_match):
+def update_service_list(ctx, from_json, force, network_firewall_policy_id, service_list_name, services, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -5132,6 +5297,9 @@ def update_service_list(ctx, from_json, force, network_firewall_policy_id, servi
 
     _details = {}
     _details['services'] = cli_util.parse_json_parameter("services", services)
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_service_list(
@@ -5153,6 +5321,7 @@ def update_service_list(ctx, from_json, force, network_firewall_policy_id, servi
 
   * INSPECT - Inspect the traffic.   * INSPECT_AND_CAPTURE_LOG - Inspect and capture logs for the traffic.""")
 @cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the tunnel inspect rule. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'position': {'module': 'network_firewall', 'class': 'RulePosition'}})
@@ -5160,7 +5329,7 @@ def update_service_list(ctx, from_json, force, network_firewall_policy_id, servi
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'TunnelInspectionRule'})
 @cli_util.wrap_exceptions
-def update_tunnel_inspection_rule(ctx, from_json, force, network_firewall_policy_id, tunnel_inspection_rule_name, protocol, action, position, if_match):
+def update_tunnel_inspection_rule(ctx, from_json, force, network_firewall_policy_id, tunnel_inspection_rule_name, protocol, action, position, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -5186,6 +5355,9 @@ def update_tunnel_inspection_rule(ctx, from_json, force, network_firewall_policy
     if position is not None:
         _details['position'] = cli_util.parse_json_parameter("position", position)
 
+    if description is not None:
+        _details['description'] = description
+
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_tunnel_inspection_rule(
         network_firewall_policy_id=network_firewall_policy_id,
@@ -5204,6 +5376,7 @@ def update_tunnel_inspection_rule(ctx, from_json, force, network_firewall_policy
 
   * INSPECT - Inspect the traffic.   * INSPECT_AND_CAPTURE_LOG - Inspect and capture logs for the traffic.""")
 @cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the tunnel inspect rule. This field can be used to add additional info.""")
 @cli_util.option('--profile-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -5212,7 +5385,7 @@ def update_tunnel_inspection_rule(ctx, from_json, force, network_firewall_policy
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'position': {'module': 'network_firewall', 'class': 'RulePosition'}, 'condition': {'module': 'network_firewall', 'class': 'VxlanInspectionRuleMatchCriteria'}, 'profile-parameterconflict': {'module': 'network_firewall', 'class': 'VxlanInspectionRuleProfile'}}, output_type={'module': 'network_firewall', 'class': 'TunnelInspectionRule'})
 @cli_util.wrap_exceptions
-def update_tunnel_inspection_rule_update_vxlan_inspection_rule_details(ctx, from_json, force, network_firewall_policy_id, tunnel_inspection_rule_name, condition, action, position, profile_parameterconflict, if_match):
+def update_tunnel_inspection_rule_update_vxlan_inspection_rule_details(ctx, from_json, force, network_firewall_policy_id, tunnel_inspection_rule_name, condition, action, position, description, profile_parameterconflict, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -5238,6 +5411,9 @@ def update_tunnel_inspection_rule_update_vxlan_inspection_rule_details(ctx, from
     if position is not None:
         _details['position'] = cli_util.parse_json_parameter("position", position)
 
+    if description is not None:
+        _details['description'] = description
+
     if profile_parameterconflict is not None:
         _details['profile'] = cli_util.parse_json_parameter("profile_parameterconflict", profile_parameterconflict)
 
@@ -5257,6 +5433,7 @@ def update_tunnel_inspection_rule_update_vxlan_inspection_rule_details(ctx, from
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--url-list-name', required=True, help=u"""Unique name identifier for url lists in the scope of Network Firewall Policy.""")
 @cli_util.option('--urls', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of urls.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the Url list. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'urls': {'module': 'network_firewall', 'class': 'list[UrlPattern]'}})
@@ -5264,7 +5441,7 @@ def update_tunnel_inspection_rule_update_vxlan_inspection_rule_details(ctx, from
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'urls': {'module': 'network_firewall', 'class': 'list[UrlPattern]'}}, output_type={'module': 'network_firewall', 'class': 'UrlList'})
 @cli_util.wrap_exceptions
-def update_url_list(ctx, from_json, force, network_firewall_policy_id, url_list_name, urls, if_match):
+def update_url_list(ctx, from_json, force, network_firewall_policy_id, url_list_name, urls, description, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -5283,6 +5460,9 @@ def update_url_list(ctx, from_json, force, network_firewall_policy_id, url_list_
 
     _details = {}
     _details['urls'] = cli_util.parse_json_parameter("urls", urls)
+
+    if description is not None:
+        _details['description'] = description
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_url_list(

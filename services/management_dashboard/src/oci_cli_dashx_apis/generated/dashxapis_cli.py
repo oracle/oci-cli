@@ -656,6 +656,7 @@ def import_dashboard(ctx, from_json, dashboards, freeform_tags, defined_tags, if
 @cli_util.option('--page', help=u"""The page token representing the page on which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--compartment-id-in-subtree', help=u"""This parameter applies only when compartmentId is root compartment. When set to true, all accessible resources will be returned. Default is false.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -663,7 +664,7 @@ def import_dashboard(ctx, from_json, dashboards, freeform_tags, defined_tags, if
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboardCollection'})
 @cli_util.wrap_exceptions
-def list_management_dashboards(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by):
+def list_management_dashboards(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by, compartment_id_in_subtree):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -679,6 +680,8 @@ def list_management_dashboards(ctx, from_json, all_pages, page_size, compartment
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('management_dashboard', 'dashx_apis', ctx)
     if all_pages:
@@ -713,6 +716,7 @@ def list_management_dashboards(ctx, from_json, all_pages, page_size, compartment
 @cli_util.option('--page', help=u"""The page token representing the page on which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--compartment-id-in-subtree', help=u"""This parameter applies only when compartmentId is root compartment. When set to true, all accessible resources will be returned. Default is false.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -720,7 +724,7 @@ def list_management_dashboards(ctx, from_json, all_pages, page_size, compartment
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearchCollection'})
 @cli_util.wrap_exceptions
-def list_management_saved_searches(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by):
+def list_management_saved_searches(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by, compartment_id_in_subtree):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -736,6 +740,8 @@ def list_management_saved_searches(ctx, from_json, all_pages, page_size, compart
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('management_dashboard', 'dashx_apis', ctx)
     if all_pages:
