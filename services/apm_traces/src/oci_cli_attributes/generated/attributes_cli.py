@@ -85,7 +85,7 @@ attributes_root_group.add_command(bulk_de_activation_status_group)
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--attribute-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of objects containing the details about individual attribute to be activated.
 
-This option is a JSON list with items of type BulkActivateAttributeDetail.  For documentation on BulkActivateAttributeDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/attributes/20200630/datatypes/BulkActivateAttributeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type BulkActivateAttributeDetail.  For documentation on BulkActivateAttributeDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/attributes/20200630/datatypes/BulkActivateAttributeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'attribute-details': {'module': 'apm_traces', 'class': 'list[BulkActivateAttributeDetail]'}})
 @cli_util.help_option
 @click.pass_context
@@ -114,7 +114,7 @@ def bulk_activate_attribute(ctx, from_json, apm_domain_id, attribute_details):
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--attribute-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of objects containing the details about individual attribute to be deactivated.
 
-This option is a JSON list with items of type BulkDeActivateAttributeDetail.  For documentation on BulkDeActivateAttributeDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/attributes/20200630/datatypes/BulkDeActivateAttributeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type BulkDeActivateAttributeDetail.  For documentation on BulkDeActivateAttributeDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/attributes/20200630/datatypes/BulkDeActivateAttributeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'attribute-details': {'module': 'apm_traces', 'class': 'list[BulkDeActivateAttributeDetail]'}})
 @cli_util.help_option
 @click.pass_context
@@ -143,7 +143,7 @@ def bulk_de_activate_attribute(ctx, from_json, apm_domain_id, attribute_details)
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--attribute-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of objects containing the details about individual attribute to be pinned.
 
-This option is a JSON list with items of type BulkPinAttributeDetail.  For documentation on BulkPinAttributeDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/attributes/20200630/datatypes/BulkPinAttributeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type BulkPinAttributeDetail.  For documentation on BulkPinAttributeDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/attributes/20200630/datatypes/BulkPinAttributeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'attribute-details': {'module': 'apm_traces', 'class': 'list[BulkPinAttributeDetail]'}})
 @cli_util.help_option
 @click.pass_context
@@ -172,7 +172,7 @@ def bulk_pin_attribute(ctx, from_json, apm_domain_id, attribute_details):
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--attribute-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of objects containing the details about individual attribute to be unpinned.
 
-This option is a JSON list with items of type BulkUnpinAttributeDetail.  For documentation on BulkUnpinAttributeDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/attributes/20200630/datatypes/BulkUnpinAttributeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type BulkUnpinAttributeDetail.  For documentation on BulkUnpinAttributeDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/attributes/20200630/datatypes/BulkUnpinAttributeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'attribute-details': {'module': 'apm_traces', 'class': 'list[BulkUnpinAttributeDetail]'}})
 @cli_util.help_option
 @click.pass_context
@@ -201,7 +201,7 @@ def bulk_unpin_attribute(ctx, from_json, apm_domain_id, attribute_details):
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--attribute-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of objects containing the details about individual attribute for which properties are to be updated.
 
-This option is a JSON list with items of type BulkUpdateAttributeDetail.  For documentation on BulkUpdateAttributeDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/attributes/20200630/datatypes/BulkUpdateAttributeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type BulkUpdateAttributeDetail.  For documentation on BulkUpdateAttributeDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/attributes/20200630/datatypes/BulkUpdateAttributeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'attribute-details': {'module': 'apm_traces', 'class': 'list[BulkUpdateAttributeDetail]'}})
 @cli_util.help_option
 @click.pass_context
@@ -230,7 +230,7 @@ def bulk_update_attribute(ctx, from_json, apm_domain_id, attribute_details):
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--attribute-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of objects containing the details about individual attribute for which notes are to be updated.
 
-This option is a JSON list with items of type BulkUpdateAttributeNotesDetail.  For documentation on BulkUpdateAttributeNotesDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/attributes/20200630/datatypes/BulkUpdateAttributeNotesDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type BulkUpdateAttributeNotesDetail.  For documentation on BulkUpdateAttributeNotesDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/attributes/20200630/datatypes/BulkUpdateAttributeNotesDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'attribute-details': {'module': 'apm_traces', 'class': 'list[BulkUpdateAttributeNotesDetail]'}})
 @cli_util.help_option
 @click.pass_context

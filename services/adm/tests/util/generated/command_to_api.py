@@ -30,6 +30,7 @@ SDK_client_map = {
     "adm.list_remediation_recipes": "oci.adm.ApplicationDependencyManagementClient.list_remediation_recipes",
     "adm.list_remediation_runs": "oci.adm.ApplicationDependencyManagementClient.list_remediation_runs",
     "adm.list_stages": "oci.adm.ApplicationDependencyManagementClient.list_stages",
+    "adm.list_vulnerabilities": "oci.adm.ApplicationDependencyManagementClient.list_vulnerabilities",
     "adm.list_vulnerability_audits": "oci.adm.ApplicationDependencyManagementClient.list_vulnerability_audits",
     "adm.list_work_request_errors": "oci.adm.ApplicationDependencyManagementClient.list_work_request_errors",
     "adm.list_work_request_logs": "oci.adm.ApplicationDependencyManagementClient.list_work_request_logs",

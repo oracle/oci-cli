@@ -895,7 +895,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -1023,7 +1023,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -1282,21 +1282,21 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type AppAppsNetworkPerimeters.  For documentation on AppAppsNetworkPerimeters please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAppsNetworkPerimeters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAppsNetworkPerimeters.  For documentation on AppAppsNetworkPerimeters please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAppsNetworkPerimeters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cloud-control-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A collection of arbitrary properties that scope the privileges of a cloud-control App.
 
 **Added In:** 18.4.2
 
 **SCIM++ Properties:**  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppCloudControlProperties.  For documentation on AppCloudControlProperties please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppCloudControlProperties.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppCloudControlProperties.  For documentation on AppCloudControlProperties please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppCloudControlProperties.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--editable-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""App attributes editable by subject
 
 **Added In:** 18.2.6
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppEditableAttributes.  For documentation on AppEditableAttributes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppEditableAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppEditableAttributes.  For documentation on AppEditableAttributes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppEditableAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terms-of-use', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--protectable-secondary-audiences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of secondary audiences--additional URIs to be added automatically to any OAuth token that allows access to this App. Note: This attribute is used mainly for backward compatibility in certain Oracle Public Cloud Apps.
 
@@ -1304,7 +1304,7 @@ This option is a JSON list with items of type AppEditableAttributes.  For docume
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppProtectableSecondaryAudiences.  For documentation on AppProtectableSecondaryAudiences please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppProtectableSecondaryAudiences.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppProtectableSecondaryAudiences.  For documentation on AppProtectableSecondaryAudiences please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppProtectableSecondaryAudiences.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--idp-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--allowed-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags, acting as an OAuthClient, this App is allowed to access.
 
@@ -1312,76 +1312,76 @@ This option is a JSON list with items of type AppProtectableSecondaryAudiences. 
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppAllowedTags.  For documentation on AppAllowedTags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAllowedTags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAllowedTags.  For documentation on AppAllowedTags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAllowedTags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--app-signon-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trust-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Trust Policies.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type AppTrustPolicies.  For documentation on AppTrustPolicies please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppTrustPolicies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppTrustPolicies.  For documentation on AppTrustPolicies please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppTrustPolicies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--signon-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--identity-providers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IdentityProvider assigned to app. A user trying to access this app will be automatically redirected to configured IdP during the authentication phase, before being able to access App.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex
 
-This option is a JSON list with items of type AppIdentityProviders.  For documentation on AppIdentityProviders please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppIdentityProviders.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppIdentityProviders.  For documentation on AppIdentityProviders please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppIdentityProviders.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--accounts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Accounts of App
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppAccounts.  For documentation on AppAccounts please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAccounts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAccounts.  For documentation on AppAccounts please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAccounts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--grants', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Grants assigned to the app
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppGrants.  For documentation on AppGrants please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppGrants.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppGrants.  For documentation on AppGrants please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppGrants.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--service-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom attribute that is required to compute other attribute values during app creation.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: always  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppServiceParams.  For documentation on AppServiceParams please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppServiceParams.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppServiceParams.  For documentation on AppServiceParams please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppServiceParams.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--attr-rendering-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Label for the attribute to be shown in the UI.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: immutable  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppAttrRenderingMetadata.  For documentation on AppAttrRenderingMetadata please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAttrRenderingMetadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAttrRenderingMetadata.  For documentation on AppAttrRenderingMetadata please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAttrRenderingMetadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--granted-app-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of AppRoles that are granted to this App (and that are defined by other Apps). Within the Oracle Public Cloud infrastructure, this allows AppID-based association. Such an association allows this App to act as a consumer and thus to access resources of another App that acts as a producer.
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppGrantedAppRoles.  For documentation on AppGrantedAppRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppGrantedAppRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppGrantedAppRoles.  For documentation on AppGrantedAppRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppGrantedAppRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--saml-service-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--allowed-scopes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of scopes (exposed by this App or by other Apps) that this App is allowed to access when it acts as an OAuthClient.
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [fqs]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppAllowedScopes.  For documentation on AppAllowedScopes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAllowedScopes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAllowedScopes.  For documentation on AppAllowedScopes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAllowedScopes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificates', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Each value of this attribute represent a certificate that this App uses when it acts as an OAuthClient.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [certAlias]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppCertificates.  For documentation on AppCertificates please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppCertificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppCertificates.  For documentation on AppCertificates please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppCertificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--alias-apps', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Each value of this internal attribute refers to an Oracle Public Cloud infrastructure App on which this App depends.
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppAliasApps.  For documentation on AppAliasApps please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAliasApps.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAliasApps.  For documentation on AppAliasApps please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAliasApps.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--as-opc-service', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of AppRoles defined by this UnmanagedApp. Membership in each of these AppRoles confers administrative privilege within this App.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex
 
-This option is a JSON list with items of type AppAdminRoles.  For documentation on AppAdminRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAdminRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAdminRoles.  For documentation on AppAdminRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAdminRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--user-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of AppRoles defined by this UnmanagedApp. Membership in each of these AppRoles confers end-user privilege within this App.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex
 
-This option is a JSON list with items of type AppUserRoles.  For documentation on AppUserRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppUserRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppUserRoles.  For documentation on AppUserRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppUserRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scopes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Scopes defined by this App. Used when this App acts as an OAuth Resource.
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppScopes.  For documentation on AppScopes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppScopes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppScopes.  For documentation on AppScopes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppScopes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionradius-app-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionsaml-service-provider-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionweb-tier-policy-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1797,7 +1797,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -1851,7 +1851,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Grantee Name, mapsTo:members.value], [columnHeaderName:Grantee Type, mapsTo:members.type]]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - idcsPaginateResponse: true  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppRoleMembers.  For documentation on AppRoleMembers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppRoleMembers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppRoleMembers.  For documentation on AppRoleMembers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppRoleMembers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'app': {'module': 'identity_domains', 'class': 'AppRoleApp'}, 'members': {'module': 'identity_domains', 'class': 'list[AppRoleMembers]'}})
 @cli_util.help_option
 @click.pass_context
@@ -1981,7 +1981,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -2004,7 +2004,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type ApprovalWorkflowApprovalWorkflowSteps.  For documentation on ApprovalWorkflowApprovalWorkflowSteps please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/ApprovalWorkflowApprovalWorkflowSteps.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ApprovalWorkflowApprovalWorkflowSteps.  For documentation on ApprovalWorkflowApprovalWorkflowSteps please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/ApprovalWorkflowApprovalWorkflowSteps.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'max-duration': {'module': 'identity_domains', 'class': 'ApprovalWorkflowMaxDuration'}, 'approval-workflow-steps': {'module': 'identity_domains', 'class': 'list[ApprovalWorkflowApprovalWorkflowSteps]'}})
 @cli_util.help_option
 @click.pass_context
@@ -2108,7 +2108,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -2223,7 +2223,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -2249,7 +2249,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type ApprovalWorkflowStepApprovers.  For documentation on ApprovalWorkflowStepApprovers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/ApprovalWorkflowStepApprovers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ApprovalWorkflowStepApprovers.  For documentation on ApprovalWorkflowStepApprovers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/ApprovalWorkflowStepApprovers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'approvers-expressions': {'module': 'identity_domains', 'class': 'list[string]'}, 'approvers': {'module': 'identity_domains', 'class': 'list[ApprovalWorkflowStepApprovers]'}})
 @cli_util.help_option
 @click.pass_context
@@ -2351,7 +2351,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -2496,7 +2496,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -2616,7 +2616,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -2661,25 +2661,25 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type CloudGateExtUpstreamServerGroups.  For documentation on CloudGateExtUpstreamServerGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServerGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type CloudGateExtUpstreamServerGroups.  For documentation on CloudGateExtUpstreamServerGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServerGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--upstream-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of upstream servers
 
 **Added In:** 20.1.3
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type CloudGateExtUpstreamServers.  For documentation on CloudGateExtUpstreamServers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type CloudGateExtUpstreamServers.  For documentation on CloudGateExtUpstreamServers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--oauth-client', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Server Blocks on this Cloud Gate
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [hostName]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type CloudGateExtServers.  For documentation on CloudGateExtServers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type CloudGateExtServers.  For documentation on CloudGateExtServers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/CloudGateExtServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--mappings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Cloud Gate Mappings that map Apps to this Cloud Gate
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [serverId, resourcePrefix]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type CloudGateExtMappings.  For documentation on CloudGateExtMappings please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type CloudGateExtMappings.  For documentation on CloudGateExtMappings please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/CloudGateExtMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'upstream-server-groups': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServerGroups]'}, 'upstream-servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServers]'}, 'oauth-client': {'module': 'identity_domains', 'class': 'CloudGateOauthClient'}, 'servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtServers]'}, 'mappings': {'module': 'identity_domains', 'class': 'list[CloudGateExtMappings]'}})
 @cli_util.help_option
 @click.pass_context
@@ -2810,7 +2810,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -2964,7 +2964,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -3105,7 +3105,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -3239,7 +3239,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -3399,7 +3399,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -3422,12 +3422,12 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsAddedSinceVersion: 3  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type DynamicResourceGroupGrants.  For documentation on DynamicResourceGroupGrants please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/DynamicResourceGroupGrants.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type DynamicResourceGroupGrants.  For documentation on DynamicResourceGroupGrants please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/DynamicResourceGroupGrants.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dynamic-group-app-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of appRoles that are currently granted to this Dynamic Resource Group.  The Identity service will assert these AppRoles for any resource that satisfies the matching-rule of this DynamicResourceGroup.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type DynamicResourceGroupDynamicGroupAppRoles.  For documentation on DynamicResourceGroupDynamicGroupAppRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/DynamicResourceGroupDynamicGroupAppRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type DynamicResourceGroupDynamicGroupAppRoles.  For documentation on DynamicResourceGroupDynamicGroupAppRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/DynamicResourceGroupDynamicGroupAppRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextension-oci-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'grants': {'module': 'identity_domains', 'class': 'list[DynamicResourceGroupGrants]'}, 'dynamic-group-app-roles': {'module': 'identity_domains', 'class': 'list[DynamicResourceGroupDynamicGroupAppRoles]'}, 'urnietfparamsscimschemasoracleidcsextension-oci-tags': {'module': 'identity_domains', 'class': 'ExtensionOCITags'}})
 @cli_util.help_option
@@ -3537,7 +3537,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -3686,7 +3686,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -3714,7 +3714,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:User Members, mapsTo:members[User].value, multiValueDelimiter:;]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - idcsPaginateResponse: true  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type GroupMembers.  For documentation on GroupMembers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/GroupMembers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type GroupMembers.  For documentation on GroupMembers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/GroupMembers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensiongroup-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionposix-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionrequestable-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3848,7 +3848,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -3909,7 +3909,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [rule, value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type IdentityPropagationTrustImpersonationServiceUsers.  For documentation on IdentityPropagationTrustImpersonationServiceUsers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/IdentityPropagationTrustImpersonationServiceUsers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type IdentityPropagationTrustImpersonationServiceUsers.  For documentation on IdentityPropagationTrustImpersonationServiceUsers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/IdentityPropagationTrustImpersonationServiceUsers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--keytab', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'client-claim-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'oauth-clients': {'module': 'identity_domains', 'class': 'list[string]'}, 'impersonation-service-users': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustImpersonationServiceUsers]'}, 'keytab': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustKeytab'}})
 @cli_util.help_option
@@ -4055,7 +4055,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -4231,7 +4231,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [idpGroup]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type IdentityProviderJitUserProvGroupMappings.  For documentation on IdentityProviderJitUserProvGroupMappings please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/IdentityProviderJitUserProvGroupMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type IdentityProviderJitUserProvGroupMappings.  For documentation on IdentityProviderJitUserProvGroupMappings please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/IdentityProviderJitUserProvGroupMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--jit-user-prov-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--jit-user-prov-assigned-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Refers to every group of which a JIT-provisioned User should be a member.  Just-in-Time user-provisioning applies this static list when jitUserProvGroupStaticListEnabled:true.
 
@@ -4239,7 +4239,7 @@ This option is a JSON list with items of type IdentityProviderJitUserProvGroupMa
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type IdentityProviderJitUserProvAssignedGroups.  For documentation on IdentityProviderJitUserProvAssignedGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/IdentityProviderJitUserProvAssignedGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type IdentityProviderJitUserProvAssignedGroups.  For documentation on IdentityProviderJitUserProvAssignedGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/IdentityProviderJitUserProvAssignedGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--correlation-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionsocial-identity-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionx509-identity-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4470,7 +4470,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -4529,47 +4529,47 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Email, mapsTo:emails[work].value], [columnHeaderName:Home Email, mapsTo:emails[home].value], [columnHeaderName:Primary Email Type, mapsTo:emails[$(type)].primary], [columnHeaderName:Other Email, mapsTo:emails[other].value], [columnHeaderName:Recovery Email, mapsTo:emails[recovery].value], [columnHeaderName:Work Email Verified, mapsTo:emails[work].verified], [columnHeaderName:Home Email Verified, mapsTo:emails[home].verified], [columnHeaderName:Other Email Verified, mapsTo:emails[other].verified], [columnHeaderName:Recovery Email Verified, mapsTo:emails[recovery].verified]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeEmails.  For documentation on MeEmails please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeEmails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeEmails.  For documentation on MeEmails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeEmails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--phone-numbers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Phone numbers
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Phone, mapsTo:phoneNumbers[work].value], [columnHeaderName:Mobile No, mapsTo:phoneNumbers[mobile].value], [columnHeaderName:Home Phone, mapsTo:phoneNumbers[home].value], [columnHeaderName:Fax, mapsTo:phoneNumbers[fax].value], [columnHeaderName:Pager, mapsTo:phoneNumbers[pager].value], [columnHeaderName:Other Phone, mapsTo:phoneNumbers[other].value], [columnHeaderName:Recovery Phone, mapsTo:phoneNumbers[recovery].value], [columnHeaderName:Primary Phone Type, mapsTo:phoneNumbers[$(type)].primary]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MePhoneNumbers.  For documentation on MePhoneNumbers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MePhoneNumbers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MePhoneNumbers.  For documentation on MePhoneNumbers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MePhoneNumbers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ims', type=custom_types.CLI_COMPLEX_TYPE, help=u"""User's instant messaging addresses
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeIms.  For documentation on MeIms please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeIms.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeIms.  For documentation on MeIms please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeIms.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--photos', type=custom_types.CLI_COMPLEX_TYPE, help=u"""URLs of photos for the User
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MePhotos.  For documentation on MePhotos please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MePhotos.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MePhotos.  For documentation on MePhotos please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MePhotos.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A physical mailing address for this User, as described in (address Element). Canonical Type Values of work, home, and other. The value attribute is a complex type with the following sub-attributes.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Address Street, deprecatedColumnHeaderName:Work Street Address, mapsTo:addresses[work].streetAddress], [columnHeaderName:Work Address Locality, deprecatedColumnHeaderName:Work City, mapsTo:addresses[work].locality], [columnHeaderName:Work Address Region, deprecatedColumnHeaderName:Work State, mapsTo:addresses[work].region], [columnHeaderName:Work Address Postal Code, deprecatedColumnHeaderName:Work Postal Code, mapsTo:addresses[work].postalCode], [columnHeaderName:Work Address Country, deprecatedColumnHeaderName:Work Country, mapsTo:addresses[work].country], [columnHeaderName:Work Address Formatted, mapsTo:addresses[work].formatted], [columnHeaderName:Home Address Formatted, mapsTo:addresses[home].formatted], [columnHeaderName:Other Address Formatted, mapsTo:addresses[other].formatted], [columnHeaderName:Home Address Street, mapsTo:addresses[home].streetAddress], [columnHeaderName:Other Address Street, mapsTo:addresses[other].streetAddress], [columnHeaderName:Home Address Locality, mapsTo:addresses[home].locality], [columnHeaderName:Other Address Locality, mapsTo:addresses[other].locality], [columnHeaderName:Home Address Region, mapsTo:addresses[home].region], [columnHeaderName:Other Address Region, mapsTo:addresses[other].region], [columnHeaderName:Home Address Country, mapsTo:addresses[home].country], [columnHeaderName:Other Address Country, mapsTo:addresses[other].country], [columnHeaderName:Home Address Postal Code, mapsTo:addresses[home].postalCode], [columnHeaderName:Other Address Postal Code, mapsTo:addresses[other].postalCode], [columnHeaderName:Primary Address Type, mapsTo:addresses[$(type)].primary]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Addresses.  For documentation on addresses please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Addresses.  For documentation on addresses please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of groups that the user belongs to, either thorough direct membership, nested groups, or dynamically calculated
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeGroups.  For documentation on MeGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeGroups.  For documentation on MeGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entitlements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of entitlements for the User that represent a thing the User has.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeEntitlements.  For documentation on MeEntitlements please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeEntitlements.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeEntitlements.  For documentation on MeEntitlements please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeEntitlements.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of roles for the User that collectively represent who the User is; e.g., 'Student', 'Faculty'.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeRoles.  For documentation on MeRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeRoles.  For documentation on MeRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--x509-certificates', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of certificates issued to the User.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeX509Certificates.  For documentation on MeX509Certificates please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeX509Certificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeX509Certificates.  For documentation on MeX509Certificates please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeX509Certificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasextensionenterprise2-0-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionuser-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionpassword-state-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4791,7 +4791,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -4905,7 +4905,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -5039,7 +5039,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -5075,7 +5075,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MyAuthenticationFactorInitiatorAdditionalAttributes.  For documentation on MyAuthenticationFactorInitiatorAdditionalAttributes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MyAuthenticationFactorInitiatorAdditionalAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MyAuthenticationFactorInitiatorAdditionalAttributes.  For documentation on MyAuthenticationFactorInitiatorAdditionalAttributes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MyAuthenticationFactorInitiatorAdditionalAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-acc-rec-enabled', type=click.BOOL, help=u"""Flag indicates whether the device is enrolled in account recovery
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -5195,7 +5195,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -5248,7 +5248,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - type: complex  - multiValued: true  - required: false  - mutability: writeOnly  - returned: never  - uniqueness: none  - idcsSearchable: false
 
-This option is a JSON list with items of type MyAuthenticationFactorValidatorSecurityQuestions.  For documentation on MyAuthenticationFactorValidatorSecurityQuestions please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MyAuthenticationFactorValidatorSecurityQuestions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MyAuthenticationFactorValidatorSecurityQuestions.  For documentation on MyAuthenticationFactorValidatorSecurityQuestions please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MyAuthenticationFactorValidatorSecurityQuestions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', help=u"""Name of the client to be trusted
 
 **SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - mutability: writeOnly  - returned: never  - uniqueness: none""")
@@ -5284,7 +5284,7 @@ This option is a JSON list with items of type MyAuthenticationFactorValidatorSec
 
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MyAuthenticationFactorValidatorAdditionalAttributes.  For documentation on MyAuthenticationFactorValidatorAdditionalAttributes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MyAuthenticationFactorValidatorAdditionalAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MyAuthenticationFactorValidatorAdditionalAttributes.  For documentation on MyAuthenticationFactorValidatorAdditionalAttributes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MyAuthenticationFactorValidatorAdditionalAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'security-questions': {'module': 'identity_domains', 'class': 'list[MyAuthenticationFactorValidatorSecurityQuestions]'}, 'policy-enabled-second-factors': {'module': 'identity_domains', 'class': 'list[string]'}, 'third-party-factor': {'module': 'identity_domains', 'class': 'MyAuthenticationFactorValidatorThirdPartyFactor'}, 'additional-attributes': {'module': 'identity_domains', 'class': 'list[MyAuthenticationFactorValidatorAdditionalAttributes]'}})
 @cli_util.help_option
 @click.pass_context
@@ -5444,7 +5444,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -5557,7 +5557,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -5701,7 +5701,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -5845,7 +5845,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -5880,7 +5880,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MyRequestApprovalDetails.  For documentation on MyRequestApprovalDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MyRequestApprovalDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MyRequestApprovalDetails.  For documentation on MyRequestApprovalDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MyRequestApprovalDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--requestor', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'approval-details': {'module': 'identity_domains', 'class': 'list[MyRequestApprovalDetails]'}, 'requestor': {'module': 'identity_domains', 'class': 'MyRequestRequestor'}, 'requesting': {'module': 'identity_domains', 'class': 'MyRequestRequesting'}})
 @cli_util.help_option
@@ -5990,7 +5990,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -6122,7 +6122,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -6246,7 +6246,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -6421,7 +6421,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -6547,7 +6547,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -6705,7 +6705,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -6864,7 +6864,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -7030,7 +7030,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -7163,12 +7163,12 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type PasswordPolicyGroups.  For documentation on PasswordPolicyGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/PasswordPolicyGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type PasswordPolicyGroups.  For documentation on PasswordPolicyGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/PasswordPolicyGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configured-password-policy-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of password policy rules that have values set. This map of stringKey:stringValue pairs can be used to aid users while setting/resetting password
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [key]  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type PasswordPolicyConfiguredPasswordPolicyRules.  For documentation on PasswordPolicyConfiguredPasswordPolicyRules please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/PasswordPolicyConfiguredPasswordPolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type PasswordPolicyConfiguredPasswordPolicyRules.  For documentation on PasswordPolicyConfiguredPasswordPolicyRules please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/PasswordPolicyConfiguredPasswordPolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'disallowed-user-attribute-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'disallowed-substrings': {'module': 'identity_domains', 'class': 'list[string]'}, 'groups': {'module': 'identity_domains', 'class': 'list[PasswordPolicyGroups]'}, 'configured-password-policy-rules': {'module': 'identity_domains', 'class': 'list[PasswordPolicyConfiguredPasswordPolicyRules]'}})
 @cli_util.help_option
 @click.pass_context
@@ -7375,7 +7375,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -7407,7 +7407,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type PolicyRules.  For documentation on PolicyRules please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/PolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type PolicyRules.  For documentation on PolicyRules please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/PolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'PolicyExtensionOciconsolesignonpolicyconsentPolicy'}})
 @cli_util.help_option
@@ -7509,7 +7509,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""**SCIM++ Properties:** - idcsSearchable: false - multiValued: true - mutability: readOnly - required: false - returned: request - type: string - uniqueness: none Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.""")
 @cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""**SCIM++ Properties:** - idcsCompositeKey: [key, value] - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]] - idcsSearchable: true - multiValued: true - mutability: readWrite - required: false - returned: request - type: complex - uniqueness: none A list of tags on this resource.
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: true - multiValued: false - mutability: readOnly - required: false - returned: default - type: boolean - uniqueness: none A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.""")
 @cli_util.option('--idcs-last-upgraded-in-release', help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: false - multiValued: false - mutability: readOnly - required: false - returned: request - type: string - uniqueness: none The release number when the resource was upgraded.""")
 @cli_util.option('--domain-ocid', help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: false - multiValued: false - mutability: readOnly - required: false - returned: default - type: string - uniqueness: none OCI Domain Id (ocid) in which the resource lives.""")
@@ -7615,7 +7615,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -7772,7 +7772,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -7907,7 +7907,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -7945,30 +7945,30 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SelfRegistrationProfileAfterSubmitText.  For documentation on SelfRegistrationProfileAfterSubmitText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileAfterSubmitText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileAfterSubmitText.  For documentation on SelfRegistrationProfileAfterSubmitText please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileAfterSubmitText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--user-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""**SCIM++ Properties:** - idcsCompositeKey: [value] - idcsSearchable: true - multiValued: true - mutability: readWrite - required: false - returned: default - type: complex - uniqueness: none User Attributes
 
-This option is a JSON list with items of type SelfRegistrationProfileUserAttributes.  For documentation on SelfRegistrationProfileUserAttributes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileUserAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileUserAttributes.  For documentation on SelfRegistrationProfileUserAttributes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileUserAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--default-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Default groups assigned to the user
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex
 
-This option is a JSON list with items of type SelfRegistrationProfileDefaultGroups.  For documentation on SelfRegistrationProfileDefaultGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileDefaultGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileDefaultGroups.  For documentation on SelfRegistrationProfileDefaultGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileDefaultGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--header-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Header text
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SelfRegistrationProfileHeaderText.  For documentation on SelfRegistrationProfileHeaderText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileHeaderText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileHeaderText.  For documentation on SelfRegistrationProfileHeaderText please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileHeaderText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--footer-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Footer text
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SelfRegistrationProfileFooterText.  For documentation on SelfRegistrationProfileFooterText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileFooterText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileFooterText.  For documentation on SelfRegistrationProfileFooterText please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileFooterText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--consent-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Consent text
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SelfRegistrationProfileConsentText.  For documentation on SelfRegistrationProfileConsentText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileConsentText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileConsentText.  For documentation on SelfRegistrationProfileConsentText please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileConsentText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'allowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'disallowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'display-name': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDisplayName]'}, 'after-submit-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileAfterSubmitText]'}, 'user-attributes': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileUserAttributes]'}, 'email-template': {'module': 'identity_domains', 'class': 'SelfRegistrationProfileEmailTemplate'}, 'default-groups': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDefaultGroups]'}, 'header-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileHeaderText]'}, 'footer-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileFooterText]'}, 'consent-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileConsentText]'}})
 @cli_util.help_option
 @click.pass_context
@@ -8106,7 +8106,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -8271,7 +8271,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -8306,7 +8306,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SocialIdentityProviderJitProvAssignedGroups.  For documentation on SocialIdentityProviderJitProvAssignedGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SocialIdentityProviderJitProvAssignedGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SocialIdentityProviderJitProvAssignedGroups.  For documentation on SocialIdentityProviderJitProvAssignedGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SocialIdentityProviderJitProvAssignedGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auto-redirect-enabled', type=click.BOOL, help=u"""Whether social auto redirect is enabled. The IDP policy should be configured with only one Social IDP, and without username/password selected.
 
 **Added In:** 2310202314
@@ -8377,7 +8377,7 @@ This option is a JSON list with items of type SocialIdentityProviderJitProvAssig
 
 **SCIM++ Properties:**  - idcsCompositeKey: [relayParamKey]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SocialIdentityProviderRelayIdpParamMappings.  For documentation on SocialIdentityProviderRelayIdpParamMappings please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SocialIdentityProviderRelayIdpParamMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SocialIdentityProviderRelayIdpParamMappings.  For documentation on SocialIdentityProviderRelayIdpParamMappings please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SocialIdentityProviderRelayIdpParamMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'jit-prov-assigned-groups': {'module': 'identity_domains', 'class': 'list[SocialIdentityProviderJitProvAssignedGroups]'}, 'scope': {'module': 'identity_domains', 'class': 'list[string]'}, 'admin-scope': {'module': 'identity_domains', 'class': 'list[string]'}, 'relay-idp-param-mappings': {'module': 'identity_domains', 'class': 'list[SocialIdentityProviderRelayIdpParamMappings]'}})
 @cli_util.help_option
 @click.pass_context
@@ -8538,7 +8538,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -8597,47 +8597,47 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Email, mapsTo:emails[work].value], [columnHeaderName:Home Email, mapsTo:emails[home].value], [columnHeaderName:Primary Email Type, mapsTo:emails[$(type)].primary], [columnHeaderName:Other Email, mapsTo:emails[other].value], [columnHeaderName:Recovery Email, mapsTo:emails[recovery].value], [columnHeaderName:Work Email Verified, mapsTo:emails[work].verified], [columnHeaderName:Home Email Verified, mapsTo:emails[home].verified], [columnHeaderName:Other Email Verified, mapsTo:emails[other].verified], [columnHeaderName:Recovery Email Verified, mapsTo:emails[recovery].verified]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserEmails.  For documentation on UserEmails please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserEmails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserEmails.  For documentation on UserEmails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserEmails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--phone-numbers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Phone numbers
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Phone, mapsTo:phoneNumbers[work].value], [columnHeaderName:Mobile No, mapsTo:phoneNumbers[mobile].value], [columnHeaderName:Home Phone, mapsTo:phoneNumbers[home].value], [columnHeaderName:Fax, mapsTo:phoneNumbers[fax].value], [columnHeaderName:Pager, mapsTo:phoneNumbers[pager].value], [columnHeaderName:Other Phone, mapsTo:phoneNumbers[other].value], [columnHeaderName:Recovery Phone, mapsTo:phoneNumbers[recovery].value], [columnHeaderName:Primary Phone Type, mapsTo:phoneNumbers[$(type)].primary]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserPhoneNumbers.  For documentation on UserPhoneNumbers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserPhoneNumbers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserPhoneNumbers.  For documentation on UserPhoneNumbers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserPhoneNumbers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ims', type=custom_types.CLI_COMPLEX_TYPE, help=u"""User's instant messaging addresses
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserIms.  For documentation on UserIms please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserIms.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserIms.  For documentation on UserIms please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserIms.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--photos', type=custom_types.CLI_COMPLEX_TYPE, help=u"""URLs of photos for the User
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserPhotos.  For documentation on UserPhotos please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserPhotos.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserPhotos.  For documentation on UserPhotos please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserPhotos.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A physical mailing address for this User, as described in (address Element). Canonical Type Values of work, home, and other. The value attribute is a complex type with the following sub-attributes.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Address Street, deprecatedColumnHeaderName:Work Street Address, mapsTo:addresses[work].streetAddress], [columnHeaderName:Work Address Locality, deprecatedColumnHeaderName:Work City, mapsTo:addresses[work].locality], [columnHeaderName:Work Address Region, deprecatedColumnHeaderName:Work State, mapsTo:addresses[work].region], [columnHeaderName:Work Address Postal Code, deprecatedColumnHeaderName:Work Postal Code, mapsTo:addresses[work].postalCode], [columnHeaderName:Work Address Country, deprecatedColumnHeaderName:Work Country, mapsTo:addresses[work].country], [columnHeaderName:Work Address Formatted, mapsTo:addresses[work].formatted], [columnHeaderName:Home Address Formatted, mapsTo:addresses[home].formatted], [columnHeaderName:Other Address Formatted, mapsTo:addresses[other].formatted], [columnHeaderName:Home Address Street, mapsTo:addresses[home].streetAddress], [columnHeaderName:Other Address Street, mapsTo:addresses[other].streetAddress], [columnHeaderName:Home Address Locality, mapsTo:addresses[home].locality], [columnHeaderName:Other Address Locality, mapsTo:addresses[other].locality], [columnHeaderName:Home Address Region, mapsTo:addresses[home].region], [columnHeaderName:Other Address Region, mapsTo:addresses[other].region], [columnHeaderName:Home Address Country, mapsTo:addresses[home].country], [columnHeaderName:Other Address Country, mapsTo:addresses[other].country], [columnHeaderName:Home Address Postal Code, mapsTo:addresses[home].postalCode], [columnHeaderName:Other Address Postal Code, mapsTo:addresses[other].postalCode], [columnHeaderName:Primary Address Type, mapsTo:addresses[$(type)].primary]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Addresses.  For documentation on addresses please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Addresses.  For documentation on addresses please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of groups that the user belongs to, either thorough direct membership, nested groups, or dynamically calculated
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserGroups.  For documentation on UserGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserGroups.  For documentation on UserGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entitlements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of entitlements for the User that represent a thing the User has.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserEntitlements.  For documentation on UserEntitlements please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserEntitlements.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserEntitlements.  For documentation on UserEntitlements please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserEntitlements.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of roles for the User that collectively represent who the User is; e.g., 'Student', 'Faculty'.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserRoles.  For documentation on UserRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserRoles.  For documentation on UserRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--x509-certificates', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of certificates issued to the User.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserX509Certificates.  For documentation on UserX509Certificates please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserX509Certificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserX509Certificates.  For documentation on UserX509Certificates please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserX509Certificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasextensionenterprise2-0-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionuser-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionpassword-state-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8878,7 +8878,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -18291,7 +18291,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -18423,7 +18423,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -18682,21 +18682,21 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type AppAppsNetworkPerimeters.  For documentation on AppAppsNetworkPerimeters please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAppsNetworkPerimeters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAppsNetworkPerimeters.  For documentation on AppAppsNetworkPerimeters please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAppsNetworkPerimeters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cloud-control-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A collection of arbitrary properties that scope the privileges of a cloud-control App.
 
 **Added In:** 18.4.2
 
 **SCIM++ Properties:**  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppCloudControlProperties.  For documentation on AppCloudControlProperties please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppCloudControlProperties.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppCloudControlProperties.  For documentation on AppCloudControlProperties please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppCloudControlProperties.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--editable-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""App attributes editable by subject
 
 **Added In:** 18.2.6
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppEditableAttributes.  For documentation on AppEditableAttributes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppEditableAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppEditableAttributes.  For documentation on AppEditableAttributes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppEditableAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terms-of-use', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--protectable-secondary-audiences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of secondary audiences--additional URIs to be added automatically to any OAuth token that allows access to this App. Note: This attribute is used mainly for backward compatibility in certain Oracle Public Cloud Apps.
 
@@ -18704,7 +18704,7 @@ This option is a JSON list with items of type AppEditableAttributes.  For docume
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppProtectableSecondaryAudiences.  For documentation on AppProtectableSecondaryAudiences please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppProtectableSecondaryAudiences.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppProtectableSecondaryAudiences.  For documentation on AppProtectableSecondaryAudiences please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppProtectableSecondaryAudiences.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--idp-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--allowed-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags, acting as an OAuthClient, this App is allowed to access.
 
@@ -18712,76 +18712,76 @@ This option is a JSON list with items of type AppProtectableSecondaryAudiences. 
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppAllowedTags.  For documentation on AppAllowedTags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAllowedTags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAllowedTags.  For documentation on AppAllowedTags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAllowedTags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--app-signon-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trust-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Trust Policies.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type AppTrustPolicies.  For documentation on AppTrustPolicies please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppTrustPolicies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppTrustPolicies.  For documentation on AppTrustPolicies please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppTrustPolicies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--signon-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--identity-providers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IdentityProvider assigned to app. A user trying to access this app will be automatically redirected to configured IdP during the authentication phase, before being able to access App.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex
 
-This option is a JSON list with items of type AppIdentityProviders.  For documentation on AppIdentityProviders please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppIdentityProviders.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppIdentityProviders.  For documentation on AppIdentityProviders please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppIdentityProviders.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--accounts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Accounts of App
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppAccounts.  For documentation on AppAccounts please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAccounts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAccounts.  For documentation on AppAccounts please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAccounts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--grants', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Grants assigned to the app
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppGrants.  For documentation on AppGrants please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppGrants.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppGrants.  For documentation on AppGrants please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppGrants.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--service-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom attribute that is required to compute other attribute values during app creation.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: always  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppServiceParams.  For documentation on AppServiceParams please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppServiceParams.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppServiceParams.  For documentation on AppServiceParams please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppServiceParams.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--attr-rendering-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Label for the attribute to be shown in the UI.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: immutable  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppAttrRenderingMetadata.  For documentation on AppAttrRenderingMetadata please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAttrRenderingMetadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAttrRenderingMetadata.  For documentation on AppAttrRenderingMetadata please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAttrRenderingMetadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--granted-app-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of AppRoles that are granted to this App (and that are defined by other Apps). Within the Oracle Public Cloud infrastructure, this allows AppID-based association. Such an association allows this App to act as a consumer and thus to access resources of another App that acts as a producer.
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppGrantedAppRoles.  For documentation on AppGrantedAppRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppGrantedAppRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppGrantedAppRoles.  For documentation on AppGrantedAppRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppGrantedAppRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--saml-service-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--allowed-scopes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of scopes (exposed by this App or by other Apps) that this App is allowed to access when it acts as an OAuthClient.
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [fqs]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppAllowedScopes.  For documentation on AppAllowedScopes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAllowedScopes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAllowedScopes.  For documentation on AppAllowedScopes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAllowedScopes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificates', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Each value of this attribute represent a certificate that this App uses when it acts as an OAuthClient.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [certAlias]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppCertificates.  For documentation on AppCertificates please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppCertificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppCertificates.  For documentation on AppCertificates please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppCertificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--alias-apps', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Each value of this internal attribute refers to an Oracle Public Cloud infrastructure App on which this App depends.
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppAliasApps.  For documentation on AppAliasApps please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAliasApps.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAliasApps.  For documentation on AppAliasApps please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAliasApps.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--as-opc-service', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of AppRoles defined by this UnmanagedApp. Membership in each of these AppRoles confers administrative privilege within this App.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex
 
-This option is a JSON list with items of type AppAdminRoles.  For documentation on AppAdminRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppAdminRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppAdminRoles.  For documentation on AppAdminRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppAdminRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--user-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of AppRoles defined by this UnmanagedApp. Membership in each of these AppRoles confers end-user privilege within this App.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex
 
-This option is a JSON list with items of type AppUserRoles.  For documentation on AppUserRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppUserRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppUserRoles.  For documentation on AppUserRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppUserRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scopes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Scopes defined by this App. Used when this App acts as an OAuth Resource.
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type AppScopes.  For documentation on AppScopes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/AppScopes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type AppScopes.  For documentation on AppScopes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/AppScopes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionradius-app-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionsaml-service-provider-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionweb-tier-policy-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -19209,7 +19209,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -19333,7 +19333,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -19356,7 +19356,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type ApprovalWorkflowApprovalWorkflowSteps.  For documentation on ApprovalWorkflowApprovalWorkflowSteps please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/ApprovalWorkflowApprovalWorkflowSteps.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ApprovalWorkflowApprovalWorkflowSteps.  For documentation on ApprovalWorkflowApprovalWorkflowSteps please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/ApprovalWorkflowApprovalWorkflowSteps.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'max-duration': {'module': 'identity_domains', 'class': 'ApprovalWorkflowMaxDuration'}, 'approval-workflow-steps': {'module': 'identity_domains', 'class': 'list[ApprovalWorkflowApprovalWorkflowSteps]'}})
@@ -19496,7 +19496,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -19716,7 +19716,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -19761,25 +19761,25 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type CloudGateExtUpstreamServerGroups.  For documentation on CloudGateExtUpstreamServerGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServerGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type CloudGateExtUpstreamServerGroups.  For documentation on CloudGateExtUpstreamServerGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServerGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--upstream-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of upstream servers
 
 **Added In:** 20.1.3
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type CloudGateExtUpstreamServers.  For documentation on CloudGateExtUpstreamServers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type CloudGateExtUpstreamServers.  For documentation on CloudGateExtUpstreamServers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--oauth-client', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Server Blocks on this Cloud Gate
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [hostName]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type CloudGateExtServers.  For documentation on CloudGateExtServers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type CloudGateExtServers.  For documentation on CloudGateExtServers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/CloudGateExtServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--mappings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Cloud Gate Mappings that map Apps to this Cloud Gate
 
 **SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [serverId, resourcePrefix]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type CloudGateExtMappings.  For documentation on CloudGateExtMappings please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type CloudGateExtMappings.  For documentation on CloudGateExtMappings please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/CloudGateExtMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'upstream-server-groups': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServerGroups]'}, 'upstream-servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServers]'}, 'oauth-client': {'module': 'identity_domains', 'class': 'CloudGateOauthClient'}, 'servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtServers]'}, 'mappings': {'module': 'identity_domains', 'class': 'list[CloudGateExtMappings]'}})
@@ -19923,7 +19923,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -20090,7 +20090,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -20244,7 +20244,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -20397,7 +20397,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -20420,12 +20420,12 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsAddedSinceVersion: 3  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type DynamicResourceGroupGrants.  For documentation on DynamicResourceGroupGrants please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/DynamicResourceGroupGrants.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type DynamicResourceGroupGrants.  For documentation on DynamicResourceGroupGrants please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/DynamicResourceGroupGrants.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dynamic-group-app-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of appRoles that are currently granted to this Dynamic Resource Group.  The Identity service will assert these AppRoles for any resource that satisfies the matching-rule of this DynamicResourceGroup.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type DynamicResourceGroupDynamicGroupAppRoles.  For documentation on DynamicResourceGroupDynamicGroupAppRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/DynamicResourceGroupDynamicGroupAppRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type DynamicResourceGroupDynamicGroupAppRoles.  For documentation on DynamicResourceGroupDynamicGroupAppRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/DynamicResourceGroupDynamicGroupAppRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextension-oci-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -20547,7 +20547,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -20575,7 +20575,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:User Members, mapsTo:members[User].value, multiValueDelimiter:;]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - idcsPaginateResponse: true  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type GroupMembers.  For documentation on GroupMembers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/GroupMembers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type GroupMembers.  For documentation on GroupMembers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/GroupMembers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensiongroup-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionposix-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionrequestable-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -20722,7 +20722,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -20783,7 +20783,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [rule, value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type IdentityPropagationTrustImpersonationServiceUsers.  For documentation on IdentityPropagationTrustImpersonationServiceUsers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/IdentityPropagationTrustImpersonationServiceUsers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type IdentityPropagationTrustImpersonationServiceUsers.  For documentation on IdentityPropagationTrustImpersonationServiceUsers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/IdentityPropagationTrustImpersonationServiceUsers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--keytab', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -20942,7 +20942,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -21118,7 +21118,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [idpGroup]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type IdentityProviderJitUserProvGroupMappings.  For documentation on IdentityProviderJitUserProvGroupMappings please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/IdentityProviderJitUserProvGroupMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type IdentityProviderJitUserProvGroupMappings.  For documentation on IdentityProviderJitUserProvGroupMappings please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/IdentityProviderJitUserProvGroupMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--jit-user-prov-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--jit-user-prov-assigned-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Refers to every group of which a JIT-provisioned User should be a member.  Just-in-Time user-provisioning applies this static list when jitUserProvGroupStaticListEnabled:true.
 
@@ -21126,7 +21126,7 @@ This option is a JSON list with items of type IdentityProviderJitUserProvGroupMa
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type IdentityProviderJitUserProvAssignedGroups.  For documentation on IdentityProviderJitUserProvAssignedGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/IdentityProviderJitUserProvAssignedGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type IdentityProviderJitUserProvAssignedGroups.  For documentation on IdentityProviderJitUserProvAssignedGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/IdentityProviderJitUserProvAssignedGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--correlation-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionsocial-identity-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionx509-identity-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -21367,7 +21367,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -21414,7 +21414,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [type]  - multiValued: true  - required: false  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type IdentitySettingsTokens.  For documentation on IdentitySettingsTokens please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/IdentitySettingsTokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type IdentitySettingsTokens.  For documentation on IdentitySettingsTokens please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/IdentitySettingsTokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'my-profile': {'module': 'identity_domains', 'class': 'IdentitySettingsMyProfile'}, 'posix-uid': {'module': 'identity_domains', 'class': 'IdentitySettingsPOSIXUid'}, 'posix-gid': {'module': 'identity_domains', 'class': 'IdentitySettingsPOSIXGid'}, 'tokens': {'module': 'identity_domains', 'class': 'list[IdentitySettingsTokens]'}})
@@ -21548,7 +21548,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -21733,7 +21733,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -21753,7 +21753,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [idcsAttributeName, managedObjectAttributeName]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MappedAttributeAttributeMappings.  For documentation on MappedAttributeAttributeMappings please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MappedAttributeAttributeMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MappedAttributeAttributeMappings.  For documentation on MappedAttributeAttributeMappings please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MappedAttributeAttributeMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'attribute-mappings': {'module': 'identity_domains', 'class': 'list[MappedAttributeAttributeMappings]'}})
@@ -21866,7 +21866,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -21925,47 +21925,47 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Email, mapsTo:emails[work].value], [columnHeaderName:Home Email, mapsTo:emails[home].value], [columnHeaderName:Primary Email Type, mapsTo:emails[$(type)].primary], [columnHeaderName:Other Email, mapsTo:emails[other].value], [columnHeaderName:Recovery Email, mapsTo:emails[recovery].value], [columnHeaderName:Work Email Verified, mapsTo:emails[work].verified], [columnHeaderName:Home Email Verified, mapsTo:emails[home].verified], [columnHeaderName:Other Email Verified, mapsTo:emails[other].verified], [columnHeaderName:Recovery Email Verified, mapsTo:emails[recovery].verified]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeEmails.  For documentation on MeEmails please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeEmails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeEmails.  For documentation on MeEmails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeEmails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--phone-numbers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Phone numbers
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Phone, mapsTo:phoneNumbers[work].value], [columnHeaderName:Mobile No, mapsTo:phoneNumbers[mobile].value], [columnHeaderName:Home Phone, mapsTo:phoneNumbers[home].value], [columnHeaderName:Fax, mapsTo:phoneNumbers[fax].value], [columnHeaderName:Pager, mapsTo:phoneNumbers[pager].value], [columnHeaderName:Other Phone, mapsTo:phoneNumbers[other].value], [columnHeaderName:Recovery Phone, mapsTo:phoneNumbers[recovery].value], [columnHeaderName:Primary Phone Type, mapsTo:phoneNumbers[$(type)].primary]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MePhoneNumbers.  For documentation on MePhoneNumbers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MePhoneNumbers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MePhoneNumbers.  For documentation on MePhoneNumbers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MePhoneNumbers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ims', type=custom_types.CLI_COMPLEX_TYPE, help=u"""User's instant messaging addresses
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeIms.  For documentation on MeIms please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeIms.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeIms.  For documentation on MeIms please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeIms.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--photos', type=custom_types.CLI_COMPLEX_TYPE, help=u"""URLs of photos for the User
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MePhotos.  For documentation on MePhotos please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MePhotos.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MePhotos.  For documentation on MePhotos please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MePhotos.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A physical mailing address for this User, as described in (address Element). Canonical Type Values of work, home, and other. The value attribute is a complex type with the following sub-attributes.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Address Street, deprecatedColumnHeaderName:Work Street Address, mapsTo:addresses[work].streetAddress], [columnHeaderName:Work Address Locality, deprecatedColumnHeaderName:Work City, mapsTo:addresses[work].locality], [columnHeaderName:Work Address Region, deprecatedColumnHeaderName:Work State, mapsTo:addresses[work].region], [columnHeaderName:Work Address Postal Code, deprecatedColumnHeaderName:Work Postal Code, mapsTo:addresses[work].postalCode], [columnHeaderName:Work Address Country, deprecatedColumnHeaderName:Work Country, mapsTo:addresses[work].country], [columnHeaderName:Work Address Formatted, mapsTo:addresses[work].formatted], [columnHeaderName:Home Address Formatted, mapsTo:addresses[home].formatted], [columnHeaderName:Other Address Formatted, mapsTo:addresses[other].formatted], [columnHeaderName:Home Address Street, mapsTo:addresses[home].streetAddress], [columnHeaderName:Other Address Street, mapsTo:addresses[other].streetAddress], [columnHeaderName:Home Address Locality, mapsTo:addresses[home].locality], [columnHeaderName:Other Address Locality, mapsTo:addresses[other].locality], [columnHeaderName:Home Address Region, mapsTo:addresses[home].region], [columnHeaderName:Other Address Region, mapsTo:addresses[other].region], [columnHeaderName:Home Address Country, mapsTo:addresses[home].country], [columnHeaderName:Other Address Country, mapsTo:addresses[other].country], [columnHeaderName:Home Address Postal Code, mapsTo:addresses[home].postalCode], [columnHeaderName:Other Address Postal Code, mapsTo:addresses[other].postalCode], [columnHeaderName:Primary Address Type, mapsTo:addresses[$(type)].primary]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Addresses.  For documentation on addresses please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Addresses.  For documentation on addresses please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of groups that the user belongs to, either thorough direct membership, nested groups, or dynamically calculated
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeGroups.  For documentation on MeGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeGroups.  For documentation on MeGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entitlements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of entitlements for the User that represent a thing the User has.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeEntitlements.  For documentation on MeEntitlements please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeEntitlements.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeEntitlements.  For documentation on MeEntitlements please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeEntitlements.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of roles for the User that collectively represent who the User is; e.g., 'Student', 'Faculty'.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeRoles.  For documentation on MeRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeRoles.  For documentation on MeRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--x509-certificates', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of certificates issued to the User.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type MeX509Certificates.  For documentation on MeX509Certificates please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MeX509Certificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MeX509Certificates.  For documentation on MeX509Certificates please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/MeX509Certificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasextensionenterprise2-0-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionuser-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionpassword-state-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -22191,7 +22191,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -22316,7 +22316,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -22456,7 +22456,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -22615,7 +22615,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -22748,12 +22748,12 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type PasswordPolicyGroups.  For documentation on PasswordPolicyGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/PasswordPolicyGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type PasswordPolicyGroups.  For documentation on PasswordPolicyGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/PasswordPolicyGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configured-password-policy-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of password policy rules that have values set. This map of stringKey:stringValue pairs can be used to aid users while setting/resetting password
 
 **SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [key]  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type PasswordPolicyConfiguredPasswordPolicyRules.  For documentation on PasswordPolicyConfiguredPasswordPolicyRules please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/PasswordPolicyConfiguredPasswordPolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type PasswordPolicyConfiguredPasswordPolicyRules.  For documentation on PasswordPolicyConfiguredPasswordPolicyRules please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/PasswordPolicyConfiguredPasswordPolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'disallowed-user-attribute-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'disallowed-substrings': {'module': 'identity_domains', 'class': 'list[string]'}, 'groups': {'module': 'identity_domains', 'class': 'list[PasswordPolicyGroups]'}, 'configured-password-policy-rules': {'module': 'identity_domains', 'class': 'list[PasswordPolicyConfiguredPasswordPolicyRules]'}})
@@ -22973,7 +22973,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -23005,7 +23005,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type PolicyRules.  For documentation on PolicyRules please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/PolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type PolicyRules.  For documentation on PolicyRules please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/PolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -23142,7 +23142,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -23319,7 +23319,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: []  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type SchemaAttributes.  For documentation on SchemaAttributes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SchemaAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SchemaAttributes.  For documentation on SchemaAttributes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SchemaAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'idcs-resource-types': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[SchemaAttributes]'}})
@@ -23420,7 +23420,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -23569,7 +23569,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -23607,30 +23607,30 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SelfRegistrationProfileAfterSubmitText.  For documentation on SelfRegistrationProfileAfterSubmitText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileAfterSubmitText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileAfterSubmitText.  For documentation on SelfRegistrationProfileAfterSubmitText please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileAfterSubmitText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--user-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""**SCIM++ Properties:** - idcsCompositeKey: [value] - idcsSearchable: true - multiValued: true - mutability: readWrite - required: false - returned: default - type: complex - uniqueness: none User Attributes
 
-This option is a JSON list with items of type SelfRegistrationProfileUserAttributes.  For documentation on SelfRegistrationProfileUserAttributes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileUserAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileUserAttributes.  For documentation on SelfRegistrationProfileUserAttributes please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileUserAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--default-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Default groups assigned to the user
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex
 
-This option is a JSON list with items of type SelfRegistrationProfileDefaultGroups.  For documentation on SelfRegistrationProfileDefaultGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileDefaultGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileDefaultGroups.  For documentation on SelfRegistrationProfileDefaultGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileDefaultGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--header-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Header text
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SelfRegistrationProfileHeaderText.  For documentation on SelfRegistrationProfileHeaderText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileHeaderText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileHeaderText.  For documentation on SelfRegistrationProfileHeaderText please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileHeaderText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--footer-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Footer text
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SelfRegistrationProfileFooterText.  For documentation on SelfRegistrationProfileFooterText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileFooterText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileFooterText.  For documentation on SelfRegistrationProfileFooterText please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileFooterText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--consent-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Consent text
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SelfRegistrationProfileConsentText.  For documentation on SelfRegistrationProfileConsentText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileConsentText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SelfRegistrationProfileConsentText.  For documentation on SelfRegistrationProfileConsentText please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileConsentText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'allowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'disallowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'display-name': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDisplayName]'}, 'after-submit-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileAfterSubmitText]'}, 'user-attributes': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileUserAttributes]'}, 'email-template': {'module': 'identity_domains', 'class': 'SelfRegistrationProfileEmailTemplate'}, 'default-groups': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDefaultGroups]'}, 'header-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileHeaderText]'}, 'footer-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileFooterText]'}, 'consent-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileConsentText]'}})
@@ -23781,7 +23781,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -23968,50 +23968,50 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [name]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SettingsTenantCustomClaims.  For documentation on SettingsTenantCustomClaims please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsTenantCustomClaims.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SettingsTenantCustomClaims.  For documentation on SettingsTenantCustomClaims please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SettingsTenantCustomClaims.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--purge-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Purge Configs for different Resource Types
 
 **Deprecated Since: 19.1.6**
 
 **SCIM++ Properties:**  - idcsCompositeKey: [resourceName]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type SettingsPurgeConfigs.  For documentation on SettingsPurgeConfigs please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsPurgeConfigs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SettingsPurgeConfigs.  For documentation on SettingsPurgeConfigs please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SettingsPurgeConfigs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--default-company-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Default name of the Company in different locales
 
 **Added In:** 18.2.2
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - multiValued: true  - mutability: readOnly  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type SettingsDefaultCompanyNames.  For documentation on SettingsDefaultCompanyNames please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsDefaultCompanyNames.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SettingsDefaultCompanyNames.  For documentation on SettingsDefaultCompanyNames please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SettingsDefaultCompanyNames.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--default-login-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Default Login text in different locales
 
 **Added In:** 18.2.2
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - multiValued: true  - mutability: readOnly  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type SettingsDefaultLoginTexts.  For documentation on SettingsDefaultLoginTexts please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsDefaultLoginTexts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SettingsDefaultLoginTexts.  For documentation on SettingsDefaultLoginTexts please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SettingsDefaultLoginTexts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--default-images', type=custom_types.CLI_COMPLEX_TYPE, help=u"""References to various images
 
 **Added In:** 18.2.2
 
 **SCIM++ Properties:**  - idcsCompositeKey: [type]  - multiValued: true  - mutability: readOnly  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type SettingsDefaultImages.  For documentation on SettingsDefaultImages please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsDefaultImages.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SettingsDefaultImages.  For documentation on SettingsDefaultImages please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SettingsDefaultImages.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--company-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Name of the company in different locales
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type SettingsCompanyNames.  For documentation on SettingsCompanyNames please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsCompanyNames.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SettingsCompanyNames.  For documentation on SettingsCompanyNames please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SettingsCompanyNames.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--login-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Login text in different locales
 
 **SCIM++ Properties:**  - idcsCompositeKey: [locale]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type SettingsLoginTexts.  For documentation on SettingsLoginTexts please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsLoginTexts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SettingsLoginTexts.  For documentation on SettingsLoginTexts please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SettingsLoginTexts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--images', type=custom_types.CLI_COMPLEX_TYPE, help=u"""References to various images
 
 **SCIM++ Properties:**  - idcsCompositeKey: [type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
 
-This option is a JSON list with items of type SettingsImages.  For documentation on SettingsImages please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsImages.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SettingsImages.  For documentation on SettingsImages please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SettingsImages.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'contact-emails': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-forgot-password-flow-return-urls': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-notification-redirect-urls': {'module': 'identity_domains', 'class': 'list[string]'}, 'cloud-gate-cors-settings': {'module': 'identity_domains', 'class': 'SettingsCloudGateCorsSettings'}, 'certificate-validation': {'module': 'identity_domains', 'class': 'SettingsCertificateValidation'}, 'tenant-custom-claims': {'module': 'identity_domains', 'class': 'list[SettingsTenantCustomClaims]'}, 'purge-configs': {'module': 'identity_domains', 'class': 'list[SettingsPurgeConfigs]'}, 'default-company-names': {'module': 'identity_domains', 'class': 'list[SettingsDefaultCompanyNames]'}, 'default-login-texts': {'module': 'identity_domains', 'class': 'list[SettingsDefaultLoginTexts]'}, 'default-images': {'module': 'identity_domains', 'class': 'list[SettingsDefaultImages]'}, 'company-names': {'module': 'identity_domains', 'class': 'list[SettingsCompanyNames]'}, 'login-texts': {'module': 'identity_domains', 'class': 'list[SettingsLoginTexts]'}, 'images': {'module': 'identity_domains', 'class': 'list[SettingsImages]'}})
@@ -24279,7 +24279,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -24314,7 +24314,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SocialIdentityProviderJitProvAssignedGroups.  For documentation on SocialIdentityProviderJitProvAssignedGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SocialIdentityProviderJitProvAssignedGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SocialIdentityProviderJitProvAssignedGroups.  For documentation on SocialIdentityProviderJitProvAssignedGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SocialIdentityProviderJitProvAssignedGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auto-redirect-enabled', type=click.BOOL, help=u"""Whether social auto redirect is enabled. The IDP policy should be configured with only one Social IDP, and without username/password selected.
 
 **Added In:** 2310202314
@@ -24385,7 +24385,7 @@ This option is a JSON list with items of type SocialIdentityProviderJitProvAssig
 
 **SCIM++ Properties:**  - idcsCompositeKey: [relayParamKey]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type SocialIdentityProviderRelayIdpParamMappings.  For documentation on SocialIdentityProviderRelayIdpParamMappings please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SocialIdentityProviderRelayIdpParamMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SocialIdentityProviderRelayIdpParamMappings.  For documentation on SocialIdentityProviderRelayIdpParamMappings please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/SocialIdentityProviderRelayIdpParamMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'jit-prov-assigned-groups': {'module': 'identity_domains', 'class': 'list[SocialIdentityProviderJitProvAssignedGroups]'}, 'scope': {'module': 'identity_domains', 'class': 'list[string]'}, 'admin-scope': {'module': 'identity_domains', 'class': 'list[string]'}, 'relay-idp-param-mappings': {'module': 'identity_domains', 'class': 'list[SocialIdentityProviderRelayIdpParamMappings]'}})
@@ -24559,7 +24559,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -24618,47 +24618,47 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Email, mapsTo:emails[work].value], [columnHeaderName:Home Email, mapsTo:emails[home].value], [columnHeaderName:Primary Email Type, mapsTo:emails[$(type)].primary], [columnHeaderName:Other Email, mapsTo:emails[other].value], [columnHeaderName:Recovery Email, mapsTo:emails[recovery].value], [columnHeaderName:Work Email Verified, mapsTo:emails[work].verified], [columnHeaderName:Home Email Verified, mapsTo:emails[home].verified], [columnHeaderName:Other Email Verified, mapsTo:emails[other].verified], [columnHeaderName:Recovery Email Verified, mapsTo:emails[recovery].verified]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserEmails.  For documentation on UserEmails please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserEmails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserEmails.  For documentation on UserEmails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserEmails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--phone-numbers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Phone numbers
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Phone, mapsTo:phoneNumbers[work].value], [columnHeaderName:Mobile No, mapsTo:phoneNumbers[mobile].value], [columnHeaderName:Home Phone, mapsTo:phoneNumbers[home].value], [columnHeaderName:Fax, mapsTo:phoneNumbers[fax].value], [columnHeaderName:Pager, mapsTo:phoneNumbers[pager].value], [columnHeaderName:Other Phone, mapsTo:phoneNumbers[other].value], [columnHeaderName:Recovery Phone, mapsTo:phoneNumbers[recovery].value], [columnHeaderName:Primary Phone Type, mapsTo:phoneNumbers[$(type)].primary]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserPhoneNumbers.  For documentation on UserPhoneNumbers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserPhoneNumbers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserPhoneNumbers.  For documentation on UserPhoneNumbers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserPhoneNumbers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ims', type=custom_types.CLI_COMPLEX_TYPE, help=u"""User's instant messaging addresses
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserIms.  For documentation on UserIms please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserIms.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserIms.  For documentation on UserIms please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserIms.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--photos', type=custom_types.CLI_COMPLEX_TYPE, help=u"""URLs of photos for the User
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserPhotos.  For documentation on UserPhotos please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserPhotos.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserPhotos.  For documentation on UserPhotos please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserPhotos.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A physical mailing address for this User, as described in (address Element). Canonical Type Values of work, home, and other. The value attribute is a complex type with the following sub-attributes.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [type]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Work Address Street, deprecatedColumnHeaderName:Work Street Address, mapsTo:addresses[work].streetAddress], [columnHeaderName:Work Address Locality, deprecatedColumnHeaderName:Work City, mapsTo:addresses[work].locality], [columnHeaderName:Work Address Region, deprecatedColumnHeaderName:Work State, mapsTo:addresses[work].region], [columnHeaderName:Work Address Postal Code, deprecatedColumnHeaderName:Work Postal Code, mapsTo:addresses[work].postalCode], [columnHeaderName:Work Address Country, deprecatedColumnHeaderName:Work Country, mapsTo:addresses[work].country], [columnHeaderName:Work Address Formatted, mapsTo:addresses[work].formatted], [columnHeaderName:Home Address Formatted, mapsTo:addresses[home].formatted], [columnHeaderName:Other Address Formatted, mapsTo:addresses[other].formatted], [columnHeaderName:Home Address Street, mapsTo:addresses[home].streetAddress], [columnHeaderName:Other Address Street, mapsTo:addresses[other].streetAddress], [columnHeaderName:Home Address Locality, mapsTo:addresses[home].locality], [columnHeaderName:Other Address Locality, mapsTo:addresses[other].locality], [columnHeaderName:Home Address Region, mapsTo:addresses[home].region], [columnHeaderName:Other Address Region, mapsTo:addresses[other].region], [columnHeaderName:Home Address Country, mapsTo:addresses[home].country], [columnHeaderName:Other Address Country, mapsTo:addresses[other].country], [columnHeaderName:Home Address Postal Code, mapsTo:addresses[home].postalCode], [columnHeaderName:Other Address Postal Code, mapsTo:addresses[other].postalCode], [columnHeaderName:Primary Address Type, mapsTo:addresses[$(type)].primary]]  - idcsPii: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Addresses.  For documentation on addresses please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Addresses.  For documentation on addresses please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of groups that the user belongs to, either thorough direct membership, nested groups, or dynamically calculated
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserGroups.  For documentation on UserGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserGroups.  For documentation on UserGroups please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entitlements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of entitlements for the User that represent a thing the User has.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserEntitlements.  For documentation on UserEntitlements please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserEntitlements.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserEntitlements.  For documentation on UserEntitlements please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserEntitlements.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of roles for the User that collectively represent who the User is; e.g., 'Student', 'Faculty'.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserRoles.  For documentation on UserRoles please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserRoles.  For documentation on UserRoles please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserRoles.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--x509-certificates', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of certificates issued to the User.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type UserX509Certificates.  For documentation on UserX509Certificates please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/UserX509Certificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UserX509Certificates.  For documentation on UserX509Certificates please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/UserX509Certificates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasextensionenterprise2-0-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionuser-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionpassword-state-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -24907,7 +24907,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -25075,7 +25075,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -25211,7 +25211,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
@@ -25364,7 +25364,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 
 **SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
-This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")

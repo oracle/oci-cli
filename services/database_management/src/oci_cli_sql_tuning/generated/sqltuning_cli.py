@@ -4026,7 +4026,7 @@ def save_sql_tuning_set_as_database_password_credential_details(ctx, from_json, 
 @cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
 
-This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
@@ -4094,7 +4094,7 @@ def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, total_
 @cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
 
-This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
@@ -4165,7 +4165,7 @@ def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_js
 @cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
 
-This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
@@ -4234,7 +4234,7 @@ def start_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_
 @cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
 
-This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
@@ -4309,7 +4309,7 @@ def start_sql_tuning_task_database_secret_credential_details(ctx, from_json, man
 @cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
 
-This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
@@ -4376,7 +4376,7 @@ def start_sql_tuning_task_database_named_credential_details(ctx, from_json, mana
 @cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
 
-This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")

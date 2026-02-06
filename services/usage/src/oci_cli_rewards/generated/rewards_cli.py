@@ -65,7 +65,7 @@ rewards_root_group.add_command(product_summary_group)
 @cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of new user to be added to the list of user that can redeem rewards.
 
-This option is a JSON list with items of type RedeemableUser.  For documentation on RedeemableUser please see our API reference: https://docs.cloud.oracle.com/api/#/en/rewards/20190111/datatypes/RedeemableUser.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type RedeemableUser.  For documentation on RedeemableUser please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/rewards/20190111/datatypes/RedeemableUser.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--user-id', help=u"""The user ID of the person to send a copy of an email.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'usage', 'class': 'list[RedeemableUser]'}})

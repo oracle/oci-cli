@@ -198,7 +198,7 @@ def create_config_create_span_filter_details(ctx, from_json, apm_domain_id, disp
 @cli_util.option('--namespace', help=u"""The namespace to which the metrics are published. It must be one of several predefined namespaces.""")
 @cli_util.option('--dimensions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of dimensions for the metric. This variable should not be used.
 
-This option is a JSON list with items of type Dimension.  For documentation on Dimension please see our API reference: https://docs.cloud.oracle.com/api/#/en/config/20210201/datatypes/Dimension.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Dimension.  For documentation on Dimension please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/config/20210201/datatypes/Dimension.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--opc-dry-run', help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apm_config', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_config', 'class': 'dict(str, dict(str, object))'}, 'dimensions': {'module': 'apm_config', 'class': 'list[Dimension]'}, 'metrics': {'module': 'apm_config', 'class': 'list[Metric]'}})
 @cli_util.help_option
@@ -703,7 +703,7 @@ def test(ctx, from_json, apm_domain_id, test_type):
 @cli_util.option('--span', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The span to test the rules on. This should be a valid JSON object that follows one of the formats used by distributed tracing frameworks, such as OpenTelemetry, Zipkin, or Oracle Application Performance Monitoring.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of filters to try against the given span.
 
-This option is a JSON list with items of type FilterTextOrId.  For documentation on FilterTextOrId please see our API reference: https://docs.cloud.oracle.com/api/#/en/config/20210201/datatypes/FilterTextOrId.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type FilterTextOrId.  For documentation on FilterTextOrId please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/config/20210201/datatypes/FilterTextOrId.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'options': {'module': 'apm_config', 'class': 'object'}, 'filters': {'module': 'apm_config', 'class': 'list[FilterTextOrId]'}, 'span': {'module': 'apm_config', 'class': 'object'}})
 @cli_util.help_option
 @click.pass_context
@@ -791,10 +791,10 @@ def update_config(ctx, from_json, force, apm_domain_id, config_id, config_type, 
 @cli_util.option('--namespace', help=u"""The namespace to which the metrics are published. It must be one of several predefined namespaces.""")
 @cli_util.option('--dimensions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of dimensions for the metric. This variable should not be used.
 
-This option is a JSON list with items of type Dimension.  For documentation on Dimension please see our API reference: https://docs.cloud.oracle.com/api/#/en/config/20210201/datatypes/Dimension.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Dimension.  For documentation on Dimension please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/config/20210201/datatypes/Dimension.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metrics', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of metrics in this group.
 
-This option is a JSON list with items of type Metric.  For documentation on Metric please see our API reference: https://docs.cloud.oracle.com/api/#/en/config/20210201/datatypes/Metric.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Metric.  For documentation on Metric please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/config/20210201/datatypes/Metric.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
