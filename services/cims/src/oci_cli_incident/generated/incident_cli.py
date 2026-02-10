@@ -64,7 +64,7 @@ support_root_group.add_command(incident_group)
 @cli_util.option('--user-group-id', help=u"""Technical support type (`TECH`) only: Identifier of the user group to assign the new support request to. To find identifiers of user groups that you have access to, run the [ValidateUser] operation. Note: The Customer User Administrator (CUA) can manage user groups by name using [My Oracle Cloud Support portal].""")
 @cli_util.option('--contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of contacts.
 
-This option is a JSON list with items of type Contact.  For documentation on Contact please see our API reference: https://docs.cloud.oracle.com/api/#/en/incident/20181231/datatypes/Contact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Contact.  For documentation on Contact please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/incident/20181231/datatypes/Contact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--referrer', help=u"""The incident referrer. This value is often the URL that the customer used when creating the support request.""")
 @cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account. User OCID is mandatory for OCI Users and optional for Multicloud users.""")
 @cli_util.option('--homeregion', help=u"""The region of the tenancy.""")

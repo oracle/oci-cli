@@ -15,7 +15,7 @@ Jinja2>=3.1.5; python_version >= '3.7'
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.167.0
+oci==2.167.1
 packaging>=22.0; python_version > '3.8'
 packaging==20.2; python_version <= '3.8'
 pluggy==0.13.0
@@ -54,5 +54,5 @@ setuptools==70.0.0; python_version == '3.8'
 setuptools==68.0.0; python_version == '3.7'
 setuptools==59.6.0; python_version == '3.6'
 # this is required because of python 3.6 requests dependency version bound
-urllib3==2.5.0; python_version >= '3.10'
+urllib3==2.6.3; python_version >= '3.10'
 urllib3==1.26.19; python_version < '3.10'

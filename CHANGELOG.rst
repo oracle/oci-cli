@@ -6,11 +6,130 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.74.0 - 2026-02-10
+-------------------
+Added
+~~~~~
+* Database Migration service
+
+  * Support for Assessments in the Database Migration service
+
+    * ``oci database-migration database-assessment advisor-report-check-collection update-check-action-update-object``
+    * ``oci database-migration database-assessment advisor-report-check-collection update-check-action-update-object-all-update-check-action-update-object-details``
+    * ``oci database-migration database-assessment advisor-report-check-collection update-check-action-update-object-list-update-check-action-update-object-details``
+    * ``oci database-migration connection-summary``
+    * ``oci database-migration database-assessment assessment add``
+    * ``oci database-migration database-assessment assessment add-assessment-objects-my-sql-assessment-object-collection``
+    * ``oci database-migration database-assessment assessment add-assessment-objects-oracle-assessment-object-collection``
+    * ``oci database-migration database-assessment assessment change-compartment``
+    * ``oci database-migration database-assessment assessment clone``
+    * ``oci database-migration database-assessment assessment clone-assessment-my-sql-clone-assessment-details``
+    * ``oci database-migration database-assessment assessment clone-assessment-oracle-clone-assessment-details``
+    * ``oci database-migration database-assessment assessment create``
+    * ``oci database-migration database-assessment assessment create-assessment-create-my-sql-assessment-details``
+    * ``oci database-migration database-assessment assessment create-assessment-create-oracle-assessment-details``
+    * ``oci database-migration database-assessment assessment delete``
+    * ``oci database-migration database-assessment assessment get``
+    * ``oci database-migration database-assessment assessment perform-assessor-action``
+    * ``oci database-migration database-assessment assessment perform-assessor-action-download-sql``
+    * ``oci database-migration database-assessment assessment perform-assessor-check-action``
+    * ``oci database-migration database-assessment assessment remove``
+    * ``oci database-migration database-assessment assessment remove-assessment-objects-my-sql-assessment-object-collection``
+    * ``oci database-migration database-assessment assessment remove-assessment-objects-oracle-assessment-object-collection``
+    * ``oci database-migration database-assessment assessment update``
+    * ``oci database-migration database-assessment assessment update-assessment-update-my-sql-assessment-details``
+    * ``oci database-migration database-assessment assessment update-assessment-update-oracle-assessment-details``
+    * ``oci database-migration database-assessment assessment-object-collection list-assessment-objects``
+    * ``oci database-migration database-assessment assessment-object-type-summary list-assessment-object-types``
+    * ``oci database-migration database-assessment assessment-summary list-assessments``
+    * ``oci database-migration database-assessment assessor get``
+    * ``oci database-migration database-assessment assessor-check get``
+    * ``oci database-migration database-assessment assessor-check list-affected-objects``
+    * ``oci database-migration database-assessment assessor-check-summary list-assessor-checks``
+    * ``oci database-migration database-assessment assessor-summary list-assessors``
+    * ``oci database-migration database-assessment binary get-script``
+    * ``oci database-migration database-connection-type-summary list-database-connection-type``
+    * ``oci database-migration job-output-summary list``
+    * ``oci database-migration job-summary``
+    * ``oci database-migration migration-object-collection list``
+    * ``oci database-migration migration-summary``
+    * ``oci database-migration work-request-log-entry list``
+    * ``oci database-migration work-request-summary``
+
+  * Support for new optional parameters
+
+    * ``oci database-migration connection list --technology-sub-type``
+    * ``oci database-migration job list --job-id-not-equal-to``
+    * ``oci database-migration migration clone-mysql-migration --assessment-id``
+    * ``oci database-migration migration clone-oracle-migration --assessment-id``
+    * ``oci database-migration migration create-mysql-migration --source-database-connection-id --target-database-connection-id --assessment-id``
+    * ``oci database-migration migration create-oracle-migration --source-database-connection-id --target-database-connection-id --assessment-id``
+
+* ADM service
+
+  * Support for Audit Vulnerabilities in the ApplicationDependencyManagement service.
+
+    * ``oci adm vulnerability-audit list-vulnerabilities``
+
+* MySQL HeatWave service
+
+  * Support for flexible MySQL Configurations in MySQL HeatWave service
+
+    * ``oci mysql configuration create --options ``
+
+* Core service
+
+  * Support for Bulk Operations for Private IP and IPv6
+
+    * ``oci network internal-vnic-attachment create-vnic-attachment``
+    * ``oci network ipv6 bulk-create``
+    * ``oci network ipv6 bulk-delete``
+    * ``oci network ipv6 bulk-detach``
+    * ``oci network ipv6 bulk-update``
+    * ``oci network private-ip bulk-create``
+    * ``oci network private-ip bulk-delete``
+    * ``oci network private-ip bulk-detach``
+    * ``oci network private-ip bulk-update``
+
+  * Support for baselineOcpuUtilization field in the input json file for shape-availabilities in the request and baselineOcpuUtilization field in the response
+
+    * ``oci compute compute-capacity-report create --availability-domain --compartment-id --shape-availabilities``
+
+  * Support for new optional parameter ``--opc-parent-resource-principal-token-url`` for the following command
+
+    * ``oci bv volume-kms-key update``
+
+  * Support for new optional parameters ``--interface-name`` and ``--oci-physical-device-name`` for the following command
+
+    * ``oci network cross-connect create``
+
+* Fleet Software Update service
+
+  * Support for Exadata Database service on Exascale Infrastructure
+
+    * ``oci fleet-software-update fsu-collection create-db --service-type exadbxs``
+    * ``oci fleet-software-update fsu-collection create-gi --service-type exadbxs``
+    * ``oci fleet-software-update fsu-discovery create-gi --details-service-type exadbxs``
+    * ``oci fleet-software-update fsu-discovery create-db --details-service-type exadbxs``
+
+
+Deprecated
+~~~~~~~~~~
+* [BREAKING] Support for specifying variables and initVariables when creating MySQL Configurations in MySQL HeatWave service has now been deprecated
+  * ``oci mysql configuration create --variables ``
+  * ``oci mysql configuration create --initvariables ``
+
+
+Security
+~~~~~~~~
+* Updated urllib3 dependency to `2.6.3` for python version `>=3.10` per: https://www.cve.org/CVERecord?id=CVE-2026-21441, https://www.cve.org/CVERecord?id=CVE-2025-66418, https://www.cve.org/CVERecord?id=CVE-2025-66471
+
+
 3.73.2 - 2026-02-03
 -------------------
 Added
 ~~~~~
-*  Generative AI Service
+* Generative AI Service
   * Support for the new model capability.
     * ``oci generative-ai imported-model create-from-huggingface --capabilites``
     * ``oci generative-ai imported-model create-from-objectstorage --capabilities``

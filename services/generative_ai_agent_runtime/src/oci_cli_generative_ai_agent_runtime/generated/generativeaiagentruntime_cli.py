@@ -61,10 +61,10 @@ generative_ai_agent_runtime_root_group.add_command(agent_endpoint_group)
 @cli_util.option('--tool-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map where each key is a toolId and the value contains tool type and additional dynamic parameters. This field is deprecated and will be removed after July 02 2026.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tool-inputs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of tool input objects, each specifying a tool's ID, type, and corresponding input parameters required for execution.
 
-This option is a JSON list with items of type ToolInput.  For documentation on ToolInput please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiagentruntime/20240531/datatypes/ToolInput.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ToolInput.  For documentation on ToolInput please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeaiagentruntime/20240531/datatypes/ToolInput.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--performed-actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of actions that have been performed based on prior required actions.
 
-This option is a JSON list with items of type PerformedAction.  For documentation on PerformedAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiagentruntime/20240531/datatypes/PerformedAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type PerformedAction.  For documentation on PerformedAction please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeaiagentruntime/20240531/datatypes/PerformedAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'tool-parameters': {'module': 'generative_ai_agent_runtime', 'class': 'dict(str, string)'}, 'tool-inputs': {'module': 'generative_ai_agent_runtime', 'class': 'list[ToolInput]'}, 'performed-actions': {'module': 'generative_ai_agent_runtime', 'class': 'list[PerformedAction]'}})
 @cli_util.help_option
@@ -208,7 +208,7 @@ def get_session(ctx, from_json, agent_endpoint_id, session_id):
 @cli_util.option('--knowledge-base-id', required=True, help=u"""A unique ID for the Knowledge Base.""")
 @cli_util.option('--filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metadata filters to narrow down the retrieved metadata
 
-This option is a JSON list with items of type MetadataFilter.  For documentation on MetadataFilter please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiagentruntime/20240531/datatypes/MetadataFilter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MetadataFilter.  For documentation on MetadataFilter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeaiagentruntime/20240531/datatypes/MetadataFilter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'filters': {'module': 'generative_ai_agent_runtime', 'class': 'list[MetadataFilter]'}})
 @cli_util.help_option

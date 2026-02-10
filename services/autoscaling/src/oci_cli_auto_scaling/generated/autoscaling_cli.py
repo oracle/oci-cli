@@ -687,7 +687,7 @@ def update_auto_scaling_policy(ctx, from_json, force, auto_scaling_configuration
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling policy is enabled.""")
 @cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
-This option is a JSON list with items of type UpdateConditionDetails.  For documentation on UpdateConditionDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/autoscaling/20181001/datatypes/UpdateConditionDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UpdateConditionDetails.  For documentation on UpdateConditionDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/autoscaling/20181001/datatypes/UpdateConditionDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'rules': {'module': 'autoscaling', 'class': 'list[UpdateConditionDetails]'}})
