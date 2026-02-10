@@ -315,7 +315,7 @@ data_integration_root_group.add_command(runtime_pipeline_group)
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the the workspace to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -377,7 +377,7 @@ def change_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--dis-application-id', required=True, help=u"""The OCID of the DIS Application.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the the DIS Application to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -453,7 +453,7 @@ def change_dis_application_compartment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the workspace.""")
 @cli_util.option('--source-application-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'source-application-info': {'module': 'data_integration', 'class': 'CreateSourceApplicationInfo'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
@@ -589,7 +589,7 @@ def create_application_detailed_description(ctx, from_json, workspace_id, applic
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
 @cli_util.help_option
@@ -654,7 +654,7 @@ def create_connection(ctx, from_json, workspace_id, name, identifier, model_type
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
@@ -722,7 +722,7 @@ def create_connection_create_connection_from_oracle_siebel(ctx, from_json, works
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--access-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -792,7 +792,7 @@ def create_connection_create_connection_from_amazon_s3(ctx, from_json, workspace
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -866,7 +866,7 @@ def create_connection_create_connection_from_bicc(ctx, from_json, workspace_id, 
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tns-alias', help=u"""The Autonomous Transaction Processing instance service name.""")
 @cli_util.option('--tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -951,7 +951,7 @@ def create_connection_create_connection_from_atp(ctx, from_json, workspace_id, n
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--realm', help=u"""HDFS Realm name.""")
 @cli_util.option('--key-distribution-center', help=u"""The HDFS Key Distribution Center.""")
@@ -1030,7 +1030,7 @@ def create_connection_create_connection_from_hdfs(ctx, from_json, workspace_id, 
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
@@ -1100,7 +1100,7 @@ def create_connection_create_connection_from_my_sql_heat_wave(ctx, from_json, wo
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auth-header', help=u"""Optional header name if used other than default header(Authorization).""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
@@ -1168,7 +1168,7 @@ def create_connection_create_connection_from_rest_basic_auth(ctx, from_json, wor
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password', help=u"""The password for the connection.""")
@@ -1244,7 +1244,7 @@ def create_connection_create_connection_from_oracle(ctx, from_json, workspace_id
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
@@ -1314,7 +1314,7 @@ def create_connection_create_connection_from_oracle_people_soft(ctx, from_json, 
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
@@ -1382,7 +1382,7 @@ def create_connection_create_connection_from_oracle_ebs(ctx, from_json, workspac
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password', help=u"""The password for the connection.""")
@@ -1456,7 +1456,7 @@ def create_connection_create_connection_from_my_sql(ctx, from_json, workspace_id
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password', help=u"""The password for the connection.""")
@@ -1530,7 +1530,7 @@ def create_connection_create_connection_from_jdbc(ctx, from_json, workspace_id, 
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1601,7 +1601,7 @@ def create_connection_create_connection_from_bip(ctx, from_json, workspace_id, n
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--client-id', help=u"""Specifies the client ID key for specific application""")
 @cli_util.option('--client-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1680,7 +1680,7 @@ def create_connection_create_connection_from_o_auth2(ctx, from_json, workspace_i
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tns-alias', help=u"""The Autonomous Data Warehouse instance service name.""")
 @cli_util.option('--tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1762,7 +1762,7 @@ def create_connection_create_connection_from_adwc(ctx, from_json, workspace_id, 
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
 @cli_util.help_option
@@ -1824,7 +1824,7 @@ def create_connection_create_connection_from_rest_no_auth(ctx, from_json, worksp
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--credential-file-content', help=u"""The credential file content from an Oracle Object Storage wallet.""")
 @cli_util.option('--user-id', help=u"""The OCI user OCID for the user to connect to.""")
@@ -1902,7 +1902,7 @@ def create_connection_create_connection_from_object_storage(ctx, from_json, work
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
 @cli_util.help_option
@@ -3379,7 +3379,7 @@ def create_connection_validation_create_data_asset_from_object_storage(ctx, from
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
@@ -3456,7 +3456,7 @@ def create_connection_validation_create_connection_from_oracle_siebel(ctx, from_
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-access-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-secret-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3535,7 +3535,7 @@ def create_connection_validation_create_connection_from_amazon_s3(ctx, from_json
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-username', help=u"""The user name for the connection.""")
 @cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3618,7 +3618,7 @@ def create_connection_validation_create_connection_from_bicc(ctx, from_json, wor
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-tns-alias', help=u"""The Autonomous Transaction Processing instance service name.""")
 @cli_util.option('--connection-tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3712,7 +3712,7 @@ def create_connection_validation_create_connection_from_atp(ctx, from_json, work
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-realm', help=u"""HDFS Realm name.""")
 @cli_util.option('--connection-key-distribution-center', help=u"""The HDFS Key Distribution Center.""")
@@ -3800,7 +3800,7 @@ def create_connection_validation_create_connection_from_hdfs(ctx, from_json, wor
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
@@ -3879,7 +3879,7 @@ def create_connection_validation_create_connection_from_my_sql_heat_wave(ctx, fr
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-auth-header', help=u"""Optional header name if used other than default header(Authorization).""")
 @json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
@@ -3956,7 +3956,7 @@ def create_connection_validation_create_connection_from_rest_basic_auth(ctx, fro
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-username', help=u"""The user name for the connection.""")
 @cli_util.option('--connection-password', help=u"""The password for the connection.""")
@@ -4041,7 +4041,7 @@ def create_connection_validation_create_connection_from_oracle(ctx, from_json, w
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
@@ -4120,7 +4120,7 @@ def create_connection_validation_create_connection_from_oracle_people_soft(ctx, 
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
@@ -4197,7 +4197,7 @@ def create_connection_validation_create_connection_from_oracle_ebs(ctx, from_jso
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-username', help=u"""The user name for the connection.""")
 @cli_util.option('--connection-password', help=u"""The password for the connection.""")
@@ -4280,7 +4280,7 @@ def create_connection_validation_create_connection_from_my_sql(ctx, from_json, w
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-username', help=u"""The user name for the connection.""")
 @cli_util.option('--connection-password', help=u"""The password for the connection.""")
@@ -4363,7 +4363,7 @@ def create_connection_validation_create_connection_from_jdbc(ctx, from_json, wor
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-username', help=u"""The user name for the connection.""")
 @cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4443,7 +4443,7 @@ def create_connection_validation_create_connection_from_bip(ctx, from_json, work
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-client-id', help=u"""Specifies the client ID key for specific application""")
 @cli_util.option('--connection-client-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4531,7 +4531,7 @@ def create_connection_validation_create_connection_from_o_auth2(ctx, from_json, 
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-tns-alias', help=u"""The Autonomous Data Warehouse instance service name.""")
 @cli_util.option('--connection-tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4622,7 +4622,7 @@ def create_connection_validation_create_connection_from_adwc(ctx, from_json, wor
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
 @cli_util.help_option
@@ -4693,7 +4693,7 @@ def create_connection_validation_create_connection_from_rest_no_auth(ctx, from_j
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-credential-file-content', help=u"""The credential file content from an Oracle Object Storage wallet.""")
 @cli_util.option('--connection-user-id', help=u"""The OCI user OCID for the user to connect to.""")
@@ -4780,7 +4780,7 @@ def create_connection_validation_create_connection_from_object_storage(ctx, from
 @cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
 @cli_util.help_option
@@ -4843,7 +4843,7 @@ def create_connection_validation_create_connection_from_lake(ctx, from_json, wor
 @cli_util.option('--source-workspace-id', required=True, help=u"""The workspace id of the source from where we need to copy object.""")
 @cli_util.option('--object-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the objects to be copied.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--copy-conflict-resolution', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'object-keys': {'module': 'data_integration', 'class': 'list[string]'}, 'copy-conflict-resolution': {'module': 'data_integration', 'class': 'CopyConflictResolution'}})
@@ -6208,10 +6208,10 @@ def create_data_asset_create_data_asset_from_object_storage(ctx, from_json, work
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nodes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of nodes.
 
-This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Detailed description for the object.""")
 @cli_util.option('--flow-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
@@ -6277,10 +6277,10 @@ def create_data_flow(ctx, from_json, workspace_id, name, identifier, registry_me
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--nodes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of nodes.
 
-This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Detailed description for the object.""")
 @cli_util.option('--flow-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
@@ -6288,10 +6288,10 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--key-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A key map. If provided, key is replaced with generated key. This structure provides mapping between user provided key and generated key.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--typed-object-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A hash map that maps TypedObject keys to the object itself, for java sdk.
 
-This option is a JSON dictionary of type dict(str, TypedObjectWrapper).  For documentation on TypedObjectWrapper please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/TypedObjectWrapper.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON dictionary of type dict(str, TypedObjectWrapper).  For documentation on TypedObjectWrapper please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/TypedObjectWrapper.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-field-map-summary', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A hash map that maps TypedObject keys to a field map that maps to the typed object as a target, for java sdk.
 
-This option is a JSON dictionary of type dict(str, FieldMapWrapper).  For documentation on FieldMapWrapper please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FieldMapWrapper.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON dictionary of type dict(str, FieldMapWrapper).  For documentation on FieldMapWrapper please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/FieldMapWrapper.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'nodes': {'module': 'data_integration', 'class': 'list[FlowNode]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'flow-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}, 'key-map': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'typed-object-map': {'module': 'data_integration', 'class': 'dict(str, TypedObjectWrapper)'}, 'target-field-map-summary': {'module': 'data_integration', 'class': 'dict(str, FieldMapWrapper)'}})
 @cli_util.help_option
 @click.pass_context
@@ -6380,7 +6380,7 @@ def create_data_flow_validation(ctx, from_json, workspace_id, key, model_type, m
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the workspace.""")
 @cli_util.option('--source-application-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'source-application-info': {'module': 'data_integration', 'class': 'CreateSourceApplicationInfo'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
@@ -6563,10 +6563,10 @@ def create_entity_shape(ctx, from_json, workspace_id, connection_key, schema_res
 @cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
-This option is a JSON list with items of type UniqueKey.  For documentation on UniqueKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/UniqueKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UniqueKey.  For documentation on UniqueKey please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/UniqueKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--foreign-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of foreign keys.
 
-This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
@@ -6664,10 +6664,10 @@ def create_entity_shape_create_entity_shape_from_object(ctx, from_json, workspac
 @cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
-This option is a JSON list with items of type UniqueKey.  For documentation on UniqueKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/UniqueKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UniqueKey.  For documentation on UniqueKey please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/UniqueKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--foreign-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of foreign keys.
 
-This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
@@ -6782,10 +6782,10 @@ def create_entity_shape_create_entity_shape_from_sql(ctx, from_json, workspace_i
 @cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
-This option is a JSON list with items of type UniqueKey.  For documentation on UniqueKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/UniqueKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type UniqueKey.  For documentation on UniqueKey please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/UniqueKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--foreign-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of foreign keys.
 
-This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
@@ -6891,7 +6891,7 @@ def create_entity_shape_create_entity_shape_from_file(ctx, from_json, workspace_
 @cli_util.option('--object-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Field is used to specify which object keys to export""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--are-references-included', type=click.BOOL, help=u"""This field controls if the references will be exported along with the objects""")
 @cli_util.option('--filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Filters for exported objects""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'object-keys': {'module': 'data_integration', 'class': 'list[string]'}, 'filters': {'module': 'data_integration', 'class': 'list[string]'}})
@@ -7166,7 +7166,7 @@ def create_function_library(ctx, from_json, workspace_id, name, identifier, regi
 @cli_util.option('--object-key-for-import', help=u"""Key of the object inside which all the objects will be imported""")
 @cli_util.option('--are-data-asset-references-included', type=click.BOOL, help=u"""This field controls if the data asset references will be included during import.""")
 @cli_util.option('--import-conflict-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'import-conflict-resolution': {'module': 'data_integration', 'class': 'ImportConflictResolution'}})
@@ -7310,14 +7310,14 @@ def create_patch(ctx, from_json, workspace_id, application_key, name, identifier
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--nodes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of nodes attached to the pipeline
 
-This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of additional parameters required in pipeline.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--flow-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of variables required in pipeline.
 
-This option is a JSON list with items of type Variable.  For documentation on Variable please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Variable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Variable.  For documentation on Variable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Variable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'nodes': {'module': 'data_integration', 'class': 'list[FlowNode]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'flow-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'variables': {'module': 'data_integration', 'class': 'list[Variable]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
 @cli_util.help_option
 @click.pass_context
@@ -7391,14 +7391,14 @@ def create_pipeline(ctx, from_json, workspace_id, name, identifier, registry_met
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--nodes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of nodes attached to the pipeline.
 
-This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of parameters for the pipeline, this allows certain aspects of the pipeline to be configured when the pipeline is executed.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--flow-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of variables required in pipeline, variables can be used to store values that can be used as inputs to tasks in the pipeline.
 
-This option is a JSON list with items of type Variable.  For documentation on Variable please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Variable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Variable.  For documentation on Variable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Variable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'nodes': {'module': 'data_integration', 'class': 'list[FlowNode]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'flow-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'variables': {'module': 'data_integration', 'class': 'list[Variable]'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}})
 @cli_util.help_option
@@ -8100,13 +8100,13 @@ def create_schedule_hourly_frequency_details(ctx, from_json, workspace_id, appli
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -8183,13 +8183,13 @@ def create_task(ctx, from_json, workspace_id, model_type, name, identifier, regi
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -8271,13 +8271,13 @@ def create_task_create_task_from_integration_task(ctx, from_json, workspace_id, 
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -8371,13 +8371,13 @@ def create_task_create_task_from_data_loader_task(ctx, from_json, workspace_id, 
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -8459,13 +8459,13 @@ def create_task_create_task_from_pipeline_task(ctx, from_json, workspace_id, nam
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -8555,13 +8555,13 @@ def create_task_create_task_from_oci_dataflow_task(ctx, from_json, workspace_id,
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -8651,13 +8651,13 @@ def create_task_create_task_from_sql_task(ctx, from_json, workspace_id, name, id
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -8675,7 +8675,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--poll-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--typed-expressions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of typed expressions.
 
-This option is a JSON list with items of type TypedExpression.  For documentation on TypedExpression please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/TypedExpression.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type TypedExpression.  For documentation on TypedExpression please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/TypedExpression.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'auth-config': {'module': 'data_integration', 'class': 'AuthConfig'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}, 'poll-rest-call-config': {'module': 'data_integration', 'class': 'PollRestCallConfig'}, 'typed-expressions': {'module': 'data_integration', 'class': 'list[TypedExpression]'}})
 @cli_util.help_option
 @click.pass_context
@@ -8984,13 +8984,13 @@ def create_task_schedule(ctx, from_json, workspace_id, application_key, name, id
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -9075,13 +9075,13 @@ def create_task_validation(ctx, from_json, workspace_id, model_type, key, model_
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -9169,13 +9169,13 @@ def create_task_validation_create_task_validation_from_data_loader_task(ctx, fro
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -9263,13 +9263,13 @@ def create_task_validation_create_task_validation_from_pipeline_task(ctx, from_j
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -9355,7 +9355,7 @@ def create_task_validation_create_task_validation_from_integration_task(ctx, fro
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--signatures', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of function signature.
 
-This option is a JSON list with items of type FunctionSignature.  For documentation on FunctionSignature please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FunctionSignature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type FunctionSignature.  For documentation on FunctionSignature please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/FunctionSignature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--expr', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Detailed description for the object.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
@@ -9418,7 +9418,7 @@ def create_user_defined_function(ctx, from_json, workspace_id, name, identifier,
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--signatures', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of function signature.
 
-This option is a JSON list with items of type FunctionSignature.  For documentation on FunctionSignature please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FunctionSignature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type FunctionSignature.  For documentation on FunctionSignature please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/FunctionSignature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--expr', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Detailed description for the object.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
@@ -9505,7 +9505,7 @@ def create_user_defined_function_validation(ctx, from_json, workspace_id, key, m
 @cli_util.option('--endpoint-name', help=u"""DCMS Private Endpoint Name""")
 @cli_util.option('--endpoint-compartment-id', help=u"""DCMS PRivate Endpoint Compartment Identifier""")
 @cli_util.option('--workspace-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-values pairs of workspace for storing properties on the workspace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'workspace-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}})
@@ -10475,7 +10475,7 @@ def delete_user_defined_function_validation(ctx, from_json, workspace_id, user_d
 @cli_util.option('--is-force-operation', type=click.BOOL, help=u"""Used to force close down the workspace.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -14656,7 +14656,7 @@ def list_workspaces(ctx, from_json, all_pages, page_size, compartment_id, name, 
 @workspace_group.command(name=cli_util.override('data_integration.start_workspace.command_name', 'start'), help=u"""Starts a workspace. \n[Command Reference](startWorkspace)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -14713,7 +14713,7 @@ def start_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--quiesce-timeout', type=click.INT, help=u"""Used to set the timeout for Data Integration to gracefully close down any running jobs before stopping the workspace.""")
 @cli_util.option('--is-force-operation', type=click.BOOL, help=u"""Used to force close down the workspace.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -14789,7 +14789,7 @@ def stop_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the workspace.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}, 'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}})
@@ -14944,7 +14944,7 @@ def update_application_detailed_description(ctx, from_json, workspace_id, applic
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -15022,7 +15022,7 @@ def update_connection(ctx, from_json, force, workspace_id, connection_key, model
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -15103,7 +15103,7 @@ def update_connection_update_connection_from_lake(ctx, from_json, force, workspa
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
@@ -15188,7 +15188,7 @@ def update_connection_update_connection_from_oracle_ebs(ctx, from_json, force, w
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--credential-file-content', help=u"""The credential file content from an Oracle Object Storage wallet.""")
 @cli_util.option('--user-id', help=u"""The OCI user OCID for the user to connect to.""")
@@ -15283,7 +15283,7 @@ def update_connection_update_connection_from_object_storage(ctx, from_json, forc
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -15374,7 +15374,7 @@ def update_connection_update_connection_from_bicc(ctx, from_json, force, workspa
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -15456,7 +15456,7 @@ def update_connection_update_connection_from_rest_no_auth(ctx, from_json, force,
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--realm', help=u"""HDFS Realm name.""")
 @cli_util.option('--key-distribution-center', help=u"""The HDFS Key Distribution Center.""")
@@ -15551,7 +15551,7 @@ def update_connection_update_connection_from_hdfs(ctx, from_json, force, workspa
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--client-id', help=u"""Specifies the client ID key for specific application""")
 @cli_util.option('--client-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -15649,7 +15649,7 @@ def update_connection_update_connection_from_o_auth2(ctx, from_json, force, work
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auth-header', help=u"""Optional header name if used other than default header(Authorization).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
@@ -15736,7 +15736,7 @@ def update_connection_update_connection_from_rest_basic_auth(ctx, from_json, for
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
@@ -15823,7 +15823,7 @@ def update_connection_update_connection_from_oracle_siebel(ctx, from_json, force
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
@@ -15908,7 +15908,7 @@ def update_connection_update_connection_from_my_sql_heat_wave(ctx, from_json, fo
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -15995,7 +15995,7 @@ def update_connection_update_connection_from_bip(ctx, from_json, force, workspac
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password', help=u"""The password for the connection.""")
@@ -16086,7 +16086,7 @@ def update_connection_update_connection_from_my_sql(ctx, from_json, force, works
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password', help=u"""The password for the connection.""")
@@ -16177,7 +16177,7 @@ def update_connection_update_connection_from_jdbc(ctx, from_json, force, workspa
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--access-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16264,7 +16264,7 @@ def update_connection_update_connection_from_amazon_s3(ctx, from_json, force, wo
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tns-alias', help=u"""The Autonomous Transaction Processing instance service name.""")
 @cli_util.option('--tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16363,7 +16363,7 @@ def update_connection_update_connection_from_atp(ctx, from_json, force, workspac
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password', help=u"""The password for the connection.""")
@@ -16454,7 +16454,7 @@ def update_connection_update_connection_from_oracle(ctx, from_json, force, works
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tns-alias', help=u"""The Autonomous Data Warehouse instance service name.""")
 @cli_util.option('--tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16555,7 +16555,7 @@ def update_connection_update_connection_from_adwc(ctx, from_json, force, workspa
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
 
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
@@ -18203,10 +18203,10 @@ def update_data_asset_update_data_asset_from_oracle(ctx, from_json, force, works
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--nodes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of nodes.
 
-This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Detailed description for the object.""")
 @cli_util.option('--flow-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
@@ -18300,7 +18300,7 @@ def update_data_flow(ctx, from_json, force, workspace_id, data_flow_key, key, mo
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the workspace.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}, 'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}})
@@ -18743,14 +18743,14 @@ def update_import_request(ctx, from_json, workspace_id, import_request_key, stat
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--nodes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of nodes attached to the pipeline
 
-This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type FlowNode.  For documentation on FlowNode please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/FlowNode.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of additional parameters required in pipeline.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--flow-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of variables required in pipeline.
 
-This option is a JSON list with items of type Variable.  For documentation on Variable please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Variable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Variable.  For documentation on Variable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Variable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -18905,7 +18905,7 @@ def update_project(ctx, from_json, force, workspace_id, project_key, key, model_
 @cli_util.option('--target-object', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The new target object to reference. This can be of type `DataAsset`, `Schema` or `Task`. In case of `DataAsset`, the child references can be of type `Connection`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--child-references', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of child references that also need to be updated.
 
-This option is a JSON list with items of type ChildReferenceDetail.  For documentation on ChildReferenceDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ChildReferenceDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ChildReferenceDetail.  For documentation on ChildReferenceDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/ChildReferenceDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'options': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'target-object': {'module': 'data_integration', 'class': 'object'}, 'child-references': {'module': 'data_integration', 'class': 'list[ChildReferenceDetail]'}})
@@ -19687,13 +19687,13 @@ def update_schedule_hourly_frequency_details(ctx, from_json, force, workspace_id
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -19789,13 +19789,13 @@ def update_task(ctx, from_json, force, workspace_id, task_key, model_type, key, 
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -19815,7 +19815,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--poll-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--typed-expressions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of typed expressions.
 
-This option is a JSON list with items of type TypedExpression.  For documentation on TypedExpression please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/TypedExpression.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type TypedExpression.  For documentation on TypedExpression please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/TypedExpression.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'auth-config': {'module': 'data_integration', 'class': 'AuthConfig'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}, 'poll-rest-call-config': {'module': 'data_integration', 'class': 'PollRestCallConfig'}, 'typed-expressions': {'module': 'data_integration', 'class': 'list[TypedExpression]'}})
@@ -19950,13 +19950,13 @@ def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, 
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -20057,13 +20057,13 @@ def update_task_update_task_from_pipeline_task(ctx, from_json, force, workspace_
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -20172,13 +20172,13 @@ def update_task_update_task_from_oci_dataflow_task(ctx, from_json, force, worksp
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -20287,13 +20287,13 @@ def update_task_update_task_from_sql_task(ctx, from_json, force, workspace_id, t
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -20406,13 +20406,13 @@ def update_task_update_task_from_data_loader_task(ctx, from_json, force, workspa
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
 
-This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type InputPort.  For documentation on InputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/InputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of output ports.
 
-This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters.
 
-This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
@@ -20722,7 +20722,7 @@ def update_task_schedule(ctx, from_json, force, workspace_id, application_key, t
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--signatures', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of function signature.
 
-This option is a JSON list with items of type FunctionSignature.  For documentation on FunctionSignature please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FunctionSignature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type FunctionSignature.  For documentation on FunctionSignature please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dataintegration/20200430/datatypes/FunctionSignature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--expr', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Detailed description for the object.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
@@ -20802,7 +20802,7 @@ def update_user_defined_function(ctx, from_json, force, workspace_id, user_defin
 @cli_util.option('--workspace-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-values pairs of workspace for storing properties on the workspace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'workspace-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}})

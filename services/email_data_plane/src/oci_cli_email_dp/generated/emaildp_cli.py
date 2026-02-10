@@ -48,7 +48,7 @@ email_data_plane_root_group.add_command(email_raw_submitted_response_group)
 @cli_util.option('--body-text', help=u"""Text body content. NOTE: Even though bodytext and bodyhtml are both optional, at least one of them must be provided.""")
 @cli_util.option('--reply-to', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The email address for the recipient to reply to. If left blank, defaults to the sender address.
 
-This option is a JSON list with items of type EmailAddress.  For documentation on EmailAddress please see our API reference: https://docs.cloud.oracle.com/api/#/en/emaildp/20220926/datatypes/EmailAddress.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type EmailAddress.  For documentation on EmailAddress please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/emaildp/20220926/datatypes/EmailAddress.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--header-fields', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The header used by the customer for the email sent. Reserved headers are not allowed e.g \"subject\", \"from\", and \"to\" etc. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'sender': {'module': 'email_data_plane', 'class': 'Sender'}, 'recipients': {'module': 'email_data_plane', 'class': 'Recipients'}, 'reply-to': {'module': 'email_data_plane', 'class': 'list[EmailAddress]'}, 'header-fields': {'module': 'email_data_plane', 'class': 'dict(str, string)'}})
 @cli_util.help_option

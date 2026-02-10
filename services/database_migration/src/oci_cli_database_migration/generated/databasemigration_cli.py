@@ -22,9 +22,105 @@ def database_migration_root_group():
     pass
 
 
+@click.command(cli_util.override('database_migration.assessor_check_group.command_name', 'assessor-check'), cls=CommandGroupWithAlias, help="""Assessor Check""")
+@cli_util.help_option_group
+def assessor_check_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.assessment_summary_group.command_name', 'assessment-summary'), cls=CommandGroupWithAlias, help="""Assessment Summary resource""")
+@cli_util.help_option_group
+def assessment_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.assessor_group.command_name', 'assessor'), cls=CommandGroupWithAlias, help="""Assessor resource""")
+@cli_util.help_option_group
+def assessor_group():
+    pass
+
+
 @click.command(cli_util.override('database_migration.work_request_summary_group.command_name', 'work-request-summary'), cls=CommandGroupWithAlias, help="""A summary of the status of a work request.""")
 @cli_util.help_option_group
 def work_request_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
+@cli_util.help_option_group
+def work_request_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.migration_summary_group.command_name', 'migration-summary'), cls=CommandGroupWithAlias, help="""Migration resource""")
+@cli_util.help_option_group
+def migration_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.advisor_report_check_collection_group.command_name', 'advisor-report-check-collection'), cls=CommandGroupWithAlias, help="""Pre-Migration extended advisor report result.""")
+@cli_util.help_option_group
+def advisor_report_check_collection_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.connection_summary_group.command_name', 'connection-summary'), cls=CommandGroupWithAlias, help="""Represents the parameters common for all connections in list operation.""")
+@cli_util.help_option_group
+def connection_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.assessment_group.command_name', 'assessment'), cls=CommandGroupWithAlias, help="""Assessment resource""")
+@cli_util.help_option_group
+def assessment_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.migration_parameter_summary_group.command_name', 'migration-parameter-summary'), cls=CommandGroupWithAlias, help="""Migration parameter response object.""")
+@cli_util.help_option_group
+def migration_parameter_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.database_connection_type_summary_group.command_name', 'database-connection-type-summary'), cls=CommandGroupWithAlias, help="""Connection type e.g. ORACLE and array of technology type objects.""")
+@cli_util.help_option_group
+def database_connection_type_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.migration_object_type_summary_group.command_name', 'migration-object-type-summary'), cls=CommandGroupWithAlias, help="""Migration Object Type""")
+@cli_util.help_option_group
+def migration_object_type_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing an operation that is tracked by a work request.""")
+@cli_util.help_option_group
+def work_request_error_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.connection_group.command_name', 'connection'), cls=CommandGroupWithAlias, help="""Represents the common details required for creating a new connection.""")
+@cli_util.help_option_group
+def connection_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.assessment_object_type_summary_group.command_name', 'assessment-object-type-summary'), cls=CommandGroupWithAlias, help="""Assessment Object Type""")
+@cli_util.help_option_group
+def assessment_object_type_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.assessor_check_summary_group.command_name', 'assessor-check-summary'), cls=CommandGroupWithAlias, help="""Assessor Check Summary""")
+@cli_util.help_option_group
+def assessor_check_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.assessment_object_collection_group.command_name', 'assessment-object-collection'), cls=CommandGroupWithAlias, help="""Assessment Objects collection.""")
+@cli_util.help_option_group
+def assessment_object_collection_group():
     pass
 
 
@@ -46,27 +142,9 @@ def excluded_object_summary_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
+@click.command(cli_util.override('database_migration.assessor_summary_group.command_name', 'assessor-summary'), cls=CommandGroupWithAlias, help="""Assessor Summary""")
 @cli_util.help_option_group
-def work_request_group():
-    pass
-
-
-@click.command(cli_util.override('database_migration.migration_summary_group.command_name', 'migration-summary'), cls=CommandGroupWithAlias, help="""Migration resource""")
-@cli_util.help_option_group
-def migration_summary_group():
-    pass
-
-
-@click.command(cli_util.override('database_migration.connection_summary_group.command_name', 'connection-summary'), cls=CommandGroupWithAlias, help="""Represents the parameters common for all connections in list operation.""")
-@cli_util.help_option_group
-def connection_summary_group():
-    pass
-
-
-@click.command(cli_util.override('database_migration.migration_parameter_summary_group.command_name', 'migration-parameter-summary'), cls=CommandGroupWithAlias, help="""Migration parameter response object.""")
-@cli_util.help_option_group
-def migration_parameter_summary_group():
+def assessor_summary_group():
     pass
 
 
@@ -76,27 +154,9 @@ def job_summary_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.migration_object_type_summary_group.command_name', 'migration-object-type-summary'), cls=CommandGroupWithAlias, help="""Migration Object Type""")
-@cli_util.help_option_group
-def migration_object_type_summary_group():
-    pass
-
-
-@click.command(cli_util.override('database_migration.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing an operation that is tracked by a work request.""")
-@cli_util.help_option_group
-def work_request_error_group():
-    pass
-
-
 @click.command(cli_util.override('database_migration.migration_group.command_name', 'migration'), cls=CommandGroupWithAlias, help="""Migration resource""")
 @cli_util.help_option_group
 def migration_group():
-    pass
-
-
-@click.command(cli_util.override('database_migration.connection_group.command_name', 'connection'), cls=CommandGroupWithAlias, help="""Represents the common details required for creating a new connection.""")
-@cli_util.help_option_group
-def connection_group():
     pass
 
 
@@ -112,27 +172,51 @@ def job_output_summary_group():
     pass
 
 
+@click.command(cli_util.override('database_migration.advisor_report_check_group.command_name', 'advisor-report-check'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def advisor_report_check_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.binary_group.command_name', 'binary'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def binary_group():
+    pass
+
+
+database_migration_root_group.add_command(assessor_check_group)
+database_migration_root_group.add_command(assessment_summary_group)
+database_migration_root_group.add_command(assessor_group)
 database_migration_root_group.add_command(work_request_summary_group)
+database_migration_root_group.add_command(work_request_group)
+database_migration_root_group.add_command(migration_summary_group)
+database_migration_root_group.add_command(advisor_report_check_collection_group)
+database_migration_root_group.add_command(connection_summary_group)
+database_migration_root_group.add_command(assessment_group)
+database_migration_root_group.add_command(migration_parameter_summary_group)
+database_migration_root_group.add_command(database_connection_type_summary_group)
+database_migration_root_group.add_command(migration_object_type_summary_group)
+database_migration_root_group.add_command(work_request_error_group)
+database_migration_root_group.add_command(connection_group)
+database_migration_root_group.add_command(assessment_object_type_summary_group)
+database_migration_root_group.add_command(assessor_check_summary_group)
+database_migration_root_group.add_command(assessment_object_collection_group)
 database_migration_root_group.add_command(migration_object_collection_group)
 database_migration_root_group.add_command(work_request_log_entry_group)
 database_migration_root_group.add_command(excluded_object_summary_group)
-database_migration_root_group.add_command(work_request_group)
-database_migration_root_group.add_command(migration_summary_group)
-database_migration_root_group.add_command(connection_summary_group)
-database_migration_root_group.add_command(migration_parameter_summary_group)
+database_migration_root_group.add_command(assessor_summary_group)
 database_migration_root_group.add_command(job_summary_group)
-database_migration_root_group.add_command(migration_object_type_summary_group)
-database_migration_root_group.add_command(work_request_error_group)
 database_migration_root_group.add_command(migration_group)
-database_migration_root_group.add_command(connection_group)
 database_migration_root_group.add_command(job_group)
 database_migration_root_group.add_command(job_output_summary_group)
+database_migration_root_group.add_command(advisor_report_check_group)
+database_migration_root_group.add_command(binary_group)
 
 
 @job_group.command(name=cli_util.override('database_migration.abort_job.command_name', 'abort'), help=u"""Aborts a Migration Job (either Evaluation or Migration). \n[Command Reference](abortJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -177,6 +261,107 @@ def abort_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.add_assessment_objects.command_name', 'add'), help=u"""Add excluded/included object to the list. \n[Command Reference](addAssessmentObjects)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--database-combination', required=True, type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), help=u"""The combination of source and target databases participating in a migration. Example: ORACLE means the migration is meant for migrating Oracle source and target databases.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def add_assessment_objects(ctx, from_json, assessment_id, database_combination, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCombination'] = database_combination
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.add_assessment_objects(
+        assessment_id=assessment_id,
+        add_assessment_objects_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.add_assessment_objects_oracle_assessment_object_collection.command_name', 'add-assessment-objects-oracle-assessment-object-collection'), help=u"""Add excluded/included object to the list. \n[Command Reference](addAssessmentObjects)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of database objects.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--bulk-include-exclude-data', help=u"""Specifies the database objects to be excluded from the migration in bulk. The definition accepts input in a CSV format, newline separated for each entry. More details can be found in the documentation.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[OracleDatabaseObjectSummary]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[OracleDatabaseObjectSummary]'}})
+@cli_util.wrap_exceptions
+def add_assessment_objects_oracle_assessment_object_collection(ctx, from_json, assessment_id, items, bulk_include_exclude_data, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    if bulk_include_exclude_data is not None:
+        _details['bulkIncludeExcludeData'] = bulk_include_exclude_data
+
+    _details['databaseCombination'] = 'ORACLE'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.add_assessment_objects(
+        assessment_id=assessment_id,
+        add_assessment_objects_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.add_assessment_objects_my_sql_assessment_object_collection.command_name', 'add-assessment-objects-my-sql-assessment-object-collection'), help=u"""Add excluded/included object to the list. \n[Command Reference](addAssessmentObjects)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of affected database objects.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObjectSummary]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObjectSummary]'}})
+@cli_util.wrap_exceptions
+def add_assessment_objects_my_sql_assessment_object_collection(ctx, from_json, assessment_id, items, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    _details['databaseCombination'] = 'MYSQL'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.add_assessment_objects(
+        assessment_id=assessment_id,
+        add_assessment_objects_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -285,6 +470,37 @@ def add_migration_objects_oracle_migration_object_collection(ctx, from_json, mig
     cli_util.render_response(result, ctx)
 
 
+@assessment_group.command(name=cli_util.override('database_migration.change_assessment_compartment.command_name', 'change-compartment'), help=u"""Used to change the Assessment compartment. \n[Command Reference](changeAssessmentCompartment)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_assessment_compartment(ctx, from_json, assessment_id, compartment_id, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.change_assessment_compartment(
+        assessment_id=assessment_id,
+        change_assessment_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('database_migration.change_connection_compartment.command_name', 'change-compartment'), help=u"""Used to change the Database Connection compartment. \n[Command Reference](changeConnectionCompartment)""")
 @cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
@@ -347,6 +563,249 @@ def change_migration_compartment(ctx, from_json, migration_id, compartment_id, i
     cli_util.render_response(result, ctx)
 
 
+@assessment_group.command(name=cli_util.override('database_migration.clone_assessment.command_name', 'clone'), help=u"""Clone a configuration from an existing Assessment. \n[Command Reference](cloneAssessment)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--database-combination', required=True, type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), help=u"""The combination of source and target databases participating in a migration. Example: ORACLE means the migration is meant for migrating Oracle source and target databases.""")
+@cli_util.option('--source-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Assessment'})
+@cli_util.wrap_exceptions
+def clone_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, database_combination, source_database_connection, target_database_connection, display_name, compartment_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCombination'] = database_combination
+    _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
+    _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.clone_assessment(
+        assessment_id=assessment_id,
+        clone_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.clone_assessment_my_sql_clone_assessment_details.command_name', 'clone-assessment-my-sql-clone-assessment-details'), help=u"""Clone a configuration from an existing Assessment. \n[Command Reference](cloneAssessment)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--source-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Assessment'})
+@cli_util.wrap_exceptions
+def clone_assessment_my_sql_clone_assessment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, source_database_connection, target_database_connection, display_name, compartment_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
+    _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['databaseCombination'] = 'MYSQL'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.clone_assessment(
+        assessment_id=assessment_id,
+        clone_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.clone_assessment_oracle_clone_assessment_details.command_name', 'clone-assessment-oracle-clone-assessment-details'), help=u"""Clone a configuration from an existing Assessment. \n[Command Reference](cloneAssessment)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--source-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Assessment'})
+@cli_util.wrap_exceptions
+def clone_assessment_oracle_clone_assessment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, source_database_connection, target_database_connection, display_name, compartment_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
+    _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['databaseCombination'] = 'ORACLE'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.clone_assessment(
+        assessment_id=assessment_id,
+        clone_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @migration_group.command(name=cli_util.override('database_migration.clone_migration.command_name', 'clone'), help=u"""Clone a configuration from an existing Migration. \n[Command Reference](cloneMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--database-combination', required=True, type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), help=u"""The combination of source and target databases participating in a migration. Example: ORACLE means the migration is meant for migrating Oracle source and target databases.""")
@@ -354,10 +813,11 @@ def change_migration_compartment(ctx, from_json, migration_id, compartment_id, i
 @cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--assessment-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
@@ -365,7 +825,7 @@ def change_migration_compartment(ctx, from_json, migration_id, compartment_id, i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, database_combination, source_database_connection_id, target_database_connection_id, display_name, compartment_id, freeform_tags, defined_tags, if_match):
+def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, database_combination, source_database_connection_id, target_database_connection_id, display_name, compartment_id, assessment_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -385,6 +845,9 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
+
+    if assessment_id is not None:
+        _details['assessmentId'] = assessment_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -434,12 +897,13 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--assessment-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--source-standby-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
@@ -447,7 +911,7 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, source_database_connection_id, target_database_connection_id, display_name, compartment_id, freeform_tags, defined_tags, source_container_database_connection_id, source_standby_database_connection_id, if_match):
+def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, source_database_connection_id, target_database_connection_id, display_name, compartment_id, assessment_id, freeform_tags, defined_tags, source_container_database_connection_id, source_standby_database_connection_id, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -466,6 +930,9 @@ def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_stat
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
+
+    if assessment_id is not None:
+        _details['assessmentId'] = assessment_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -523,10 +990,11 @@ def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_stat
 @cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--assessment-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
@@ -534,7 +1002,7 @@ def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_stat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def clone_migration_my_sql_clone_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, source_database_connection_id, target_database_connection_id, display_name, compartment_id, freeform_tags, defined_tags, if_match):
+def clone_migration_my_sql_clone_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, source_database_connection_id, target_database_connection_id, display_name, compartment_id, assessment_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -553,6 +1021,9 @@ def clone_migration_my_sql_clone_migration_details(ctx, from_json, wait_for_stat
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
+
+    if assessment_id is not None:
+        _details['assessmentId'] = assessment_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -604,7 +1075,7 @@ def clone_migration_my_sql_clone_migration_details(ctx, from_json, wait_for_stat
 @cli_util.option('--namespace', required=True, help=u"""Object Storage namespace.""")
 @cli_util.option('--object-name-prefix', required=True, help=u"""Object name prefix.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -666,12 +1137,13 @@ def collect_traces(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @connection_group.command(name=cli_util.override('database_migration.connection_diagnostics.command_name', 'connection-diagnostics'), help=u"""Perform connection test for a database connection. \n[Command Reference](connectionDiagnostics)""")
 @cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-assessment-validation', type=click.BOOL, help=u"""When true, run assessment validation checks (e.g., DMSROLE) and include database information (name/version/size) in the response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'DiagnosticsResult'})
 @cli_util.wrap_exceptions
-def connection_diagnostics(ctx, from_json, connection_id, if_match):
+def connection_diagnostics(ctx, from_json, connection_id, if_match, is_assessment_validation):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -679,12 +1151,307 @@ def connection_diagnostics(ctx, from_json, connection_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_assessment_validation is not None:
+        kwargs['is_assessment_validation'] = is_assessment_validation
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_migration', 'database_migration', ctx)
     result = client.connection_diagnostics(
         connection_id=connection_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.create_assessment.command_name', 'create'), help=u"""Create an Assessment resource that contains all the details to perform the database assessment operation, such as source and destination database details, network throughput, accepted downtime etc. \n[Command Reference](createAssessment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--database-combination', required=True, type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), help=u"""The combination of source and target databases participating in a migration. Example: ORACLE means the migration is meant for migrating Oracle source and target databases.""")
+@cli_util.option('--network-speed-megabit-per-second', required=True, type=custom_types.CliCaseInsensitiveChoice(["MBPS_10", "MBPS_100", "MBPS_1000", "MBPS_2500", "MBPS_5000", "MBPS_10000"]), help=u"""A network speed in Megabits per second.""")
+@cli_util.option('--acceptable-downtime', required=True, type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_10_MINUTES", "LESS_THAN_1_HOUR", "LESS_THAN_4_HOURS", "LESS_THAN_8_HOURS", "LESS_THAN_12_HOURS", "LESS_THAN_1_DAY", "LESS_THAN_2_DAYS", "MORE_THAN_2_DAYS"]), help=u"""Time allowed for the application downtime.""")
+@cli_util.option('--database-data-size', required=True, type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_1GB", "GB_1_10", "GB_10_50", "GB_50_100", "GB_100_500", "GB_500_TB_1", "TB_1_3", "TB_3_10", "TB_10_50", "GREATER_THAN_50TB"]), help=u"""The size of a source database.""")
+@cli_util.option('--ddl-expectation', required=True, type=custom_types.CliCaseInsensitiveChoice(["DDL_EXPECTED", "DDL_NOT_EXPECTED"]), help=u"""DDL expectation values.""")
+@cli_util.option('--source-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_ONLY", "CREATE_AND_RUN_ASSESSORS"]), help=u"""The type of assessment creation.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Assessment'})
+@cli_util.wrap_exceptions
+def create_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_combination, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, source_database_connection, target_database_connection, description, display_name, creation_type, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['databaseCombination'] = database_combination
+    _details['networkSpeedMegabitPerSecond'] = network_speed_megabit_per_second
+    _details['acceptableDowntime'] = acceptable_downtime
+    _details['databaseDataSize'] = database_data_size
+    _details['ddlExpectation'] = ddl_expectation
+    _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
+    _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if creation_type is not None:
+        _details['creationType'] = creation_type
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.create_assessment(
+        create_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.create_assessment_create_oracle_assessment_details.command_name', 'create-assessment-create-oracle-assessment-details'), help=u"""Create an Assessment resource that contains all the details to perform the database assessment operation, such as source and destination database details, network throughput, accepted downtime etc. \n[Command Reference](createAssessment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--network-speed-megabit-per-second', required=True, type=custom_types.CliCaseInsensitiveChoice(["MBPS_10", "MBPS_100", "MBPS_1000", "MBPS_2500", "MBPS_5000", "MBPS_10000"]), help=u"""A network speed in Megabits per second.""")
+@cli_util.option('--acceptable-downtime', required=True, type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_10_MINUTES", "LESS_THAN_1_HOUR", "LESS_THAN_4_HOURS", "LESS_THAN_8_HOURS", "LESS_THAN_12_HOURS", "LESS_THAN_1_DAY", "LESS_THAN_2_DAYS", "MORE_THAN_2_DAYS"]), help=u"""Time allowed for the application downtime.""")
+@cli_util.option('--database-data-size', required=True, type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_1GB", "GB_1_10", "GB_10_50", "GB_50_100", "GB_100_500", "GB_500_TB_1", "TB_1_3", "TB_3_10", "TB_10_50", "GREATER_THAN_50TB"]), help=u"""The size of a source database.""")
+@cli_util.option('--ddl-expectation', required=True, type=custom_types.CliCaseInsensitiveChoice(["DDL_EXPECTED", "DDL_NOT_EXPECTED"]), help=u"""DDL expectation values.""")
+@cli_util.option('--source-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_ONLY", "CREATE_AND_RUN_ASSESSORS"]), help=u"""The type of assessment creation.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'
+
+This option is a JSON list with items of type OracleDatabaseObject.  For documentation on OracleDatabaseObject please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/OracleDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'
+
+This option is a JSON list with items of type OracleDatabaseObject.  For documentation on OracleDatabaseObject please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/OracleDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--bulk-include-exclude-data', help=u"""Specifies the database objects to be excluded from the migration in bulk. The definition accepts input in a CSV format, newline separated for each entry. More details can be found in the documentation.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}}, output_type={'module': 'database_migration', 'class': 'Assessment'})
+@cli_util.wrap_exceptions
+def create_assessment_create_oracle_assessment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, source_database_connection, target_database_connection, description, display_name, creation_type, freeform_tags, defined_tags, exclude_objects, include_objects, bulk_include_exclude_data):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['networkSpeedMegabitPerSecond'] = network_speed_megabit_per_second
+    _details['acceptableDowntime'] = acceptable_downtime
+    _details['databaseDataSize'] = database_data_size
+    _details['ddlExpectation'] = ddl_expectation
+    _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
+    _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if creation_type is not None:
+        _details['creationType'] = creation_type
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if exclude_objects is not None:
+        _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
+
+    if include_objects is not None:
+        _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if bulk_include_exclude_data is not None:
+        _details['bulkIncludeExcludeData'] = bulk_include_exclude_data
+
+    _details['databaseCombination'] = 'ORACLE'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.create_assessment(
+        create_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.create_assessment_create_my_sql_assessment_details.command_name', 'create-assessment-create-my-sql-assessment-details'), help=u"""Create an Assessment resource that contains all the details to perform the database assessment operation, such as source and destination database details, network throughput, accepted downtime etc. \n[Command Reference](createAssessment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--network-speed-megabit-per-second', required=True, type=custom_types.CliCaseInsensitiveChoice(["MBPS_10", "MBPS_100", "MBPS_1000", "MBPS_2500", "MBPS_5000", "MBPS_10000"]), help=u"""A network speed in Megabits per second.""")
+@cli_util.option('--acceptable-downtime', required=True, type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_10_MINUTES", "LESS_THAN_1_HOUR", "LESS_THAN_4_HOURS", "LESS_THAN_8_HOURS", "LESS_THAN_12_HOURS", "LESS_THAN_1_DAY", "LESS_THAN_2_DAYS", "MORE_THAN_2_DAYS"]), help=u"""Time allowed for the application downtime.""")
+@cli_util.option('--database-data-size', required=True, type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_1GB", "GB_1_10", "GB_10_50", "GB_50_100", "GB_100_500", "GB_500_TB_1", "TB_1_3", "TB_3_10", "TB_10_50", "GREATER_THAN_50TB"]), help=u"""The size of a source database.""")
+@cli_util.option('--ddl-expectation', required=True, type=custom_types.CliCaseInsensitiveChoice(["DDL_EXPECTED", "DDL_NOT_EXPECTED"]), help=u"""DDL expectation values.""")
+@cli_util.option('--source-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_ONLY", "CREATE_AND_RUN_ASSESSORS"]), help=u"""The type of assessment creation.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'
+
+This option is a JSON list with items of type MySqlDatabaseObject.  For documentation on MySqlDatabaseObject please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/MySqlDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'
+
+This option is a JSON list with items of type MySqlDatabaseObject.  For documentation on MySqlDatabaseObject please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/MySqlDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--bulk-include-exclude-data', help=u"""Specifies the database objects to be excluded from the migration in bulk. The definition accepts input in a CSV format, newline separated for each entry. More details can be found in the documentation.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObject]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObject]'}}, output_type={'module': 'database_migration', 'class': 'Assessment'})
+@cli_util.wrap_exceptions
+def create_assessment_create_my_sql_assessment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, source_database_connection, target_database_connection, description, display_name, creation_type, freeform_tags, defined_tags, exclude_objects, include_objects, bulk_include_exclude_data):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['networkSpeedMegabitPerSecond'] = network_speed_megabit_per_second
+    _details['acceptableDowntime'] = acceptable_downtime
+    _details['databaseDataSize'] = database_data_size
+    _details['ddlExpectation'] = ddl_expectation
+    _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
+    _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if creation_type is not None:
+        _details['creationType'] = creation_type
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if exclude_objects is not None:
+        _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
+
+    if include_objects is not None:
+        _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if bulk_include_exclude_data is not None:
+        _details['bulkIncludeExcludeData'] = bulk_include_exclude_data
+
+    _details['databaseCombination'] = 'MYSQL'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.create_assessment(
+        create_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -703,7 +1470,7 @@ def connection_diagnostics(ctx, from_json, connection_id, if_match):
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--replication-username', help=u"""The username (credential) used when creating or updating this resource.""")
 @cli_util.option('--replication-password', help=u"""The password (credential) used when creating or updating this resource.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'database_migration', 'class': 'list[string]'}})
@@ -807,9 +1574,9 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--ssl-key', help=u"""Client Key - The client-key.pem containing the client private key (for 2-way SSL).""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries.
 
-This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-system-id', help=u"""The OCID of the database system being referenced.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'database_migration', 'class': 'list[string]'}, 'additional-attributes': {'module': 'database_migration', 'class': 'list[NameValuePair]'}})
@@ -940,7 +1707,7 @@ def create_connection_create_mysql_connection_details(ctx, from_json, wait_for_s
 @cli_util.option('--ssh-key', help=u"""Private SSH key string.""")
 @cli_util.option('--ssh-user', help=u"""The username (credential) used when creating or updating this resource.""")
 @cli_util.option('--ssh-sudo-location', help=u"""Sudo location""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'database_migration', 'class': 'list[string]'}})
@@ -1045,13 +1812,14 @@ def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--database-combination', required=True, type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), help=u"""The combination of source and target databases participating in a migration. Example: ORACLE means the migration is meant for migrating Oracle source and target databases.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""The type of the migration to be performed. Example: ONLINE if no downtime is preferred for a migration. This method uses Oracle GoldenGate for replication.""")
-@cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the resource being referenced.""")
-@cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--source-database-connection-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--target-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--assessment-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
@@ -1059,7 +1827,7 @@ def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_combination, type, source_database_connection_id, target_database_connection_id, description, display_name, freeform_tags, defined_tags):
+def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_combination, type, description, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, assessment_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1068,8 +1836,6 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     _details['compartmentId'] = compartment_id
     _details['databaseCombination'] = database_combination
     _details['type'] = type
-    _details['sourceDatabaseConnectionId'] = source_database_connection_id
-    _details['targetDatabaseConnectionId'] = target_database_connection_id
 
     if description is not None:
         _details['description'] = description
@@ -1077,11 +1843,20 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     if display_name is not None:
         _details['displayName'] = display_name
 
+    if source_database_connection_id is not None:
+        _details['sourceDatabaseConnectionId'] = source_database_connection_id
+
+    if target_database_connection_id is not None:
+        _details['targetDatabaseConnectionId'] = target_database_connection_id
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if assessment_id is not None:
+        _details['assessmentId'] = assessment_id
 
     client = cli_util.build_client('database_migration', 'database_migration', ctx)
     result = client.create_migration(
@@ -1121,25 +1896,26 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @migration_group.command(name=cli_util.override('database_migration.create_migration_create_my_sql_migration_details.command_name', 'create-migration-create-my-sql-migration-details'), help=u"""Create a Migration resource that contains all the details to perform the database migration operation, such as source and destination database details, credentials, etc. \n[Command Reference](createMigration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""The type of the migration to be performed. Example: ONLINE if no downtime is preferred for a migration. This method uses Oracle GoldenGate for replication.""")
-@cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the resource being referenced.""")
-@cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--source-database-connection-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--target-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--assessment-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-load-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'
 
-This option is a JSON list with items of type MySqlDatabaseObject.  For documentation on MySqlDatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/MySqlDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MySqlDatabaseObject.  For documentation on MySqlDatabaseObject please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/MySqlDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'
 
-This option is a JSON list with items of type MySqlDatabaseObject.  For documentation on MySqlDatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/MySqlDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MySqlDatabaseObject.  For documentation on MySqlDatabaseObject please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/MySqlDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--bulk-include-exclude-data', help=u"""Specifies the database objects to be excluded from the migration in bulk. The definition accepts input in a CSV format, newline separated for each entry. More details can be found in the documentation.""")
 @cli_util.option('--hub-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ggs-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateMySqlDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateMySqlInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateMySqlAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObject]'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateMySqlGgsDeploymentDetails'}})
@@ -1147,7 +1923,7 @@ This option is a JSON list with items of type MySqlDatabaseObject.  For document
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateMySqlDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateMySqlInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateMySqlAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObject]'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateMySqlGgsDeploymentDetails'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_create_my_sql_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, source_database_connection_id, target_database_connection_id, description, display_name, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, exclude_objects, include_objects, bulk_include_exclude_data, hub_details, ggs_details):
+def create_migration_create_my_sql_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, description, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, assessment_id, data_transfer_medium_details, initial_load_settings, advisor_settings, exclude_objects, include_objects, bulk_include_exclude_data, hub_details, ggs_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1155,8 +1931,6 @@ def create_migration_create_my_sql_migration_details(ctx, from_json, wait_for_st
     _details = {}
     _details['compartmentId'] = compartment_id
     _details['type'] = type
-    _details['sourceDatabaseConnectionId'] = source_database_connection_id
-    _details['targetDatabaseConnectionId'] = target_database_connection_id
 
     if description is not None:
         _details['description'] = description
@@ -1164,11 +1938,20 @@ def create_migration_create_my_sql_migration_details(ctx, from_json, wait_for_st
     if display_name is not None:
         _details['displayName'] = display_name
 
+    if source_database_connection_id is not None:
+        _details['sourceDatabaseConnectionId'] = source_database_connection_id
+
+    if target_database_connection_id is not None:
+        _details['targetDatabaseConnectionId'] = target_database_connection_id
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if assessment_id is not None:
+        _details['assessmentId'] = assessment_id
 
     if data_transfer_medium_details is not None:
         _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
@@ -1234,12 +2017,13 @@ def create_migration_create_my_sql_migration_details(ctx, from_json, wait_for_st
 @migration_group.command(name=cli_util.override('database_migration.create_migration_create_oracle_migration_details.command_name', 'create-migration-create-oracle-migration-details'), help=u"""Create a Migration resource that contains all the details to perform the database migration operation, such as source and destination database details, credentials, etc. \n[Command Reference](createMigration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""The type of the migration to be performed. Example: ONLINE if no downtime is preferred for a migration. This method uses Oracle GoldenGate for replication.""")
-@cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the resource being referenced.""")
-@cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--source-database-connection-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--target-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--assessment-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-load-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1247,17 +2031,17 @@ def create_migration_create_my_sql_migration_details(ctx, from_json, wait_for_st
 @cli_util.option('--ggs-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--advanced-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Migration Parameter objects.
 
-This option is a JSON list with items of type MigrationParameterDetails.  For documentation on MigrationParameterDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/MigrationParameterDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MigrationParameterDetails.  For documentation on MigrationParameterDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/MigrationParameterDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--source-standby-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'
 
-This option is a JSON list with items of type OracleDatabaseObject.  For documentation on OracleDatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/OracleDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OracleDatabaseObject.  For documentation on OracleDatabaseObject please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/OracleDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'
 
-This option is a JSON list with items of type OracleDatabaseObject.  For documentation on OracleDatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/OracleDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type OracleDatabaseObject.  For documentation on OracleDatabaseObject please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/OracleDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--bulk-include-exclude-data', help=u"""Specifies the database objects to be excluded from the migration in bulk. The definition accepts input in a CSV format, newline separated for each entry. More details can be found in the documentation.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}})
@@ -1265,7 +2049,7 @@ This option is a JSON list with items of type OracleDatabaseObject.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, source_database_connection_id, target_database_connection_id, description, display_name, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, source_standby_database_connection_id, exclude_objects, include_objects, bulk_include_exclude_data):
+def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, description, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, assessment_id, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, source_standby_database_connection_id, exclude_objects, include_objects, bulk_include_exclude_data):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1273,8 +2057,6 @@ def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_st
     _details = {}
     _details['compartmentId'] = compartment_id
     _details['type'] = type
-    _details['sourceDatabaseConnectionId'] = source_database_connection_id
-    _details['targetDatabaseConnectionId'] = target_database_connection_id
 
     if description is not None:
         _details['description'] = description
@@ -1282,11 +2064,20 @@ def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_st
     if display_name is not None:
         _details['displayName'] = display_name
 
+    if source_database_connection_id is not None:
+        _details['sourceDatabaseConnectionId'] = source_database_connection_id
+
+    if target_database_connection_id is not None:
+        _details['targetDatabaseConnectionId'] = target_database_connection_id
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if assessment_id is not None:
+        _details['assessmentId'] = assessment_id
 
     if data_transfer_medium_details is not None:
         _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
@@ -1365,7 +2156,7 @@ def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_st
 @cli_util.option('--description', help=u"""Describes the current parameter file version""")
 @cli_util.option('--name', help=u"""Customizable name for the paramenter file version.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1429,11 +2220,67 @@ def create_parameter_file_version(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
+@assessment_group.command(name=cli_util.override('database_migration.delete_assessment.command_name', 'delete'), help=u"""Deletes the Assessment represented by the specified assessment ID. \n[Command Reference](deleteAssessment)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.delete_assessment(
+        assessment_id=assessment_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('database_migration.delete_connection.command_name', 'delete'), help=u"""Deletes the Database Connection represented by the specified connection ID. \n[Command Reference](deleteConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1489,7 +2336,7 @@ def delete_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1553,7 +2400,7 @@ def delete_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1610,7 +2457,7 @@ def delete_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--parameter-file-name', required=True, help=u"""A unique name associated with the current migration/job and extract/replicat name""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1669,7 +2516,7 @@ def delete_parameter_file_version(ctx, from_json, wait_for_state, max_wait_secon
 @job_group.command(name=cli_util.override('database_migration.evaluate_migration.command_name', 'evaluate-migration'), help=u"""Start Validate Migration job. \n[Command Reference](evaluateMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1738,6 +2585,110 @@ def get_advisor_report(ctx, from_json, job_id):
     client = cli_util.build_client('database_migration', 'database_migration', ctx)
     result = client.get_advisor_report(
         job_id=job_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.get_assessment.command_name', 'get'), help=u"""Display Assessment details. \n[Command Reference](getAssessment)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'Assessment'})
+@cli_util.wrap_exceptions
+def get_assessment(ctx, from_json, assessment_id, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.get_assessment(
+        assessment_id=assessment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@assessor_group.command(name=cli_util.override('database_migration.get_assessor.command_name', 'get'), help=u"""Display Assessor details. \n[Command Reference](getAssessor)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--assessor-name', required=True, help=u"""The name of the Assessor""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'Assessor'})
+@cli_util.wrap_exceptions
+def get_assessor(ctx, from_json, assessment_id, assessor_name, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    if isinstance(assessor_name, six.string_types) and len(assessor_name.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.get_assessor(
+        assessment_id=assessment_id,
+        assessor_name=assessor_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@assessor_check_group.command(name=cli_util.override('database_migration.get_assessor_check.command_name', 'get'), help=u"""Get Assessor Check details. \n[Command Reference](getAssessorCheck)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--assessor-name', required=True, help=u"""The name of the Assessor""")
+@cli_util.option('--check-name', required=True, help=u"""The Name of the assessor check""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'AssessorCheck'})
+@cli_util.wrap_exceptions
+def get_assessor_check(ctx, from_json, assessment_id, compartment_id, assessor_name, check_name, display_name, limit, page, sort_by, sort_order):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    if isinstance(assessor_name, six.string_types) and len(assessor_name.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-name cannot be whitespace or empty string')
+
+    if isinstance(check_name, six.string_types) and len(check_name.strip()) == 0:
+        raise click.UsageError('Parameter --check-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.get_assessor_check(
+        assessment_id=assessment_id,
+        compartment_id=compartment_id,
+        assessor_name=assessor_name,
+        check_name=check_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1884,6 +2835,54 @@ def get_parameter_file_version(ctx, from_json, parameter_file_name, job_id):
     cli_util.render_response(result, ctx)
 
 
+@binary_group.command(name=cli_util.override('database_migration.get_script.command_name', 'get-script'), help=u"""Download DMS script. \n[Command Reference](getScript)""")
+@cli_util.option('--script-id', required=True, type=custom_types.CliCaseInsensitiveChoice(["USER_CREATION_SQL_SCRIPT"]), help=u"""The ID of the script to download.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_script(ctx, from_json, file, script_id, if_match):
+
+    if isinstance(script_id, six.string_types) and len(script_id.strip()) == 0:
+        raise click.UsageError('Parameter --script-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.get_script(
+        script_id=script_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @work_request_group.command(name=cli_util.override('database_migration.get_work_request.command_name', 'get'), help=u"""Gets the details of a work request. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1906,9 +2905,498 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
+@job_group.command(name=cli_util.override('database_migration.list_advisor_report_check_objects.command_name', 'list-advisor-report-check-objects'), help=u"""Get the Pre-Migration extended Advisor report object list. \n[Command Reference](listAdvisorReportCheckObjects)""")
+@cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--advisor-report-check-id', required=True, help=u"""The ID of the advisor check""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'AdvisorReportCheckObjectsCollection'})
+@cli_util.wrap_exceptions
+def list_advisor_report_check_objects(ctx, from_json, all_pages, page_size, job_id, advisor_report_check_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    if isinstance(advisor_report_check_id, six.string_types) and len(advisor_report_check_id.strip()) == 0:
+        raise click.UsageError('Parameter --advisor-report-check-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_advisor_report_check_objects,
+            job_id=job_id,
+            advisor_report_check_id=advisor_report_check_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_advisor_report_check_objects,
+            limit,
+            page_size,
+            job_id=job_id,
+            advisor_report_check_id=advisor_report_check_id,
+            **kwargs
+        )
+    else:
+        result = client.list_advisor_report_check_objects(
+            job_id=job_id,
+            advisor_report_check_id=advisor_report_check_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('database_migration.list_advisor_report_checks.command_name', 'list-advisor-report-checks'), help=u"""List of Pre-Migration checks from the advisor. \n[Command Reference](listAdvisorReportChecks)""")
+@cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'AdvisorReportCheckCollection'})
+@cli_util.wrap_exceptions
+def list_advisor_report_checks(ctx, from_json, all_pages, page_size, job_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_advisor_report_checks,
+            job_id=job_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_advisor_report_checks,
+            limit,
+            page_size,
+            job_id=job_id,
+            **kwargs
+        )
+    else:
+        result = client.list_advisor_report_checks(
+            job_id=job_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@assessor_check_group.command(name=cli_util.override('database_migration.list_affected_objects.command_name', 'list-affected-objects'), help=u"""Display Check Affected objects. \n[Command Reference](listAffectedObjects)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--assessor-name', required=True, help=u"""The name of the Assessor""")
+@cli_util.option('--check-name', required=True, help=u"""The Name of the assessor check""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for name is custom based on it's usage frequency. If no value is specified name is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'AffectedObjectsCollection'})
+@cli_util.wrap_exceptions
+def list_affected_objects(ctx, from_json, all_pages, page_size, assessment_id, assessor_name, check_name, if_match, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    if isinstance(assessor_name, six.string_types) and len(assessor_name.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-name cannot be whitespace or empty string')
+
+    if isinstance(check_name, six.string_types) and len(check_name.strip()) == 0:
+        raise click.UsageError('Parameter --check-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_affected_objects,
+            assessment_id=assessment_id,
+            assessor_name=assessor_name,
+            check_name=check_name,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_affected_objects,
+            limit,
+            page_size,
+            assessment_id=assessment_id,
+            assessor_name=assessor_name,
+            check_name=check_name,
+            **kwargs
+        )
+    else:
+        result = client.list_affected_objects(
+            assessment_id=assessment_id,
+            assessor_name=assessor_name,
+            check_name=check_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@assessment_object_type_summary_group.command(name=cli_util.override('database_migration.list_assessment_object_types.command_name', 'list-assessment-object-types'), help=u"""Display sample object types to exclude or include for an Assessment. \n[Command Reference](listAssessmentObjectTypes)""")
+@cli_util.option('--connection-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), help=u"""The connection type for assessment objects.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for name is custom based on it's usage frequency. If no value is specified name is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'AssessmentObjectTypeSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_assessment_object_types(ctx, from_json, all_pages, page_size, connection_type, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_assessment_object_types,
+            connection_type=connection_type,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_assessment_object_types,
+            limit,
+            page_size,
+            connection_type=connection_type,
+            **kwargs
+        )
+    else:
+        result = client.list_assessment_object_types(
+            connection_type=connection_type,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@assessment_object_collection_group.command(name=cli_util.override('database_migration.list_assessment_objects.command_name', 'list-assessment-objects'), help=u"""Display excluded/included objects. \n[Command Reference](listAssessmentObjects)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'AssessmentObjectCollection'})
+@cli_util.wrap_exceptions
+def list_assessment_objects(ctx, from_json, all_pages, page_size, assessment_id, if_match, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_assessment_objects,
+            assessment_id=assessment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_assessment_objects,
+            limit,
+            page_size,
+            assessment_id=assessment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_assessment_objects(
+            assessment_id=assessment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@assessment_summary_group.command(name=cli_util.override('database_migration.list_assessments.command_name', 'list-assessments'), help=u"""List all Assessments. \n[Command Reference](listAssessments)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "SUCCEEDED", "IN_PROGRESS", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of the Assessment.""")
+@cli_util.option('--lifecycle-details', type=custom_types.CliCaseInsensitiveChoice(["READY", "ABORTING", "VALIDATING", "VALIDATED", "ASSESSED", "WAITING", "MIGRATING", "DONE"]), help=u"""The lifecycle detailed status of the Migration.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'AssessmentCollection'})
+@cli_util.wrap_exceptions
+def list_assessments(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_by, sort_order, lifecycle_state, lifecycle_details):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if lifecycle_details is not None:
+        kwargs['lifecycle_details'] = lifecycle_details
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_assessments,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_assessments,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_assessments(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@assessor_check_summary_group.command(name=cli_util.override('database_migration.list_assessor_checks.command_name', 'list-assessor-checks'), help=u"""List Assessor Check Summaries. \n[Command Reference](listAssessorChecks)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--assessor-name', required=True, help=u"""The name of the Assessor""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'AssessorCheckSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_assessor_checks(ctx, from_json, all_pages, page_size, assessment_id, compartment_id, assessor_name, display_name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    if isinstance(assessor_name, six.string_types) and len(assessor_name.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_assessor_checks,
+            assessment_id=assessment_id,
+            compartment_id=compartment_id,
+            assessor_name=assessor_name,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_assessor_checks,
+            limit,
+            page_size,
+            assessment_id=assessment_id,
+            compartment_id=compartment_id,
+            assessor_name=assessor_name,
+            **kwargs
+        )
+    else:
+        result = client.list_assessor_checks(
+            assessment_id=assessment_id,
+            compartment_id=compartment_id,
+            assessor_name=assessor_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@assessor_summary_group.command(name=cli_util.override('database_migration.list_assessors.command_name', 'list-assessors'), help=u"""List all Assessors. \n[Command Reference](listAssessors)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "NEEDS_ATTENTION", "FAILED"]), help=u"""The lifecycle state of the Assessor.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'AssessorSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_assessors(ctx, from_json, all_pages, page_size, assessment_id, display_name, limit, page, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_assessors,
+            assessment_id=assessment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_assessors,
+            limit,
+            page_size,
+            assessment_id=assessment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_assessors(
+            assessment_id=assessment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @connection_summary_group.command(name=cli_util.override('database_migration.list_connections.command_name', 'list-connections'), help=u"""List all Database Connections. \n[Command Reference](listConnections)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--technology-type', type=custom_types.CliCaseInsensitiveChoice(["OCI_AUTONOMOUS_DATABASE", "OCI_MYSQL", "ORACLE_DATABASE", "ORACLE_EXADATA", "AMAZON_RDS_ORACLE", "AMAZON_AURORA_MYSQL", "AMAZON_RDS_MYSQL", "AZURE_MYSQL", "GOOGLE_CLOUD_SQL_MYSQL", "MYSQL_SERVER"]), multiple=True, help=u"""The array of technology types.""")
+@cli_util.option('--technology-sub-type', help=u"""The database technology sub-type.""")
 @cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), multiple=True, help=u"""The array of connection types.""")
 @cli_util.option('--source-connection-id', help=u"""The OCID of the source database connection.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -1924,7 +3412,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'ConnectionCollection'})
 @cli_util.wrap_exceptions
-def list_connections(ctx, from_json, all_pages, page_size, compartment_id, technology_type, connection_type, source_connection_id, display_name, limit, page, sort_by, sort_order, lifecycle_state):
+def list_connections(ctx, from_json, all_pages, page_size, compartment_id, technology_type, technology_sub_type, connection_type, source_connection_id, display_name, limit, page, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1932,6 +3420,8 @@ def list_connections(ctx, from_json, all_pages, page_size, compartment_id, techn
     kwargs = {}
     if technology_type is not None and len(technology_type) > 0:
         kwargs['technology_type'] = technology_type
+    if technology_sub_type is not None:
+        kwargs['technology_sub_type'] = technology_sub_type
     if connection_type is not None and len(connection_type) > 0:
         kwargs['connection_type'] = connection_type
     if source_connection_id is not None:
@@ -1969,6 +3459,69 @@ def list_connections(ctx, from_json, all_pages, page_size, compartment_id, techn
         )
     else:
         result = client.list_connections(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@database_connection_type_summary_group.command(name=cli_util.override('database_migration.list_database_connection_type.command_name', 'list-database-connection-type'), help=u"""List supported Database Types, Sub-types and Versions. \n[Command Reference](listDatabaseConnectionType)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--technology-type', type=custom_types.CliCaseInsensitiveChoice(["OCI_AUTONOMOUS_DATABASE", "OCI_MYSQL", "ORACLE_DATABASE", "ORACLE_EXADATA", "AMAZON_RDS_ORACLE", "AMAZON_AURORA_MYSQL", "AMAZON_RDS_MYSQL", "AZURE_MYSQL", "GOOGLE_CLOUD_SQL_MYSQL", "MYSQL_SERVER"]), multiple=True, help=u"""The array of technology types.""")
+@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), multiple=True, help=u"""The array of connection types.""")
+@cli_util.option('--source-connection-id', help=u"""The OCID of the source connection.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'DatabaseConnectionTypeCollection'})
+@cli_util.wrap_exceptions
+def list_database_connection_type(ctx, from_json, all_pages, page_size, compartment_id, technology_type, connection_type, source_connection_id, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if technology_type is not None and len(technology_type) > 0:
+        kwargs['technology_type'] = technology_type
+    if connection_type is not None and len(connection_type) > 0:
+        kwargs['connection_type'] = connection_type
+    if source_connection_id is not None:
+        kwargs['source_connection_id'] = source_connection_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_database_connection_type,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_database_connection_type,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_database_connection_type(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -2112,6 +3665,7 @@ def list_job_outputs(ctx, from_json, all_pages, page_size, job_id, limit, page):
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), help=u"""The lifecycle state of the Migration Job.""")
+@cli_util.option('--job-id-not-equal-to', help=u"""The ID of the Job to exclude from the list of jobs.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2119,7 +3673,7 @@ def list_job_outputs(ctx, from_json, all_pages, page_size, job_id, limit, page):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'JobCollection'})
 @cli_util.wrap_exceptions
-def list_jobs(ctx, from_json, all_pages, page_size, migration_id, display_name, limit, page, sort_by, sort_order, lifecycle_state):
+def list_jobs(ctx, from_json, all_pages, page_size, migration_id, display_name, limit, page, sort_by, sort_order, lifecycle_state, job_id_not_equal_to):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2137,6 +3691,8 @@ def list_jobs(ctx, from_json, all_pages, page_size, migration_id, display_name, 
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if job_id_not_equal_to is not None:
+        kwargs['job_id_not_equal_to'] = job_id_not_equal_to
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_migration', 'database_migration', ctx)
     if all_pages:
@@ -2336,7 +3892,7 @@ def list_migration_parameters(ctx, from_json, all_pages, page_size, migration_ty
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "IN_PROGRESS", "ACCEPTED", "SUCCEEDED", "CANCELED", "WAITING", "NEEDS_ATTENTION", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of the Migration.""")
-@cli_util.option('--lifecycle-details', type=custom_types.CliCaseInsensitiveChoice(["READY", "ABORTING", "VALIDATING", "VALIDATED", "WAITING", "MIGRATING", "DONE"]), help=u"""The lifecycle detailed status of the Migration.""")
+@cli_util.option('--lifecycle-details', type=custom_types.CliCaseInsensitiveChoice(["READY", "ABORTING", "VALIDATING", "VALIDATED", "ASSESSED", "WAITING", "MIGRATING", "DONE"]), help=u"""The lifecycle detailed status of the Migration.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2629,7 +4185,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--parameter-file-name', required=True, help=u"""A unique name associated with the current migration/job and extract/replicat name""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2678,6 +4234,314 @@ def make_current_parameter_file_version(ctx, from_json, wait_for_state, max_wait
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.perform_assessor_action.command_name', 'perform-assessor-action'), help=u"""Assessor Action. \n[Command Reference](performAssessorAction)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--assessor-name', required=True, help=u"""The name of the Assessor""")
+@cli_util.option('--assessor-action', required=True, help=u"""The Accessor Action""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of name-value details for assessor action.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[AssessorCheckNameValue]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[AssessorCheckNameValue]'}})
+@cli_util.wrap_exceptions
+def perform_assessor_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, assessor_name, assessor_action, items, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    if isinstance(assessor_name, six.string_types) and len(assessor_name.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-name cannot be whitespace or empty string')
+
+    if isinstance(assessor_action, six.string_types) and len(assessor_action.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-action cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.perform_assessor_action(
+        assessment_id=assessment_id,
+        assessor_name=assessor_name,
+        assessor_action=assessor_action,
+        perform_assessor_action_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.perform_assessor_action_download_sql.command_name', 'perform-assessor-action-download-sql'), help=u"""Download SQL script Assessor Action. \n[Command Reference](performAssessorActionDownloadSql)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--assessor-name', required=True, help=u"""The name of the Assessor""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'DownloadSqlDetails'})
+@cli_util.wrap_exceptions
+def perform_assessor_action_download_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, assessor_name, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    if isinstance(assessor_name, six.string_types) and len(assessor_name.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.perform_assessor_action_download_sql(
+        assessment_id=assessment_id,
+        assessor_name=assessor_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.perform_assessor_check_action.command_name', 'perform-assessor-check-action'), help=u"""Assessor Check Action. \n[Command Reference](performAssessorCheckAction)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--assessor-name', required=True, help=u"""The name of the Assessor""")
+@cli_util.option('--check-name', required=True, help=u"""The Name of the assessor check""")
+@cli_util.option('--assessor-check-action', required=True, help=u"""The Accessor Check Action""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of user defined details for check action.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[AssessorCheckNameValue]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[AssessorCheckNameValue]'}})
+@cli_util.wrap_exceptions
+def perform_assessor_check_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, assessor_name, check_name, assessor_check_action, items, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    if isinstance(assessor_name, six.string_types) and len(assessor_name.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-name cannot be whitespace or empty string')
+
+    if isinstance(check_name, six.string_types) and len(check_name.strip()) == 0:
+        raise click.UsageError('Parameter --check-name cannot be whitespace or empty string')
+
+    if isinstance(assessor_check_action, six.string_types) and len(assessor_check_action.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-check-action cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.perform_assessor_check_action(
+        assessment_id=assessment_id,
+        assessor_name=assessor_name,
+        check_name=check_name,
+        assessor_check_action=assessor_check_action,
+        perform_assessor_check_action_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.remove_assessment_objects.command_name', 'remove'), help=u"""Remove excluded/included objects. \n[Command Reference](removeAssessmentObjects)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--database-combination', required=True, type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), help=u"""The combination of source and target databases participating in a migration. Example: ORACLE means the migration is meant for migrating Oracle source and target databases.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_assessment_objects(ctx, from_json, assessment_id, database_combination, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCombination'] = database_combination
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.remove_assessment_objects(
+        assessment_id=assessment_id,
+        remove_assessment_objects_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.remove_assessment_objects_oracle_assessment_object_collection.command_name', 'remove-assessment-objects-oracle-assessment-object-collection'), help=u"""Remove excluded/included objects. \n[Command Reference](removeAssessmentObjects)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of database objects.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--bulk-include-exclude-data', help=u"""Specifies the database objects to be excluded from the migration in bulk. The definition accepts input in a CSV format, newline separated for each entry. More details can be found in the documentation.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[OracleDatabaseObjectSummary]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[OracleDatabaseObjectSummary]'}})
+@cli_util.wrap_exceptions
+def remove_assessment_objects_oracle_assessment_object_collection(ctx, from_json, assessment_id, items, bulk_include_exclude_data, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    if bulk_include_exclude_data is not None:
+        _details['bulkIncludeExcludeData'] = bulk_include_exclude_data
+
+    _details['databaseCombination'] = 'ORACLE'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.remove_assessment_objects(
+        assessment_id=assessment_id,
+        remove_assessment_objects_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.remove_assessment_objects_my_sql_assessment_object_collection.command_name', 'remove-assessment-objects-my-sql-assessment-object-collection'), help=u"""Remove excluded/included objects. \n[Command Reference](removeAssessmentObjects)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of affected database objects.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObjectSummary]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObjectSummary]'}})
+@cli_util.wrap_exceptions
+def remove_assessment_objects_my_sql_assessment_object_collection(ctx, from_json, assessment_id, items, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    _details['databaseCombination'] = 'MYSQL'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.remove_assessment_objects(
+        assessment_id=assessment_id,
+        remove_assessment_objects_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -2790,7 +4654,7 @@ def remove_migration_objects_oracle_migration_object_collection(ctx, from_json, 
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-after', type=custom_types.CliCaseInsensitiveChoice(["ODMS_VALIDATE_TGT", "ODMS_VALIDATE_SRC", "ODMS_VALIDATE_PREMIGRATION_ADVISOR", "ODMS_VALIDATE_GG_HUB", "ODMS_VALIDATE_DATAPUMP_SETTINGS", "ODMS_VALIDATE_DATAPUMP_SETTINGS_SRC", "ODMS_VALIDATE_DATAPUMP_SETTINGS_TGT", "ODMS_VALIDATE_DATAPUMP_SRC", "ODMS_VALIDATE_DATAPUMP_ESTIMATE_SRC", "ODMS_FETCH_METADATA_SRC", "ODMS_FETCH_METADATA_TGT", "ODMS_VALIDATE", "ODMS_PREPARE", "ODMS_INITIALIZE_REPLICATION_INFRASTRUCTURE", "ODMS_INITIAL_LOAD_EXPORT", "ODMS_DATA_UPLOAD", "ODMS_METADATA_TRANSFER", "ODMS_INITIAL_LOAD_EXPORT_DATA_UPLOAD", "ODMS_INITIAL_LOAD_IMPORT", "ODMS_POST_INITIAL_LOAD", "ODMS_PREPARE_REPLICATION_TARGET", "ODMS_MONITOR_REPLICATION_LAG", "ODMS_SWITCHOVER", "ODMS_CLEANUP"]), help=u"""Name of a migration phase. The Job will wait after executing this phase until Resume Job endpoint is called again.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2871,7 +4735,7 @@ def retrieve_supported_phases(ctx, from_json, migration_id):
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-after', type=custom_types.CliCaseInsensitiveChoice(["ODMS_VALIDATE_TGT", "ODMS_VALIDATE_SRC", "ODMS_VALIDATE_PREMIGRATION_ADVISOR", "ODMS_VALIDATE_GG_HUB", "ODMS_VALIDATE_DATAPUMP_SETTINGS", "ODMS_VALIDATE_DATAPUMP_SETTINGS_SRC", "ODMS_VALIDATE_DATAPUMP_SETTINGS_TGT", "ODMS_VALIDATE_DATAPUMP_SRC", "ODMS_VALIDATE_DATAPUMP_ESTIMATE_SRC", "ODMS_FETCH_METADATA_SRC", "ODMS_FETCH_METADATA_TGT", "ODMS_VALIDATE", "ODMS_PREPARE", "ODMS_INITIALIZE_REPLICATION_INFRASTRUCTURE", "ODMS_INITIAL_LOAD_EXPORT", "ODMS_DATA_UPLOAD", "ODMS_METADATA_TRANSFER", "ODMS_INITIAL_LOAD_EXPORT_DATA_UPLOAD", "ODMS_INITIAL_LOAD_IMPORT", "ODMS_POST_INITIAL_LOAD", "ODMS_PREPARE_REPLICATION_TARGET", "ODMS_MONITOR_REPLICATION_LAG", "ODMS_SWITCHOVER", "ODMS_CLEANUP"]), help=u"""Name of a migration phase. The Job will wait after executing this phase until the Resume Job endpoint is called.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2933,7 +4797,7 @@ def start_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @job_group.command(name=cli_util.override('database_migration.suspend_job.command_name', 'suspend'), help=u"""Place the currently executing migration Job in a Suspended State. \n[Command Reference](suspendJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2981,6 +4845,656 @@ def suspend_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
+@advisor_report_check_group.command(name=cli_util.override('database_migration.update_advisor_report_check.command_name', 'update'), help=u"""Update the premigration extended Advisor report check. \n[Command Reference](updateAdvisorReportCheck)""")
+@cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--advisor-report-check-id', required=True, help=u"""The ID of the advisor check""")
+@cli_util.option('--is-reviewed', required=True, type=click.BOOL, help=u"""User flag for advisor report check.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_advisor_report_check(ctx, from_json, job_id, advisor_report_check_id, is_reviewed, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    if isinstance(advisor_report_check_id, six.string_types) and len(advisor_report_check_id.strip()) == 0:
+        raise click.UsageError('Parameter --advisor-report-check-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['isReviewed'] = is_reviewed
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_advisor_report_check(
+        job_id=job_id,
+        advisor_report_check_id=advisor_report_check_id,
+        update_advisor_report_check=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@advisor_report_check_collection_group.command(name=cli_util.override('database_migration.update_advisor_report_check_objects.command_name', 'update-advisor-report-check-objects'), help=u"""Update the Pre-Migration extended Advisor report object list. \n[Command Reference](updateAdvisorReportCheckObjects)""")
+@cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--advisor-report-check-id', required=True, help=u"""The ID of the advisor check""")
+@cli_util.option('--kind', required=True, type=custom_types.CliCaseInsensitiveChoice(["ALL_OBJECTS", "LIST_OBJECTS"]), help=u"""Type of update advisor report check. Default kind is LIST_OBJECTS""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_advisor_report_check_objects(ctx, from_json, job_id, advisor_report_check_id, kind, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    if isinstance(advisor_report_check_id, six.string_types) and len(advisor_report_check_id.strip()) == 0:
+        raise click.UsageError('Parameter --advisor-report-check-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['kind'] = kind
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_advisor_report_check_objects(
+        job_id=job_id,
+        advisor_report_check_id=advisor_report_check_id,
+        update_advisor_report_check_objects_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@advisor_report_check_collection_group.command(name=cli_util.override('database_migration.update_advisor_report_check_objects_all_update_advisor_report_check_objects_details.command_name', 'update-advisor-report-check-objects-all-update-advisor-report-check-objects-details'), help=u"""Update the Pre-Migration extended Advisor report object list. \n[Command Reference](updateAdvisorReportCheckObjects)""")
+@cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--advisor-report-check-id', required=True, help=u"""The ID of the advisor check""")
+@cli_util.option('--is-exclude', type=click.BOOL, help=u"""Flag showing the action on the object.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_advisor_report_check_objects_all_update_advisor_report_check_objects_details(ctx, from_json, job_id, advisor_report_check_id, is_exclude, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    if isinstance(advisor_report_check_id, six.string_types) and len(advisor_report_check_id.strip()) == 0:
+        raise click.UsageError('Parameter --advisor-report-check-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if is_exclude is not None:
+        _details['isExclude'] = is_exclude
+
+    _details['kind'] = 'ALL_OBJECTS'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_advisor_report_check_objects(
+        job_id=job_id,
+        advisor_report_check_id=advisor_report_check_id,
+        update_advisor_report_check_objects_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@advisor_report_check_collection_group.command(name=cli_util.override('database_migration.update_advisor_report_check_objects_list_update_advisor_report_check_objects_details.command_name', 'update-advisor-report-check-objects-list-update-advisor-report-check-objects-details'), help=u"""Update the Pre-Migration extended Advisor report object list. \n[Command Reference](updateAdvisorReportCheckObjects)""")
+@cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--advisor-report-check-id', required=True, help=u"""The ID of the advisor check""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of check objects.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[AdvisorReportCheckObjectSummary]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[AdvisorReportCheckObjectSummary]'}})
+@cli_util.wrap_exceptions
+def update_advisor_report_check_objects_list_update_advisor_report_check_objects_details(ctx, from_json, job_id, advisor_report_check_id, items, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    if isinstance(advisor_report_check_id, six.string_types) and len(advisor_report_check_id.strip()) == 0:
+        raise click.UsageError('Parameter --advisor-report-check-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    _details['kind'] = 'LIST_OBJECTS'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_advisor_report_check_objects(
+        job_id=job_id,
+        advisor_report_check_id=advisor_report_check_id,
+        update_advisor_report_check_objects_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.update_assessment.command_name', 'update'), help=u"""Update Assessment resource details. \n[Command Reference](updateAssessment)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--database-combination', required=True, type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), help=u"""The combination of source and target databases participating in a migration. Example: ORACLE means the migration is meant for migrating Oracle source and target databases.""")
+@cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--network-speed-megabit-per-second', type=custom_types.CliCaseInsensitiveChoice(["MBPS_10", "MBPS_100", "MBPS_1000", "MBPS_2500", "MBPS_5000", "MBPS_10000"]), help=u"""A network speed in Megabits per second.""")
+@cli_util.option('--acceptable-downtime', type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_10_MINUTES", "LESS_THAN_1_HOUR", "LESS_THAN_4_HOURS", "LESS_THAN_8_HOURS", "LESS_THAN_12_HOURS", "LESS_THAN_1_DAY", "LESS_THAN_2_DAYS", "MORE_THAN_2_DAYS"]), help=u"""Time allowed for the application downtime.""")
+@cli_util.option('--database-data-size', type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_1GB", "GB_1_10", "GB_10_50", "GB_50_100", "GB_100_500", "GB_500_TB_1", "TB_1_3", "TB_3_10", "TB_10_50", "GREATER_THAN_50TB"]), help=u"""The size of a source database.""")
+@cli_util.option('--ddl-expectation', type=custom_types.CliCaseInsensitiveChoice(["DDL_EXPECTED", "DDL_NOT_EXPECTED"]), help=u"""DDL expectation values.""")
+@cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_ONLY", "CREATE_AND_RUN_ASSESSORS"]), help=u"""The type of assessment creation.""")
+@cli_util.option('--source-database-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-database-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_assessment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, database_combination, description, display_name, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, creation_type, source_database_connection, target_database_connection, freeform_tags, defined_tags, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+    if not force:
+        if source_database_connection or target_database_connection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to source-database-connection and target-database-connection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCombination'] = database_combination
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if network_speed_megabit_per_second is not None:
+        _details['networkSpeedMegabitPerSecond'] = network_speed_megabit_per_second
+
+    if acceptable_downtime is not None:
+        _details['acceptableDowntime'] = acceptable_downtime
+
+    if database_data_size is not None:
+        _details['databaseDataSize'] = database_data_size
+
+    if ddl_expectation is not None:
+        _details['ddlExpectation'] = ddl_expectation
+
+    if creation_type is not None:
+        _details['creationType'] = creation_type
+
+    if source_database_connection is not None:
+        _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
+
+    if target_database_connection is not None:
+        _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_assessment(
+        assessment_id=assessment_id,
+        update_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.update_assessment_update_my_sql_assessment_details.command_name', 'update-assessment-update-my-sql-assessment-details'), help=u"""Update Assessment resource details. \n[Command Reference](updateAssessment)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--network-speed-megabit-per-second', type=custom_types.CliCaseInsensitiveChoice(["MBPS_10", "MBPS_100", "MBPS_1000", "MBPS_2500", "MBPS_5000", "MBPS_10000"]), help=u"""A network speed in Megabits per second.""")
+@cli_util.option('--acceptable-downtime', type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_10_MINUTES", "LESS_THAN_1_HOUR", "LESS_THAN_4_HOURS", "LESS_THAN_8_HOURS", "LESS_THAN_12_HOURS", "LESS_THAN_1_DAY", "LESS_THAN_2_DAYS", "MORE_THAN_2_DAYS"]), help=u"""Time allowed for the application downtime.""")
+@cli_util.option('--database-data-size', type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_1GB", "GB_1_10", "GB_10_50", "GB_50_100", "GB_100_500", "GB_500_TB_1", "TB_1_3", "TB_3_10", "TB_10_50", "GREATER_THAN_50TB"]), help=u"""The size of a source database.""")
+@cli_util.option('--ddl-expectation', type=custom_types.CliCaseInsensitiveChoice(["DDL_EXPECTED", "DDL_NOT_EXPECTED"]), help=u"""DDL expectation values.""")
+@cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_ONLY", "CREATE_AND_RUN_ASSESSORS"]), help=u"""The type of assessment creation.""")
+@cli_util.option('--source-database-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-database-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_assessment_update_my_sql_assessment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, description, display_name, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, creation_type, source_database_connection, target_database_connection, freeform_tags, defined_tags, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+    if not force:
+        if source_database_connection or target_database_connection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to source-database-connection and target-database-connection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if network_speed_megabit_per_second is not None:
+        _details['networkSpeedMegabitPerSecond'] = network_speed_megabit_per_second
+
+    if acceptable_downtime is not None:
+        _details['acceptableDowntime'] = acceptable_downtime
+
+    if database_data_size is not None:
+        _details['databaseDataSize'] = database_data_size
+
+    if ddl_expectation is not None:
+        _details['ddlExpectation'] = ddl_expectation
+
+    if creation_type is not None:
+        _details['creationType'] = creation_type
+
+    if source_database_connection is not None:
+        _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
+
+    if target_database_connection is not None:
+        _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['databaseCombination'] = 'MYSQL'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_assessment(
+        assessment_id=assessment_id,
+        update_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@assessment_group.command(name=cli_util.override('database_migration.update_assessment_update_oracle_assessment_details.command_name', 'update-assessment-update-oracle-assessment-details'), help=u"""Update Assessment resource details. \n[Command Reference](updateAssessment)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--network-speed-megabit-per-second', type=custom_types.CliCaseInsensitiveChoice(["MBPS_10", "MBPS_100", "MBPS_1000", "MBPS_2500", "MBPS_5000", "MBPS_10000"]), help=u"""A network speed in Megabits per second.""")
+@cli_util.option('--acceptable-downtime', type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_10_MINUTES", "LESS_THAN_1_HOUR", "LESS_THAN_4_HOURS", "LESS_THAN_8_HOURS", "LESS_THAN_12_HOURS", "LESS_THAN_1_DAY", "LESS_THAN_2_DAYS", "MORE_THAN_2_DAYS"]), help=u"""Time allowed for the application downtime.""")
+@cli_util.option('--database-data-size', type=custom_types.CliCaseInsensitiveChoice(["LESS_THAN_1GB", "GB_1_10", "GB_10_50", "GB_50_100", "GB_100_500", "GB_500_TB_1", "TB_1_3", "TB_3_10", "TB_10_50", "GREATER_THAN_50TB"]), help=u"""The size of a source database.""")
+@cli_util.option('--ddl-expectation', type=custom_types.CliCaseInsensitiveChoice(["DDL_EXPECTED", "DDL_NOT_EXPECTED"]), help=u"""DDL expectation values.""")
+@cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_ONLY", "CREATE_AND_RUN_ASSESSORS"]), help=u"""The type of assessment creation.""")
+@cli_util.option('--source-database-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-database-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_assessment_update_oracle_assessment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, description, display_name, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, creation_type, source_database_connection, target_database_connection, freeform_tags, defined_tags, if_match):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+    if not force:
+        if source_database_connection or target_database_connection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to source-database-connection and target-database-connection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if network_speed_megabit_per_second is not None:
+        _details['networkSpeedMegabitPerSecond'] = network_speed_megabit_per_second
+
+    if acceptable_downtime is not None:
+        _details['acceptableDowntime'] = acceptable_downtime
+
+    if database_data_size is not None:
+        _details['databaseDataSize'] = database_data_size
+
+    if ddl_expectation is not None:
+        _details['ddlExpectation'] = ddl_expectation
+
+    if creation_type is not None:
+        _details['creationType'] = creation_type
+
+    if source_database_connection is not None:
+        _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
+
+    if target_database_connection is not None:
+        _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['databaseCombination'] = 'ORACLE'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_assessment(
+        assessment_id=assessment_id,
+        update_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@advisor_report_check_collection_group.command(name=cli_util.override('database_migration.update_check_action_update_object.command_name', 'update-check-action-update-object'), help=u"""Update the advisor report object list. \n[Command Reference](updateCheckActionUpdateObject)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--assessor-name', required=True, help=u"""The name of the Assessor""")
+@cli_util.option('--check-name', required=True, help=u"""The Name of the assessor check""")
+@cli_util.option('--kind', required=True, type=custom_types.CliCaseInsensitiveChoice(["ALL_OBJECTS", "LIST_OBJECTS"]), help=u"""Type of update advisor report check. Default kind is LIST_OBJECTS""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for name is custom based on it's usage frequency. If no value is specified name is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_check_action_update_object(ctx, from_json, assessment_id, assessor_name, check_name, kind, if_match, sort_by, sort_order, limit, page):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    if isinstance(assessor_name, six.string_types) and len(assessor_name.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-name cannot be whitespace or empty string')
+
+    if isinstance(check_name, six.string_types) and len(check_name.strip()) == 0:
+        raise click.UsageError('Parameter --check-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['kind'] = kind
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_check_action_update_object(
+        assessment_id=assessment_id,
+        assessor_name=assessor_name,
+        check_name=check_name,
+        update_check_action_update_object_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@advisor_report_check_collection_group.command(name=cli_util.override('database_migration.update_check_action_update_object_list_update_check_action_update_object_details.command_name', 'update-check-action-update-object-list-update-check-action-update-object-details'), help=u"""Update the advisor report object list. \n[Command Reference](updateCheckActionUpdateObject)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--assessor-name', required=True, help=u"""The name of the Assessor""")
+@cli_util.option('--check-name', required=True, help=u"""The Name of the assessor check""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of check objects.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for name is custom based on it's usage frequency. If no value is specified name is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[AdvisorReportCheckObjectSummary]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[AdvisorReportCheckObjectSummary]'}})
+@cli_util.wrap_exceptions
+def update_check_action_update_object_list_update_check_action_update_object_details(ctx, from_json, force, assessment_id, assessor_name, check_name, items, if_match, sort_by, sort_order, limit, page):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    if isinstance(assessor_name, six.string_types) and len(assessor_name.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-name cannot be whitespace or empty string')
+
+    if isinstance(check_name, six.string_types) and len(check_name.strip()) == 0:
+        raise click.UsageError('Parameter --check-name cannot be whitespace or empty string')
+    if not force:
+        if items:
+            if not click.confirm("WARNING: Updates to items will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    _details['kind'] = 'LIST_OBJECTS'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_check_action_update_object(
+        assessment_id=assessment_id,
+        assessor_name=assessor_name,
+        check_name=check_name,
+        update_check_action_update_object_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@advisor_report_check_collection_group.command(name=cli_util.override('database_migration.update_check_action_update_object_all_update_check_action_update_object_details.command_name', 'update-check-action-update-object-all-update-check-action-update-object-details'), help=u"""Update the advisor report object list. \n[Command Reference](updateCheckActionUpdateObject)""")
+@cli_util.option('--assessment-id', required=True, help=u"""The OCID of the Assessment""")
+@cli_util.option('--assessor-name', required=True, help=u"""The name of the Assessor""")
+@cli_util.option('--check-name', required=True, help=u"""The Name of the assessor check""")
+@cli_util.option('--is-exclude', type=click.BOOL, help=u"""Flag showing the action on the object.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for name is custom based on it's usage frequency. If no value is specified name is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_check_action_update_object_all_update_check_action_update_object_details(ctx, from_json, assessment_id, assessor_name, check_name, is_exclude, if_match, sort_by, sort_order, limit, page):
+
+    if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
+
+    if isinstance(assessor_name, six.string_types) and len(assessor_name.strip()) == 0:
+        raise click.UsageError('Parameter --assessor-name cannot be whitespace or empty string')
+
+    if isinstance(check_name, six.string_types) and len(check_name.strip()) == 0:
+        raise click.UsageError('Parameter --check-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if is_exclude is not None:
+        _details['isExclude'] = is_exclude
+
+    _details['kind'] = 'ALL_OBJECTS'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_check_action_update_object(
+        assessment_id=assessment_id,
+        assessor_name=assessor_name,
+        check_name=check_name,
+        update_check_action_update_object_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('database_migration.update_connection.command_name', 'update'), help=u"""Update Database Connection resource details. \n[Command Reference](updateConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection.""")
 @cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), help=u"""Defines the type of connection. For example, ORACLE.""")
@@ -2998,7 +5512,7 @@ def suspend_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--replication-password', help=u"""The password (credential) used when creating or updating this resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'database_migration', 'class': 'list[string]'}})
@@ -3120,7 +5634,7 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.option('--ssh-sudo-location', help=u"""Sudo location""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'database_migration', 'class': 'list[string]'}})
@@ -3264,11 +5778,11 @@ def update_connection_update_oracle_connection_details(ctx, from_json, force, wa
 @cli_util.option('--ssl-key', help=u"""Client Key - The client-key.pem containing the client private key (for 2-way SSL).""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries.
 
-This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-system-id', help=u"""The OCID of the database system being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'database_migration', 'class': 'list[string]'}, 'additional-attributes': {'module': 'database_migration', 'class': 'list[NameValuePair]'}})
@@ -3406,7 +5920,7 @@ def update_connection_update_mysql_connection_details(ctx, from_json, force, wai
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
@@ -3483,7 +5997,7 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
@@ -3581,7 +6095,7 @@ def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--ggs-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateMySqlDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateMySqlInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateMySqlAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateMySqlGgsDeploymentDetails'}})
@@ -3695,12 +6209,12 @@ def update_migration_update_my_sql_migration_details(ctx, from_json, force, wait
 @cli_util.option('--ggs-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--advanced-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Migration Parameter objects.
 
-This option is a JSON list with items of type MigrationParameterDetails.  For documentation on MigrationParameterDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/MigrationParameterDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type MigrationParameterDetails.  For documentation on MigrationParameterDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasemigration/20230518/datatypes/MigrationParameterDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the resource being updated.""")
 @cli_util.option('--source-standby-database-connection-id', help=u"""The OCID of the resource being updated.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}})
