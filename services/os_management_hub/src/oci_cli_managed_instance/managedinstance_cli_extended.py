@@ -6,6 +6,7 @@ import click  # noqa: F401
 import json  # noqa: F401
 from services.os_management_hub.src.oci_cli_managed_instance.generated import managedinstance_cli
 from services.os_management_hub.src.oci_cli_os_management_hub.generated import os_management_hub_service_cli
+from services.os_management_hub.src.oci_cli_os_management_hub.osmh_cli_utils import normalize_update_types
 from oci_cli import cli_util  # noqa: F401
 from oci_cli import custom_types  # noqa: F401
 from oci_cli import json_skeleton_utils  # noqa: F401
@@ -181,7 +182,32 @@ cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instanc
 
 # Move oci os-management-hub managed-instance update-all-packages-on-managed-instances-in-compartment to oci os-management-hub update-all-packages-on-managed-instances-in-compartment
 managedinstance_cli.managed_instance_group.commands.pop(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.name)
-os_management_hub_service_cli.os_management_hub_service_group.add_command(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment)
+
+
+@cli_util.copy_params_from_generated_command(
+    managedinstance_cli.update_all_packages_on_managed_instances_in_compartment,
+    params_to_exclude=['update_types']
+)
+@os_management_hub_service_cli.os_management_hub_service_group.command(
+    name=managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.name,
+    help=managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.help
+)
+@cli_util.option(
+    '--update-types',
+    multiple=True,
+    help=u"""The type(s) of updates to be applied. You can repeat this option, pass a comma-separated list, or pass a JSON array. Example: --update-types SECURITY --update-types BUGFIX OR --update-types '["SECURITY","BUGFIX"]'.""",
+)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(
+    input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}}
+)
+@cli_util.wrap_exceptions
+def update_all_packages_on_managed_instances_in_compartment_extended(ctx, **kwargs):
+    if 'update_types' in kwargs:
+        normalized = normalize_update_types(kwargs.get('update_types'))
+        kwargs['update_types'] = json.dumps(normalized) if normalized is not None else None
+
+    ctx.invoke(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment, **kwargs)
 
 
 # oci os-management-hub managed-instance install-all-windows-updates-on-managed-instances-in-compartment -> oci os-management-hub managed-instance install-all-windows-updates-in-compartment
