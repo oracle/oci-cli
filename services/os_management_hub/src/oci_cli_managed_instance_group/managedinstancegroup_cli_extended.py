@@ -10,6 +10,16 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli import json_skeleton_utils  # noqa: F401
 from services.os_management_hub.src.oci_cli_os_management_hub.generated import os_management_hub_service_cli
 
+_UPDATE_TYPES_ALLOWED = [
+    "SECURITY",
+    "BUGFIX",
+    "ENHANCEMENT",
+    "OTHER",
+    "KSPLICE_KERNEL",
+    "KSPLICE_USERSPACE",
+    "ALL",
+]
+
 # oci os-management-hub managed-instance-group managed-instance-group install-module-stream-profile -> oci os-management-hub managed-instance-group managed-instance-group install-module-profile
 cli_util.rename_command(managedinstancegroup_cli, managedinstancegroup_cli.managed_instance_group_group, managedinstancegroup_cli.install_module_stream_profile_on_managed_instance_group, "install-module-profile")
 
@@ -380,9 +390,15 @@ def update_managed_instance_group_extended(ctx, **kwargs):
     ctx.invoke(managedinstancegroup_cli.update_managed_instance_group, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.update_all_packages_on_managed_instance_group, params_to_exclude=['managed_instance_group_id'])
+@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.update_all_packages_on_managed_instance_group, params_to_exclude=['managed_instance_group_id', 'update_types'])
 @managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.update_all_packages_on_managed_instance_group.name, help=managedinstancegroup_cli.update_all_packages_on_managed_instance_group.help)
 @cli_util.option('--group-id', required=True, help=u"""The managed instance group OCID. [required]""")
+@cli_util.option(
+    '--update-types',
+    multiple=True,
+    type=click.STRING,
+    help=u"""The types of updates to be applied. Provide multiple values by repeating the option or pass a JSON array.""",
+)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
 @cli_util.wrap_exceptions
@@ -391,6 +407,10 @@ def update_all_packages_on_managed_instance_group_extended(ctx, **kwargs):
     if 'group_id' in kwargs:
         kwargs['managed_instance_group_id'] = kwargs['group_id']
         kwargs.pop('group_id')
+
+    if 'update_types' in kwargs and kwargs['update_types'] is not None:
+        update_types = cli_util.parse_string_list_parameter("update_types", kwargs['update_types'], allowed_values=_UPDATE_TYPES_ALLOWED)
+        kwargs['update_types'] = update_types
 
     ctx.invoke(managedinstancegroup_cli.update_all_packages_on_managed_instance_group, **kwargs)
 

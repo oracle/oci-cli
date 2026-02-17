@@ -10,6 +10,16 @@ from oci_cli import cli_util  # noqa: F401
 from oci_cli import custom_types  # noqa: F401
 from oci_cli import json_skeleton_utils  # noqa: F401
 
+_UPDATE_TYPES_ALLOWED = [
+    "SECURITY",
+    "BUGFIX",
+    "ENHANCEMENT",
+    "OTHER",
+    "KSPLICE_KERNEL",
+    "KSPLICE_USERSPACE",
+    "ALL",
+]
+
 
 # oci os-management-hub managed-instance managed-instance install-module-stream-profile -> oci os-management-hub managed-instance managed-instance install-module-profile
 cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.install_module_stream_profile_on_managed_instance, "install-module-profile")
@@ -179,9 +189,32 @@ def list_managed_instance_modules_extended(ctx, **kwargs):
 cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.remove_module_stream_profile_from_managed_instance, "remove-module-profile")
 
 
+@cli_util.copy_params_from_generated_command(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment, params_to_exclude=['update_types'])
+@managedinstance_cli.managed_instance_group.command(
+    name=managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.name,
+    help=managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.help,
+)
+@cli_util.option(
+    '--update-types',
+    multiple=True,
+    type=click.STRING,
+    help=u"""The types of updates to be applied. Provide multiple values by repeating the option or pass a JSON array.""",
+)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def update_all_packages_on_managed_instances_in_compartment_extended(ctx, **kwargs):
+    if 'update_types' in kwargs and kwargs['update_types'] is not None:
+        kwargs['update_types'] = cli_util.parse_string_list_parameter(
+            "update_types", kwargs['update_types'], allowed_values=_UPDATE_TYPES_ALLOWED
+        )
+
+    ctx.invoke(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment, **kwargs)
+
+
 # Move oci os-management-hub managed-instance update-all-packages-on-managed-instances-in-compartment to oci os-management-hub update-all-packages-on-managed-instances-in-compartment
 managedinstance_cli.managed_instance_group.commands.pop(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.name)
-os_management_hub_service_cli.os_management_hub_service_group.add_command(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment)
+os_management_hub_service_cli.os_management_hub_service_group.add_command(update_all_packages_on_managed_instances_in_compartment_extended)
 
 
 # oci os-management-hub managed-instance install-all-windows-updates-on-managed-instances-in-compartment -> oci os-management-hub managed-instance install-all-windows-updates-in-compartment

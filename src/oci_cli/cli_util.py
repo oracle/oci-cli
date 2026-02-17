@@ -1054,6 +1054,50 @@ def parse_json_parameter(parameter_name, parameter_value, default=None, camelize
     return obj
 
 
+def parse_string_list_parameter(parameter_name, parameter_value, allowed_values=None):
+    
+    if parameter_value is None:
+        return None
+
+    if isinstance(parameter_value, (list, tuple)):
+        items = list(parameter_value)
+    elif isinstance(parameter_value, six.string_types):
+        raw = parameter_value.strip()
+        if raw.startswith('['):
+            items = parse_json_parameter(parameter_name, parameter_value, camelize_keys=False)
+        elif ',' in raw:
+            items = [v.strip() for v in raw.split(',') if v.strip()]
+        elif raw == '':
+            items = []
+        else:
+            items = [parameter_value]
+    else:
+        items = [parameter_value]
+
+    if not isinstance(items, list):
+        items = [items]
+
+    if allowed_values is None:
+        return items
+
+    allowed_upper = {v.upper() for v in allowed_values}
+    normalized = []
+    for v in items:
+        if v is None:
+            continue
+        if not isinstance(v, six.string_types):
+            sys.exit("Parameter {!r} must be a string value or list of strings.".format(parameter_name))
+        vu = v.upper()
+        if vu not in allowed_upper:
+            sys.exit(
+                "Invalid value {!r} for parameter {!r}. Allowed values are: {}.".format(
+                    v, parameter_name, ", ".join(allowed_values)
+                )
+            )
+        normalized.append(vu)
+    return normalized
+
+
 # Takes a dictionary representing a JSON object and converts keys into their camelized form. This will do a deep conversion - for example if a value in the dictionary is a dictionary itself
 # then we will convert the value's keys to camel case and so on.
 #
