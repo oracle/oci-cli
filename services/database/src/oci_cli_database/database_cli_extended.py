@@ -3882,66 +3882,6 @@ cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.s
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_cross_tenancy_disaster_recovery_details, "create-cross-tenancy-disaster-recovery-details")
 
 
-@cli_util.copy_params_from_generated_command(database_cli.update_autonomous_database_aws_key_details, params_to_exclude=['is_disconnect_peer'])
-@database_cli.autonomous_database_group.command(name=database_cli.update_autonomous_database_aws_key_details.name, help=database_cli.update_autonomous_database_aws_key_details.help)
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'long-term-backup-schedule': {'module': 'database', 'class': 'LongTermBackUpScheduleDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
-@cli_util.wrap_exceptions
-def update_autonomous_database_aws_key_details_extended(ctx, **kwargs):
-
-    ctx.invoke(database_cli.update_autonomous_database_aws_key_details, **kwargs)
-
-
-@cli_util.copy_params_from_generated_command(database_cli.update_autonomous_database_azure_key_details, params_to_exclude=['is_disconnect_peer'])
-@database_cli.autonomous_database_group.command(name=database_cli.update_autonomous_database_azure_key_details.name, help=database_cli.update_autonomous_database_azure_key_details.help)
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'long-term-backup-schedule': {'module': 'database', 'class': 'LongTermBackUpScheduleDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
-@cli_util.wrap_exceptions
-def update_autonomous_database_azure_key_details_extended(ctx, **kwargs):
-
-    ctx.invoke(database_cli.update_autonomous_database_azure_key_details, **kwargs)
-
-
-@cli_util.copy_params_from_generated_command(database_cli.update_autonomous_database_oci_key_details, params_to_exclude=['is_disconnect_peer'])
-@database_cli.autonomous_database_group.command(name=database_cli.update_autonomous_database_oci_key_details.name, help=database_cli.update_autonomous_database_oci_key_details.help)
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'long-term-backup-schedule': {'module': 'database', 'class': 'LongTermBackUpScheduleDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
-@cli_util.wrap_exceptions
-def update_autonomous_database_oci_key_details_extended(ctx, **kwargs):
-
-    ctx.invoke(database_cli.update_autonomous_database_oci_key_details, **kwargs)
-
-
-@cli_util.copy_params_from_generated_command(database_cli.update_autonomous_database_oracle_managed_key_details, params_to_exclude=['is_disconnect_peer'])
-@database_cli.autonomous_database_group.command(name=database_cli.update_autonomous_database_oracle_managed_key_details.name, help=database_cli.update_autonomous_database_oracle_managed_key_details.help)
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'long-term-backup-schedule': {'module': 'database', 'class': 'LongTermBackUpScheduleDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
-@cli_util.wrap_exceptions
-def update_autonomous_database_oracle_managed_key_details_extended(ctx, **kwargs):
-
-    ctx.invoke(database_cli.update_autonomous_database_oracle_managed_key_details, **kwargs)
-
-
-# Remove update-autonomous-database-okv-key-details from oci db autonomous-database
-database_cli.autonomous_database_group.commands.pop(database_cli.update_autonomous_database_okv_key_details.name)
-
-
-# Remove update-autonomous-database-oci-key-details from oci db autonomous-database
-database_cli.autonomous_database_group.commands.pop(database_cli.update_autonomous_database_oci_key_details.name)
-
-
-# Remove update-autonomous-database-oracle-managed-key-details from oci db autonomous-database
-database_cli.autonomous_database_group.commands.pop(database_cli.update_autonomous_database_oracle_managed_key_details.name)
-
-
-# Remove update-autonomous-database-aws-key-details from oci db autonomous-database
-database_cli.autonomous_database_group.commands.pop(database_cli.update_autonomous_database_aws_key_details.name)
-
-
-# Remove update-autonomous-database-azure-key-details from oci db autonomous-database
-database_cli.autonomous_database_group.commands.pop(database_cli.update_autonomous_database_azure_key_details.name)
-
-
 # Remove create-autonomous-database-aws-key-details from oci db autonomous-database
 database_cli.autonomous_database_group.commands.pop(database_cli.create_autonomous_database_aws_key_details.name)
 
