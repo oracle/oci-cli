@@ -6,6 +6,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.74.1 - 2026-02-17
+-------------------
+Added
+~~~~~
+* Container Engine service
+
+  * Support for customer-controlled public IP decommission feature for oracle kubernetes engine
+
+    * ``oci ce cluster extend-endpoint-decommission-rollback-deadline``
+    * ``oci ce cluster get-public-api-endpoint-decommission-status``
+    * ``oci ce cluster rollback-public-api-endpoint-decommission``
+    * ``oci ce cluster start-public-api-endpoint-decommission``
+
+* Core service
+
+  * New optional parameter ``--gpu-memory-cluster-scale-config`` to provide GPU memory scale configuration while creating and updating Compute GPU Memory Cluster
+
+    * ``oci compute compute-gpu-memory-cluster create --gpu-memory-cluster-scale-config``
+    * ``oci compute compute-gpu-memory-cluster update --gpu-memory-cluster-scale-config``
+
+* MySQL HeatWave service
+
+  * Support for listing maintenance events
+
+    * ``oci mysql db-system maintenance-event list --db-system-id``
+
+
 3.74.0 - 2026-02-10
 -------------------
 Added

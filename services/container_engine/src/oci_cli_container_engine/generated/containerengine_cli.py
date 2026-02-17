@@ -1155,6 +1155,37 @@ def disable_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
+@cluster_group.command(name=cli_util.override('ce.extend_endpoint_decommission_rollback_deadline.command_name', 'extend-endpoint-decommission-rollback-deadline'), help=u"""Extend the rollback deadline of public api endpoint decommission for a cluster. The operation can only be performed within decommission rollback deadline. \n[Command Reference](extendEndpointDecommissionRollbackDeadline)""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--rollback-deadline-delay', required=True, help=u"""The optional override delay of the rollback deadline once decommission is finished. maximum to 30 days could be added. Once Deadline is passed, rollback will not able to be launched.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'container_engine', 'class': 'PublicApiEndpointDecommissionStatus'})
+@cli_util.wrap_exceptions
+def extend_endpoint_decommission_rollback_deadline(ctx, from_json, cluster_id, rollback_deadline_delay, if_match):
+
+    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['rollbackDeadlineDelay'] = rollback_deadline_delay
+
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
+    result = client.extend_endpoint_decommission_rollback_deadline(
+        cluster_id=cluster_id,
+        extend_endpoint_decommission_rollback_deadline_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @cluster_group.command(name=cli_util.override('ce.get_addon.command_name', 'get-addon'), help=u"""Get the specified addon for a cluster. \n[Command Reference](getAddon)""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--addon-name', required=True, help=u"""The name of the addon.""")
@@ -1333,6 +1364,28 @@ def get_node_pool_options(ctx, from_json, node_pool_option_id, compartment_id, s
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.get_node_pool_options(
         node_pool_option_id=node_pool_option_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cluster_group.command(name=cli_util.override('ce.get_public_api_endpoint_decommission_status.command_name', 'get-public-api-endpoint-decommission-status'), help=u"""Get cluster public api endpoint decommission status. \n[Command Reference](getPublicApiEndpointDecommissionStatus)""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'container_engine', 'class': 'PublicApiEndpointDecommissionStatus'})
+@cli_util.wrap_exceptions
+def get_public_api_endpoint_decommission_status(ctx, from_json, cluster_id):
+
+    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
+    result = client.get_public_api_endpoint_decommission_status(
+        cluster_id=cluster_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2239,6 +2292,61 @@ def replace_boot_volume_cluster_node(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
+@cluster_group.command(name=cli_util.override('ce.rollback_public_api_endpoint_decommission.command_name', 'rollback-public-api-endpoint-decommission'), help=u"""Rollback public api endpoint decommission for a cluster, legacy kubernetes endpoint will be brought back once the operation is completed. The operation can only be performed within decommission rollback deadline. \n[Command Reference](rollbackPublicApiEndpointDecommission)""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def rollback_public_api_endpoint_decommission(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, if_match):
+
+    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
+    result = client.rollback_public_api_endpoint_decommission(
+        cluster_id=cluster_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @cluster_group.command(name=cli_util.override('ce.start_credential_rotation.command_name', 'start-credential-rotation'), help=u"""Start cluster credential rotation by adding new credentials, old credentials will still work after this operation. \n[Command Reference](startCredentialRotation)""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--auto-completion-delay-duration', required=True, help=u"""The duration in days(in ISO 8601 notation eg. P5D) after which the old credentials should be retired. Maximum delay duration is 90 days.""")
@@ -2268,6 +2376,61 @@ def start_credential_rotation(ctx, from_json, wait_for_state, max_wait_seconds, 
     result = client.start_credential_rotation(
         cluster_id=cluster_id,
         start_credential_rotation_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cluster_group.command(name=cli_util.override('ce.start_public_api_endpoint_decommission.command_name', 'start-public-api-endpoint-decommission'), help=u"""Start public api endpoint decommission for a cluster, legacy kubernetes endpoint will no longer available after this operation. \n[Command Reference](startPublicApiEndpointDecommission)""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def start_public_api_endpoint_decommission(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, if_match):
+
+    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
+    result = client.start_public_api_endpoint_decommission(
+        cluster_id=cluster_id,
         **kwargs
     )
     if wait_for_state:

@@ -72,6 +72,12 @@ def cloud_listener_group():
     pass
 
 
+@click.command(cli_util.override('db_management.cloud_exadata_storage_grid_group.command_name', 'cloud-exadata-storage-grid'), cls=CommandGroupWithAlias, help="""The details of the Exadata storage server grid.""")
+@cli_util.help_option_group
+def cloud_exadata_storage_grid_group():
+    pass
+
+
 @click.command(cli_util.override('db_management.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
@@ -90,6 +96,12 @@ def job_execution_group():
     pass
 
 
+@click.command(cli_util.override('db_management.cloud_exadata_storage_server_group.command_name', 'cloud-exadata-storage-server'), cls=CommandGroupWithAlias, help="""The details of the Exadata storage server.""")
+@cli_util.help_option_group
+def cloud_exadata_storage_server_group():
+    pass
+
+
 @click.command(cli_util.override('db_management.external_exadata_storage_connector_group.command_name', 'external-exadata-storage-connector'), cls=CommandGroupWithAlias, help="""The details of the Exadata storage server connector.""")
 @cli_util.help_option_group
 def external_exadata_storage_connector_group():
@@ -99,6 +111,12 @@ def external_exadata_storage_connector_group():
 @click.command(cli_util.override('db_management.external_db_system_discovery_group.command_name', 'external-db-system-discovery'), cls=CommandGroupWithAlias, help="""The details of an external DB system discovery.""")
 @cli_util.help_option_group
 def external_db_system_discovery_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.cloud_exadata_infrastructure_group.command_name', 'cloud-exadata-infrastructure'), cls=CommandGroupWithAlias, help="""The details of the Exadata infrastructure.""")
+@cli_util.help_option_group
+def cloud_exadata_infrastructure_group():
     pass
 
 
@@ -141,6 +159,12 @@ def cluster_cache_metric_group():
 @click.command(cli_util.override('db_management.database_fleet_dataguard_metrics_group.command_name', 'database-fleet-dataguard-metrics'), cls=CommandGroupWithAlias, help="""The list of Oracle Data Guard-enabled databases in the fleet.""")
 @cli_util.help_option_group
 def database_fleet_dataguard_metrics_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.cloud_exadata_storage_connector_group.command_name', 'cloud-exadata-storage-connector'), cls=CommandGroupWithAlias, help="""The details of the Exadata storage server connector.""")
+@cli_util.help_option_group
+def cloud_exadata_storage_connector_group():
     pass
 
 
@@ -336,6 +360,12 @@ def cloud_db_system_connector_group():
     pass
 
 
+@click.command(cli_util.override('db_management.exadata_infrastructure_fleet_health_metrics_group.command_name', 'exadata-infrastructure-fleet-health-metrics'), cls=CommandGroupWithAlias, help="""The details of the fleet health metrics.""")
+@cli_util.help_option_group
+def exadata_infrastructure_fleet_health_metrics_group():
+    pass
+
+
 @click.command(cli_util.override('db_management.job_executions_status_summary_collection_group.command_name', 'job-executions-status-summary-collection'), cls=CommandGroupWithAlias, help="""A collection of job execution status summary objects.""")
 @cli_util.help_option_group
 def job_executions_status_summary_collection_group():
@@ -375,11 +405,14 @@ db_management_root_group.add_command(database_home_metrics_group)
 db_management_root_group.add_command(external_database_collection_group)
 db_management_root_group.add_command(tablespace_group)
 db_management_root_group.add_command(cloud_listener_group)
+db_management_root_group.add_command(cloud_exadata_storage_grid_group)
 db_management_root_group.add_command(work_request_error_group)
 db_management_root_group.add_command(external_exadata_infrastructure_group)
 db_management_root_group.add_command(job_execution_group)
+db_management_root_group.add_command(cloud_exadata_storage_server_group)
 db_management_root_group.add_command(external_exadata_storage_connector_group)
 db_management_root_group.add_command(external_db_system_discovery_group)
+db_management_root_group.add_command(cloud_exadata_infrastructure_group)
 db_management_root_group.add_command(my_sql_connector_collection_group)
 db_management_root_group.add_command(cloud_db_node_group)
 db_management_root_group.add_command(external_asm_instance_group)
@@ -387,6 +420,7 @@ db_management_root_group.add_command(historic_addm_result_group)
 db_management_root_group.add_command(database_fleet_backup_metrics_group)
 db_management_root_group.add_command(cluster_cache_metric_group)
 db_management_root_group.add_command(database_fleet_dataguard_metrics_group)
+db_management_root_group.add_command(cloud_exadata_storage_connector_group)
 db_management_root_group.add_command(database_fleet_ha_overview_metrics_group)
 db_management_root_group.add_command(database_fleet_health_metrics_group)
 db_management_root_group.add_command(external_cluster_group)
@@ -419,6 +453,7 @@ db_management_root_group.add_command(cloud_cluster_instance_group)
 db_management_root_group.add_command(external_db_system_group)
 db_management_root_group.add_command(external_exadata_storage_server_group)
 db_management_root_group.add_command(cloud_db_system_connector_group)
+db_management_root_group.add_command(exadata_infrastructure_fleet_health_metrics_group)
 db_management_root_group.add_command(job_executions_status_summary_collection_group)
 db_management_root_group.add_command(cloud_db_system_group)
 db_management_root_group.add_command(associated_database_summary_group)
@@ -565,6 +600,67 @@ def addm_tasks(ctx, from_json, managed_database_id, time_start, time_end, page, 
         time_end=time_end,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db_management.change_cloud_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""Moves the Exadata infrastructure and its related resources (Exadata storage server, Exadata storage server connectors and Exadata storage server grid) to the specified compartment. \n[Command Reference](changeCloudExadataInfrastructureCompartment)""")
+@cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Exadata infrastructure and related components to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_cloud_exadata_infrastructure_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, compartment_id, if_match):
+
+    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_cloud_exadata_infrastructure_compartment(
+        cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+        change_cloud_exadata_infrastructure_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1917,6 +2013,31 @@ def check_cloud_db_system_connector_connection_status(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
+@cloud_exadata_storage_connector_group.command(name=cli_util.override('db_management.check_cloud_exadata_storage_connector.command_name', 'check'), help=u"""Checks the status of the Exadata storage server connection specified by exadataStorageConnectorId. \n[Command Reference](checkCloudExadataStorageConnector)""")
+@cli_util.option('--cloud-exadata-storage-connector-id', required=True, help=u"""The [OCID] of the connector to the Exadata storage server.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudExadataStorageConnectorStatus'})
+@cli_util.wrap_exceptions
+def check_cloud_exadata_storage_connector(ctx, from_json, cloud_exadata_storage_connector_id, if_match):
+
+    if isinstance(cloud_exadata_storage_connector_id, six.string_types) and len(cloud_exadata_storage_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-storage-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.check_cloud_exadata_storage_connector(
+        cloud_exadata_storage_connector_id=cloud_exadata_storage_connector_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @external_db_system_connector_group.command(name=cli_util.override('db_management.check_external_db_system_connector_connection_status.command_name', 'check-external-db-system-connector-connection-status'), help=u"""Checks the status of the external DB system component connection specified in this connector. This operation will refresh the connectionStatus and timeConnectionStatusLastUpdated fields. \n[Command Reference](checkExternalDbSystemConnectorConnectionStatus)""")
 @cli_util.option('--external-db-system-connector-id', required=True, help=u"""The [OCID] of the external connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2805,6 +2926,148 @@ def create_cloud_db_system_discovery(ctx, from_json, wait_for_state, max_wait_se
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db_management.create_cloud_exadata_infrastructure.command_name', 'create'), help=u"""Creates an OCI resource for the Exadata infrastructure and enables the Monitoring service for the Exadata infrastructure. The following resource/subresources are created:   Infrastructure   Storage server connectors   Storage servers   Storage grids \n[Command Reference](createCloudExadataInfrastructure)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vm-cluster-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of VM Clusters in the Exadata infrastructure.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--discovery-key', help=u"""The unique key of the discovery request.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the database management resources.""")
+@cli_util.option('--display-name', help=u"""The name of the Exadata infrastructure.""")
+@cli_util.option('--storage-server-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of all the Exadata storage server names to be included for monitoring purposes. If not specified, all the Exadata storage servers associated with the VM Clusters are included.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'vm-cluster-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vm-cluster-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudExadataInfrastructure'})
+@cli_util.wrap_exceptions
+def create_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vm_cluster_ids, discovery_key, license_model, display_name, storage_server_names, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['vmClusterIds'] = cli_util.parse_json_parameter("vm_cluster_ids", vm_cluster_ids)
+
+    if discovery_key is not None:
+        _details['discoveryKey'] = discovery_key
+
+    if license_model is not None:
+        _details['licenseModel'] = license_model
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if storage_server_names is not None:
+        _details['storageServerNames'] = cli_util.parse_json_parameter("storage_server_names", storage_server_names)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_cloud_exadata_infrastructure(
+        create_cloud_exadata_infrastructure_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_exadata_infrastructure') and callable(getattr(client, 'get_cloud_exadata_infrastructure')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_exadata_infrastructure(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_connector_group.command(name=cli_util.override('db_management.create_cloud_exadata_storage_connector.command_name', 'create'), help=u"""Creates the Exadata storage server connector after validating the connection information. \n[Command Reference](createCloudExadataStorageConnector)""")
+@cli_util.option('--storage-server-id', required=True, help=u"""The [OCID] of the Exadata storage server.""")
+@cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the agent for the Exadata storage server.""")
+@cli_util.option('--connection-uri', required=True, help=u"""The unique string of the connection. For example, \"https://<storage-server-name>/MS/RESTService/\".""")
+@cli_util.option('--credential-info', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The name of the Exadata storage server connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-info': {'module': 'database_management', 'class': 'RestCredential'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-info': {'module': 'database_management', 'class': 'RestCredential'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudExadataStorageConnector'})
+@cli_util.wrap_exceptions
+def create_cloud_exadata_storage_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, storage_server_id, agent_id, connection_uri, credential_info, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['storageServerId'] = storage_server_id
+    _details['agentId'] = agent_id
+    _details['connectionUri'] = connection_uri
+    _details['credentialInfo'] = cli_util.parse_json_parameter("credential_info", credential_info)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_cloud_exadata_storage_connector(
+        create_cloud_exadata_storage_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_exadata_storage_connector') and callable(getattr(client, 'get_cloud_exadata_storage_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_exadata_storage_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -4185,6 +4448,126 @@ def delete_cloud_db_system_discovery(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db_management.delete_cloud_exadata_infrastructure.command_name', 'delete'), help=u"""Deletes the Exadata infrastructure specified by exadataInfrastructureId. \n[Command Reference](deleteCloudExadataInfrastructure)""")
+@cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, if_match):
+
+    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_cloud_exadata_infrastructure(
+        cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_connector_group.command(name=cli_util.override('db_management.delete_cloud_exadata_storage_connector.command_name', 'delete'), help=u"""Deletes the Exadata storage server connector specified by exadataStorageConnectorId. \n[Command Reference](deleteCloudExadataStorageConnector)""")
+@cli_util.option('--cloud-exadata-storage-connector-id', required=True, help=u"""The [OCID] of the connector to the Exadata storage server.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_cloud_exadata_storage_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_storage_connector_id, if_match):
+
+    if isinstance(cloud_exadata_storage_connector_id, six.string_types) and len(cloud_exadata_storage_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-storage-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_cloud_exadata_storage_connector(
+        cloud_exadata_storage_connector_id=cloud_exadata_storage_connector_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_exadata_storage_connector') and callable(getattr(client, 'get_cloud_exadata_storage_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_cloud_exadata_storage_connector(cloud_exadata_storage_connector_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @db_management_private_endpoint_group.command(name=cli_util.override('db_management.delete_db_management_private_endpoint.command_name', 'delete'), help=u"""Deletes a specific Database Management private endpoint. \n[Command Reference](deleteDbManagementPrivateEndpoint)""")
 @cli_util.option('--db-management-private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -5526,6 +5909,65 @@ def disable_cloud_db_system_stack_monitoring(ctx, from_json, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db_management.disable_cloud_exadata_infrastructure_management.command_name', 'disable-cloud-exadata-infrastructure-management'), help=u"""Disables Database Management for the Exadata infrastructure specified by exadataInfrastructureId. It covers the following components:
+
+- Exadata infrastructure - Exadata storage grid - Exadata storage server
+
+Note that Database Management will not be disabled for the VM Clusters within the Exadata infrastructure and should be disabled explicitly, if required. \n[Command Reference](disableCloudExadataInfrastructureManagement)""")
+@cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_cloud_exadata_infrastructure_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, if_match):
+
+    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_cloud_exadata_infrastructure_management(
+        cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('db_management.disable_database_management_feature.command_name', 'disable-database-management-feature'), help=u"""Disables a Database Management feature for the specified Oracle cloud database. \n[Command Reference](disableDatabaseManagementFeature)""")
 @cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature', required=True, type=custom_types.CliCaseInsensitiveChoice(["DIAGNOSTICS_AND_MANAGEMENT", "DB_LIFECYCLE_MANAGEMENT", "SQLWATCH"]), help=u"""The name of the Database Management feature.""")
@@ -6548,6 +6990,45 @@ def disable_sql_plan_baselines_usage_database_password_credential_details(ctx, f
     result = client.disable_sql_plan_baselines_usage(
         managed_database_id=managed_database_id,
         disable_sql_plan_baselines_usage_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db_management.discover_cloud_exadata_infrastructure.command_name', 'discover'), help=u"""Completes the Exadata system prechecking on the following:
+
+- Verifies if the ASM connector is defined for each VM Cluster or return 400 status code with CONNECTOR_NOT_DEFINED error code. - Verifies if the agents associated with ASM are valid and could be used for the Exadata storage servers or return 400 status code with INVALID_AGENT error code.
+
+Starts the discovery process for the Exadata system infrastructure. The following resources/components are discovered
+
+- Exadata storage servers from each VM Cluster - Exadata storage grid for all Exadata storage servers - Exadata infrastructure
+
+The same API covers both new discovery and rediscovery cases.   For the new discovery case, new managed resources/sub-resources are created or the existing ones are overridden.   For rediscovery case, the existing managed resources/sub-resources are checked to find out which ones should be added or which ones   should be removed based on the unique key defined for each resource/sub-resource. \n[Command Reference](discoverCloudExadataInfrastructure)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--discovery-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NEW", "OVERRIDE"]), help=u"""The type of discovery.""")
+@cli_util.option('--vm-cluster-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of VM Clusters in the Exadata infrastructure.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exadata-infrastructure-id', help=u"""The [OCID] of the Exadata infrastructure. This is applicable for rediscovery only.""")
+@json_skeleton_utils.get_cli_json_input_option({'vm-cluster-ids': {'module': 'database_management', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vm-cluster-ids': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'CloudExadataInfrastructureDiscovery'})
+@cli_util.wrap_exceptions
+def discover_cloud_exadata_infrastructure(ctx, from_json, compartment_id, discovery_type, vm_cluster_ids, exadata_infrastructure_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['discoveryType'] = discovery_type
+    _details['vmClusterIds'] = cli_util.parse_json_parameter("vm_cluster_ids", vm_cluster_ids)
+
+    if exadata_infrastructure_id is not None:
+        _details['exadataInfrastructureId'] = exadata_infrastructure_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.discover_cloud_exadata_infrastructure(
+        discover_cloud_exadata_infrastructure_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8020,6 +8501,69 @@ def enable_cloud_db_system_stack_monitoring(ctx, from_json, wait_for_state, max_
     result = client.enable_cloud_db_system_stack_monitoring(
         cloud_db_system_id=cloud_db_system_id,
         enable_cloud_db_system_stack_monitoring_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db_management.enable_cloud_exadata_infrastructure_management.command_name', 'enable-cloud-exadata-infrastructure-management'), help=u"""Enables Database Management for the Exadata infrastructure specified by exadataInfrastructureId. It covers the following components:
+
+- Exadata infrastructure - Exadata storage grid - Exadata storage server \n[Command Reference](enableCloudExadataInfrastructureManagement)""")
+@cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
+@cli_util.option('--license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the database management resources.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_cloud_exadata_infrastructure_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, license_model, if_match):
+
+    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['licenseModel'] = license_model
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_cloud_exadata_infrastructure_management(
+        cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+        enable_cloud_exadata_infrastructure_management_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -10496,6 +11040,116 @@ def get_cloud_db_system_discovery(ctx, from_json, cloud_db_system_discovery_id):
     cli_util.render_response(result, ctx)
 
 
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db_management.get_cloud_exadata_infrastructure.command_name', 'get'), help=u"""Gets the details for the Exadata infrastructure specified by exadataInfrastructureId. It includes the VMCluster and storage grid within the Exadata infrastructure. \n[Command Reference](getCloudExadataInfrastructure)""")
+@cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudExadataInfrastructure'})
+@cli_util.wrap_exceptions
+def get_cloud_exadata_infrastructure(ctx, from_json, cloud_exadata_infrastructure_id):
+
+    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_exadata_infrastructure(
+        cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_connector_group.command(name=cli_util.override('db_management.get_cloud_exadata_storage_connector.command_name', 'get'), help=u"""Gets the details for the Exadata storage server connector specified by exadataStorageConnectorId. \n[Command Reference](getCloudExadataStorageConnector)""")
+@cli_util.option('--cloud-exadata-storage-connector-id', required=True, help=u"""The [OCID] of the connector to the Exadata storage server.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudExadataStorageConnector'})
+@cli_util.wrap_exceptions
+def get_cloud_exadata_storage_connector(ctx, from_json, cloud_exadata_storage_connector_id):
+
+    if isinstance(cloud_exadata_storage_connector_id, six.string_types) and len(cloud_exadata_storage_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-storage-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_exadata_storage_connector(
+        cloud_exadata_storage_connector_id=cloud_exadata_storage_connector_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_grid_group.command(name=cli_util.override('db_management.get_cloud_exadata_storage_grid.command_name', 'get'), help=u"""Gets the details for the Exadata storage server grid specified by exadataStorageGridId. \n[Command Reference](getCloudExadataStorageGrid)""")
+@cli_util.option('--cloud-exadata-storage-grid-id', required=True, help=u"""The [OCID] of the Exadata storage grid.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudExadataStorageGrid'})
+@cli_util.wrap_exceptions
+def get_cloud_exadata_storage_grid(ctx, from_json, cloud_exadata_storage_grid_id):
+
+    if isinstance(cloud_exadata_storage_grid_id, six.string_types) and len(cloud_exadata_storage_grid_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-storage-grid-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_exadata_storage_grid(
+        cloud_exadata_storage_grid_id=cloud_exadata_storage_grid_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_server_group.command(name=cli_util.override('db_management.get_cloud_exadata_storage_server.command_name', 'get'), help=u"""Gets the summary for the Exadata storage server specified by exadataStorageServerId. \n[Command Reference](getCloudExadataStorageServer)""")
+@cli_util.option('--cloud-exadata-storage-server-id', required=True, help=u"""The [OCID] of the Exadata storage server.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudExadataStorageServer'})
+@cli_util.wrap_exceptions
+def get_cloud_exadata_storage_server(ctx, from_json, cloud_exadata_storage_server_id):
+
+    if isinstance(cloud_exadata_storage_server_id, six.string_types) and len(cloud_exadata_storage_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-storage-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_exadata_storage_server(
+        cloud_exadata_storage_server_id=cloud_exadata_storage_server_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_server_group.command(name=cli_util.override('db_management.get_cloud_iorm_plan.command_name', 'get-cloud-iorm-plan'), help=u"""Get the IORM plan from the specific Exadata storage server. \n[Command Reference](getCloudIormPlan)""")
+@cli_util.option('--cloud-exadata-storage-server-id', required=True, help=u"""The [OCID] of the Exadata storage server.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudIormPlan'})
+@cli_util.wrap_exceptions
+def get_cloud_iorm_plan(ctx, from_json, cloud_exadata_storage_server_id):
+
+    if isinstance(cloud_exadata_storage_server_id, six.string_types) and len(cloud_exadata_storage_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-storage-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_iorm_plan(
+        cloud_exadata_storage_server_id=cloud_exadata_storage_server_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @cloud_listener_group.command(name=cli_util.override('db_management.get_cloud_listener.command_name', 'get'), help=u"""Gets the details for the cloud listener specified by `cloudListenerId`. \n[Command Reference](getCloudListener)""")
 @cli_util.option('--cloud-listener-id', required=True, help=u"""The [OCID] of the cloud listener.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -10513,6 +11167,28 @@ def get_cloud_listener(ctx, from_json, cloud_listener_id):
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_cloud_listener(
         cloud_listener_id=cloud_listener_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_server_group.command(name=cli_util.override('db_management.get_cloud_open_alert_history.command_name', 'get-cloud-open-alert-history'), help=u"""Gets the open alerts from the specified Exadata storage server. \n[Command Reference](getCloudOpenAlertHistory)""")
+@cli_util.option('--cloud-exadata-storage-server-id', required=True, help=u"""The [OCID] of the Exadata storage server.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudOpenAlertHistory'})
+@cli_util.wrap_exceptions
+def get_cloud_open_alert_history(ctx, from_json, cloud_exadata_storage_server_id):
+
+    if isinstance(cloud_exadata_storage_server_id, six.string_types) and len(cloud_exadata_storage_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-storage-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_open_alert_history(
+        cloud_exadata_storage_server_id=cloud_exadata_storage_server_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -10866,6 +11542,44 @@ def get_db_management_private_endpoint(ctx, from_json, db_management_private_end
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_db_management_private_endpoint(
         db_management_private_endpoint_id=db_management_private_endpoint_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@exadata_infrastructure_fleet_health_metrics_group.command(name=cli_util.override('db_management.get_exadata_infrastructure_fleet_health_metrics.command_name', 'get'), help=u"""Gets the health metrics for a fleet of Exadata infrastructure in a compartment. The CompartmentId query parameters must be provided to retrieve the health metrics. \n[Command Reference](getExadataInfrastructureFleetHealthMetrics)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compare-baseline-time', required=True, help=u"""The baseline time for metrics comparison.""")
+@cli_util.option('--compare-target-time', required=True, help=u"""The target time for metrics comparison.""")
+@cli_util.option('--compare-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY", "WEEK"]), help=u"""The time window used for metrics comparison.""")
+@cli_util.option('--filter-by-exadata-infrastructure-deployment-type', type=custom_types.CliCaseInsensitiveChoice(["ONPREMISE", "EXADATA", "EXADATA_CC"]), help=u"""The filter used to filter the Exadata infrastructures in the fleet by a specific deployment type.""")
+@cli_util.option('--filter-by-exadata-infrastructure-lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "UNKNOWN"]), help=u"""The filter used to filter the Exadata infrastructure in the fleet by its lifecycle state. If the parameter is not provided, Exdata infrastructures in any state are returned.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExadataInfrastructureFleetHealthMetrics'})
+@cli_util.wrap_exceptions
+def get_exadata_infrastructure_fleet_health_metrics(ctx, from_json, compartment_id, compare_baseline_time, compare_target_time, compare_type, filter_by_exadata_infrastructure_deployment_type, filter_by_exadata_infrastructure_lifecycle_state, sort_by, sort_order):
+
+    kwargs = {}
+    if compare_type is not None:
+        kwargs['compare_type'] = compare_type
+    if filter_by_exadata_infrastructure_deployment_type is not None:
+        kwargs['filter_by_exadata_infrastructure_deployment_type'] = filter_by_exadata_infrastructure_deployment_type
+    if filter_by_exadata_infrastructure_lifecycle_state is not None:
+        kwargs['filter_by_exadata_infrastructure_lifecycle_state'] = filter_by_exadata_infrastructure_lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_exadata_infrastructure_fleet_health_metrics(
+        compartment_id=compartment_id,
+        compare_baseline_time=compare_baseline_time,
+        compare_target_time=compare_target_time,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -12795,6 +13509,185 @@ def list_cloud_db_systems(ctx, from_json, all_pages, page_size, compartment_id, 
     else:
         result = client.list_cloud_db_systems(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db_management.list_cloud_exadata_infrastructures.command_name', 'list'), help=u"""Lists the Exadata infrastructure resources in the specified compartment. \n[Command Reference](listCloudExadataInfrastructures)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""The optional single value query filter parameter on the entity display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudExadataInfrastructureCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_exadata_infrastructures(ctx, from_json, all_pages, page_size, compartment_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_exadata_infrastructures,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_exadata_infrastructures,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_exadata_infrastructures(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_connector_group.command(name=cli_util.override('db_management.list_cloud_exadata_storage_connectors.command_name', 'list'), help=u"""Lists the Exadata storage server connectors for the specified Exadata infrastructure. \n[Command Reference](listCloudExadataStorageConnectors)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
+@cli_util.option('--display-name', help=u"""The optional single value query filter parameter on the entity display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudExadataStorageConnectorCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_exadata_storage_connectors(ctx, from_json, all_pages, page_size, compartment_id, cloud_exadata_infrastructure_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_exadata_storage_connectors,
+            compartment_id=compartment_id,
+            cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_exadata_storage_connectors,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_exadata_storage_connectors(
+            compartment_id=compartment_id,
+            cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_server_group.command(name=cli_util.override('db_management.list_cloud_exadata_storage_servers.command_name', 'list'), help=u"""Lists the Exadata storage servers for the specified Exadata infrastructure. \n[Command Reference](listCloudExadataStorageServers)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
+@cli_util.option('--display-name', help=u"""The optional single value query filter parameter on the entity display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudExadataStorageServerCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_exadata_storage_servers(ctx, from_json, all_pages, page_size, compartment_id, cloud_exadata_infrastructure_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_exadata_storage_servers,
+            compartment_id=compartment_id,
+            cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_exadata_storage_servers,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_exadata_storage_servers(
+            compartment_id=compartment_id,
+            cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -20231,6 +21124,310 @@ def update_cloud_db_system_discovery(ctx, from_json, force, wait_for_state, max_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_cloud_db_system_discovery(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db_management.update_cloud_exadata_infrastructure.command_name', 'update'), help=u"""Updates the details for the Exadata infrastructure specified by exadataInfrastructureId. \n[Command Reference](updateCloudExadataInfrastructure)""")
+@cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
+@cli_util.option('--discovery-key', help=u"""The unique key of the discovery request.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the database management resources.""")
+@cli_util.option('--display-name', help=u"""The name of the Exadata infrastructure.""")
+@cli_util.option('--vm-cluster-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of all the VM Cluster OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--storage-server-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the names of Exadata storage servers to be monitored. If not specified, it includes all Exadata storage servers associated with the monitored VM Clusters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'vm-cluster-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vm-cluster-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudExadataInfrastructure'})
+@cli_util.wrap_exceptions
+def update_cloud_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, discovery_key, license_model, display_name, vm_cluster_ids, storage_server_names, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
+    if not force:
+        if vm_cluster_ids or storage_server_names or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to vm-cluster-ids and storage-server-names and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if discovery_key is not None:
+        _details['discoveryKey'] = discovery_key
+
+    if license_model is not None:
+        _details['licenseModel'] = license_model
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if vm_cluster_ids is not None:
+        _details['vmClusterIds'] = cli_util.parse_json_parameter("vm_cluster_ids", vm_cluster_ids)
+
+    if storage_server_names is not None:
+        _details['storageServerNames'] = cli_util.parse_json_parameter("storage_server_names", storage_server_names)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_exadata_infrastructure(
+        cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+        update_cloud_exadata_infrastructure_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_exadata_infrastructure') and callable(getattr(client, 'get_cloud_exadata_infrastructure')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_exadata_infrastructure(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_connector_group.command(name=cli_util.override('db_management.update_cloud_exadata_storage_connector.command_name', 'update'), help=u"""Updates the Exadata storage server connector specified by exadataStorageConnectorId. \n[Command Reference](updateCloudExadataStorageConnector)""")
+@cli_util.option('--cloud-exadata-storage-connector-id', required=True, help=u"""The [OCID] of the connector to the Exadata storage server.""")
+@cli_util.option('--display-name', help=u"""The name of the Exadata storage server connector.""")
+@cli_util.option('--connection-uri', help=u"""The unique string of the connection. For example, \"https://<storage-server-name>/MS/RESTService/\".""")
+@cli_util.option('--credential-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-info': {'module': 'database_management', 'class': 'RestCredential'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-info': {'module': 'database_management', 'class': 'RestCredential'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudExadataStorageConnector'})
+@cli_util.wrap_exceptions
+def update_cloud_exadata_storage_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_storage_connector_id, display_name, connection_uri, credential_info, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_exadata_storage_connector_id, six.string_types) and len(cloud_exadata_storage_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-storage-connector-id cannot be whitespace or empty string')
+    if not force:
+        if credential_info or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to credential-info and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if connection_uri is not None:
+        _details['connectionUri'] = connection_uri
+
+    if credential_info is not None:
+        _details['credentialInfo'] = cli_util.parse_json_parameter("credential_info", credential_info)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_exadata_storage_connector(
+        cloud_exadata_storage_connector_id=cloud_exadata_storage_connector_id,
+        update_cloud_exadata_storage_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_exadata_storage_connector') and callable(getattr(client, 'get_cloud_exadata_storage_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_exadata_storage_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_grid_group.command(name=cli_util.override('db_management.update_cloud_exadata_storage_grid.command_name', 'update'), help=u"""Updates the Exadata storage server grid specified by exadataStorageGridId. \n[Command Reference](updateCloudExadataStorageGrid)""")
+@cli_util.option('--cloud-exadata-storage-grid-id', required=True, help=u"""The [OCID] of the Exadata storage grid.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudExadataStorageGrid'})
+@cli_util.wrap_exceptions
+def update_cloud_exadata_storage_grid(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_storage_grid_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_exadata_storage_grid_id, six.string_types) and len(cloud_exadata_storage_grid_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-storage-grid-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_exadata_storage_grid(
+        cloud_exadata_storage_grid_id=cloud_exadata_storage_grid_id,
+        update_cloud_exadata_storage_grid_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_exadata_storage_grid') and callable(getattr(client, 'get_cloud_exadata_storage_grid')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_exadata_storage_grid(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_exadata_storage_server_group.command(name=cli_util.override('db_management.update_cloud_exadata_storage_server.command_name', 'update'), help=u"""Updates the Exadata storage server specified by exadataStorageServerId. \n[Command Reference](updateCloudExadataStorageServer)""")
+@cli_util.option('--cloud-exadata-storage-server-id', required=True, help=u"""The [OCID] of the Exadata storage server.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudExadataStorageServer'})
+@cli_util.wrap_exceptions
+def update_cloud_exadata_storage_server(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_storage_server_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_exadata_storage_server_id, six.string_types) and len(cloud_exadata_storage_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-storage-server-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_exadata_storage_server(
+        cloud_exadata_storage_server_id=cloud_exadata_storage_server_id,
+        update_cloud_exadata_storage_server_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_exadata_storage_server') and callable(getattr(client, 'get_cloud_exadata_storage_server')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_exadata_storage_server(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

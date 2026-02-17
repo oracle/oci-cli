@@ -40,10 +40,17 @@ def db_system_group():
     pass
 
 
+@click.command(cli_util.override('db_system.maintenance_event_group.command_name', 'maintenance-event'), cls=CommandGroupWithAlias, help="""The details of a maintenance event.""")
+@cli_util.help_option_group
+def maintenance_event_group():
+    pass
+
+
 mysql_service_cli.mysql_service_group.add_command(db_system_root_group)
 db_system_root_group.add_command(heat_wave_cluster_group)
 db_system_root_group.add_command(heat_wave_cluster_memory_estimate_group)
 db_system_root_group.add_command(db_system_group)
+db_system_root_group.add_command(maintenance_event_group)
 
 
 @heat_wave_cluster_group.command(name=cli_util.override('db_system.add_heat_wave_cluster.command_name', 'add'), help=u"""Adds a HeatWave cluster to the DB System. \n[Command Reference](addHeatWaveCluster)""")
@@ -1468,6 +1475,78 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, is_hea
     else:
         result = client.list_db_systems(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_event_group.command(name=cli_util.override('db_system.list_maintenance_events.command_name', 'list'), help=u"""List all the maintenance events. \n[Command Reference](listMaintenanceEvents)""")
+@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--mysql-version-before-maintenance', help=u"""The MySQL version before the maintenance event.""")
+@cli_util.option('--mysql-version-after-maintenance', help=u"""The MySQL version after the maintenance event.""")
+@cli_util.option('--maintenance-type', type=custom_types.CliCaseInsensitiveChoice(["AUTOMATIC", "MANUAL", "SHAPE"]), help=u"""How the maintenance event was triggered.""")
+@cli_util.option('--maintenance-action', type=custom_types.CliCaseInsensitiveChoice(["DATABASE", "OS_UPDATE", "ONLINE_UPDATE", "HARDWARE"]), help=u"""The nature of the maintenance event.""")
+@cli_util.option('--maintenance-status', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "CANCELED"]), help=u"""The last status of the maintenance event.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated list call. For information about pagination, see [List Pagination].""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the previous list call. For information about pagination, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeScheduled", "timeStarted", "timeEnded"]), help=u"""The field to sort by. Only one sort order may be provided. Time fields are default ordered as descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use (ASC or DESC).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'list[MaintenanceEvent]'})
+@cli_util.wrap_exceptions
+def list_maintenance_events(ctx, from_json, all_pages, page_size, db_system_id, mysql_version_before_maintenance, mysql_version_after_maintenance, maintenance_type, maintenance_action, maintenance_status, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if mysql_version_before_maintenance is not None:
+        kwargs['mysql_version_before_maintenance'] = mysql_version_before_maintenance
+    if mysql_version_after_maintenance is not None:
+        kwargs['mysql_version_after_maintenance'] = mysql_version_after_maintenance
+    if maintenance_type is not None:
+        kwargs['maintenance_type'] = maintenance_type
+    if maintenance_action is not None:
+        kwargs['maintenance_action'] = maintenance_action
+    if maintenance_status is not None:
+        kwargs['maintenance_status'] = maintenance_status
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('mysql', 'db_system', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_maintenance_events,
+            db_system_id=db_system_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_maintenance_events,
+            limit,
+            page_size,
+            db_system_id=db_system_id,
+            **kwargs
+        )
+    else:
+        result = client.list_maintenance_events(
+            db_system_id=db_system_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
