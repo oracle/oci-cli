@@ -636,6 +636,86 @@ def setup_autocomplete_non_windows():
         return
 
 
+@setup_group.command('completion-cache-status', help="""Show current completion cache status and statistics.""")
+@cli_util.help_option
+@click.pass_context
+def completion_cache_status(ctx):
+    """Display information about the completion cache."""
+    from interactive.enhanced_completions import get_cache_info
+
+    info = get_cache_info()
+    click.echo("Completion Cache Status")
+    click.echo("=" * 50)
+    click.echo(f"Cache Directory: {info['cache_directory']}")
+    click.echo(f"Total Cache Files: {info['total_files']}")
+    click.echo(f"Valid Cache Files: {info['valid_files']}")
+    click.echo(f"Expired Cache Files: {info['expired_files']}")
+    click.echo(f"Total Cache Size: {info['total_size_bytes'] / 1024:.2f} KB")
+    click.echo(f"Cache TTL: {info['ttl_hours']} hours")
+
+    if info['valid_files'] > 0:
+        click.echo("\nCache is active and contains valid entries.")
+    else:
+        click.echo("\nCache is empty or all entries are expired.")
+
+
+@setup_group.command('completion-cache-clear', help="""Clear cached completion data for faster autocompletion.""")
+@cli_util.option('--expired-only', is_flag=True, help='Clear only expired cache entries')
+@cli_util.option('--force', '-f', is_flag=True, help='Skip confirmation prompt')
+@cli_util.help_option
+@click.pass_context
+def completion_cache_clear(ctx, expired_only, force):
+    """Clear the completion cache."""
+    from interactive.enhanced_completions import clear_completion_cache, clear_expired_cache
+
+    if expired_only:
+        clear_expired_cache()
+        click.echo("Expired cache entries cleared successfully.")
+    else:
+        if not force:
+            if not click.confirm("This will clear all cached completion data. Continue?"):
+                click.echo("Cache clear cancelled.")
+                return
+
+        clear_completion_cache()
+
+
+@setup_group.command('completion-cache-refresh', help="""Refresh compartment cache by fetching latest data from OCI.""")
+@cli_util.help_option
+@click.pass_context
+def completion_cache_refresh(ctx):
+    """Force refresh the compartment cache."""
+    from interactive.enhanced_completions import OCIDCache, CompartmentCompleter
+
+    try:
+        # Clear existing compartment cache
+        cache = OCIDCache()
+        profile = ctx.obj.get('profile', 'DEFAULT')
+        region = ctx.obj.get('region', 'us-phoenix-1')
+        cache_key = f"compartments_profile_{profile}_region_{region}"
+
+        # Clear specific cache entry
+        cache_file = cache._get_cache_file(cache_key)
+        if cache_file.exists():
+            cache_file.unlink()
+
+        click.echo("Fetching fresh compartment data...")
+
+        # Use the compartment completer to refresh
+        completer = CompartmentCompleter(ctx)
+        compartments = completer._fetch_compartments()
+
+        if compartments:
+            cache.set(cache_key, compartments)
+            click.echo(f"Successfully cached {len(compartments)} compartments.")
+        else:
+            click.echo("Warning: No compartments found or error occurred.")
+
+    except Exception as e:
+        click.echo(f"Error refreshing compartment cache: {e}")
+        ctx.exit(1)
+
+
 @setup_group.command('repair-file-permissions', help="""Resets permissions on a given file to an appropriate access level for sensitive files. Generally this is used to fix permissions on a private key file or config file to meet the requirements of the CLI.
 On Windows, full control will be given to System, Administrators, and the current user.  On Unix, Read / Write permissions will be given to the current user.""")
 @cli_util.option('--file', required=True, help="""The file to repair permissions on.""")
