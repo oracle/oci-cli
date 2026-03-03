@@ -6,10 +6,9 @@ import click
 import json
 import time
 import oci
-from oci_cli import cli_util
+from oci_cli import cli_util, json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
 from services.rover.src.oci_cli_rover.rover_utils import dispatch_datasync_request
-from src.oci_cli import json_skeleton_utils
 
 RESOURCE_TYPE = "TASK"
 

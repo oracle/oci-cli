@@ -38,6 +38,18 @@ def lustre_file_system_group():
     pass
 
 
+@click.command(cli_util.override('lfs.available_maintenance_schedule_start_time_collection_group.command_name', 'available-maintenance-schedule-start-time-collection'), cls=CommandGroupWithAlias, help="""List of items containing available start times on every day of the week""")
+@cli_util.help_option_group
+def available_maintenance_schedule_start_time_collection_group():
+    pass
+
+
+@click.command(cli_util.override('lfs.available_override_maintenance_start_time_collection_group.command_name', 'available-override-maintenance-start-time-collection'), cls=CommandGroupWithAlias, help="""List of items containing available start times on every day of the week""")
+@cli_util.help_option_group
+def available_override_maintenance_start_time_collection_group():
+    pass
+
+
 @click.command(cli_util.override('lfs.lustre_file_system_collection_group.command_name', 'lustre-file-system-collection'), cls=CommandGroupWithAlias, help="""Results of a Lustre file system search. Contains both LustreFileSystemSummary items and other information, such as metadata.""")
 @cli_util.help_option_group
 def lustre_file_system_collection_group():
@@ -70,6 +82,8 @@ def object_storage_link_collection_group():
 
 lfs_root_group.add_command(object_storage_link_group)
 lfs_root_group.add_command(lustre_file_system_group)
+lfs_root_group.add_command(available_maintenance_schedule_start_time_collection_group)
+lfs_root_group.add_command(available_override_maintenance_start_time_collection_group)
 lfs_root_group.add_command(lustre_file_system_collection_group)
 lfs_root_group.add_command(work_request_error_group)
 lfs_root_group.add_command(work_request_log_entry_group)
@@ -244,15 +258,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Network Security Group [OCIDs] associated with this lustre file system. A maximum of 5 is allowed. Setting this to an empty array after the list is created removes the lustre file system from all NSGs. For more information about NSGs, see [Security Rules].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the KMS key used to encrypt the encryption keys associated with this file system.""")
 @cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group in which the Lustre file system exists.""")
+@cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}}, output_type={'module': 'lustre_file_storage', 'class': 'LustreFileSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}}, output_type={'module': 'lustre_file_storage', 'class': 'LustreFileSystem'})
 @cli_util.wrap_exceptions
-def create_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, file_system_name, capacity_in_gbs, subnet_id, performance_tier, root_squash_configuration, display_name, file_system_description, freeform_tags, defined_tags, nsg_ids, kms_key_id, cluster_placement_group_id):
+def create_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, file_system_name, capacity_in_gbs, subnet_id, performance_tier, root_squash_configuration, display_name, file_system_description, freeform_tags, defined_tags, nsg_ids, kms_key_id, cluster_placement_group_id, maintenance_window):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -286,6 +301,9 @@ def create_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if cluster_placement_group_id is not None:
         _details['clusterPlacementGroupId'] = cluster_placement_group_id
+
+    if maintenance_window is not None:
+        _details['maintenanceWindow'] = cli_util.parse_json_parameter("maintenance_window", maintenance_window)
 
     client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
     result = client.create_lustre_file_system(
@@ -610,6 +628,129 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@available_maintenance_schedule_start_time_collection_group.command(name=cli_util.override('lfs.list_available_maintenance_schedule_start_times.command_name', 'list-available-maintenance-schedule-start-times'), help=u"""Gets the list of available maintenance schedule start times for both Create and Update operation \n[Command Reference](listAvailableMaintenanceScheduleStartTimes)""")
+@cli_util.option('--id', help=u"""The [OCID] of the Lustre file system.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--day-of-week', type=custom_types.CliCaseInsensitiveChoice(["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]), help=u"""Day of the week filter""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["dayOfWeek"]), help=u"""The field to sort by. You can provide only one sort order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'lustre_file_storage', 'class': 'AvailableMaintenanceScheduleStartTimeCollection'})
+@cli_util.wrap_exceptions
+def list_available_maintenance_schedule_start_times(ctx, from_json, all_pages, page_size, id, compartment_id, availability_domain, day_of_week, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if day_of_week is not None:
+        kwargs['day_of_week'] = day_of_week
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_available_maintenance_schedule_start_times,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_available_maintenance_schedule_start_times,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_available_maintenance_schedule_start_times(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@available_override_maintenance_start_time_collection_group.command(name=cli_util.override('lfs.list_available_override_maintenance_start_times.command_name', 'list-available-override-maintenance-start-times'), help=u"""Gets the list of available maintenance start times for Override operation \n[Command Reference](listAvailableOverrideMaintenanceStartTimes)""")
+@cli_util.option('--id', required=True, help=u"""The [OCID] of the Lustre file system.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["date"]), help=u"""The field to sort by. You can provide only one sort order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--date', help=u"""Date in format `YYYY-MM-DD`""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'lustre_file_storage', 'class': 'AvailableOverrideMaintenanceStartTimeCollection'})
+@cli_util.wrap_exceptions
+def list_available_override_maintenance_start_times(ctx, from_json, all_pages, page_size, id, limit, page, sort_by, sort_order, date):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if date is not None:
+        kwargs['date'] = date
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_available_override_maintenance_start_times,
+            id=id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_available_override_maintenance_start_times,
+            limit,
+            page_size,
+            id=id,
+            **kwargs
+        )
+    else:
+        result = client.list_available_override_maintenance_start_times(
+            id=id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -993,6 +1134,69 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
+@lustre_file_system_group.command(name=cli_util.override('lfs.override_maintenance.command_name', 'override-maintenance'), help=u"""Overrides the upcoming maintenance to the value provided by user \n[Command Reference](overrideMaintenance)""")
+@cli_util.option('--lustre-file-system-id', required=True, help=u"""The [OCID] of the Lustre file system.""")
+@cli_util.option('--date-time-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'date-time-details': {'module': 'lustre_file_storage', 'class': 'DateAndTime'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'date-time-details': {'module': 'lustre_file_storage', 'class': 'DateAndTime'}})
+@cli_util.wrap_exceptions
+def override_maintenance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, date_time_details, if_match):
+
+    if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if date_time_details is not None:
+        _details['dateTimeDetails'] = cli_util.parse_json_parameter("date_time_details", date_time_details)
+
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.override_maintenance(
+        lustre_file_system_id=lustre_file_system_id,
+        override_maintenance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @object_storage_link_group.command(name=cli_util.override('lfs.start_export_to_object.command_name', 'start-export-to-object'), help=u"""Starts the export of data from the Lustre file system to Object Storage. The Lustre file system path and Object Storage object prefix are defined in the Object Storage link resource. \n[Command Reference](startExportToObject)""")
 @cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1109,23 +1313,24 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the KMS key used to encrypt the encryption keys associated with this file system.""")
 @cli_util.option('--capacity-in-gbs', type=click.INT, help=u"""Capacity of the Lustre file system in GB. You can increase capacity only in multiples of 5 TB.""")
 @cli_util.option('--root-squash-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}})
 @cli_util.wrap_exceptions
-def update_lustre_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, display_name, file_system_description, freeform_tags, defined_tags, nsg_ids, kms_key_id, capacity_in_gbs, root_squash_configuration, if_match):
+def update_lustre_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, display_name, file_system_description, freeform_tags, defined_tags, nsg_ids, kms_key_id, capacity_in_gbs, root_squash_configuration, maintenance_window, if_match):
 
     if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or nsg_ids or root_squash_configuration:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids and root-squash-configuration will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or nsg_ids or root_squash_configuration or maintenance_window:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids and root-squash-configuration and maintenance-window will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1158,6 +1363,9 @@ def update_lustre_file_system(ctx, from_json, force, wait_for_state, max_wait_se
 
     if root_squash_configuration is not None:
         _details['rootSquashConfiguration'] = cli_util.parse_json_parameter("root_squash_configuration", root_squash_configuration)
+
+    if maintenance_window is not None:
+        _details['maintenanceWindow'] = cli_util.parse_json_parameter("maintenance_window", maintenance_window)
 
     client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
     result = client.update_lustre_file_system(

@@ -316,7 +316,7 @@ def list_associated_oci_cache_clusters(ctx, from_json, all_pages, page_size, oci
 @oci_cache_config_set_summary_group.command(name=cli_util.override('oci_cache_config_set.list_oci_cache_config_sets.command_name', 'list-oci-cache-config-sets'), help=u"""Lists the OCI Cache Config Sets in the specified compartment. \n[Command Reference](listOciCacheConfigSets)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return the OCI Cache Config Set resources, whose lifecycle state matches with the given lifecycle state.""")
-@cli_util.option('--software-version', type=custom_types.CliCaseInsensitiveChoice(["V7_0_5", "REDIS_7_0", "VALKEY_7_2"]), help=u"""A filter to return the OCI Cache Config Set resources, whose software version matches with the given software version.""")
+@cli_util.option('--software-version', type=custom_types.CliCaseInsensitiveChoice(["V7_0_5", "REDIS_7_0", "VALKEY_7_2", "VALKEY_8_1"]), help=u"""A filter to return the OCI Cache Config Set resources, whose software version matches with the given software version.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique OCI Cache Config Set identifier.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

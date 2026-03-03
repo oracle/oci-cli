@@ -9859,15 +9859,16 @@ def generate_discovery_report_for_download(ctx, from_json, wait_for_state, max_w
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'target-credentials': {'module': 'data_safe', 'class': 'Credentials'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'target-credentials': {'module': 'data_safe', 'class': 'Credentials'}})
 @cli_util.wrap_exceptions
-def generate_health_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, check_type, target_id, compartment_id, tablespace, freeform_tags, defined_tags):
+def generate_health_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, check_type, target_id, compartment_id, tablespace, freeform_tags, defined_tags, target_credentials):
 
     if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
@@ -9894,6 +9895,9 @@ def generate_health_report(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if target_credentials is not None:
+        _details['targetCredentials'] = cli_util.parse_json_parameter("target_credentials", target_credentials)
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.generate_health_report(
@@ -19321,15 +19325,16 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, ope
 @cli_util.option('--is-refresh-stats-enabled', type=click.BOOL, help=u"""Indicates if statistics gathering is enabled. Set this attribute to false to disable statistics gathering. The masking process gathers statistics on masked database tables after masking completes. If it's not provided, the value of the isRefreshStatsEnabled attribute in the MaskingPolicy resource is used.""")
 @cli_util.option('--parallel-degree', help=u"""Specifies options to enable parallel execution when running data masking. Allowed values are 'NONE' (no parallelism), 'DEFAULT' (the Oracle Database computes the optimum degree of parallelism) or an integer value to be used as the degree of parallelism. Parallel execution helps effectively use multiple CPUs and improve masking performance. Refer to the Oracle Database parallel execution framework when choosing an explicit degree of parallelism. https://www.oracle.com/pls/topic/lookup?ctx=dblatest&en/database/oracle/oracle-database&id=VLDBG-GUID-3E2AE088-2505-465E-A8B2-AC38813EA355 If it's not provided, the value of the parallelDegree attribute in the MaskingPolicy resource is used.""")
 @cli_util.option('--recompile', help=u"""Specifies how to recompile invalid objects post data masking. Allowed values are 'SERIAL' (recompile in serial), 'PARALLEL' (recompile in parallel), 'NONE' (do not recompile). If it's set to PARALLEL, the value of parallelDegree attribute is used. Use the built-in UTL_RECOMP package to recompile any remaining invalid objects after masking completes. If it's not provided, the value of the parallelDegree attribute in the MaskingPolicy resource is used.""")
+@cli_util.option('--target-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'target-credentials': {'module': 'data_safe', 'class': 'Credentials'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-credentials': {'module': 'data_safe', 'class': 'Credentials'}})
 @cli_util.wrap_exceptions
-def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, target_id, is_decrypt, is_rerun, re_run_from_step, tablespace, is_ignore_errors_enabled, seed, user_defined_function_seed, is_move_interim_tables_enabled, is_execute_saved_script_enabled, is_drop_temp_tables_enabled, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile):
+def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, target_id, is_decrypt, is_rerun, re_run_from_step, tablespace, is_ignore_errors_enabled, seed, user_defined_function_seed, is_move_interim_tables_enabled, is_execute_saved_script_enabled, is_drop_temp_tables_enabled, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, target_credentials):
 
     if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
@@ -19383,6 +19388,9 @@ def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 
     if recompile is not None:
         _details['recompile'] = recompile
+
+    if target_credentials is not None:
+        _details['targetCredentials'] = cli_util.parse_json_parameter("target_credentials", target_credentials)
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.mask_data(

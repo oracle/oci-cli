@@ -67,7 +67,7 @@ def get_oci_cache_default_config_set(ctx, from_json, compartment_id, oci_cache_d
 @cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--id', help=u"""Unique OCI Cache Default Config Set identifier.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""A filter to return the OCI Cache Default Config Set resources, whose lifecycle state matches with the given lifecycle state.""")
-@cli_util.option('--software-version', type=custom_types.CliCaseInsensitiveChoice(["V7_0_5", "REDIS_7_0", "VALKEY_7_2"]), help=u"""A filter to return the OCI Cache Config Set resources, whose software version matches with the given software version.""")
+@cli_util.option('--software-version', type=custom_types.CliCaseInsensitiveChoice(["V7_0_5", "REDIS_7_0", "VALKEY_7_2", "VALKEY_8_1"]), help=u"""A filter to return the OCI Cache Config Set resources, whose software version matches with the given software version.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")

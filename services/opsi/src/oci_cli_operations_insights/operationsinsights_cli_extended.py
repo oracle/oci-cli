@@ -111,6 +111,13 @@ operationsinsights_cli.host_insights_group.commands.pop(operationsinsights_cli.u
 # Remove enable from oci opsi host-insights
 operationsinsights_cli.host_insights_group.commands.pop(operationsinsights_cli.enable_host_insight.name)
 
+# oci opsi chargeback-plan create-chargeback-plan-create-chargeback-plan-exadata-details -> oci opsi chargeback-plan create-chargeback-plan-exadata
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.chargeback_plan_group, operationsinsights_cli.create_chargeback_plan_create_chargeback_plan_exadata_details, "create-chargeback-plan-exadata")
+
+
+# Remove create from oci opsi chargeback-plan
+operationsinsights_cli.chargeback_plan_group.commands.pop(operationsinsights_cli.create_chargeback_plan.name)
+
 
 @cli_util.copy_params_from_generated_command(operationsinsights_cli.list_database_configurations, params_to_exclude=['enterprise_manager_bridge_id'])
 @operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.list_database_configurations.name, help=operationsinsights_cli.list_database_configurations.help)

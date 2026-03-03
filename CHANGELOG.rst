@@ -6,6 +6,71 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.75.0 - 2026-03-03
+-------------------
+Added
+~~~~~
+* Lustre File Storage Service
+  * Support for the User Managed Maintenance Window Feature
+    * ``oci lfs available-maintenance-schedule-start-time-collection list-available-maintenance-schedule-start-times``
+    * ``oci lfs available-override-maintenance-start-time-collection list-available-override-maintenance-start-times``
+    * ``oci lfs lustre-file-system override-maintenance``
+  * Added optional parameter --maintenance-window to the existing Lustre File System Create API
+    * ``oci lfs lustre-file-system create --maintenance-window``
+  * Added optional parameter --maintenance-window to the existing Lustre File System Update API
+    * ``oci lfs lustre-file-system update --maintenance-window``
+
+* Database Service
+  * Support for creating multiple standby databases across AD and across Regions in a Data Guard environment.
+      * ``oci db system launch-db-system-launch-standby-db-system-details --availability-domain, --compartment-id | -c, --db-home, --hostname, --primary-db-system-id, --shape, --ssh-public-keys, --subnet-id, --backup-network-nsg-ids, --backup-subnet-id, --cluster-name, --cluster-placement-group-id, --compute-count, --compute-model, --cpu-core-count, --data-collection-options, --data-storage-percentage, --db-system-options, --defined-tags, --display-name, --domain, --fault-domains, --freeform-tags, -? | -h | --help, --initial-data-storage-size-in-gb, --kms-key-id, --kms-key-version-id, --license-model, --node-count, --nsg-ids, --opc-dry-run, --private-ip, --private-ip-v6, --security-attributes, --sparse-diskgroup, --storage-volume-performance-mode, --subscription-id, --time-zone``
+  * Support for creating multiple standby databases across AD and across Regions in a Data Guard environment.
+      * ``oci db system launch-db-system-launch-standby-db-system-details --availability-domain, --compartment-id | -c, --db-home, --hostname, --primary-db-system-id, --shape, --ssh-public-keys, --subnet-id, --backup-network-nsg-ids, --backup-subnet-id, --cluster-name, --cluster-placement-group-id, --compute-count, --compute-model, --cpu-core-count, --data-collection-options, --data-storage-percentage, --db-system-options, --defined-tags, --display-name, --domain, --fault-domains, --freeform-tags, -? | -h | --help, --initial-data-storage-size-in-gb, --kms-key-id, --kms-key-version-id, --license-model, --node-count, --nsg-ids, --opc-dry-run, --private-ip, --private-ip-v6, --security-attributes, --sparse-diskgroup, --storage-volume-performance-mode, --subscription-id, --time-zone``
+  * Support for OS Patching in Base DB System
+      * ``oci db system execute-db-system-os-patch``
+      * ``oci db db-system-os-patch-history list``
+      * ``oci db db-system-os-patch-history get``
+
+* Redis Service
+  * Support for Valkey 8.1
+
+* Ops Insights service
+  * Support for Exadata Cost Management (Chargeback) in Ops Insights service
+    * ``oci opsi chargeback-plan change-compartment --chargebackplan-id, --compartment-id | -c, -? | -h | --help``
+    * ``oci opsi chargeback-plan create-chargeback-plan --compartment-id | -c, --plan-name, --plan-type, --defined-tags, --freeform-tags, -? | -h | --help, --plan-custom-items, --plan-description``
+    * ``oci opsi chargeback-plan create-chargeback-plan-report --id, --report-name, --report-properties, --resource-type, -? | -h | --help``
+    * ``oci opsi chargeback-plan delete --chargebackplan-id, --force, -? | -h | --help``
+    * ``oci opsi chargeback-plan delete-chargeback-plan-report --chargeback-plan-report-id, --id, --resource-type, --force, -? | -h | --help``
+    * ``oci opsi chargeback-plan get --chargebackplan-id, -? | -h | --help``
+    * ``oci opsi chargeback-plan get-chargeback-plan-report --chargeback-plan-report-id, --id, --resource-type, -? | -h | --help``
+    * ``oci opsi chargeback-plan get-chargeback-plan-report-content --chargeback-plan-report-id, --id, --resource-type, --file, -? | -h | --help, --relative-time-interval, --time-interval-end, --time-interval-start``
+    * ``oci opsi chargeback-plan list --all, --chargebackplan-id, --compartment-id | -c, --compartment-id-in-subtree, -? | -h | --help``
+    * ``oci opsi chargeback-plan list-chargeback-plan-reports --id, --resource-type, --all, -? | -h | --help``
+    * ``oci opsi chargeback-plan update --chargebackplan-id, --defined-tags, --force, --freeform-tags, -? | -h | --help, --plan-custom-items, --plan-description, --plan-name``
+    * ``oci opsi chargeback-plan update-chargeback-plan-report --chargeback-plan-report-id, --id, --resource-type, --force, -? | -h | --help, --report-name, --report-properties``
+    * ``oci opsi exadata-insights disable-plan --exadata-insight-id, -? | -h | --help``
+    * ``oci opsi exadata-insights enable-plan --exadata-insight-id, --plan-id, -? | -h | --help``
+
+* Data Safe Service
+  * Support for accepting target database user credentials for Data Safe Data Masking and generate health report
+    * ``oci data-safe masking-policy mask-data --target-credentials``
+    * ``oci data-safe masking-policy-health-report generate-health-report --target-credentials``
+
+Security
+~~~~~~~~
+* Updated cryptography dependency to >=3.2.1,<47.0.0 and pyOpenSSL version to >=17.5.0,<25.3.0 per: https://www.cve.org/CVERecord?id=CVE-2026-26007 
+
+Deprecated
+~~~~~~~~~~
+* Fusion Application service
+  * [BREAKING] password is deprecated from fusion-apps service admin user creation
+    * ``oci fusion-apps fusion-environment create-fusion-environment-admin-user --username --email-address --first-name --last-name --fusion-environment-id``
+
+Changed
+~~~~~~~
+* Updated the dynamic loader script to allow import from ".pyc" python compiled files
+* Updated "setup.cfg" to support newer setuptools versions
+
+
 3.74.2 - 2026-02-24
 -------------------
 Added

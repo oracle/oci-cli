@@ -9,6 +9,15 @@ import oci
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from services.cloud_guard.src.oci_cli_cloud_guard.generated import cloudguard_cli
+from oci_cli import custom_types
+
+# Shortcut reference
+data_mask_rule_group = cloudguard_cli.data_mask_rule_group
+
+# Shared complex type definition for data-mask-categories
+DATA_MASK_CATEGORY_COMPLEX_TYPE = {
+    'data-mask-categories': {'module': 'cloud_guard', 'class': 'list[string]'}
+}
 
 
 @cli_util.copy_params_from_generated_command(cloudguard_cli.list_problems, params_to_exclude=['region_parameterconflict'])
@@ -35,10 +44,17 @@ cloudguard_cli.data_mask_rule_group.commands.pop(cloudguard_cli.update_data_mask
 cloudguard_cli.data_mask_rule_group.commands.pop(cloudguard_cli.update_data_mask_rule_target_ids_selected.name)
 
 
-@cli_util.copy_params_from_generated_command(cloudguard_cli.create_data_mask_rule, params_to_exclude=[])
+@cli_util.copy_params_from_generated_command(cloudguard_cli.create_data_mask_rule, params_to_exclude=["data_mask_categories"])
 @cloudguard_cli.data_mask_rule_group.command(name="create", help=cloudguard_cli.create_data_mask_rule.help)
+@cli_util.option(
+    '--data-mask-categories',
+    type=custom_types.CLI_COMPLEX_TYPE,
+    required=True,
+    help="Data mask rule categories to apply. Provide as JSON array." + custom_types.cli_complex_type.COMPLEX_TYPE_HELP
+)
+@json_skeleton_utils.get_cli_json_input_option(DATA_MASK_CATEGORY_COMPLEX_TYPE)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-selected': {'module': 'cloud_guard', 'class': 'TargetSelected'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={**DATA_MASK_CATEGORY_COMPLEX_TYPE, 'target-selected': {'module': 'cloud_guard', 'class': 'TargetSelected'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
 @cli_util.wrap_exceptions
 def create_data_mask_rule_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, iam_group_id, target_selected, data_mask_categories, description, data_mask_rule_status, lifecycle_state, freeform_tags, defined_tags):
 
@@ -50,7 +66,7 @@ def create_data_mask_rule_extended(ctx, from_json, wait_for_state, max_wait_seco
     _details['compartmentId'] = compartment_id
     _details['iamGroupId'] = iam_group_id
     _details['targetSelected'] = cli_util.parse_json_parameter("target_selected", target_selected)
-    _details['dataMaskCategories'] = data_mask_categories
+    _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
 
     if description is not None:
         _details['description'] = description
@@ -98,10 +114,17 @@ def create_data_mask_rule_extended(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(cloudguard_cli.create_data_mask_rule_all_targets_selected, params_to_exclude=[])
+@cli_util.copy_params_from_generated_command(cloudguard_cli.create_data_mask_rule_all_targets_selected, params_to_exclude=["data_mask_categories"])
 @cloudguard_cli.data_mask_rule_group.command(name="create-for-all-targets", help=cloudguard_cli.create_data_mask_rule_all_targets_selected.help)
+@cli_util.option(
+    '--data-mask-categories',
+    type=custom_types.CLI_COMPLEX_TYPE,
+    required=True,
+    help="Data mask rule categories to apply. Provide as JSON array." + custom_types.cli_complex_type.COMPLEX_TYPE_HELP
+)
+@json_skeleton_utils.get_cli_json_input_option(DATA_MASK_CATEGORY_COMPLEX_TYPE)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={**DATA_MASK_CATEGORY_COMPLEX_TYPE, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
 @cli_util.wrap_exceptions
 def create_data_mask_rule_all_targets_selected_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, iam_group_id, data_mask_categories, description, data_mask_rule_status, lifecycle_state, freeform_tags, defined_tags):
 
@@ -113,7 +136,7 @@ def create_data_mask_rule_all_targets_selected_extended(ctx, from_json, wait_for
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
     _details['iamGroupId'] = iam_group_id
-    _details['dataMaskCategories'] = data_mask_categories
+    _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
 
     if description is not None:
         _details['description'] = description
@@ -163,10 +186,17 @@ def create_data_mask_rule_all_targets_selected_extended(ctx, from_json, wait_for
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(cloudguard_cli.create_data_mask_rule_target_resource_types_selected, params_to_exclude=[])
+@cli_util.copy_params_from_generated_command(cloudguard_cli.create_data_mask_rule_target_resource_types_selected, params_to_exclude=["data_mask_categories"])
 @cloudguard_cli.data_mask_rule_group.command(name="create-for-services", help=cloudguard_cli.create_data_mask_rule_target_resource_types_selected.help)
+@cli_util.option(
+    '--data-mask-categories',
+    type=custom_types.CLI_COMPLEX_TYPE,
+    required=True,
+    help="Data mask rule categories to apply. Provide as JSON array." + custom_types.cli_complex_type.COMPLEX_TYPE_HELP
+)
+@json_skeleton_utils.get_cli_json_input_option(DATA_MASK_CATEGORY_COMPLEX_TYPE)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={**DATA_MASK_CATEGORY_COMPLEX_TYPE, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
 @cli_util.wrap_exceptions
 def create_data_mask_rule_target_resource_types_selected_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, iam_group_id, data_mask_categories, description, data_mask_rule_status, lifecycle_state, freeform_tags, defined_tags, target_selected_values):
 
@@ -178,7 +208,7 @@ def create_data_mask_rule_target_resource_types_selected_extended(ctx, from_json
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
     _details['iamGroupId'] = iam_group_id
-    _details['dataMaskCategories'] = data_mask_categories
+    _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
 
     if description is not None:
         _details['description'] = description
@@ -231,10 +261,17 @@ def create_data_mask_rule_target_resource_types_selected_extended(ctx, from_json
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(cloudguard_cli.create_data_mask_rule_target_ids_selected, params_to_exclude=[])
+@cli_util.copy_params_from_generated_command(cloudguard_cli.create_data_mask_rule_target_ids_selected, params_to_exclude=["data_mask_categories"])
 @cloudguard_cli.data_mask_rule_group.command(name="create-for-targets", help=cloudguard_cli.create_data_mask_rule_target_ids_selected.help)
+@cli_util.option(
+    '--data-mask-categories',
+    type=custom_types.CLI_COMPLEX_TYPE,
+    required=True,
+    help="Data mask rule categories to apply. Provide as JSON array." + custom_types.cli_complex_type.COMPLEX_TYPE_HELP
+)
+@json_skeleton_utils.get_cli_json_input_option(DATA_MASK_CATEGORY_COMPLEX_TYPE)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'target-selected-values': {'module': 'cloud_guard', 'class': 'list[string]'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={**DATA_MASK_CATEGORY_COMPLEX_TYPE, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'target-selected-values': {'module': 'cloud_guard', 'class': 'list[string]'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
 @cli_util.wrap_exceptions
 def create_data_mask_rule_target_ids_selected_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, iam_group_id, data_mask_categories, description, data_mask_rule_status, lifecycle_state, freeform_tags, defined_tags, target_selected_values):
 
@@ -246,7 +283,7 @@ def create_data_mask_rule_target_ids_selected_extended(ctx, from_json, wait_for_
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
     _details['iamGroupId'] = iam_group_id
-    _details['dataMaskCategories'] = data_mask_categories
+    _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
 
     if description is not None:
         _details['description'] = description
@@ -299,10 +336,16 @@ def create_data_mask_rule_target_ids_selected_extended(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(cloudguard_cli.update_data_mask_rule, params_to_exclude=[])
+@cli_util.copy_params_from_generated_command(cloudguard_cli.update_data_mask_rule, params_to_exclude=["data_mask_categories"])
 @cloudguard_cli.data_mask_rule_group.command(name="update", help=cloudguard_cli.update_data_mask_rule.help)
+@cli_util.option(
+    '--data-mask-categories',
+    type=custom_types.CLI_COMPLEX_TYPE,
+    help="Data mask rule categories to update. Provide as JSON array." + custom_types.cli_complex_type.COMPLEX_TYPE_HELP
+)
+@json_skeleton_utils.get_cli_json_input_option(DATA_MASK_CATEGORY_COMPLEX_TYPE)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-selected': {'module': 'cloud_guard', 'class': 'TargetSelected'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={**DATA_MASK_CATEGORY_COMPLEX_TYPE, 'target-selected': {'module': 'cloud_guard', 'class': 'TargetSelected'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
 @cli_util.wrap_exceptions
 def update_data_mask_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, target_selected, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match):
 
@@ -333,7 +376,7 @@ def update_data_mask_rule(ctx, from_json, force, wait_for_state, max_wait_second
         _details['targetSelected'] = cli_util.parse_json_parameter("target_selected", target_selected)
 
     if data_mask_categories is not None:
-        _details['dataMaskCategories'] = data_mask_categories
+        _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
 
     if data_mask_rule_status is not None:
         _details['dataMaskRuleStatus'] = data_mask_rule_status
@@ -376,10 +419,16 @@ def update_data_mask_rule(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(cloudguard_cli.update_data_mask_rule_all_targets_selected, params_to_exclude=[])
+@cli_util.copy_params_from_generated_command(cloudguard_cli.update_data_mask_rule_all_targets_selected, params_to_exclude=["data_mask_categories"])
 @cloudguard_cli.data_mask_rule_group.command(name="update-for-all-targets", help=cloudguard_cli.update_data_mask_rule_all_targets_selected.help)
+@cli_util.option(
+    '--data-mask-categories',
+    type=custom_types.CLI_COMPLEX_TYPE,
+    help="Data mask rule categories to update. Provide as JSON array." + custom_types.cli_complex_type.COMPLEX_TYPE_HELP
+)
+@json_skeleton_utils.get_cli_json_input_option(DATA_MASK_CATEGORY_COMPLEX_TYPE)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={**DATA_MASK_CATEGORY_COMPLEX_TYPE, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
 @cli_util.wrap_exceptions
 def update_data_mask_rule_all_targets_selected_extended(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match):
 
@@ -408,7 +457,7 @@ def update_data_mask_rule_all_targets_selected_extended(ctx, from_json, force, w
         _details['iamGroupId'] = iam_group_id
 
     if data_mask_categories is not None:
-        _details['dataMaskCategories'] = data_mask_categories
+        _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
 
     if data_mask_rule_status is not None:
         _details['dataMaskRuleStatus'] = data_mask_rule_status
@@ -453,10 +502,16 @@ def update_data_mask_rule_all_targets_selected_extended(ctx, from_json, force, w
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(cloudguard_cli.update_data_mask_rule_target_resource_types_selected, params_to_exclude=[])
+@cli_util.copy_params_from_generated_command(cloudguard_cli.update_data_mask_rule_target_resource_types_selected, params_to_exclude=["data_mask_categories"])
 @cloudguard_cli.data_mask_rule_group.command(name="update-for-services", help=cloudguard_cli.update_data_mask_rule_target_resource_types_selected.help)
+@cli_util.option(
+    '--data-mask-categories',
+    type=custom_types.CLI_COMPLEX_TYPE,
+    help="Data mask rule categories to update. Provide as JSON array." + custom_types.cli_complex_type.COMPLEX_TYPE_HELP
+)
+@json_skeleton_utils.get_cli_json_input_option(DATA_MASK_CATEGORY_COMPLEX_TYPE)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={**DATA_MASK_CATEGORY_COMPLEX_TYPE, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
 @cli_util.wrap_exceptions
 def update_data_mask_rule_target_resource_types_selected_extended(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match, target_selected_values):
 
@@ -485,7 +540,7 @@ def update_data_mask_rule_target_resource_types_selected_extended(ctx, from_json
         _details['iamGroupId'] = iam_group_id
 
     if data_mask_categories is not None:
-        _details['dataMaskCategories'] = data_mask_categories
+        _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
 
     if data_mask_rule_status is not None:
         _details['dataMaskRuleStatus'] = data_mask_rule_status
@@ -533,10 +588,16 @@ def update_data_mask_rule_target_resource_types_selected_extended(ctx, from_json
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(cloudguard_cli.update_data_mask_rule_target_ids_selected, params_to_exclude=[])
+@cli_util.copy_params_from_generated_command(cloudguard_cli.update_data_mask_rule_target_ids_selected, params_to_exclude=["data_mask_categories"])
 @cloudguard_cli.data_mask_rule_group.command(name="update-for-targets", help=cloudguard_cli.update_data_mask_rule_target_ids_selected.help)
+@cli_util.option(
+    '--data-mask-categories',
+    type=custom_types.CLI_COMPLEX_TYPE,
+    help="Data mask rule categories to update. Provide as JSON array." + custom_types.cli_complex_type.COMPLEX_TYPE_HELP
+)
+@json_skeleton_utils.get_cli_json_input_option(DATA_MASK_CATEGORY_COMPLEX_TYPE)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'target-selected-values': {'module': 'cloud_guard', 'class': 'list[string]'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={**DATA_MASK_CATEGORY_COMPLEX_TYPE, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'target-selected-values': {'module': 'cloud_guard', 'class': 'list[string]'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
 @cli_util.wrap_exceptions
 def update_data_mask_rule_target_ids_selected_extended(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match, target_selected_values):
 
@@ -565,7 +626,7 @@ def update_data_mask_rule_target_ids_selected_extended(ctx, from_json, force, wa
         _details['iamGroupId'] = iam_group_id
 
     if data_mask_categories is not None:
-        _details['dataMaskCategories'] = data_mask_categories
+        _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
 
     if data_mask_rule_status is not None:
         _details['dataMaskRuleStatus'] = data_mask_rule_status
