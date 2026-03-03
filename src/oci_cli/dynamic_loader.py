@@ -3,12 +3,12 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import sys
-from inspect import getsourcefile
 from os import listdir, path, environ
 from oci_cli.service_mapping import service_mapping
 
 ALL_SERVICES_DIR = "services"
 NON_SERVICE_TOP_LEVEL_COMMANDS = ["raw-request", "session", "setup"]
+MSI_GENERATION = False
 
 # Add platformization directories to the python system path (PYTHONPATH)
 # This has to be done prior to importing cli_root.
@@ -24,15 +24,21 @@ if getattr(sys, "frozen", False):
         this_file_path = path.join(libdir, 'lib', 'oci_cli', 'dynamic_loader.py')
     else:
         this_file_path = path.join(datadir, 'Lib', 'site-packages', 'oci_cli', 'dynamic_loader.py')
+        if not path.exists(this_file_path):
+            MSI_GENERATION = True
+            this_file_path = path.join(datadir, 'lib', 'oci_cli', 'dynamic_loader.py')
 else:
-    this_file_path = path.abspath(getsourcefile(lambda: 0))
+    this_file_path = path.abspath(__file__)
 if "site-packages" in this_file_path or "dist-packages" in this_file_path:
     # If the installation directory starts with oci_cli, we need to find the
     # last occurrence of oci_cli in the path.
     python_cli_root_dir = this_file_path[0:this_file_path.rindex("oci_cli")]
 elif "lib" in this_file_path:
-    # which using exe C:\Users\username\AppData\Local\Programs\Oracle\oci-cli\Lib\oci_cli
-    python_cli_root_dir = this_file_path[0:this_file_path.index("oci_cli")]
+    if MSI_GENERATION:
+        python_cli_root_dir = this_file_path[0:this_file_path.rindex("oci_cli")]
+    else:
+        # which using exe C:\Users\username\AppData\Local\Programs\Oracle\oci-cli\Lib\oci_cli
+        python_cli_root_dir = this_file_path[0:this_file_path.index("oci_cli")]
 else:
     python_cli_root_dir = this_file_path[0:this_file_path.index(path.join('src', 'oci_cli'))]
     sys.path.append(python_cli_root_dir + 'src')
@@ -114,15 +120,27 @@ def load_generated(mod_dir, service, mod):
     generated_dir = path.join(mod_dir, "generated")
     if path.isdir(generated_dir):
         for file in sorted(listdir(generated_dir)):
-            if "__" not in file and file.endswith('.py'):
-                load_module(".{service}.src.{mod}.generated.{generated_mod}".format(service=service, mod=mod, generated_mod=file[:-3]))
+            if "__" not in file:
+                if file.endswith('.py'):
+                    extension_len = 3
+                elif file.endswith('.pyc'):
+                    extension_len = 4
+                else:
+                    continue
+                load_module(".{service}.src.{mod}.generated.{generated_mod}".format(service=service, mod=mod, generated_mod=file[:-extension_len]))
 
 
 # Only loads in any extended/manual changes
 def load_extended(mod_dir, service, mod):
     for file in sorted(listdir(mod_dir)):
-        if path.isfile(path.join(mod_dir, file)) and "extended" in file and file.endswith('.py'):
-            load_module(".{service}.src.{mod}.{extended_mod}".format(service=service, mod=mod, extended_mod=file[:-3]))
+        if path.isfile(path.join(mod_dir, file)) and "extended" in file:
+            if file.endswith('.py'):
+                extension_len = 3
+            elif file.endswith('.pyc'):
+                extension_len = 4
+            else:
+                continue
+            load_module(".{service}.src.{mod}.{extended_mod}".format(service=service, mod=mod, extended_mod=file[:-extension_len]))
 
 
 def load_module(mod_path):

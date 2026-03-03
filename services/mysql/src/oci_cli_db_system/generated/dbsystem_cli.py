@@ -40,15 +40,15 @@ def db_system_group():
     pass
 
 
-@click.command(cli_util.override('db_system.maintenance_event_group.command_name', 'maintenance-event'), cls=CommandGroupWithAlias, help="""The details of a maintenance event.""")
-@cli_util.help_option_group
-def maintenance_event_group():
-    pass
-
-
 @click.command(cli_util.override('db_system.db_system_status_group.command_name', 'db-system-status'), cls=CommandGroupWithAlias, help="""Runtime status summary of a DbSystem, aggregating information about availability and operational indicators.""")
 @cli_util.help_option_group
 def db_system_status_group():
+    pass
+
+
+@click.command(cli_util.override('db_system.maintenance_event_group.command_name', 'maintenance-event'), cls=CommandGroupWithAlias, help="""The details of a maintenance event.""")
+@cli_util.help_option_group
+def maintenance_event_group():
     pass
 
 
@@ -56,8 +56,8 @@ mysql_service_cli.mysql_service_group.add_command(db_system_root_group)
 db_system_root_group.add_command(heat_wave_cluster_group)
 db_system_root_group.add_command(heat_wave_cluster_memory_estimate_group)
 db_system_root_group.add_command(db_system_group)
-db_system_root_group.add_command(maintenance_event_group)
 db_system_root_group.add_command(db_system_status_group)
+db_system_root_group.add_command(maintenance_event_group)
 
 
 @heat_wave_cluster_group.command(name=cli_util.override('db_system.add_heat_wave_cluster.command_name', 'add'), help=u"""Adds a HeatWave cluster to the DB System. \n[Command Reference](addHeatWaveCluster)""")
@@ -1311,7 +1311,7 @@ def delete_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--gtid-set-type', type=custom_types.CliCaseInsensitiveChoice(["GTID_EXECUTED", "GTID_AVAILABLE"]), help=u"""Specifies whether to collect the full set of GTIDs executed on the DB System ([gtid_executed]) or the set of GTIDs available in the DB System binary logs, not part of ([gtid_purged]) (GTID_AVAILABLE, which is gtid_executed - gtid_purged). Use GTID_AVAILABLE if gtid_executed is too large to fit in the response.""")
 @cli_util.option('--gtid-set-to-apply', help=u"""Specifies the GTID set to be checked on the DB System to determine whether it has been applied. The result of the check is isGtidSetApplied in the response.""")
 @cli_util.option('--channel-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Channel IDs for which to collect status information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'channel-ids': {'module': 'mysql', 'class': 'list[string]'}})

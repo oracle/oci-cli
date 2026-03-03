@@ -405,7 +405,6 @@ def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--first-name', required=True, help=u"""The administrator's first name.""")
 @cli_util.option('--last-name', required=True, help=u"""The administrator's last name.""")
 @cli_util.option('--fusion-environment-id', required=True, help=u"""unique FusionEnvironment identifier""")
-@cli_util.option('--password', help=u"""The password for the administrator.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -414,7 +413,7 @@ def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_fusion_environment_admin_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, username, email_address, first_name, last_name, fusion_environment_id, password):
+def create_fusion_environment_admin_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, username, email_address, first_name, last_name, fusion_environment_id):
 
     if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
@@ -427,9 +426,6 @@ def create_fusion_environment_admin_user(ctx, from_json, wait_for_state, max_wai
     _details['emailAddress'] = email_address
     _details['firstName'] = first_name
     _details['lastName'] = last_name
-
-    if password is not None:
-        _details['password'] = password
 
     client = cli_util.build_client('fusion_apps', 'fusion_applications', ctx)
     result = client.create_fusion_environment_admin_user(

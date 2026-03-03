@@ -42,6 +42,12 @@ def exadata_insights_group():
     pass
 
 
+@click.command(cli_util.override('opsi.chargeback_plan_group.command_name', 'chargeback-plan'), cls=CommandGroupWithAlias, help="""A chargeback plan that allows Ops Insights services to compute chargeback costs.""")
+@cli_util.help_option_group
+def chargeback_plan_group():
+    pass
+
+
 @click.command(cli_util.override('opsi.awr_hubs_group.command_name', 'awr-hubs'), cls=CommandGroupWithAlias, help="""Logical grouping used for Awr Hub operations.""")
 @cli_util.help_option_group
 def awr_hubs_group():
@@ -121,6 +127,7 @@ def work_requests_group():
 opsi_root_group.add_command(enterprise_manager_bridges_group)
 opsi_root_group.add_command(opsi_data_objects_group)
 opsi_root_group.add_command(exadata_insights_group)
+opsi_root_group.add_command(chargeback_plan_group)
 opsi_root_group.add_command(awr_hubs_group)
 opsi_root_group.add_command(news_reports_group)
 opsi_root_group.add_command(operations_insights_warehouse_users_group)
@@ -833,6 +840,67 @@ def change_awr_hub_source_compartment(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
+@chargeback_plan_group.command(name=cli_util.override('opsi.change_chargeback_plan_compartment.command_name', 'change-compartment'), help=u"""Moves a Chargeback Plan insight resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeChargebackPlanCompartment)""")
+@cli_util.option('--chargebackplan-id', required=True, help=u"""The [OCID] of the Ops Insights chargeback plan.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_chargeback_plan_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, chargebackplan_id, compartment_id, if_match):
+
+    if isinstance(chargebackplan_id, six.string_types) and len(chargebackplan_id.strip()) == 0:
+        raise click.UsageError('Parameter --chargebackplan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_chargeback_plan_compartment(
+        chargebackplan_id=chargebackplan_id,
+        change_chargeback_plan_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.change_database_insight_compartment.command_name', 'change'), help=u"""Moves a DatabaseInsight resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeDatabaseInsightCompartment)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the resource should be moved.""")
@@ -1016,7 +1084,7 @@ def change_exadata_insight_compartment(ctx, from_json, wait_for_state, max_wait_
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.change_external_mysql_database_insight_connection.command_name', 'change-external-mysql'), help=u"""Change the connection details of an External MySQL database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeExternalMysqlDatabaseInsightConnection)""")
+@database_insights_group.command(name=cli_util.override('opsi.change_external_mysql_database_insight_connection.command_name', 'change-external-mysql'), help=u"""MySQL support within the OCI Ops Insights service has been deprecated as of January 29, 2026. Change the connection details of an External MySQL database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeExternalMysqlDatabaseInsightConnection)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--database-connector-id', required=True, help=u"""The DBM owned database connector [OCID] mapping to the database credentials and connection details.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2611,6 +2679,222 @@ def create_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.create_awr_hub_source(
         create_awr_hub_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@chargeback_plan_group.command(name=cli_util.override('opsi.create_chargeback_plan.command_name', 'create'), help=u"""Create a chargeback plan resource for the resource in Ops Insights. \n[Command Reference](createChargebackPlan)""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["CHARGEBACK_EXADATA", "CHARGEBACK_COMPUTE"]), help=u"""Source of the chargeback plan.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--plan-name', required=True, help=u"""Name for the OPSI Chargeback plan.""")
+@cli_util.option('--plan-type', required=True, help=u"""Chargeback Plan type of the chargeback entity. For an Exadata it can be WEIGHTED_ALLOCATION, EQUAL_ALLOCATION, UNUSED_ALLOCATION.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--plan-description', help=u"""Description of OPSI Chargeback Plan.""")
+@cli_util.option('--plan-custom-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of chargeback plan customizations.
+
+This option is a JSON list with items of type CreatePlanCustomItemDetails.  For documentation on CreatePlanCustomItemDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/operationsinsights/20200630/datatypes/CreatePlanCustomItemDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'plan-custom-items': {'module': 'opsi', 'class': 'list[CreatePlanCustomItemDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'plan-custom-items': {'module': 'opsi', 'class': 'list[CreatePlanCustomItemDetails]'}}, output_type={'module': 'opsi', 'class': 'ChargebackPlan'})
+@cli_util.wrap_exceptions
+def create_chargeback_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, entity_source, compartment_id, plan_name, plan_type, freeform_tags, defined_tags, plan_description, plan_custom_items):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['entitySource'] = entity_source
+    _details['compartmentId'] = compartment_id
+    _details['planName'] = plan_name
+    _details['planType'] = plan_type
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if plan_description is not None:
+        _details['planDescription'] = plan_description
+
+    if plan_custom_items is not None:
+        _details['planCustomItems'] = cli_util.parse_json_parameter("plan_custom_items", plan_custom_items)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_chargeback_plan(
+        create_chargeback_plan_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@chargeback_plan_group.command(name=cli_util.override('opsi.create_chargeback_plan_create_chargeback_plan_exadata_details.command_name', 'create-chargeback-plan-create-chargeback-plan-exadata-details'), help=u"""Create a chargeback plan resource for the resource in Ops Insights. \n[Command Reference](createChargebackPlan)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--plan-name', required=True, help=u"""Name for the OPSI Chargeback plan.""")
+@cli_util.option('--plan-type', required=True, help=u"""Chargeback Plan type of the chargeback entity. For an Exadata it can be WEIGHTED_ALLOCATION, EQUAL_ALLOCATION, UNUSED_ALLOCATION.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--plan-description', help=u"""Description of OPSI Chargeback Plan.""")
+@cli_util.option('--plan-custom-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of chargeback plan customizations.
+
+This option is a JSON list with items of type CreatePlanCustomItemDetails.  For documentation on CreatePlanCustomItemDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/operationsinsights/20200630/datatypes/CreatePlanCustomItemDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'plan-custom-items': {'module': 'opsi', 'class': 'list[CreatePlanCustomItemDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'plan-custom-items': {'module': 'opsi', 'class': 'list[CreatePlanCustomItemDetails]'}}, output_type={'module': 'opsi', 'class': 'ChargebackPlan'})
+@cli_util.wrap_exceptions
+def create_chargeback_plan_create_chargeback_plan_exadata_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, plan_name, plan_type, freeform_tags, defined_tags, plan_description, plan_custom_items):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['planName'] = plan_name
+    _details['planType'] = plan_type
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if plan_description is not None:
+        _details['planDescription'] = plan_description
+
+    if plan_custom_items is not None:
+        _details['planCustomItems'] = cli_util.parse_json_parameter("plan_custom_items", plan_custom_items)
+
+    _details['entitySource'] = 'CHARGEBACK_EXADATA'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_chargeback_plan(
+        create_chargeback_plan_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@chargeback_plan_group.command(name=cli_util.override('opsi.create_chargeback_plan_report.command_name', 'create-chargeback-plan-report'), help=u"""Creates a chargeback plan report for a resource in Ops Insights \n[Command Reference](createChargebackPlanReport)""")
+@cli_util.option('--report-name', required=True, help=u"""The chargeback plan report name.""")
+@cli_util.option('--report-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--id', required=True, help=u"""Unique Ops insight identifier""")
+@cli_util.option('--resource-type', required=True, help=u"""Filter by resource type. Supported values are EXADATA_INSIGHT , HOST_INSIGHT, DATABASE_INSIGHT.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'report-properties': {'module': 'opsi', 'class': 'ReportPropertyDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'report-properties': {'module': 'opsi', 'class': 'ReportPropertyDetails'}}, output_type={'module': 'opsi', 'class': 'ChargebackPlanReport'})
+@cli_util.wrap_exceptions
+def create_chargeback_plan_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_name, report_properties, id, resource_type, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['reportName'] = report_name
+    _details['reportProperties'] = cli_util.parse_json_parameter("report_properties", report_properties)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_chargeback_plan_report(
+        id=id,
+        resource_type=resource_type,
+        create_chargeback_plan_report_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -4515,6 +4799,122 @@ def delete_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@chargeback_plan_group.command(name=cli_util.override('opsi.delete_chargeback_plan.command_name', 'delete'), help=u"""Deletes a chargeback plan if it's not assigned to any resource. \n[Command Reference](deleteChargebackPlan)""")
+@cli_util.option('--chargebackplan-id', required=True, help=u"""The [OCID] of the Ops Insights chargeback plan.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_chargeback_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, chargebackplan_id, if_match):
+
+    if isinstance(chargebackplan_id, six.string_types) and len(chargebackplan_id.strip()) == 0:
+        raise click.UsageError('Parameter --chargebackplan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.delete_chargeback_plan(
+        chargebackplan_id=chargebackplan_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@chargeback_plan_group.command(name=cli_util.override('opsi.delete_chargeback_plan_report.command_name', 'delete-chargeback-plan-report'), help=u"""Deletes a chargeback plan report if it's not assigned to any resource. \n[Command Reference](deleteChargebackPlanReport)""")
+@cli_util.option('--chargeback-plan-report-id', required=True, help=u"""The [OCID] of the Ops Insights chargeback plan report""")
+@cli_util.option('--id', required=True, help=u"""Unique Ops insight identifier""")
+@cli_util.option('--resource-type', required=True, help=u"""Filter by resource type. Supported values are EXADATA_INSIGHT , HOST_INSIGHT, DATABASE_INSIGHT.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_chargeback_plan_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, chargeback_plan_report_id, id, resource_type, if_match):
+
+    if isinstance(chargeback_plan_report_id, six.string_types) and len(chargeback_plan_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --chargeback-plan-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.delete_chargeback_plan_report(
+        chargeback_plan_report_id=chargeback_plan_report_id,
+        id=id,
+        resource_type=resource_type,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.delete_database_insight.command_name', 'delete'), help=u"""Deletes a database insight. The database insight will be deleted and cannot be enabled again. \n[Command Reference](deleteDatabaseInsight)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -5262,6 +5662,61 @@ def disable_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.disable_host_insight(
         host_insight_id=host_insight_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@exadata_insights_group.command(name=cli_util.override('opsi.disable_plan_exadata_insight.command_name', 'disable-plan'), help=u"""Disables a chargeback plan on an Exadata system in Operations Insights. Metering-related metric collection and analysis will be stopped. \n[Command Reference](disablePlanExadataInsight)""")
+@cli_util.option('--exadata-insight-id', required=True, help=u"""Unique Exadata insight identifier""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_plan_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, if_match):
+
+    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.disable_plan_exadata_insight(
+        exadata_insight_id=exadata_insight_id,
         **kwargs
     )
     if wait_for_state:
@@ -6847,6 +7302,67 @@ def enable_host_insight_enable_em_managed_external_host_insight_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
+@exadata_insights_group.command(name=cli_util.override('opsi.enable_plan_exadata_insight.command_name', 'enable-plan'), help=u"""Enables a chargeback plan on an Exadata system in Operations Insights. Metering-related metric collection and analysis will be started. \n[Command Reference](enablePlanExadataInsight)""")
+@cli_util.option('--plan-id', required=True, help=u"""[OCID] of OPSI Chargeback plan resource.""")
+@cli_util.option('--exadata-insight-id', required=True, help=u"""Unique Exadata insight identifier""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_plan_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, plan_id, exadata_insight_id, if_match):
+
+    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['planId'] = plan_id
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.enable_plan_exadata_insight(
+        exadata_insight_id=exadata_insight_id,
+        enable_plan_exadata_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @awr_hubs_group.command(name=cli_util.override('opsi.get_awr_database_report.command_name', 'get-awr-database-report'), help=u"""Gets the AWR report for the specified database. \n[Command Reference](getAwrDatabaseReport)""")
 @cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
 @cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
@@ -7070,6 +7586,112 @@ def get_awr_report(ctx, from_json, awr_hub_id, awr_source_database_identifier, r
         **kwargs
     )
     cli_util.render_response(result, ctx)
+
+
+@chargeback_plan_group.command(name=cli_util.override('opsi.get_chargeback_plan.command_name', 'get'), help=u"""Gets the details of the specified chargeback plan. \n[Command Reference](getChargebackPlan)""")
+@cli_util.option('--chargebackplan-id', required=True, help=u"""The [OCID] of the Ops Insights chargeback plan.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'ChargebackPlan'})
+@cli_util.wrap_exceptions
+def get_chargeback_plan(ctx, from_json, chargebackplan_id):
+
+    if isinstance(chargebackplan_id, six.string_types) and len(chargebackplan_id.strip()) == 0:
+        raise click.UsageError('Parameter --chargebackplan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_chargeback_plan(
+        chargebackplan_id=chargebackplan_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@chargeback_plan_group.command(name=cli_util.override('opsi.get_chargeback_plan_report.command_name', 'get-chargeback-plan-report'), help=u"""Gets the details of the specified chargeback plan plan report \n[Command Reference](getChargebackPlanReport)""")
+@cli_util.option('--chargeback-plan-report-id', required=True, help=u"""The [OCID] of the Ops Insights chargeback plan report""")
+@cli_util.option('--id', required=True, help=u"""Unique Ops insight identifier""")
+@cli_util.option('--resource-type', required=True, help=u"""Filter by resource type. Supported values are EXADATA_INSIGHT , HOST_INSIGHT, DATABASE_INSIGHT.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'ChargebackPlanReport'})
+@cli_util.wrap_exceptions
+def get_chargeback_plan_report(ctx, from_json, chargeback_plan_report_id, id, resource_type):
+
+    if isinstance(chargeback_plan_report_id, six.string_types) and len(chargeback_plan_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --chargeback-plan-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_chargeback_plan_report(
+        chargeback_plan_report_id=chargeback_plan_report_id,
+        id=id,
+        resource_type=resource_type,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@chargeback_plan_group.command(name=cli_util.override('opsi.get_chargeback_plan_report_content.command_name', 'get-chargeback-plan-report-content'), help=u"""Generates the chargeback report in csv format for a specified time interval \n[Command Reference](getChargebackPlanReportContent)""")
+@cli_util.option('--chargeback-plan-report-id', required=True, help=u"""The [OCID] of the Ops Insights chargeback plan report""")
+@cli_util.option('--id', required=True, help=u"""Unique Ops insight identifier""")
+@cli_util.option('--resource-type', required=True, help=u"""Filter by resource type. Supported values are EXADATA_INSIGHT , HOST_INSIGHT, DATABASE_INSIGHT.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--relative-time-interval', help=u"""Specify relative time period with respect to current time. If relativeTimeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P1M (previous month), P1Q (previous quarter) and P1Y (previous year).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_chargeback_plan_report_content(ctx, from_json, file, chargeback_plan_report_id, id, resource_type, time_interval_start, time_interval_end, relative_time_interval):
+
+    if isinstance(chargeback_plan_report_id, six.string_types) and len(chargeback_plan_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --chargeback-plan-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if time_interval_start is not None:
+        kwargs['time_interval_start'] = time_interval_start
+    if time_interval_end is not None:
+        kwargs['time_interval_end'] = time_interval_end
+    if relative_time_interval is not None:
+        kwargs['relative_time_interval'] = relative_time_interval
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_chargeback_plan_report_content(
+        chargeback_plan_report_id=chargeback_plan_report_id,
+        id=id,
+        resource_type=resource_type,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
 
 
 @database_insights_group.command(name=cli_util.override('opsi.get_database_insight.command_name', 'get'), help=u"""Gets details of a database insight. \n[Command Reference](getDatabaseInsight)""")
@@ -8611,6 +9233,123 @@ def list_awr_snapshots(ctx, from_json, all_pages, page_size, awr_hub_id, awr_sou
     cli_util.render_response(result, ctx)
 
 
+@chargeback_plan_group.command(name=cli_util.override('opsi.list_chargeback_plan_reports.command_name', 'list-chargeback-plan-reports'), help=u"""Gets a list of Ops Insights chargeback plan reports for a resource. \n[Command Reference](listChargebackPlanReports)""")
+@cli_util.option('--id', required=True, help=u"""Unique Ops insight identifier""")
+@cli_util.option('--resource-type', required=True, help=u"""Filter by resource type. Supported values are EXADATA_INSIGHT , HOST_INSIGHT, DATABASE_INSIGHT.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "id"]), help=u"""The field to sort chargeback plan reports.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'ChargebackPlanReportCollection'})
+@cli_util.wrap_exceptions
+def list_chargeback_plan_reports(ctx, from_json, all_pages, page_size, id, resource_type, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_chargeback_plan_reports,
+            id=id,
+            resource_type=resource_type,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_chargeback_plan_reports,
+            limit,
+            page_size,
+            id=id,
+            resource_type=resource_type,
+            **kwargs
+        )
+    else:
+        result = client.list_chargeback_plan_reports(
+            id=id,
+            resource_type=resource_type,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@chargeback_plan_group.command(name=cli_util.override('opsi.list_chargeback_plans.command_name', 'list'), help=u"""Gets a list of Ops Insights chargeback plans. \n[Command Reference](listChargebackPlans)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--chargebackplan-id', help=u"""The [OCID] of the Ops Insights chargeback plan.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "id", "lifecycleState"]), help=u"""The field to sort chargeback plans.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""A flag to search all resources within a given compartment and all sub-compartments.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'ChargebackPlanCollection'})
+@cli_util.wrap_exceptions
+def list_chargeback_plans(ctx, from_json, all_pages, page_size, compartment_id, chargebackplan_id, limit, page, sort_order, sort_by, compartment_id_in_subtree):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if chargebackplan_id is not None:
+        kwargs['chargebackplan_id'] = chargebackplan_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_chargeback_plans,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_chargeback_plans,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_chargeback_plans(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.list_database_configurations.command_name', 'list-database-configurations'), help=u"""Gets a list of database insight configurations based on the query parameters specified. Either compartmentId or databaseInsightId query parameter must be specified. When both compartmentId and compartmentIdInSubtree are specified, a list of database insight configurations in that compartment and in all sub-compartments will be returned. \n[Command Reference](listDatabaseConfigurations)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--enterprise-manager-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
@@ -9850,7 +10589,7 @@ def list_sql_plans(ctx, from_json, all_pages, compartment_id, sql_identifier, pl
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.list_sql_searches.command_name', 'list-sql-searches'), help=u"""Search SQL by SQL Identifier across databases in a compartment and in all sub-compartments if specified. And get the SQL Text and the details of the databases executing the SQL for a given time period. \n[Command Reference](listSqlSearches)""")
+@database_insights_group.command(name=cli_util.override('opsi.list_sql_searches.command_name', 'list-sql-searches'), help=u"""This API was deprecated May 2024 and is no longer functional as of May 31st, 2025. Search SQL by SQL Identifier across databases in a compartment and in all sub-compartments if specified. And get the SQL Text and the details of the databases executing the SQL for a given time period. \n[Command Reference](listSqlSearches)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
@@ -13581,7 +14320,7 @@ def summarize_operations_insights_warehouse_resource_usage(ctx, from_json, opera
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_insights.command_name', 'summarize-sql-insights'), help=u"""Query SQL Warehouse to get the performance insights for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlInsights)""")
+@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_insights.command_name', 'summarize-sql-insights'), help=u"""This API was deprecated May 2024 and is no longer functional as of May 31st, 2025. Query SQL Warehouse to get the performance insights for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlInsights)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
@@ -13651,7 +14390,7 @@ def summarize_sql_insights(ctx, from_json, compartment_id, database_type, databa
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_plan_insights.command_name', 'summarize-sql-plan-insights'), help=u"""Query SQL Warehouse to get the performance insights on the execution plans for a given SQL for a given time period. Either databaseId or id must be specified. \n[Command Reference](summarizeSqlPlanInsights)""")
+@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_plan_insights.command_name', 'summarize-sql-plan-insights'), help=u"""This API was deprecated May 2024 and is no longer functional as of May 31st, 2025. Query SQL Warehouse to get the performance insights on the execution plans for a given SQL for a given time period. Either databaseId or id must be specified. \n[Command Reference](summarizeSqlPlanInsights)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
 @cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
@@ -13690,7 +14429,7 @@ def summarize_sql_plan_insights(ctx, from_json, compartment_id, sql_identifier, 
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_response_time_distributions.command_name', 'summarize-sql-response-time-distributions'), help=u"""Query SQL Warehouse to summarize the response time distribution of query executions for a given SQL for a given time period. Either databaseId or id must be specified. \n[Command Reference](summarizeSqlResponseTimeDistributions)""")
+@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_response_time_distributions.command_name', 'summarize-sql-response-time-distributions'), help=u"""This API was deprecated May 2024 and is no longer functional as of May 31st, 2025. Query SQL Warehouse to summarize the response time distribution of query executions for a given SQL for a given time period. Either databaseId or id must be specified. \n[Command Reference](summarizeSqlResponseTimeDistributions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
 @cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
@@ -13729,7 +14468,7 @@ def summarize_sql_response_time_distributions(ctx, from_json, compartment_id, sq
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics.command_name', 'summarize-sql-statistics'), help=u"""Query SQL Warehouse to get the performance statistics for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlStatistics)""")
+@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics.command_name', 'summarize-sql-statistics'), help=u"""This API was deprecated May 2024 and is no longer functional as of May 31st, 2025. Query SQL Warehouse to get the performance statistics for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlStatistics)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
@@ -13814,7 +14553,7 @@ def summarize_sql_statistics(ctx, from_json, compartment_id, database_type, data
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics_time_series.command_name', 'summarize-sql-statistics-time-series'), help=u"""Query SQL Warehouse to get the performance statistics time series for a given SQL across given databases for a given time period in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlStatisticsTimeSeries)""")
+@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics_time_series.command_name', 'summarize-sql-statistics-time-series'), help=u"""This API was deprecated May 2024 and is no longer functional as of May 31st, 2025. Query SQL Warehouse to get the performance statistics time series for a given SQL across given databases for a given time period in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlStatisticsTimeSeries)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
@@ -13880,7 +14619,7 @@ def summarize_sql_statistics_time_series(ctx, from_json, compartment_id, sql_ide
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics_time_series_by_plan.command_name', 'summarize-sql-statistics-time-series-by-plan'), help=u"""Query SQL Warehouse to get the performance statistics time series for a given SQL by execution plans for a given time period. Either databaseId or id must be specified. \n[Command Reference](summarizeSqlStatisticsTimeSeriesByPlan)""")
+@database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics_time_series_by_plan.command_name', 'summarize-sql-statistics-time-series-by-plan'), help=u"""This API was deprecated May 2024 and is no longer functional as of May 31st, 2025. Query SQL Warehouse to get the performance statistics time series for a given SQL by execution plans for a given time period. Either databaseId or id must be specified. \n[Command Reference](summarizeSqlStatisticsTimeSeriesByPlan)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
 @cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
@@ -13919,9 +14658,9 @@ def summarize_sql_statistics_time_series_by_plan(ctx, from_json, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.synchronize_autonomous_database_to_exadata.command_name', 'synchronize-autonomous-database-to-exadata'), help=u"""Synchronize infrastructure details that has been missing when autonomous database onboarded in Operations Insights. Onboarded Opsi ExadataInsight resource need to be provided with compartmentId for searching infrastruture details. The query parameters, DatabaseId and DatabaseInsightId, are mutually exclusive and provided for searching Opsi resources that have been onboarded. \n[Command Reference](synchronizeAutonomousDatabaseToExadata)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@database_insights_group.command(name=cli_util.override('opsi.synchronize_autonomous_database_to_exadata.command_name', 'synchronize-autonomous-database-to-exadata'), help=u"""Synchronize infrastructure details that has been missing when autonomous database onboarded in Ops Insights. Parameters exadataInsightId, databaseId, or databaseInsightId (id) are mutually exclusive, and scope the Ops Insights resources which are scoped for the search to find ADB-D resources missing the Exadata infrastructure details. \n[Command Reference](synchronizeAutonomousDatabaseToExadata)""")
 @cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_DATABASE", "EM_MANAGED_EXTERNAL_DATABASE", "MACS_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE", "MDS_MYSQL_DATABASE_SYSTEM", "EXTERNAL_MYSQL_DATABASE_SYSTEM", "MACS_MANAGED_CLOUD_DATABASE", "MACS_MANAGED_AUTONOMOUS_DATABASE"]), help=u"""Source of the database entity. Currently only AUTONOMOUS_DATABASE source is supported.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
 @cli_util.option('--exadata-insight-id', help=u"""[OCID] of exadata insight resource.""")
@@ -13934,9 +14673,11 @@ def summarize_sql_statistics_time_series_by_plan(ctx, from_json, compartment_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def synchronize_autonomous_database_to_exadata(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, entity_source, database_id, id, exadata_insight_id, if_match):
+def synchronize_autonomous_database_to_exadata(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, entity_source, compartment_id, database_id, id, exadata_insight_id, if_match):
 
     kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if database_id is not None:
         kwargs['database_id'] = database_id
     if id is not None:
@@ -13952,7 +14693,6 @@ def synchronize_autonomous_database_to_exadata(ctx, from_json, wait_for_state, m
 
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.synchronize_autonomous_database_to_exadata(
-        compartment_id=compartment_id,
         synchronize_autonomous_database_to_exadata_details=_details,
         **kwargs
     )
@@ -14816,6 +15556,164 @@ def update_awr_hub_source(ctx, from_json, force, wait_for_state, max_wait_second
     result = client.update_awr_hub_source(
         awr_hub_source_id=awr_hub_source_id,
         update_awr_hub_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@chargeback_plan_group.command(name=cli_util.override('opsi.update_chargeback_plan.command_name', 'update'), help=u"""Updates one or more attributes of the specified chargeback plan. \n[Command Reference](updateChargebackPlan)""")
+@cli_util.option('--chargebackplan-id', required=True, help=u"""The [OCID] of the Ops Insights chargeback plan.""")
+@cli_util.option('--plan-description', help=u"""Description of OPSI Chargeback Plan.""")
+@cli_util.option('--plan-name', help=u"""Name for the OPSI Chargeback plan.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--plan-custom-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of chargeback plan customizations.
+
+This option is a JSON list with items of type CreatePlanCustomItemDetails.  For documentation on CreatePlanCustomItemDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/operationsinsights/20200630/datatypes/CreatePlanCustomItemDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'plan-custom-items': {'module': 'opsi', 'class': 'list[CreatePlanCustomItemDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'plan-custom-items': {'module': 'opsi', 'class': 'list[CreatePlanCustomItemDetails]'}})
+@cli_util.wrap_exceptions
+def update_chargeback_plan(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, chargebackplan_id, plan_description, plan_name, freeform_tags, defined_tags, plan_custom_items, if_match):
+
+    if isinstance(chargebackplan_id, six.string_types) and len(chargebackplan_id.strip()) == 0:
+        raise click.UsageError('Parameter --chargebackplan-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or plan_custom_items:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and plan-custom-items will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if plan_description is not None:
+        _details['planDescription'] = plan_description
+
+    if plan_name is not None:
+        _details['planName'] = plan_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if plan_custom_items is not None:
+        _details['planCustomItems'] = cli_util.parse_json_parameter("plan_custom_items", plan_custom_items)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_chargeback_plan(
+        chargebackplan_id=chargebackplan_id,
+        update_chargeback_plan_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@chargeback_plan_group.command(name=cli_util.override('opsi.update_chargeback_plan_report.command_name', 'update-chargeback-plan-report'), help=u"""Updates one or more attributes of the specified chargeback plan report. \n[Command Reference](updateChargebackPlanReport)""")
+@cli_util.option('--chargeback-plan-report-id', required=True, help=u"""The [OCID] of the Ops Insights chargeback plan report""")
+@cli_util.option('--id', required=True, help=u"""Unique Ops insight identifier""")
+@cli_util.option('--resource-type', required=True, help=u"""Filter by resource type. Supported values are EXADATA_INSIGHT , HOST_INSIGHT, DATABASE_INSIGHT.""")
+@cli_util.option('--report-name', required=True, help=u"""The chargeback plan report name.""")
+@cli_util.option('--report-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'report-properties': {'module': 'opsi', 'class': 'ReportPropertyDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'report-properties': {'module': 'opsi', 'class': 'ReportPropertyDetails'}})
+@cli_util.wrap_exceptions
+def update_chargeback_plan_report(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, chargeback_plan_report_id, id, resource_type, report_name, report_properties, if_match):
+
+    if isinstance(chargeback_plan_report_id, six.string_types) and len(chargeback_plan_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --chargeback-plan-report-id cannot be whitespace or empty string')
+    if not force:
+        if report_properties:
+            if not click.confirm("WARNING: Updates to report-properties will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['reportName'] = report_name
+    _details['reportProperties'] = cli_util.parse_json_parameter("report_properties", report_properties)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_chargeback_plan_report(
+        chargeback_plan_report_id=chargeback_plan_report_id,
+        id=id,
+        resource_type=resource_type,
+        update_chargeback_plan_report_details=_details,
         **kwargs
     )
     if wait_for_state:

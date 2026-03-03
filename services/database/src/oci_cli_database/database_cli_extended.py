@@ -4302,3 +4302,16 @@ cli_util.rename_command(database_cli, database_cli.database_group, database_cli.
 
 # oci db autonomous-database list-estimate-cost-savings -> oci db autonomous-database list-elastic-pool-cost-savings
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.list_estimate_cost_savings, "list-elastic-pool-cost-savings")
+
+# oci db db-system-os-patch-history-entry-collection list-db-system-os-patch-history-entries -> oci db db-system-os-patch-history-entry-collection list
+cli_util.rename_command(database_cli, database_cli.db_system_os_patch_history_entry_collection_group, database_cli.list_db_system_os_patch_history_entries, "list")
+
+# oci db db-system-os-patch-history-entry-collection list -> oci db db-system-os-patch-history-entry list
+database_cli.db_system_os_patch_history_entry_collection_group.commands.pop(database_cli.list_db_system_os_patch_history_entries.name)
+database_cli.db_system_os_patch_history_entry_group.add_command(database_cli.list_db_system_os_patch_history_entries)
+
+# oci db db-system-os-patch-history-entry -> oci db db-system-os-patch-history
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_os_patch_history_entry_group, "db-system-os-patch-history")
+
+# Remove db-system-os-patch-history-entry-collection from oci db
+database_cli.db_root_group.commands.pop(database_cli.db_system_os_patch_history_entry_collection_group.name)
