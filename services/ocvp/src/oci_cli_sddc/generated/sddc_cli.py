@@ -162,6 +162,7 @@ Use the [WorkRequest] operations to track the creation of the SDDC.
 @cli_util.option('--display-name', help=u"""A descriptive name for the SDDC. SDDC name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the region. Avoid entering confidential information.""")
 @cli_util.option('--esxi-software-version', help=u"""The ESXi software bundle to install on the ESXi hosts in the SDDC. Only versions under the same vmwareSoftwareVersion and have been validate by Oracle Cloud VMware Solution will be accepted. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--is-single-host-sddc', type=click.BOOL, help=u"""Indicates whether this SDDC is designated for only single ESXi host.""")
+@cli_util.option('--sddc-byol-allocation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -171,12 +172,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'initial-configuration': {'module': 'ocvp', 'class': 'InitialConfiguration'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'initial-configuration': {'module': 'ocvp', 'class': 'InitialConfiguration'}, 'sddc-byol-allocation-details': {'module': 'ocvp', 'class': 'SddcByolAllocationDetails'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-configuration': {'module': 'ocvp', 'class': 'InitialConfiguration'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-configuration': {'module': 'ocvp', 'class': 'InitialConfiguration'}, 'sddc-byol-allocation-details': {'module': 'ocvp', 'class': 'SddcByolAllocationDetails'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vmware_software_version, compartment_id, hcx_mode, initial_configuration, ssh_authorized_keys, display_name, esxi_software_version, is_single_host_sddc, freeform_tags, defined_tags):
+def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vmware_software_version, compartment_id, hcx_mode, initial_configuration, ssh_authorized_keys, display_name, esxi_software_version, is_single_host_sddc, sddc_byol_allocation_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -196,6 +197,9 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if is_single_host_sddc is not None:
         _details['isSingleHostSddc'] = is_single_host_sddc
+
+    if sddc_byol_allocation_details is not None:
+        _details['sddcByolAllocationDetails'] = cli_util.parse_json_parameter("sddc_byol_allocation_details", sddc_byol_allocation_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -705,6 +709,7 @@ For the list of versions supported by the Oracle Cloud VMware Solution, see [Lis
 
 For the list of versions supported by the Oracle Cloud VMware Solution, see [ListSupportedVmwareSoftwareVersions]).""")
 @cli_util.option('--ssh-authorized-keys', help=u"""One or more public SSH keys to be included in the `~/.ssh/authorized_keys` file for the default user on each ESXi host, only when adding new ESXi hosts to this SDDC. Use a newline character to separate multiple keys. The SSH keys must be in the format required for the `authorized_keys` file.""")
+@cli_util.option('--sddc-byol-allocation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -716,18 +721,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'sddc-byol-allocation-details': {'module': 'ocvp', 'class': 'SddcByolAllocationDetails'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ocvp', 'class': 'Sddc'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sddc-byol-allocation-details': {'module': 'ocvp', 'class': 'SddcByolAllocationDetails'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ocvp', 'class': 'Sddc'})
 @cli_util.wrap_exceptions
-def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, vmware_software_version, esxi_software_version, ssh_authorized_keys, freeform_tags, defined_tags, if_match):
+def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, vmware_software_version, esxi_software_version, ssh_authorized_keys, sddc_byol_allocation_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if sddc_byol_allocation_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to sddc-byol-allocation-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -748,6 +753,9 @@ def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
     if ssh_authorized_keys is not None:
         _details['sshAuthorizedKeys'] = ssh_authorized_keys
+
+    if sddc_byol_allocation_details is not None:
+        _details['sddcByolAllocationDetails'] = cli_util.parse_json_parameter("sddc_byol_allocation_details", sddc_byol_allocation_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

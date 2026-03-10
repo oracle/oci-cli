@@ -4,7 +4,8 @@
 
 from services.email.src.oci_cli_email.generated import email_cli
 from oci_cli import cli_util
-
+from oci_cli import json_skeleton_utils
+import click
 
 email_cli.email_root_group.help = "Email Delivery Service CLI"
 
@@ -33,3 +34,49 @@ email_cli.email_root_group.commands.pop(email_cli.work_request_summary_collectio
 
 # oci email work-request-error-collection -> oci email work-request-error
 cli_util.rename_command(email_cli, email_cli.email_root_group, email_cli.work_request_error_collection_group, "work-request-error")
+
+# oci email email-outbound-ip-collection -> oci email email-outbound-ip
+cli_util.rename_command(email_cli, email_cli.email_root_group, email_cli.email_outbound_ip_collection_group, "email-outbound-ip")
+
+
+# oci email email-outbound-ip-collection list-email-outbound-ips -> oci email email-outbound-ip-collection list
+cli_util.rename_command(email_cli, email_cli.email_outbound_ip_collection_group, email_cli.list_email_outbound_ips, "list")
+
+
+# oci email email-ip-pool-collection list-email-ip-pools -> oci email email-ip-pool-collection list
+cli_util.rename_command(email_cli, email_cli.email_ip_pool_collection_group, email_cli.list_email_ip_pools, "list")
+
+
+# Move commands under 'oci email email-ip-pool-collection' -> 'oci email email-ip-pool'
+email_cli.email_root_group.commands.pop(email_cli.email_ip_pool_collection_group.name)
+email_cli.email_ip_pool_group.add_command(email_cli.list_email_ip_pools)
+
+
+@cli_util.copy_params_from_generated_command(email_cli.create_email_ip_pool, params_to_exclude=['last_ip_drain_period_in_hours'])
+@email_cli.email_ip_pool_group.command(name=email_cli.create_email_ip_pool.name, help=email_cli.create_email_ip_pool.help)
+@cli_util.option('--last-ip-drain-period', type=click.INT, help=u"""Last IP will be unassigned from the IP Pool after the period of time (in hours) specified by this parameter. Default is 24 hours.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'outbound-ips': {'module': 'email', 'class': 'list[string]'}, 'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'email', 'class': 'EmailIpPool'})
+@cli_util.wrap_exceptions
+def create_email_ip_pool_extended(ctx, **kwargs):
+
+    if 'last_ip_drain_period' in kwargs:
+        kwargs['last_ip_drain_period_in_hours'] = kwargs['last_ip_drain_period']
+        kwargs.pop('last_ip_drain_period')
+
+    ctx.invoke(email_cli.create_email_ip_pool, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(email_cli.update_email_ip_pool, params_to_exclude=['last_ip_drain_period_in_hours'])
+@email_cli.email_ip_pool_group.command(name=email_cli.update_email_ip_pool.name, help=email_cli.update_email_ip_pool.help)
+@cli_util.option('--last-ip-drain-period', type=click.INT, help=u"""Last IP will be unassigned from the IP Pool after the period of time (in hours) specified by this parameter. Default is 24 hours.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_email_ip_pool_extended(ctx, **kwargs):
+
+    if 'last_ip_drain_period' in kwargs:
+        kwargs['last_ip_drain_period_in_hours'] = kwargs['last_ip_drain_period']
+        kwargs.pop('last_ip_drain_period')
+
+    ctx.invoke(email_cli.update_email_ip_pool, **kwargs)

@@ -16,29 +16,74 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.ocvp.src.oci_cli_ocvp.generated import ocvs_service_cli
 
 
-@click.command(cli_util.override('management_appliance.management_appliance_root_group.command_name', 'management-appliance'), cls=CommandGroupWithAlias, help=cli_util.override('management_appliance.management_appliance_root_group.help', """Use the Oracle Cloud VMware API to create SDDCs and manage ESXi hosts and software.
-For more information, see [Oracle Cloud VMware Solution]."""), short_help=cli_util.override('management_appliance.management_appliance_root_group.short_help', """Oracle Cloud VMware Solution API"""))
+@click.command(cli_util.override('byol.byol_root_group.command_name', 'byol'), cls=CommandGroupWithAlias, help=cli_util.override('byol.byol_root_group.help', """Use the Oracle Cloud VMware API to create SDDCs and manage ESXi hosts and software.
+For more information, see [Oracle Cloud VMware Solution]."""), short_help=cli_util.override('byol.byol_root_group.short_help', """Oracle Cloud VMware Solution API"""))
 @cli_util.help_option_group
-def management_appliance_root_group():
+def byol_root_group():
     pass
 
 
-@click.command(cli_util.override('management_appliance.management_appliance_group.command_name', 'management-appliance'), cls=CommandGroupWithAlias, help="""Information about management appliance.""")
+@click.command(cli_util.override('byol.byol_group.command_name', 'byol'), cls=CommandGroupWithAlias, help="""An [Oracle Cloud VMware Solution] Bring-Your-Own-License (BYOL), is a permit (entitlement) customer purchased from Broadcom and registered in OCI to install VMware software.""")
 @cli_util.help_option_group
-def management_appliance_group():
+def byol_group():
     pass
 
 
-ocvs_service_cli.ocvs_service_group.add_command(management_appliance_root_group)
-management_appliance_root_group.add_command(management_appliance_group)
+@click.command(cli_util.override('byol.byol_summary_group.command_name', 'byol-summary'), cls=CommandGroupWithAlias, help="""An [Oracle Cloud VMware Solution] Bring-Your-Own-License (BYOL), is a permit (entitlement) customer purchased from Broadcom and registered in OCI to install VMware software.""")
+@cli_util.help_option_group
+def byol_summary_group():
+    pass
 
 
-@management_appliance_group.command(name=cli_util.override('management_appliance.create_management_appliance.command_name', 'create'), help=u"""Creates a management appliance. \n[Command Reference](createManagementAppliance)""")
-@cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of SDDC in OCI, that this appliance is going to be registered in.""")
-@cli_util.option('--display-name', required=True, help=u"""A descriptive name for the management appliance. It must be unique, start with a letter, and contain only letters, digits, whitespaces, dashes and underscores. Avoid entering confidential information.""")
-@cli_util.option('--configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connections', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of connections for management appliance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--public-ssh-keys', help=u"""One or more public SSH keys to be included in `~/.ssh/authorized_keys` file for Management Appliance compute instance. Several public SSH keys must be separate by newline character.""")
+ocvs_service_cli.ocvs_service_group.add_command(byol_root_group)
+byol_root_group.add_command(byol_group)
+byol_root_group.add_command(byol_summary_group)
+
+
+@byol_group.command(name=cli_util.override('byol.change_byol_compartment.command_name', 'change-compartment'), help=u"""Moves an BYOL into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeByolCompartment)""")
+@cli_util.option('--byol-id', required=True, help=u"""The [OCID] of the BYOL.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the BYOL to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_byol_compartment(ctx, from_json, byol_id, compartment_id, if_match):
+
+    if isinstance(byol_id, six.string_types) and len(byol_id.strip()) == 0:
+        raise click.UsageError('Parameter --byol-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('ocvp', 'byol', ctx)
+    result = client.change_byol_compartment(
+        byol_id=byol_id,
+        change_byol_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@byol_group.command(name=cli_util.override('byol.create_byol.command_name', 'create'), help=u"""Creates an Oracle Cloud VMware Solution Bring-You-Own-License (BYOL).
+
+Use the [WorkRequest] operations to track the creation of the BYOL. \n[Command Reference](createByol)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the BYOL.""")
+@cli_util.option('--display-name', required=True, help=u"""A descriptive name for the BYOL.""")
+@cli_util.option('--software-type', required=True, help=u"""The type of VMware software the BYOL applies to. Supported values: - VCF (VMware Cloud Foundation) - VSAN (VMware vSAN) - VDEFEND (VMware vDefend Firewall) - AVI_LOAD_BALANCER (VMware Avi Load Balancer)""")
+@cli_util.option('--total-units', required=True, type=click.INT, help=u"""Total quantity of licensed units for the specified `softwareType`:
+
+- VCF, VDEFEND: number of OCPUs - VSAN: storage capacity in TiB (tebibytes) - AVI_LOAD_BALANCER: number of instances""")
+@cli_util.option('--time-term-start', required=True, type=custom_types.CLI_DATETIME, help=u"""The date and time when the BYOL becomes active. VMware software functionality cannot begin before this time. In the format defined by[RFC3339]. Example: `2016-08-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-term-end', required=True, type=custom_types.CLI_DATETIME, help=u"""The date and time when the BYOL expires and becomes inactive. In the format defined by[RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--entitlement-key', required=True, help=u"""The Broadcom-supplied identifier of a BYOL license.""")
+@cli_util.option('--description', help=u"""A description of the BYOL.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -48,24 +93,27 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'configuration': {'module': 'ocvp', 'class': 'ManagementApplianceConfiguration'}, 'connections': {'module': 'ocvp', 'class': 'list[ManagementApplianceConnection]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration': {'module': 'ocvp', 'class': 'ManagementApplianceConfiguration'}, 'connections': {'module': 'ocvp', 'class': 'list[ManagementApplianceConnection]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_management_appliance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, configuration, connections, public_ssh_keys, freeform_tags, defined_tags):
+def create_byol(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, software_type, total_units, time_term_start, time_term_end, entitlement_key, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['sddcId'] = sddc_id
+    _details['compartmentId'] = compartment_id
     _details['displayName'] = display_name
-    _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
-    _details['connections'] = cli_util.parse_json_parameter("connections", connections)
+    _details['softwareType'] = software_type
+    _details['totalUnits'] = total_units
+    _details['timeTermStart'] = time_term_start
+    _details['timeTermEnd'] = time_term_end
+    _details['entitlementKey'] = entitlement_key
 
-    if public_ssh_keys is not None:
-        _details['publicSshKeys'] = public_ssh_keys
+    if description is not None:
+        _details['description'] = description
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -73,9 +121,9 @@ def create_management_appliance(ctx, from_json, wait_for_state, max_wait_seconds
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('ocvp', 'management_appliance', ctx)
-    result = client.create_management_appliance(
-        create_management_appliance_details=_details,
+    client = cli_util.build_client('ocvp', 'byol', ctx)
+    result = client.create_byol(
+        create_byol_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -108,8 +156,8 @@ def create_management_appliance(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@management_appliance_group.command(name=cli_util.override('management_appliance.delete_management_appliance.command_name', 'delete'), help=u"""Deletes management appliance specified. \n[Command Reference](deleteManagementAppliance)""")
-@cli_util.option('--management-appliance-id', required=True, help=u"""The [OCID] of the management appliance.""")
+@byol_group.command(name=cli_util.override('byol.delete_byol.command_name', 'delete'), help=u"""Deletes the specified BYOL. \n[Command Reference](deleteByol)""")
+@cli_util.option('--byol-id', required=True, help=u"""The [OCID] of the BYOL.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -120,18 +168,18 @@ def create_management_appliance(ctx, from_json, wait_for_state, max_wait_seconds
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_management_appliance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_appliance_id, if_match):
+def delete_byol(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, byol_id, if_match):
 
-    if isinstance(management_appliance_id, six.string_types) and len(management_appliance_id.strip()) == 0:
-        raise click.UsageError('Parameter --management-appliance-id cannot be whitespace or empty string')
+    if isinstance(byol_id, six.string_types) and len(byol_id.strip()) == 0:
+        raise click.UsageError('Parameter --byol-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('ocvp', 'management_appliance', ctx)
-    result = client.delete_management_appliance(
-        management_appliance_id=management_appliance_id,
+    client = cli_util.build_client('ocvp', 'byol', ctx)
+    result = client.delete_byol(
+        byol_id=byol_id,
         **kwargs
     )
     if wait_for_state:
@@ -164,38 +212,39 @@ def delete_management_appliance(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@management_appliance_group.command(name=cli_util.override('management_appliance.get_management_appliance.command_name', 'get'), help=u"""Get the specified management appliance information. \n[Command Reference](getManagementAppliance)""")
-@cli_util.option('--management-appliance-id', required=True, help=u"""The [OCID] of the management appliance.""")
+@byol_group.command(name=cli_util.override('byol.get_byol.command_name', 'get'), help=u"""Gets the specified BYOL's information. \n[Command Reference](getByol)""")
+@cli_util.option('--byol-id', required=True, help=u"""The [OCID] of the BYOL.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'ManagementAppliance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'Byol'})
 @cli_util.wrap_exceptions
-def get_management_appliance(ctx, from_json, management_appliance_id):
+def get_byol(ctx, from_json, byol_id):
 
-    if isinstance(management_appliance_id, six.string_types) and len(management_appliance_id.strip()) == 0:
-        raise click.UsageError('Parameter --management-appliance-id cannot be whitespace or empty string')
+    if isinstance(byol_id, six.string_types) and len(byol_id.strip()) == 0:
+        raise click.UsageError('Parameter --byol-id cannot be whitespace or empty string')
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('ocvp', 'management_appliance', ctx)
-    result = client.get_management_appliance(
-        management_appliance_id=management_appliance_id,
+    client = cli_util.build_client('ocvp', 'byol', ctx)
+    result = client.get_byol(
+        byol_id=byol_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
 
 
-@management_appliance_group.command(name=cli_util.override('management_appliance.list_management_appliances.command_name', 'list'), help=u"""Lists management appliances in compartment specified. List can be filtered by management appliance, compartment, name and lifecycle state. \n[Command Reference](listManagementAppliances)""")
+@byol_summary_group.command(name=cli_util.override('byol.list_byols.command_name', 'list-byols'), help=u"""Lists the BYOLs in the specified compartment. The list can be filtered by display name or availability domain. \n[Command Reference](listByols)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--management-appliance-id', help=u"""The [OCID] of the management appliance.""")
-@cli_util.option('--sddc-id', help=u"""The [OCID] of the SDDC.""")
+@cli_util.option('--byol-id', help=u"""The [OCID] of the BYOL.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources whose lifecycle state matches the given value.""")
+@cli_util.option('--software-type', type=custom_types.CliCaseInsensitiveChoice(["VCF", "VSAN", "VDEFEND", "AVI_LOAD_BALANCER"]), help=u"""A filter to return only resources whose softwareType matches the given value.""")
+@cli_util.option('--available-units-greater-than-or-equal-to', type=click.FLOAT, help=u"""A filter to return only resources whose availableUnits greater than or equal to the given value.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of the management appliance.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "timeTermStart"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for `timeTermStart` is descending. Default order for `timeCreated` is descending. Default order for `displayName` is ascending. The `displayName` sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -203,22 +252,24 @@ def get_management_appliance(ctx, from_json, management_appliance_id):
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'ManagementApplianceCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'ByolCollection'})
 @cli_util.wrap_exceptions
-def list_management_appliances(ctx, from_json, all_pages, page_size, compartment_id, management_appliance_id, sddc_id, display_name, lifecycle_state, limit, page, sort_order, sort_by):
+def list_byols(ctx, from_json, all_pages, page_size, compartment_id, byol_id, lifecycle_state, software_type, available_units_greater_than_or_equal_to, display_name, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
-    if management_appliance_id is not None:
-        kwargs['management_appliance_id'] = management_appliance_id
-    if sddc_id is not None:
-        kwargs['sddc_id'] = sddc_id
-    if display_name is not None:
-        kwargs['display_name'] = display_name
+    if byol_id is not None:
+        kwargs['byol_id'] = byol_id
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if software_type is not None:
+        kwargs['software_type'] = software_type
+    if available_units_greater_than_or_equal_to is not None:
+        kwargs['available_units_greater_than_or_equal_to'] = available_units_greater_than_or_equal_to
+    if display_name is not None:
+        kwargs['display_name'] = display_name
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -228,39 +279,77 @@ def list_management_appliances(ctx, from_json, all_pages, page_size, compartment
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('ocvp', 'management_appliance', ctx)
+    client = cli_util.build_client('ocvp', 'byol', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
 
         result = cli_util.list_call_get_all_results(
-            client.list_management_appliances,
+            client.list_byols,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
         result = cli_util.list_call_get_up_to_limit(
-            client.list_management_appliances,
+            client.list_byols,
             limit,
             page_size,
             compartment_id=compartment_id,
             **kwargs
         )
     else:
-        result = client.list_management_appliances(
+        result = client.list_byols(
             compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
 
 
-@management_appliance_group.command(name=cli_util.override('management_appliance.update_management_appliance.command_name', 'update'), help=u"""Updates management appliance specified. \n[Command Reference](updateManagementAppliance)""")
-@cli_util.option('--management-appliance-id', required=True, help=u"""The [OCID] of the management appliance.""")
-@cli_util.option('--display-name', help=u"""A descriptive name for the management appliance. It must be unique, start with a letter, and contain only letters, digits, whitespaces, dashes and underscores. Avoid entering confidential information.""")
-@cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connections', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of connections for management appliance.
+@byol_group.command(name=cli_util.override('byol.retrieve_byol_realm_allocations.command_name', 'retrieve-byol-realm-allocations'), help=u"""Retrieve realm-wide allocation status for a specified BYOL. \n[Command Reference](retrieveByolRealmAllocations)""")
+@cli_util.option('--byol-id', required=True, help=u"""The [OCID] of the BYOL.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'ByolRealmAllocationCollection'})
+@cli_util.wrap_exceptions
+def retrieve_byol_realm_allocations(ctx, from_json, byol_id, limit, page, sort_order, sort_by):
 
-This option is a JSON list with items of type ManagementApplianceConnection.  For documentation on ManagementApplianceConnection please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/managementappliance/20230701/datatypes/ManagementApplianceConnection.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+    if isinstance(byol_id, six.string_types) and len(byol_id.strip()) == 0:
+        raise click.UsageError('Parameter --byol-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'byol', ctx)
+    result = client.retrieve_byol_realm_allocations(
+        byol_id=byol_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@byol_group.command(name=cli_util.override('byol.update_byol.command_name', 'update'), help=u"""Updates the specified BYOL. \n[Command Reference](updateByol)""")
+@cli_util.option('--byol-id', required=True, help=u"""The [OCID] of the BYOL.""")
+@cli_util.option('--display-name', help=u"""A descriptive name for the BYOL.""")
+@cli_util.option('--total-units', type=click.INT, help=u"""Total quantity of licensed units for the specified `softwareType`:
+
+- VCF, VDEFEND: number of OCPUs - VSAN: storage capacity in TiB (tebibytes) - AVI_LOAD_BALANCER: number of instances""")
+@cli_util.option('--description', help=u"""A description of the BYOL.""")
+@cli_util.option('--software-type', help=u"""The type of VMware software the BYOL applies to. Supported values: - VCF (VMware Cloud Foundation) - VSAN (VMware vSAN) - VDEFEND (VMware vDefend Firewall) - AVI_LOAD_BALANCER (VMware Avi Load Balancer)""")
+@cli_util.option('--time-term-start', type=custom_types.CLI_DATETIME, help=u"""The date and time when the BYOL becomes active. VMware software functionality cannot begin before this time. In the format defined by[RFC3339]. Example: `2016-08-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-term-end', type=custom_types.CLI_DATETIME, help=u"""The date and time when the BYOL expires and becomes inactive. In the format defined by[RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--entitlement-key', help=u"""The Broadcom-supplied identifier of a BYOL license.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -272,18 +361,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'configuration': {'module': 'ocvp', 'class': 'ManagementApplianceConfiguration'}, 'connections': {'module': 'ocvp', 'class': 'list[ManagementApplianceConnection]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration': {'module': 'ocvp', 'class': 'ManagementApplianceConfiguration'}, 'connections': {'module': 'ocvp', 'class': 'list[ManagementApplianceConnection]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_management_appliance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_appliance_id, display_name, configuration, connections, freeform_tags, defined_tags, if_match):
+def update_byol(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, byol_id, display_name, total_units, description, software_type, time_term_start, time_term_end, entitlement_key, freeform_tags, defined_tags, if_match):
 
-    if isinstance(management_appliance_id, six.string_types) and len(management_appliance_id.strip()) == 0:
-        raise click.UsageError('Parameter --management-appliance-id cannot be whitespace or empty string')
+    if isinstance(byol_id, six.string_types) and len(byol_id.strip()) == 0:
+        raise click.UsageError('Parameter --byol-id cannot be whitespace or empty string')
     if not force:
-        if configuration or connections or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to configuration and connections and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -296,11 +385,23 @@ def update_management_appliance(ctx, from_json, force, wait_for_state, max_wait_
     if display_name is not None:
         _details['displayName'] = display_name
 
-    if configuration is not None:
-        _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+    if total_units is not None:
+        _details['totalUnits'] = total_units
 
-    if connections is not None:
-        _details['connections'] = cli_util.parse_json_parameter("connections", connections)
+    if description is not None:
+        _details['description'] = description
+
+    if software_type is not None:
+        _details['softwareType'] = software_type
+
+    if time_term_start is not None:
+        _details['timeTermStart'] = time_term_start
+
+    if time_term_end is not None:
+        _details['timeTermEnd'] = time_term_end
+
+    if entitlement_key is not None:
+        _details['entitlementKey'] = entitlement_key
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -308,10 +409,10 @@ def update_management_appliance(ctx, from_json, force, wait_for_state, max_wait_
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('ocvp', 'management_appliance', ctx)
-    result = client.update_management_appliance(
-        management_appliance_id=management_appliance_id,
-        update_management_appliance_details=_details,
+    client = cli_util.build_client('ocvp', 'byol', ctx)
+    result = client.update_byol(
+        byol_id=byol_id,
+        update_byol_details=_details,
         **kwargs
     )
     if wait_for_state:

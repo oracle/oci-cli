@@ -586,3 +586,11 @@ queue, queue-admin, queue, update
 compute, compute-host, get
 compute, compute-host, update
 log-analytics, query, search
+ocvs, sddc, update
+identity-domains, identity-proofing-provider, create
+identity-domains, identity-proofing-provider, put
+identity-domains, identity-proofing-provider, search
+identity-domains, identity-proofing-provider-template, create
+identity-domains, identity-proofing-provider-template, put
+identity-domains, verification-claim, create
+limits-increase, limits-increase-request, create
