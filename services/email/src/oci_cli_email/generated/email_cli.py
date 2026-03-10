@@ -783,6 +783,7 @@ Example: green_pool-1""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this IpPool.""")
 @cli_util.option('--outbound-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of outbound public IPs for assignment to the IpPool. These IPs must be in the AVAILABLE state to be eligible for assignment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the IpPool. Avoid entering confidential information.""")
+@cli_util.option('--last-ip-drain-period-in-hours', type=click.INT, help=u"""Last IP will be unassigned from the IP Pool after the period of time (in hours) specified by this parameter. Default is 24 hours.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -797,7 +798,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'outbound-ips': {'module': 'email', 'class': 'list[string]'}, 'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'email', 'class': 'EmailIpPool'})
 @cli_util.wrap_exceptions
-def create_email_ip_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, outbound_ips, description, freeform_tags, defined_tags):
+def create_email_ip_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, outbound_ips, description, last_ip_drain_period_in_hours, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -809,6 +810,9 @@ def create_email_ip_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if description is not None:
         _details['description'] = description
+
+    if last_ip_drain_period_in_hours is not None:
+        _details['lastIpDrainPeriodInHours'] = last_ip_drain_period_in_hours
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1982,6 +1986,8 @@ def list_suppressions(ctx, from_json, all_pages, page_size, compartment_id, emai
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. `1` is the minimum, `1000` is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timestamp"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timestamp is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending or descending order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1989,7 +1995,7 @@ def list_suppressions(ctx, from_json, all_pages, page_size, compartment_id, emai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'WorkRequestErrorCollection'})
 @cli_util.wrap_exceptions
-def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_id, page, limit):
+def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_id, page, limit, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2002,6 +2008,10 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('email', 'email', ctx)
     if all_pages:
@@ -2033,6 +2043,8 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. `1` is the minimum, `1000` is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timestamp"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timestamp is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending or descending order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2040,7 +2052,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'WorkRequestLogEntryCollection'})
 @cli_util.wrap_exceptions
-def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id, page, limit):
+def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id, page, limit, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2053,6 +2065,10 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('email', 'email', ctx)
     if all_pages:
@@ -2085,6 +2101,10 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. `1` is the minimum, `1000` is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending or descending order.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_DKIM", "DELETE_DKIM", "MOVE_DKIM", "UPDATE_DKIM", "CREATE_EMAIL_DOMAIN", "DELETE_EMAIL_DOMAIN", "MOVE_EMAIL_DOMAIN", "UPDATE_EMAIL_DOMAIN", "CREATE_RETURN_PATH", "DELETE_RETURN_PATH", "UPDATE_RETURN_PATH", "CREATE_IP_POOL", "UPDATE_IP_POOL", "DELETE_IP_POOL", "MOVE_IP_POOL"]), help=u"""A filter to return only resources matching the given operation type.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2092,7 +2112,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'WorkRequestSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, work_request_id, page, limit):
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, work_request_id, page, limit, status, sort_by, sort_order, operation_type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2104,6 +2124,14 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if status is not None:
+        kwargs['status'] = status
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if operation_type is not None:
+        kwargs['operation_type'] = operation_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('email', 'email', ctx)
     if all_pages:
@@ -2606,6 +2634,7 @@ def update_email_domain(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @email_ip_pool_group.command(name=cli_util.override('email.update_email_ip_pool.command_name', 'update'), help=u"""Updates the EmailIpPool \n[Command Reference](updateEmailIpPool)""")
 @cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
 @cli_util.option('--description', help=u"""The description of the IpPool. Avoid entering confidential information.""")
+@cli_util.option('--last-ip-drain-period-in-hours', type=click.INT, help=u"""Last IP will be unassigned from the IP Pool after the period of time (in hours) specified by this parameter. Default is 24 hours.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2623,7 +2652,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_email_ip_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, email_ip_pool_id, description, freeform_tags, defined_tags, if_match, is_lock_override):
+def update_email_ip_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, email_ip_pool_id, description, last_ip_drain_period_in_hours, freeform_tags, defined_tags, if_match, is_lock_override):
 
     if isinstance(email_ip_pool_id, six.string_types) and len(email_ip_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --email-ip-pool-id cannot be whitespace or empty string')
@@ -2643,6 +2672,9 @@ def update_email_ip_pool(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if description is not None:
         _details['description'] = description
+
+    if last_ip_drain_period_in_hours is not None:
+        _details['lastIpDrainPeriodInHours'] = last_ip_drain_period_in_hours
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

@@ -6,6 +6,116 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.76.0 - 2026-03-10
+-------------------
+Added
+~~~~~
+*  Oracle Cloud VMware Provisioning service
+
+  * Support new commands for VMware Bring-Your-Own-License with VCF5.2
+
+    * ``oci ocvs byol``
+    * ``oci ocvs byol-allocation``
+
+  * Support for new optional parameters ``--byol-allocation-details`` and ``--sddc-byol-allocation-details`` in the following commands
+
+    * ``oci ocvs sddc create``
+    * ``oci ocvs sddc update``
+
+  * Support for new optional parameter ``--cluster-byol-allocation-details`` in the following commands
+
+    * ``oci ovcs cluster create``
+    * ``oci ocvs cluster update``
+
+  * Support for new optional parameter ``--initial-vcf-byol-allocation-id`` in the following command
+
+    * ``oci ovcs cluster create``
+
+  * Support for new optional parameters ``--is-vsan-byol-enabled`` and ``--vcf-byol-allocation-id`` in the following commands
+
+    * ``oci ocvs esxi-host create``
+    * ``oci ocvs esxi-host update``
+
+  * Support listing Management Appliances by SDDC Id using new optional parameter ``--sddc-id``
+
+    * ``oci ocvs management-appliance list --sddc-id``
+
+* Support for the Guarded Data Pipelines service
+
+  * ``oci gdp``
+
+* Support for Identity Verification in the Identity Domains service
+
+  * ``oci identity-domains identity-proofing-provider``
+  * ``oci identity-domains identity-proofing-provider-template``
+  * ``oci identity-domains verification-claim``
+
+* Distributed Database service
+
+  * Support for new commands
+
+    * ``oci distributed-database distributed-autonomous-db-service distributed-autonomous-database configure-distributed-autonomous-database-gsm-wallet``
+    * ``oci distributed-database distributed-autonomous-db-service distributed-autonomous-database recreate-failed-distributed-autonomous-database-resource``
+    * ``oci distributed-database distributed-autonomous-db-service distributed-autonomous-database validate-distributed-autonomous-database-ca-bundle``
+    * ``oci distributed-database distributed-autonomous-db-service distributed-database get-distributed-autonomous-database-raft-metric``
+    * ``oci distributed-database distributed-db-service distributed-database get-distributed-database-raft-metric``
+    * ``oci distributed-database distributed-db-service distributed-database move-distributed-database-replication-unit``
+    * ``oci distributed-database distributed-db-service distributed-database recreate-failed-distributed-database-resource``
+
+  *  Support for new optional parameter
+
+    * ``oci distributed-database distributed-autonomous-db-service distributed-autonomous-database configure-distributed-autonomous-database-sharding --ca-bundle-id --certificate-id``
+    * ``oci distributed-database distributed-autonomous-db-service distributed-autonomous-database-collection list-distributed-autonomous-databases --private-endpoint-id``
+    * ``oci distributed-database distributed-db-service distributed-database create --scan-listener-port``
+    * ``oci distributed-database distributed-db-service distributed-database delete --must-delete-infra``
+    * ``oci distributed-database distributed-db-service distributed-database-collection list-distributed-databases --private-endpoint-id``
+
+* Support for new optional parameter in the Email Delivery Service
+
+  * ``oci email email-ip-pool create --last-ip-drain-period``
+  * ``oci email email-ip-pool update --last-ip-drain-period``
+  * ``oci email work-request list --operation-type --sort-by --sort-order --status``
+  * ``oci email work-request-error list --sort-by --sort-order``
+  * ``oci email work-request-log list --sort-by --sort-order``
+
+* Support for the Limits Increase service
+
+  * ``oci limits-increase``
+
+Changed
+~~~~~~~
+* Oracle Cloud VMware Provisioning service
+
+  * [BREAKING] Rename commands under the cluster group
+
+    * ``oci ocvs cluster create``
+    * ``oci ocvs cluster delete``
+    * ``oci ocvs cluster get``
+    * ``oci ocvs cluster list``
+    * ``oci ocvs cluster update``
+
+  * [BREAKING] Rename commands under the management-appliance group
+
+    * ``oci ocvs management-appliance create``
+    * ``oci ocvs management-appliance delete``
+    * ``oci ocvs management-appliance get``
+    * ``oci ocvs management-appliance list``
+    * ``oci ocvs management-appliance update``
+
+  * [BREAKING] Rename command to list work request errors
+
+    * ``oci ocvs work-request-error list``
+
+* ``--ca-bundle-id`` is now an optional parameter for the following command in Distributed Database service
+
+  * ``oci distributed-database distributed-autonomous-db-service distributed-autonomous-database generate-distributed-autonomous-database-gsm-certificate-signing-request``
+
+* [BREAKING] Renamed commands to list email IP pools and outbound public IPs assigned for a given tenant in the Email Delivery Service
+
+  * ``oci email email-ip-pool list``
+  * ``oci email email-outbound-ip list``
+
+
 3.75.0 - 2026-03-03
 -------------------
 Added

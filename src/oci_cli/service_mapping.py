@@ -343,6 +343,11 @@ service_mapping = {
         "Fusion Applications Environment Management",
         "Others"
     ],
+    "gdp": [
+        "gdp",
+        "Guarded Data Pipelines",
+        "Others"
+    ],
     "generative-ai": [
         "generative_ai",
         "Generative AI Service Management",
@@ -448,6 +453,11 @@ service_mapping = {
         "Service Limits",
         "Governance & Administration"
     ],
+    "limits-increase": [
+        "limits_increase",
+        "Limits Increase",
+        "Governance & Administration"
+    ],
     "log-analytics": [
         "log_analytics",
         "LogAnalytics",
@@ -544,7 +554,7 @@ service_mapping = {
         "Databases"
     ],
     "occ": [
-        "oci_control_center",
+        "occ",
         "OCI Control Center",
         "Others"
     ],

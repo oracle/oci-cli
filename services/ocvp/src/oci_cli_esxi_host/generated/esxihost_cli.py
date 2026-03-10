@@ -61,6 +61,8 @@ Avoid entering confidential information.""")
 @cli_util.option('--host-ocpu-count', type=click.FLOAT, help=u"""The OCPU count of the ESXi host.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The [OCID] of the Capacity Reservation.""")
 @cli_util.option('--esxi-software-version', help=u"""The ESXi software bundle to install on the ESXi host. Only versions under the same vmwareSoftwareVersion and have been validate by Oracle Cloud VMware Solution will be accepted. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
+@cli_util.option('--vcf-byol-allocation-id', help=u"""The [OCID] of the Byol Allocation for VCF (VMware Cloud Foundation) deployment.""")
+@cli_util.option('--is-vsan-byol-enabled', type=click.BOOL, help=u"""Indicates whether this host embedded VMware vSAN with BYOL Allocation.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -75,7 +77,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, display_name, billing_donor_host_id, current_commitment, next_commitment, compute_availability_domain, host_shape_name, host_ocpu_count, capacity_reservation_id, esxi_software_version, freeform_tags, defined_tags):
+def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, display_name, billing_donor_host_id, current_commitment, next_commitment, compute_availability_domain, host_shape_name, host_ocpu_count, capacity_reservation_id, esxi_software_version, vcf_byol_allocation_id, is_vsan_byol_enabled, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -109,6 +111,12 @@ def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if esxi_software_version is not None:
         _details['esxiSoftwareVersion'] = esxi_software_version
+
+    if vcf_byol_allocation_id is not None:
+        _details['vcfByolAllocationId'] = vcf_byol_allocation_id
+
+    if is_vsan_byol_enabled is not None:
+        _details['isVsanByolEnabled'] = is_vsan_byol_enabled
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -497,6 +505,8 @@ Avoid entering confidential information.""")
 @cli_util.option('--billing-donor-host-id', help=u"""The [OCID] of the deleted ESXi Host with leftover billing cycle.
 
 **Note:** This option also requires the `nextCommitment` parameter to be populated with a value other than `HOUR`. Otherwise, any update request fails with the error \u201CNext SKU can\u2019t be NULL or Hourly.\u201D""")
+@cli_util.option('--vcf-byol-allocation-id', help=u"""The [OCID] of the Byol Allocation for VCF (VMware Cloud Foundation) deployment.""")
+@cli_util.option('--is-vsan-byol-enabled', type=click.BOOL, help=u"""Indicates whether this host embedded VMware vSAN with BYOL Allocation.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -513,7 +523,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ocvp', 'class': 'EsxiHost'})
 @cli_util.wrap_exceptions
-def update_esxi_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, esxi_host_id, display_name, next_commitment, billing_donor_host_id, freeform_tags, defined_tags, if_match):
+def update_esxi_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, esxi_host_id, display_name, next_commitment, billing_donor_host_id, vcf_byol_allocation_id, is_vsan_byol_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(esxi_host_id, six.string_types) and len(esxi_host_id.strip()) == 0:
         raise click.UsageError('Parameter --esxi-host-id cannot be whitespace or empty string')
@@ -537,6 +547,12 @@ def update_esxi_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if billing_donor_host_id is not None:
         _details['billingDonorHostId'] = billing_donor_host_id
+
+    if vcf_byol_allocation_id is not None:
+        _details['vcfByolAllocationId'] = vcf_byol_allocation_id
+
+    if is_vsan_byol_enabled is not None:
+        _details['isVsanByolEnabled'] = is_vsan_byol_enabled
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

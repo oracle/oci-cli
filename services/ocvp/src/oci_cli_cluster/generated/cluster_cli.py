@@ -69,6 +69,8 @@ This option is a JSON list with items of type DatastoreInfo.  For documentation 
 @cli_util.option('--datastore-cluster-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of datastore clusters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vmware-software-version', help=u"""The VMware software bundle to install on the ESXi hosts in the Cluster. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--esxi-software-version', help=u"""The ESXi software bundle to install on the ESXi hosts in the Cluster. Only versions under the same vmwareSoftwareVersion and have been validate by Oracle Cloud VMware Solution will be accepted. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
+@cli_util.option('--cluster-byol-allocation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--initial-vcf-byol-allocation-id', help=u"""The [OCID] of the initial VMware BYOL Allocation used to deploy VMware Cloud Foundation.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -78,12 +80,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'datastore-cluster-ids': {'module': 'ocvp', 'class': 'list[string]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'datastore-cluster-ids': {'module': 'ocvp', 'class': 'list[string]'}, 'cluster-byol-allocation-details': {'module': 'ocvp', 'class': 'ClusterByolAllocationDetails'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'datastore-cluster-ids': {'module': 'ocvp', 'class': 'list[string]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'datastore-cluster-ids': {'module': 'ocvp', 'class': 'list[string]'}, 'cluster-byol-allocation-details': {'module': 'ocvp', 'class': 'ClusterByolAllocationDetails'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, compute_availability_domain, esxi_hosts_count, network_configuration, display_name, instance_display_name_prefix, initial_commitment, workload_network_cidr, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, capacity_reservation_id, datastores, datastore_cluster_ids, vmware_software_version, esxi_software_version, freeform_tags, defined_tags):
+def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, compute_availability_domain, esxi_hosts_count, network_configuration, display_name, instance_display_name_prefix, initial_commitment, workload_network_cidr, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, capacity_reservation_id, datastores, datastore_cluster_ids, vmware_software_version, esxi_software_version, cluster_byol_allocation_details, initial_vcf_byol_allocation_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -129,6 +131,12 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if esxi_software_version is not None:
         _details['esxiSoftwareVersion'] = esxi_software_version
+
+    if cluster_byol_allocation_details is not None:
+        _details['clusterByolAllocationDetails'] = cli_util.parse_json_parameter("cluster_byol_allocation_details", cluster_byol_allocation_details)
+
+    if initial_vcf_byol_allocation_id is not None:
+        _details['initialVcfByolAllocationId'] = initial_vcf_byol_allocation_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -323,6 +331,7 @@ def list_clusters(ctx, from_json, all_pages, page_size, sddc_id, display_name, l
 @cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vmware-software-version', help=u"""The version of bundled VMware software that the Oracle Cloud VMware Solution will install on any new ESXi hosts that you add to this Cluster in the future. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--esxi-software-version', help=u"""The version of bundled ESXi software that the Oracle Cloud VMware Solution will install on any new ESXi hosts that you add to this Cluster in the future unless a specific version is configured on the ESXi level. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
+@cli_util.option('--cluster-byol-allocation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -334,18 +343,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'cluster-byol-allocation-details': {'module': 'ocvp', 'class': 'ClusterByolAllocationDetails'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ocvp', 'class': 'Cluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'cluster-byol-allocation-details': {'module': 'ocvp', 'class': 'ClusterByolAllocationDetails'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ocvp', 'class': 'Cluster'})
 @cli_util.wrap_exceptions
-def update_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, display_name, network_configuration, vmware_software_version, esxi_software_version, freeform_tags, defined_tags, if_match):
+def update_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, display_name, network_configuration, vmware_software_version, esxi_software_version, cluster_byol_allocation_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
     if not force:
-        if network_configuration or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to network-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if network_configuration or cluster_byol_allocation_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to network-configuration and cluster-byol-allocation-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -366,6 +375,9 @@ def update_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
     if esxi_software_version is not None:
         _details['esxiSoftwareVersion'] = esxi_software_version
+
+    if cluster_byol_allocation_details is not None:
+        _details['clusterByolAllocationDetails'] = cli_util.parse_json_parameter("cluster_byol_allocation_details", cluster_byol_allocation_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
