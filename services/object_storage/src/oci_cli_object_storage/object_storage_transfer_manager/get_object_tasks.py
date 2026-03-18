@@ -5,7 +5,7 @@
 from .work_pool import WorkPool
 from .work_pool_task import WorkPoolTask
 from .work_pool_task import WorkPoolTaskCallbacksContainer, WorkPoolTaskErrorCallback
-from oci._vendor.urllib3.exceptions import (
+from urllib3.exceptions import (
     ReadTimeoutError,
     ProtocolError
 )
