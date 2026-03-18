@@ -6,6 +6,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.76.1 - 2026-03-17
+-------------------
+Added
+~~~~~
+* OCI OpenSearch service
+
+  * Support for new optional parameters ``--ml-node-count`` in the following commands
+
+    * ``oci opensearch cluster create``
+    * ``oci opensearch cluster resizehorizontal``
+
+  * Support for new optional parameters ``--ml-node-host-memory-gb``, ``--ml-node-host-ocpu-count``, ``--ml-node-host-shape``, ``--ml-node-storage-gb`` in the following commands
+
+    * ``oci opensearch cluster create``
+    * ``oci opensearch cluster resizevertical``
+
+  * Support for new optional parameters ``--ml-node-host-type`` in the following command
+     * ``oci opensearch cluster create``
+
+
 3.76.0 - 2026-03-10
 -------------------
 Added

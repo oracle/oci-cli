@@ -11,7 +11,7 @@ from . import stubs
 import itertools
 import vcr
 
-from oci._vendor.urllib3 import connectionpool
+from urllib3 import connectionpool
 
 import unittest.mock as mock
 
@@ -19,15 +19,25 @@ try:
     # Python 3.8+
     from importlib.metadata import version as pkg_version
 except ImportError:
-    # Python 3.6/3.7 need backported package:
     from importlib_metadata import version as pkg_version
 
 from packaging import version
 
-# Save the original types for our vendored version of requests and urllib3 so we can reset/unmock them later
-_OCIVendoredVerifiedHTTPSConnection = connectionpool.VerifiedHTTPSConnection
+try:
+    # Modern urllib3 (2.0+)
+    from urllib3.connection import HTTPSConnection
+    _cpoolOCIVendoredHTTPSConnection = HTTPSConnection
+    _OCIVendoredVerifiedHTTPSConnection = HTTPSConnection
+except ImportError:
+    # Legacy urllib3 (1.x)
+    try:
+        from urllib3.connectionpool import VerifiedHTTPSConnection as HTTPSConnection
+    except ImportError:
+        from urllib3.connectionpool import HTTPSConnection
+    _OCIVendoredVerifiedHTTPSConnection = HTTPSConnection
+    _cpoolOCIVendoredHTTPSConnection = HTTPSConnection
+
 _cpoolOCIVendoredHTTPConnection = connectionpool.HTTPConnection
-_cpoolOCIVendoredHTTPSConnection = connectionpool.HTTPSConnection
 
 # Save the base VCR function references from VCR so that we can call them from inside our modified functions
 original_vcr_reset_patchers_ref = vcr.patch.reset_patchers
@@ -38,7 +48,8 @@ def _revised_vcr_reset_patchers():
     for patcher in original_vcr_reset_patchers_ref():
         yield patcher
 
-    yield mock.patch.object(connectionpool, 'VerifiedHTTPSConnection', _OCIVendoredVerifiedHTTPSConnection)
+    if version.parse(pkg_version("urllib3")) < version.parse("2.0.0"):
+        yield mock.patch.object(connectionpool, 'VerifiedHTTPSConnection', _OCIVendoredVerifiedHTTPSConnection)
     yield mock.patch.object(connectionpool, 'HTTPConnection', _cpoolOCIVendoredHTTPConnection)
 
     if hasattr(connectionpool.HTTPConnectionPool, 'ConnectionCls'):
