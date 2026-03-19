@@ -2149,7 +2149,8 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
                 headers = call_result.headers
                 request = call_result.request
             final_response = Response(status, headers, post_processed_results, request)
-            return final_response
+    if stream_output:
+        return final_response
     if ctx and ctx.obj['debug']:
         print("", file=sys.stderr)
 
@@ -2333,7 +2334,8 @@ def list_call_get_all_results_multiple_keys(list_func_ref, ctx=None, is_json=Fal
                 headers = call_result.headers
                 request = call_result.request
             final_response = Response(status, headers, post_processed_results, request)
-            return final_response
+    if stream_output:
+        return final_response
     if ctx and ctx.obj['debug']:
         print("", file=sys.stderr)
 
