@@ -70,6 +70,12 @@ def bds_instance_group():
     pass
 
 
+@click.command(cli_util.override('bds.bds_certificate_configuration_group.command_name', 'bds-certificate-configuration'), cls=CommandGroupWithAlias, help="""The BDS certificate configuration information.""")
+@cli_util.help_option_group
+def bds_certificate_configuration_group():
+    pass
+
+
 @click.command(cli_util.override('bds.resource_principal_configuration_group.command_name', 'resource-principal-configuration'), cls=CommandGroupWithAlias, help="""Resource Principal Session Token Details.""")
 @cli_util.help_option_group
 def resource_principal_configuration_group():
@@ -108,6 +114,7 @@ bds_root_group.add_command(node_replace_configuration_group)
 bds_root_group.add_command(work_request_group)
 bds_root_group.add_command(bds_metastore_configuration_group)
 bds_root_group.add_command(bds_instance_group)
+bds_root_group.add_command(bds_certificate_configuration_group)
 bds_root_group.add_command(resource_principal_configuration_group)
 bds_root_group.add_command(bds_api_key_group)
 bds_root_group.add_command(work_request_error_group)
@@ -118,8 +125,9 @@ bds_root_group.add_command(node_backup_configuration_group)
 @bds_metastore_configuration_group.command(name=cli_util.override('bds.activate_bds_metastore_configuration.command_name', 'activate'), help=u"""Activate specified metastore configuration. \n[Command Reference](activateBdsMetastoreConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--metastore-config-id', required=True, help=u"""The metastore configuration ID""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--bds-api-key-passphrase', help=u"""Base-64 encoded passphrase of the BDS Api Key. Set only if metastore's type is EXTERNAL.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -129,7 +137,7 @@ bds_root_group.add_command(node_backup_configuration_group)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def activate_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_config_id, cluster_admin_password, bds_api_key_passphrase, if_match):
+def activate_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_config_id, bds_api_key_passphrase, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -143,10 +151,15 @@ def activate_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wai
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
 
     if bds_api_key_passphrase is not None:
         _details['bdsApiKeyPassphrase'] = bds_api_key_passphrase
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.activate_bds_metastore_configuration(
@@ -188,7 +201,8 @@ def activate_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wai
 @identity_configuration_group.command(name=cli_util.override('bds.activate_iam_user_sync_configuration.command_name', 'activate-iam-user-sync-configuration'), help=u"""Activate IAM user sync configuration for the given identity configuration \n[Command Reference](activateIamUserSyncConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--identity-configuration-id', required=True, help=u"""The OCID of the identity configuration""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--is-posix-attributes-addition-required', type=click.BOOL, help=u"""whether posix attribute needs to be appended to users""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -199,7 +213,7 @@ def activate_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def activate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, is_posix_attributes_addition_required, if_match):
+def activate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, secret_id, is_posix_attributes_addition_required, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -213,7 +227,12 @@ def activate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wai
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if is_posix_attributes_addition_required is not None:
         _details['isPosixAttributesAdditionRequired'] = is_posix_attributes_addition_required
@@ -258,9 +277,10 @@ def activate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wai
 @identity_configuration_group.command(name=cli_util.override('bds.activate_upst_configuration.command_name', 'activate-upst-configuration'), help=u"""Activate UPST configuration for the given identity configuration \n[Command Reference](activateUpstConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--identity-configuration-id', required=True, help=u"""The OCID of the identity configuration""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--vault-id', required=True, help=u"""OCID of the vault to store token exchange service principal keyta, required for creating UPST configb""")
 @cli_util.option('--master-encryption-key-id', required=True, help=u"""OCID of the master encryption key in vault for encrypting token exchange service principal keytab, required for creating UPST config""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -270,7 +290,7 @@ def activate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def activate_upst_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, vault_id, master_encryption_key_id, if_match):
+def activate_upst_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, vault_id, master_encryption_key_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -284,9 +304,14 @@ def activate_upst_configuration(ctx, from_json, wait_for_state, max_wait_seconds
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['vaultId'] = vault_id
     _details['masterEncryptionKeyId'] = master_encryption_key_id
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.activate_upst_configuration(
@@ -329,8 +354,9 @@ def activate_upst_configuration(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--node-type', required=True, help=u"""A node type that is managed by an autoscale configuration. The only supported types are WORKER and COMPUTE_ONLY_WORKER.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -342,7 +368,7 @@ def activate_upst_configuration(ctx, from_json, wait_for_state, max_wait_seconds
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}, 'policy-details': {'module': 'bds', 'class': 'AddAutoScalePolicyDetails'}})
 @cli_util.wrap_exceptions
-def add_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, display_name, policy, policy_details, if_match):
+def add_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, display_name, cluster_admin_password, secret_id, policy, policy_details, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -355,10 +381,15 @@ def add_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seco
     _details = {}
     _details['nodeType'] = node_type
     _details['isEnabled'] = is_enabled
-    _details['clusterAdminPassword'] = cluster_admin_password
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if policy is not None:
         _details['policy'] = cli_util.parse_json_parameter("policy", policy)
@@ -406,8 +437,9 @@ def add_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--node-type', required=True, help=u"""A node type that is managed by an autoscale configuration. The only supported types are WORKER and COMPUTE_ONLY_WORKER.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-scale-out-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -420,7 +452,7 @@ def add_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seco
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}, 'policy-details-scale-out-config': {'module': 'bds', 'class': 'MetricBasedHorizontalScaleOutConfig'}, 'policy-details-scale-in-config': {'module': 'bds', 'class': 'MetricBasedHorizontalScaleInConfig'}})
 @cli_util.wrap_exceptions
-def add_auto_scaling_configuration_add_metric_based_horizontal_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, display_name, policy, if_match, policy_details_scale_out_config, policy_details_scale_in_config):
+def add_auto_scaling_configuration_add_metric_based_horizontal_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, display_name, cluster_admin_password, secret_id, policy, if_match, policy_details_scale_out_config, policy_details_scale_in_config):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -434,10 +466,15 @@ def add_auto_scaling_configuration_add_metric_based_horizontal_scaling_policy_de
     _details['policyDetails'] = {}
     _details['nodeType'] = node_type
     _details['isEnabled'] = is_enabled
-    _details['clusterAdminPassword'] = cluster_admin_password
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if policy is not None:
         _details['policy'] = cli_util.parse_json_parameter("policy", policy)
@@ -490,8 +527,9 @@ def add_auto_scaling_configuration_add_metric_based_horizontal_scaling_policy_de
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--node-type', required=True, help=u"""A node type that is managed by an autoscale configuration. The only supported types are WORKER and COMPUTE_ONLY_WORKER.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-timezone', help=u"""The time zone of the execution schedule, in IANA time zone database name format""")
@@ -506,7 +544,7 @@ This option is a JSON list with items of type VerticalScalingScheduleDetails.  F
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}, 'policy-details-schedule-details': {'module': 'bds', 'class': 'list[VerticalScalingScheduleDetails]'}})
 @cli_util.wrap_exceptions
-def add_auto_scaling_configuration_add_schedule_based_vertical_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, display_name, policy, if_match, policy_details_timezone, policy_details_schedule_details):
+def add_auto_scaling_configuration_add_schedule_based_vertical_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, display_name, cluster_admin_password, secret_id, policy, if_match, policy_details_timezone, policy_details_schedule_details):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -520,10 +558,15 @@ def add_auto_scaling_configuration_add_schedule_based_vertical_scaling_policy_de
     _details['policyDetails'] = {}
     _details['nodeType'] = node_type
     _details['isEnabled'] = is_enabled
-    _details['clusterAdminPassword'] = cluster_admin_password
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if policy is not None:
         _details['policy'] = cli_util.parse_json_parameter("policy", policy)
@@ -576,8 +619,9 @@ def add_auto_scaling_configuration_add_schedule_based_vertical_scaling_policy_de
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--node-type', required=True, help=u"""A node type that is managed by an autoscale configuration. The only supported types are WORKER and COMPUTE_ONLY_WORKER.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-timezone', help=u"""The time zone of the execution schedule, in IANA time zone database name format""")
@@ -592,7 +636,7 @@ This option is a JSON list with items of type HorizontalScalingScheduleDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}, 'policy-details-schedule-details': {'module': 'bds', 'class': 'list[HorizontalScalingScheduleDetails]'}})
 @cli_util.wrap_exceptions
-def add_auto_scaling_configuration_add_schedule_based_horizontal_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, display_name, policy, if_match, policy_details_timezone, policy_details_schedule_details):
+def add_auto_scaling_configuration_add_schedule_based_horizontal_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, display_name, cluster_admin_password, secret_id, policy, if_match, policy_details_timezone, policy_details_schedule_details):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -606,10 +650,15 @@ def add_auto_scaling_configuration_add_schedule_based_horizontal_scaling_policy_
     _details['policyDetails'] = {}
     _details['nodeType'] = node_type
     _details['isEnabled'] = is_enabled
-    _details['clusterAdminPassword'] = cluster_admin_password
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if policy is not None:
         _details['policy'] = cli_util.parse_json_parameter("policy", policy)
@@ -662,8 +711,9 @@ def add_auto_scaling_configuration_add_schedule_based_horizontal_scaling_policy_
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--node-type', required=True, help=u"""A node type that is managed by an autoscale configuration. The only supported types are WORKER and COMPUTE_ONLY_WORKER.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-scale-up-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -676,7 +726,7 @@ def add_auto_scaling_configuration_add_schedule_based_horizontal_scaling_policy_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}, 'policy-details-scale-up-config': {'module': 'bds', 'class': 'MetricBasedVerticalScaleUpConfig'}, 'policy-details-scale-down-config': {'module': 'bds', 'class': 'MetricBasedVerticalScaleDownConfig'}})
 @cli_util.wrap_exceptions
-def add_auto_scaling_configuration_add_metric_based_vertical_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, display_name, policy, if_match, policy_details_scale_up_config, policy_details_scale_down_config):
+def add_auto_scaling_configuration_add_metric_based_vertical_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, display_name, cluster_admin_password, secret_id, policy, if_match, policy_details_scale_up_config, policy_details_scale_down_config):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -690,10 +740,15 @@ def add_auto_scaling_configuration_add_metric_based_vertical_scaling_policy_deta
     _details['policyDetails'] = {}
     _details['nodeType'] = node_type
     _details['isEnabled'] = is_enabled
-    _details['clusterAdminPassword'] = cluster_admin_password
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if policy is not None:
         _details['policy'] = cli_util.parse_json_parameter("policy", policy)
@@ -742,21 +797,23 @@ def add_auto_scaling_configuration_add_metric_based_vertical_scaling_policy_deta
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.add_block_storage.command_name', 'add'), help=u"""Adds block storage to existing worker/compute only worker nodes. The same amount of  storage will be added to all worker/compute only worker nodes. No change will be made to storage that is already attached. Block storage cannot be removed. \n[Command Reference](addBlockStorage)""")
+@bds_instance_group.command(name=cli_util.override('bds.add_block_storage.command_name', 'add'), help=u"""Adds block storage to existing worker/compute only worker nodes. The same amount of storage will be added to all worker/compute only worker nodes. No change will be made to storage that is already attached. Block storage cannot be removed. \n[Command Reference](addBlockStorage)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
-@cli_util.option('--block-volume-size-in-gbs', required=True, type=click.INT, help=u"""The size of block volume in GB to be added to each worker node. All the details needed for attaching the block volume are managed by service itself.""")
-@cli_util.option('--node-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["WORKER", "COMPUTE_ONLY_WORKER", "KAFKA_BROKER"]), help=u"""Worker node types.""")
+@cli_util.option('--block-volume-size-in-gbs', required=True, type=click.INT, help=u"""The size of block volume in GB to be added. For WORKER, COMPUTE_ONLY_WORKER, and KAFKA_BROKER nodes, the same size will be added to all nodes of that type. For EDGE nodes, this size can be different per node when nodeId is specified. All the details needed for attaching the block volume are managed by service itself.""")
+@cli_util.option('--node-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["WORKER", "COMPUTE_ONLY_WORKER", "KAFKA_BROKER", "EDGE"]), help=u"""Worker node types.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--node-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Optional. List of OCIDs of specific nodes to add storage to. Only supported for EDGE nodes. When omitted, storage is added to all nodes of the specified type.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'node-ids': {'module': 'bds', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'node-ids': {'module': 'bds', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def add_block_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, block_volume_size_in_gbs, node_type, if_match):
+def add_block_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, block_volume_size_in_gbs, node_type, cluster_admin_password, secret_id, node_ids, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -767,9 +824,17 @@ def add_block_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['blockVolumeSizeInGBs'] = block_volume_size_in_gbs
     _details['nodeType'] = node_type
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    if node_ids is not None:
+        _details['nodeIds'] = cli_util.parse_json_parameter("node_ids", node_ids)
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.add_block_storage(
@@ -810,9 +875,9 @@ def add_block_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @bds_instance_group.command(name=cli_util.override('bds.add_cloud_sql.command_name', 'add'), help=u"""Adds Cloud SQL to your cluster. You can use Cloud SQL to query against non-relational data stored in multiple big data sources, including Apache Hive, HDFS, Oracle NoSQL Database, and Apache HBase. Adding Cloud SQL adds a query server node to the cluster and creates cell servers on all the worker nodes in the cluster. \n[Command Reference](addCloudSql)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--shape', required=True, help=u"""Shape of the node.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volume in GB to be attached to the given node. All details needed for attaching the block volume are managed by the service itself.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -822,7 +887,7 @@ def add_block_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'bds', 'class': 'ShapeConfigDetails'}})
 @cli_util.wrap_exceptions
-def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, shape, cluster_admin_password, shape_config, block_volume_size_in_gbs, if_match):
+def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, shape, shape_config, block_volume_size_in_gbs, cluster_admin_password, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -834,13 +899,15 @@ def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     _details = {}
     _details['shape'] = shape
-    _details['clusterAdminPassword'] = cluster_admin_password
 
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
     if block_volume_size_in_gbs is not None:
         _details['blockVolumeSizeInGBs'] = block_volume_size_in_gbs
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.add_cloud_sql(
@@ -882,9 +949,10 @@ def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--shape', required=True, help=u"""Shape of the Kafka broker node.""")
 @cli_util.option('--number-of-kafka-nodes', required=True, type=click.INT, help=u"""Number of Kafka nodes for the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volme in GB to be attached to the given node. All details needed for attaching the block volume are managed by the service itself.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -894,7 +962,7 @@ def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'bds', 'class': 'ShapeConfigDetails'}})
 @cli_util.wrap_exceptions
-def add_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, shape, number_of_kafka_nodes, cluster_admin_password, shape_config, block_volume_size_in_gbs, if_match):
+def add_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, shape, number_of_kafka_nodes, shape_config, block_volume_size_in_gbs, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -907,13 +975,18 @@ def add_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
     _details = {}
     _details['shape'] = shape
     _details['numberOfKafkaNodes'] = number_of_kafka_nodes
-    _details['clusterAdminPassword'] = cluster_admin_password
 
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
     if block_volume_size_in_gbs is not None:
         _details['blockVolumeSizeInGBs'] = block_volume_size_in_gbs
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.add_kafka(
@@ -953,8 +1026,9 @@ def add_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 
 @bds_instance_group.command(name=cli_util.override('bds.add_master_nodes.command_name', 'add'), help=u"""Increases the size (scales out) of a cluster by adding master nodes. The added master nodes will have the same shape and will have the same amount of attached block storage as other master nodes in the cluster. \n[Command Reference](addMasterNodes)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
 @cli_util.option('--number-of-master-nodes', required=True, type=click.INT, help=u"""Number of additional master nodes for the cluster.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--shape', help=u"""Shape of the node. It's a read-only property derived from existing Master node.""")
 @cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volume in GB to be attached to the given node. It's a read-only property.""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -967,7 +1041,7 @@ def add_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'bds', 'class': 'ShapeConfigDetails'}})
 @cli_util.wrap_exceptions
-def add_master_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, number_of_master_nodes, shape, block_volume_size_in_gbs, shape_config, if_match):
+def add_master_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, number_of_master_nodes, cluster_admin_password, secret_id, shape, block_volume_size_in_gbs, shape_config, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -978,8 +1052,13 @@ def add_master_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['numberOfMasterNodes'] = number_of_master_nodes
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if shape is not None:
         _details['shape'] = shape
@@ -1028,8 +1107,9 @@ def add_master_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 @bds_instance_group.command(name=cli_util.override('bds.add_utility_nodes.command_name', 'add'), help=u"""Increases the size (scales out) of a cluster by adding utility nodes. The added utility nodes will have the same shape and will have the same amount of attached block storage as other utility nodes in the cluster. \n[Command Reference](addUtilityNodes)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
 @cli_util.option('--number-of-utility-nodes', required=True, type=click.INT, help=u"""Number of additional utility nodes for the cluster.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--shape', help=u"""Shape of the node. It's a read-only property derived from existing Utility node.""")
 @cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volume in GB to be attached to the given node. It's a read-only property.""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1042,7 +1122,7 @@ def add_master_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'bds', 'class': 'ShapeConfigDetails'}})
 @cli_util.wrap_exceptions
-def add_utility_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, number_of_utility_nodes, shape, block_volume_size_in_gbs, shape_config, if_match):
+def add_utility_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, number_of_utility_nodes, cluster_admin_password, secret_id, shape, block_volume_size_in_gbs, shape_config, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -1053,8 +1133,13 @@ def add_utility_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['numberOfUtilityNodes'] = number_of_utility_nodes
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if shape is not None:
         _details['shape'] = shape
@@ -1101,13 +1186,14 @@ def add_utility_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.add_worker_nodes.command_name', 'add'), help=u"""Increases the size (scales out) a cluster by adding worker nodes(data/compute). The added worker nodes will have the same shape and will have the same amount of attached block storage as other worker nodes in the cluster. \n[Command Reference](addWorkerNodes)""")
+@bds_instance_group.command(name=cli_util.override('bds.add_worker_nodes.command_name', 'add'), help=u"""Increases the size (scales out) of a cluster by adding worker nodes (data/compute/edge). The added worker and compute only worker nodes will have the same amount of attached block storage as other nodes of the same type in the cluster. Edge nodes can have different block storage sizes within the valid range (50GB-10TB). \n[Command Reference](addWorkerNodes)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--number-of-worker-nodes', required=True, type=click.INT, help=u"""Number of additional worker nodes for the cluster.""")
 @cli_util.option('--node-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["WORKER", "COMPUTE_ONLY_WORKER", "EDGE", "KAFKA_BROKER"]), help=u"""Worker node types, can either be Worker Data node or Compute only worker node.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--shape', help=u"""Shape of the node. This has to be specified when adding compute only worker node at the first time. Otherwise, it's a read-only property.""")
-@cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volume in GB to be attached to the given node. This has to be specified when adding compute only worker node at the first time. Otherwise, it's a read-only property.""")
+@cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volume in GB to be attached to the given node. This has to be specified when adding compute only worker or edge node at the first time. For EDGE nodes. Each node can have a different block storage size within the valid range (50GB-10TB) and the value must be specified.""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1118,7 +1204,7 @@ def add_utility_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'bds', 'class': 'ShapeConfigDetails'}})
 @cli_util.wrap_exceptions
-def add_worker_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, number_of_worker_nodes, node_type, shape, block_volume_size_in_gbs, shape_config, if_match):
+def add_worker_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, number_of_worker_nodes, node_type, cluster_admin_password, secret_id, shape, block_volume_size_in_gbs, shape_config, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -1129,9 +1215,14 @@ def add_worker_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['numberOfWorkerNodes'] = number_of_worker_nodes
     _details['nodeType'] = node_type
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if shape is not None:
         _details['shape'] = shape
@@ -1379,6 +1470,75 @@ def backup_node_node_level_details(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.bds_instance_reset_password.command_name', 'bds-instance-reset-password'), help=u"""Admin function which allows the password reset of indicated service. \n[Command Reference](bdsInstanceResetPassword)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--service', required=True, type=custom_types.CliCaseInsensitiveChoice(["AMBARI", "HUE", "RANGER", "JUPYTERHUB"]), help=u"""Target service to which this operation applies.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the cluster admin user.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'bds', 'class': 'PasswordSummary'})
+@cli_util.wrap_exceptions
+def bds_instance_reset_password(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, service, cluster_admin_password, secret_id, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['service'] = service
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.bds_instance_reset_password(
+        bds_instance_id=bds_instance_id,
+        bds_instance_reset_password_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.certificate_service_info.command_name', 'certificate-service-info'), help=u"""A list of services and their certificate details. \n[Command Reference](certificateServiceInfo)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of services for which TLS/SSL needs to be enabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1473,8 +1633,9 @@ def change_bds_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 @bds_instance_group.command(name=cli_util.override('bds.change_shape.command_name', 'change-shape'), help=u"""Changes the size of a cluster by scaling up or scaling down the nodes. Nodes are scaled up or down by changing the shapes of all the nodes of the same type to the next larger or smaller shape. The node types are master, utility, worker, and Cloud SQL. Only nodes with VM-STANDARD shapes can be scaled. \n[Command Reference](changeShape)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--nodes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1484,7 +1645,7 @@ def change_bds_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nodes': {'module': 'bds', 'class': 'ChangeShapeNodes'}})
 @cli_util.wrap_exceptions
-def change_shape(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, nodes, if_match):
+def change_shape(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, nodes, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -1495,8 +1656,13 @@ def change_shape(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['nodes'] = cli_util.parse_json_parameter("nodes", nodes)
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.change_shape(
@@ -1629,15 +1795,93 @@ def create_bds_capacity_report(ctx, from_json, compartment_id, shape_availabilit
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.create_bds_certificate_configuration.command_name', 'create-bds-certificate-configuration'), help=u"""Create a BDS certificate configuration for the cluster. \n[Command Reference](createBdsCertificateConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the BDS certificate configuration.""")
+@cli_util.option('--certificate-type', required=True, help=u"""The type of the BDS certificate configuration, also the type of the BDS certificates which will be generated by the BDS certificate configuration.""")
+@cli_util.option('--certificate-authority-id', help=u"""The OCID of the certificate authority which is associated with this certificate configuration.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment of the certificate authority connecting to this certificate configuration.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_bds_certificate_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, display_name, certificate_type, certificate_authority_id, compartment_id, cluster_admin_password, secret_id):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['certificateType'] = certificate_type
+
+    if certificate_authority_id is not None:
+        _details['certificateAuthorityId'] = certificate_authority_id
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.create_bds_certificate_configuration(
+        bds_instance_id=bds_instance_id,
+        create_bds_certificate_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.create_bds_instance.command_name', 'create'), help=u"""Creates a Big Data Service cluster. \n[Command Reference](createBdsInstance)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""Name of the Big Data Service cluster.""")
 @cli_util.option('--cluster-version', required=True, help=u"""Version of the Hadoop distribution.""")
 @cli_util.option('--cluster-public-key', required=True, help=u"""The SSH public key used to authenticate the cluster connection.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--is-high-availability', required=True, type=click.BOOL, help=u"""Boolean flag specifying whether or not the cluster is highly available (HA).""")
 @cli_util.option('--is-secure', required=True, type=click.BOOL, help=u"""Boolean flag specifying whether or not the cluster should be set up as secure.""")
 @cli_util.option('--nodes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of nodes in the Big Data Service cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user. Not required if the secretId is specified.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--is-secret-reused', type=click.BOOL, help=u"""Boolean flag specifying whether or not to persist the provided secret OCID and reuse it for future operations.""")
 @cli_util.option('--network-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--bootstrap-script-url', help=u"""Pre-authenticated URL of the script in Object Store that is downloaded and executed.""")
 @cli_util.option('--kerberos-realm-name', help=u"""The user-defined kerberos realm name.""")
@@ -1654,7 +1898,7 @@ def create_bds_capacity_report(ctx, from_json, compartment_id, shape_availabilit
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-config': {'module': 'bds', 'class': 'NetworkConfig'}, 'nodes': {'module': 'bds', 'class': 'list[CreateNodeDetails]'}, 'freeform-tags': {'module': 'bds', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bds', 'class': 'dict(str, dict(str, object))'}, 'bds-cluster-version-summary': {'module': 'bds', 'class': 'BdsClusterVersionSummary'}})
 @cli_util.wrap_exceptions
-def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, cluster_version, cluster_public_key, cluster_admin_password, is_high_availability, is_secure, nodes, network_config, bootstrap_script_url, kerberos_realm_name, freeform_tags, defined_tags, kms_key_id, cluster_profile, bds_cluster_version_summary):
+def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, cluster_version, cluster_public_key, is_high_availability, is_secure, nodes, cluster_admin_password, secret_id, is_secret_reused, network_config, bootstrap_script_url, kerberos_realm_name, freeform_tags, defined_tags, kms_key_id, cluster_profile, bds_cluster_version_summary):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1664,10 +1908,18 @@ def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     _details['displayName'] = display_name
     _details['clusterVersion'] = cluster_version
     _details['clusterPublicKey'] = cluster_public_key
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['isHighAvailability'] = is_high_availability
     _details['isSecure'] = is_secure
     _details['nodes'] = cli_util.parse_json_parameter("nodes", nodes)
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    if is_secret_reused is not None:
+        _details['isSecretReused'] = is_secret_reused
 
     if network_config is not None:
         _details['networkConfig'] = cli_util.parse_json_parameter("network_config", network_config)
@@ -1733,8 +1985,9 @@ def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--metastore-id', required=True, help=u"""The OCID of the Data Catalog metastore.""")
 @cli_util.option('--bds-api-key-id', required=True, help=u"""The ID of BDS Api Key used for Data Catalog metastore integration.""")
 @cli_util.option('--bds-api-key-passphrase', required=True, help=u"""Base-64 encoded passphrase of the BDS Api Key.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--display-name', help=u"""The display name of the metastore configuration""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1743,7 +1996,7 @@ def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_id, bds_api_key_id, bds_api_key_passphrase, cluster_admin_password, display_name):
+def create_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_id, bds_api_key_id, bds_api_key_passphrase, display_name, cluster_admin_password, secret_id):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -1755,10 +2008,15 @@ def create_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_
     _details['metastoreId'] = metastore_id
     _details['bdsApiKeyId'] = bds_api_key_id
     _details['bdsApiKeyPassphrase'] = bds_api_key_passphrase
-    _details['clusterAdminPassword'] = cluster_admin_password
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.create_bds_metastore_configuration(
@@ -1798,10 +2056,11 @@ def create_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_
 
 @identity_configuration_group.command(name=cli_util.override('bds.create_identity_configuration.command_name', 'create'), help=u"""Create an identity configuration for the cluster \n[Command Reference](createIdentityConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the identity configuration, required for creating identity configuration.""")
 @cli_util.option('--identity-domain-id', required=True, help=u"""Identity domain OCID to use for identity config, required for creating identity configuration""")
 @cli_util.option('--confidential-application-id', required=True, help=u"""Identity domain confidential application ID for the identity config, required for creating identity configuration""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--upst-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--iam-user-sync-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1812,7 +2071,7 @@ def create_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'upst-configuration-details': {'module': 'bds', 'class': 'UpstConfigurationDetails'}, 'iam-user-sync-configuration-details': {'module': 'bds', 'class': 'IamUserSyncConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def create_identity_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, display_name, identity_domain_id, confidential_application_id, upst_configuration_details, iam_user_sync_configuration_details):
+def create_identity_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, display_name, identity_domain_id, confidential_application_id, cluster_admin_password, secret_id, upst_configuration_details, iam_user_sync_configuration_details):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -1821,10 +2080,15 @@ def create_identity_configuration(ctx, from_json, wait_for_state, max_wait_secon
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['displayName'] = display_name
     _details['identityDomainId'] = identity_domain_id
     _details['confidentialApplicationId'] = confidential_application_id
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if upst_configuration_details is not None:
         _details['upstConfigurationDetails'] = cli_util.parse_json_parameter("upst_configuration_details", upst_configuration_details)
@@ -2105,10 +2369,11 @@ def create_node_backup_configuration_node_level_details(ctx, from_json, wait_for
 @bds_instance_group.command(name=cli_util.override('bds.create_node_replace_configuration.command_name', 'create-node-replace-configuration'), help=u"""Add a nodeReplaceConfigurations to the cluster. \n[Command Reference](createNodeReplaceConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--level-type-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--metric-type', required=True, help=u"""Type of compute instance health metric to use for node replacement""")
 @cli_util.option('--duration-in-minutes', required=True, type=click.INT, help=u"""This value is the minimum period of time to wait before triggering node replacement. The value is in minutes.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Only ASCII alphanumeric characters with no spaces allowed. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2117,7 +2382,7 @@ def create_node_backup_configuration_node_level_details(ctx, from_json, wait_for
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'level-type-details': {'module': 'bds', 'class': 'LevelTypeDetails'}})
 @cli_util.wrap_exceptions
-def create_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, level_type_details, cluster_admin_password, metric_type, duration_in_minutes, display_name):
+def create_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, level_type_details, metric_type, duration_in_minutes, display_name, cluster_admin_password, secret_id):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -2127,12 +2392,17 @@ def create_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_s
 
     _details = {}
     _details['levelTypeDetails'] = cli_util.parse_json_parameter("level_type_details", level_type_details)
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['metricType'] = metric_type
     _details['durationInMinutes'] = duration_in_minutes
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.create_node_replace_configuration(
@@ -2172,11 +2442,12 @@ def create_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_s
 
 @bds_instance_group.command(name=cli_util.override('bds.create_node_replace_configuration_node_type_level_details.command_name', 'create-node-replace-configuration-node-type-level-details'), help=u"""Add a nodeReplaceConfigurations to the cluster. \n[Command Reference](createNodeReplaceConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--metric-type', required=True, help=u"""Type of compute instance health metric to use for node replacement""")
 @cli_util.option('--duration-in-minutes', required=True, type=click.INT, help=u"""This value is the minimum period of time to wait before triggering node replacement. The value is in minutes.""")
 @cli_util.option('--level-type-details-node-type', required=True, help=u"""Type of the node or nodes of the node backup configuration or node replacement configuration which are going to be created.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Only ASCII alphanumeric characters with no spaces allowed. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2185,7 +2456,7 @@ def create_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_node_replace_configuration_node_type_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, metric_type, duration_in_minutes, level_type_details_node_type, display_name):
+def create_node_replace_configuration_node_type_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metric_type, duration_in_minutes, level_type_details_node_type, display_name, cluster_admin_password, secret_id):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -2195,13 +2466,18 @@ def create_node_replace_configuration_node_type_level_details(ctx, from_json, wa
 
     _details = {}
     _details['levelTypeDetails'] = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['metricType'] = metric_type
     _details['durationInMinutes'] = duration_in_minutes
     _details['levelTypeDetails']['nodeType'] = level_type_details_node_type
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     _details['levelTypeDetails']['levelType'] = 'NODE_TYPE_LEVEL'
 
@@ -2243,11 +2519,12 @@ def create_node_replace_configuration_node_type_level_details(ctx, from_json, wa
 
 @bds_instance_group.command(name=cli_util.override('bds.create_node_replace_configuration_node_level_details.command_name', 'create-node-replace-configuration-node-level-details'), help=u"""Add a nodeReplaceConfigurations to the cluster. \n[Command Reference](createNodeReplaceConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--metric-type', required=True, help=u"""Type of compute instance health metric to use for node replacement""")
 @cli_util.option('--duration-in-minutes', required=True, type=click.INT, help=u"""This value is the minimum period of time to wait before triggering node replacement. The value is in minutes.""")
 @cli_util.option('--level-type-details-node-host-name', required=True, help=u"""Host name of the node to create backup configuration.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Only ASCII alphanumeric characters with no spaces allowed. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2256,7 +2533,7 @@ def create_node_replace_configuration_node_type_level_details(ctx, from_json, wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_node_replace_configuration_node_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, metric_type, duration_in_minutes, level_type_details_node_host_name, display_name):
+def create_node_replace_configuration_node_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metric_type, duration_in_minutes, level_type_details_node_host_name, display_name, cluster_admin_password, secret_id):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -2266,13 +2543,18 @@ def create_node_replace_configuration_node_level_details(ctx, from_json, wait_fo
 
     _details = {}
     _details['levelTypeDetails'] = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['metricType'] = metric_type
     _details['durationInMinutes'] = duration_in_minutes
     _details['levelTypeDetails']['nodeHostName'] = level_type_details_node_host_name
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     _details['levelTypeDetails']['levelType'] = 'NODE_LEVEL'
 
@@ -2315,7 +2597,8 @@ def create_node_replace_configuration_node_level_details(ctx, from_json, wait_fo
 @bds_instance_group.command(name=cli_util.override('bds.create_resource_principal_configuration.command_name', 'create-resource-principal-configuration'), help=u"""Create a resource principal session token configuration. \n[Command Reference](createResourcePrincipalConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Only ASCII alphanumeric characters with no spaces allowed. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--session-token-life-span-duration-in-hours', type=click.INT, help=u"""Life span in hours for the resource principal session token.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2325,7 +2608,7 @@ def create_node_replace_configuration_node_level_details(ctx, from_json, wait_fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_resource_principal_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, display_name, cluster_admin_password, session_token_life_span_duration_in_hours):
+def create_resource_principal_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, display_name, cluster_admin_password, secret_id, session_token_life_span_duration_in_hours):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -2335,7 +2618,12 @@ def create_resource_principal_configuration(ctx, from_json, wait_for_state, max_
 
     _details = {}
     _details['displayName'] = display_name
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if session_token_life_span_duration_in_hours is not None:
         _details['sessionTokenLifeSpanDurationInHours'] = session_token_life_span_duration_in_hours
@@ -2379,7 +2667,8 @@ def create_resource_principal_configuration(ctx, from_json, wait_for_state, max_
 @identity_configuration_group.command(name=cli_util.override('bds.deactivate_iam_user_sync_configuration.command_name', 'deactivate-iam-user-sync-configuration'), help=u"""Deactivate the IAM user sync configuration. \n[Command Reference](deactivateIamUserSyncConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--identity-configuration-id', required=True, help=u"""The OCID of the identity configuration""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2389,7 +2678,7 @@ def create_resource_principal_configuration(ctx, from_json, wait_for_state, max_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def deactivate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, if_match):
+def deactivate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -2403,7 +2692,12 @@ def deactivate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_w
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.deactivate_iam_user_sync_configuration(
@@ -2445,7 +2739,8 @@ def deactivate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_w
 @identity_configuration_group.command(name=cli_util.override('bds.deactivate_upst_configuration.command_name', 'deactivate-upst-configuration'), help=u"""Deactivate the UPST configuration represented by the provided ID. \n[Command Reference](deactivateUpstConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--identity-configuration-id', required=True, help=u"""The OCID of the identity configuration""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2455,7 +2750,7 @@ def deactivate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def deactivate_upst_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, if_match):
+def deactivate_upst_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -2469,7 +2764,12 @@ def deactivate_upst_configuration(ctx, from_json, wait_for_state, max_wait_secon
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.deactivate_upst_configuration(
@@ -2537,6 +2837,67 @@ def delete_bds_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     result = client.delete_bds_api_key(
         bds_instance_id=bds_instance_id,
         api_key_id=api_key_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_certificate_configuration_group.command(name=cli_util.override('bds.delete_bds_certificate_configuration.command_name', 'delete'), help=u"""Delete the BDS certificate configuration for the given ID. \n[Command Reference](deleteBdsCertificateConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--bds-certificate-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the BdsCertificateConfiguration.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_bds_certificate_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, bds_certificate_configuration_id, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(bds_certificate_configuration_id, six.string_types) and len(bds_certificate_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-certificate-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.delete_bds_certificate_configuration(
+        bds_instance_id=bds_instance_id,
+        bds_certificate_configuration_id=bds_certificate_configuration_id,
         **kwargs
     )
     if wait_for_state:
@@ -2871,8 +3232,9 @@ def delete_node_backup_configuration(ctx, from_json, wait_for_state, max_wait_se
 
 @bds_instance_group.command(name=cli_util.override('bds.disable_certificate.command_name', 'disable-certificate'), help=u"""Disabling TLS/SSL for various ODH services running on the BDS cluster. \n[Command Reference](disableCertificate)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of services for which certificate needs to be disabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2882,7 +3244,7 @@ def delete_node_backup_configuration(ctx, from_json, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'services': {'module': 'bds', 'class': 'list[Service]'}})
 @cli_util.wrap_exceptions
-def disable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, services, if_match):
+def disable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, services, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -2893,8 +3255,13 @@ def disable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['services'] = cli_util.parse_json_parameter("services", services)
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.disable_certificate(
@@ -2934,8 +3301,9 @@ def disable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 @bds_instance_group.command(name=cli_util.override('bds.enable_certificate.command_name', 'enable-certificate'), help=u"""Configuring TLS/SSL for various ODH services running on the BDS cluster. \n[Command Reference](enableCertificate)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of services for which certificate needs to be enabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--root-certificate', help=u"""Plain text certificate/s in order, separated by new line character. If not provided in request a self-signed root certificate is generated inside the cluster. In case hostCertDetails is provided, root certificate is mandatory.""")
 @cli_util.option('--host-cert-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of leaf certificates to use for services on each host. If custom host certificate is provided the root certificate becomes required.
 
@@ -2950,7 +3318,7 @@ This option is a JSON list with items of type HostCertDetails.  For documentatio
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'services': {'module': 'bds', 'class': 'list[Service]'}, 'host-cert-details': {'module': 'bds', 'class': 'list[HostCertDetails]'}})
 @cli_util.wrap_exceptions
-def enable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, services, root_certificate, host_cert_details, server_key_password, if_match):
+def enable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, services, cluster_admin_password, secret_id, root_certificate, host_cert_details, server_key_password, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -2961,8 +3329,13 @@ def enable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['services'] = cli_util.parse_json_parameter("services", services)
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if root_certificate is not None:
         _details['rootCertificate'] = root_certificate
@@ -3011,7 +3384,8 @@ def enable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @bds_instance_group.command(name=cli_util.override('bds.execute_bootstrap_script.command_name', 'execute-bootstrap-script'), help=u"""Execute bootstrap script. \n[Command Reference](executeBootstrapScript)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--bootstrap-script-url', help=u"""pre-authenticated URL of the bootstrap script in Object Store that can be downloaded and executed.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3022,7 +3396,7 @@ def enable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def execute_bootstrap_script(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, bootstrap_script_url, if_match):
+def execute_bootstrap_script(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, secret_id, bootstrap_script_url, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3033,7 +3407,12 @@ def execute_bootstrap_script(ctx, from_json, wait_for_state, max_wait_seconds, w
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if bootstrap_script_url is not None:
         _details['bootstrapScriptUrl'] = bootstrap_script_url
@@ -3077,7 +3456,8 @@ def execute_bootstrap_script(ctx, from_json, wait_for_state, max_wait_seconds, w
 @bds_instance_group.command(name=cli_util.override('bds.force_refresh_resource_principal.command_name', 'force-refresh-resource-principal'), help=u"""Force Refresh Resource Principal for the cluster. \n[Command Reference](forceRefreshResourcePrincipal)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--resource-principal-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the ResourcePrincipalConfiguration.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3087,7 +3467,7 @@ def execute_bootstrap_script(ctx, from_json, wait_for_state, max_wait_seconds, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def force_refresh_resource_principal(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, resource_principal_configuration_id, cluster_admin_password, if_match):
+def force_refresh_resource_principal(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, resource_principal_configuration_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3101,13 +3481,235 @@ def force_refresh_resource_principal(ctx, from_json, wait_for_state, max_wait_se
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.force_refresh_resource_principal(
         bds_instance_id=bds_instance_id,
         resource_principal_configuration_id=resource_principal_configuration_id,
         force_refresh_resource_principal_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.generate_bds_certificate.command_name', 'generate-bds-certificate'), help=u"""Generating certificates under BDS cluster nodes. \n[Command Reference](generateBdsCertificate)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--manage-certificate-level-type-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'manage-certificate-level-type-details': {'module': 'bds', 'class': 'ManageBdsCertificateLevelTypeDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'manage-certificate-level-type-details': {'module': 'bds', 'class': 'ManageBdsCertificateLevelTypeDetails'}})
+@cli_util.wrap_exceptions
+def generate_bds_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, manage_certificate_level_type_details, cluster_admin_password, secret_id, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['manageCertificateLevelTypeDetails'] = cli_util.parse_json_parameter("manage_certificate_level_type_details", manage_certificate_level_type_details)
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.generate_bds_certificate(
+        bds_instance_id=bds_instance_id,
+        generate_bds_certificate_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.generate_bds_certificate_node_level_manage_bds_certificate_details.command_name', 'generate-bds-certificate-node-level-manage-bds-certificate-details'), help=u"""Generating certificates under BDS cluster nodes. \n[Command Reference](generateBdsCertificate)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--manage-certificate-level-type-details-node-host-names', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Host name(s) of the specified node(s) to generate or renew BDS certificate(s).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'manage-certificate-level-type-details-node-host-names': {'module': 'bds', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'manage-certificate-level-type-details-node-host-names': {'module': 'bds', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def generate_bds_certificate_node_level_manage_bds_certificate_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, manage_certificate_level_type_details_node_host_names, cluster_admin_password, secret_id, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['manageCertificateLevelTypeDetails'] = {}
+    _details['manageCertificateLevelTypeDetails']['nodeHostNames'] = cli_util.parse_json_parameter("manage_certificate_level_type_details_node_host_names", manage_certificate_level_type_details_node_host_names)
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    _details['manageCertificateLevelTypeDetails']['triggerType'] = 'NODE_LEVEL'
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.generate_bds_certificate(
+        bds_instance_id=bds_instance_id,
+        generate_bds_certificate_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.generate_bds_certificate_config_level_manage_bds_certificate_details.command_name', 'generate-bds-certificate-config-level-manage-bds-certificate-details'), help=u"""Generating certificates under BDS cluster nodes. \n[Command Reference](generateBdsCertificate)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--manage-certificate-level-type-details-certificate-configuration-id', required=True, help=u"""The id of the BDS certificate configuration used to generate or renew BDS certificate(s).""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--manage-certificate-level-type-details-is-missing-nodes-only', type=click.BOOL, help=u"""Boolean flag specifying whether the request will only generate certificates for nodes which do not have the same certificate authority as the certificate configuration or not. The flag is only used for generating certificates from CONFIG_LEVEL.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def generate_bds_certificate_config_level_manage_bds_certificate_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, manage_certificate_level_type_details_certificate_configuration_id, cluster_admin_password, secret_id, if_match, manage_certificate_level_type_details_is_missing_nodes_only):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['manageCertificateLevelTypeDetails'] = {}
+    _details['manageCertificateLevelTypeDetails']['certificateConfigurationId'] = manage_certificate_level_type_details_certificate_configuration_id
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    if manage_certificate_level_type_details_is_missing_nodes_only is not None:
+        _details['manageCertificateLevelTypeDetails']['isMissingNodesOnly'] = manage_certificate_level_type_details_is_missing_nodes_only
+
+    _details['manageCertificateLevelTypeDetails']['triggerType'] = 'CONFIG_LEVEL'
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.generate_bds_certificate(
+        bds_instance_id=bds_instance_id,
+        generate_bds_certificate_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -3189,6 +3791,33 @@ def get_bds_api_key(ctx, from_json, bds_instance_id, api_key_id):
     result = client.get_bds_api_key(
         bds_instance_id=bds_instance_id,
         api_key_id=api_key_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@bds_certificate_configuration_group.command(name=cli_util.override('bds.get_bds_certificate_configuration.command_name', 'get'), help=u"""Returns details of the BdsCertificateConfiguration identified by the given ID. \n[Command Reference](getBdsCertificateConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--bds-certificate-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the BdsCertificateConfiguration.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'bds', 'class': 'BdsCertificateConfiguration'})
+@cli_util.wrap_exceptions
+def get_bds_certificate_configuration(ctx, from_json, bds_instance_id, bds_certificate_configuration_id):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(bds_certificate_configuration_id, six.string_types) and len(bds_certificate_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-certificate-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.get_bds_certificate_configuration(
+        bds_instance_id=bds_instance_id,
+        bds_certificate_configuration_id=bds_certificate_configuration_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3472,7 +4101,8 @@ def get_work_request(ctx, from_json, work_request_id):
 @bds_instance_group.command(name=cli_util.override('bds.install_os_patch.command_name', 'install-os-patch'), help=u"""Install an os patch on a cluster \n[Command Reference](installOsPatch)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--os-patch-version', required=True, help=u"""The target os patch version.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--patching-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Perform dry run for the patch and stop.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3484,7 +4114,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'patching-configs': {'module': 'bds', 'class': 'PatchingConfigs'}})
 @cli_util.wrap_exceptions
-def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs, is_dry_run, if_match):
+def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, secret_id, patching_configs, is_dry_run, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3496,7 +4126,12 @@ def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     _details = {}
     _details['osPatchVersion'] = os_patch_version
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if patching_configs is not None:
         _details['patchingConfigs'] = cli_util.parse_json_parameter("patching_configs", patching_configs)
@@ -3543,10 +4178,11 @@ def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @bds_instance_group.command(name=cli_util.override('bds.install_os_patch_batching_based_patching_configs.command_name', 'install-os-patch-batching-based-patching-configs'), help=u"""Install an os patch on a cluster \n[Command Reference](installOsPatch)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--os-patch-version', required=True, help=u"""The target os patch version.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--patching-configs-batch-size', required=True, type=click.INT, help=u"""How many nodes to be patched and rebooted in each iteration.""")
 @cli_util.option('--patching-configs-wait-time-between-batch-in-seconds', required=True, type=click.INT, help=u"""The wait time between batches in seconds.""")
 @cli_util.option('--patching-configs-tolerance-threshold-per-batch', required=True, type=click.INT, help=u"""Acceptable number of failed-to-be-patched nodes in each batch. The maximum number of failed-to-patch nodes cannot exceed 20% of the number of nodes.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Perform dry run for the patch and stop.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3557,7 +4193,7 @@ def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs_batch_size, patching_configs_wait_time_between_batch_in_seconds, patching_configs_tolerance_threshold_per_batch, is_dry_run, if_match):
+def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, patching_configs_batch_size, patching_configs_wait_time_between_batch_in_seconds, patching_configs_tolerance_threshold_per_batch, cluster_admin_password, secret_id, is_dry_run, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3570,10 +4206,15 @@ def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_st
     _details = {}
     _details['patchingConfigs'] = {}
     _details['osPatchVersion'] = os_patch_version
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['patchingConfigs']['batchSize'] = patching_configs_batch_size
     _details['patchingConfigs']['waitTimeBetweenBatchInSeconds'] = patching_configs_wait_time_between_batch_in_seconds
     _details['patchingConfigs']['toleranceThresholdPerBatch'] = patching_configs_tolerance_threshold_per_batch
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if is_dry_run is not None:
         _details['isDryRun'] = is_dry_run
@@ -3619,7 +4260,8 @@ def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_st
 @bds_instance_group.command(name=cli_util.override('bds.install_os_patch_downtime_based_patching_configs.command_name', 'install-os-patch-downtime-based-patching-configs'), help=u"""Install an os patch on a cluster \n[Command Reference](installOsPatch)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--os-patch-version', required=True, help=u"""The target os patch version.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Perform dry run for the patch and stop.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3630,7 +4272,7 @@ def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_st
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, is_dry_run, if_match):
+def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, secret_id, is_dry_run, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3643,7 +4285,12 @@ def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_st
     _details = {}
     _details['patchingConfigs'] = {}
     _details['osPatchVersion'] = os_patch_version
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if is_dry_run is not None:
         _details['isDryRun'] = is_dry_run
@@ -3689,9 +4336,10 @@ def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_st
 @bds_instance_group.command(name=cli_util.override('bds.install_os_patch_domain_based_patching_configs.command_name', 'install-os-patch-domain-based-patching-configs'), help=u"""Install an os patch on a cluster \n[Command Reference](installOsPatch)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--os-patch-version', required=True, help=u"""The target os patch version.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--patching-configs-wait-time-between-domain-in-seconds', required=True, type=click.INT, help=u"""The wait time between AD/FD in seconds.""")
 @cli_util.option('--patching-configs-tolerance-threshold-per-domain', required=True, type=click.INT, help=u"""Acceptable number of failed-to-be-patched nodes in each domain. The maximum number of failed-to-patch nodes cannot exceed 20% of the number of nodes.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Perform dry run for the patch and stop.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3702,7 +4350,7 @@ def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_st
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs_wait_time_between_domain_in_seconds, patching_configs_tolerance_threshold_per_domain, is_dry_run, if_match):
+def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, patching_configs_wait_time_between_domain_in_seconds, patching_configs_tolerance_threshold_per_domain, cluster_admin_password, secret_id, is_dry_run, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3715,9 +4363,14 @@ def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_stat
     _details = {}
     _details['patchingConfigs'] = {}
     _details['osPatchVersion'] = os_patch_version
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['patchingConfigs']['waitTimeBetweenDomainInSeconds'] = patching_configs_wait_time_between_domain_in_seconds
     _details['patchingConfigs']['toleranceThresholdPerDomain'] = patching_configs_tolerance_threshold_per_domain
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if is_dry_run is not None:
         _details['isDryRun'] = is_dry_run
@@ -3763,7 +4416,8 @@ def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_stat
 @bds_instance_group.command(name=cli_util.override('bds.install_patch.command_name', 'install-patch'), help=u"""Install the specified patch to this cluster. \n[Command Reference](installPatch)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--version-parameterconflict', required=True, help=u"""The version of the patch to be installed.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--patching-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3774,7 +4428,7 @@ def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_stat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'patching-config': {'module': 'bds', 'class': 'OdhPatchingConfig'}})
 @cli_util.wrap_exceptions
-def install_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, patching_config, if_match):
+def install_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, secret_id, patching_config, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3786,7 +4440,12 @@ def install_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     _details = {}
     _details['version'] = version_parameterconflict
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if patching_config is not None:
         _details['patchingConfig'] = cli_util.parse_json_parameter("patching_config", patching_config)
@@ -3830,7 +4489,8 @@ def install_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @bds_instance_group.command(name=cli_util.override('bds.install_patch_downtime_based_odh_patching_config.command_name', 'install-patch-downtime-based-odh-patching-config'), help=u"""Install the specified patch to this cluster. \n[Command Reference](installPatch)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--version-parameterconflict', required=True, help=u"""The version of the patch to be installed.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3840,7 +4500,7 @@ def install_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def install_patch_downtime_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, if_match):
+def install_patch_downtime_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3853,7 +4513,12 @@ def install_patch_downtime_based_odh_patching_config(ctx, from_json, wait_for_st
     _details = {}
     _details['patchingConfig'] = {}
     _details['version'] = version_parameterconflict
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     _details['patchingConfig']['patchingConfigStrategy'] = 'DOWNTIME_BASED'
 
@@ -3896,8 +4561,9 @@ def install_patch_downtime_based_odh_patching_config(ctx, from_json, wait_for_st
 @bds_instance_group.command(name=cli_util.override('bds.install_patch_domain_based_odh_patching_config.command_name', 'install-patch-domain-based-odh-patching-config'), help=u"""Install the specified patch to this cluster. \n[Command Reference](installPatch)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--version-parameterconflict', required=True, help=u"""The version of the patch to be installed.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--patching-config-wait-time-between-domain-in-seconds', required=True, type=click.INT, help=u"""The wait time between AD/FD in seconds.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--patching-config-tolerance-threshold-per-domain', type=click.INT, help=u"""Acceptable number of failed-to-be-patched nodes in each domain. The maximum number of failed-to-patch nodes cannot exceed 20% of the number of non-utility and non-master nodes.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3908,7 +4574,7 @@ def install_patch_downtime_based_odh_patching_config(ctx, from_json, wait_for_st
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def install_patch_domain_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, patching_config_wait_time_between_domain_in_seconds, if_match, patching_config_tolerance_threshold_per_domain):
+def install_patch_domain_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, patching_config_wait_time_between_domain_in_seconds, cluster_admin_password, secret_id, if_match, patching_config_tolerance_threshold_per_domain):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3921,8 +4587,13 @@ def install_patch_domain_based_odh_patching_config(ctx, from_json, wait_for_stat
     _details = {}
     _details['patchingConfig'] = {}
     _details['version'] = version_parameterconflict
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['patchingConfig']['waitTimeBetweenDomainInSeconds'] = patching_config_wait_time_between_domain_in_seconds
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if patching_config_tolerance_threshold_per_domain is not None:
         _details['patchingConfig']['toleranceThresholdPerDomain'] = patching_config_tolerance_threshold_per_domain
@@ -3968,9 +4639,10 @@ def install_patch_domain_based_odh_patching_config(ctx, from_json, wait_for_stat
 @bds_instance_group.command(name=cli_util.override('bds.install_patch_batching_based_odh_patching_config.command_name', 'install-patch-batching-based-odh-patching-config'), help=u"""Install the specified patch to this cluster. \n[Command Reference](installPatch)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--version-parameterconflict', required=True, help=u"""The version of the patch to be installed.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--patching-config-batch-size', required=True, type=click.INT, help=u"""How many nodes to be patched in each iteration.""")
 @cli_util.option('--patching-config-wait-time-between-batch-in-seconds', required=True, type=click.INT, help=u"""The wait time between batches in seconds.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--patching-config-tolerance-threshold-per-batch', type=click.INT, help=u"""Acceptable number of failed-to-be-patched nodes in each batch. The maximum number of failed-to-patch nodes cannot exceed 20% of the number of non-utility and non-master nodes.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3981,7 +4653,7 @@ def install_patch_domain_based_odh_patching_config(ctx, from_json, wait_for_stat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def install_patch_batching_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, patching_config_batch_size, patching_config_wait_time_between_batch_in_seconds, if_match, patching_config_tolerance_threshold_per_batch):
+def install_patch_batching_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, patching_config_batch_size, patching_config_wait_time_between_batch_in_seconds, cluster_admin_password, secret_id, if_match, patching_config_tolerance_threshold_per_batch):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3994,9 +4666,14 @@ def install_patch_batching_based_odh_patching_config(ctx, from_json, wait_for_st
     _details = {}
     _details['patchingConfig'] = {}
     _details['version'] = version_parameterconflict
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['patchingConfig']['batchSize'] = patching_config_batch_size
     _details['patchingConfig']['waitTimeBetweenBatchInSeconds'] = patching_config_wait_time_between_batch_in_seconds
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if patching_config_tolerance_threshold_per_batch is not None:
         _details['patchingConfig']['toleranceThresholdPerBatch'] = patching_config_tolerance_threshold_per_batch
@@ -4227,6 +4904,69 @@ def list_bds_api_keys(ctx, from_json, all_pages, page_size, bds_instance_id, lif
         )
     else:
         result = client.list_bds_api_keys(
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@bds_certificate_configuration_group.command(name=cli_util.override('bds.list_bds_certificate_configurations.command_name', 'list'), help=u"""Returns a list of BDS certificate configurations associated with this Big Data Service cluster. \n[Command Reference](listBdsCertificateConfigurations)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The state of the BdsCertificateConfiguration.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'bds', 'class': 'list[BdsCertificateConfigurationSummary]'})
+@cli_util.wrap_exceptions
+def list_bds_certificate_configurations(ctx, from_json, all_pages, page_size, bds_instance_id, page, limit, sort_by, sort_order, display_name, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('bds', 'bds', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_bds_certificate_configurations,
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_bds_certificate_configurations,
+            limit,
+            page_size,
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_bds_certificate_configurations(
             bds_instance_id=bds_instance_id,
             **kwargs
         )
@@ -5148,7 +5888,8 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @identity_configuration_group.command(name=cli_util.override('bds.refresh_confidential_application.command_name', 'refresh-confidential-application'), help=u"""Refresh confidential application for the given identity configuration in case of any update to the confidential application (e.g. regenerated client secret) \n[Command Reference](refreshConfidentialApplication)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--identity-configuration-id', required=True, help=u"""The OCID of the identity configuration""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5158,7 +5899,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def refresh_confidential_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, if_match):
+def refresh_confidential_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5172,7 +5913,12 @@ def refresh_confidential_application(ctx, from_json, wait_for_state, max_wait_se
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.refresh_confidential_application(
@@ -5214,7 +5960,8 @@ def refresh_confidential_application(ctx, from_json, wait_for_state, max_wait_se
 @identity_configuration_group.command(name=cli_util.override('bds.refresh_upst_token_exchange_keytab.command_name', 'refresh-upst-token-exchange-keytab'), help=u"""Refresh token exchange kerberos principal keytab for the UPST enabled identity configuration \n[Command Reference](refreshUpstTokenExchangeKeytab)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--identity-configuration-id', required=True, help=u"""The OCID of the identity configuration""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5224,7 +5971,7 @@ def refresh_confidential_application(ctx, from_json, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def refresh_upst_token_exchange_keytab(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, if_match):
+def refresh_upst_token_exchange_keytab(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5238,7 +5985,12 @@ def refresh_upst_token_exchange_keytab(ctx, from_json, wait_for_state, max_wait_
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.refresh_upst_token_exchange_keytab(
@@ -5280,7 +6032,8 @@ def refresh_upst_token_exchange_keytab(ctx, from_json, wait_for_state, max_wait_
 @bds_instance_group.command(name=cli_util.override('bds.remove_auto_scaling_configuration.command_name', 'remove'), help=u"""Deletes an autoscale configuration. \n[Command Reference](removeAutoScalingConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscale configuration.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5290,7 +6043,7 @@ def refresh_upst_token_exchange_keytab(ctx, from_json, wait_for_state, max_wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def remove_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, cluster_admin_password, if_match):
+def remove_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5304,7 +6057,12 @@ def remove_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_s
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.remove_auto_scaling_configuration(
@@ -5345,7 +6103,7 @@ def remove_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_s
 
 @bds_instance_group.command(name=cli_util.override('bds.remove_cloud_sql.command_name', 'remove'), help=u"""Removes Cloud SQL from the cluster. \n[Command Reference](removeCloudSql)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5366,7 +6124,9 @@ def remove_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.remove_cloud_sql(
@@ -5406,7 +6166,8 @@ def remove_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 @bds_instance_group.command(name=cli_util.override('bds.remove_kafka.command_name', 'remove'), help=u"""Remove Kafka from the cluster. \n[Command Reference](removeKafka)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5416,7 +6177,7 @@ def remove_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def remove_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, if_match):
+def remove_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5427,7 +6188,12 @@ def remove_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.remove_kafka(
@@ -5467,8 +6233,9 @@ def remove_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @bds_instance_group.command(name=cli_util.override('bds.remove_node.command_name', 'remove'), help=u"""Remove a single node of a Big Data Service cluster \n[Command Reference](removeNode)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--node-id', required=True, help=u"""OCID of the node to be removed.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--is-force-remove-enabled', type=click.BOOL, help=u"""Boolean flag specifying whether or not to force remove node if graceful removal fails.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5479,7 +6246,7 @@ def remove_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def remove_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, node_id, is_force_remove_enabled, if_match):
+def remove_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_id, cluster_admin_password, secret_id, is_force_remove_enabled, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5490,8 +6257,13 @@ def remove_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
     _details['nodeId'] = node_id
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if is_force_remove_enabled is not None:
         _details['isForceRemoveEnabled'] = is_force_remove_enabled
@@ -5535,7 +6307,8 @@ def remove_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @node_replace_configuration_group.command(name=cli_util.override('bds.remove_node_replace_configuration.command_name', 'remove'), help=u"""Deletes a nodeReplaceConfiguration \n[Command Reference](removeNodeReplaceConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--node-replace-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the  NodeReplaceConfiguration.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5545,7 +6318,7 @@ def remove_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def remove_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_replace_configuration_id, cluster_admin_password, if_match):
+def remove_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_replace_configuration_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5559,7 +6332,12 @@ def remove_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_s
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.remove_node_replace_configuration(
@@ -5598,10 +6376,84 @@ def remove_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.remove_nodes.command_name', 'remove'), help=u"""Removes list of nodes from a Big Data Service cluster \n[Command Reference](removeNodes)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--instance-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of instance IDs to be removed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--is-force-remove-enabled', type=click.BOOL, help=u"""Boolean flag specifying whether or not to force remove nodes if graceful removal fails.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'instance-ids': {'module': 'bds', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'instance-ids': {'module': 'bds', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def remove_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, instance_ids, cluster_admin_password, secret_id, is_force_remove_enabled, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['instanceIds'] = cli_util.parse_json_parameter("instance_ids", instance_ids)
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    if is_force_remove_enabled is not None:
+        _details['isForceRemoveEnabled'] = is_force_remove_enabled
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.remove_nodes(
+        bds_instance_id=bds_instance_id,
+        remove_nodes_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @resource_principal_configuration_group.command(name=cli_util.override('bds.remove_resource_principal_configuration.command_name', 'remove'), help=u"""Delete the resource principal configuration for the cluster. \n[Command Reference](removeResourcePrincipalConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--resource-principal-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the ResourcePrincipalConfiguration.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5611,7 +6463,7 @@ def remove_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def remove_resource_principal_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, resource_principal_configuration_id, cluster_admin_password, if_match):
+def remove_resource_principal_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, resource_principal_configuration_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5625,7 +6477,12 @@ def remove_resource_principal_configuration(ctx, from_json, wait_for_state, max_
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.remove_resource_principal_configuration(
@@ -5664,9 +6521,227 @@ def remove_resource_principal_configuration(ctx, from_json, wait_for_state, max_
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.renew_bds_certificate.command_name', 'renew-bds-certificate'), help=u"""Renewing certificates under BDS cluster nodes. \n[Command Reference](renewBdsCertificate)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--manage-certificate-level-type-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'manage-certificate-level-type-details': {'module': 'bds', 'class': 'ManageBdsCertificateLevelTypeDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'manage-certificate-level-type-details': {'module': 'bds', 'class': 'ManageBdsCertificateLevelTypeDetails'}})
+@cli_util.wrap_exceptions
+def renew_bds_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, manage_certificate_level_type_details, cluster_admin_password, secret_id, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['manageCertificateLevelTypeDetails'] = cli_util.parse_json_parameter("manage_certificate_level_type_details", manage_certificate_level_type_details)
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.renew_bds_certificate(
+        bds_instance_id=bds_instance_id,
+        renew_bds_certificate_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.renew_bds_certificate_node_level_manage_bds_certificate_details.command_name', 'renew-bds-certificate-node-level-manage-bds-certificate-details'), help=u"""Renewing certificates under BDS cluster nodes. \n[Command Reference](renewBdsCertificate)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--manage-certificate-level-type-details-node-host-names', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Host name(s) of the specified node(s) to generate or renew BDS certificate(s).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'manage-certificate-level-type-details-node-host-names': {'module': 'bds', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'manage-certificate-level-type-details-node-host-names': {'module': 'bds', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def renew_bds_certificate_node_level_manage_bds_certificate_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, manage_certificate_level_type_details_node_host_names, cluster_admin_password, secret_id, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['manageCertificateLevelTypeDetails'] = {}
+    _details['manageCertificateLevelTypeDetails']['nodeHostNames'] = cli_util.parse_json_parameter("manage_certificate_level_type_details_node_host_names", manage_certificate_level_type_details_node_host_names)
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    _details['manageCertificateLevelTypeDetails']['triggerType'] = 'NODE_LEVEL'
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.renew_bds_certificate(
+        bds_instance_id=bds_instance_id,
+        renew_bds_certificate_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.renew_bds_certificate_config_level_manage_bds_certificate_details.command_name', 'renew-bds-certificate-config-level-manage-bds-certificate-details'), help=u"""Renewing certificates under BDS cluster nodes. \n[Command Reference](renewBdsCertificate)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--manage-certificate-level-type-details-certificate-configuration-id', required=True, help=u"""The id of the BDS certificate configuration used to generate or renew BDS certificate(s).""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--manage-certificate-level-type-details-is-missing-nodes-only', type=click.BOOL, help=u"""Boolean flag specifying whether the request will only generate certificates for nodes which do not have the same certificate authority as the certificate configuration or not. The flag is only used for generating certificates from CONFIG_LEVEL.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def renew_bds_certificate_config_level_manage_bds_certificate_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, manage_certificate_level_type_details_certificate_configuration_id, cluster_admin_password, secret_id, if_match, manage_certificate_level_type_details_is_missing_nodes_only):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['manageCertificateLevelTypeDetails'] = {}
+    _details['manageCertificateLevelTypeDetails']['certificateConfigurationId'] = manage_certificate_level_type_details_certificate_configuration_id
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    if manage_certificate_level_type_details_is_missing_nodes_only is not None:
+        _details['manageCertificateLevelTypeDetails']['isMissingNodesOnly'] = manage_certificate_level_type_details_is_missing_nodes_only
+
+    _details['manageCertificateLevelTypeDetails']['triggerType'] = 'CONFIG_LEVEL'
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.renew_bds_certificate(
+        bds_instance_id=bds_instance_id,
+        renew_bds_certificate_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.renew_certificate.command_name', 'renew-certificate'), help=u"""Renewing TLS/SSL for various ODH services running on the BDS cluster. \n[Command Reference](renewCertificate)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of services for which certificate needs to be renewed. If no services provided renew will happen only for default services - AMBARI,RANGER,HUE,LIVY.
 
 This option is a JSON list with items of type Service.  For documentation on Service please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/bds/20190531/datatypes/Service.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5684,7 +6759,7 @@ This option is a JSON list with items of type HostCertDetails.  For documentatio
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'services': {'module': 'bds', 'class': 'list[Service]'}, 'host-cert-details': {'module': 'bds', 'class': 'list[HostCertDetails]'}})
 @cli_util.wrap_exceptions
-def renew_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, services, root_certificate, host_cert_details, server_key_password, if_match):
+def renew_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, secret_id, services, root_certificate, host_cert_details, server_key_password, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5695,7 +6770,12 @@ def renew_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if services is not None:
         _details['services'] = cli_util.parse_json_parameter("services", services)
@@ -5749,7 +6829,8 @@ def renew_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--node-host-name', required=True, help=u"""Host name of the node to replace. MASTER, UTILITY and EDGE node are only supported types""")
 @cli_util.option('--node-backup-id', required=True, help=u"""The id of the nodeBackup to use for replacing the node.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--shape', help=u"""Shape of the new vm when replacing the node. If not provided, BDS will attempt to replace the node with the shape of current node.""")
 @cli_util.option('--if-match', help=u"""This if-match is for the BdsInstance. For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5760,7 +6841,7 @@ def renew_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def replace_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_host_name, node_backup_id, cluster_admin_password, shape, if_match):
+def replace_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_host_name, node_backup_id, cluster_admin_password, secret_id, shape, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5773,7 +6854,12 @@ def replace_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     _details = {}
     _details['nodeHostName'] = node_host_name
     _details['nodeBackupId'] = node_backup_id
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if shape is not None:
         _details['shape'] = shape
@@ -5875,9 +6961,82 @@ def restart_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
+@bds_certificate_configuration_group.command(name=cli_util.override('bds.set_default_bds_certificate_configuration.command_name', 'set-default'), help=u"""Set specified BDS certificate configuration as default configuration. \n[Command Reference](setDefaultBdsCertificateConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--bds-certificate-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the BdsCertificateConfiguration.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def set_default_bds_certificate_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, bds_certificate_configuration_id, cluster_admin_password, secret_id, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(bds_certificate_configuration_id, six.string_types) and len(bds_certificate_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-certificate-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.set_default_bds_certificate_configuration(
+        bds_instance_id=bds_instance_id,
+        bds_certificate_configuration_id=bds_certificate_configuration_id,
+        set_default_bds_certificate_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.start_bds_instance.command_name', 'start'), help=u"""Starts the BDS cluster that was stopped earlier. \n[Command Reference](startBdsInstance)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--start-cluster-shape-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5888,7 +7047,7 @@ def restart_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'start-cluster-shape-configs': {'module': 'bds', 'class': 'StartClusterShapeConfigs'}})
 @cli_util.wrap_exceptions
-def start_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, start_cluster_shape_configs, if_match):
+def start_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, secret_id, start_cluster_shape_configs, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5899,7 +7058,12 @@ def start_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if start_cluster_shape_configs is not None:
         _details['startClusterShapeConfigs'] = cli_util.parse_json_parameter("start_cluster_shape_configs", start_cluster_shape_configs)
@@ -5942,8 +7106,9 @@ def start_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @bds_instance_group.command(name=cli_util.override('bds.stop_bds_instance.command_name', 'stop'), help=u"""Stops the BDS cluster that can be started at later point of time. \n[Command Reference](stopBdsInstance)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--is-force-stop-jobs', type=click.BOOL, help=u"""Boolean indicating whether to force stop jobs while stopping cluster. Defaults to false.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5953,7 +7118,7 @@ def start_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def stop_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, is_force_stop_jobs, if_match):
+def stop_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, is_force_stop_jobs, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -5964,10 +7129,15 @@ def stop_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
 
     if is_force_stop_jobs is not None:
         _details['isForceStopJobs'] = is_force_stop_jobs
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.stop_bds_instance(
@@ -6008,7 +7178,8 @@ def stop_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @bds_metastore_configuration_group.command(name=cli_util.override('bds.test_bds_metastore_configuration.command_name', 'test'), help=u"""Test specified metastore configuration. \n[Command Reference](testBdsMetastoreConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--metastore-config-id', required=True, help=u"""The metastore configuration ID""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -6018,7 +7189,7 @@ def stop_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def test_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_config_id, cluster_admin_password, if_match):
+def test_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_config_id, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -6032,7 +7203,12 @@ def test_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_se
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.test_bds_metastore_configuration(
@@ -6146,6 +7322,7 @@ def test_bds_object_storage_connection(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
 @cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6158,7 +7335,7 @@ def test_bds_object_storage_connection(ctx, from_json, wait_for_state, max_wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}, 'policy-details': {'module': 'bds', 'class': 'UpdateAutoScalePolicyDetails'}})
 @cli_util.wrap_exceptions
-def update_auto_scaling_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, policy_details, if_match):
+def update_auto_scaling_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, secret_id, policy, policy_details, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -6185,6 +7362,9 @@ def update_auto_scaling_configuration(ctx, from_json, force, wait_for_state, max
 
     if cluster_admin_password is not None:
         _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if policy is not None:
         _details['policy'] = cli_util.parse_json_parameter("policy", policy)
@@ -6235,6 +7415,7 @@ def update_auto_scaling_configuration(ctx, from_json, force, wait_for_state, max
 @cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
 @cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-timezone', help=u"""The time zone of the execution schedule, in IANA time zone database name format""")
@@ -6250,7 +7431,7 @@ This option is a JSON list with items of type HorizontalScalingScheduleDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}, 'policy-details-schedule-details': {'module': 'bds', 'class': 'list[HorizontalScalingScheduleDetails]'}})
 @cli_util.wrap_exceptions
-def update_auto_scaling_configuration_update_schedule_based_horizontal_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, if_match, policy_details_timezone, policy_details_schedule_details):
+def update_auto_scaling_configuration_update_schedule_based_horizontal_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, secret_id, policy, if_match, policy_details_timezone, policy_details_schedule_details):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -6278,6 +7459,9 @@ def update_auto_scaling_configuration_update_schedule_based_horizontal_scaling_p
 
     if cluster_admin_password is not None:
         _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if policy is not None:
         _details['policy'] = cli_util.parse_json_parameter("policy", policy)
@@ -6333,6 +7517,7 @@ def update_auto_scaling_configuration_update_schedule_based_horizontal_scaling_p
 @cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
 @cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-scale-up-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6346,7 +7531,7 @@ def update_auto_scaling_configuration_update_schedule_based_horizontal_scaling_p
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}, 'policy-details-scale-up-config': {'module': 'bds', 'class': 'MetricBasedVerticalScaleUpConfig'}, 'policy-details-scale-down-config': {'module': 'bds', 'class': 'MetricBasedVerticalScaleDownConfig'}})
 @cli_util.wrap_exceptions
-def update_auto_scaling_configuration_update_metric_based_vertical_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, if_match, policy_details_scale_up_config, policy_details_scale_down_config):
+def update_auto_scaling_configuration_update_metric_based_vertical_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, secret_id, policy, if_match, policy_details_scale_up_config, policy_details_scale_down_config):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -6374,6 +7559,9 @@ def update_auto_scaling_configuration_update_metric_based_vertical_scaling_polic
 
     if cluster_admin_password is not None:
         _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if policy is not None:
         _details['policy'] = cli_util.parse_json_parameter("policy", policy)
@@ -6429,6 +7617,7 @@ def update_auto_scaling_configuration_update_metric_based_vertical_scaling_polic
 @cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
 @cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-scale-out-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6442,7 +7631,7 @@ def update_auto_scaling_configuration_update_metric_based_vertical_scaling_polic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}, 'policy-details-scale-out-config': {'module': 'bds', 'class': 'MetricBasedHorizontalScaleOutConfig'}, 'policy-details-scale-in-config': {'module': 'bds', 'class': 'MetricBasedHorizontalScaleInConfig'}})
 @cli_util.wrap_exceptions
-def update_auto_scaling_configuration_update_metric_based_horizontal_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, if_match, policy_details_scale_out_config, policy_details_scale_in_config):
+def update_auto_scaling_configuration_update_metric_based_horizontal_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, secret_id, policy, if_match, policy_details_scale_out_config, policy_details_scale_in_config):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -6470,6 +7659,9 @@ def update_auto_scaling_configuration_update_metric_based_horizontal_scaling_pol
 
     if cluster_admin_password is not None:
         _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if policy is not None:
         _details['policy'] = cli_util.parse_json_parameter("policy", policy)
@@ -6525,6 +7717,7 @@ def update_auto_scaling_configuration_update_metric_based_horizontal_scaling_pol
 @cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
 @cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-timezone', help=u"""The time zone of the execution schedule, in IANA time zone database name format""")
@@ -6540,7 +7733,7 @@ This option is a JSON list with items of type VerticalScalingScheduleDetails.  F
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}, 'policy-details-schedule-details': {'module': 'bds', 'class': 'list[VerticalScalingScheduleDetails]'}})
 @cli_util.wrap_exceptions
-def update_auto_scaling_configuration_update_schedule_based_vertical_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, if_match, policy_details_timezone, policy_details_schedule_details):
+def update_auto_scaling_configuration_update_schedule_based_vertical_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, secret_id, policy, if_match, policy_details_timezone, policy_details_schedule_details):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -6568,6 +7761,9 @@ def update_auto_scaling_configuration_update_schedule_based_vertical_scaling_pol
 
     if cluster_admin_password is not None:
         _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if policy is not None:
         _details['policy'] = cli_util.parse_json_parameter("policy", policy)
@@ -6619,6 +7815,8 @@ def update_auto_scaling_configuration_update_schedule_based_vertical_scaling_pol
 
 @bds_instance_group.command(name=cli_util.override('bds.update_bds_instance.command_name', 'update'), help=u"""Updates the Big Data Service cluster identified by the given ID. \n[Command Reference](updateBdsInstance)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
+@cli_util.option('--is-secret-reused', type=click.BOOL, help=u"""Boolean flag specifying whether or not to persist the provided secret OCID and reuse it for future operations.""")
 @cli_util.option('--display-name', help=u"""Name of the cluster.""")
 @cli_util.option('--bootstrap-script-url', help=u"""Pre-authenticated URL of the bootstrap script in Object Store that can be downloaded and executed..""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. For example, `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6635,7 +7833,7 @@ def update_auto_scaling_configuration_update_schedule_based_vertical_scaling_pol
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'bds', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bds', 'class': 'dict(str, dict(str, object))'}, 'network-config': {'module': 'bds', 'class': 'NetworkConfig'}})
 @cli_util.wrap_exceptions
-def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, display_name, bootstrap_script_url, freeform_tags, defined_tags, kms_key_id, network_config, if_match):
+def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, secret_id, is_secret_reused, display_name, bootstrap_script_url, freeform_tags, defined_tags, kms_key_id, network_config, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -6650,6 +7848,12 @@ def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    if is_secret_reused is not None:
+        _details['isSecretReused'] = is_secret_reused
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -6712,6 +7916,7 @@ def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.option('--bds-api-key-id', help=u"""The ID of BDS Api Key used for Data Catalog metastore integration. Set only if metastore's type is EXTERNAL.""")
 @cli_util.option('--bds-api-key-passphrase', help=u"""Base-64 encoded passphrase of the BDS Api Key.""")
 @cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -6721,7 +7926,7 @@ def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_config_id, display_name, bds_api_key_id, bds_api_key_passphrase, cluster_admin_password, if_match):
+def update_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_config_id, display_name, bds_api_key_id, bds_api_key_passphrase, cluster_admin_password, secret_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -6747,6 +7952,9 @@ def update_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_
 
     if cluster_admin_password is not None:
         _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.update_bds_metastore_configuration(
@@ -6788,7 +7996,8 @@ def update_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_
 @identity_configuration_group.command(name=cli_util.override('bds.update_identity_configuration.command_name', 'update'), help=u"""Update the IAM user sync and UPST configuration for the specified identity configuration \n[Command Reference](updateIdentityConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--identity-configuration-id', required=True, help=u"""The OCID of the identity configuration""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--secret-id', help=u"""The secretId for the clusterAdminPassword.""")
 @cli_util.option('--upst-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--iam-user-sync-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6801,7 +8010,7 @@ def update_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'upst-configuration-details': {'module': 'bds', 'class': 'UpstConfigurationDetails'}, 'iam-user-sync-configuration-details': {'module': 'bds', 'class': 'IamUserSyncConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def update_identity_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, upst_configuration_details, iam_user_sync_configuration_details, if_match):
+def update_identity_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, secret_id, upst_configuration_details, iam_user_sync_configuration_details, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -6819,7 +8028,12 @@ def update_identity_configuration(ctx, from_json, force, wait_for_state, max_wai
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if upst_configuration_details is not None:
         _details['upstConfigurationDetails'] = cli_util.parse_json_parameter("upst_configuration_details", upst_configuration_details)

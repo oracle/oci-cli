@@ -105,3 +105,39 @@ def update_imported_model_extended(ctx, **kwargs):
         kwargs.pop('version')
 
     ctx.invoke(generativeai_cli.update_imported_model, **kwargs)
+
+
+# Remove create-semantic-store-create-data-source-database-tools-connection-details from oci generative-ai semantic-store
+generativeai_cli.semantic_store_group.commands.pop(generativeai_cli.create_semantic_store_create_data_source_database_tools_connection_details.name)
+
+
+# Remove create-semantic-store-create-schemas-database-tools-connection-details from oci generative-ai semantic-store
+generativeai_cli.semantic_store_group.commands.pop(generativeai_cli.create_semantic_store_create_schemas_database_tools_connection_details.name)
+
+
+# Remove create-semantic-store-refresh-schedule-interval-details from oci generative-ai semantic-store
+generativeai_cli.semantic_store_group.commands.pop(generativeai_cli.create_semantic_store_refresh_schedule_interval_details.name)
+
+
+# Remove create-semantic-store-refresh-schedule-none-details from oci generative-ai semantic-store
+generativeai_cli.semantic_store_group.commands.pop(generativeai_cli.create_semantic_store_refresh_schedule_none_details.name)
+
+
+# Remove create-semantic-store-refresh-schedule-on-create-details from oci generative-ai semantic-store
+generativeai_cli.semantic_store_group.commands.pop(generativeai_cli.create_semantic_store_refresh_schedule_on_create_details.name)
+
+
+# Remove update-semantic-store-create-schemas-database-tools-connection-details from oci generative-ai semantic-store
+generativeai_cli.semantic_store_group.commands.pop(generativeai_cli.update_semantic_store_create_schemas_database_tools_connection_details.name)
+
+
+# Remove update-semantic-store-refresh-schedule-interval-details from oci generative-ai semantic-store
+generativeai_cli.semantic_store_group.commands.pop(generativeai_cli.update_semantic_store_refresh_schedule_interval_details.name)
+
+
+# Remove update-semantic-store-refresh-schedule-none-details from oci generative-ai semantic-store
+generativeai_cli.semantic_store_group.commands.pop(generativeai_cli.update_semantic_store_refresh_schedule_none_details.name)
+
+
+# Remove update-semantic-store-refresh-schedule-on-create-details from oci generative-ai semantic-store
+generativeai_cli.semantic_store_group.commands.pop(generativeai_cli.update_semantic_store_refresh_schedule_on_create_details.name)

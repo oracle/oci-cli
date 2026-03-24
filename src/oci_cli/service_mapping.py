@@ -363,6 +363,11 @@ service_mapping = {
         "Generative AI Agents Client",
         "Others"
     ],
+    "generative-ai-data": [
+        "generative_ai_data",
+        "Generative AI Service Nl2sql",
+        "Others"
+    ],
     "generative-ai-inference": [
         "generative_ai_inference",
         "Generative AI Service Inference",
@@ -524,7 +529,7 @@ service_mapping = {
         "Others"
     ],
     "multicloud": [
-        "multicloud",
+        "omhub_cp",
         "Oracle Multicloud",
         "Others"
     ],
