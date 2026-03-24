@@ -6,6 +6,102 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.76.2 - 2026-03-24
+-------------------
+Added
+~~~~~
+* Generative AI Service
+
+  * Support for Hosted Deployment in Generative AI service.
+
+    * ``oci generative-ai hosted-application change-compartment``
+    * ``oci generative-ai hosted-application create``
+    * ``oci generative-ai hosted-application delete``
+    * ``oci generative-ai hosted-application get``
+    * ``oci generative-ai hosted-application update``
+    * ``oci generative-ai hosted-application-collection list-hosted-applications``
+    * ``oci generative-ai hosted-application-storage change-compartment``
+    * ``oci generative-ai hosted-application-storage create``
+    * ``oci generative-ai hosted-application-storage delete``
+    * ``oci generative-ai hosted-application-storage get``
+    * ``oci generative-ai hosted-application-storage-collection list-hosted-application-storages``
+    * ``oci generative-ai hosted-deployment add``
+    * ``oci generative-ai hosted-deployment add-artifact-create-single-docker-artifact-details``
+    * ``oci generative-ai hosted-deployment create``
+    * ``oci generative-ai hosted-deployment create-hosted-deployment-single-docker-artifact``
+    * ``oci generative-ai hosted-deployment delete``
+    * ``oci generative-ai hosted-deployment delete-hosted-deployment-artifact``
+    * ``oci generative-ai hosted-deployment get``
+    * ``oci generative-ai hosted-deployment update``
+    * ``oci generative-ai hosted-deployment-collection list-hosted-deployments``
+
+  * Added support for new optional parameter ``--resource-type``.
+
+    * ``oci generative-ai generative-ai-private-endpoint create --resource-type``
+    * ``oci generative-ai generative-ai-private-endpoint-collection list-generative-ai-private-endpoints --resource-type``
+
+  * Support for Vector Store Connector in Generative AI Service.
+
+    * ``oci generative-ai vector-store-connector create``
+    * ``oci generative-ai vector-store-connector create-vector-store-connector-oci-object-storage-configuration``
+    * ``oci generative-ai vector-store-connector create-vector-store-connector-schedule-cron-config``
+    * ``oci generative-ai vector-store-connector create-vector-store-connector-schedule-interval-config``
+    * ``oci generative-ai vector-store-connector delete``
+    * ``oci generative-ai vector-store-connector get``
+    * ``oci generative-ai vector-store-connector update``
+    * ``oci generative-ai vector-store-connector update-vector-store-connector-oci-object-storage-configuration``
+    * ``oci generative-ai vector-store-connector update-vector-store-connector-schedule-cron-config``
+    * ``oci generative-ai vector-store-connector update-vector-store-connector-schedule-interval-config``
+    * ``oci generative-ai vector-store-connector-collection list-vector-store-connectors``
+    * ``oci generative-ai vector-store-connector-file-sync cancel``
+    * ``oci generative-ai vector-store-connector-file-sync create``
+    * ``oci generative-ai vector-store-connector-file-sync get``
+    * ``oci generative-ai vector-store-connector-file-sync-collection list-vector-store-connector-file-syncs``
+    * ``oci generative-ai vector-store-connector-ingestion-logs-collection list-vector-store-connector-ingestion-logs``
+    * ``oci generative-ai vector-store-connector-stats get``
+    * ``oci generative-ai file-sync-ingestion-logs-collection list-vector-store-connector-file-sync-ingestion-logs``
+
+  * Support for GenerativeAiProject feature in Generative AI Service.
+
+    * ``oci generative-ai generative-ai-project change-compartment``
+    * ``oci generative-ai generative-ai-project create``
+    * ``oci generative-ai generative-ai-project delete``
+    * ``oci generative-ai generative-ai-project get``
+    * ``oci generative-ai generative-ai-project update``
+    * ``oci generative-ai generative-ai-project-collection list-generative-ai-projects``
+
+  * Support for Semantic Store in Generative AI Service
+
+    * ``oci generative-ai semantic-store change-compartment``
+    * ``oci generative-ai semantic-store create``
+    * ``oci generative-ai semantic-store delete``
+    * ``oci generative-ai semantic-store get``
+    * ``oci generative-ai semantic-store update``
+    * ``oci generative-ai semantic-store-collection list-semantic-stores``
+
+* Big Data Service
+
+  * Add Block Storage to Master/Utility and Edge Nodes
+
+    * ``oci bds block-storage add --node-ids``
+
+  * Reset BDS component Admin Password from OCI console
+
+    * ``oci bds instance reset-password --bds-instance-id <bds-ocid> --service <service-name>``
+
+  * Delete multiple nodes
+
+    * ``oci bds instance remove-nodes --bds-instance-id <bds-ocid> --instace-ids '["<node-ocid>", "<node-ocid>", ... , "<node-ocid>"]'``
+
+Changed
+~~~~~~~
+* Big Data Service
+
+  * Support for cluster admin password stored in OCI Vault - changed ``cluster-admin-password`` required parameter to optional parameter and added ``secret-id`` parameter
+
+    * ``oci bds <command> --cluster-admin-password --secret-id``
+
+
 3.76.1 - 2026-03-17
 -------------------
 Added
