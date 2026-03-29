@@ -5,6 +5,7 @@
 from prompt_toolkit.completion import Completer, Completion
 from alloy import alloy_util
 from interactive.oci_resources_completions import get_oci_resources
+import click
 import collections
 import shlex
 from interactive.utils import parameters_to_exclude, styles_dict
@@ -305,6 +306,12 @@ class OciShellCompleter(Completer):
                 remaing_sub_string,
             )
 
+        elif check_param_is_bool(command, parameter):
+            for value in ['true', 'false']:
+                completion = self.add_completion(remaing_sub_string, value, word_before_cursor)
+                if completion:
+                    completions.append(completion)
+
         else:
             if "OCI_OPS_CLI_TOOLS_IMPORT" not in os.environ:
                 completions = get_oci_resources(
@@ -344,6 +351,13 @@ def check_param_is_flag(command, param):
     for p in command.params:
         if param in p.opts:
             return p.is_flag
+    return False
+
+
+def check_param_is_bool(command, param):
+    for p in command.params:
+        if param in p.opts:
+            return p.type is click.BOOL
     return False
 
 
