@@ -230,7 +230,7 @@ Example: `example_backend_set`""")
 @cli_util.option('--weight', type=click.INT, help=u"""The network load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives three times the number of new connections as a server weighted '1'. For more information about network load balancer policies, see [Network Load Balancer Policies].
 
 Example: `3`""")
-@cli_util.option('--is-drain', type=click.BOOL, help=u"""Whether the network load balancer should drain this server. Servers marked \"isDrain\" receive no incoming traffic.
+@cli_util.option('--is-drain', type=click.BOOL, help=u"""Whether the network load balancer should drain this server. Servers marked \"isDrain\" stop receiving new connections but will continue to receive traffic on existing connections until the connection is terminated.
 
 Example: `false`""")
 @cli_util.option('--is-backup', type=click.BOOL, help=u"""Whether the network load balancer should treat this server as a backup unit. If `true`, then the network load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"isBackup\" fail the health check policy.
@@ -336,8 +336,8 @@ Example: `FIVE_TUPLE``""")
 @cli_util.option('--is-preserve-source', type=click.BOOL, help=u"""If this parameter is enabled, then the network load balancer preserves the source IP of the packet when it is forwarded to backends. Backends see the original source IP. If the isPreserveSourceDestination parameter is enabled for the network load balancer resource, then this parameter cannot be disabled. The value is true by default.""")
 @cli_util.option('--is-fail-open', type=click.BOOL, help=u"""If enabled, the network load balancer will continue to distribute traffic in the configured distribution in the event all backends are unhealthy. The value is false by default.""")
 @cli_util.option('--is-instant-failover-enabled', type=click.BOOL, help=u"""If enabled existing connections will be forwarded to an alternative healthy backend as soon as current backend becomes unhealthy.""")
-@cli_util.option('--is-instant-failover-tcp-reset-enabled', type=click.BOOL, help=u"""If enabled along with instant failover, the network load balancer will send TCP RST to the clients for the existing connections instead of failing over to a healthy backend. This only applies when using the instant failover. By default, TCP RST is enabled.""")
-@cli_util.option('--are-operationally-active-backends-preferred', type=click.BOOL, help=u"""If enabled, NLB supports active-standby backends. The standby backend takes over the traffic when the active node fails, and continues to serve the traffic even when the old active node is back healthy.""")
+@cli_util.option('--is-instant-failover-tcp-reset-enabled', type=click.BOOL, help=u"""This only applies when using instant failover. If enabled, the network load balancer will send TCP RST to clients when a backend becomes unhealthy and the traffic is moved to a healthy backend. If disabled, the network load balancer will not send TCP RST before moving traffic to a healthy backend.  By default, TCP RST is enabled.""")
+@cli_util.option('--are-operationally-active-backends-preferred', type=click.BOOL, help=u"""If enabled, NLB supports active-standby backends, with the initial standby being the configured backup backend. The standby backend becomes active and takes over serving traffic when the current active backend becomes unhealthy. The new active backend continues to serve the traffic while healthy even when the old active backend becomes healthy.""")
 @cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""IP version associated with the backend set.""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of backends to be associated with the backend set.
 
@@ -524,7 +524,7 @@ def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--subnet-id', required=True, help=u"""The subnet in which the network load balancer is spawned [OCIDs].""")
 @cli_util.option('--is-preserve-source-destination', type=click.BOOL, help=u"""This parameter can be enabled only if backends are compute OCIDs. When enabled, the skipSourceDestinationCheck parameter is automatically enabled on the load balancer VNIC, and packets are sent to the backend with the entire IP header intact.""")
 @cli_util.option('--is-symmetric-hash-enabled', type=click.BOOL, help=u"""This can only be enabled when NLB is working in transparent mode with source destination header preservation enabled. This removes the additional dependency from NLB backends(like Firewalls) to perform SNAT.""")
-@cli_util.option('--reserved-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of reserved Ips.
+@cli_util.option('--reserved-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of reserved Ips. NLB supports reserved public ip, reserved private IP and reserved IPv6. Customer can pass 3 reserved IP ocids, with all items unique, and a maximum of 1 allowed for each entity type: public-ip, private-ip and IPv6 Note that NLB does not support changing an IP\u2019s lifecycle state between ephemeral and reserved if the IP is already assigned to the NLB. While this type of lifecycle state change is supported by VCN IPs even when the IP is assigned to a resource, such changes will not be recognized or reflected by NLB.
 
 This option is a JSON list with items of type ReservedIP.  For documentation on ReservedIP please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/networkloadbalancer/20200501/datatypes/ReservedIP.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-private', type=click.BOOL, help=u"""Whether the network load balancer has a virtual cloud network-local (private) IP address.
@@ -1807,7 +1807,7 @@ Example: `3`""")
 @cli_util.option('--is-backup', type=click.BOOL, help=u"""Whether the network load balancer should treat this server as a backup unit. If `true`, then the network load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"isBackup\" fail the health check policy.
 
 Example: `false`""")
-@cli_util.option('--is-drain', type=click.BOOL, help=u"""Whether the network load balancer should drain this server. Servers marked \"isDrain\" receive no incoming traffic.
+@cli_util.option('--is-drain', type=click.BOOL, help=u"""Whether the network load balancer should drain this server. Servers marked \"isDrain\" stop receiving new connections but will continue to receive traffic on existing connections until the connection is terminated or times out.
 
 Example: `false`""")
 @cli_util.option('--is-offline', type=click.BOOL, help=u"""Whether the network load balancer should treat this server as offline. Offline servers receive no incoming traffic.
@@ -1901,8 +1901,8 @@ Example: `FIVE_TUPLE`""")
 @cli_util.option('--is-preserve-source', type=click.BOOL, help=u"""If this parameter is enabled, then the network load balancer preserves the source IP of the packet when it is forwarded to backends. Backends see the original source IP. If the isPreserveSourceDestination parameter is enabled for the network load balancer resource, then this parameter cannot be disabled. The value is true by default.""")
 @cli_util.option('--is-fail-open', type=click.BOOL, help=u"""If enabled, the network load balancer will continue to distribute traffic in the configured distribution in the event all backends are unhealthy. The value is false by default.""")
 @cli_util.option('--is-instant-failover-enabled', type=click.BOOL, help=u"""If enabled existing connections will be forwarded to an alternative healthy backend as soon as current backend becomes unhealthy.""")
-@cli_util.option('--is-instant-failover-tcp-reset-enabled', type=click.BOOL, help=u"""If enabled along with instant failover, the network load balancer will send TCP RST to the clients for the existing connections instead of failing over to a healthy backend. This only applies when using the instant failover.""")
-@cli_util.option('--are-operationally-active-backends-preferred', type=click.BOOL, help=u"""If enabled, NLB supports active-standby backends. The standby backend takes over the traffic when the active node fails, and continues to serve the traffic even when the old active node is back healthy.""")
+@cli_util.option('--is-instant-failover-tcp-reset-enabled', type=click.BOOL, help=u"""This only applies when using instant failover. If enabled, the network load balancer will send TCP RST to clients when a backend becomes unhealthy and the traffic is moved to a healthy backend. If disabled, the network load balancer will not send TCP RST before moving traffic to a healthy backend.  By default, TCP RST is enabled.""")
+@cli_util.option('--are-operationally-active-backends-preferred', type=click.BOOL, help=u"""If enabled, NLB supports active-standby backends, with the initial standby being the configured backup backend. The standby backend becomes active and takes over serving traffic when the current active backend becomes unhealthy. The new active backend continues to serve the traffic while healthy even when the old active backend becomes healthy.""")
 @cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""The IP version associated with the backend set.""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of backends associated with the backend set.
 
@@ -2246,6 +2246,7 @@ Example: `example_network_load_balancer`""")
 @cli_util.option('--nlb-ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV4_AND_IPV6", "IPV6"]), help=u"""IP version associated with the NLB.""")
 @cli_util.option('--subnet-ipv6-cidr', help=u"""IPv6 subnet prefix selection. If Ipv6 subnet prefix is passed, Nlb Ipv6 Address would be assign within the cidr block. NLB has to be dual or single stack ipv6 to support this.""")
 @cli_util.option('--assigned-ipv6', help=u"""IPv6 address to be assigned to the network load balancer being created. This IP address has to be part of one of the prefixes supported by the subnet. Example: \"2607:9b80:9a0a:9a7e:abcd:ef01:2345:6789\"""")
+@cli_util.option('--reserved-ipv6-id', help=u"""The reservedIpv6Id field is used to specify the OCID of a reserved IPv6 address to be used only when updating NLB from single-stack IPv4 to dual-stack. This field should not be used for any other scenario""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2265,7 +2266,7 @@ Example: `{\"oracle-zpr\": {\"td\": {\"value\": \"42\", \"mode\": \"audit\"}}}`"
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'network_load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_load_balancer', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'network_load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, display_name, is_preserve_source_destination, is_symmetric_hash_enabled, nlb_ip_version, subnet_ipv6_cidr, assigned_ipv6, freeform_tags, defined_tags, security_attributes, if_match):
+def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, display_name, is_preserve_source_destination, is_symmetric_hash_enabled, nlb_ip_version, subnet_ipv6_cidr, assigned_ipv6, reserved_ipv6_id, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -2298,6 +2299,9 @@ def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait
 
     if assigned_ipv6 is not None:
         _details['assignedIpv6'] = assigned_ipv6
+
+    if reserved_ipv6_id is not None:
+        _details['reservedIpv6Id'] = reserved_ipv6_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

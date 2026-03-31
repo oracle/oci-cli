@@ -1,3 +1,6 @@
+# coding: utf-8
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates. All rights reserved.
+
 import click  # noqa: F401
 import json  # noqa: F401
 from services.generative_ai_data.src.oci_cli_generate_sql_from_nl_job.generated import generatesqlfromnljob_cli
