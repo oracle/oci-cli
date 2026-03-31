@@ -183,6 +183,11 @@ service_mapping = {
         "Container Instance",
         "Others"
     ],
+    "container-registry": [
+        "container_registry",
+        "Container Registry",
+        "Others"
+    ],
     "cpg": [
         "cluster_placement_groups",
         "Cluster Placement Groups",
@@ -365,7 +370,7 @@ service_mapping = {
     ],
     "generative-ai-data": [
         "generative_ai_data",
-        "Generative AI Service Nl2sql",
+        "Generative AI Service NL2SQL",
         "Others"
     ],
     "generative-ai-inference": [
@@ -529,7 +534,7 @@ service_mapping = {
         "Others"
     ],
     "multicloud": [
-        "omhub_cp",
+        "multicloud",
         "Oracle Multicloud",
         "Others"
     ],
@@ -722,6 +727,11 @@ service_mapping = {
         "security_attribute",
         "Security Attribute",
         "Identity & Security"
+    ],
+    "self": [
+        "self",
+        "SELF Service",
+        "Others"
     ],
     "service-catalog": [
         "service_catalog",

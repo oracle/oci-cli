@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.generative_ai_data.src.oci_cli_generative_ai_data.generated import generative_ai_data_service_cli
 
 
-@click.command(cli_util.override('generate_sql_from_nl_job.generate_sql_from_nl_job_root_group.command_name', 'generate-sql-from-nl-job'), cls=CommandGroupWithAlias, help=cli_util.override('generate_sql_from_nl_job.generate_sql_from_nl_job_root_group.help', """A description of the ReferenceService API. in progress"""), short_help=cli_util.override('generate_sql_from_nl_job.generate_sql_from_nl_job_root_group.short_help', """Generative AI Service Nl2sql API"""))
+@click.command(cli_util.override('generate_sql_from_nl_job.generate_sql_from_nl_job_root_group.command_name', 'generate-sql-from-nl-job'), cls=CommandGroupWithAlias, help=cli_util.override('generate_sql_from_nl_job.generate_sql_from_nl_job_root_group.help', """A description of the ReferenceService API. in progress"""), short_help=cli_util.override('generate_sql_from_nl_job.generate_sql_from_nl_job_root_group.short_help', """Generative AI Service NL2SQL API"""))
 @cli_util.help_option_group
 def generate_sql_from_nl_job_root_group():
     pass
@@ -39,21 +39,18 @@ generate_sql_from_nl_job_root_group.add_command(generate_sql_from_nl_job_group)
 @cli_util.option('--display-name', help=u"""A user-friendly display name. It does not have to be unique and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--opc-compartment-id', help=u"""The ID of the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'generative_ai_data', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai_data', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai_data', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai_data', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai_data', 'class': 'GenerateSqlFromNlJob'})
 @cli_util.wrap_exceptions
-def generate_sql_from_nl(ctx, from_json, input_natural_language_query, semantic_store_id, description, display_name, freeform_tags, defined_tags, opc_compartment_id, if_match):
+def generate_sql_from_nl(ctx, from_json, input_natural_language_query, semantic_store_id, description, display_name, freeform_tags, defined_tags, if_match):
 
     if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
     kwargs = {}
-    if opc_compartment_id is not None:
-        kwargs['opc_compartment_id'] = opc_compartment_id
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
