@@ -1112,7 +1112,11 @@ Example: `My mount target`""")
 
 Note:
 
-This attribute value is stored in the [PrivateIp] resource, not in the `mountTarget` resource. To update the `hostnameLabel`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's private IPs (`privateIpIds`). Then, you can use [UpdatePrivateIp] to update the `hostnameLabel` value. For more information, see [DNS in Your Virtual Cloud Network].
+If the IP address is IPv4, this attribute value is stored in the [PrivateIp] resource, not in the `mountTarget` resource. To update the `hostnameLabel`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's private IPs (`privateIpIds`). Then, you can use [UpdatePrivateIp] to update the `hostnameLabel` value.
+
+If the IP address is IPv6, it is stored in the [Ipv6]  resource To update the `hostnameLabel`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's IPv6 address (`mountTargetIpv6Ids`). Then, you can use [UpdateIpv6] to update the `hostnameLabel` value.
+
+For more information, see [DNS in Your Virtual Cloud Network].
 
 Example: `files-1`""")
 @cli_util.option('--ip-address', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
@@ -1323,6 +1327,8 @@ Example: `My outbound connector`""")
 This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/filestorage/20171215/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the password for the LDAP bind account in the Vault.""")
 @cli_util.option('--password-secret-version', type=click.INT, help=u"""Version of the password secret in the Vault to use.""")
+@cli_util.option('--trusted-certificate-secret-id', help=u"""The [OCID] of the trusted certificate for the LDAP server in the Vault.""")
+@cli_util.option('--trusted-certificate-secret-version', type=click.INT, help=u"""Version of the trusted certificate secret in the Vault to use.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1331,7 +1337,7 @@ This option is a JSON list with items of type ResourceLock.  For documentation o
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'file_storage', 'class': 'list[ResourceLock]'}, 'endpoints': {'module': 'file_storage', 'class': 'list[Endpoint]'}}, output_type={'module': 'file_storage', 'class': 'OutboundConnector'})
 @cli_util.wrap_exceptions
-def create_outbound_connector_create_ldap_bind_account_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, endpoints, bind_distinguished_name, display_name, freeform_tags, defined_tags, locks, password_secret_id, password_secret_version):
+def create_outbound_connector_create_ldap_bind_account_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, endpoints, bind_distinguished_name, display_name, freeform_tags, defined_tags, locks, password_secret_id, password_secret_version, trusted_certificate_secret_id, trusted_certificate_secret_version):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1359,6 +1365,12 @@ def create_outbound_connector_create_ldap_bind_account_details(ctx, from_json, w
 
     if password_secret_version is not None:
         _details['passwordSecretVersion'] = password_secret_version
+
+    if trusted_certificate_secret_id is not None:
+        _details['trustedCertificateSecretId'] = trusted_certificate_secret_id
+
+    if trusted_certificate_secret_version is not None:
+        _details['trustedCertificateSecretVersion'] = trusted_certificate_secret_version
 
     _details['connectorType'] = 'LDAPBIND'
 

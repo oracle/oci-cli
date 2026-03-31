@@ -6,6 +6,93 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.77.0 - 2026-03-31
+-------------------
+Added
+~~~~~
+* Support for the Container Registry service
+
+  * ``oci container-registry``
+
+* Support for Generative AI Data Service
+
+  * ``oci generative-ai-data``
+
+* Support for the SaaS Listings service (Subscription Model with Tiered Pricing) 
+
+  * ``oci self``
+
+* Support for the Public Egress, Container Signature Verification for model-deployments in the Data Science service
+
+  * ``oci data-science model-deployment create``
+  * ``oci data-science model-deployment create-model-deployment-model-group-deployment-configuration-details``
+
+* Support for controlled updates in MySQL HeatWave Service
+
+  * ``oci mysql db-system controlled-update --db-system-id``
+
+* Support for new AI Autonomous DB types AJD, APEX, AVD in Ops Insights service
+
+  * ``oci opsi database-insights list-database-configurations --database-type``
+  * ``oci opsi database-insights list --database-type``
+  * ``oci opsi database-insights summarize-database-insight-resource-capacity-trend --database-type``
+  * ``oci opsi database-insights summarize-database-insight-resource-forecast-trend --database-type``
+  * ``oci opsi database-insights summarize-database-insight-resource-statistics --database-type``
+  * ``oci opsi database-insights summarize-database-insight-resource-usage-trend --database-type``
+  * ``oci opsi database-insights summarize-database-insight-resource-usage --database-type``
+  * ``oci opsi database-insights summarize-database-insight-resource-utilization-insight --database-type``
+  * ``oci opsi database-insights summarize-sql-insights --database-type``
+  * ``oci opsi database-insights summarize-sql-statistics --database-type``
+
+* Support for Reserved Private IP feature for Network Load Balancer service
+
+  * ``oci nlb network-load-balancer update --reserved-ipv6-id``
+
+* Cloud Migrations service
+
+  * Support for new optional parameters ``--migration-config, --migration-type`` in the following commands
+
+    * ``oci cloud-migrations migration create``
+    * ``oci cloud-migrations migration update``
+
+  * Support for new optional parameter ``--replication-location-detail`` in the following command
+
+    * ``oci cloud-migrations migration-asset create``
+
+  * Support for new commands
+
+    * ``oci cloud-migrations target-asset create-target-asset-create-olvm-target-asset-details``
+    * ``oci cloud-migrations target-asset update-target-asset-update-olvm-target-asset-details``
+
+* File Storage service
+
+  * Support for using IPv6 addresses as a Mount Target IP address
+
+    * ``oci fs mount-target create --ip-address``
+
+  * Support for Custom CA certificates for LDAP Feature on Mount Targets
+
+    * ``oci fs outbound-connector create_ldap_bind_connector --trusted-certificate-secret-id, --trusted-certificate-secret-version``
+
+* Database service
+
+  * Support for new optional parameter ``--zero-data-loss-enabled`` in the following command
+
+    * ``oci db database update --zero-data-loss-enabled [boolean]``
+    * ``oci db database create --zero-data-loss-enabled [boolean]``
+
+Changed
+~~~~~~~
+* Generative AI Data Service
+
+ * [BREAKING] Removed optional parameter ``--opc-compartment-id`` from the following command
+
+    * ``oci generative-ai-data generate-sql-from-nl-job generate-sql-from-nl``
+
+* Minor changes to existing OIC CP Public API to support existing DR design in Integration service
+
+  * ``oci integration integration-instance convert-instance --conversion-phase , -? | -h | --help``
+
 3.76.2 - 2026-03-24
 -------------------
 Added

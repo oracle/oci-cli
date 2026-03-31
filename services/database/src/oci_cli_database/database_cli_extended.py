@@ -667,6 +667,7 @@ def launch_db_system_from_database_extended(ctx, **kwargs):
 @cli_util.option('--hsm-password', required=False, help=u"""Provide the HSM password as you would in RDBMS for External HSM.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Provide the DATA storage size, in gigabytes, that is applicable for the database.""")
 @cli_util.option('--reco-storage-size-in-gbs', type=click.INT, help=u"""Provide the RECO storage size, in gigabytes, that is applicable for the database.""")
+@cli_util.option('--zero-data-loss-enabled', required=False, type=click.BOOL, help=u"""Enable Zero Data loss feature""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -765,6 +766,11 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
         db_backup_config.auto_backup_enabled = kwargs['auto_backup_enabled']
         db_backup_config.auto_backup_window = kwargs['auto-backup-window']
         del kwargs['auto-backup-window']
+    if kwargs.get('zero_data_loss_enabled') is not None:
+        backup_details_list = db_backup_config.setdefault('backupDestinationDetails', [])
+        if not backup_details_list:
+            backup_details_list.append({})
+        backup_details_list[0]['isZeroDataLossEnabled'] = kwargs['zero_data_loss_enabled']
 
     if kwargs['auto_backup_enabled'] is not None or kwargs['recovery_window_in_days'] is not None:
         if kwargs['auto_backup_enabled'] is not None:
@@ -790,6 +796,7 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
     del kwargs['auto_full_backup_day']
     del kwargs['auto_full_backup_window']
     del kwargs['run_immediate_full_backup']
+    kwargs.pop('zero_data_loss_enabled', None)
 
     create_db_home_details.database = create_database_details
     if 'db_version' in kwargs and kwargs['db_version']:
@@ -980,6 +987,7 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--auto-full-backup-day', required=False, help="""Day of the week the full backup should be applied on the database system. If no option is selected, the value is null and we will default to Sunday.""")
 @cli_util.option('--auto-full-backup-window', required=False, help="""Specifying a two hour slot when the full backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
 @cli_util.option('--backup-destination', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""backup destination list""")
+@cli_util.option('--zero-data-loss-enabled', required=False, type=click.BOOL, help=u"""Enable Zero Data loss feature""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
@@ -1005,12 +1013,19 @@ def update_database_extended(ctx, **kwargs):
             db_backup_config['backupDestinationDetails'] = cli_util.parse_json_parameter("backup_destination_details", kwargs['backup_destination'])
         kwargs['db_backup_config'] = json.dumps(db_backup_config)
 
+    if kwargs.get('zero_data_loss_enabled') is not None:
+        backup_details_list = db_backup_config.setdefault('backupDestinationDetails', [])
+        if not backup_details_list:
+            backup_details_list.append({})
+        backup_details_list[0]['isZeroDataLossEnabled'] = kwargs['zero_data_loss_enabled']
+
     del kwargs['auto_backup_enabled']
     del kwargs['recovery_window_in_days']
     del kwargs['auto_backup_window']
     del kwargs['auto_full_backup_day']
     del kwargs['auto_full_backup_window']
     del kwargs['backup_destination']
+    kwargs.pop('zero_data_loss_enabled', None)
 
     ctx.invoke(database_cli.update_database, **kwargs)
 

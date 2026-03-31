@@ -129,6 +129,75 @@ def add_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@db_system_group.command(name=cli_util.override('db_system.controlled_update_db_system.command_name', 'controlled-update'), help=u"""Update the chosen subset of MySQL instances based on their role. \n[Command Reference](controlledUpdateDbSystem)""")
+@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
+@cli_util.option('--target-mysql-version', help=u"""The MySQL version to be applied to the selected instances.""")
+@cli_util.option('--target-db-instances', type=custom_types.CliCaseInsensitiveChoice(["ALL_BUT_PRIMARY", "PRIMARY_ONLY"]), help=u"""Defines the MySQL instances to be operated during a controlled update.  - ALL_BUT_PRIMARY: Update all MySQL instances in a highly available DB System except the primary group member,    without triggering a controlled failover.  - PRIMARY_ONLY: Update the primary group member in a highly available DB System    after a controlled failover (downtime is expected). This operation requires that the other    MySQL instances have been previously updated using the ALL_BUT_PRIMARY option.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def controlled_update_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, target_mysql_version, target_db_instances, if_match):
+
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if target_mysql_version is not None:
+        _details['targetMysqlVersion'] = target_mysql_version
+
+    if target_db_instances is not None:
+        _details['targetDbInstances'] = target_db_instances
+
+    client = cli_util.build_client('mysql', 'db_system', ctx)
+    result = client.controlled_update_db_system(
+        db_system_id=db_system_id,
+        controlled_update_db_system_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        client = cli_util.build_client('mysql', 'work_requests', ctx)
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @db_system_group.command(name=cli_util.override('db_system.create_db_system.command_name', 'create'), help=u"""Creates and launches a DB System. \n[Command Reference](createDbSystem)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
