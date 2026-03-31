@@ -334,19 +334,21 @@ def change_replication_schedule_compartment(ctx, from_json, wait_for_state, max_
 @migration_group.command(name=cli_util.override('cloud_migrations.create_migration.command_name', 'create'), help=u"""Creates a migration. \n[Command Reference](createMigration)""")
 @cli_util.option('--display-name', required=True, help=u"""Migration identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier""")
+@cli_util.option('--migration-type', help=u"""Type of migration project (OCI/OLVM). This determines the target environment for the migration.""")
 @cli_util.option('--replication-schedule-id', help=u"""Replication schedule identifier""")
 @cli_util.option('--is-completed', type=click.BOOL, help=u"""Indicates whether migration is marked as complete.""")
+@cli_util.option('--migration-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. It exists only for cross-compatibility. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "NEEDS_ATTENTION", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_migrations', 'class': 'Migration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_migrations', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, replication_schedule_id, is_completed, freeform_tags, defined_tags):
+def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, migration_type, replication_schedule_id, is_completed, migration_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -355,11 +357,17 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
 
+    if migration_type is not None:
+        _details['migrationType'] = migration_type
+
     if replication_schedule_id is not None:
         _details['replicationScheduleId'] = replication_schedule_id
 
     if is_completed is not None:
         _details['isCompleted'] = is_completed
+
+    if migration_config is not None:
+        _details['migrationConfig'] = cli_util.parse_json_parameter("migration_config", migration_config)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -406,16 +414,17 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--snap-shot-bucket-name', required=True, help=u"""Name of snapshot bucket""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. If empty, then source asset name will be used. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--replication-schedule-id', help=u"""Replication schedule identifier""")
+@cli_util.option('--replication-location-detail', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--depends-on', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of migration assets that depends on this asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'depends-on': {'module': 'cloud_migrations', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'replication-location-detail': {'module': 'cloud_migrations', 'class': 'ReplicationLocationDetail'}, 'depends-on': {'module': 'cloud_migrations', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'depends-on': {'module': 'cloud_migrations', 'class': 'list[string]'}}, output_type={'module': 'cloud_migrations', 'class': 'MigrationAsset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'replication-location-detail': {'module': 'cloud_migrations', 'class': 'ReplicationLocationDetail'}, 'depends-on': {'module': 'cloud_migrations', 'class': 'list[string]'}}, output_type={'module': 'cloud_migrations', 'class': 'MigrationAsset'})
 @cli_util.wrap_exceptions
-def create_migration_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_asset_id, migration_id, availability_domain, replication_compartment_id, snap_shot_bucket_name, display_name, replication_schedule_id, depends_on):
+def create_migration_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_asset_id, migration_id, availability_domain, replication_compartment_id, snap_shot_bucket_name, display_name, replication_schedule_id, replication_location_detail, depends_on):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -432,6 +441,9 @@ def create_migration_asset(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if replication_schedule_id is not None:
         _details['replicationScheduleId'] = replication_schedule_id
+
+    if replication_location_detail is not None:
+        _details['replicationLocationDetail'] = cli_util.parse_json_parameter("replication_location_detail", replication_location_detail)
 
     if depends_on is not None:
         _details['dependsOn'] = cli_util.parse_json_parameter("depends_on", depends_on)
@@ -619,7 +631,7 @@ def create_replication_schedule(ctx, from_json, wait_for_state, max_wait_seconds
 
 @target_asset_group.command(name=cli_util.override('cloud_migrations.create_target_asset.command_name', 'create'), help=u"""Creates a target asset. \n[Command Reference](createTargetAsset)""")
 @cli_util.option('--migration-plan-id', required=True, help=u"""OCID of the associated migration plan.""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INSTANCE"]), help=u"""The type of target asset.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INSTANCE", "OLVM_INSTANCE"]), help=u"""The type of target asset.""")
 @cli_util.option('--is-excluded-from-execution', required=True, type=click.BOOL, help=u"""A boolean indicating whether the asset should be migrated.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -638,6 +650,67 @@ def create_target_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     _details['migrationPlanId'] = migration_plan_id
     _details['type'] = type
     _details['isExcludedFromExecution'] = is_excluded_from_execution
+
+    client = cli_util.build_client('cloud_migrations', 'migration', ctx)
+    result = client.create_target_asset(
+        create_target_asset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@target_asset_group.command(name=cli_util.override('cloud_migrations.create_target_asset_create_olvm_target_asset_details.command_name', 'create-target-asset-create-olvm-target-asset-details'), help=u"""Creates a target asset. \n[Command Reference](createTargetAsset)""")
+@cli_util.option('--migration-plan-id', required=True, help=u"""OCID of the associated migration plan.""")
+@cli_util.option('--is-excluded-from-execution', required=True, type=click.BOOL, help=u"""A boolean indicating whether the asset should be migrated.""")
+@cli_util.option('--ms-license', help=u"""Microsoft license for the VM configuration.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_migrations', 'class': 'TargetAsset'})
+@cli_util.wrap_exceptions
+def create_target_asset_create_olvm_target_asset_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_plan_id, is_excluded_from_execution, ms_license):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['migrationPlanId'] = migration_plan_id
+    _details['isExcludedFromExecution'] = is_excluded_from_execution
+
+    if ms_license is not None:
+        _details['msLicense'] = ms_license
+
+    _details['type'] = 'OLVM_INSTANCE'
 
     client = cli_util.build_client('cloud_migrations', 'migration', ctx)
     result = client.create_target_asset(
@@ -1840,7 +1913,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources where the resource's lifecycle state matches the given operation status.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_MIGRATION", "UPDATE_MIGRATION", "REFRESH_MIGRATION", "DELETE_MIGRATION", "MOVE_MIGRATION", "START_ASSET_REPLICATION", "START_MIGRATION_REPLICATION", "CREATE_REPLICATION_SCHEDULE", "UPDATE_REPLICATION_SCHEDULE", "DELETE_REPLICATION_SCHEDULE", "MOVE_REPLICATION_SCHEDULE", "CREATE_MIGRATION_PLAN", "UPDATE_MIGRATION_PLAN", "DELETE_MIGRATION_PLAN", "MOVE_MIGRATION_PLAN", "REFRESH_MIGRATION_PLAN", "EXECUTE_MIGRATION_PLAN", "REFRESH_MIGRATION_ASSET", "CREATE_MIGRATION_ASSET", "DELETE_MIGRATION_ASSET", "CREATE_TARGET_ASSET", "UPDATE_TARGET_ASSET", "DELETE_TARGET_ASSET"]), help=u"""A filter to return only resources where the resource's lifecycle state matches the given operation type.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_MIGRATION", "UPDATE_MIGRATION", "REFRESH_MIGRATION", "DELETE_MIGRATION", "MOVE_MIGRATION", "START_ASSET_REPLICATION", "START_MIGRATION_REPLICATION", "CREATE_REPLICATION_SCHEDULE", "UPDATE_REPLICATION_SCHEDULE", "DELETE_REPLICATION_SCHEDULE", "MOVE_REPLICATION_SCHEDULE", "CREATE_MIGRATION_PLAN", "UPDATE_MIGRATION_PLAN", "DELETE_MIGRATION_PLAN", "MOVE_MIGRATION_PLAN", "REFRESH_MIGRATION_PLAN", "EXECUTE_MIGRATION_PLAN", "REFRESH_MIGRATION_ASSET", "CREATE_MIGRATION_ASSET", "DELETE_MIGRATION_ASSET", "CREATE_TARGET_ASSET", "UPDATE_TARGET_ASSET", "DELETE_TARGET_ASSET", "PREPARE_TARGET_ASSET"]), help=u"""A filter to return only resources where the resource's lifecycle state matches the given operation type.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of the previous response.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -2181,6 +2254,8 @@ def start_migration_replication(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.option('--display-name', help=u"""Migration identifier""")
 @cli_util.option('--replication-schedule-id', help=u"""Replication schedule identifier""")
 @cli_util.option('--is-completed', type=click.BOOL, help=u"""Indicates whether migration is marked as complete.""")
+@cli_util.option('--migration-type', help=u"""Type of migration project (OCI/OLVM). This determines the target environment for the migration.""")
+@cli_util.option('--migration-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. It exists only for cross-compatibility. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2188,18 +2263,18 @@ def start_migration_replication(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "NEEDS_ATTENTION", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_migrations', 'class': 'Migration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_migrations', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, display_name, replication_schedule_id, is_completed, freeform_tags, defined_tags, if_match):
+def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, display_name, replication_schedule_id, is_completed, migration_type, migration_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if migration_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to migration-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2217,6 +2292,12 @@ def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if is_completed is not None:
         _details['isCompleted'] = is_completed
+
+    if migration_type is not None:
+        _details['migrationType'] = migration_type
+
+    if migration_config is not None:
+        _details['migrationConfig'] = cli_util.parse_json_parameter("migration_config", migration_config)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -2498,7 +2579,7 @@ def update_replication_schedule(ctx, from_json, force, wait_for_state, max_wait_
 
 @target_asset_group.command(name=cli_util.override('cloud_migrations.update_target_asset.command_name', 'update'), help=u"""Updates the target asset. \n[Command Reference](updateTargetAsset)""")
 @cli_util.option('--target-asset-id', required=True, help=u"""Unique target asset identifier""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INSTANCE"]), help=u"""The type of target asset.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INSTANCE", "OLVM_INSTANCE"]), help=u"""The type of target asset.""")
 @cli_util.option('--is-excluded-from-execution', type=click.BOOL, help=u"""A boolean indicating whether the asset should be migrated.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2610,6 +2691,75 @@ def update_target_asset_update_vm_target_asset_details(ctx, from_json, force, wa
         _details['userSpec'] = cli_util.parse_json_parameter("user_spec", user_spec)
 
     _details['type'] = 'INSTANCE'
+
+    client = cli_util.build_client('cloud_migrations', 'migration', ctx)
+    result = client.update_target_asset(
+        target_asset_id=target_asset_id,
+        update_target_asset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@target_asset_group.command(name=cli_util.override('cloud_migrations.update_target_asset_update_olvm_target_asset_details.command_name', 'update-target-asset-update-olvm-target-asset-details'), help=u"""Updates the target asset. \n[Command Reference](updateTargetAsset)""")
+@cli_util.option('--target-asset-id', required=True, help=u"""Unique target asset identifier""")
+@cli_util.option('--is-excluded-from-execution', type=click.BOOL, help=u"""A boolean indicating whether the asset should be migrated.""")
+@cli_util.option('--ms-license', help=u"""Microsoft license for the VM configuration.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_target_asset_update_olvm_target_asset_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_asset_id, is_excluded_from_execution, ms_license, if_match):
+
+    if isinstance(target_asset_id, six.string_types) and len(target_asset_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-asset-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if is_excluded_from_execution is not None:
+        _details['isExcludedFromExecution'] = is_excluded_from_execution
+
+    if ms_license is not None:
+        _details['msLicense'] = ms_license
+
+    _details['type'] = 'OLVM_INSTANCE'
 
     client = cli_util.build_client('cloud_migrations', 'migration', ctx)
     result = client.update_target_asset(

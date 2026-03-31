@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.generative_ai_data.src.oci_cli_generative_ai_data.generated import generative_ai_data_service_cli
 
 
-@click.command(cli_util.override('get_enrichment_job.get_enrichment_job_root_group.command_name', 'get-enrichment-job'), cls=CommandGroupWithAlias, help=cli_util.override('get_enrichment_job.get_enrichment_job_root_group.help', """A description of the ReferenceService API. in progress"""), short_help=cli_util.override('get_enrichment_job.get_enrichment_job_root_group.short_help', """Generative AI Service Nl2sql API"""))
+@click.command(cli_util.override('get_enrichment_job.get_enrichment_job_root_group.command_name', 'get-enrichment-job'), cls=CommandGroupWithAlias, help=cli_util.override('get_enrichment_job.get_enrichment_job_root_group.help', """A description of the ReferenceService API. in progress"""), short_help=cli_util.override('get_enrichment_job.get_enrichment_job_root_group.short_help', """Generative AI Service NL2SQL API"""))
 @cli_util.help_option_group
 def get_enrichment_job_root_group():
     pass
