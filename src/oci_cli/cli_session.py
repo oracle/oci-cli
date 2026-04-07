@@ -354,6 +354,12 @@ def import_session(ctx, session_archive, force):
                 archived_profile_name = click.prompt("Config already contains a profile with the same name as the archived profile: {}. Provide an alternative name for the imported profile".format(archived_profile_name))
 
             imported_resources_dir = os.path.join(cli_setup.DEFAULT_TOKEN_DIRECTORY, archived_profile_name)
+            # The session-archive could be a malicious file where a profile name like "../../<some_path>" can cause
+            # arbitrary files to be written outside the expected location. Need to prevent it
+            if os.path.commonpath([os.path.abspath(cli_setup.DEFAULT_TOKEN_DIRECTORY), os.path.abspath(imported_resources_dir)]) != os.path.abspath(cli_setup.DEFAULT_TOKEN_DIRECTORY):
+                click.echo('ERROR: Invalid profile name: {bad_profile_name} in session-archive. Attempted to create a session outside {expected_dir}'.format(bad_profile_name=archived_profile_name, expected_dir=cli_setup.DEFAULT_TOKEN_DIRECTORY))
+                sys.exit(1)
+
             if not os.path.exists(imported_resources_dir):
                 os.makedirs(imported_resources_dir)
 

@@ -1218,7 +1218,7 @@ def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartm
     cli_util.render_response(result, ctx)
 
 
-@management_agent_group.command(name=cli_util.override('management_agent.list_management_agents.command_name', 'list'), help=u"""Returns a list of Management Agents. If no explicit page size limit is specified, it will default to 1000 when compartmentIdInSubtree is true and 5000 otherwise. The response is limited to maximum 1000 records when compartmentIdInSubtree is true. \n[Command Reference](listManagementAgents)""")
+@management_agent_group.command(name=cli_util.override('management_agent.list_management_agents.command_name', 'list'), help=u"""Returns a list of Management Agents. If no explicit page size limit is specified, it will default to 1000. The response is limited to maximum 1000 records when compartmentIdInSubtree is true. \n[Command Reference](listManagementAgents)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--plugin-name', multiple=True, help=u"""Filter to return only Management Agents having the particular Plugin installed. A special pluginName of 'None' can be provided and this will return only Management Agents having no plugin installed.""")
 @cli_util.option('--version-parameterconflict', multiple=True, help=u"""Filter to return only Management Agents having the particular agent version.""")

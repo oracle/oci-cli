@@ -315,3 +315,6 @@ cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_g
 
 # oci os-management-hub software-source update-software-source-update-third-party-software-source-details -> oci os-management-hub software-source update-third-party-swsrc
 cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.update_software_source_update_third_party_software_source_details, "update-third-party-swsrc")
+
+# oci os-management-hub software-source list-available-software-sources-to-add -> oci os-management-hub list-available-software-sources
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.list_available_software_sources_to_add, "list-available-software-sources")

@@ -43,7 +43,9 @@ reporting_managed_instance_root_group.add_command(managed_instance_analytic_coll
 @managed_instance_group.command(name=cli_util.override('reporting_managed_instance.get_managed_instance_analytic_content.command_name', 'get-managed-instance-analytic-content'), help=u"""Returns a report of managed instances matching the given filters. You can select CSV, XML, or JSON format. \n[Command Reference](getManagedInstanceAnalyticContent)""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Indicates whether to include subcompartments in the returned results. Default is false.""")
 @cli_util.option('--managed-instance-group-id', help=u"""The [OCID] of the managed instance group. This filter returns resources associated with this group.""")
+@cli_util.option('--dynamic-set-id', help=u"""The [OCID] of the dynamic set. This filter returns resources associated with this dynamic set.""")
 @cli_util.option('--lifecycle-environment-id', help=u"""The [OCID] of the lifecycle environment. This filter returns only resource contained with the specified lifecycle environment.""")
 @cli_util.option('--lifecycle-stage-id', help=u"""The [OCID] of the lifecycle stage. This resource returns resources associated with this lifecycle stage.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "UNREACHABLE", "ERROR", "WARNING", "REGISTRATION_ERROR", "DELETING", "ONBOARDING", "REBOOTING"]), multiple=True, help=u"""A filter to return only managed instances whose status matches the status provided.""")
@@ -51,26 +53,32 @@ reporting_managed_instance_root_group.add_command(managed_instance_analytic_coll
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--security-updates-available-equals-to', type=click.INT, help=u"""A filter to return instances that have the specified number of available security updates.""")
 @cli_util.option('--bug-updates-available-equals-to', type=click.INT, help=u"""A filter to return instances that have the specified number of available bug updates.""")
+@cli_util.option('--other-updates-available-equals-to', type=click.INT, help=u"""A filter to return instances that have the specified number of available other updates.""")
 @cli_util.option('--security-updates-available-greater-than', type=click.INT, help=u"""A filter to return instances that have more available security updates than the number specified.""")
 @cli_util.option('--bug-updates-available-greater-than', type=click.INT, help=u"""A filter to return instances that have more available bug updates than the number specified.""")
+@cli_util.option('--other-updates-available-greater-than', type=click.INT, help=u"""A filter to return instances that have more available other updates than the number specified.""")
 @cli_util.option('--location', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location matches the given value.""")
 @cli_util.option('--location-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location does not match the given value.""")
-@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), multiple=True, help=u"""A filter to return only resources that match the given operating system family.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_10", "ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "WINDOWS_SERVER_2025", "WINDOWS_11", "ALL", "UBUNTU_20_04", "UBUNTU_22_04", "UBUNTU_24_04"]), multiple=True, help=u"""A filter to return only resources that match the given operating system family.""")
 @cli_util.option('--is-managed-by-autonomous-linux', type=click.BOOL, help=u"""Indicates whether to list only resources managed by the Autonomous Linux service.""")
 @cli_util.option('--report-format', type=custom_types.CliCaseInsensitiveChoice(["csv", "json", "xml"]), help=u"""The format of the report to download. Default is CSV.""")
-@cli_util.option('--report-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ACTIVITY", "ALL"]), help=u"""The type of the report the user wants to download. Default is ALL.""")
+@cli_util.option('--report-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ACTIVITY", "OTHER", "ALL"]), help=u"""The type of the report the user wants to download. Default is ALL.""")
 @json_skeleton_utils.get_cli_json_input_option({'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def get_managed_instance_analytic_content(ctx, from_json, file, compartment_id, managed_instance_group_id, lifecycle_environment_id, lifecycle_stage_id, status, display_name, display_name_contains, security_updates_available_equals_to, bug_updates_available_equals_to, security_updates_available_greater_than, bug_updates_available_greater_than, location, location_not_equal_to, os_family, is_managed_by_autonomous_linux, report_format, report_type):
+def get_managed_instance_analytic_content(ctx, from_json, file, compartment_id, compartment_id_in_subtree, managed_instance_group_id, dynamic_set_id, lifecycle_environment_id, lifecycle_stage_id, status, display_name, display_name_contains, security_updates_available_equals_to, bug_updates_available_equals_to, other_updates_available_equals_to, security_updates_available_greater_than, bug_updates_available_greater_than, other_updates_available_greater_than, location, location_not_equal_to, os_family, is_managed_by_autonomous_linux, report_format, report_type):
 
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     if managed_instance_group_id is not None:
         kwargs['managed_instance_group_id'] = managed_instance_group_id
+    if dynamic_set_id is not None:
+        kwargs['dynamic_set_id'] = dynamic_set_id
     if lifecycle_environment_id is not None:
         kwargs['lifecycle_environment_id'] = lifecycle_environment_id
     if lifecycle_stage_id is not None:
@@ -85,10 +93,14 @@ def get_managed_instance_analytic_content(ctx, from_json, file, compartment_id, 
         kwargs['security_updates_available_equals_to'] = security_updates_available_equals_to
     if bug_updates_available_equals_to is not None:
         kwargs['bug_updates_available_equals_to'] = bug_updates_available_equals_to
+    if other_updates_available_equals_to is not None:
+        kwargs['other_updates_available_equals_to'] = other_updates_available_equals_to
     if security_updates_available_greater_than is not None:
         kwargs['security_updates_available_greater_than'] = security_updates_available_greater_than
     if bug_updates_available_greater_than is not None:
         kwargs['bug_updates_available_greater_than'] = bug_updates_available_greater_than
+    if other_updates_available_greater_than is not None:
+        kwargs['other_updates_available_greater_than'] = other_updates_available_greater_than
     if location is not None and len(location) > 0:
         kwargs['location'] = location
     if location_not_equal_to is not None and len(location_not_equal_to) > 0:
@@ -199,15 +211,17 @@ def get_managed_instance_content(ctx, from_json, file, managed_instance_id, vuln
 
 
 @managed_instance_analytic_collection_group.command(name=cli_util.override('reporting_managed_instance.summarize_managed_instance_analytics.command_name', 'summarize-managed-instance-analytics'), help=u"""Returns a list of user specified metrics for a collection of managed instances. \n[Command Reference](summarizeManagedInstanceAnalytics)""")
-@cli_util.option('--metric-names', required=True, type=custom_types.CliCaseInsensitiveChoice(["TOTAL_INSTANCE_COUNT", "INSTANCE_WITH_AVAILABLE_SECURITY_UPDATES_COUNT", "INSTANCE_WITH_AVAILABLE_BUGFIX_UPDATES_COUNT", "NORMAL_INSTANCE_COUNT", "ERROR_INSTANCE_COUNT", "WARNING_INSTANCE_COUNT", "UNREACHABLE_INSTANCE_COUNT", "REGISTRATION_FAILED_INSTANCE_COUNT", "DELETING_INSTANCE_COUNT", "ONBOARDING_INSTANCE_COUNT", "INSTANCE_SECURITY_UPDATES_COUNT", "INSTANCE_BUGFIX_UPDATES_COUNT", "INSTANCE_SECURITY_ADVISORY_COUNT", "INSTANCE_BUGFIX_ADVISORY_COUNT", "REBOOTING_INSTANCE_COUNT", "NEEDS_REBOOTING_INSTANCE_COUNT"]), multiple=True, help=u"""A filter to return only metrics whose name matches the given metric names.""")
+@cli_util.option('--metric-names', required=True, type=custom_types.CliCaseInsensitiveChoice(["TOTAL_INSTANCE_COUNT", "INSTANCE_WITH_AVAILABLE_SECURITY_UPDATES_COUNT", "INSTANCE_WITH_AVAILABLE_BUGFIX_UPDATES_COUNT", "NORMAL_INSTANCE_COUNT", "ERROR_INSTANCE_COUNT", "WARNING_INSTANCE_COUNT", "UNREACHABLE_INSTANCE_COUNT", "REGISTRATION_FAILED_INSTANCE_COUNT", "INSTANCE_WITH_AVAILABLE_OTHER_UPDATES_COUNT", "DELETING_INSTANCE_COUNT", "ONBOARDING_INSTANCE_COUNT", "INSTANCE_SECURITY_UPDATES_COUNT", "INSTANCE_BUGFIX_UPDATES_COUNT", "INSTANCE_SECURITY_ADVISORY_COUNT", "INSTANCE_BUGFIX_ADVISORY_COUNT", "INSTANCE_OTHER_UPDATES_COUNT", "REBOOTING_INSTANCE_COUNT", "NEEDS_REBOOTING_INSTANCE_COUNT"]), multiple=True, help=u"""A filter to return only metrics whose name matches the given metric names.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Indicates whether to include subcompartments in the returned results. Default is false.""")
 @cli_util.option('--managed-instance-group-id', help=u"""The [OCID] of the managed instance group. This filter returns resources associated with this group.""")
+@cli_util.option('--dynamic-set-id', help=u"""The [OCID] of the dynamic set. This filter returns resources associated with this dynamic set.""")
 @cli_util.option('--lifecycle-environment-id', help=u"""The [OCID] of the lifecycle environment. This filter returns only resource contained with the specified lifecycle environment.""")
 @cli_util.option('--lifecycle-stage-id', help=u"""The [OCID] of the lifecycle stage. This resource returns resources associated with this lifecycle stage.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "UNREACHABLE", "ERROR", "WARNING", "REGISTRATION_ERROR", "DELETING", "ONBOARDING", "REBOOTING"]), multiple=True, help=u"""A filter to return only managed instances whose status matches the status provided.""")
 @cli_util.option('--location', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location matches the given value.""")
 @cli_util.option('--location-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location does not match the given value.""")
-@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), multiple=True, help=u"""A filter to return only resources that match the given operating system family.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_10", "ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "WINDOWS_SERVER_2025", "WINDOWS_11", "ALL", "UBUNTU_20_04", "UBUNTU_22_04", "UBUNTU_24_04"]), multiple=True, help=u"""A filter to return only resources that match the given operating system family.""")
 @cli_util.option('--is-managed-by-autonomous-linux', type=click.BOOL, help=u"""Indicates whether to list only resources managed by the Autonomous Linux service.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
@@ -224,13 +238,17 @@ Example: `3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'ManagedInstanceAnalyticCollection'})
 @cli_util.wrap_exceptions
-def summarize_managed_instance_analytics(ctx, from_json, metric_names, compartment_id, managed_instance_group_id, lifecycle_environment_id, lifecycle_stage_id, status, location, location_not_equal_to, os_family, is_managed_by_autonomous_linux, display_name, display_name_contains, limit, page, sort_by, sort_order):
+def summarize_managed_instance_analytics(ctx, from_json, metric_names, compartment_id, compartment_id_in_subtree, managed_instance_group_id, dynamic_set_id, lifecycle_environment_id, lifecycle_stage_id, status, location, location_not_equal_to, os_family, is_managed_by_autonomous_linux, display_name, display_name_contains, limit, page, sort_by, sort_order):
 
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     if managed_instance_group_id is not None:
         kwargs['managed_instance_group_id'] = managed_instance_group_id
+    if dynamic_set_id is not None:
+        kwargs['dynamic_set_id'] = dynamic_set_id
     if lifecycle_environment_id is not None:
         kwargs['lifecycle_environment_id'] = lifecycle_environment_id
     if lifecycle_stage_id is not None:

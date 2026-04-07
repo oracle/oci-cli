@@ -6,6 +6,99 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.78.0 - 2026-04-07
+-------------------
+Added
+~~~~~
+* Support for new optional parameter in Cloud Bridge service
+
+  * ``oci cloud-bridge discovery asset-source create --environment-type --olvm-endpoint``
+  * ``oci cloud-bridge discovery asset-source update --environment-type --olvm-endpoint``
+  * ``oci cloud-bridge inventory asset create --environment-type --asset-class-name --asset-class-version --asset-details``
+  * ``oci cloud-bridge inventory asset update --environment-type --asset-class-name --asset-class-version --asset-details``
+  * ``oci cloud-bridge inventory asset list --asset-class-name --asset-class-version``
+  * ``oci cloud-bridge inventory asset-aggregation analyze-assets --asset-class-name --asset-class-version``
+
+* Support for optional field bucket-scope for S3 Virtual host URLs for existing Object Storage buckets and regionally unique buckets in the Object Storage service
+
+  * ``oci os bucket create --bucket-scope region``
+  * ``oci os bucket update --bucket-scope region``
+
+* Support for IPv6 in Management Agent Cloud Service
+
+  * ``oci management-agent --enable-dual-stack``
+
+* Support for a new networkType ACCELERATEDPV during instance launch in the Core Service
+
+  * ``oci compute image create --launch-mode ACCELERATEDPV``
+
+* Support for Generic VNIC Attachments in the Kubernetes Engine service
+
+  * ``oci ce node-pool create --network-launch-type``
+  * ``oci ce node-pool create --cni-type --secondary-vnics``
+
+* OS Management Hub Service
+
+  * Support for Dynamic Sets
+
+    * ``oci os-management-hub dynamic-set``
+
+  * Support for Snap operations for Managed Instances
+
+    * ``oci os-management-hub managed-instance install-snaps``
+    * ``oci os-management-hub managed-instance list-managed-instance-snaps``
+    * ``oci os-management-hub managed-instance switch-snap-channel``
+
+  * Support for new optional parameters for Managed Instances
+
+    * ``oci os-management-hub managed-instance get-analytic-content --compartment-id-in-subtree --dynamic-set-id --other-updates-available-equals-to --other-updates-available-greater-than``
+    * ``oci os-management-hub managed-instance list-updatable-packages --advisory-severity``
+    * ``oci os-management-hub managed-instance summarize-analytics --compartment-id-in-subtree --dynamic-set-id``
+
+  * Support for new commands for Managed Instance Groups
+
+    * ``oci os-management-hub managed-instance-group list-managed-instance-group-managed-instances``
+    * ``oci os-management-hub managed-instance-group refresh-software``
+
+  * Support for new optional parameters for Management Stations
+
+    * ``oci os-management-hub management-station create --arch-type --os-family``
+    * ``oci os-management-hub management-station list --health-state``
+    * ``oci os-management-hub management-station update --arch-type --os-family``
+
+  * Support for Ubuntu standalone profile creation
+
+    * ``oci os-management-hub profile create-profile-create-ubuntu-stand-alone-profile-details``
+
+  * Support for new optional parameters for scheduled jobs
+
+    * ``oci os-management-hub scheduled-job create --dynamic-set-ids``
+    * ``oci os-management-hub scheduled-job list --dynamic-set-id``
+
+  * Support for new commands and optional parameters for software sources
+
+    * ``oci os-management-hub software-source list-available-software-sources-to-add``
+    * ``oci os-management-hub software-source replicate-vendor-swsrc --origin-display-name``
+
+  * Support for new optional parameters for work requests.
+
+    * ``oci os-management-hub work-request list --compartment-id-in-subtree``
+
+  * Enforced that imported sessions created via ``oci session import`` must reside under ``~/.oci/sessions/``, else session import exits with status code ``1``.
+
+
+Changed
+~~~~~~~
+* OS Management Hub Service
+
+  * [BREAKING] ``--software-source-ids`` is now a required parameter in the following command
+
+    * ``oci os-management-hub profile create-software-source-profile --software-source-ids``
+
+  * origin-software-source-id`` is now an optional parameter in the following command
+
+    * ``oci os-management-hub software-source replicate-vendor-swsrc --origin-software-source-id``
+
 3.77.0 - 2026-03-31
 -------------------
 Added

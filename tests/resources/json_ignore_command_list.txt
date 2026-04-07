@@ -594,3 +594,7 @@ identity-domains, identity-proofing-provider-template, create
 identity-domains, identity-proofing-provider-template, put
 identity-domains, verification-claim, create
 limits-increase, limits-increase-request, create
+cloud-bridge, discovery, asset-source, create
+cloud-bridge, discovery, asset-source, update
+cloud-bridge, inventory, asset, update
+os-management-hub, managed-instance-group, list-managed-instances

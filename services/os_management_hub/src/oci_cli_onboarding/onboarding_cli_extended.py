@@ -144,3 +144,7 @@ def attach_lifecycle_stage_to_profile(ctx, **kwargs):
         kwargs.pop('stage_id')
 
     ctx.invoke(onboarding_cli.attach_lifecycle_stage_to_profile, **kwargs)
+
+
+# oci os-management-hub profile create-profile-create-ubuntu-stand-alone-profile-details -> oci os-management-hub profile create-ubuntu-stand-alone-profile
+cli_util.rename_command(onboarding_cli, onboarding_cli.profile_group, onboarding_cli.create_profile_create_ubuntu_stand_alone_profile_details, "create-ubuntu-stand-alone-profile")

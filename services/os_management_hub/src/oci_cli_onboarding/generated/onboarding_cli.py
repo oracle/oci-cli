@@ -198,11 +198,11 @@ def change_profile_compartment(ctx, from_json, profile_id, compartment_id, if_ma
 
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile.command_name', 'create'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Must be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
-@cli_util.option('--profile-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SOFTWARESOURCE", "GROUP", "LIFECYCLE", "STATION", "WINDOWS_STANDALONE"]), help=u"""The type of profile.""")
+@cli_util.option('--profile-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SOFTWARESOURCE", "GROUP", "LIFECYCLE", "STATION", "WINDOWS_STANDALONE", "UBUNTU_STANDALONE"]), help=u"""The type of profile.""")
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
-@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is required when creating a profile for non-OCI instances.""")
+@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is used when creating a profile for non-OCI instances.""")
 @cli_util.option('--registration-type', help=u"""The type of instance to register.""")
 @cli_util.option('--is-default-profile', type=click.BOOL, help=u"""Indicates if the profile is set as the default. There is exactly one default profile for a specified architecture, OS family, registration type, and vendor. When registering an instance with the corresonding characteristics, the default profile is used, unless another profile is specified.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -274,12 +274,95 @@ def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
+@profile_group.command(name=cli_util.override('onboarding.create_profile_create_ubuntu_stand_alone_profile_details.command_name', 'create-profile-create-ubuntu-stand-alone-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Must be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
+@cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT", "CANONICAL"]), help=u"""The vendor of the operating system for the instance.""")
+@cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_10", "ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "WINDOWS_SERVER_2025", "WINDOWS_11", "ALL", "UBUNTU_20_04", "UBUNTU_22_04", "UBUNTU_24_04"]), help=u"""The operating system family.""")
+@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386", "AMD64", "ARM64", "ALL"]), help=u"""The architecture type.""")
+@cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
+@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is used when creating a profile for non-OCI instances.""")
+@cli_util.option('--registration-type', help=u"""The type of instance to register.""")
+@cli_util.option('--is-default-profile', type=click.BOOL, help=u"""Indicates if the profile is set as the default. There is exactly one default profile for a specified architecture, OS family, registration type, and vendor. When registering an instance with the corresonding characteristics, the default profile is used, unless another profile is specified.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'Profile'})
+@cli_util.wrap_exceptions
+def create_profile_create_ubuntu_stand_alone_profile_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, vendor_name, os_family, arch_type, description, management_station_id, registration_type, is_default_profile, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['vendorName'] = vendor_name
+    _details['osFamily'] = os_family
+    _details['archType'] = arch_type
+
+    if description is not None:
+        _details['description'] = description
+
+    if management_station_id is not None:
+        _details['managementStationId'] = management_station_id
+
+    if registration_type is not None:
+        _details['registrationType'] = registration_type
+
+    if is_default_profile is not None:
+        _details['isDefaultProfile'] = is_default_profile
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['profileType'] = 'UBUNTU_STANDALONE'
+
+    client = cli_util.build_client('os_management_hub', 'onboarding', ctx)
+    result = client.create_profile(
+        create_profile_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_profile') and callable(getattr(client, 'get_profile')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_profile(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @profile_group.command(name=cli_util.override('onboarding.create_profile_create_group_profile_details.command_name', 'create-profile-create-group-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Must be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""The [OCID] of the managed instance group that the instance will join after registration.""")
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
-@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is required when creating a profile for non-OCI instances.""")
+@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is used when creating a profile for non-OCI instances.""")
 @cli_util.option('--registration-type', help=u"""The type of instance to register.""")
 @cli_util.option('--is-default-profile', type=click.BOOL, help=u"""Indicates if the profile is set as the default. There is exactly one default profile for a specified architecture, OS family, registration type, and vendor. When registering an instance with the corresonding characteristics, the default profile is used, unless another profile is specified.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -354,13 +437,13 @@ def create_profile_create_group_profile_details(ctx, from_json, wait_for_state, 
 
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile_create_windows_stand_alone_profile_details.command_name', 'create-profile-create-windows-stand-alone-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Must be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
-@cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""The vendor of the operating system for the instance.""")
-@cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""The operating system family.""")
-@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""The architecture type.""")
+@cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT", "CANONICAL"]), help=u"""The vendor of the operating system for the instance.""")
+@cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_10", "ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "WINDOWS_SERVER_2025", "WINDOWS_11", "ALL", "UBUNTU_20_04", "UBUNTU_22_04", "UBUNTU_24_04"]), help=u"""The operating system family.""")
+@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386", "AMD64", "ARM64", "ALL"]), help=u"""The architecture type.""")
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
-@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is required when creating a profile for non-OCI instances.""")
+@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is used when creating a profile for non-OCI instances.""")
 @cli_util.option('--registration-type', help=u"""The type of instance to register.""")
 @cli_util.option('--is-default-profile', type=click.BOOL, help=u"""Indicates if the profile is set as the default. There is exactly one default profile for a specified architecture, OS family, registration type, and vendor. When registering an instance with the corresonding characteristics, the default profile is used, unless another profile is specified.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -437,17 +520,17 @@ def create_profile_create_windows_stand_alone_profile_details(ctx, from_json, wa
 
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile_create_station_profile_details.command_name', 'create-profile-create-station-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Must be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
-@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is required when creating a profile for non-OCI instances.""")
+@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is used when creating a profile for non-OCI instances.""")
 @cli_util.option('--registration-type', help=u"""The type of instance to register.""")
 @cli_util.option('--is-default-profile', type=click.BOOL, help=u"""Indicates if the profile is set as the default. There is exactly one default profile for a specified architecture, OS family, registration type, and vendor. When registering an instance with the corresonding characteristics, the default profile is used, unless another profile is specified.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vendor-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""The vendor of the operating system for the instance.""")
-@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""The operating system family.""")
-@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""The architecture type.""")
+@cli_util.option('--vendor-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT", "CANONICAL"]), help=u"""The vendor of the operating system for the instance.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_10", "ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "WINDOWS_SERVER_2025", "WINDOWS_11", "ALL", "UBUNTU_20_04", "UBUNTU_22_04", "UBUNTU_24_04"]), help=u"""The operating system family.""")
+@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386", "AMD64", "ARM64", "ALL"]), help=u"""The architecture type.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -526,18 +609,18 @@ def create_profile_create_station_profile_details(ctx, from_json, wait_for_state
 
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile_create_software_source_profile_details.command_name', 'create-profile-create-software-source-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Must be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
-@cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""The vendor of the operating system for the instance.""")
-@cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""The operating system family.""")
-@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""The architecture type.""")
+@cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT", "CANONICAL"]), help=u"""The vendor of the operating system for the instance.""")
+@cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_10", "ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "WINDOWS_SERVER_2025", "WINDOWS_11", "ALL", "UBUNTU_20_04", "UBUNTU_22_04", "UBUNTU_24_04"]), help=u"""The operating system family.""")
+@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386", "AMD64", "ARM64", "ALL"]), help=u"""The architecture type.""")
+@cli_util.option('--software-source-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of software source [OCIDs] that the registration profile will use.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
-@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is required when creating a profile for non-OCI instances.""")
+@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is used when creating a profile for non-OCI instances.""")
 @cli_util.option('--registration-type', help=u"""The type of instance to register.""")
 @cli_util.option('--is-default-profile', type=click.BOOL, help=u"""Indicates if the profile is set as the default. There is exactly one default profile for a specified architecture, OS family, registration type, and vendor. When registering an instance with the corresonding characteristics, the default profile is used, unless another profile is specified.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--software-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of software source [OCIDs] that the registration profile will use.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -546,7 +629,7 @@ def create_profile_create_station_profile_details(ctx, from_json, wait_for_state
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'software-source-ids': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'Profile'})
 @cli_util.wrap_exceptions
-def create_profile_create_software_source_profile_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, vendor_name, os_family, arch_type, description, management_station_id, registration_type, is_default_profile, freeform_tags, defined_tags, software_source_ids):
+def create_profile_create_software_source_profile_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, vendor_name, os_family, arch_type, software_source_ids, description, management_station_id, registration_type, is_default_profile, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -557,6 +640,7 @@ def create_profile_create_software_source_profile_details(ctx, from_json, wait_f
     _details['vendorName'] = vendor_name
     _details['osFamily'] = os_family
     _details['archType'] = arch_type
+    _details['softwareSourceIds'] = cli_util.parse_json_parameter("software_source_ids", software_source_ids)
 
     if description is not None:
         _details['description'] = description
@@ -575,9 +659,6 @@ def create_profile_create_software_source_profile_details(ctx, from_json, wait_f
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if software_source_ids is not None:
-        _details['softwareSourceIds'] = cli_util.parse_json_parameter("software_source_ids", software_source_ids)
 
     _details['profileType'] = 'SOFTWARESOURCE'
 
@@ -613,11 +694,11 @@ def create_profile_create_software_source_profile_details(ctx, from_json, wait_f
 
 
 @profile_group.command(name=cli_util.override('onboarding.create_profile_create_lifecycle_profile_details.command_name', 'create-profile-create-lifecycle-profile-details'), help=u"""Creates a registration profile. A profile defines the content applied to the instance when registering it with the service. \n[Command Reference](createProfile)""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Must be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the registration profile.""")
 @cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage that the instance will be associated with.""")
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
-@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is required when creating a profile for non-OCI instances.""")
+@cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is used when creating a profile for non-OCI instances.""")
 @cli_util.option('--registration-type', help=u"""The type of instance to register.""")
 @cli_util.option('--is-default-profile', type=click.BOOL, help=u"""Indicates if the profile is set as the default. There is exactly one default profile for a specified architecture, OS family, registration type, and vendor. When registering an instance with the corresonding characteristics, the default profile is used, unless another profile is specified.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -752,6 +833,37 @@ def delete_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@profile_group.command(name=cli_util.override('onboarding.detach_management_station_from_profile.command_name', 'detach'), help=u"""Detaches the specified management station from a profile. \n[Command Reference](detachManagementStationFromProfile)""")
+@cli_util.option('--profile-id', required=True, help=u"""The [OCID] of the registration profile.""")
+@cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station to detach from the profile.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def detach_management_station_from_profile(ctx, from_json, profile_id, management_station_id, if_match):
+
+    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+        raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['managementStationId'] = management_station_id
+
+    client = cli_util.build_client('os_management_hub', 'onboarding', ctx)
+    result = client.detach_management_station_from_profile(
+        profile_id=profile_id,
+        detach_management_station_from_profile_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -909,17 +1021,17 @@ def list_profile_available_software_sources(ctx, from_json, all_pages, page_size
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--profile-type', type=custom_types.CliCaseInsensitiveChoice(["SOFTWARESOURCE", "GROUP", "LIFECYCLE", "STATION", "WINDOWS_STANDALONE"]), multiple=True, help=u"""A filter to return registration profiles that match the given profile type.""")
+@cli_util.option('--profile-type', type=custom_types.CliCaseInsensitiveChoice(["SOFTWARESOURCE", "GROUP", "LIFECYCLE", "STATION", "WINDOWS_STANDALONE", "UBUNTU_STANDALONE"]), multiple=True, help=u"""A filter to return registration profiles that match the given profile type.""")
 @cli_util.option('--profile-id', help=u"""The [OCID] of the registration profile. A filter used to return the specified profile.""")
-@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""A filter to return only resources that match the given operating system family.""")
-@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""A filter to return only profiles that match the given archType.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_10", "ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "WINDOWS_SERVER_2025", "WINDOWS_11", "ALL", "UBUNTU_20_04", "UBUNTU_22_04", "UBUNTU_24_04"]), help=u"""A filter to return only resources that match the given operating system family.""")
+@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386", "AMD64", "ARM64", "ALL"]), help=u"""A filter to return only profiles that match the given archType.""")
 @cli_util.option('--registration-type', type=custom_types.CliCaseInsensitiveChoice(["OCI_LINUX", "NON_OCI_LINUX", "OCI_WINDOWS", "AUTONOMOUS_LINUX"]), multiple=True, help=u"""A filter to return profiles that match the given instance type.""")
 @cli_util.option('--is-default-profile', type=click.BOOL, help=u"""A filter to return only default profiles.""")
 @cli_util.option('--is-service-provided-profile', type=click.BOOL, help=u"""A filter to return only service-provided profiles.""")
 @cli_util.option('--management-station', multiple=True, help=u"""A filter to return resources that are associated with the specified management station [OCIDs].""")
 @cli_util.option('--management-station-not-equal-to', multiple=True, help=u"""A filter to return resources that aren't associated with the specified management station [OCIDs].""")
 @cli_util.option('--profile-version', help=u"""The version of the registration profile.""")
-@cli_util.option('--vendor-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""A filter to return only resources that match the given vendor name.""")
+@cli_util.option('--vendor-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT", "CANONICAL"]), help=u"""A filter to return only resources that match the given vendor name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")

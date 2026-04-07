@@ -392,12 +392,13 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.""")
 @cli_util.option('--versioning', type=custom_types.CliCaseInsensitiveChoice(["Enabled", "Disabled"]), help=u"""Set the versioning status on the bucket. By default, a bucket is created with versioning `Disabled`. Use this option to enable versioning during bucket creation. Objects in a version enabled bucket are protected from overwrites and deletions. Previous versions of the same object will be available in the bucket.""")
 @cli_util.option('--auto-tiering', help=u"""Set the auto tiering status on the bucket. By default, a bucket is created with auto tiering `Disabled`. Use this option to enable auto tiering during bucket creation. Objects in a bucket with auto tiering set to `InfrequentAccess` are transitioned automatically between the 'Standard' and 'InfrequentAccess' tiers based on the access pattern of the objects.""")
+@cli_util.option('--bucket-scope', help=u"""Scope in which the bucket is unique. Default value is NAMESPACE. Bucket scope as NAMESPACE means that the bucket is unique only in the owning namespace/tenancy. Other tenancies can have a bucket with same name in their namespace. Bucket scope as REGION means that the bucket is regionally unique. No other tenancy can have a bucket with same name and scope REGION.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, object_events_enabled, freeform_tags, defined_tags, kms_key_id, versioning, auto_tiering):
+def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, object_events_enabled, freeform_tags, defined_tags, kms_key_id, versioning, auto_tiering, bucket_scope):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -435,6 +436,9 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
 
     if auto_tiering is not None:
         _details['autoTiering'] = auto_tiering
+
+    if bucket_scope is not None:
+        _details['bucketScope'] = bucket_scope
 
     client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.create_bucket(
@@ -2605,13 +2609,14 @@ Use UpdateBucket to move a bucket from one compartment to another within the sam
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the Key Management master encryption key to associate with the specified bucket. If this value is empty, the Update operation will remove the associated key, if there is one, from the bucket. (The bucket will continue to be encrypted, but with an encryption key managed by Oracle.)""")
 @cli_util.option('--versioning', type=custom_types.CliCaseInsensitiveChoice(["Enabled", "Suspended"]), help=u"""The versioning status on the bucket. If in state `Enabled`, multiple versions of the same object can be kept in the bucket. When the object is overwritten or deleted, previous versions will still be available. When versioning is `Suspended`, the previous versions will still remain but new versions will no longer be created when overwitten or deleted. Versioning cannot be disabled on a bucket once enabled.""")
 @cli_util.option('--auto-tiering', help=u"""The auto tiering status on the bucket. If in state `InfrequentAccess`, objects are transitioned automatically between the 'Standard' and 'InfrequentAccess' tiers based on the access pattern of the objects. When auto tiering is `Disabled`, there will be no automatic transitions between storage tiers.""")
+@cli_util.option('--bucket-scope', help=u"""Scope in which the bucket is unique. Default value is NAMESPACE. Bucket scope as NAMESPACE means that the bucket is unique only in the owning namespace/tenancy. Other tenancies can have a bucket with same name in their namespace. Bucket scope as REGION means that the bucket is regionally unique. No other tenancy can have a bucket with same name and scope REGION. BucketScope can only be updated from NAMESPACE to REGION, it cannot be updated from REGION to NAMESPACE. Updating bucket scope is possible only if the bucket name is valid and there is no existing regionally unique bucket with the same name.""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, object_events_enabled, freeform_tags, defined_tags, kms_key_id, versioning, auto_tiering, if_match):
+def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, object_events_enabled, freeform_tags, defined_tags, kms_key_id, versioning, auto_tiering, bucket_scope, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2655,6 +2660,9 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, m
 
     if auto_tiering is not None:
         _details['autoTiering'] = auto_tiering
+
+    if bucket_scope is not None:
+        _details['bucketScope'] = bucket_scope
 
     client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.update_bucket(

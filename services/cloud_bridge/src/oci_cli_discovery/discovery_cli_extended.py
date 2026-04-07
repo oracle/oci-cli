@@ -31,11 +31,26 @@ discovery_cli.asset_source_group.commands.pop(discovery_cli.update_asset_source.
 discovery_cli.asset_source_group.commands.pop(
     discovery_cli.update_asset_source_update_vm_ware_asset_source_details.name)
 
+# Remove create-asset-source-create-aws-asset-source-details from oci cloud-bridge discovery asset-source
+discovery_cli.asset_source_group.commands.pop(
+    discovery_cli.create_asset_source_create_aws_asset_source_details.name)
+# Remove update-asset-source-update-aws-asset-source-details from oci cloud-bridge discovery asset-source
+discovery_cli.asset_source_group.commands.pop(
+    discovery_cli.update_asset_source_update_aws_asset_source_details.name)
+# Remove create-asset-source-create-olvm-asset-source-details from oci cloud-bridge discovery asset-source
+discovery_cli.asset_source_group.commands.pop(
+    discovery_cli.create_asset_source_create_olvm_asset_source_details.name)
+# Remove update-asset-source-update-olvm-asset-source-details from oci cloud-bridge discovery asset-source
+discovery_cli.asset_source_group.commands.pop(
+    discovery_cli.update_asset_source_update_olvm_asset_source_details.name)
+
 
 @cli_util.copy_params_from_generated_command(discovery_cli.create_asset_source, params_to_exclude=[''])
 @cli_util.option('--vcenter-endpoint',
                  help=u"""Endpoint for VMware asset discovery and replication in the form of ```https://<host>:<port>/sdk```""")
 @cli_util.option('--discovery-credentials', type=custom_types.CLI_COMPLEX_TYPE,
+                 help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-credentials', type=custom_types.CLI_COMPLEX_TYPE,
                  help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--are-historical-metrics-collected', type=click.BOOL,
                  help=u"""Flag indicating whether historical metrics are collected for assets, originating from this asset source.""")
@@ -45,6 +60,7 @@ discovery_cli.asset_source_group.commands.pop(
                  help=u"""Flag indicating whether cost data collection is enabled for assets, originating from this asset source.""")
 @cli_util.option('--aws-region', help=u"""AWS region information, from where the resources are discovered.""")
 @cli_util.option('--aws-account-key', help=u"""The key of customer's aws account to be discovered/migrated.""")
+@cli_util.option('--olvm-endpoint', help=u"""Endpoint for OLVM asset discovery and replication in the form of ```https://<host>:<port>```""")
 @discovery_cli.asset_source_group.command(
     name=cli_util.override('discovery.create_asset_source.command_name', 'create'),
     help=u"""Creates an asset source. \n[Command Reference](createAssetSource)""")
@@ -66,9 +82,9 @@ discovery_cli.asset_source_group.commands.pop(
     output_type={'module': 'cloud_bridge', 'class': 'AssetSource'})
 @cli_util.wrap_exceptions
 def create_asset_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id,
-                        environment_id, inventory_id, assets_compartment_id, vcenter_endpoint, discovery_credentials,
+                        environment_id, inventory_id, assets_compartment_id, vcenter_endpoint, discovery_credentials, replication_credentials,
                         are_historical_metrics_collected, are_realtime_metrics_collected, is_cost_information_collected,
-                        display_name, discovery_schedule_id, aws_region, aws_account_key, freeform_tags, defined_tags, system_tags):
+                        display_name, discovery_schedule_id, aws_region, aws_account_key, olvm_endpoint, freeform_tags, defined_tags, system_tags):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -80,8 +96,10 @@ def create_asset_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     _details['assetsCompartmentId'] = assets_compartment_id
     _details['vcenterEndpoint'] = vcenter_endpoint
     _details['discoveryCredentials'] = cli_util.parse_json_parameter("discovery_credentials", discovery_credentials)
+    _details['replicationCredentials'] = cli_util.parse_json_parameter("replication_credentials", replication_credentials)
     _details['awsRegion'] = aws_region
     _details['awsAccountKey'] = aws_account_key
+    _details['olvmEndpoint'] = olvm_endpoint
 
     if are_historical_metrics_collected is not None:
         _details['areHistoricalMetricsCollected'] = are_historical_metrics_collected
@@ -115,6 +133,10 @@ def create_asset_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
         if discovery_credentials is None or aws_region is None or aws_account_key is None:
             raise click.UsageError('If parameter --type is AWS, then parameters --discovery-credentials, '
                                    '--aws-region and --aws-account-key must be provided')
+
+    if type.lower() == 'olvm':
+        if discovery_credentials is None or olvm_endpoint is None:
+            raise click.UsageError('If parameter --type is OLVM, then parameters --discovery-credentials and --olvm-endpoint must be provided')
 
     client = cli_util.build_client('cloud_bridge', 'discovery', ctx)
     result = client.create_asset_source(
@@ -178,6 +200,7 @@ def create_asset_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
      'system-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'},
      'discovery-credentials': {'module': 'cloud_bridge', 'class': 'AssetSourceCredentials'},
      'replication-credentials': {'module': 'cloud_bridge', 'class': 'AssetSourceCredentials'}})
+@cli_util.option('--olvm-endpoint', help=u"""Endpoint for OLVM asset discovery and replication in the form of ```https://<host>:<port>```""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'},
@@ -192,7 +215,7 @@ def update_asset_source(ctx, from_json, force, wait_for_state, max_wait_seconds,
                         type, display_name, assets_compartment_id, freeform_tags, defined_tags, system_tags,
                         vcenter_endpoint, discovery_credentials, replication_credentials,
                         are_historical_metrics_collected, are_realtime_metrics_collected, is_cost_information_collected,
-                        discovery_schedule_id, if_match):
+                        discovery_schedule_id, olvm_endpoint, if_match):
     if isinstance(asset_source_id, six.string_types) and len(asset_source_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-source-id cannot be whitespace or empty string')
     if not force:
@@ -246,6 +269,9 @@ def update_asset_source(ctx, from_json, force, wait_for_state, max_wait_seconds,
     if discovery_schedule_id is not None:
         _details['discoveryScheduleId'] = discovery_schedule_id
 
+    if olvm_endpoint is not None:
+        _details['olvmEndpoint'] = olvm_endpoint
+
     client = cli_util.build_client('cloud_bridge', 'discovery', ctx)
     result = client.update_asset_source(
         asset_source_id=asset_source_id,
@@ -291,11 +317,3 @@ cli_util.rename_command(discovery_cli, discovery_cli.supported_cloud_region_summ
 
 # oci cloud-bridge discovery supported-cloud-region-summary -> oci cloud-bridge discovery supported-cloud-regions
 cli_util.rename_command(discovery_cli, discovery_cli.discovery_root_group, discovery_cli.supported_cloud_region_summary_group, "supported-cloud-regions")
-
-
-# Remove create-asset-source-create-aws-asset-source-details from oci cloud-bridge discovery asset-source
-discovery_cli.asset_source_group.commands.pop(discovery_cli.create_asset_source_create_aws_asset_source_details.name)
-
-
-# Remove update-asset-source-update-aws-asset-source-details from oci cloud-bridge discovery asset-source
-discovery_cli.asset_source_group.commands.pop(discovery_cli.update_asset_source_update_aws_asset_source_details.name)

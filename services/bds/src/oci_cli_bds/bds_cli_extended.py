@@ -18,8 +18,13 @@ cli_util.rename_command(bds_cli, bds_cli.work_request_log_entry_group, bds_cli.l
 # oci bds bds-instance -> oci bds instance
 cli_util.rename_command(bds_cli, bds_cli.bds_root_group, bds_cli.bds_instance_group, "instance")
 
+cli_util.rename_command(bds_cli, bds_cli.bds_instance_group, bds_cli.remove_nodes, "remove-nodes")
+cli_util.rename_command(bds_cli, bds_cli.bds_instance_group, bds_cli.remove_node, "remove")
+cli_util.rename_command(bds_cli, bds_cli.bds_instance_group, bds_cli.bds_instance_reset_password, "reset-password")
 
 # oci bds bds-instance add  -> oci bds instance worker-nodes add
+
+
 @click.command('worker-nodes', cls=CommandGroupWithAlias, help=bds_cli.add_worker_nodes.help)
 @cli_util.help_option_group
 def bds_worker_nodes_group():
