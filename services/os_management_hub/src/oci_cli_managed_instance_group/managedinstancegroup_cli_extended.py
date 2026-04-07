@@ -58,6 +58,8 @@ cli_util.rename_command(managedinstancegroup_cli, managedinstancegroup_cli.manag
 # Remove manage-module-streams from oci os-management-hub managed-instance-group managed-instance-group
 managedinstancegroup_cli.managed_instance_group_group.commands.pop(managedinstancegroup_cli.manage_module_streams_on_managed_instance_group.name)
 
+# Rename oci os-management-hub managed-instance-group list-managed-instance-group-managed-instances -> oci os-management-hub managed-instance-group list-managed-instances
+cli_util.rename_command(managedinstancegroup_cli, managedinstancegroup_cli.managed_instance_group_group, managedinstancegroup_cli.list_managed_instance_group_managed_instances, "list-managed-instances")
 
 # Move commands under 'oci os-management-hub managed-instance-group managed-instance-group' -> 'oci os-management-hub managed-instance-group'
 managedinstancegroup_cli.managed_instance_group_root_group.commands.pop(managedinstancegroup_cli.managed_instance_group_group.name)
@@ -380,21 +382,24 @@ def update_managed_instance_group_extended(ctx, **kwargs):
     ctx.invoke(managedinstancegroup_cli.update_managed_instance_group, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.update_all_packages_on_managed_instance_group, params_to_exclude=['managed_instance_group_id'])
+# oci os-management-hub managed-instance-group update-all-packages --managed-instance-group-id -> --group-id
+# oci os-management-hub managed-instance-group update-all-packages - Allow JSON list for --update-types
+@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.update_all_packages_on_managed_instance_group, params_to_exclude=['managed_instance_group_id', 'update_types'], copy_from_json=False)
 @managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.update_all_packages_on_managed_instance_group.name, help=managedinstancegroup_cli.update_all_packages_on_managed_instance_group.help)
 @cli_util.option('--group-id', required=True, help=u"""The managed instance group OCID. [required]""")
+@cli_util.option('--update-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of updates to be applied.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'update-types': {'module': 'os_management_hub', 'class': 'list[string]'}, 'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}, 'update-types': {'module': 'os_management_hub', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_all_packages_on_managed_instance_group_extended(ctx, **kwargs):
-
     if 'group_id' in kwargs:
         kwargs['managed_instance_group_id'] = kwargs['group_id']
         kwargs.pop('group_id')
-
     ctx.invoke(managedinstancegroup_cli.update_all_packages_on_managed_instance_group, **kwargs)
 
 
+# oci os-management-hub managed-instance-group change-compartment --managed-instance-group-id -> --group-id
 @cli_util.copy_params_from_generated_command(managedinstancegroup_cli.change_managed_instance_group_compartment, params_to_exclude=['managed_instance_group_id'])
 @managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.change_managed_instance_group_compartment.name, help=managedinstancegroup_cli.change_managed_instance_group_compartment.help)
 @cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group. [required]""")
@@ -410,11 +415,18 @@ def change_managed_instance_group_compartment_extended(ctx, **kwargs):
     ctx.invoke(managedinstancegroup_cli.change_managed_instance_group_compartment, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.install_windows_updates_on_managed_instance_group, params_to_exclude=['managed_instance_group_id'])
+managedinstancegroup_cli.managed_instance_group_group.commands.pop('install-windows-updates')
+
+
+# oci os-management-hub managed-instance-group install-windows-updates --managed-instance-group-id -> --group-id
+# oci os-management-hub managed-instance-group install-windows-updates - Allow JSON list for --update-types
+@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.install_windows_updates_on_managed_instance_group, params_to_exclude=['managed_instance_group_id', 'windows_update_types'], copy_from_json=False)
 @managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.install_windows_updates_on_managed_instance_group.name, help=managedinstancegroup_cli.install_windows_updates_on_managed_instance_group.help)
 @cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group. [required]""")
+@cli_util.option('--windows-update-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of Windows updates to be installed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'windows-update-types': {'module': 'os_management_hub', 'class': 'list[string]'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}, 'windows-update-types': {'module': 'os_management_hub', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def install_windows_updates_on_managed_instance_group_extended(ctx, **kwargs):
 
@@ -425,6 +437,7 @@ def install_windows_updates_on_managed_instance_group_extended(ctx, **kwargs):
     ctx.invoke(managedinstancegroup_cli.install_windows_updates_on_managed_instance_group, **kwargs)
 
 
+# oci os-management-hub managed-instance-group switch-module-stream --managed-instance-group-id -> --group-id
 @cli_util.copy_params_from_generated_command(managedinstancegroup_cli.switch_module_stream_on_managed_instance_group, params_to_exclude=['managed_instance_group_id'])
 @managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.switch_module_stream_on_managed_instance_group.name, help=managedinstancegroup_cli.switch_module_stream_on_managed_instance_group.help)
 @cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group. [required]""")
@@ -440,6 +453,7 @@ def switch_module_stream_on_managed_instance_group_extended(ctx, **kwargs):
     ctx.invoke(managedinstancegroup_cli.switch_module_stream_on_managed_instance_group, **kwargs)
 
 
+# oci os-management-hub managed-instance-group reboot --managed-instance-group-id -> --group-id
 @cli_util.copy_params_from_generated_command(managedinstancegroup_cli.reboot_managed_instance_group, params_to_exclude=['managed_instance_group_id'])
 @managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.reboot_managed_instance_group.name, help=managedinstancegroup_cli.reboot_managed_instance_group.help)
 @cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group. [required]""")
@@ -453,3 +467,31 @@ def reboot_managed_instance_group_extended(ctx, **kwargs):
         kwargs.pop('group_id')
 
     ctx.invoke(managedinstancegroup_cli.reboot_managed_instance_group, **kwargs)
+
+
+# list_managed_instance_group_managed_instances --managed-instance-group-id -> --group-id
+@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.list_managed_instance_group_managed_instances, params_to_exclude=['managed_instance_group_id'])
+@managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.list_managed_instance_group_managed_instances.name, help=managedinstancegroup_cli.list_managed_instance_group_managed_instances.help)
+@cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def list_managed_instance_group_managed_instances_extended(ctx, **kwargs):
+    if 'group_id' in kwargs:
+        kwargs['managed_instance_group_id'] = kwargs['group_id']
+        kwargs.pop('group_id')
+    ctx.invoke(managedinstancegroup_cli.list_managed_instance_group_managed_instances, **kwargs)
+
+
+# refresh_software_on_managed_instance_group --managed-instance-group-id -> --group-id
+@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.refresh_software_on_managed_instance_group, params_to_exclude=['managed_instance_group_id'])
+@managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.refresh_software_on_managed_instance_group.name, help=managedinstancegroup_cli.refresh_software_on_managed_instance_group.help)
+@cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def refresh_software_on_managed_instance_group_extended(ctx, **kwargs):
+    if 'group_id' in kwargs:
+        kwargs['managed_instance_group_id'] = kwargs['group_id']
+        kwargs.pop('group_id')
+    ctx.invoke(managedinstancegroup_cli.refresh_software_on_managed_instance_group, **kwargs)

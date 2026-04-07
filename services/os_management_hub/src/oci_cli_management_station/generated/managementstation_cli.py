@@ -79,6 +79,8 @@ def change_management_station_compartment(ctx, from_json, management_station_id,
 @cli_util.option('--mirror', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""User-specified description of the management station. Avoid entering confidential information.""")
 @cli_util.option('--is-auto-config-enabled', type=click.BOOL, help=u"""When enabled, the station setup script automatically runs to configure the firewall and SELinux settings on the station.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_10", "ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "WINDOWS_SERVER_2025", "WINDOWS_11", "ALL", "UBUNTU_20_04", "UBUNTU_22_04", "UBUNTU_24_04"]), help=u"""The operating system family.""")
+@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386", "AMD64", "ARM64", "ALL"]), help=u"""The architecture type.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -89,7 +91,7 @@ def change_management_station_compartment(ctx, from_json, management_station_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'proxy-parameterconflict': {'module': 'os_management_hub', 'class': 'CreateProxyConfigurationDetails'}, 'mirror': {'module': 'os_management_hub', 'class': 'CreateMirrorConfigurationDetails'}, 'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'ManagementStation'})
 @cli_util.wrap_exceptions
-def create_management_station(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, hostname, proxy_parameterconflict, mirror, description, is_auto_config_enabled, freeform_tags, defined_tags):
+def create_management_station(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, hostname, proxy_parameterconflict, mirror, description, is_auto_config_enabled, os_family, arch_type, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -106,6 +108,12 @@ def create_management_station(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if is_auto_config_enabled is not None:
         _details['isAutoConfigEnabled'] = is_auto_config_enabled
+
+    if os_family is not None:
+        _details['osFamily'] = os_family
+
+    if arch_type is not None:
+        _details['archType'] = arch_type
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -247,6 +255,7 @@ Example: `3`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--id', help=u"""The [OCID] of the management station. A filter that returns information about the specified management station.""")
+@cli_util.option('--health-state', type=custom_types.CliCaseInsensitiveChoice(["HEALTHY", "UNHEALTHY", "UNAVAILABLE"]), help=u"""A filter that returns information for management stations in the specified health state.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -254,7 +263,7 @@ Example: `3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'ManagementStationCollection'})
 @cli_util.wrap_exceptions
-def list_management_stations(ctx, from_json, all_pages, page_size, compartment_id, display_name, display_name_contains, lifecycle_state, managed_instance_id, limit, page, location, location_not_equal_to, sort_order, sort_by, id):
+def list_management_stations(ctx, from_json, all_pages, page_size, compartment_id, display_name, display_name_contains, lifecycle_state, managed_instance_id, limit, page, location, location_not_equal_to, sort_order, sort_by, id, health_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -284,6 +293,8 @@ def list_management_stations(ctx, from_json, all_pages, page_size, compartment_i
         kwargs['sort_by'] = sort_by
     if id is not None:
         kwargs['id'] = id
+    if health_state is not None:
+        kwargs['health_state'] = health_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('os_management_hub', 'management_station', ctx)
     if all_pages:
@@ -381,7 +392,7 @@ def list_mirrors(ctx, from_json, all_pages, page_size, management_station_id, di
 @management_station_group.command(name=cli_util.override('management_station.refresh_management_station_config.command_name', 'refresh-management-station-config'), help=u"""Refreshes the list of software sources mirrored by the management station. \n[Command Reference](refreshManagementStationConfig)""")
 @cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state WAITING --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SKIPPED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state WAITING --wait-for-state SKIPPED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -437,7 +448,7 @@ def refresh_management_station_config(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
 @cli_util.option('--software-source-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of software source [OCIDs] to synchronize.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state WAITING --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SKIPPED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state WAITING --wait-for-state SKIPPED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'software-source-list': {'module': 'os_management_hub', 'class': 'list[string]'}})
@@ -498,7 +509,7 @@ def synchronize_mirrors(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
 @cli_util.option('--mirror-id', required=True, help=u"""Unique Software Source identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state WAITING --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SKIPPED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state WAITING --wait-for-state SKIPPED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -560,6 +571,8 @@ def synchronize_single_mirrors(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--description', help=u"""User-specified description of the management station. Avoid entering confidential information.""")
 @cli_util.option('--hostname', help=u"""Hostname of the management station.""")
 @cli_util.option('--is-auto-config-enabled', type=click.BOOL, help=u"""When enabled, the station setup script automatically runs to configure the firewall and SELinux settings on the station.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_10", "ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "WINDOWS_SERVER_2025", "WINDOWS_11", "ALL", "UBUNTU_20_04", "UBUNTU_22_04", "UBUNTU_24_04"]), help=u"""The operating system family.""")
+@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386", "AMD64", "ARM64", "ALL"]), help=u"""The architecture type.""")
 @cli_util.option('--proxy-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--mirror', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -574,7 +587,7 @@ def synchronize_single_mirrors(ctx, from_json, wait_for_state, max_wait_seconds,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'proxy-parameterconflict': {'module': 'os_management_hub', 'class': 'UpdateProxyConfigurationDetails'}, 'mirror': {'module': 'os_management_hub', 'class': 'UpdateMirrorConfigurationDetails'}, 'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'ManagementStation'})
 @cli_util.wrap_exceptions
-def update_management_station(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_station_id, display_name, description, hostname, is_auto_config_enabled, proxy_parameterconflict, mirror, freeform_tags, defined_tags, if_match):
+def update_management_station(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_station_id, display_name, description, hostname, is_auto_config_enabled, os_family, arch_type, proxy_parameterconflict, mirror, freeform_tags, defined_tags, if_match):
 
     if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
         raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
@@ -601,6 +614,12 @@ def update_management_station(ctx, from_json, force, wait_for_state, max_wait_se
 
     if is_auto_config_enabled is not None:
         _details['isAutoConfigEnabled'] = is_auto_config_enabled
+
+    if os_family is not None:
+        _details['osFamily'] = os_family
+
+    if arch_type is not None:
+        _details['archType'] = arch_type
 
     if proxy_parameterconflict is not None:
         _details['proxy'] = cli_util.parse_json_parameter("proxy_parameterconflict", proxy_parameterconflict)

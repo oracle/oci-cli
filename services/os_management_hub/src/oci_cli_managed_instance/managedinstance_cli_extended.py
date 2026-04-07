@@ -63,7 +63,6 @@ cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instanc
 # Remove manage-module-streams from oci os-management-hub managed-instance managed-instance
 managedinstance_cli.managed_instance_group.commands.pop(managedinstance_cli.manage_module_streams_on_managed_instance.name)
 
-
 # Move commands under 'oci os-management-hub managed-instance managed-instance' -> 'oci os-management-hub managed-instance'
 managedinstance_cli.managed_instance_root_group.commands.pop(managedinstance_cli.managed_instance_group.name)
 os_management_hub_service_cli.os_management_hub_service_group.commands.pop(managedinstance_cli.managed_instance_root_group.name)
@@ -178,23 +177,75 @@ def list_managed_instance_modules_extended(ctx, **kwargs):
 # Rename remove to remove-module-profile
 cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.remove_module_stream_profile_from_managed_instance, "remove-module-profile")
 
-
-# Move oci os-management-hub managed-instance update-all-packages-on-managed-instances-in-compartment to oci os-management-hub update-all-packages-on-managed-instances-in-compartment
-managedinstance_cli.managed_instance_group.commands.pop(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.name)
-os_management_hub_service_cli.os_management_hub_service_group.add_command(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment)
-
-
 # oci os-management-hub managed-instance install-all-windows-updates-on-managed-instances-in-compartment -> oci os-management-hub managed-instance install-all-windows-updates-in-compartment
 cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment, "install-all-windows-updates-in-compartment")
-
-# Move oci os-management-hub managed-instance install-all-windows-updates-on-managed-instances-in-compartment to os-management-hub install-all-windows-updates-on-managed-instances-in-compartment
-managedinstance_cli.managed_instance_group.commands.pop(managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment.name)
-os_management_hub_service_cli.os_management_hub_service_group.add_command(managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment)
-
 
 # oci os-management-hub managed-instance list-managed-instance-available-windows-updates -> oci os-management-hub managed-instance list-available-windows-updates
 cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.list_managed_instance_available_windows_updates, "list-available-windows-updates")
 
-
 # oci os-management-hub managed-instance list-managed-instance-installed-windows-updates -> oci os-management-hub managed-instance list-installed-windows-updates
 cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.list_managed_instance_installed_windows_updates, "list-installed-windows-updates")
+
+# oci os-management-hub managed-instance list-managed-instance-snaps -> oci os-management-hub managed-instance list-snaps
+cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.list_managed_instance_snaps, "list-snaps")
+
+# oci os-management-hub managed-instance remove -> oci os-management-hub managed-instance remove-snaps
+cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.remove_snaps_from_managed_instance, "remove-snaps")
+
+
+# oci os-management-hub install-all-windows-updates-in-compartment - Allow JSON list for --windows-update-types
+@cli_util.copy_params_from_generated_command(managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment, params_to_exclude=['windows_update_types', 'from_json'], copy_from_json=False)
+@managedinstance_cli.managed_instance_group.command(name=managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment.name, help=managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment.help)
+@cli_util.option('--windows-update-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of Windows updates to be installed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'windows-update-types': {'module': 'os_management_hub', 'class': 'list[string]'}, 'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}, 'windows-update-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'windows-update-types': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def install_all_windows_updates_on_managed_instances_in_compartment_extended(ctx, **kwargs):
+    ctx.invoke(managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment, **kwargs)
+
+
+# Move oci os-management-hub managed-instance install-all-windows-updates-on-managed-instances-in-compartment to os-management-hub install-all-windows-updates-on-managed-instances-in-compartment
+managedinstance_cli.managed_instance_group.commands.pop(managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment.name)
+os_management_hub_service_cli.os_management_hub_service_group.add_command(install_all_windows_updates_on_managed_instances_in_compartment_extended)
+
+
+# oci os-management-hub managed-instance install-windows-updates - Allow JSON list for --windows-update-types
+@cli_util.copy_params_from_generated_command(managedinstance_cli.install_windows_updates_on_managed_instance, params_to_exclude=['windows_update_types'], copy_from_json=False)
+@managedinstance_cli.managed_instance_group.command(name=managedinstance_cli.install_windows_updates_on_managed_instance.name, help=managedinstance_cli.install_windows_updates_on_managed_instance.help)
+@cli_util.option('--windows-update-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of Windows updates to be installed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'windows-update-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'windows-update-types': {'module': 'os_management_hub', 'class': 'list[string]'}, 'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}, 'windows-update-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'windows-update-types': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def install_windows_updates_on_managed_instance_extended(ctx, **kwargs):
+    ctx.invoke(managedinstance_cli.install_windows_updates_on_managed_instance, **kwargs)
+
+
+# oci os-management-hub managed-instance update-all-packages-in-compartment - Allow JSON list for --update-types
+@cli_util.copy_params_from_generated_command(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment, params_to_exclude=['update_types'], copy_from_json=False)
+@managedinstance_cli.managed_instance_group.command(name=managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.name, help=managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.help)
+@cli_util.option('--update-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of updates to be applied.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'update-types': {'module': 'os_management_hub', 'class': 'list[string]'}, 'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}, 'package-names': {'module': 'os_management_hub', 'class': 'list[string]'}, 'update-types': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_all_packages_on_managed_instances_in_compartment_extended(ctx, **kwargs):
+    ctx.invoke(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment, **kwargs)
+
+
+# Move oci os-management-hub managed-instance update-all-packages-on-managed-instances-in-compartment to oci os-management-hub update-all-packages-on-managed-instances-in-compartment
+managedinstance_cli.managed_instance_group.commands.pop(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.name)
+os_management_hub_service_cli.os_management_hub_service_group.add_command(update_all_packages_on_managed_instances_in_compartment_extended)
+
+
+# oci os-management-hub managed-instance update-packages - Allow JSON list for --update-types
+@cli_util.copy_params_from_generated_command(managedinstance_cli.update_packages_on_managed_instance, params_to_exclude=['update_types'], copy_from_json=False)
+@managedinstance_cli.managed_instance_group.command(name=managedinstance_cli.update_packages_on_managed_instance.name, help=managedinstance_cli.update_packages_on_managed_instance.help)
+@cli_util.option('--update-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of updates to be applied.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'package-names': {'module': 'os_management_hub', 'class': 'list[string]'}, 'update-types': {'module': 'os_management_hub', 'class': 'list[string]'}, 'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}, 'package-names': {'module': 'os_management_hub', 'class': 'list[string]'}, 'update-types': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_packages_on_managed_instance_extended(ctx, **kwargs):
+    ctx.invoke(managedinstance_cli.update_packages_on_managed_instance, **kwargs)

@@ -50,8 +50,15 @@ inventory_cli.asset_group.commands.pop(inventory_cli.update_asset.name)
 inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_vm_asset_details.name)
 inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_vmware_vm_asset_details.name)
 
+# Remove default "asset_type" param and add a custom one with "INVENTORY_ASSET" option to avoid duplicate options
 
-@cli_util.copy_params_from_generated_command(inventory_cli.create_asset, params_to_exclude=[''])
+
+@cli_util.copy_params_from_generated_command(inventory_cli.create_asset, params_to_exclude=['asset_type'])
+@cli_util.option('--asset-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM", "AWS_EC2", "AWS_EBS", "INVENTORY_ASSET"]), help=u"""The type of asset.""")
+@cli_util.option('--environment-type', type=custom_types.CliCaseInsensitiveChoice(["SOURCE", "DESTINATION"]), help=u"""Specifies if this is the Source or Destination point for migration - different assets may be discovered depending on setting.""")
+@cli_util.option('--asset-class-name', help=u"""The name of the asset class.""")
+@cli_util.option('--asset-class-version', help=u"""The version of the asset class.""")
+@cli_util.option('--asset-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute', type=custom_types.CLI_COMPLEX_TYPE,
                  help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vm', type=custom_types.CLI_COMPLEX_TYPE,
@@ -86,6 +93,9 @@ inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_vmware_
     'compute': {
         'module': 'cloud_bridge',
         'class': 'ComputeProperties'},
+    'asset-details': {
+        'module': 'cloud_bridge',
+        'class': 'dict(str, dict(str, object))'},
     'vm': {
         'module': 'cloud_bridge',
         'class': 'VmProperties'},
@@ -118,6 +128,8 @@ inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_vmware_
                          'class': 'dict(str, dict(str, object))'},
         'compute': {'module': 'cloud_bridge',
                     'class': 'ComputeProperties'},
+        'asset-details': {'module': 'cloud_bridge',
+                          'class': 'dict(str, dict(str, object))'},
         'vm': {'module': 'cloud_bridge',
                'class': 'VmProperties'},
         'vmware-vm': {'module': 'cloud_bridge',
@@ -138,7 +150,8 @@ inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_vmware_
 def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_id, compartment_id,
                  source_key, external_asset_key, asset_type, display_name, asset_source_ids, freeform_tags,
                  defined_tags, compute, vm, vmware_vm, vmware_v_center,
-                 aws_ebs, aws_ec2, aws_ec2_cost, attached_ebs_volumes_cost):
+                 aws_ebs, aws_ec2, aws_ec2_cost, attached_ebs_volumes_cost,
+                 environment_type, asset_details, asset_class_name, asset_class_version):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -185,6 +198,18 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     if attached_ebs_volumes_cost is not None:
         _details['attachedEbsVolumesCost'] = cli_util.parse_json_parameter("attached_ebs_volumes_cost", attached_ebs_volumes_cost)
 
+    if environment_type is not None:
+        _details['environmentType'] = environment_type
+    if asset_class_name is not None:
+        _details['assetClassName'] = asset_class_name
+    if asset_class_version is not None:
+        _details['assetClassVersion'] = asset_class_version
+    if asset_details is not None:
+        _details['assetDetails'] = cli_util.parse_json_parameter("asset_details", asset_details)
+    if asset_type.lower() == 'inventory_asset':
+        if asset_class_name is None or asset_class_version is None or asset_details is None:
+            raise click.UsageError('If parameter --asset-type is INVENTORY_ASSET, then parameters --asset-class-name and --asset-class-version and --asset-details must be provided')
+
     client = cli_util.build_client('cloud_bridge', 'inventory', ctx)
     result = client.create_asset(
         create_asset_details=_details,
@@ -222,9 +247,16 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(inventory_cli.update_asset, params_to_exclude=[''])
+# Remove default "asset_type" param and add a custom one with "INVENTORY_ASSET" option to avoid duplicate options
+@cli_util.copy_params_from_generated_command(inventory_cli.update_asset, params_to_exclude=['asset_type'])
 @inventory_cli.asset_group.command(name=cli_util.override('inventory.update_asset.command_name', 'update'),
                                    help=u"""Updates the asset. \n[Command Reference](updateAsset)""")
+@cli_util.option('--asset-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM", "AWS_EC2", "AWS_EBS", "INVENTORY_ASSET"]), help=u"""The type of asset.""")
+@cli_util.option('--environment-type', type=custom_types.CliCaseInsensitiveChoice(["SOURCE", "DESTINATION"]), help=u"""Specifies if this is the Source or Destination point for migration - different assets may be discovered depending on setting.""")
+@cli_util.option('--asset-class-name', help=u"""The name of the asset class.""")
+@cli_util.option('--asset-class-version', help=u"""The version of the asset class.""")
+@cli_util.option('--asset-details', type=custom_types.CLI_COMPLEX_TYPE,
+                 help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute', type=custom_types.CLI_COMPLEX_TYPE,
                  help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vm', type=custom_types.CLI_COMPLEX_TYPE,
@@ -247,6 +279,7 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                                                 'defined-tags': {'module': 'cloud_bridge',
                                                                  'class': 'dict(str, dict(str, object))'},
                                                 'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'},
+                                                'asset-details': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'},
                                                 'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'},
                                                 'vmware-vm': {'module': 'cloud_bridge', 'class': 'VmwareVmProperties'},
                                                 'vmware-v-center': {'module': 'cloud_bridge',
@@ -266,6 +299,7 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                                    'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'},
                                    'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'},
                                    'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'},
+                                   'asset-details': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'},
                                    'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'},
                                    'vmware-vm': {'module': 'cloud_bridge', 'class': 'VmwareVmProperties'},
                                    'vmware-v-center': {'module': 'cloud_bridge', 'class': 'VmwareVCenterProperties'},
@@ -277,7 +311,8 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def update_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, asset_type,
                  display_name, asset_source_ids, freeform_tags, defined_tags, compute, vm, vmware_vm, vmware_v_center,
-                 aws_ebs, aws_ec2, aws_ec2_cost, attached_ebs_volumes_cost, if_match):
+                 aws_ebs, aws_ec2, aws_ec2_cost, attached_ebs_volumes_cost, environment_type, asset_class_name, asset_class_version,
+                 asset_details, if_match):
     if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
     if not force:
@@ -330,6 +365,20 @@ def update_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     if attached_ebs_volumes_cost is not None:
         _details['attachedEbsVolumesCost'] = cli_util.parse_json_parameter("attached_ebs_volumes_cost", attached_ebs_volumes_cost)
 
+    if environment_type is not None:
+        if asset_type.lower() != 'inventory_asset':
+            raise click.UsageError('Parameter --environment-type is only configurable for INVENTORY_ASSET asset type.')
+        _details['environmentType'] = environment_type
+    if asset_class_name is not None:
+        _details['assetClassName'] = asset_class_name
+    if asset_class_version is not None:
+        _details['assetClassVersion'] = asset_class_version
+    if asset_details is not None:
+        _details['assetDetails'] = cli_util.parse_json_parameter("asset_details", asset_details)
+    if asset_type.lower() == 'inventory_asset':
+        if asset_class_name is None or asset_class_version is None or asset_details is None:
+            raise click.UsageError('If parameter --asset-type is INVENTORY_ASSET, then parameters --asset-class-name and --asset-class-version and --asset-details must be provided')
+
     client = cli_util.build_client('cloud_bridge', 'inventory', ctx)
     result = client.update_asset(
         asset_id=asset_id,
@@ -377,7 +426,7 @@ inventory_cli.asset_group.commands.pop(inventory_cli.create_asset_create_aws_ec2
 
 
 # Remove create-asset-create-inventory-asset-details from oci cloud-bridge inventory asset
-# inventory_cli.asset_group.commands.pop(inventory_cli.create_asset_create_inventory_asset_details.name)
+inventory_cli.asset_group.commands.pop(inventory_cli.create_asset_create_inventory_asset_details.name)
 
 
 # Remove update-asset-update-aws-ebs-asset-details from oci cloud-bridge inventory asset
@@ -389,4 +438,4 @@ inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_aws_ec2
 
 
 # Remove update-asset-update-inventory-asset-details from oci cloud-bridge inventory asset
-# inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_inventory_asset_details.name)
+inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_inventory_asset_details.name)

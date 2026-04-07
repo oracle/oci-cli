@@ -340,6 +340,7 @@ def create_cluster(ctx, **kwargs):
 @cli_util.option('--max-pods-per-node', type=click.INT, help="""The maximum number of pods that will live on a node of the node pool.""")
 @cli_util.option('--pod-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the Network Security Group(s) to associate pods for this node pool with.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--pod-subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the subnets in which to place pods for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cni-type', type=custom_types.CliCaseInsensitiveChoice(["OCI_VCN_IP_NATIVE", "FLANNEL_OVERLAY"]), help="""The CNI plugin used by this node pool.""")
 @json_skeleton_utils.get_cli_json_input_option(
     {'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
@@ -390,6 +391,15 @@ def create_node_pool(ctx, **kwargs):
         )
 
     nodePoolPodNetworkOptionDetails = {}
+    if 'cni_type' in kwargs and kwargs['cni_type'] is not None:
+        if kwargs['cni_type'] == "FLANNEL_OVERLAY" and kwargs.get('pod_subnet_ids'):
+            raise click.UsageError(
+                'Cannot specify --pod_subnet_ids with --cni-type FLANNEL_OVERLAY'
+            )
+        nodePoolPodNetworkOptionDetails['cniType'] = kwargs['cni_type']
+        kwargs['node_config_details']['nodePoolPodNetworkOptionDetails'] = nodePoolPodNetworkOptionDetails
+    kwargs.pop('cni_type', None)
+
     if 'max_pods_per_node' in kwargs and kwargs['max_pods_per_node'] is not None:
         nodePoolPodNetworkOptionDetails['maxPodsPerNode'] = cli_util.parse_json_parameter("max_pods_per_node", kwargs['max_pods_per_node'])
     kwargs.pop('max_pods_per_node', None)
@@ -401,8 +411,8 @@ def create_node_pool(ctx, **kwargs):
     # existence of pod_subnet_ids hints that the CNI used is OCI_VCN_IP_NATIVE
     # with it's absence, we will pass a null nodePoolPodNetworkOptionDetails, which means use default CNI FLANNEL_OVERLAY
     if 'pod_subnet_ids' in kwargs and kwargs['pod_subnet_ids'] is not None:
-        # if cniType is absent, defaults to FLANNEL
-        nodePoolPodNetworkOptionDetails['cniType'] = "OCI_VCN_IP_NATIVE"
+        if nodePoolPodNetworkOptionDetails.get('cni_type') is None:
+            nodePoolPodNetworkOptionDetails['cniType'] = "OCI_VCN_IP_NATIVE"
         nodePoolPodNetworkOptionDetails['podSubnetIds'] = cli_util.parse_json_parameter("pod_subnet_ids", kwargs['pod_subnet_ids'])
         kwargs['node_config_details']['nodePoolPodNetworkOptionDetails'] = nodePoolPodNetworkOptionDetails
     kwargs.pop('pod_subnet_ids', None)
