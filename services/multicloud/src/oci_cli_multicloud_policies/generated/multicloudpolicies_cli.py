@@ -16,24 +16,26 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.multicloud.src.oci_cli_multicloud.generated import multicloud_service_cli
 
 
-@click.command(cli_util.override('multicloudsubscriptions.multicloudsubscriptions_root_group.command_name', 'multicloudsubscriptions'), cls=CommandGroupWithAlias, help=cli_util.override('multicloudsubscriptions.multicloudsubscriptions_root_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see [Oracle Multicloud Hub]."""), short_help=cli_util.override('multicloudsubscriptions.multicloudsubscriptions_root_group.short_help', """Oracle Multicloud API"""))
+@click.command(cli_util.override('multicloud_policies.multicloud_policies_root_group.command_name', 'multicloud-policies'), cls=CommandGroupWithAlias, help=cli_util.override('multicloud_policies.multicloud_policies_root_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see [Oracle Multicloud Hub]."""), short_help=cli_util.override('multicloud_policies.multicloud_policies_root_group.short_help', """Oracle Multicloud API"""))
 @cli_util.help_option_group
-def multicloudsubscriptions_root_group():
+def multicloud_policies_root_group():
     pass
 
 
-@click.command(cli_util.override('multicloudsubscriptions.multicloud_subscription_collection_group.command_name', 'multicloud-subscription-collection'), cls=CommandGroupWithAlias, help="""Properties that define activated Multicloud subscriptions in the indicated compartment. For more information, see [Listing Multicloud Subscriptions].""")
+@click.command(cli_util.override('multicloud_policies.multicloud_policy_collection_group.command_name', 'multicloud-policy-collection'), cls=CommandGroupWithAlias, help="""Multicloud Policy information.""")
 @cli_util.help_option_group
-def multicloud_subscription_collection_group():
+def multicloud_policy_collection_group():
     pass
 
 
-multicloud_service_cli.multicloud_service_group.add_command(multicloudsubscriptions_root_group)
-multicloudsubscriptions_root_group.add_command(multicloud_subscription_collection_group)
+multicloud_service_cli.multicloud_service_group.add_command(multicloud_policies_root_group)
+multicloud_policies_root_group.add_command(multicloud_policy_collection_group)
 
 
-@multicloud_subscription_collection_group.command(name=cli_util.override('multicloudsubscriptions.list_multicloud_subscriptions.command_name', 'list-multicloud-subscriptions'), help=u"""Lists activated Multicloud subscriptions in the specified compartment. For more information, see [Listing Multicloud Subscriptions]. \n[Command Reference](listMulticloudSubscriptions)""")
+@multicloud_policy_collection_group.command(name=cli_util.override('multicloud_policies.list_multicloud_policies.command_name', 'list-multicloud-policies'), help=u"""Gets a list of Multicloud IAM Policies. \n[Command Reference](listMulticloudPolicies)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--is-force-refresh', type=click.BOOL, help=u"""Refresh the policies.""")
+@cli_util.option('--subscription-id', help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -44,14 +46,18 @@ multicloudsubscriptions_root_group.add_command(multicloud_subscription_collectio
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'multicloud', 'class': 'MulticloudSubscriptionCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'multicloud', 'class': 'MulticloudPolicyCollection'})
 @cli_util.wrap_exceptions
-def list_multicloud_subscriptions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, display_name, sort_by, sort_order):
+def list_multicloud_policies(ctx, from_json, all_pages, page_size, compartment_id, is_force_refresh, subscription_id, limit, page, display_name, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if is_force_refresh is not None:
+        kwargs['is_force_refresh'] = is_force_refresh
+    if subscription_id is not None:
+        kwargs['subscription_id'] = subscription_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -63,26 +69,26 @@ def list_multicloud_subscriptions(ctx, from_json, all_pages, page_size, compartm
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('multicloud', 'multicloudsubscriptions', ctx)
+    client = cli_util.build_client('multicloud', 'multicloud_policies', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
 
         result = cli_util.list_call_get_all_results(
-            client.list_multicloud_subscriptions,
+            client.list_multicloud_policies,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
         result = cli_util.list_call_get_up_to_limit(
-            client.list_multicloud_subscriptions,
+            client.list_multicloud_policies,
             limit,
             page_size,
             compartment_id=compartment_id,
             **kwargs
         )
     else:
-        result = client.list_multicloud_subscriptions(
+        result = client.list_multicloud_policies(
             compartment_id=compartment_id,
             **kwargs
         )

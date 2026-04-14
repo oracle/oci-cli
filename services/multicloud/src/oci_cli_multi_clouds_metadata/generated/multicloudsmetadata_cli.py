@@ -16,19 +16,19 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.multicloud.src.oci_cli_multicloud.generated import multicloud_service_cli
 
 
-@click.command(cli_util.override('multi_clouds_metadata.multi_clouds_metadata_root_group.command_name', 'multi-clouds-metadata'), cls=CommandGroupWithAlias, help=cli_util.override('multi_clouds_metadata.multi_clouds_metadata_root_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see <link to docs>."""), short_help=cli_util.override('multi_clouds_metadata.multi_clouds_metadata_root_group.short_help', """Oracle Multicloud API"""))
+@click.command(cli_util.override('multi_clouds_metadata.multi_clouds_metadata_root_group.command_name', 'multi-clouds-metadata'), cls=CommandGroupWithAlias, help=cli_util.override('multi_clouds_metadata.multi_clouds_metadata_root_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see [Oracle Multicloud Hub]."""), short_help=cli_util.override('multi_clouds_metadata.multi_clouds_metadata_root_group.short_help', """Oracle Multicloud API"""))
 @cli_util.help_option_group
 def multi_clouds_metadata_root_group():
     pass
 
 
-@click.command(cli_util.override('multi_clouds_metadata.multi_cloud_metadata_collection_group.command_name', 'multi-cloud-metadata-collection'), cls=CommandGroupWithAlias, help="""Multicloud metadata information across clouds.""")
+@click.command(cli_util.override('multi_clouds_metadata.multi_cloud_metadata_collection_group.command_name', 'multi-cloud-metadata-collection'), cls=CommandGroupWithAlias, help="""Multicloud metadata for Multicloud subscriptions in the indicated compartment. For more information, see [Listing Multicloud Metadata for a Subscription].""")
 @cli_util.help_option_group
 def multi_cloud_metadata_collection_group():
     pass
 
 
-@click.command(cli_util.override('multi_clouds_metadata.multi_cloud_metadata_group.command_name', 'multi-cloud-metadata'), cls=CommandGroupWithAlias, help="""Multicloud metadata information including base multicloud compartments information.""")
+@click.command(cli_util.override('multi_clouds_metadata.multi_cloud_metadata_group.command_name', 'multi-cloud-metadata'), cls=CommandGroupWithAlias, help="""The Multicloud metadata for the indicated subscription. Multicloud metadata for a subscription includes the Multicloud base compartment (top-level OCI compartment). For more information, see [Getting Details for Multicloud Metadata].""")
 @cli_util.help_option_group
 def multi_cloud_metadata_group():
     pass
@@ -39,7 +39,7 @@ multi_clouds_metadata_root_group.add_command(multi_cloud_metadata_collection_gro
 multi_clouds_metadata_root_group.add_command(multi_cloud_metadata_group)
 
 
-@multi_cloud_metadata_group.command(name=cli_util.override('multi_clouds_metadata.get_multi_cloud_metadata.command_name', 'get'), help=u"""Gets information about the Multicloud base compartment for a given tenancy Id. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud). \n[Command Reference](getMultiCloudMetadata)""")
+@multi_cloud_metadata_group.command(name=cli_util.override('multi_clouds_metadata.get_multi_cloud_metadata.command_name', 'get'), help=u"""Gets details for Multicloud metadata for the specified Multicloud subscription. Multicloud metadata for a subscription includes the Multicloud base compartment (top-level OCI compartment). For more information, see [Getting Details for Multicloud Metadata]. \n[Command Reference](getMultiCloudMetadata)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the OCI subscription.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -63,11 +63,11 @@ def get_multi_cloud_metadata(ctx, from_json, compartment_id, subscription_id):
     cli_util.render_response(result, ctx)
 
 
-@multi_cloud_metadata_collection_group.command(name=cli_util.override('multi_clouds_metadata.list_multi_cloud_metadata.command_name', 'list-multi-cloud-metadata'), help=u"""Gets a list of multicloud metadata with pairs of Multicloud base compartment and subscription across Cloud Service Providers from a tenancy Id. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud). \n[Command Reference](listMultiCloudMetadata)""")
+@multi_cloud_metadata_collection_group.command(name=cli_util.override('multi_clouds_metadata.list_multi_cloud_metadata.command_name', 'list-multi-cloud-metadata'), help=u"""Lists Multicloud metadata for Multicloud subscriptions in the specified compartment. Multicloud metadata for a subscription includes the Multicloud base compartment (top-level OCI compartment). For more information, see [Listing Multicloud Metadata for a Subscription]. \n[Command Reference](listMultiCloudMetadata)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). In general, the sort order is `DESC` when sorting by time and `ASC` otherwise.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")

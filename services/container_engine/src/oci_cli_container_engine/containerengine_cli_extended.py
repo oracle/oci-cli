@@ -173,13 +173,11 @@ containerengine_cli.cluster_group.add_command(generate_token)
 def create_cluster(ctx, **kwargs):
     kwargs['options'] = {}
     if 'service_lb_subnet_ids' in kwargs and kwargs['service_lb_subnet_ids'] is not None:
-        kwargs['options'] = {'serviceLbSubnetIds': cli_util.parse_json_parameter("service_lb_subnet_ids",
-                                                                                 kwargs['service_lb_subnet_ids'])}
+        kwargs['options']['serviceLbSubnetIds'] = cli_util.parse_json_parameter("service_lb_subnet_ids", kwargs['service_lb_subnet_ids'])
     kwargs.pop('service_lb_subnet_ids', None)
 
     if 'ip_families' in kwargs and kwargs['ip_families'] is not None:
-        kwargs['options'] = {'ipFamilies': cli_util.parse_json_parameter("ip_families",
-                                                                         kwargs['ip_families'])}
+        kwargs['options']['ipFamilies'] = cli_util.parse_json_parameter("ip_families", kwargs['ip_families'])
     kwargs.pop('ip_families', None)
 
     if 'dashboard_enabled' in kwargs and kwargs['dashboard_enabled'] is not None:

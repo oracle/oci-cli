@@ -8,7 +8,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('omhub_resource_anchor.multicloud_service_group.command_name', 'multicloud'), cls=CommandGroupWithAlias, help=cli_util.override('omhub_resource_anchor.multicloud_service_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see <link to docs>."""), short_help=cli_util.override('omhub_resource_anchor.multicloud_service_group.short_help', """Oracle Multicloud API"""))
+@cli.command(cli_util.override('omhub_resource_anchor.multicloud_service_group.command_name', 'multicloud'), cls=CommandGroupWithAlias, help=cli_util.override('omhub_resource_anchor.multicloud_service_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see [Oracle Multicloud Hub]."""), short_help=cli_util.override('omhub_resource_anchor.multicloud_service_group.short_help', """Oracle Multicloud API"""))
 @cli_util.help_option_group
 def multicloud_service_group():
     pass

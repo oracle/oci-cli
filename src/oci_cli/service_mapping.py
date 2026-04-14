@@ -534,7 +534,7 @@ service_mapping = {
         "Others"
     ],
     "multicloud": [
-        "omhub_cp",
+        "multicloud",
         "Oracle Multicloud",
         "Others"
     ],
@@ -564,7 +564,7 @@ service_mapping = {
         "Databases"
     ],
     "occ": [
-        "occ",
+        "oci_control_center",
         "OCI Control Center",
         "Others"
     ],

@@ -314,21 +314,24 @@ def create_data_masking_activity(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.option('--kms-key-id', help=u"""byok kms keyId""")
 @cli_util.option('--dns-prefix', help=u"""DNS prefix.""")
 @cli_util.option('--additional-language-packs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Language packs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-i-pv6-dual-stack-enabled', type=click.BOOL, help=u"""Enable IPv4/IPv6 dual stack support for the environment.  Setting to true will assign an IPv6 address to the environment in addition to an IPv4 address. Default value will be false if not set""")
+@cli_util.option('--is-i-pv6-dual-stack-enabled', type=click.BOOL, help=u"""Enable IPv4/IPv6 dual stack support for the environment (where available). Setting to true will assign an IPv6 address to the environment in addition to an IPv4 address. The default value is false.""")
 @cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Rules.
 
 This option is a JSON list with items of type Rule.  For documentation on Rule please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/fusionapplications/20211201/datatypes/Rule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-egress-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional egress rules that should be applied to the environment. Some standard ports are open for general use; see [Securing Network Access to a Fusion Applications Environment][iaas/Content/fusion-applications/plan-environment.htm#internet-cache]. If access to a non-standard port is required, however, they can be listed here.
+
+This option is a JSON list with items of type AdditionalEgressRule.  For documentation on AdditionalEgressRule please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/fusionapplications/20211201/datatypes/AdditionalEgressRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'maintenance-policy': {'module': 'fusion_apps', 'class': 'MaintenancePolicy'}, 'additional-language-packs': {'module': 'fusion_apps', 'class': 'list[string]'}, 'rules': {'module': 'fusion_apps', 'class': 'list[Rule]'}, 'create-fusion-environment-admin-user-details': {'module': 'fusion_apps', 'class': 'CreateFusionEnvironmentAdminUserDetails'}, 'freeform-tags': {'module': 'fusion_apps', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fusion_apps', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'maintenance-policy': {'module': 'fusion_apps', 'class': 'MaintenancePolicy'}, 'additional-language-packs': {'module': 'fusion_apps', 'class': 'list[string]'}, 'rules': {'module': 'fusion_apps', 'class': 'list[Rule]'}, 'additional-egress-rules': {'module': 'fusion_apps', 'class': 'list[AdditionalEgressRule]'}, 'create-fusion-environment-admin-user-details': {'module': 'fusion_apps', 'class': 'CreateFusionEnvironmentAdminUserDetails'}, 'freeform-tags': {'module': 'fusion_apps', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fusion_apps', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-policy': {'module': 'fusion_apps', 'class': 'MaintenancePolicy'}, 'additional-language-packs': {'module': 'fusion_apps', 'class': 'list[string]'}, 'rules': {'module': 'fusion_apps', 'class': 'list[Rule]'}, 'create-fusion-environment-admin-user-details': {'module': 'fusion_apps', 'class': 'CreateFusionEnvironmentAdminUserDetails'}, 'freeform-tags': {'module': 'fusion_apps', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fusion_apps', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-policy': {'module': 'fusion_apps', 'class': 'MaintenancePolicy'}, 'additional-language-packs': {'module': 'fusion_apps', 'class': 'list[string]'}, 'rules': {'module': 'fusion_apps', 'class': 'list[Rule]'}, 'additional-egress-rules': {'module': 'fusion_apps', 'class': 'list[AdditionalEgressRule]'}, 'create-fusion-environment-admin-user-details': {'module': 'fusion_apps', 'class': 'CreateFusionEnvironmentAdminUserDetails'}, 'freeform-tags': {'module': 'fusion_apps', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fusion_apps', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, fusion_environment_family_id, fusion_environment_type, create_fusion_environment_admin_user_details, maintenance_policy, kms_key_id, dns_prefix, additional_language_packs, is_i_pv6_dual_stack_enabled, rules, freeform_tags, defined_tags):
+def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, fusion_environment_family_id, fusion_environment_type, create_fusion_environment_admin_user_details, maintenance_policy, kms_key_id, dns_prefix, additional_language_packs, is_i_pv6_dual_stack_enabled, rules, additional_egress_rules, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -357,6 +360,9 @@ def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if rules is not None:
         _details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    if additional_egress_rules is not None:
+        _details['additionalEgressRules'] = cli_util.parse_json_parameter("additional_egress_rules", additional_egress_rules)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1627,7 +1633,7 @@ def list_scheduled_activities(ctx, from_json, all_pages, page_size, fusion_envir
 @cli_util.option('--fusion-environment-id', required=True, help=u"""unique FusionEnvironment identifier""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter that returns all resources that match the specified lifecycle state.""")
-@cli_util.option('--service-instance-type', type=custom_types.CliCaseInsensitiveChoice(["DIGITAL_ASSISTANT", "INTEGRATION_CLOUD", "ANALYTICS_WAREHOUSE", "VBCS", "VISUAL_BUILDER_STUDIO"]), help=u"""A filter that returns all resources that match the specified lifecycle state.""")
+@cli_util.option('--service-instance-type', type=custom_types.CliCaseInsensitiveChoice(["DIGITAL_ASSISTANT", "INTEGRATION_CLOUD", "ANALYTICS_WAREHOUSE", "FUSION_DATA_INTELLIGENCE", "VBCS", "VISUAL_BUILDER_STUDIO"]), help=u"""A filter that returns all resources that match the specified lifecycle state.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -1992,10 +1998,13 @@ def reset_fusion_environment_password(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--kms-key-id', help=u"""byok kms keyId""")
 @cli_util.option('--maintenance-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--additional-language-packs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Language packs""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-i-pv6-dual-stack-enabled', type=click.BOOL, help=u"""Enable IPv4/IPv6 dual stack support for the environment.  Setting to true will assign an IPv6 address to the environment in addition to an IPv4 address.""")
+@cli_util.option('--is-i-pv6-dual-stack-enabled', type=click.BOOL, help=u"""Enable IPv4/IPv6 dual stack support for the environment (where available). Setting to true will assign an IPv6 address to the environment in addition to an IPv4 address.""")
 @cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Network access control rules to limit internet traffic that can access the environment. For more information, see [AllowRule Reference].
 
 This option is a JSON list with items of type Rule.  For documentation on Rule please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/fusionapplications/20211201/datatypes/Rule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-egress-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional egress rules that should be applied to the environment. Some standard ports are open for general use; see [Securing Network Access to a Fusion Applications Environment][iaas/Content/fusion-applications/plan-environment.htm#internet-cache]. If access to a non-standard port is required, however, they can be listed here.
+
+This option is a JSON list with items of type AdditionalEgressRule.  For documentation on AdditionalEgressRule please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/fusionapplications/20211201/datatypes/AdditionalEgressRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2003,18 +2012,18 @@ This option is a JSON list with items of type Rule.  For documentation on Rule p
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'maintenance-policy': {'module': 'fusion_apps', 'class': 'MaintenancePolicy'}, 'additional-language-packs': {'module': 'fusion_apps', 'class': 'list[string]'}, 'rules': {'module': 'fusion_apps', 'class': 'list[Rule]'}, 'freeform-tags': {'module': 'fusion_apps', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fusion_apps', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'maintenance-policy': {'module': 'fusion_apps', 'class': 'MaintenancePolicy'}, 'additional-language-packs': {'module': 'fusion_apps', 'class': 'list[string]'}, 'rules': {'module': 'fusion_apps', 'class': 'list[Rule]'}, 'additional-egress-rules': {'module': 'fusion_apps', 'class': 'list[AdditionalEgressRule]'}, 'freeform-tags': {'module': 'fusion_apps', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fusion_apps', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-policy': {'module': 'fusion_apps', 'class': 'MaintenancePolicy'}, 'additional-language-packs': {'module': 'fusion_apps', 'class': 'list[string]'}, 'rules': {'module': 'fusion_apps', 'class': 'list[Rule]'}, 'freeform-tags': {'module': 'fusion_apps', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fusion_apps', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-policy': {'module': 'fusion_apps', 'class': 'MaintenancePolicy'}, 'additional-language-packs': {'module': 'fusion_apps', 'class': 'list[string]'}, 'rules': {'module': 'fusion_apps', 'class': 'list[Rule]'}, 'additional-egress-rules': {'module': 'fusion_apps', 'class': 'list[AdditionalEgressRule]'}, 'freeform-tags': {'module': 'fusion_apps', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fusion_apps', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fusion_environment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, display_name, kms_key_id, maintenance_policy, additional_language_packs, is_i_pv6_dual_stack_enabled, rules, freeform_tags, defined_tags, if_match):
+def update_fusion_environment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, display_name, kms_key_id, maintenance_policy, additional_language_packs, is_i_pv6_dual_stack_enabled, rules, additional_egress_rules, freeform_tags, defined_tags, if_match):
 
     if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
     if not force:
-        if maintenance_policy or additional_language_packs or rules or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to maintenance-policy and additional-language-packs and rules and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if maintenance_policy or additional_language_packs or rules or additional_egress_rules or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to maintenance-policy and additional-language-packs and rules and additional-egress-rules and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2041,6 +2050,9 @@ def update_fusion_environment(ctx, from_json, force, wait_for_state, max_wait_se
 
     if rules is not None:
         _details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    if additional_egress_rules is not None:
+        _details['additionalEgressRules'] = cli_util.parse_json_parameter("additional_egress_rules", additional_egress_rules)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
