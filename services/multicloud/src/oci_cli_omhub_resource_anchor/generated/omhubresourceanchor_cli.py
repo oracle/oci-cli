@@ -16,19 +16,19 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.multicloud.src.oci_cli_multicloud.generated import multicloud_service_cli
 
 
-@click.command(cli_util.override('omhub_resource_anchor.omhub_resource_anchor_root_group.command_name', 'omhub-resource-anchor'), cls=CommandGroupWithAlias, help=cli_util.override('omhub_resource_anchor.omhub_resource_anchor_root_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see <link to docs>."""), short_help=cli_util.override('omhub_resource_anchor.omhub_resource_anchor_root_group.short_help', """Oracle Multicloud API"""))
+@click.command(cli_util.override('omhub_resource_anchor.omhub_resource_anchor_root_group.command_name', 'omhub-resource-anchor'), cls=CommandGroupWithAlias, help=cli_util.override('omhub_resource_anchor.omhub_resource_anchor_root_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see [Oracle Multicloud Hub]."""), short_help=cli_util.override('omhub_resource_anchor.omhub_resource_anchor_root_group.short_help', """Oracle Multicloud API"""))
 @cli_util.help_option_group
 def omhub_resource_anchor_root_group():
     pass
 
 
-@click.command(cli_util.override('omhub_resource_anchor.resource_anchor_collection_group.command_name', 'resource-anchor-collection'), cls=CommandGroupWithAlias, help="""Results of a resourceAnchor search. Contains both ResourceAnchorSummary items and other information, such as metadata.""")
+@click.command(cli_util.override('omhub_resource_anchor.resource_anchor_collection_group.command_name', 'resource-anchor-collection'), cls=CommandGroupWithAlias, help="""List of resource anchors in the indicated Multicloud subscription.""")
 @cli_util.help_option_group
 def resource_anchor_collection_group():
     pass
 
 
-@click.command(cli_util.override('omhub_resource_anchor.resource_anchor_group.command_name', 'resource-anchor'), cls=CommandGroupWithAlias, help="""A ResourceAnchor is a description of a ResourceAnchor.
+@click.command(cli_util.override('omhub_resource_anchor.resource_anchor_group.command_name', 'resource-anchor'), cls=CommandGroupWithAlias, help="""A resource anchor.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -41,11 +41,11 @@ omhub_resource_anchor_root_group.add_command(resource_anchor_collection_group)
 omhub_resource_anchor_root_group.add_command(resource_anchor_group)
 
 
-@resource_anchor_group.command(name=cli_util.override('omhub_resource_anchor.get_resource_anchor.command_name', 'get'), help=u"""Gets information about a ResourceAnchor. \n[Command Reference](getResourceAnchor)""")
-@cli_util.option('--resource-anchor-id', required=True, help=u"""The [OCID] of the ResourceAnchor.""")
-@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
+@resource_anchor_group.command(name=cli_util.override('omhub_resource_anchor.get_resource_anchor.command_name', 'get'), help=u"""Gets details for the specified resource anchor. The subscription OCID and service name are required. For more information, see [Getting a Resource Anchor's Details (OCI)]. \n[Command Reference](getResourceAnchor)""")
+@cli_util.option('--resource-anchor-id', required=True, help=u"""The [OCID] of the resource anchor.""")
+@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The cloud service provider.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
-@cli_util.option('--should-fetch-compartment-name', type=click.BOOL, help=u"""Whether to fetch and include the compartment name, setting this field to yes may introduce additional latency.""")
+@cli_util.option('--should-fetch-compartment-name', type=click.BOOL, help=u"""Whether to fetch and include the compartment name. Setting this field to `true` might introduce additional latency.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -70,19 +70,19 @@ def get_resource_anchor(ctx, from_json, resource_anchor_id, subscription_service
     cli_util.render_response(result, ctx)
 
 
-@resource_anchor_collection_group.command(name=cli_util.override('omhub_resource_anchor.list_resource_anchors.command_name', 'list-resource-anchors'), help=u"""Gets a list of ResourceAnchors. \n[Command Reference](listResourceAnchors)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the Multicloud base compartment or sub-compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
+@resource_anchor_collection_group.command(name=cli_util.override('omhub_resource_anchor.list_resource_anchors.command_name', 'list-resource-anchors'), help=u"""Lists resource anchors in the specified Multicloud subscription. Details listed for each resource anchor include name, state, and the related Multicloud compartment. For more information, see [Listing Resource Anchors]. \n[Command Reference](listResourceAnchors)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the Multicloud base compartment or sub-compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a cloud service provider (such as Azure or AWS).""")
 @cli_util.option('--linked-compartment-id', help=u"""The [OCID] of the compartment linked to the resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--id', help=u"""The [OCID] of the ResourceAnchor.""")
+@cli_util.option('--id', help=u"""The [OCID] of the resource anchor.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). In general, the sort order is `DESC` when sorting by time and `ASC` otherwise.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
-@cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Check the sub-compartments of a given compartmentId""")
-@cli_util.option('--should-fetch-compartment-name', type=click.BOOL, help=u"""Whether to fetch and include the compartment name, setting this field to yes may introduce additional latency.""")
-@cli_util.option('--subscription-service-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
+@cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Check the sub-compartments of a given `compartmentId`.""")
+@cli_util.option('--should-fetch-compartment-name', type=click.BOOL, help=u"""Whether to fetch and include the compartment name. Setting this field to `true` might introduce additional latency.""")
+@cli_util.option('--subscription-service-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The cloud service provider.""")
 @cli_util.option('--subscription-id', help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")

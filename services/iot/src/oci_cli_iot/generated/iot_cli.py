@@ -985,7 +985,7 @@ def create_iot_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 @iot_domain_group_group.command(name=cli_util.override('iot.create_iot_domain_group.command_name', 'create'), help=u"""Creates a new IoT domain group. \n[Command Reference](createIotDomainGroup)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment corresponding to the resource.""")
-@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "LIGHTWEIGHT"]), help=u"""Type of the domain group. LIGHTWEIGHT uses fewer resources and has a higher Recovery Time Objective (RTO), making it suitable for development and testing. STANDARD is recommended for production.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["PRODUCTION", "DEVELOPMENT", "STANDARD", "LIGHTWEIGHT"]), help=u"""Type of domain group. DEVELOPMENT uses fewer resources and has a higher Recovery Time Objective (RTO), making it suitable for development and testing. PRODUCTION is recommended for production workloads. LIGHTWEIGHT and STANDARD are deprecated aliases for DEVELOPMENT and PRODUCTION respectively and will be removed in a future release.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -2102,7 +2102,7 @@ def list_digital_twin_relationships(ctx, from_json, all_pages, page_size, iot_do
 @cli_util.option('--id', help=u"""Filter resources by [OCID]. Must be a valid OCID of the resource type.""")
 @cli_util.option('--display-name', help=u"""Filter resources whose display name matches the specified value.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter resources whose lifecycleState matches the specified value.""")
-@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "LIGHTWEIGHT"]), help=u"""Filter resources by type. Valid values are LIGHTWEIGHT or STANDARD.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["PRODUCTION", "DEVELOPMENT", "STANDARD", "LIGHTWEIGHT"]), help=u"""Filter resources by type. Valid values are LIGHTWEIGHT or STANDARD.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination: The value of the opc-next-page response header from the previous \"List\" call. For important details on how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either ASC (ascending) or DESC (descending).""")

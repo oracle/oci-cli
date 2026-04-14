@@ -8,27 +8,27 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.demand_signal.src.oci_cli_demand_signal.generated import demand_signal_service_cli
 
 
-@cli.command(cli_util.override('demand_signal.demand_signal_root_group.command_name', 'demand-signal'), cls=CommandGroupWithAlias, help=cli_util.override('demand_signal.demand_signal_root_group.help', """Use the OCI Control Center Demand Signal API to manage Demand Signals."""), short_help=cli_util.override('demand_signal.demand_signal_root_group.short_help', """OCI Control Center Demand Signal API"""))
+@click.command(cli_util.override('occ_demand_signal.occ_demand_signal_root_group.command_name', 'occ-demand-signal'), cls=CommandGroupWithAlias, help=cli_util.override('occ_demand_signal.occ_demand_signal_root_group.help', """Use the OCI Control Center Demand Signal API to manage Demand Signals."""), short_help=cli_util.override('occ_demand_signal.occ_demand_signal_root_group.short_help', """OCI Control Center Demand Signal API"""))
 @cli_util.help_option_group
-def demand_signal_root_group():
+def occ_demand_signal_root_group():
     pass
 
 
-@click.command(cli_util.override('demand_signal.occ_demand_signal_collection_group.command_name', 'occ-demand-signal-collection'), cls=CommandGroupWithAlias, help="""Results of a occDemandSignal search. Contains both OccDemandSignalSummary items and other information, such as metadata.""")
+@click.command(cli_util.override('occ_demand_signal.occ_demand_signal_collection_group.command_name', 'occ-demand-signal-collection'), cls=CommandGroupWithAlias, help="""Results of a occDemandSignal search. Contains both OccDemandSignalSummary items and other information, such as metadata.""")
 @cli_util.help_option_group
 def occ_demand_signal_collection_group():
     pass
 
 
-@click.command(cli_util.override('demand_signal.occ_demand_signal_group.command_name', 'occ-demand-signal'), cls=CommandGroupWithAlias, help="""An OccDemandSignal is a forecast created for different Resource Types.
+@click.command(cli_util.override('occ_demand_signal.occ_demand_signal_group.command_name', 'occ-demand-signal'), cls=CommandGroupWithAlias, help="""An OccDemandSignal is a forecast created for different Resource Types.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -36,11 +36,12 @@ def occ_demand_signal_group():
     pass
 
 
-demand_signal_root_group.add_command(occ_demand_signal_collection_group)
-demand_signal_root_group.add_command(occ_demand_signal_group)
+demand_signal_service_cli.demand_signal_service_group.add_command(occ_demand_signal_root_group)
+occ_demand_signal_root_group.add_command(occ_demand_signal_collection_group)
+occ_demand_signal_root_group.add_command(occ_demand_signal_group)
 
 
-@occ_demand_signal_group.command(name=cli_util.override('demand_signal.change_occ_demand_signal_compartment.command_name', 'change-compartment'), help=u"""Moves a OccDemandSignal into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeOccDemandSignalCompartment)""")
+@occ_demand_signal_group.command(name=cli_util.override('occ_demand_signal.change_occ_demand_signal_compartment.command_name', 'change-compartment'), help=u"""Moves a OccDemandSignal into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeOccDemandSignalCompartment)""")
 @cli_util.option('--occ-demand-signal-id', required=True, help=u"""The [OCID] of the OccDemandSignal.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the OccDemandSignal to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -71,7 +72,7 @@ def change_occ_demand_signal_compartment(ctx, from_json, occ_demand_signal_id, c
     cli_util.render_response(result, ctx)
 
 
-@occ_demand_signal_group.command(name=cli_util.override('demand_signal.create_occ_demand_signal.command_name', 'create'), help=u"""Creates a OccDemandSignal. \n[Command Reference](createOccDemandSignal)""")
+@occ_demand_signal_group.command(name=cli_util.override('occ_demand_signal.create_occ_demand_signal.command_name', 'create'), help=u"""Creates a OccDemandSignal. \n[Command Reference](createOccDemandSignal)""")
 @cli_util.option('--occ-demand-signals', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OccDemandSignal data.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-active', required=True, type=click.BOOL, help=u"""Indicator of whether to share the data with Oracle.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the OccDemandSignal in.""")
@@ -140,7 +141,7 @@ def create_occ_demand_signal(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@occ_demand_signal_group.command(name=cli_util.override('demand_signal.delete_occ_demand_signal.command_name', 'delete'), help=u"""Deletes a OccDemandSignal. \n[Command Reference](deleteOccDemandSignal)""")
+@occ_demand_signal_group.command(name=cli_util.override('occ_demand_signal.delete_occ_demand_signal.command_name', 'delete'), help=u"""Deletes a OccDemandSignal. \n[Command Reference](deleteOccDemandSignal)""")
 @cli_util.option('--occ-demand-signal-id', required=True, help=u"""The [OCID] of the OccDemandSignal.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -204,7 +205,7 @@ def delete_occ_demand_signal(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@occ_demand_signal_group.command(name=cli_util.override('demand_signal.get_occ_demand_signal.command_name', 'get'), help=u"""Gets information about a OccDemandSignal. \n[Command Reference](getOccDemandSignal)""")
+@occ_demand_signal_group.command(name=cli_util.override('occ_demand_signal.get_occ_demand_signal.command_name', 'get'), help=u"""Gets information about a OccDemandSignal. \n[Command Reference](getOccDemandSignal)""")
 @cli_util.option('--occ-demand-signal-id', required=True, help=u"""The [OCID] of the OccDemandSignal.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -226,7 +227,7 @@ def get_occ_demand_signal(ctx, from_json, occ_demand_signal_id):
     cli_util.render_response(result, ctx)
 
 
-@occ_demand_signal_collection_group.command(name=cli_util.override('demand_signal.list_occ_demand_signals.command_name', 'list-occ-demand-signals'), help=u"""Gets a list of OccDemandSignals. \n[Command Reference](listOccDemandSignals)""")
+@occ_demand_signal_collection_group.command(name=cli_util.override('occ_demand_signal.list_occ_demand_signals.command_name', 'list-occ-demand-signals'), help=u"""Gets a list of OccDemandSignals. \n[Command Reference](listOccDemandSignals)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -288,7 +289,7 @@ def list_occ_demand_signals(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@occ_demand_signal_group.command(name=cli_util.override('demand_signal.patch_occ_demand_signal.command_name', 'patch'), help=u"""Updates the data of an OccDemandSignal. \n[Command Reference](patchOccDemandSignal)""")
+@occ_demand_signal_group.command(name=cli_util.override('occ_demand_signal.patch_occ_demand_signal.command_name', 'patch'), help=u"""Updates the data of an OccDemandSignal. \n[Command Reference](patchOccDemandSignal)""")
 @cli_util.option('--occ-demand-signal-id', required=True, help=u"""The [OCID] of the OccDemandSignal.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of patch instructions.
 
@@ -323,7 +324,7 @@ def patch_occ_demand_signal(ctx, from_json, occ_demand_signal_id, items, if_matc
     cli_util.render_response(result, ctx)
 
 
-@occ_demand_signal_group.command(name=cli_util.override('demand_signal.update_occ_demand_signal.command_name', 'update'), help=u"""Updates a OccDemandSignal. \n[Command Reference](updateOccDemandSignal)""")
+@occ_demand_signal_group.command(name=cli_util.override('occ_demand_signal.update_occ_demand_signal.command_name', 'update'), help=u"""Updates a OccDemandSignal. \n[Command Reference](updateOccDemandSignal)""")
 @cli_util.option('--occ-demand-signal-id', required=True, help=u"""The [OCID] of the OccDemandSignal.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-active', type=click.BOOL, help=u"""Indicator of whether to share the data with Oracle.""")

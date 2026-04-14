@@ -598,3 +598,5 @@ cloud-bridge, discovery, asset-source, create
 cloud-bridge, discovery, asset-source, update
 cloud-bridge, inventory, asset, update
 os-management-hub, managed-instance-group, list-managed-instances
+fusion-apps, fusion-environment, create
+fusion-apps, fusion-environment, update

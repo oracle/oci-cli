@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.multicloud.src.oci_cli_multicloud.generated import multicloud_service_cli
 
 
-@click.command(cli_util.override('metadata.metadata_root_group.command_name', 'metadata'), cls=CommandGroupWithAlias, help=cli_util.override('metadata.metadata_root_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see <link to docs>."""), short_help=cli_util.override('metadata.metadata_root_group.short_help', """Oracle Multicloud API"""))
+@click.command(cli_util.override('metadata.metadata_root_group.command_name', 'metadata'), cls=CommandGroupWithAlias, help=cli_util.override('metadata.metadata_root_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see [Oracle Multicloud Hub]."""), short_help=cli_util.override('metadata.metadata_root_group.short_help', """Oracle Multicloud API"""))
 @cli_util.help_option_group
 def metadata_root_group():
     pass
@@ -48,16 +48,16 @@ metadata_root_group.add_command(external_locations_metadatum_collection_group)
 
 @external_locations_metadatum_collection_group.command(name=cli_util.override('metadata.list_external_location_details_metadata.command_name', 'list-external-location-details-metadata'), help=u"""List externalLocationDetail metadata from OCI to Cloud  Service Provider for regions, Availability Zones, and Cluster Placement Group ID. \n[Command Reference](listExternalLocationDetailsMetadata)""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
-@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
-@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["dbsystem"]), help=u"""The resource type query (i.e. dbsystem, instance etc.)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the Multicloud base compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
+@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The cloud service provider.""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["dbsystem"]), help=u"""The resource type query (for example, dbsystem or instance).""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the Multicloud base compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a cloud service provider (such as Azure or AWS).""")
 @cli_util.option('--linked-compartment-id', help=u"""The [OCID] of the compartment linked to the resource.""")
-@cli_util.option('--external-location', help=u"""The Cloud Service Provider region.""")
-@cli_util.option('--logical-zone', help=u"""OCI Logical AD to filter the response.""")
-@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the Cluster Placement Group.""")
+@cli_util.option('--external-location', help=u"""The cloud service provider region.""")
+@cli_util.option('--logical-zone', help=u"""OCI logical availability domain (AD) to filter the response.""")
+@cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). In general, the sort order is `DESC` when sorting by time and `ASC` otherwise.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -122,13 +122,13 @@ def list_external_location_details_metadata(ctx, from_json, all_pages, page_size
     cli_util.render_response(result, ctx)
 
 
-@external_location_mapping_metadatum_summary_collection_group.command(name=cli_util.override('metadata.list_external_location_mapping_metadata.command_name', 'list-external-location-mapping-metadata'), help=u"""List externalLocation metadata from OCI to the Cloud Service Provider for regions, Physical Availability Zones. \n[Command Reference](listExternalLocationMappingMetadata)""")
-@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), multiple=True, help=u"""The subscription type of the Cloud Service Provider.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Multicloud base compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
+@external_location_mapping_metadatum_summary_collection_group.command(name=cli_util.override('metadata.list_external_location_mapping_metadata.command_name', 'list-external-location-mapping-metadata'), help=u"""List mapped partner cloud regions and zones across cloud service providers for the specified Multicloud base compartment and subscription service name. Each mapping includes the OCI region, logical availability domain, and physical availability domain, along with mapped partner cloud details that depend on the partner cloud. For example, Azure includes a logical zone while AWS doesn't. For more information, see [Cross-Cloud Region-Zone Mapping]. \n[Command Reference](listExternalLocationMappingMetadata)""")
+@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), multiple=True, help=u"""The cloud service provider.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Multicloud base compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a cloud service provider (such as Azure or AWS).""")
 @cli_util.option('--subscription-id', help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). In general, the sort order is `DESC` when sorting by time and `ASC` otherwise.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -184,13 +184,13 @@ def list_external_location_mapping_metadata(ctx, from_json, all_pages, page_size
 
 
 @external_location_summaries_metadatum_summary_collection_group.command(name=cli_util.override('metadata.list_external_location_summaries_metadata.command_name', 'list-external-location-summaries-metadata'), help=u"""List externalLocationSummary metadata from OCI Region to the Cloud Service Provider region across all regions. \n[Command Reference](listExternalLocationSummariesMetadata)""")
-@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Multicloud base compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
+@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The cloud service provider.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the Multicloud base compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a cloud service provider (such as Azure or AWS).""")
 @cli_util.option('--subscription-id', help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
-@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["dbsystem"]), help=u"""The resource type query (i.e. dbsystem, instance etc.)""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["dbsystem"]), help=u"""The resource type query (for example, dbsystem or instance).""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). In general, the sort order is `DESC` when sorting by time and `ASC` otherwise.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")

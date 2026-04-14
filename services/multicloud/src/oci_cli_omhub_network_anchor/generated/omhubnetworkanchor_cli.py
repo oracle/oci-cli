@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.multicloud.src.oci_cli_multicloud.generated import multicloud_service_cli
 
 
-@click.command(cli_util.override('omhub_network_anchor.omhub_network_anchor_root_group.command_name', 'omhub-network-anchor'), cls=CommandGroupWithAlias, help=cli_util.override('omhub_network_anchor.omhub_network_anchor_root_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see <link to docs>."""), short_help=cli_util.override('omhub_network_anchor.omhub_network_anchor_root_group.short_help', """Oracle Multicloud API"""))
+@click.command(cli_util.override('omhub_network_anchor.omhub_network_anchor_root_group.command_name', 'omhub-network-anchor'), cls=CommandGroupWithAlias, help=cli_util.override('omhub_network_anchor.omhub_network_anchor_root_group.help', """Use the Oracle Multicloud API to retrieve resource anchors and network anchors, and the metadata mappings related a Cloud Service Provider. For more information, see [Oracle Multicloud Hub]."""), short_help=cli_util.override('omhub_network_anchor.omhub_network_anchor_root_group.short_help', """Oracle Multicloud API"""))
 @cli_util.help_option_group
 def omhub_network_anchor_root_group():
     pass
@@ -41,11 +41,11 @@ omhub_network_anchor_root_group.add_command(network_anchor_group)
 omhub_network_anchor_root_group.add_command(network_anchor_collection_group)
 
 
-@network_anchor_group.command(name=cli_util.override('omhub_network_anchor.get_network_anchor.command_name', 'get'), help=u"""Gets information about a NetworkAnchor. \n[Command Reference](getNetworkAnchor)""")
+@network_anchor_group.command(name=cli_util.override('omhub_network_anchor.get_network_anchor.command_name', 'get'), help=u"""Gets details for the specified network anchor. The subscription OCID and service name are required. For more information, see [Getting a Network Anchor's Details]. \n[Command Reference](getNetworkAnchor)""")
 @cli_util.option('--network-anchor-id', required=True, help=u"""The [OCID] of the NetworkAnchor.""")
-@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
+@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The cloud service provider.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
-@cli_util.option('--external-location', help=u"""The Cloud Service Provider region.""")
+@cli_util.option('--external-location', help=u"""The cloud service provider region.""")
 @cli_util.option('--should-fetch-vcn-name', type=click.BOOL, help=u"""Whether to fetch and include the vcn display name, which may introduce additional latency.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -73,21 +73,20 @@ def get_network_anchor(ctx, from_json, network_anchor_id, subscription_service_n
     cli_util.render_response(result, ctx)
 
 
-@network_anchor_collection_group.command(name=cli_util.override('omhub_network_anchor.list_network_anchors.command_name', 'list-network-anchors'), help=u"""Gets a list of NetworkAnchors. \n[Command Reference](listNetworkAnchors)""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the Multicloud base compartment or sub-compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
+@network_anchor_collection_group.command(name=cli_util.override('omhub_network_anchor.list_network_anchors.command_name', 'list-network-anchors'), help=u"""Lists network anchors in the specified Multicloud subscription, Multicloud compartment, and partner cloud region. Details listed for each resource include name, state, VCN, and ODB network ID. For more information, see [Listing Network Anchors]. \n[Command Reference](listNetworkAnchors)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the Multicloud base compartment or sub-compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a cloud service provider (such as Azure or AWS).""")
 @cli_util.option('--subscription-id', help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
-@cli_util.option('--subscription-service-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
+@cli_util.option('--subscription-service-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The cloud service provider.""")
 @cli_util.option('--network-anchor-lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--external-location', help=u"""The Cloud Service Provider region.""")
+@cli_util.option('--external-location', help=u"""The cloud service provider region.""")
 @cli_util.option('--network-anchor-oci-subnet-id', help=u"""A filter to return only NetworkAnchor resources that match the given OCI subnet Id.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If set to true, a list operation will return NetworkAnchors from all child compartments in the provided compartmentId parameter.""")
 @cli_util.option('--network-anchor-oci-vcn-id', help=u"""A filter to return only NetworkAnchor resources that match the given OCI Vcn Id.""")
 @cli_util.option('--id', help=u"""The [OCID] of the NetworkAnchor.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--should-fetch-vcn-name', type=click.BOOL, help=u"""Whether to fetch and include the vcn display name, which may introduce additional latency.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). In general, the sort order is `DESC` when sorting by time and `ASC` otherwise.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -96,7 +95,7 @@ def get_network_anchor(ctx, from_json, network_anchor_id, subscription_service_n
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'multicloud', 'class': 'NetworkAnchorCollection'})
 @cli_util.wrap_exceptions
-def list_network_anchors(ctx, from_json, all_pages, page_size, compartment_id, subscription_id, subscription_service_name, network_anchor_lifecycle_state, display_name, external_location, network_anchor_oci_subnet_id, compartment_id_in_subtree, network_anchor_oci_vcn_id, id, limit, page, should_fetch_vcn_name, sort_order, sort_by):
+def list_network_anchors(ctx, from_json, all_pages, page_size, compartment_id, subscription_id, subscription_service_name, network_anchor_lifecycle_state, display_name, external_location, network_anchor_oci_subnet_id, network_anchor_oci_vcn_id, id, limit, page, should_fetch_vcn_name, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -116,8 +115,6 @@ def list_network_anchors(ctx, from_json, all_pages, page_size, compartment_id, s
         kwargs['external_location'] = external_location
     if network_anchor_oci_subnet_id is not None:
         kwargs['network_anchor_oci_subnet_id'] = network_anchor_oci_subnet_id
-    if compartment_id_in_subtree is not None:
-        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     if network_anchor_oci_vcn_id is not None:
         kwargs['network_anchor_oci_vcn_id'] = network_anchor_oci_vcn_id
     if id is not None:

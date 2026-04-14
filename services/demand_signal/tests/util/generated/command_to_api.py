@@ -2,11 +2,9 @@
 # Copyright (c) 2016, 2026, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
-    "demand_signal.change_occ_demand_signal_compartment": "oci.demand_signal.OccDemandSignalClient.change_occ_demand_signal_compartment",
-    "demand_signal.create_occ_demand_signal": "oci.demand_signal.OccDemandSignalClient.create_occ_demand_signal",
-    "demand_signal.delete_occ_demand_signal": "oci.demand_signal.OccDemandSignalClient.delete_occ_demand_signal",
-    "demand_signal.get_occ_demand_signal": "oci.demand_signal.OccDemandSignalClient.get_occ_demand_signal",
-    "demand_signal.list_occ_demand_signals": "oci.demand_signal.OccDemandSignalClient.list_occ_demand_signals",
-    "demand_signal.patch_occ_demand_signal": "oci.demand_signal.OccDemandSignalClient.patch_occ_demand_signal",
-    "demand_signal.update_occ_demand_signal": "oci.demand_signal.OccDemandSignalClient.update_occ_demand_signal",
+    "occ_metric_alarm.create_occ_metric_alarm": "oci.demand_signal.OccMetricAlarmClient.create_occ_metric_alarm",
+    "occ_metric_alarm.delete_occ_metric_alarm": "oci.demand_signal.OccMetricAlarmClient.delete_occ_metric_alarm",
+    "occ_metric_alarm.get_occ_metric_alarm": "oci.demand_signal.OccMetricAlarmClient.get_occ_metric_alarm",
+    "occ_metric_alarm.list_occ_metric_alarms": "oci.demand_signal.OccMetricAlarmClient.list_occ_metric_alarms",
+    "occ_metric_alarm.update_occ_metric_alarm": "oci.demand_signal.OccMetricAlarmClient.update_occ_metric_alarm",
 }

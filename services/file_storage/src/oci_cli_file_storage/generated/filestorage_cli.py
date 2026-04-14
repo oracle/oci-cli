@@ -1537,6 +1537,7 @@ Avoid entering confidential information.
 
 Example: `Sunday`""")
 @cli_util.option('--expiration-time', type=custom_types.CLI_DATETIME, help=u"""The time when this snapshot will be deleted.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--lock-duration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
@@ -1545,12 +1546,12 @@ This option is a JSON list with items of type ResourceLock.  For documentation o
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'file_storage', 'class': 'list[ResourceLock]'}})
+@json_skeleton_utils.get_cli_json_input_option({'lock-duration-details': {'module': 'file_storage', 'class': 'LockDurationDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'file_storage', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'file_storage', 'class': 'list[ResourceLock]'}}, output_type={'module': 'file_storage', 'class': 'Snapshot'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'lock-duration-details': {'module': 'file_storage', 'class': 'LockDurationDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'file_storage', 'class': 'list[ResourceLock]'}}, output_type={'module': 'file_storage', 'class': 'Snapshot'})
 @cli_util.wrap_exceptions
-def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, name, expiration_time, freeform_tags, defined_tags, locks):
+def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, name, expiration_time, lock_duration_details, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1561,6 +1562,9 @@ def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if expiration_time is not None:
         _details['expirationTime'] = expiration_time
+
+    if lock_duration_details is not None:
+        _details['lockDurationDetails'] = cli_util.parse_json_parameter("lock_duration_details", lock_duration_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -4555,24 +4559,25 @@ def update_replication(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.option('--expiration-time', type=custom_types.CLI_DATETIME, help=u"""The UTC time when this snapshot will be deleted. To remove the expiration time, set this field to the minimum date-time value using Date(0).
 
 Example: `Thu Jan 01 01:00:00 GMT 1970`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--lock-duration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'lock-duration-details': {'module': 'file_storage', 'class': 'LockDurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'Snapshot'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'lock-duration-details': {'module': 'file_storage', 'class': 'LockDurationDetails'}}, output_type={'module': 'file_storage', 'class': 'Snapshot'})
 @cli_util.wrap_exceptions
-def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, snapshot_id, freeform_tags, defined_tags, expiration_time, if_match, is_lock_override):
+def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, snapshot_id, freeform_tags, defined_tags, expiration_time, lock_duration_details, if_match, is_lock_override):
 
     if isinstance(snapshot_id, six.string_types) and len(snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or lock_duration_details:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and lock-duration-details will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4592,6 +4597,9 @@ def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if expiration_time is not None:
         _details['expirationTime'] = expiration_time
+
+    if lock_duration_details is not None:
+        _details['lockDurationDetails'] = cli_util.parse_json_parameter("lock_duration_details", lock_duration_details)
 
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.update_snapshot(
