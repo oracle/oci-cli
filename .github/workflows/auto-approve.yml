@@ -14,7 +14,6 @@ jobs:
       github.event.pull_request.user.login == 'oci-dex-release-bot' &&
       (github.event.pull_request.base.ref == 'master' || github.event.pull_request.base.ref == 'auto-approve-test')
     runs-on: ubuntu-latest
-
     steps:
       - name: Approve PR via GitHub API
         env:
