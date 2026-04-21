@@ -1,13 +1,31 @@
-name: Auto Approve
-on: pull_request_target
+name: Auto Approve Release Bot PRs
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  pull-requests: write
+
 jobs:
   auto-approve:
+    if: >
+      github.actor == 'oci-dex-release-bot' &&
+      github.event.pull_request.user.login == 'oci-dex-release-bot' &&
+      (github.event.pull_request.base.ref == 'master' || github.event.pull_request.base.ref == 'auto-approve-test')
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-    if: github.actor == 'oci-dex-release-bot'
+
     steps:
-      - uses: hmarr/auto-approve-action@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          review-message: "Auto-approved by GitHub Actions"
+      - name: Approve PR via GitHub API
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          curl -sS -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${REPO}/pulls/${PR_NUMBER}/reviews" \
+            -d '{"event":"APPROVE","body":"Auto-approved release PR from oci-dex-release-bot"}'
