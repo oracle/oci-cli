@@ -12,7 +12,7 @@ jobs:
     if: >
       github.actor == 'oci-dex-release-bot' &&
       github.event.pull_request.user.login == 'oci-dex-release-bot' &&
-      (github.event.pull_request.base.ref == 'master' || github.event.pull_request.base.ref == 'auto-approve-test')
+      github.event.pull_request.base.ref == 'master'
     runs-on: ubuntu-latest
 
     steps:
