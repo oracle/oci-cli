@@ -1187,9 +1187,9 @@ def bulk_add_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_id,
     cli_util.render_response(result, ctx)
 
 
-@ipv6_group.command(name=cli_util.override('virtual_network.bulk_create_ipv6s.command_name', 'bulk-create'), help=u"""Create new IPv6s for a VNIC or Subnet. \n[Command Reference](bulkCreateIpv6s)""")
-@cli_util.option('--bulk-create-ipv6s-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Secondary IPv6 addresses to assign.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to assign the IPv6s to. The IPv6 will be in the VNIC's subnet.""")
+@ipv6_group.command(name=cli_util.override('virtual_network.bulk_create_ipv6s.command_name', 'bulk-create'), help=u"""Create new IPv6s in bulk for a VNIC or subnet. \n[Command Reference](bulkCreateIpv6s)""")
+@cli_util.option('--bulk-create-ipv6s-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A secondary IPv6 address to assign.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to assign the IPv6s to. The IPv6s will be in the VNIC's subnet.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the IPv6s are to be drawn. The IP addresses, *if supplied*, must be valid for the given subnet, only valid for reserved IPs currently.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1257,7 +1257,7 @@ def bulk_create_ipv6s(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 
 @private_ip_group.command(name=cli_util.override('virtual_network.bulk_create_private_ips.command_name', 'bulk-create'), help=u"""Create secondary private IPv4 addresses. \n[Command Reference](bulkCreatePrivateIps)""")
-@cli_util.option('--bulk-create-private-ip-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Secondary IPv4 addresses to assign.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--bulk-create-private-ip-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A secondary IPv4 address to assign.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to assign the private IPs to. The VNIC and private IPs must be in the same subnet.""")
 @cli_util.option('--vlan-id', help=u"""Use this attribute only with the Oracle Cloud VMware Solution. The [OCID] of the VLAN from which the private IPs is to be drawn. The IP addresses, *if supplied*, must be valid for the given VLAN. See [Vlan].""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the private IPs is to be drawn. The IP addresses, *if supplied*, must be valid for the given subnet.""")
@@ -1329,10 +1329,10 @@ def bulk_create_private_ips(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@ipv6_group.command(name=cli_util.override('virtual_network.bulk_delete_ipv6s.command_name', 'bulk-delete'), help=u"""Unassigns and deletes IPv6s for a VNIC. \n[Command Reference](bulkDeleteIpv6s)""")
-@cli_util.option('--bulk-delete-ipv6s-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""IPv6 addresses to deleted.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@ipv6_group.command(name=cli_util.override('virtual_network.bulk_delete_ipv6s.command_name', 'bulk-delete'), help=u"""Unassign and delete IPv6s for a VNIC in bulk. \n[Command Reference](bulkDeleteIpv6s)""")
+@cli_util.option('--bulk-delete-ipv6s-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An IPv6 address to delete.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to assign the IPv6s to. The IPv6 will be in the VNIC's subnet.""")
-@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the IPv6s addresses are to be deleted.""")
+@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the IPv6s addresses are deleted.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1398,8 +1398,8 @@ def bulk_delete_ipv6s(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@private_ip_group.command(name=cli_util.override('virtual_network.bulk_delete_private_ips.command_name', 'bulk-delete'), help=u"""Unassigns and deletes secondary private IPv4s for a VNIC. \n[Command Reference](bulkDeletePrivateIps)""")
-@cli_util.option('--bulk-delete-private-ip-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Secondary IPv4 addresses to deleted""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@private_ip_group.command(name=cli_util.override('virtual_network.bulk_delete_private_ips.command_name', 'bulk-delete'), help=u"""Unassign and delete secondary private IPv4s for a VNIC. \n[Command Reference](bulkDeletePrivateIps)""")
+@cli_util.option('--bulk-delete-private-ip-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A secondary IPv4 address to delete.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC of which private IPs should be deleted. The VNIC and private IPs must be in the same subnet.""")
 @cli_util.option('--vlan-id', help=u"""Use this attribute only with the Oracle Cloud VMware Solution. The [OCID] of the VLAN from which the private IP is to be deleted.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the private IPs is to be deleted.""")
@@ -1498,9 +1498,9 @@ def bulk_delete_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_
     cli_util.render_response(result, ctx)
 
 
-@ipv6_group.command(name=cli_util.override('virtual_network.bulk_detach_ipv6s.command_name', 'bulk-detach'), help=u"""detach the specified IPv6s. \n[Command Reference](bulkDetachIpv6s)""")
-@cli_util.option('--bulk-detach-ipv6s-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Secondary IPv6 addresses to detached.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC of which IPv6s should be detached. The VNIC and IPv6s must be in the same subnet.""")
+@ipv6_group.command(name=cli_util.override('virtual_network.bulk_detach_ipv6s.command_name', 'bulk-detach'), help=u"""Detach the specified IPv6s. \n[Command Reference](bulkDetachIpv6s)""")
+@cli_util.option('--bulk-detach-ipv6s-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A secondary IPv6 address to detach.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC from which multiple IPv6s should be detached. The VNIC and IPv6s must be in the same subnet.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1563,8 +1563,8 @@ def bulk_detach_ipv6s(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@private_ip_group.command(name=cli_util.override('virtual_network.bulk_detach_private_ips.command_name', 'bulk-detach'), help=u"""Unassign the specified PrivateIP address from Virtual Network Interface Card (VNIC). You must specify the PrivateIP [OCID]. \n[Command Reference](bulkDetachPrivateIps)""")
-@cli_util.option('--bulk-detach-private-ip-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Secondary IPv4 addresses to detached.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@private_ip_group.command(name=cli_util.override('virtual_network.bulk_detach_private_ips.command_name', 'bulk-detach'), help=u"""Unassign the specified private IP addresses from the Virtual Network Interface Card (VNIC). You must specify the PrivateIP object's [OCID]. \n[Command Reference](bulkDetachPrivateIps)""")
+@cli_util.option('--bulk-detach-private-ip-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Secondary IPv4 addresses to detach.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC of which private IPs should be detached. The VNIC and private IPs must be in the same subnet.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1628,8 +1628,8 @@ def bulk_detach_private_ips(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@ipv6_group.command(name=cli_util.override('virtual_network.bulk_update_ipv6s.command_name', 'bulk-update'), help=u"""Updates the specified IPv6s. \n[Command Reference](bulkUpdateIpv6s)""")
-@cli_util.option('--bulk-update-ipv6s-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Secondary IPv6 addresses to updated.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@ipv6_group.command(name=cli_util.override('virtual_network.bulk_update_ipv6s.command_name', 'bulk-update'), help=u"""Updates the specified IPv6s in bulk. \n[Command Reference](bulkUpdateIpv6s)""")
+@cli_util.option('--bulk-update-ipv6s-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A secondary IPv6 address to update.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to move the IPv6s to. The VNIC and IPv6s must be in the same subnet.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1693,8 +1693,8 @@ def bulk_update_ipv6s(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@private_ip_group.command(name=cli_util.override('virtual_network.bulk_update_private_ips.command_name', 'bulk-update'), help=u"""Updates existing secondary Private IPv4s for a VNIC. \n[Command Reference](bulkUpdatePrivateIps)""")
-@cli_util.option('--bulk-update-private-ip-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Secondary IPv4 addresses to updated.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@private_ip_group.command(name=cli_util.override('virtual_network.bulk_update_private_ips.command_name', 'bulk-update'), help=u"""Update existing secondary private IPv4s for a VNIC. \n[Command Reference](bulkUpdatePrivateIps)""")
+@cli_util.option('--bulk-update-private-ip-item', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A secondary IPv4 address to update.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to reassign the private IPs to. The VNIC and private IPs must be in the same subnet.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -4916,7 +4916,11 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""[Security attributes] are labels for a resource that can be referenced in a [Zero Trust Packet Routing] (ZPR) policy to control access to ZPR-supported resources.
 
 Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\"mode\":\"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-ipv6-enabled', type=click.BOOL, help=u"""Whether IPv6 is enabled for the VCN. Default is `false`. If enabled, Oracle will assign the VCN a IPv6 /56 CIDR block. You may skip having Oracle allocate the VCN a IPv6 /56 CIDR block by setting isOracleGuaAllocationEnabled to `false`. For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
+@cli_util.option('--is-ipv6-enabled', type=click.BOOL, help=u"""Whether IPv6 is enabled for the VCN. Default is `false`. If enabled, Oracle will assign the VCN a IPv6 /56 CIDR block.
+
+You may skip having Oracle allocate the VCN a IPv6 /56 CIDR block by setting isOracleGuaAllocationEnabled to `false`.
+
+For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
 
 Example: `true`""")
 @cli_util.option('--is-zpr-only', type=click.BOOL, help=u"""Indicates whether ZPR Only mode is enforced.""")
@@ -5035,7 +5039,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--gateway-id', help=u"""For private virtual circuits only. The [OCID] of the [dynamic routing gateway (DRG)] that this virtual circuit uses.""")
 @cli_util.option('--provider-name', help=u"""Deprecated. Instead use `providerServiceId`. To get a list of the provider names, see [ListFastConnectProviderServices].""")
 @cli_util.option('--provider-service-id', help=u"""The [OCID] of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see [ListFastConnectProviderServices].""")
-@cli_util.option('--provider-service-key-name', help=u"""The service key name offered by the provider (if the customer is connecting via a provider).""")
+@cli_util.option('--provider-service-key-name', help=u"""The service key name or activation key offered by the provider (if the customer is connecting via a provider).""")
 @cli_util.option('--provider-service-name', help=u"""Deprecated. Instead use `providerServiceId`. To get a list of the provider names, see [ListFastConnectProviderServices].""")
 @cli_util.option('--public-prefixes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""For a public virtual circuit. The public IP prefixes (CIDRs) the customer wants to advertise across the connection.
 
@@ -15228,7 +15232,9 @@ If the VNIC belongs to a VLAN as part of the Oracle Cloud VMware Solution (inste
 For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--skip-source-dest-check', type=click.BOOL, help=u"""Whether the source/destination check is disabled on the VNIC. Defaults to `false`, which means the check is performed. For information about why you would skip the source/destination check, see [Using a Private IP as a Route Target].
 
-If the VNIC belongs to a VLAN as part of the Oracle Cloud VMware Solution (instead of belonging to a subnet), the value of the `skipSourceDestCheck` attribute is ignored. This is because the source/destination check is always disabled for VNICs in a VLAN. Example: `true`""")
+If the VNIC belongs to a VLAN as part of the Oracle Cloud VMware Solution (instead of belonging to a subnet), the value of the `skipSourceDestCheck` attribute is ignored. This is because the source/destination check is always disabled for VNICs in a VLAN.
+
+Example: `true`""")
 @cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Per-resource Routing].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)

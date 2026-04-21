@@ -237,7 +237,7 @@ def add_connection_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -365,7 +365,7 @@ def add_deployment_local_peer(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
 @cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -553,7 +553,7 @@ def cancel_deployment_backup_default_cancel_deployment_backup_details(ctx, from_
 @cli_util.option('--deployment-upgrade-id', required=True, help=u"""A unique Deployment Upgrade identifier.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The type of a deploymentUpgrade cancel.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state WAITING --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -609,7 +609,7 @@ def cancel_deployment_upgrade(ctx, from_json, wait_for_state, max_wait_seconds, 
 @deployment_upgrade_group.command(name=cli_util.override('goldengate.cancel_deployment_upgrade_default_cancel_deployment_upgrade_details.command_name', 'cancel-deployment-upgrade-default-cancel-deployment-upgrade-details'), help=u"""Cancels a DeploymentUpgrade, applicable only for DeploymentUpgrade in Waiting state. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](cancelDeploymentUpgrade)""")
 @cli_util.option('--deployment-upgrade-id', required=True, help=u"""A unique Deployment Upgrade identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state WAITING --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1582,9 +1582,6 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server. The supported file formats are .pem and .crt. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--ssl-key', help=u"""The base64 encoded private key of the PostgreSQL server. The supported file formats are .pem and .crt. Deprecated: This field is deprecated and replaced by \"sslKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the private key of the PostgreSQL server. The supported file formats are .pem and .crt. Note: When provided, 'sslKey' field must not be provided.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
-
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--db-system-id', help=u"""The [OCID] of the database system being referenced.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1594,7 +1591,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_postgresql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, username, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, host, port, password, password_secret_id, additional_attributes, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, ssl_key_secret_id, private_ip, db_system_id):
+def create_connection_create_postgresql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, username, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, host, port, password, password_secret_id, additional_attributes, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, ssl_key_secret_id, db_system_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1679,9 +1676,6 @@ def create_connection_create_postgresql_connection_details(ctx, from_json, wait_
     if ssl_key_secret_id is not None:
         _details['sslKeySecretId'] = ssl_key_secret_id
 
-    if private_ip is not None:
-        _details['privateIp'] = private_ip
-
     if db_system_id is not None:
         _details['dbSystemId'] = db_system_id
 
@@ -1762,9 +1756,6 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the kafka Ssl KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--ssl-key-password', help=u"""The password for the cert inside the KeyStore. In case it differs from the KeyStore password, it should be provided. Deprecated: This field is deprecated and replaced by \"sslKeyPasswordSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-password-secret-id', help=u"""The [OCID] of the Secret that stores the password for the cert inside the KeyStore. In case it differs from the KeyStore password, it should be provided. Note: When provided, 'sslKeyPassword' field must not be provided.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
-
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1773,7 +1764,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_kafka_schema_registry_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, url, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, private_ip):
+def create_connection_create_kafka_schema_registry_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, url, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1863,9 +1854,6 @@ def create_connection_create_kafka_schema_registry_connection_details(ctx, from_
     if ssl_key_password_secret_id is not None:
         _details['sslKeyPasswordSecretId'] = ssl_key_password_secret_id
 
-    if private_ip is not None:
-        _details['privateIp'] = private_ip
-
     _details['connectionType'] = 'KAFKA_SCHEMA_REGISTRY'
 
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
@@ -1940,9 +1928,6 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file containing the server public key (for 1-way SSL).""")
 @cli_util.option('--should-validate-server-certificate', type=click.BOOL, help=u"""If set to true, the driver validates the certificate that is sent by the database server.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
-
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1951,7 +1936,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_microsoft_sqlserver_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, host, port, username, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, password, password_secret_id, additional_attributes, ssl_ca, should_validate_server_certificate, private_ip):
+def create_connection_create_microsoft_sqlserver_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, host, port, username, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, password, password_secret_id, additional_attributes, ssl_ca, should_validate_server_certificate):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2019,9 +2004,6 @@ def create_connection_create_microsoft_sqlserver_connection_details(ctx, from_js
 
     if should_validate_server_certificate is not None:
         _details['shouldValidateServerCertificate'] = should_validate_server_certificate
-
-    if private_ip is not None:
-        _details['privateIp'] = private_ip
 
     _details['connectionType'] = 'MICROSOFT_SQLSERVER'
 
@@ -3098,6 +3080,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--endpoint-parameterconflict', help=u"""A legal URL to connect to Google Cloud Storage including scheme, server name and port (if not the default port). Default: https://storage.googleapis.com""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google Cloud Storage. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google Cloud Storage. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3108,7 +3091,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_google_cloud_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, service_account_key_file, service_account_key_file_secret_id):
+def create_connection_create_google_cloud_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, endpoint_parameterconflict, service_account_key_file, service_account_key_file_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3156,6 +3139,9 @@ def create_connection_create_google_cloud_storage_connection_details(ctx, from_j
 
     if security_attributes is not None:
         _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
+
+    if endpoint_parameterconflict is not None:
+        _details['endpoint'] = endpoint_parameterconflict
 
     if service_account_key_file is not None:
         _details['serviceAccountKeyFile'] = service_account_key_file
@@ -3229,7 +3215,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--cluster-id', help=u"""The [OCID] of the Kafka cluster being referenced from OCI Streaming with Apache Kafka.""")
 @cli_util.option('--bootstrap-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Kafka bootstrap. Equivalent of bootstrap.servers configuration property in Kafka: list of KafkaBootstrapServer objects specified by host/port. Used for establishing the initial connection to the Kafka cluster. Example: `\"server1.example.com:9092,server2.example.com:9092\"`
 
-This option is a JSON list with items of type KafkaBootstrapServer.  For documentation on KafkaBootstrapServer please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/goldengate/20200407/datatypes/KafkaBootstrapServer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type CreateKafkaBootstrapServer.  For documentation on CreateKafkaBootstrapServer please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/goldengate/20200407/datatypes/CreateKafkaBootstrapServer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--security-protocol', help=u"""Security Type for Kafka.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. Deprecated: This field is deprecated and replaced by \"passwordSecretId\". This field will be removed after February 15 2026.""")
@@ -3250,10 +3236,10 @@ This option is a JSON list with items of type KafkaBootstrapServer.  For documen
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'bootstrap-servers': {'module': 'golden_gate', 'class': 'list[KafkaBootstrapServer]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'bootstrap-servers': {'module': 'golden_gate', 'class': 'list[CreateKafkaBootstrapServer]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'bootstrap-servers': {'module': 'golden_gate', 'class': 'list[KafkaBootstrapServer]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'bootstrap-servers': {'module': 'golden_gate', 'class': 'list[CreateKafkaBootstrapServer]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
 def create_connection_create_kafka_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, stream_pool_id, cluster_id, bootstrap_servers, security_protocol, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, consumer_properties, producer_properties, should_use_resource_principal):
 
@@ -3605,9 +3591,6 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--ssl-key-password', help=u"""The password for the cert inside of the KeyStore. In case it differs from the KeyStore password, it should be provided. Deprecated: This field is deprecated and replaced by \"sslKeyPasswordSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-password-secret-id', help=u"""The [OCID] of the Secret where the password is stored for the cert inside of the Keystore. In case it differs from the KeyStore password, it should be provided. Note: When provided, 'sslKeyPassword' field must not be provided.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
-
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3616,7 +3599,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_java_message_service_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, should_use_jndi, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, jndi_connection_factory, jndi_provider_url, jndi_initial_context_factory, jndi_security_principal, jndi_security_credentials, jndi_security_credentials_secret_id, connection_url, connection_factory, username, password, password_secret_id, security_protocol, authentication_type, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, private_ip):
+def create_connection_create_java_message_service_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, should_use_jndi, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, jndi_connection_factory, jndi_provider_url, jndi_initial_context_factory, jndi_security_principal, jndi_security_credentials, jndi_security_credentials_secret_id, connection_url, connection_factory, username, password, password_secret_id, security_protocol, authentication_type, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3735,9 +3718,6 @@ def create_connection_create_java_message_service_connection_details(ctx, from_j
     if ssl_key_password_secret_id is not None:
         _details['sslKeyPasswordSecretId'] = ssl_key_password_secret_id
 
-    if private_ip is not None:
-        _details['privateIp'] = private_ip
-
     _details['connectionType'] = 'JAVA_MESSAGE_SERVICE'
 
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
@@ -3800,6 +3780,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--endpoint-parameterconflict', help=u"""A legal URL to connect to BigQuery including scheme, server name and port (if not the default port). Default: https://bigquery.googleapis.com""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google BigQuery. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google BigQuery. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3810,7 +3791,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_google_big_query_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, service_account_key_file, service_account_key_file_secret_id):
+def create_connection_create_google_big_query_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, endpoint_parameterconflict, service_account_key_file, service_account_key_file_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3858,6 +3839,9 @@ def create_connection_create_google_big_query_connection_details(ctx, from_json,
 
     if security_attributes is not None:
         _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
+
+    if endpoint_parameterconflict is not None:
+        _details['endpoint'] = endpoint_parameterconflict
 
     if service_account_key_file is not None:
         _details['serviceAccountKeyFile'] = service_account_key_file
@@ -4245,6 +4229,8 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
 @cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
+@cli_util.option('--private-key-file', help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Deprecated: This field is deprecated and replaced by \"privateKeyFileSecretId\". This field will be removed after February 15 2026.""")
+@cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key. Deprecated: This field is deprecated and replaced by \"privateKeyPassphraseSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--public-key-fingerprint', help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
 @cli_util.option('--should-use-resource-principal', type=click.BOOL, help=u"""Specifies that the user intends to authenticate to the instance using a resource principal. Default: false""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4255,7 +4241,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_oracle_ai_data_platform_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, connection_url, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, tenancy_id, region_parameterconflict, user_id, private_key_file_secret_id, private_key_passphrase_secret_id, public_key_fingerprint, should_use_resource_principal):
+def create_connection_create_oracle_ai_data_platform_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, connection_url, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, tenancy_id, region_parameterconflict, user_id, private_key_file_secret_id, private_key_passphrase_secret_id, private_key_file, private_key_passphrase, public_key_fingerprint, should_use_resource_principal):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4319,6 +4305,12 @@ def create_connection_create_oracle_ai_data_platform_connection_details(ctx, fro
 
     if private_key_passphrase_secret_id is not None:
         _details['privateKeyPassphraseSecretId'] = private_key_passphrase_secret_id
+
+    if private_key_file is not None:
+        _details['privateKeyFile'] = private_key_file
+
+    if private_key_passphrase is not None:
+        _details['privateKeyPassphrase'] = private_key_passphrase
 
     if public_key_fingerprint is not None:
         _details['publicKeyFingerprint'] = public_key_fingerprint
@@ -5251,9 +5243,6 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file containing the client public key (for 2-way SSL). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--ssl-key', help=u"""Client Key - The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL). Deprecated: This field is deprecated and replaced by \"sslKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the Client Key - The content of a .pem or .crt file containing the client private key (for 2-way SSL). Note: When provided, 'sslKey' field must not be provided.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
-
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5266,7 +5255,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_mysql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, username, database_name, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, password, password_secret_id, host, port, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, ssl_key_secret_id, private_ip, additional_attributes, db_system_id):
+def create_connection_create_mysql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, username, database_name, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, password, password_secret_id, host, port, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, ssl_key_secret_id, additional_attributes, db_system_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -5347,9 +5336,6 @@ def create_connection_create_mysql_connection_details(ctx, from_json, wait_for_s
 
     if ssl_key_secret_id is not None:
         _details['sslKeySecretId'] = ssl_key_secret_id
-
-    if private_ip is not None:
-        _details['privateIp'] = private_ip
 
     if additional_attributes is not None:
         _details['additionalAttributes'] = cli_util.parse_json_parameter("additional_attributes", additional_attributes)
@@ -5549,10 +5535,11 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--authentication-mode', help=u"""Authentication mode. It can be provided at creation of Oracle Autonomous Database Serverless connections, when a databaseId is provided. The default value is MTLS.""")
 @cli_util.option('--wallet', help=u"""The wallet contents Oracle GoldenGate uses to make connections to a database. This attribute is expected to be base64 encoded. Deprecated: This field is deprecated and replaced by \"walletSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--wallet-secret-id', help=u"""The [OCID] of the Secret where the wallet file is stored. The wallet contents Oracle GoldenGate uses to make connections to a database. Note: When provided, 'wallet' field must not be provided.""")
-@cli_util.option('--session-mode', help=u"""The mode of the database connection session to be established by the data client. 'REDIRECT' - for a RAC database, 'DIRECT' - for a non-RAC database. Connection to a RAC database involves a redirection received from the SCAN listeners to the database node to connect to. By default the mode would be DIRECT.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
+@cli_util.option('--session-mode', help=u"""Specifies the session mode for the database connection. Use REDIRECT only for RAC databases with SCAN listeners that return IP addresses. For RAC databases with SCAN listeners that return FQDNs, and for all other Oracle database technologies, use DIRECT. In RAC deployments, SCAN listeners redirects a connection to a specific database node, identified by either IP address or FQDN. It is recommended to configure RAC with FQDN-based SCAN listeners.
 
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
+The default is DIRECT, except when databaseId is provided and the discovered database relies on the SCAN listener. In this case, the default is REDIRECT.
+
+Deprecated: Defaulting to the REDIRECT session mode will be removed after March 1, 2027.""")
 @cli_util.option('--database-id', help=u"""The [OCID] of the database being referenced.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5562,7 +5549,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, username, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, password, password_secret_id, connection_string, authentication_mode, wallet, wallet_secret_id, session_mode, private_ip, database_id):
+def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, username, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, password, password_secret_id, connection_string, authentication_mode, wallet, wallet_secret_id, session_mode, database_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -5632,9 +5619,6 @@ def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_
 
     if session_mode is not None:
         _details['sessionMode'] = session_mode
-
-    if private_ip is not None:
-        _details['privateIp'] = private_ip
 
     if database_id is not None:
         _details['databaseId'] = database_id
@@ -5707,9 +5691,6 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--username', help=u"""The username credential existing in the Oracle GoldenGate used to be connected to.""")
 @cli_util.option('--password', help=u"""The password used to connect to the Oracle GoldenGate accessed trough this connection. Deprecated: This field is deprecated and replaced by \"passwordSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored, which is used to connect to the Oracle GoldenGate accessed trough this connection. Note: When provided, 'password' field must not be provided.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
-
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5718,7 +5699,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_golden_gate_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, deployment_id, host, port, username, password, password_secret_id, private_ip):
+def create_connection_create_golden_gate_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes, deployment_id, host, port, username, password, password_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -5784,9 +5765,6 @@ def create_connection_create_golden_gate_connection_details(ctx, from_json, wait
 
     if password_secret_id is not None:
         _details['passwordSecretId'] = password_secret_id
-
-    if private_ip is not None:
-        _details['privateIp'] = private_ip
 
     _details['connectionType'] = 'GOLDENGATE'
 
@@ -6154,7 +6132,11 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--deployment-backup-id', help=u"""The [OCID] of the backup being referenced.""")
-@cli_util.option('--load-balancer-subnet-id', help=u"""The [OCID] of a public subnet in the customer tenancy. Can be provided only for public deployments. If provided, the loadbalancer will be created in this subnet instead of the service tenancy. For backward compatibility, this is an optional property. It will become mandatory for public deployments after October 1, 2024.""")
+@cli_util.option('--load-balancer-subnet-id', help=u"""The [OCID] of a public subnet in the customer tenancy used to host the public load balancer of the deployment.
+
+Rules: - Create: Mandatory when isPublic is true. Must be a public, regional subnet in the same VCN as subnetId. - Update:   - For public deployments, this property must be present and is immutable once set (cannot be changed to a different subnet).   - Legacy exception: a public deployment created without this property may continue to be updated without providing it; once set, it becomes immutable.
+
+Validation: - Must reference a public subnet. - Must be a regional subnet. - Must be in the same VCN as subnetId.""")
 @cli_util.option('--fqdn', help=u"""A three-label Fully Qualified Domain Name (FQDN) for a resource.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-public', type=click.BOOL, help=u"""True if this object is publicly available.""")
@@ -7599,7 +7581,7 @@ def list_connection_assignments(ctx, from_json, all_pages, page_size, compartmen
 
 @connection_group.command(name=cli_util.override('goldengate.list_connections.command_name', 'list'), help=u"""Lists the Connections in the compartment. \n[Command Reference](listConnections)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
-@cli_util.option('--technology-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "GENERIC", "OCI_AUTONOMOUS_DATABASE", "OCI_AUTONOMOUS_JSON_DATABASE", "OCI_CACHE_WITH_REDIS", "OCI_MYSQL", "OCI_OBJECT_STORAGE", "OCI_POSTGRESQL", "OCI_STREAMING", "OCI_STREAMING_WITH_APACHE_KAFKA", "ORACLE_DATABASE", "ORACLE_EXADATA", "ORACLE_EXADATA_DATABASE_AT_AZURE", "ORACLE_AUTONOMOUS_DATABASE_AT_AZURE", "ORACLE_JSON_COLLECTION", "ORACLE_EXADATA_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_AUTONOMOUS_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_EXADATA_DATABASE_AT_AWS", "ORACLE_AUTONOMOUS_DATABASE_AT_AWS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_NOSQL", "ORACLE_REST_DATA_SERVICES", "ORACLE_WEBLOGIC_JMS", "AMAZON_RDS_ORACLE", "AMAZON_RDS_SQLSERVER", "AMAZON_S3", "AMAZON_AURORA_MYSQL", "AMAZON_AURORA_POSTGRESQL", "AMAZON_DOCUMENT_DB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "AMAZON_RDS_MARIADB", "AMAZON_RDS_MYSQL", "AMAZON_RDS_POSTGRESQL", "APACHE_ICEBERG", "APACHE_KAFKA", "AZURE_COSMOS_DB_FOR_MONGODB", "AZURE_COSMOS_DB_FOR_POSTGRESQL", "AZURE_DATA_LAKE_STORAGE", "AZURE_EVENT_HUBS", "AZURE_MYSQL", "AZURE_POSTGRESQL", "AZURE_SQLSERVER_MANAGED_INSTANCE", "AZURE_SQLSERVER_NON_MANAGED_INSTANCE", "AZURE_SYNAPSE_ANALYTICS", "CONFLUENT_KAFKA", "CONFLUENT_SCHEMA_REGISTRY", "DATABRICKS", "DB2_I", "DB2_ZOS", "ELASTICSEARCH", "GOOGLE_ALLOY_DB_FOR_POSTGRESQL", "GOOGLE_BIGQUERY", "GOOGLE_CLOUD_STORAGE", "GOOGLE_CLOUD_SQL_MYSQL", "GOOGLE_CLOUD_SQL_POSTGRESQL", "GOOGLE_CLOUD_SQL_SQLSERVER", "GOOGLE_PUBSUB", "HDFS", "MARIADB", "MICROSOFT_SQLSERVER", "MICROSOFT_FABRIC_LAKEHOUSE", "MICROSOFT_FABRIC_MIRROR", "MONGODB", "MYSQL_SERVER", "MYSQL_HEATWAVE_ON_AZURE", "MYSQL_HEATWAVE_ON_AWS", "POSTGRESQL_SERVER", "REDIS", "SINGLESTOREDB", "SINGLESTOREDB_CLOUD", "SNOWFLAKE"]), multiple=True, help=u"""The array of technology types.""")
+@cli_util.option('--technology-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "GENERIC", "OCI_AUTONOMOUS_DATABASE", "OCI_AUTONOMOUS_JSON_DATABASE", "OCI_CACHE_WITH_REDIS", "OCI_MYSQL", "OCI_OBJECT_STORAGE", "OCI_POSTGRESQL", "OCI_STREAMING", "OCI_STREAMING_WITH_APACHE_KAFKA", "ORACLE_DATABASE", "ORACLE_EXADATA", "ORACLE_EXADATA_DATABASE_AT_AZURE", "ORACLE_AUTONOMOUS_DATABASE_AT_AZURE", "ORACLE_JSON_COLLECTION", "ORACLE_EXADATA_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_AUTONOMOUS_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_EXADATA_DATABASE_AT_AWS", "ORACLE_AUTONOMOUS_DATABASE_AT_AWS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_NOSQL", "ORACLE_REST_DATA_SERVICES", "ORACLE_WEBLOGIC_JMS", "AMAZON_RDS_ORACLE", "AMAZON_RDS_SQLSERVER", "AMAZON_S3", "AMAZON_AURORA_MYSQL", "AMAZON_AURORA_POSTGRESQL", "AMAZON_DOCUMENT_DB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "AMAZON_RDS_MARIADB", "AMAZON_RDS_MYSQL", "AMAZON_RDS_POSTGRESQL", "APACHE_ICEBERG", "APACHE_KAFKA", "AZURE_COSMOS_DB_FOR_MONGODB", "AZURE_COSMOS_DB_FOR_POSTGRESQL", "AZURE_DATA_LAKE_STORAGE", "AZURE_EVENT_HUBS", "AZURE_MYSQL", "AZURE_POSTGRESQL", "AZURE_SQLSERVER_MANAGED_INSTANCE", "AZURE_SQLSERVER_NON_MANAGED_INSTANCE", "AZURE_SYNAPSE_ANALYTICS", "CONFLUENT_KAFKA", "CONFLUENT_SCHEMA_REGISTRY", "DATABRICKS", "DB2_I", "DB2_ZOS", "ELASTICSEARCH", "EDB_POSTGRES_ADVANCED_SERVER", "GOOGLE_ALLOY_DB_FOR_POSTGRESQL", "GOOGLE_BIGQUERY", "GOOGLE_CLOUD_STORAGE", "GOOGLE_CLOUD_SQL_MYSQL", "GOOGLE_CLOUD_SQL_POSTGRESQL", "GOOGLE_CLOUD_SQL_SQLSERVER", "GOOGLE_PUBSUB", "HDFS", "MARIADB", "MICROSOFT_SQLSERVER", "MICROSOFT_FABRIC_EVENTSTREAM", "MICROSOFT_FABRIC_LAKEHOUSE", "MICROSOFT_FABRIC_MIRROR", "MONGODB", "MYSQL_SERVER", "MYSQL_HEATWAVE_ON_AZURE", "MYSQL_HEATWAVE_ON_AWS", "POSTGRESQL_SERVER", "REDIS", "SINGLESTOREDB", "SINGLESTOREDB_CLOUD", "SNOWFLAKE", "YUGABYTE_DB"]), multiple=True, help=u"""The array of technology types.""")
 @cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "ICEBERG"]), multiple=True, help=u"""The array of connection types.""")
 @cli_util.option('--assigned-deployment-id', help=u"""The OCID of the deployment which for the connection must be assigned.""")
 @cli_util.option('--assignable-deployment-id', help=u"""Filters for compatible connections which can be, but currently not assigned to the deployment specified by its id.""")
@@ -7735,7 +7717,7 @@ def list_database_registrations(ctx, from_json, all_pages, page_size, compartmen
 @deployment_backup_group.command(name=cli_util.override('goldengate.list_deployment_backups.command_name', 'list'), help=u"""Lists the Backups in a compartment. \n[Command Reference](listDeploymentBackups)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), help=u"""A filter to return only the resources that match the 'lifecycleState' given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the deployment backups having the 'lifecycleState' given.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -7851,7 +7833,7 @@ def list_deployment_environments(ctx, from_json, all_pages, page_size, compartme
 
 @deployment_peer_summary_group.command(name=cli_util.override('goldengate.list_deployment_peers.command_name', 'list-deployment-peers'), help=u"""Lists the local and remote peers in a deployment. \n[Command Reference](listDeploymentPeers)""")
 @cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), help=u"""A filter to return only the resources that match the 'lifecycleState' given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING"]), help=u"""A filter to return only the deployment peers having the 'lifecycleState' given.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -7978,7 +7960,7 @@ def list_deployment_types(ctx, from_json, all_pages, page_size, compartment_id, 
 @deployment_upgrade_group.command(name=cli_util.override('goldengate.list_deployment_upgrades.command_name', 'list'), help=u"""Lists the Deployment Upgrades in a compartment. \n[Command Reference](listDeploymentUpgrades)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), help=u"""A filter to return only the resources that match the 'lifecycleState' given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), help=u"""A filter to return only the deployment upgrades having the 'lifecycleState' given.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -8163,7 +8145,7 @@ def list_deployment_wallets_operations(ctx, from_json, all_pages, page_size, dep
 @cli_util.option('--supported-connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "ICEBERG"]), help=u"""The connection type which the deployment must support.""")
 @cli_util.option('--assigned-connection-id', help=u"""The OCID of the connection which for the deployment must be assigned.""")
 @cli_util.option('--assignable-connection-id', help=u"""Return the deployments to which the specified connectionId may be assigned.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), help=u"""A filter to return only the resources that match the 'lifecycleState' given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only the deployments having the 'lifecycleState' given.""")
 @cli_util.option('--lifecycle-sub-state', type=custom_types.CliCaseInsensitiveChoice(["RECOVERING", "STARTING", "STOPPING", "MOVING", "UPGRADING", "RESTORING", "BACKUP_IN_PROGRESS", "ROLLBACK_IN_PROGRESS"]), help=u"""A filter to return only the resources that match the 'lifecycleSubState' given.""")
 @cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS"]), help=u"""A filter that returns only the resources matching the specified 'deploymentType'.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
@@ -8892,6 +8874,140 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
+@connection_group.command(name=cli_util.override('goldengate.migrate_connection.command_name', 'migrate'), help=u"""Migrate Connection attributes. \n[Command Reference](migrateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SECRET"]), help=u"""The type of a migrate Connection.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def migrate_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, type, if_match, is_lock_override):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.migrate_connection(
+        connection_id=connection_id,
+        migrate_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('goldengate.migrate_connection_secret_migrate_connection_details.command_name', 'migrate-connection-secret-migrate-connection-details'), help=u"""Migrate Connection attributes. \n[Command Reference](migrateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
+@cli_util.option('--secret-compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--vault-id', required=True, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', required=True, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def migrate_connection_secret_migrate_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, secret_compartment_id, vault_id, key_id, if_match, is_lock_override):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['secretCompartmentId'] = secret_compartment_id
+    _details['vaultId'] = vault_id
+    _details['keyId'] = key_id
+
+    _details['type'] = 'SECRET'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.migrate_connection(
+        connection_id=connection_id,
+        migrate_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @pipeline_group.command(name=cli_util.override('goldengate.pause_pipeline.command_name', 'pause'), help=u"""Pauses the pipeline. \n[Command Reference](pausePipeline)""")
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""Type of a pipeline pause. This option applies when pausing a pipeline.""")
@@ -9209,7 +9325,7 @@ def remove_connection_lock(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--deployment-backup-id', required=True, help=u"""A unique DeploymentBackup identifier.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -9329,7 +9445,7 @@ def remove_deployment_local_peer(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -9386,7 +9502,7 @@ def remove_deployment_lock(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--deployment-upgrade-id', required=True, help=u"""A unique Deployment Upgrade identifier.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESCHEDULE_TO_DATE"]), help=u"""The type of a deploymentUpgrade reschedule.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state WAITING --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -9443,7 +9559,7 @@ def reschedule_deployment_upgrade(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--deployment-upgrade-id', required=True, help=u"""A unique Deployment Upgrade identifier.""")
 @cli_util.option('--time-schedule', required=True, type=custom_types.CLI_DATETIME, help=u"""The time of upgrade schedule. The format is defined by [RFC3339], such as `2016-08-25T21:10:29.600Z`.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state WAITING --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -10804,6 +10920,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--endpoint-parameterconflict', help=u"""A legal URL to connect to BigQuery including scheme, server name and port (if not the default port). Default: https://bigquery.googleapis.com""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google BigQuery. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google BigQuery. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -10817,7 +10934,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_connection_update_google_big_query_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, service_account_key_file, service_account_key_file_secret_id, if_match, is_lock_override):
+def update_connection_update_google_big_query_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, endpoint_parameterconflict, service_account_key_file, service_account_key_file_secret_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -10867,6 +10984,9 @@ def update_connection_update_google_big_query_connection_details(ctx, from_json,
 
     if security_attributes is not None:
         _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
+
+    if endpoint_parameterconflict is not None:
+        _details['endpoint'] = endpoint_parameterconflict
 
     if service_account_key_file is not None:
         _details['serviceAccountKeyFile'] = service_account_key_file
@@ -10938,10 +11058,14 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--authentication-mode', help=u"""Authentication mode. It can be provided at creation of Oracle Autonomous Database Serverless connections, when a databaseId is provided. The default value is MTLS.""")
 @cli_util.option('--wallet', help=u"""The wallet contents Oracle GoldenGate uses to make connections to a database. This attribute is expected to be base64 encoded. Deprecated: This field is deprecated and replaced by \"walletSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--wallet-secret-id', help=u"""The [OCID] of the Secret where the wallet file is stored. The wallet contents Oracle GoldenGate uses to make connections to a database. Note: When provided, 'wallet' field must not be provided.""")
-@cli_util.option('--session-mode', help=u"""The mode of the database connection session to be established by the data client. 'REDIRECT' - for a RAC database, 'DIRECT' - for a non-RAC database. Connection to a RAC database involves a redirection received from the SCAN listeners to the database node to connect to. By default the mode would be DIRECT.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
+@cli_util.option('--session-mode', help=u"""Specifies the session mode for the database connection. Use REDIRECT only for RAC databases with SCAN listeners that return IP addresses. For RAC databases with SCAN listeners that return FQDNs, and for all other Oracle database technologies, use DIRECT. In RAC deployments, SCAN listeners redirects a connection to a specific database node, identified by either IP address or FQDN. It is recommended to configure RAC with FQDN-based SCAN listeners.
 
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
+The default is DIRECT, except when databaseId is provided and the discovered database relies on the SCAN listener. In this case, the default is REDIRECT.
+
+Deprecated: Defaulting to the REDIRECT session mode will be removed after March 1, 2027.""")
+@cli_util.option('--private-ip', help=u"""This property is not available when creating connections. For existing deprecated connections having this value set, the value cannot be updated; set it to empty.
+
+For deprecated connections created with this field in the past, either the private IP had to be specified in the connectionString or host field, or the host name had to be resolvable in the target VCN.""")
 @cli_util.option('--database-id', help=u"""The [OCID] of the database being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -11724,6 +11848,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--endpoint-parameterconflict', help=u"""A legal URL to connect to Google Cloud Storage including scheme, server name and port (if not the default port). Default: https://storage.googleapis.com""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google Cloud Storage. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google Cloud Storage. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -11737,7 +11862,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_connection_update_google_cloud_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, service_account_key_file, service_account_key_file_secret_id, if_match, is_lock_override):
+def update_connection_update_google_cloud_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, endpoint_parameterconflict, service_account_key_file, service_account_key_file_secret_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -11787,6 +11912,9 @@ def update_connection_update_google_cloud_storage_connection_details(ctx, from_j
 
     if security_attributes is not None:
         _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
+
+    if endpoint_parameterconflict is not None:
+        _details['endpoint'] = endpoint_parameterconflict
 
     if service_account_key_file is not None:
         _details['serviceAccountKeyFile'] = service_account_key_file
@@ -11857,6 +11985,8 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to. If the user is not provided, backend will default to the user who is calling the API endpoint.""")
 @cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
+@cli_util.option('--private-key-file', help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Deprecated: This field is deprecated and replaced by \"privateKeyFileSecretId\". This field will be removed after February 15 2026.""")
+@cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key. Deprecated: This field is deprecated and replaced by \"privateKeyPassphraseSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--public-key-fingerprint', help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
 @cli_util.option('--should-use-resource-principal', type=click.BOOL, help=u"""Specifies that the user intends to authenticate to the instance using a resource principal. Default: false""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -11870,7 +12000,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_connection_update_oracle_ai_data_platform_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, connection_url, tenancy_id, region_parameterconflict, user_id, private_key_file_secret_id, private_key_passphrase_secret_id, public_key_fingerprint, should_use_resource_principal, if_match, is_lock_override):
+def update_connection_update_oracle_ai_data_platform_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, connection_url, tenancy_id, region_parameterconflict, user_id, private_key_file_secret_id, private_key_passphrase_secret_id, private_key_file, private_key_passphrase, public_key_fingerprint, should_use_resource_principal, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -11938,6 +12068,12 @@ def update_connection_update_oracle_ai_data_platform_connection_details(ctx, fro
 
     if private_key_passphrase_secret_id is not None:
         _details['privateKeyPassphraseSecretId'] = private_key_passphrase_secret_id
+
+    if private_key_file is not None:
+        _details['privateKeyFile'] = private_key_file
+
+    if private_key_passphrase is not None:
+        _details['privateKeyPassphrase'] = private_key_passphrase
 
     if public_key_fingerprint is not None:
         _details['publicKeyFingerprint'] = public_key_fingerprint
@@ -12157,9 +12293,9 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server. The supported file formats are .pem and .crt. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--ssl-key', help=u"""The base64 encoded private key of the PostgreSQL server. The supported file formats are .pem and .crt. Deprecated: This field is deprecated and replaced by \"sslKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the private key of the PostgreSQL server. The supported file formats are .pem and .crt. Note: When provided, 'sslKey' field must not be provided.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
+@cli_util.option('--private-ip', help=u"""This property is not available when creating connections. For existing deprecated connections having this value set, the value cannot be updated; set it to empty.
 
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
+For deprecated connections created with this field in the past, either the private IP had to be specified in the connectionString or host field, or the host name had to be resolvable in the target VCN.""")
 @cli_util.option('--db-system-id', help=u"""The [OCID] of the database system being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -12340,9 +12476,9 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--security-protocol', help=u"""Security Type for Microsoft SQL Server.""")
 @cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file containing the server public key (for 1-way SSL).""")
 @cli_util.option('--should-validate-server-certificate', type=click.BOOL, help=u"""If set to true, the driver validates the certificate that is sent by the database server.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
+@cli_util.option('--private-ip', help=u"""This property is not available when creating connections. For existing deprecated connections having this value set, the value cannot be updated; set it to empty.
 
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
+For deprecated connections created with this field in the past, either the private IP had to be specified in the connectionString or host field, or the host name had to be resolvable in the target VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -13455,9 +13591,9 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--ssl-key-password', help=u"""The password for the cert inside of the KeyStore. In case it differs from the KeyStore password, it should be provided. Deprecated: This field is deprecated and replaced by \"sslKeyPasswordSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-password-secret-id', help=u"""The [OCID] of the Secret where the password is stored for the cert inside of the Keystore. In case it differs from the KeyStore password, it should be provided. Note: When provided, 'sslKeyPassword' field must not be provided.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
+@cli_util.option('--private-ip', help=u"""This property is not available when creating connections. For existing deprecated connections having this value set, the value cannot be updated; set it to empty.
 
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
+For deprecated connections created with this field in the past, either the private IP had to be specified in the connectionString or host field, or the host name had to be resolvable in the target VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -13658,9 +13794,9 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--username', help=u"""The username credential existing in the Oracle GoldenGate used to be connected to.""")
 @cli_util.option('--password', help=u"""The password used to connect to the Oracle GoldenGate accessed trough this connection. Deprecated: This field is deprecated and replaced by \"passwordSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored, which is used to connect to the Oracle GoldenGate accessed trough this connection. Note: When provided, 'password' field must not be provided.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
+@cli_util.option('--private-ip', help=u"""This property is not available when creating connections. For existing deprecated connections having this value set, the value cannot be updated; set it to empty.
 
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
+For deprecated connections created with this field in the past, either the private IP had to be specified in the connectionString or host field, or the host name had to be resolvable in the target VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -14098,9 +14234,9 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the kafka Ssl KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--ssl-key-password', help=u"""The password for the cert inside the KeyStore. In case it differs from the KeyStore password, it should be provided. Deprecated: This field is deprecated and replaced by \"sslKeyPasswordSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-password-secret-id', help=u"""The [OCID] of the Secret that stores the password for the cert inside the KeyStore. In case it differs from the KeyStore password, it should be provided. Note: When provided, 'sslKeyPassword' field must not be provided.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
+@cli_util.option('--private-ip', help=u"""This property is not available when creating connections. For existing deprecated connections having this value set, the value cannot be updated; set it to empty.
 
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
+For deprecated connections created with this field in the past, either the private IP had to be specified in the connectionString or host field, or the host name had to be resolvable in the target VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -14420,9 +14556,9 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file containing the client public key (for 2-way SSL). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--ssl-key', help=u"""Client Key - The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL). Deprecated: This field is deprecated and replaced by \"sslKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the Client Key - The content of a .pem or .crt file containing the client private key (for 2-way SSL). Note: When provided, 'sslKey' field must not be provided.""")
-@cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
+@cli_util.option('--private-ip', help=u"""This property is not available when creating connections. For existing deprecated connections having this value set, the value cannot be updated; set it to empty.
 
-The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
+For deprecated connections created with this field in the past, either the private IP had to be specified in the connectionString or host field, or the host name had to be resolvable in the target VCN.""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -15271,7 +15407,11 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet of the deployment's private endpoint. The subnet must be a private subnet. For backward compatibility, public subnets are allowed until May 31 2025, after which the private subnet will be enforced.""")
-@cli_util.option('--load-balancer-subnet-id', help=u"""The [OCID] of a public subnet in the customer tenancy. Can be provided only for public deployments. If provided, the loadbalancer will be created in this subnet instead of the service tenancy. For backward compatibility, this is an optional property. It will become mandatory for public deployments after October 1, 2024.""")
+@cli_util.option('--load-balancer-subnet-id', help=u"""The [OCID] of a public subnet in the customer tenancy used to host the public load balancer of the deployment.
+
+Rules: - Create: Mandatory when isPublic is true. Must be a public, regional subnet in the same VCN as subnetId. - Update:   - For public deployments, this property must be present and is immutable once set (cannot be changed to a different subnet).   - Legacy exception: a public deployment created without this property may continue to be updated without providing it; once set, it becomes immutable.
+
+Validation: - Must reference a public subnet. - Must be a regional subnet. - Must be in the same VCN as subnetId.""")
 @cli_util.option('--is-public', type=click.BOOL, help=u"""True if this object is publicly available.""")
 @cli_util.option('--fqdn', help=u"""A three-label Fully Qualified Domain Name (FQDN) for a resource.""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The Minimum number of OCPUs to be made available for this Deployment.""")
@@ -15425,7 +15565,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})

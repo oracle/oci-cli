@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('logging_search.logging_search_root_group.command_name', 'logging-search'), cls=CommandGroupWithAlias, help=cli_util.override('logging_search.logging_search_root_group.help', """Search for logs in your compartments, log groups, and log objects."""), short_help=cli_util.override('logging_search.logging_search_root_group.short_help', """Logging Search API"""))
+@cli.command(cli_util.override('logging_search.logging_search_root_group.command_name', 'logging-search'), cls=CommandGroupWithAlias, help=cli_util.override('logging_search.logging_search_root_group.help', """Use the Logging Search API to search for logs in your compartments, log groups, and log objects. For more information, see [Logging Overview]."""), short_help=cli_util.override('logging_search.logging_search_root_group.short_help', """Logging Search API"""))
 @cli_util.help_option_group
 def logging_search_root_group():
     pass
@@ -34,12 +34,12 @@ logging_search_root_group.add_command(search_result_group)
 @search_result_group.command(name=cli_util.override('logging_search.search_logs.command_name', 'search-logs'), help=u"""Submit a query to search logs.
 
 See [Using the API] for SDK examples. \n[Command Reference](searchLogs)""")
-@cli_util.option('--time-start', required=True, type=custom_types.CLI_DATETIME, help=u"""Start filter log's date and time, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', required=True, type=custom_types.CLI_DATETIME, help=u"""End filter log's date and time, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-start', required=True, type=custom_types.CLI_DATETIME, help=u"""Start filter log's date and time, in the format defined by RFC 3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', required=True, type=custom_types.CLI_DATETIME, help=u"""End filter log's date and time, in the format defined by RFC 3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--search-query', required=True, help=u"""Query corresponding to the search operation. This query is parsed and validated before execution and should follow the specification. For more information on the query language specification, see [Logging Query Language Specification].""")
 @cli_util.option('--is-return-field-info', type=click.BOOL, help=u"""Whether to return field schema information for the log stream specified in searchQuery.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a response. Pagination is not supported in this API.""")
-@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"Search\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a response.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"Search\" call. The input value can be null but an empty string will return an error. For important details about how pagination works, see [List Pagination].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

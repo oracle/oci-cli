@@ -1178,7 +1178,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Specifies whether or not nested compartments should be traversed. Defaults to false.""")
 @cli_util.option('--display-name', help=u"""Resource name.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` or `opc-previous-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""When setting the page limit, specifies the maximum number of unfiltered records that can be fetched from the data store in one request. Filtering happens after the records are retrieved. Subsequent pages might include results that match the query criteria.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by (one column only). Default sort order is ascending exception of `timeCreated` and `timeLastModified` columns (descending).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1238,7 +1238,7 @@ def list_log_groups(ctx, from_json, all_pages, page_size, compartment_id, is_com
 @cli_util.option('--log-saved-search-id', help=u"""OCID of the LogSavedSearch.""")
 @cli_util.option('--name', help=u"""Resource name.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` or `opc-previous-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""When setting the page limit, specifies the maximum number of unfiltered records that can be fetched from the data store in one request. Filtering happens after the records are retrieved. Subsequent pages might include results that match the query criteria.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by (one column only). Default sort order is ascending exception of `timeCreated` and `timeLastModified` columns (descending).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1301,7 +1301,7 @@ def list_log_saved_searches(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.option('--display-name', help=u"""Resource name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "INACTIVE", "DELETING", "FAILED"]), help=u"""Lifecycle state of the log object""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` or `opc-previous-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""When setting the page limit, specifies the maximum number of unfiltered records that can be fetched from the data store in one request. Filtering happens after the records are retrieved. Subsequent pages might include results that match the query criteria.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by (one column only). Default sort order is ascending exception of `timeCreated` and `timeLastModified` columns (descending).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1366,15 +1366,18 @@ def list_logs(ctx, from_json, all_pages, page_size, log_group_id, log_type, sour
 
 
 @service_group.command(name=cli_util.override('logging.list_services.command_name', 'list'), help=u"""Lists all services that support logging. \n[Command Reference](listServices)""")
+@cli_util.option('--compartment-id', help=u"""Compartment OCID to list resources in. Please see compartmentIdInSubtree      for nested compartments traversal.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'logging', 'class': 'list[ServiceSummary]'})
 @cli_util.wrap_exceptions
-def list_services(ctx, from_json, all_pages, ):
+def list_services(ctx, from_json, all_pages, compartment_id):
 
     kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('logging', 'logging_management', ctx)
     result = client.list_services(
@@ -1390,7 +1393,7 @@ def list_services(ctx, from_json, all_pages, ):
 @cli_util.option('--group-id', help=u"""The OCID of a group or a dynamic group.""")
 @cli_util.option('--display-name', help=u"""Resource name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "INACTIVE", "DELETING", "FAILED"]), help=u"""Lifecycle state of the log object""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""When setting the page limit, specifies the maximum number of unfiltered records that can be fetched from the data store in one request. Filtering happens after the records are retrieved. Subsequent pages might include results that match the query criteria.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` or `opc-previous-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by (one column only). Default sort order is ascending exception of `timeCreated` and `timeLastModified` columns (descending).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
@@ -1455,7 +1458,7 @@ def list_unified_agent_configurations(ctx, from_json, all_pages, page_size, comp
 @work_request_error_group.command(name=cli_util.override('logging.list_work_request_errors.command_name', 'list'), help=u"""Return a list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The asynchronous request ID.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` or `opc-previous-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""When setting the page limit, specifies the maximum number of unfiltered records that can be fetched from the data store in one request. Filtering happens after the records are retrieved. Subsequent pages might include results that match the query criteria.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1506,7 +1509,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 @work_request_log_group.command(name=cli_util.override('logging.list_work_request_logs.command_name', 'list'), help=u"""Return a list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The asynchronous request ID.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` or `opc-previous-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""When setting the page limit, specifies the maximum number of unfiltered records that can be fetched from the data store in one request. Filtering happens after the records are retrieved. Subsequent pages might include results that match the query criteria.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1559,7 +1562,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), help=u"""Filter results by work request status.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` or `opc-previous-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""When setting the page limit, specifies the maximum number of unfiltered records that can be fetched from the data store in one request. Filtering happens after the records are retrieved. Subsequent pages might include results that match the query criteria.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["operationType", "status", "timeAccepted"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
