@@ -16,13 +16,13 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('logging_ingestion.logging_ingestion_root_group.command_name', 'logging-ingestion'), cls=CommandGroupWithAlias, help=cli_util.override('logging_ingestion.logging_ingestion_root_group.help', """Use the Logging Ingestion API to ingest your application logs."""), short_help=cli_util.override('logging_ingestion.logging_ingestion_root_group.short_help', """Logging Ingestion API"""))
+@cli.command(cli_util.override('logging_ingestion.logging_ingestion_root_group.command_name', 'logging-ingestion'), cls=CommandGroupWithAlias, help=cli_util.override('logging_ingestion.logging_ingestion_root_group.help', """Use the Logging Ingestion API to ingest your application logs. For more information, see [Logging Overview]."""), short_help=cli_util.override('logging_ingestion.logging_ingestion_root_group.short_help', """Logging Ingestion API"""))
 @cli_util.help_option_group
 def logging_ingestion_root_group():
     pass
 
 
-@click.command(cli_util.override('logging_ingestion.log_entry_group.command_name', 'log-entry'), cls=CommandGroupWithAlias, help="""Contains the log content with the associated timestamp and ID. Each entry should be less than 1 MB size.""")
+@click.command(cli_util.override('logging_ingestion.log_entry_group.command_name', 'log-entry'), cls=CommandGroupWithAlias, help="""Contains the log content with the associated timestamp and ID. Each entry should be less than 1 MB size. Any log data field cannot be more than 10,000 characters. If your data exceeds this limit, the field is truncated during ingestion.""")
 @cli_util.help_option_group
 def log_entry_group():
     pass

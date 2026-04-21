@@ -84,7 +84,7 @@ def instance_maintenance_event_group():
     pass
 
 
-@click.command(cli_util.override('compute.compute_gpu_memory_cluster_group.command_name', 'compute-gpu-memory-cluster'), cls=CommandGroupWithAlias, help="""The customer facing object includes GPU memory cluster details.""")
+@click.command(cli_util.override('compute.compute_gpu_memory_cluster_group.command_name', 'compute-gpu-memory-cluster'), cls=CommandGroupWithAlias, help="""The customer facing object includes GPU Memory Cluster details.""")
 @cli_util.help_option_group
 def compute_gpu_memory_cluster_group():
     pass
@@ -110,7 +110,7 @@ def instance_credentials_group():
     pass
 
 
-@click.command(cli_util.override('compute.compute_gpu_memory_cluster_instance_summary_group.command_name', 'compute-gpu-memory-cluster-instance-summary'), cls=CommandGroupWithAlias, help="""The customer facing GPU memory cluster instance object details.""")
+@click.command(cli_util.override('compute.compute_gpu_memory_cluster_instance_summary_group.command_name', 'compute-gpu-memory-cluster-instance-summary'), cls=CommandGroupWithAlias, help="""The customer facing GPU Memory Cluster instance object details.""")
 @cli_util.help_option_group
 def compute_gpu_memory_cluster_instance_summary_group():
     pass
@@ -432,12 +432,15 @@ def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_n
 @compute_host_group.command(name=cli_util.override('compute.apply_host_configuration.command_name', 'apply-host-configuration'), help=u"""Triggers the asynchronous process that applies the host's target configuration \n[Command Reference](applyHostConfiguration)""")
 @cli_util.option('--compute-host-id', required=True, help=u"""The [OCID] of the compute host.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "OCCUPIED", "PROVISIONING", "REPAIR", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state AVAILABLE --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeHost'})
 @cli_util.wrap_exceptions
-def apply_host_configuration(ctx, from_json, compute_host_id, if_match):
+def apply_host_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, if_match):
 
     if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
@@ -451,6 +454,29 @@ def apply_host_configuration(ctx, from_json, compute_host_id, if_match):
         compute_host_id=compute_host_id,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_host') and callable(getattr(client, 'get_compute_host')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_host(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -516,12 +542,15 @@ def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--compute-host-id', required=True, help=u"""The [OCID] of the compute host.""")
 @cli_util.option('--compute-host-group-id', required=True, help=u"""'The [OCID] of the compute host group.'""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "OCCUPIED", "PROVISIONING", "REPAIR", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state AVAILABLE --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeHost'})
 @cli_util.wrap_exceptions
-def attach_compute_host_group_host(ctx, from_json, compute_host_id, compute_host_group_id, if_match):
+def attach_compute_host_group_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, compute_host_group_id, if_match):
 
     if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
@@ -540,6 +569,29 @@ def attach_compute_host_group_host(ctx, from_json, compute_host_id, compute_host
         attach_compute_host_group_host_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_host') and callable(getattr(client, 'get_compute_host')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_host(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1601,12 +1653,15 @@ def change_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds
 @compute_host_group.command(name=cli_util.override('compute.check_host_configuration.command_name', 'check-host-configuration'), help=u"""Marks the host to be checked for conformance to its target configuration \n[Command Reference](checkHostConfiguration)""")
 @cli_util.option('--compute-host-id', required=True, help=u"""The [OCID] of the compute host.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "OCCUPIED", "PROVISIONING", "REPAIR", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state AVAILABLE --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeHost'})
 @cli_util.wrap_exceptions
-def check_host_configuration(ctx, from_json, compute_host_id, if_match):
+def check_host_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, if_match):
 
     if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
@@ -1620,6 +1675,29 @@ def check_host_configuration(ctx, from_json, compute_host_id, if_match):
         compute_host_id=compute_host_id,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_host') and callable(getattr(client, 'get_compute_host')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_host(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2002,12 +2080,12 @@ def create_compute_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.create_compute_gpu_memory_cluster.command_name', 'create'), help=u"""Create a compute GPU memory cluster instance on a specific compute GPU memory fabric \n[Command Reference](createComputeGpuMemoryCluster)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the GPU memory cluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the compute GPU memory cluster. compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the GPU Memory Cluster.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the compute GPU Memory Cluster. compartment.""")
 @cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster.""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""Instance Configuration to be used for this GPU Memory Cluster""")
 @cli_util.option('--gpu-memory-fabric-id', help=u"""The [OCID] of the GPU memory fabric.""")
-@cli_util.option('--size', type=click.INT, help=u"""The number of instances currently running in the GpuMemoryCluster""")
+@cli_util.option('--size', type=click.INT, help=u"""The desired number of instances for the GPU Memory Cluster.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2016,15 +2094,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--gpu-memory-cluster-scale-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-ip-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Unique list of OCIDs for private IPs (IPv4/IPv6) associated with the GPU Memory Cluster""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'gpu-memory-cluster-scale-config': {'module': 'core', 'class': 'CreateComputeGpuMemoryClusterScaleConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'gpu-memory-cluster-scale-config': {'module': 'core', 'class': 'CreateComputeGpuMemoryClusterScaleConfig'}, 'private-ip-ids': {'module': 'core', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'gpu-memory-cluster-scale-config': {'module': 'core', 'class': 'CreateComputeGpuMemoryClusterScaleConfig'}}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'gpu-memory-cluster-scale-config': {'module': 'core', 'class': 'CreateComputeGpuMemoryClusterScaleConfig'}, 'private-ip-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryCluster'})
 @cli_util.wrap_exceptions
-def create_compute_gpu_memory_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, compute_cluster_id, instance_configuration_id, gpu_memory_fabric_id, size, defined_tags, freeform_tags, display_name, gpu_memory_cluster_scale_config):
+def create_compute_gpu_memory_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, compute_cluster_id, instance_configuration_id, gpu_memory_fabric_id, size, defined_tags, freeform_tags, display_name, gpu_memory_cluster_scale_config, private_ip_ids):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2052,6 +2131,9 @@ def create_compute_gpu_memory_cluster(ctx, from_json, wait_for_state, max_wait_s
 
     if gpu_memory_cluster_scale_config is not None:
         _details['gpuMemoryClusterScaleConfig'] = cli_util.parse_json_parameter("gpu_memory_cluster_scale_config", gpu_memory_cluster_scale_config)
+
+    if private_ip_ids is not None:
+        _details['privateIpIds'] = cli_util.parse_json_parameter("private_ip_ids", private_ip_ids)
 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_compute_gpu_memory_cluster(
@@ -4239,6 +4321,28 @@ def get_compute_gpu_memory_fabric(ctx, from_json, compute_gpu_memory_fabric_id):
     cli_util.render_response(result, ctx)
 
 
+@compute_host_group.command(name=cli_util.override('compute.get_compute_host.command_name', 'get'), help=u"""Gets information about the specified compute host \n[Command Reference](getComputeHost)""")
+@cli_util.option('--compute-host-id', required=True, help=u"""The [OCID] of the compute host.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeHost'})
+@cli_util.wrap_exceptions
+def get_compute_host(ctx, from_json, compute_host_id):
+
+    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_compute_host(
+        compute_host_id=compute_host_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @compute_host_group_group.command(name=cli_util.override('compute.get_compute_host_group.command_name', 'get'), help=u"""Gets information about the specified compute host group \n[Command Reference](getComputeHostGroup)""")
 @cli_util.option('--compute-host-group-id', required=True, help=u"""The [OCID] of the compute host group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4256,28 +4360,6 @@ def get_compute_host_group(ctx, from_json, compute_host_group_id):
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_compute_host_group(
         compute_host_group_id=compute_host_group_id,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@compute_host_group.command(name=cli_util.override('compute.get_compute_hosts.command_name', 'get'), help=u"""Gets information about the specified compute host \n[Command Reference](getComputeHosts)""")
-@cli_util.option('--compute-host-id', required=True, help=u"""The [OCID] of the compute host.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeHost'})
-@cli_util.wrap_exceptions
-def get_compute_hosts(ctx, from_json, compute_host_id):
-
-    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
-        raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('core', 'compute', ctx)
-    result = client.get_compute_hosts(
-        compute_host_id=compute_host_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -11697,7 +11779,7 @@ def update_compute_cluster(ctx, from_json, force, wait_for_state, max_wait_secon
 @compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.update_compute_gpu_memory_cluster.command_name', 'update'), help=u"""Updates a compute gpu memory cluster resource. \n[Command Reference](updateComputeGpuMemoryCluster)""")
 @cli_util.option('--compute-gpu-memory-cluster-id', required=True, help=u"""The OCID of the compute GPU memory cluster.""")
 @cli_util.option('--instance-configuration-id', help=u"""Instance Configuration to be used for this GPU Memory Cluster""")
-@cli_util.option('--size', type=click.INT, help=u"""The number of instances currently running in the GpuMemoryCluster""")
+@cli_util.option('--size', type=click.INT, help=u"""The desired number of instances for the GPU Memory Cluster.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -11706,23 +11788,24 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--gpu-memory-cluster-scale-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-ip-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Unique list of OCIDs for private IPs (IPv4/IPv6) associated with the GPU Memory Cluster""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'gpu-memory-cluster-scale-config': {'module': 'core', 'class': 'UpdateComputeGpuMemoryClusterScaleConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'gpu-memory-cluster-scale-config': {'module': 'core', 'class': 'UpdateComputeGpuMemoryClusterScaleConfig'}, 'private-ip-ids': {'module': 'core', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'gpu-memory-cluster-scale-config': {'module': 'core', 'class': 'UpdateComputeGpuMemoryClusterScaleConfig'}}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'gpu-memory-cluster-scale-config': {'module': 'core', 'class': 'UpdateComputeGpuMemoryClusterScaleConfig'}, 'private-ip-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryCluster'})
 @cli_util.wrap_exceptions
-def update_compute_gpu_memory_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_gpu_memory_cluster_id, instance_configuration_id, size, defined_tags, freeform_tags, display_name, gpu_memory_cluster_scale_config, if_match):
+def update_compute_gpu_memory_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_gpu_memory_cluster_id, instance_configuration_id, size, defined_tags, freeform_tags, display_name, gpu_memory_cluster_scale_config, private_ip_ids, if_match):
 
     if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or gpu_memory_cluster_scale_config:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and gpu-memory-cluster-scale-config will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or gpu_memory_cluster_scale_config or private_ip_ids:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and gpu-memory-cluster-scale-config and private-ip-ids will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -11749,6 +11832,9 @@ def update_compute_gpu_memory_cluster(ctx, from_json, force, wait_for_state, max
 
     if gpu_memory_cluster_scale_config is not None:
         _details['gpuMemoryClusterScaleConfig'] = cli_util.parse_json_parameter("gpu_memory_cluster_scale_config", gpu_memory_cluster_scale_config)
+
+    if private_ip_ids is not None:
+        _details['privateIpIds'] = cli_util.parse_json_parameter("private_ip_ids", private_ip_ids)
 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.update_compute_gpu_memory_cluster(
@@ -11862,6 +11948,94 @@ def update_compute_gpu_memory_fabric(ctx, from_json, force, wait_for_state, max_
     cli_util.render_response(result, ctx)
 
 
+@compute_host_group.command(name=cli_util.override('compute.update_compute_host.command_name', 'update'), help=u"""Customer can update the some fields for ComputeHost record \n[Command Reference](updateComputeHost)""")
+@cli_util.option('--compute-host-id', required=True, help=u"""The [OCID] of the compute host.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_compute_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, defined_tags, display_name, freeform_tags, if_match):
+
+    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_compute_host(
+        compute_host_id=compute_host_id,
+        update_compute_host_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @compute_host_group_group.command(name=cli_util.override('compute.update_compute_host_group.command_name', 'update'), help=u"""Updates the specified compute host group details. \n[Command Reference](updateComputeHostGroup)""")
 @cli_util.option('--compute-host-group-id', required=True, help=u"""The [OCID] of the compute host group.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -11945,94 +12119,6 @@ def update_compute_host_group(ctx, from_json, force, wait_for_state, max_wait_se
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
-@compute_host_group.command(name=cli_util.override('compute.update_compute_hosts.command_name', 'update'), help=u"""Customer can update the some fields for ComputeHost record \n[Command Reference](updateComputeHosts)""")
-@cli_util.option('--compute-host-id', required=True, help=u"""The [OCID] of the compute host.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
-
-Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
-@cli_util.wrap_exceptions
-def update_compute_hosts(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, defined_tags, display_name, freeform_tags, if_match):
-
-    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
-        raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
-    if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
-                ctx.abort()
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-
-    if defined_tags is not None:
-        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if display_name is not None:
-        _details['displayName'] = display_name
-
-    if freeform_tags is not None:
-        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    client = cli_util.build_client('core', 'compute', ctx)
-    result = client.update_compute_hosts(
-        compute_host_id=compute_host_id,
-        update_compute_hosts_details=_details,
-        **kwargs
-    )
-    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
-    if wait_for_state:
-
-        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
-                    entity_type = result.data.resources[0].entity_type
-                    identifier = result.data.resources[0].identifier
-                    get_operation = 'get_' + entity_type
-                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
-                        result = getattr(client, get_operation)(identifier)
-
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

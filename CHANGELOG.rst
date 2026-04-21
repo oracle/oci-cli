@@ -6,7 +6,78 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
-3.79.0 - 2026-04-09
+3.80.0 - 2026-04-21
+-------------------
+Added
+~~~~~
+* Database service
+
+    * Support for ASM Diskgroup Resize for CloudVmCluster in the Exadata Database Service on Dedicated Infrastructure
+
+      * ``oci db cloud-vm-cluster create --reco-storage-percentage --sparse-storage-percentage``
+      * ``oci db cloud-vm-cluster update --data-storage-percentage --is-local-backup-enabled --is-sparse-diskgroup-enabled --reco-storage-percentage --sparse-storage-percentage``
+
+    * Support for ASM Diskgroup Resize for VmCluster in the Exadata Database Service on Cloud@Customer
+
+      * ``oci db vm-cluster create --data-storage-percentage --reco-storage-percentage --sparse-storage-percentage``
+      * ``oci db vm-cluster update --data-storage-percentage --is-local-backup-enabled --is-sparse-diskgroup-enabled --reco-storage-percentage --sparse-storage-percentage``
+
+  * Fusion Applications service
+
+    * Support for Email Subdomain, Marketing Brand, and Microsite commands
+
+      * ``oci fusion-apps email-subdomain``
+      * ``oci fusion-apps marketing-brand``
+      * ``oci fusion-apps microsite``
+
+  * GoldenGate service
+
+    * Support for new technology types
+
+      * ``oci goldengate connection create-kafka-connection --technology-type MICROSOFT_FABRIC_EVENTSTREAM``
+      * ``oci goldengate connection create-postgresql-connection --technology-type EDB_POSTGRES_ADVANCED_SERVER``
+      * ``oci goldengate connection create-postgresql-connection --technology-type YUGABYTE_DB``
+
+    * Support for new optional endpoint parameter for Google BigQuery connections
+
+      * ``oci goldengate connection create-google-big-query-connection --endpoint-parameterconflict``
+      * ``oci goldengate connection update-google-big-query-connection --endpoint-parameterconflict``
+
+    * Support for new optional endpoint parameter for Google Cloud Storage connections
+
+      * ``oci goldengate connection create-google-cloud-storage-connection --endpoint-parameterconflict``
+      * ``oci goldengate connection update-google-cloud-storage-connection --endpoint-parameterconflict``
+
+    * Support for migrating Connection Secret details
+      * ``oci goldengate connection migrate``
+      * ``oci goldengate connection migrate-connection-secret-migrate-connection-details``
+
+  * Functions service
+
+    * Support for Application logging configuration
+
+      * ``oci fn application create --logging``
+      * ``oci fn application update --logging``
+
+  * Usage service
+
+    * Support for ``USAGE_ONLY`` queryType
+
+      * ``oci usage-api usage-summary request-summarized-usages --query-type USAGE_ONLY``
+
+  * Compute GPU Memory Cluster service
+
+    * Support for Reserved Private IP Ids
+
+      * ``oci compute compute-gpu-memory-cluster create --private-ip-ids``
+      * ``oci compute compute-gpu-memory-cluster update --private-ip-ids``
+
+Changed
+~~~~~~~
+  - [BREAKING] GoldenGate service: --private-ip is no longer supported for connection creation commands
+
+
+3.79.0 - 2026-04-14
 -------------------
 Added
 ~~~~~
