@@ -5,6 +5,7 @@
 from oci_cli.cli_root import cli
 from oci_cli import cli_session  # noqa: F401,E402
 from oci_cli import cli_setup  # noqa: F401
+from oci_cli import cli_completion  # noqa: F401
 from oci_cli import cli_setup_bootstrap  # noqa: F401
 from oci_cli import raw_request_cli  # noqa: F401
 from interactive import cli_interactive  # noqa: F401
