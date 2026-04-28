@@ -36,15 +36,13 @@ redis_identity_root_group.add_command(create_identity_token_details_group)
 @cli_util.option('--public-key', required=True, help=u"""User public key pair""")
 @cli_util.option('--redis-user', required=True, help=u"""Redis User generating identity token.""")
 @cli_util.option('--redis-cluster-id', required=True, help=u"""The [OCID] of the cluster.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'redis', 'class': 'IdentityTokenDetailsResponse'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'redis', 'class': 'IdentityTokenDetailsResponse'})
 @cli_util.wrap_exceptions
-def create_identity_token(ctx, from_json, public_key, redis_user, redis_cluster_id, freeform_tags, defined_tags, if_match):
+def create_identity_token(ctx, from_json, public_key, redis_user, redis_cluster_id, if_match):
 
     if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
@@ -57,12 +55,6 @@ def create_identity_token(ctx, from_json, public_key, redis_user, redis_cluster_
     _details = {}
     _details['publicKey'] = public_key
     _details['redisUser'] = redis_user
-
-    if freeform_tags is not None:
-        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if defined_tags is not None:
-        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('redis', 'redis_identity', ctx)
     result = client.create_identity_token(

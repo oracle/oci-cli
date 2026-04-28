@@ -489,6 +489,10 @@ def set_request_session_properties_from_context(session, ctx, uses_ssl=True):
 
 
 def build_raw_requests_session(ctx):
+
+    if 'OCI_CLI_USE_INSTANCE_METADATA_SERVICE' in os.environ:
+        oci.regions.enable_instance_metadata_service()
+
     config_and_signer = create_config_and_signer_based_on_click_context(ctx)
     signer = config_and_signer.signer
     client_config = config_and_signer.config

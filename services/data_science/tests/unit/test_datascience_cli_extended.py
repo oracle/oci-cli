@@ -54,3 +54,14 @@ class TestDatascienceCLI(unittest.TestCase):
         result = util.invoke_command(['data-science', 'job', 'create-job-artifact'])
         tokens = re.split('[ .]', result.output)
         assert '--job-artifact-file' in tokens
+
+    def test_ds_private_endpoint_resource_type_choices(self):
+        create_result = util.invoke_command(['data-science', 'ds-private-endpoint', 'create'])
+        assert '--ds-resource-type' in create_result.output
+        create_result_2 = util.invoke_command([
+            'data-science', 'ds-private-endpoint', 'create',
+            '-c', 'ocid.loremipsum',
+            '--ds-resource-type', 'WRONGVALUE'
+        ])
+        assert 'MODEL_DEPLOYMENT' in create_result_2.output
+        assert 'NOTEBOOK_SESSION' in create_result_2.output

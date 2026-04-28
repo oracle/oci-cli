@@ -543,7 +543,7 @@ def change_data_science_private_endpoint_compartment_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(datascience_cli.create_data_science_private_endpoint, params_to_exclude=['data_science_resource_type'])
 @datascience_cli.data_science_private_endpoint_group.command(name=datascience_cli.create_data_science_private_endpoint.name, help=datascience_cli.create_data_science_private_endpoint.help)
-@cli_util.option('--ds-resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION"]), help=u"""Data Science resource type. [required]""")
+@cli_util.option('--ds-resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION", "MODEL_DEPLOYMENT"]), help=u"""Data Science resource type. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_science', 'class': 'list[string]'}}, output_type={'module': 'data_science', 'class': 'DataSciencePrivateEndpoint'})
 @cli_util.wrap_exceptions
@@ -588,7 +588,7 @@ def get_data_science_private_endpoint_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(datascience_cli.list_data_science_private_endpoints, params_to_exclude=['data_science_resource_type'])
 @datascience_cli.data_science_private_endpoint_group.command(name=datascience_cli.list_data_science_private_endpoints.name, help=datascience_cli.list_data_science_private_endpoints.help)
-@cli_util.option('--ds-resource-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION"]), help=u"""Resource types in the Data Science service such as notebooks.""")
+@cli_util.option('--ds-resource-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION", "MODEL_DEPLOYMENT"]), help=u"""Resource types in the Data Science service such as notebooks.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[DataSciencePrivateEndpointSummary]'})
 @cli_util.wrap_exceptions

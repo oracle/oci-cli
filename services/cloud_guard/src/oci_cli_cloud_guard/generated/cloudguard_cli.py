@@ -1300,7 +1300,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-source-details-query', help=u"""The continuous query expression that is run periodically.""")
 @cli_util.option('--data-source-details-description', help=u"""Description text for the query""")
-@cli_util.option('--data-source-details-interval-in-seconds', type=click.INT, help=u"""Interval in minutes which query is run periodically.""")
+@cli_util.option('--data-source-details-interval-in-seconds', type=click.INT, help=u"""Interval in seconds which query is run periodically.""")
 @cli_util.option('--data-source-details-scheduled-query-scope-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Target information in which scheduled query will be run
 
 This option is a JSON list with items of type ScheduledQueryScopeDetail.  For documentation on ScheduledQueryScopeDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/cloudguard/20200131/datatypes/ScheduledQueryScopeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1393,9 +1393,9 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--data-source-details-regions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of logging query regions""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-source-details-query', help=u"""The continuous query expression that is run periodicall""")
 @cli_util.option('--data-source-details-interval-in-minutes', type=click.INT, help=u"""Interval in minutes that query is run periodically.""")
-@cli_util.option('--data-source-details-threshold', type=click.INT, help=u"""The integer value that must be exceeded, fall below or equal to (depending on the operator), for the query result to trigger an event""")
+@cli_util.option('--data-source-details-threshold', type=click.INT, help=u"""DEPRECATED - The integer value that must be exceeded, fall below or equal to (depending on the operator), for the query result to trigger an event""")
 @cli_util.option('--data-source-details-query-start-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-source-details-operator', type=custom_types.CliCaseInsensitiveChoice(["EQUAL", "GREATER", "GREATERTHANEQUALTO", "LESS", "LESSTHANEQUALTO"]), help=u"""Operator used in data source""")
+@cli_util.option('--data-source-details-operator', type=custom_types.CliCaseInsensitiveChoice(["EQUAL", "GREATER", "GREATERTHANEQUALTO", "LESS", "LESSTHANEQUALTO"]), help=u"""DEPRECATED - Operator used in data source""")
 @cli_util.option('--data-source-details-logging-query-type', type=custom_types.CliCaseInsensitiveChoice(["INSIGHT"]), help=u"""Type of logging query for data source (Sighting/Insight)""")
 @cli_util.option('--data-source-details-additional-entities-count', type=click.INT, help=u"""The additional entities count used for data source query""")
 @cli_util.option('--data-source-details-logging-query-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1933,6 +1933,7 @@ def create_security_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--security-zone-recipe-id', required=True, help=u"""The OCID of the security zone recipe (`SecurityRecipe` resource) for the security zone""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the security zone""")
 @cli_util.option('--description', help=u"""The security zone's description""")
+@cli_util.option('--is-inheritance-after-delete-enabled', type=click.BOOL, help=u"""Indicates if upon deletion of the security zone the comparment should inherit parent security zone""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1945,7 +1946,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'SecurityZone'})
 @cli_util.wrap_exceptions
-def create_security_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, security_zone_recipe_id, compartment_id, description, freeform_tags, defined_tags):
+def create_security_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, security_zone_recipe_id, compartment_id, description, is_inheritance_after_delete_enabled, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1957,6 +1958,9 @@ def create_security_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if description is not None:
         _details['description'] = description
+
+    if is_inheritance_after_delete_enabled is not None:
+        _details['isInheritanceAfterDeleteEnabled'] = is_inheritance_after_delete_enabled
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -2966,7 +2970,7 @@ def delete_target_responder_recipe(ctx, from_json, target_id, target_responder_r
     cli_util.render_response(result, ctx)
 
 
-@wlp_agent_group.command(name=cli_util.override('cloud_guard.delete_wlp_agent.command_name', 'delete'), help=u"""Deletes and unregisters the WLP agent for an on-premise resource. x-obmcs-splat: routing:   strategy: route-to-any-ad serviceList: [ 'cloudguard-cp-SPLAT_ENV' ] resources:   wlpAgent:     serviceResourceName: WlpAgent     targetCompartmentId: downstream.getOr404('cloudguard-cp-SPLAT_ENV', 'GetWlpAgent', request.resourceId).compartmentId     actionKind: delete     resourceOcid: request.resourceId     reconciliationCanStartAfterSecs: 30     permissions: [ \"WLP_AGENT_DELETE\" ] authorization:   mode: automated   check: resources['wlpAgent'].grantedPermissions.contains('WLP_AGENT_DELETE')   allowCrossTenancy: true tagStore:   mode: automated maximumAttemptCount: 3 throttling:   perUserLimit:     rpsLimit: 15   perTenantLimit:     rpsLimit: 30 quotas:   mode: automated search:   mode: backfilling   operationResourceName: wlpAgent lock:   mode: test   operationResourceName: wlpAgent \n[Command Reference](deleteWlpAgent)""")
+@wlp_agent_group.command(name=cli_util.override('cloud_guard.delete_wlp_agent.command_name', 'delete'), help=u"""Deletes and unregisters the WLP agent for an on-premise resource. \n[Command Reference](deleteWlpAgent)""")
 @cli_util.option('--wlp-agent-id', required=True, help=u"""WLP agent OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -8205,7 +8209,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--data-source-details-query', help=u"""The continuous query expression that is run periodically.""")
 @cli_util.option('--data-source-details-description', help=u"""Description text for the query""")
-@cli_util.option('--data-source-details-interval-in-seconds', type=click.INT, help=u"""Interval in minutes which query is run periodically.""")
+@cli_util.option('--data-source-details-interval-in-seconds', type=click.INT, help=u"""Interval in seconds which query is run periodically.""")
 @cli_util.option('--data-source-details-scheduled-query-scope-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Target information in which scheduled query will be run
 
 This option is a JSON list with items of type ScheduledQueryScopeDetail.  For documentation on ScheduledQueryScopeDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/cloudguard/20200131/datatypes/ScheduledQueryScopeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8309,9 +8313,9 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--data-source-details-regions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of logging query regions""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-source-details-query', help=u"""The continuous query expression that is run periodicall""")
 @cli_util.option('--data-source-details-interval-in-minutes', type=click.INT, help=u"""Interval in minutes that query is run periodically.""")
-@cli_util.option('--data-source-details-threshold', type=click.INT, help=u"""The integer value that must be exceeded, fall below or equal to (depending on the operator), for the query result to trigger an event""")
+@cli_util.option('--data-source-details-threshold', type=click.INT, help=u"""DEPRECATED - The integer value that must be exceeded, fall below or equal to (depending on the operator), for the query result to trigger an event""")
 @cli_util.option('--data-source-details-query-start-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-source-details-operator', type=custom_types.CliCaseInsensitiveChoice(["EQUAL", "GREATER", "GREATERTHANEQUALTO", "LESS", "LESSTHANEQUALTO"]), help=u"""Operator used in data source""")
+@cli_util.option('--data-source-details-operator', type=custom_types.CliCaseInsensitiveChoice(["EQUAL", "GREATER", "GREATERTHANEQUALTO", "LESS", "LESSTHANEQUALTO"]), help=u"""DEPRECATED - Operator used in data source""")
 @cli_util.option('--data-source-details-logging-query-type', type=custom_types.CliCaseInsensitiveChoice(["INSIGHT"]), help=u"""Type of logging query for data source (Sighting/Insight)""")
 @cli_util.option('--data-source-details-additional-entities-count', type=click.INT, help=u"""The additional entities count used for data source query""")
 @cli_util.option('--data-source-details-logging-query-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -9044,6 +9048,7 @@ def update_security_recipe(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.option('--display-name', required=True, help=u"""The security zone's display name""")
 @cli_util.option('--description', help=u"""The security zone's description""")
 @cli_util.option('--security-zone-recipe-id', help=u"""The OCID of the security recipe (`SecurityRecipe` resource) for the security zone""")
+@cli_util.option('--is-inheritance-after-delete-enabled', type=click.BOOL, help=u"""Indicates if upon deletion of the security zone the comparment should inherit parent security zone""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -9058,7 +9063,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'SecurityZone'})
 @cli_util.wrap_exceptions
-def update_security_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_zone_id, display_name, description, security_zone_recipe_id, freeform_tags, defined_tags, if_match):
+def update_security_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_zone_id, display_name, description, security_zone_recipe_id, is_inheritance_after_delete_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(security_zone_id, six.string_types) and len(security_zone_id.strip()) == 0:
         raise click.UsageError('Parameter --security-zone-id cannot be whitespace or empty string')
@@ -9080,6 +9085,9 @@ def update_security_zone(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if security_zone_recipe_id is not None:
         _details['securityZoneRecipeId'] = security_zone_recipe_id
+
+    if is_inheritance_after_delete_enabled is not None:
+        _details['isInheritanceAfterDeleteEnabled'] = is_inheritance_after_delete_enabled
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

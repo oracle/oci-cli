@@ -222,7 +222,7 @@ def change_redis_cluster_compartment(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@redis_cluster_group.command(name=cli_util.override('redis_cluster.create_redis_cluster.command_name', 'create'), help=u"""Creates a new OCI Cache cluster. A cluster is a memory-based storage solution. For more information, see [OCI Cache]. \n[Command Reference](createRedisCluster)""")
+@redis_cluster_group.command(name=cli_util.override('redis_cluster.create_redis_cluster.command_name', 'create'), help=u"""Creates a new OCI Cache cluster. A cluster is a memory-based storage solution. You can optionally initialize the cluster data by restoring from an OCI Cache Backup (backupId) or by importing from Object Storage RDB file(s) (importFromObjectStorageDetails). For more information, see [OCI Cache]. \n[Command Reference](createRedisCluster)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the cluster.""")
 @cli_util.option('--node-count', required=True, type=click.INT, help=u"""The number of nodes per shard in the cluster when clusterMode is SHARDED. This is the total number of nodes when clusterMode is NONSHARDED.""")
@@ -236,17 +236,19 @@ def change_redis_cluster_compartment(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for redis cluster resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--backup-id', help=u"""The ID of the OCI Cache Backup from which this cluster was created.Mutually exclusive with 'importFromObjectStorageDetails'.""")
+@cli_util.option('--import-from-object-storage-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'security-attributes': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'security-attributes': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}, 'import-from-object-storage-details': {'module': 'redis', 'class': 'ImportOciCacheFromObjectStorageDetails'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'security-attributes': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'redis', 'class': 'RedisCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'security-attributes': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}, 'import-from-object-storage-details': {'module': 'redis', 'class': 'ImportOciCacheFromObjectStorageDetails'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'redis', 'class': 'RedisCluster'})
 @cli_util.wrap_exceptions
-def create_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, node_count, software_version, node_memory_in_gbs, subnet_id, oci_cache_config_set_id, cluster_mode, shard_count, nsg_ids, security_attributes, freeform_tags, defined_tags):
+def create_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, node_count, software_version, node_memory_in_gbs, subnet_id, oci_cache_config_set_id, cluster_mode, shard_count, nsg_ids, security_attributes, backup_id, import_from_object_storage_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -273,6 +275,12 @@ def create_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if security_attributes is not None:
         _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
+
+    if backup_id is not None:
+        _details['backupId'] = backup_id
+
+    if import_from_object_storage_details is not None:
+        _details['importFromObjectStorageDetails'] = cli_util.parse_json_parameter("import_from_object_storage_details", import_from_object_storage_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

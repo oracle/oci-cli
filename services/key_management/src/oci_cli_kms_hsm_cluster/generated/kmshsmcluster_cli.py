@@ -126,15 +126,16 @@ def change_hsm_cluster_compartment(ctx, from_json, hsm_cluster_id, compartment_i
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the HSM cluster resource. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--audit-log-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "INITIALIZATION_REQUIRED", "INITIALIZING", "ACTIVATION_REQUIRED", "ACTIVATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state CANCELLING_DELETION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'audit-log-config': {'module': 'key_management', 'class': 'AuditLoggingConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}}, output_type={'module': 'key_management', 'class': 'HsmCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'audit-log-config': {'module': 'key_management', 'class': 'AuditLoggingConfig'}}, output_type={'module': 'key_management', 'class': 'HsmCluster'})
 @cli_util.wrap_exceptions
-def create_hsm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, defined_tags, freeform_tags):
+def create_hsm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, defined_tags, freeform_tags, audit_log_config):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -148,6 +149,9 @@ def create_hsm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if audit_log_config is not None:
+        _details['auditLogConfig'] = cli_util.parse_json_parameter("audit_log_config", audit_log_config)
 
     client = cli_util.build_client('key_management', 'kms_hsm_cluster', ctx)
     result = client.create_hsm_cluster(
@@ -180,6 +184,31 @@ def create_hsm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.disable_audit_mgmt_logging.command_name', 'disable-audit-mgmt-logging'), help=u"""Disables management audit logging for the given HSM Cluster resource. This requires the Crypto Officer (CO) password. This operation is idempotent: if audit logging is already disabled, the call is a no-op and returns success. \n[Command Reference](disableAuditMgmtLogging)""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_audit_mgmt_logging(ctx, from_json, hsm_cluster_id, if_match):
+
+    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('key_management', 'kms_hsm_cluster', ctx)
+    result = client.disable_audit_mgmt_logging(
+        hsm_cluster_id=hsm_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.download_certificate_signing_request.command_name', 'download-certificate-signing-request'), help=u"""Retrieves the certificate signing request for the designated HSM Cluster resource. \n[Command Reference](downloadCertificateSigningRequest)""")
 @cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -199,6 +228,31 @@ def download_certificate_signing_request(ctx, from_json, hsm_cluster_id, if_matc
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('key_management', 'kms_hsm_cluster', ctx)
     result = client.download_certificate_signing_request(
+        hsm_cluster_id=hsm_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.enable_audit_mgmt_logging.command_name', 'enable-audit-mgmt-logging'), help=u"""Validates that the Dynamic Group and bucket policy supplied during EnableAuditLogging / CreateHsmCluster are now in place. If the cluster is in WAITING_FOR_CUSTOMER, and validation is successful, status is progressed and a work request is started. If the cluster has already progressed past that gate, the call is idempotent and returns 202 with the current cluster representation. \n[Command Reference](enableAuditMgmtLogging)""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'EnableAuditMgmtLogging'})
+@cli_util.wrap_exceptions
+def enable_audit_mgmt_logging(ctx, from_json, hsm_cluster_id, if_match):
+
+    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('key_management', 'kms_hsm_cluster', ctx)
+    result = client.enable_audit_mgmt_logging(
         hsm_cluster_id=hsm_cluster_id,
         **kwargs
     )
@@ -273,6 +327,41 @@ def get_pre_co_user_credentials(ctx, from_json, hsm_cluster_id):
     client = cli_util.build_client('key_management', 'kms_hsm_cluster', ctx)
     result = client.get_pre_co_user_credentials(
         hsm_cluster_id=hsm_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.initiate_audit_logging.command_name', 'initiate-audit-logging'), help=u"""Initiates the process of enabling audit logs for a HSM cluster resource by taking in the required parameters. \n[Command Reference](initiateAuditLogging)""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
+@cli_util.option('--bucket-name', required=True, help=u"""The bucket name to which audit logs will be stored.""")
+@cli_util.option('--namespace', required=True, help=u"""The namespace under bucket to which audit logs will be stored.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartmentId [OCID] under namespace to which audit logs will be stored.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'AuditLogging'})
+@cli_util.wrap_exceptions
+def initiate_audit_logging(ctx, from_json, hsm_cluster_id, bucket_name, namespace, compartment_id, if_match):
+
+    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['bucketName'] = bucket_name
+    _details['namespace'] = namespace
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('key_management', 'kms_hsm_cluster', ctx)
+    result = client.initiate_audit_logging(
+        hsm_cluster_id=hsm_cluster_id,
+        initiate_audit_logging_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -450,6 +539,41 @@ def schedule_hsm_cluster_deletion(ctx, from_json, wait_for_state, max_wait_secon
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.update_audit_logging_destination.command_name', 'update-audit-logging-destination'), help=u"""update bucket details of management audit logs for a HSM cluster resource by hsmClusterId. \n[Command Reference](updateAuditLoggingDestination)""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
+@cli_util.option('--bucket-name', required=True, help=u"""The bucket name to which audit logs will be stored.""")
+@cli_util.option('--namespace', required=True, help=u"""The namespace under bucket to which audit logs will be stored.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartmentId [OCID] under namespace to which audit logs will be stored.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'AuditLogging'})
+@cli_util.wrap_exceptions
+def update_audit_logging_destination(ctx, from_json, hsm_cluster_id, bucket_name, namespace, compartment_id, if_match):
+
+    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['bucketName'] = bucket_name
+    _details['namespace'] = namespace
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('key_management', 'kms_hsm_cluster', ctx)
+    result = client.update_audit_logging_destination(
+        hsm_cluster_id=hsm_cluster_id,
+        update_audit_logging_destination_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
