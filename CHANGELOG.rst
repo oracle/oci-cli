@@ -6,6 +6,108 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.81.0 - 2026-04-28
+-------------------
+Added
+~~~~~
+* Support for new optional parameter ``--embed-contents`` in the Generative AI Inference service
+
+  * ``oci generative-ai-inference embed-text-result embed-text --embed-contents``
+
+* Redis service
+
+  * Support for OCI Cache Backup operations in the Redis service
+
+    * ``oci redis oci-cache-backup oci-cache-backup``
+    * ``oci redis oci-cache-backup oci-cache-backup-summary``
+
+  * Support for new optional parameters ``--backup-id`` and ``--import-from-object-storage-details``
+
+    * ``oci redis redis-cluster redis-cluster create --backup-id --import-from-object-storage-details``
+
+* Support for new optional parameter ``--migration-scope`` in the Database Migration service
+
+  * ``oci database-migration assessment create-assessment-create-my-sql-assessment-details --migration-scope``
+  * ``oci database-migration assessment create-assessment-create-oracle-assessment-details --migration-scope``
+  * ``oci database-migration assessment update-assessment-update-my-sql-assessment-details --migration-scope``
+  * ``oci database-migration assessment update-assessment-update-oracle-assessment-details --migration-scope``
+
+* Batch service
+
+  * Support for new optional parameters for improved failure and logging visibility (container creation and failure details)
+
+    * ``oci batch batch-context create-oci-logging-configuration --is-job-task-events-propagation-enabled``
+    * ``oci batch batch-context update --logging-configuration``
+
+  * Support for updating logging configuration
+
+    * ``oci batch batch-context update-oci-logging-configuration``
+
+  * Support for new optional parameters for group tasks (hierarchical task groupings with scoped dependencies)
+
+    * ``oci batch batch-task list --group-task-name, --hierarchy-view, --task-id, --type``
+    * ``oci batch batch-task list-batch-tasks --task-id``
+
+  * Support for new optional parameters for different shape types
+
+    * ``oci batch batch-context-shape-collection list --shape-type``
+    * ``oci batch batch-task-profile create --extended-information, --min-disk-size-in-gbs``
+
+  * Support for creating a batch task profile based on CPU architecture, CPU and GPU shape
+
+    * ``oci batch batch-task-profile create-cpu-architecture``
+    * ``oci batch batch-task-profile create-cpu-shape``
+    * ``oci batch batch-task-profile create-gpu-shape``
+
+* Key Management service
+
+  * Support for new optional parameter ``--audit-log-config``
+
+    * ``oci kms kms-hsm-cluster hsm-cluster create --audit-log-config``
+
+  * Support for Activity Logs in Dedicated KMS
+
+    * ``oci kms kms-hsm-cluster hsm-cluster disable-audit-mgmt-logging``
+    * ``oci kms kms-hsm-cluster hsm-cluster enable-audit-mgmt-logging``
+    * ``oci kms kms-hsm-cluster hsm-cluster initiate-audit-logging``
+    * ``oci kms kms-hsm-cluster hsm-cluster update-audit-logging-destination``
+
+* Support for vanity domain in the Fusion Applications service
+
+  * ``oci fusion-apps vanity-domain``
+  * ``oci fusion-apps vanity-domain-activity``
+
+* Java Management service
+
+  * Support for IPv6 dual stack endpoint in Java Downloads, Utils and Fleet
+
+    * ``oci jms --enable-dual-stack``
+    * ``oci jms-java-downloads --enable-dual-stack``
+    * ``oci jms-utils --enable-dual-stack``
+
+  * Support for new optional parameter ``--jre-security-status`` for listing Java installation usage summaries with JRE security status filter
+
+    * ``oci jms installation-usage summarize --jre-security-status``
+
+* Support for new optional parameter ``--is-inheritance-after-delete-enabled`` in the Cloud Guard service
+
+  * ``oci cloud-guard security-zone update --is-inheritance-after-delete-enabled``
+
+Changed
+~~~~~~~
+* ``--inputs`` is now an optional parameter in the Generative AI Inference service
+
+  * ``oci generative-ai-inference embed-text-result embed-text --inputs``
+
+* [BREAKING] Removed optional parameters ``--defined-tags`` and ``--freeform-tags`` from the Redis service
+
+  * ``oci redis redis-identity create-identity-token-details create-identity-token``
+
+* ``--min-memory-in-gbs`` and ``--min-ocpus`` are now optional parameters in the Batch service
+
+  * ``oci batch batch-task-profile create --min-memory-in-gbs --min-ocpus``
+
+
 3.80.0 - 2026-04-21
 -------------------
 Added

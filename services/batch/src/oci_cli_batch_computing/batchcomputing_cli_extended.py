@@ -18,6 +18,10 @@ cli_util.rename_command(batchcomputing_cli, batchcomputing_cli.batch_context_col
 cli_util.rename_command(batchcomputing_cli, batchcomputing_cli.batch_context_group, batchcomputing_cli.create_batch_context_oci_logging_configuration, "create-oci-logging-configuration")
 
 
+# oci batch batch-context create-batch-context-oci-logging-configuration -> oci batch batch-context create-oci-logging-configuration
+cli_util.rename_command(batchcomputing_cli, batchcomputing_cli.batch_context_group, batchcomputing_cli.update_batch_context_update_oci_logging_configuration, "update-oci-logging-configuration")
+
+
 # oci batch batch-context-shape-collection list-batch-context-shapes -> oci batch batch-context-shape-collection list
 cli_util.rename_command(batchcomputing_cli, batchcomputing_cli.batch_context_shape_collection_group, batchcomputing_cli.list_batch_context_shapes, "list")
 
@@ -73,14 +77,19 @@ batchcomputing_cli.batch_root_group.commands.pop(batchcomputing_cli.batch_job_po
 batchcomputing_cli.batch_job_pool_group.add_command(batchcomputing_cli.list_batch_job_pools)
 
 
-@cli_util.copy_params_from_generated_command(batchcomputing_cli.create_batch_context_oci_logging_configuration, params_to_exclude=['logging_configuration_log_group_id', 'logging_configuration_log_id'])
+@cli_util.copy_params_from_generated_command(batchcomputing_cli.create_batch_context_oci_logging_configuration, params_to_exclude=['logging_configuration_log_group_id', 'logging_configuration_log_id', 'logging_configuration_is_job_task_events_propagation_enabled'])
 @batchcomputing_cli.batch_context_group.command(name=batchcomputing_cli.create_batch_context_oci_logging_configuration.name, help=batchcomputing_cli.create_batch_context_oci_logging_configuration.help)
+@cli_util.option('--is-job-task-events-propagation-enabled', type=click.BOOL, help="""A switch to enable or disable propagation of job and task events to the customer's logs in OCI logging service.""")
 @cli_util.option('--log-group-id', required=True, help=u"""The [OCID] of the log group. [required]""")
 @cli_util.option('--log-id', required=True, help=u"""The [OCID] of the log. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'job-priority-configurations': {'module': 'batch', 'class': 'list[JobPriorityConfiguration]'}, 'network': {'module': 'batch', 'class': 'CreateNetworkDetails'}, 'fleets': {'module': 'batch', 'class': 'list[CreateFleetDetails]'}, 'entitlements': {'module': 'batch', 'class': 'dict(str, integer)'}}, output_type={'module': 'batch', 'class': 'BatchContext'})
 @cli_util.wrap_exceptions
 def create_batch_context_oci_logging_configuration_extended(ctx, **kwargs):
+
+    if 'is_job_task_events_propagation_enabled' in kwargs:
+        kwargs['logging_configuration_is_job_task_events_propagation_enabled'] = kwargs['is_job_task_events_propagation_enabled']
+        kwargs.pop('is_job_task_events_propagation_enabled')
 
     if 'log_group_id' in kwargs:
         kwargs['logging_configuration_log_group_id'] = kwargs['log_group_id']
@@ -91,3 +100,15 @@ def create_batch_context_oci_logging_configuration_extended(ctx, **kwargs):
         kwargs.pop('log_id')
 
     ctx.invoke(batchcomputing_cli.create_batch_context_oci_logging_configuration, **kwargs)
+
+
+# oci batch batch-task-profile create-batch-task-profile-create-cpu-architecture-task-profile-extended-information-details -> oci batch batch-task-profile create-cpu-architecture
+cli_util.rename_command(batchcomputing_cli, batchcomputing_cli.batch_task_profile_group, batchcomputing_cli.create_batch_task_profile_create_cpu_architecture_task_profile_extended_information_details, "create-cpu-architecture")
+
+
+# oci batch batch-task-profile create-batch-task-profile-create-cpu-shape-task-profile-extended-information-details -> oci batch batch-task-profile create-cpu-shape
+cli_util.rename_command(batchcomputing_cli, batchcomputing_cli.batch_task_profile_group, batchcomputing_cli.create_batch_task_profile_create_cpu_shape_task_profile_extended_information_details, "create-cpu-shape")
+
+
+# oci batch batch-task-profile create-batch-task-profile-create-gpu-shape-task-profile-extended-information-details -> oci batch batch-task-profile create-gpu-shape
+cli_util.rename_command(batchcomputing_cli, batchcomputing_cli.batch_task_profile_group, batchcomputing_cli.create_batch_task_profile_create_gpu_shape_task_profile_extended_information_details, "create-gpu-shape")

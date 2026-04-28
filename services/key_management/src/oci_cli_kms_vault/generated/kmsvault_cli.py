@@ -22,6 +22,12 @@ def kms_vault_root_group():
     pass
 
 
+@click.command(cli_util.override('kms_vault.update_registered_vault_for_mtls_details_group.command_name', 'update-registered-vault-for-mtls-details'), cls=CommandGroupWithAlias, help="""The details of the registered mTLS vault that you wish to update.""")
+@cli_util.help_option_group
+def update_registered_vault_for_mtls_details_group():
+    pass
+
+
 @click.command(cli_util.override('kms_vault.vault_usage_group.command_name', 'vault-usage'), cls=CommandGroupWithAlias, help="""The details of the number of Keys and KeyVersions usage in a Vault.""")
 @cli_util.help_option_group
 def vault_usage_group():
@@ -35,6 +41,7 @@ def vault_group():
 
 
 kms_service_cli.kms_service_group.add_command(kms_vault_root_group)
+kms_vault_root_group.add_command(update_registered_vault_for_mtls_details_group)
 kms_vault_root_group.add_command(vault_usage_group)
 kms_vault_root_group.add_command(vault_group)
 
@@ -855,6 +862,37 @@ def schedule_vault_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wa
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@update_registered_vault_for_mtls_details_group.command(name=cli_util.override('kms_vault.update_registered_vault_for_mtls.command_name', 'update-registered-vault-for-mtls'), help=u"""Update fleet ids for the registered mTLS vault. \n[Command Reference](updateRegisteredVaultForMtls)""")
+@cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
+@cli_util.option('--fleet-id', required=True, help=u"""Identifier of the fleet associated with the mTLS connection.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'VaultMtlsUpdateResponse'})
+@cli_util.wrap_exceptions
+def update_registered_vault_for_mtls(ctx, from_json, vault_id, fleet_id, if_match):
+
+    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+        raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['fleetId'] = fleet_id
+
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
+    result = client.update_registered_vault_for_mtls(
+        vault_id=vault_id,
+        update_registered_vault_for_mtls_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

@@ -15,5 +15,6 @@ SDK_client_map = {
     "kms_vault.restore_vault_from_file": "oci.key_management.KmsVaultClient.restore_vault_from_file",
     "kms_vault.restore_vault_from_object_store": "oci.key_management.KmsVaultClient.restore_vault_from_object_store",
     "kms_vault.schedule_vault_deletion": "oci.key_management.KmsVaultClient.schedule_vault_deletion",
+    "kms_vault.update_registered_vault_for_mtls": "oci.key_management.KmsVaultClient.update_registered_vault_for_mtls",
     "kms_vault.update_vault": "oci.key_management.KmsVaultClient.update_vault",
 }

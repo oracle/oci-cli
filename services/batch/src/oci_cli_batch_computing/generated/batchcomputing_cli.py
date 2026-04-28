@@ -616,6 +616,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 This option is a JSON list with items of type JobPriorityConfiguration.  For documentation on JobPriorityConfiguration please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/batchcomputing/20251031/datatypes/JobPriorityConfiguration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entitlements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Mapping of concurrent/shared resources used in job tasks to their limits.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--logging-configuration-is-job-task-events-propagation-enabled', type=click.BOOL, help=u"""A switch to enable or disable propagation of job and task events to the customer's logs in OCI logging service.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -624,7 +625,7 @@ This option is a JSON list with items of type JobPriorityConfiguration.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'job-priority-configurations': {'module': 'batch', 'class': 'list[JobPriorityConfiguration]'}, 'network': {'module': 'batch', 'class': 'CreateNetworkDetails'}, 'fleets': {'module': 'batch', 'class': 'list[CreateFleetDetails]'}, 'entitlements': {'module': 'batch', 'class': 'dict(str, integer)'}}, output_type={'module': 'batch', 'class': 'BatchContext'})
 @cli_util.wrap_exceptions
-def create_batch_context_oci_logging_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, network, fleets, logging_configuration_log_group_id, logging_configuration_log_id, display_name, description, freeform_tags, defined_tags, job_priority_configurations, entitlements):
+def create_batch_context_oci_logging_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, network, fleets, logging_configuration_log_group_id, logging_configuration_log_id, display_name, description, freeform_tags, defined_tags, job_priority_configurations, entitlements, logging_configuration_is_job_task_events_propagation_enabled):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -654,6 +655,9 @@ def create_batch_context_oci_logging_configuration(ctx, from_json, wait_for_stat
 
     if entitlements is not None:
         _details['entitlements'] = cli_util.parse_json_parameter("entitlements", entitlements)
+
+    if logging_configuration_is_job_task_events_propagation_enabled is not None:
+        _details['loggingConfiguration']['isJobTaskEventsPropagationEnabled'] = logging_configuration_is_job_task_events_propagation_enabled
 
     _details['loggingConfiguration']['type'] = 'OCI_LOGGING'
 
@@ -933,10 +937,97 @@ def create_batch_task_environment(ctx, from_json, wait_for_state, max_wait_secon
 
 @batch_task_profile_group.command(name=cli_util.override('batch.create_batch_task_profile.command_name', 'create'), help=u"""Creates a batch task profile. \n[Command Reference](createBatchTaskProfile)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--min-ocpus', required=True, type=click.INT, help=u"""The minimum required OCPUs.""")
-@cli_util.option('--min-memory-in-gbs', required=True, type=click.INT, help=u"""The minimum required memory.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. If not specified or provided as null or empty string, it be generated as \"<resourceType><timeCreated>\", where timeCreated corresponds with the resource creation time in ISO 8601 basic format, i.e. omitting separating punctuation, at second-level precision and no UTC offset. Example: batchtaskprofile20250914115623.""")
 @cli_util.option('--description', help=u"""The batch task profile description.""")
+@cli_util.option('--min-ocpus', type=click.INT, help=u"""The minimum required OCPUs.""")
+@cli_util.option('--min-memory-in-gbs', type=click.INT, help=u"""The minimum required memory.""")
+@cli_util.option('--min-disk-size-in-gbs', type=click.INT, help=u"""The minimum required size of disk space in GBs.""")
+@cli_util.option('--extended-information', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'extended-information': {'module': 'batch', 'class': 'CreateBatchTaskProfileExtendedInformationDetails'}, 'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'extended-information': {'module': 'batch', 'class': 'CreateBatchTaskProfileExtendedInformationDetails'}, 'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}}, output_type={'module': 'batch', 'class': 'BatchTaskProfile'})
+@cli_util.wrap_exceptions
+def create_batch_task_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, min_ocpus, min_memory_in_gbs, min_disk_size_in_gbs, extended_information, defined_tags, freeform_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if min_ocpus is not None:
+        _details['minOcpus'] = min_ocpus
+
+    if min_memory_in_gbs is not None:
+        _details['minMemoryInGBs'] = min_memory_in_gbs
+
+    if min_disk_size_in_gbs is not None:
+        _details['minDiskSizeInGBs'] = min_disk_size_in_gbs
+
+    if extended_information is not None:
+        _details['extendedInformation'] = cli_util.parse_json_parameter("extended_information", extended_information)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('batch', 'batch_computing', ctx)
+    result = client.create_batch_task_profile(
+        create_batch_task_profile_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_batch_task_profile') and callable(getattr(client, 'get_batch_task_profile')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_batch_task_profile(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@batch_task_profile_group.command(name=cli_util.override('batch.create_batch_task_profile_create_gpu_shape_task_profile_extended_information_details.command_name', 'create-batch-task-profile-create-gpu-shape-task-profile-extended-information-details'), help=u"""Creates a batch task profile. \n[Command Reference](createBatchTaskProfile)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--extended-information-shape-name', required=True, help=u"""A name of the GPU shape.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. If not specified or provided as null or empty string, it be generated as \"<resourceType><timeCreated>\", where timeCreated corresponds with the resource creation time in ISO 8601 basic format, i.e. omitting separating punctuation, at second-level precision and no UTC offset. Example: batchtaskprofile20250914115623.""")
+@cli_util.option('--description', help=u"""The batch task profile description.""")
+@cli_util.option('--min-ocpus', type=click.INT, help=u"""The minimum required OCPUs.""")
+@cli_util.option('--min-memory-in-gbs', type=click.INT, help=u"""The minimum required memory.""")
+@cli_util.option('--min-disk-size-in-gbs', type=click.INT, help=u"""The minimum required size of disk space in GBs.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -951,15 +1042,15 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}}, output_type={'module': 'batch', 'class': 'BatchTaskProfile'})
 @cli_util.wrap_exceptions
-def create_batch_task_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, min_ocpus, min_memory_in_gbs, display_name, description, defined_tags, freeform_tags):
+def create_batch_task_profile_create_gpu_shape_task_profile_extended_information_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, extended_information_shape_name, display_name, description, min_ocpus, min_memory_in_gbs, min_disk_size_in_gbs, defined_tags, freeform_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['extendedInformation'] = {}
     _details['compartmentId'] = compartment_id
-    _details['minOcpus'] = min_ocpus
-    _details['minMemoryInGBs'] = min_memory_in_gbs
+    _details['extendedInformation']['shapeName'] = extended_information_shape_name
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -967,11 +1058,194 @@ def create_batch_task_profile(ctx, from_json, wait_for_state, max_wait_seconds, 
     if description is not None:
         _details['description'] = description
 
+    if min_ocpus is not None:
+        _details['minOcpus'] = min_ocpus
+
+    if min_memory_in_gbs is not None:
+        _details['minMemoryInGBs'] = min_memory_in_gbs
+
+    if min_disk_size_in_gbs is not None:
+        _details['minDiskSizeInGBs'] = min_disk_size_in_gbs
+
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    _details['extendedInformation']['type'] = 'GPU_SHAPE_TASK_PROFILE_EXTENDED_INFORMATION'
+
+    client = cli_util.build_client('batch', 'batch_computing', ctx)
+    result = client.create_batch_task_profile(
+        create_batch_task_profile_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_batch_task_profile') and callable(getattr(client, 'get_batch_task_profile')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_batch_task_profile(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@batch_task_profile_group.command(name=cli_util.override('batch.create_batch_task_profile_create_cpu_shape_task_profile_extended_information_details.command_name', 'create-batch-task-profile-create-cpu-shape-task-profile-extended-information-details'), help=u"""Creates a batch task profile. \n[Command Reference](createBatchTaskProfile)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--extended-information-shape-name', required=True, help=u"""A name of the CPU shape.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. If not specified or provided as null or empty string, it be generated as \"<resourceType><timeCreated>\", where timeCreated corresponds with the resource creation time in ISO 8601 basic format, i.e. omitting separating punctuation, at second-level precision and no UTC offset. Example: batchtaskprofile20250914115623.""")
+@cli_util.option('--description', help=u"""The batch task profile description.""")
+@cli_util.option('--min-ocpus', type=click.INT, help=u"""The minimum required OCPUs.""")
+@cli_util.option('--min-memory-in-gbs', type=click.INT, help=u"""The minimum required memory.""")
+@cli_util.option('--min-disk-size-in-gbs', type=click.INT, help=u"""The minimum required size of disk space in GBs.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}}, output_type={'module': 'batch', 'class': 'BatchTaskProfile'})
+@cli_util.wrap_exceptions
+def create_batch_task_profile_create_cpu_shape_task_profile_extended_information_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, extended_information_shape_name, display_name, description, min_ocpus, min_memory_in_gbs, min_disk_size_in_gbs, defined_tags, freeform_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['extendedInformation'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['extendedInformation']['shapeName'] = extended_information_shape_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if min_ocpus is not None:
+        _details['minOcpus'] = min_ocpus
+
+    if min_memory_in_gbs is not None:
+        _details['minMemoryInGBs'] = min_memory_in_gbs
+
+    if min_disk_size_in_gbs is not None:
+        _details['minDiskSizeInGBs'] = min_disk_size_in_gbs
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    _details['extendedInformation']['type'] = 'CPU_SHAPE_TASK_PROFILE_EXTENDED_INFORMATION'
+
+    client = cli_util.build_client('batch', 'batch_computing', ctx)
+    result = client.create_batch_task_profile(
+        create_batch_task_profile_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_batch_task_profile') and callable(getattr(client, 'get_batch_task_profile')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_batch_task_profile(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@batch_task_profile_group.command(name=cli_util.override('batch.create_batch_task_profile_create_cpu_architecture_task_profile_extended_information_details.command_name', 'create-batch-task-profile-create-cpu-architecture-task-profile-extended-information-details'), help=u"""Creates a batch task profile. \n[Command Reference](createBatchTaskProfile)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--extended-information-architecture', required=True, type=custom_types.CliCaseInsensitiveChoice(["GENERIC_X86", "GENERIC_ARM"]), help=u"""Type of CPU architecture.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. If not specified or provided as null or empty string, it be generated as \"<resourceType><timeCreated>\", where timeCreated corresponds with the resource creation time in ISO 8601 basic format, i.e. omitting separating punctuation, at second-level precision and no UTC offset. Example: batchtaskprofile20250914115623.""")
+@cli_util.option('--description', help=u"""The batch task profile description.""")
+@cli_util.option('--min-ocpus', type=click.INT, help=u"""The minimum required OCPUs.""")
+@cli_util.option('--min-memory-in-gbs', type=click.INT, help=u"""The minimum required memory.""")
+@cli_util.option('--min-disk-size-in-gbs', type=click.INT, help=u"""The minimum required size of disk space in GBs.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}}, output_type={'module': 'batch', 'class': 'BatchTaskProfile'})
+@cli_util.wrap_exceptions
+def create_batch_task_profile_create_cpu_architecture_task_profile_extended_information_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, extended_information_architecture, display_name, description, min_ocpus, min_memory_in_gbs, min_disk_size_in_gbs, defined_tags, freeform_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['extendedInformation'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['extendedInformation']['architecture'] = extended_information_architecture
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if min_ocpus is not None:
+        _details['minOcpus'] = min_ocpus
+
+    if min_memory_in_gbs is not None:
+        _details['minMemoryInGBs'] = min_memory_in_gbs
+
+    if min_disk_size_in_gbs is not None:
+        _details['minDiskSizeInGBs'] = min_disk_size_in_gbs
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    _details['extendedInformation']['type'] = 'CPU_ARCHITECTURE_TASK_PROFILE_EXTENDED_INFORMATION'
 
     client = cli_util.build_client('batch', 'batch_computing', ctx)
     result = client.create_batch_task_profile(
@@ -1320,7 +1594,7 @@ def get_batch_job_pool(ctx, from_json, batch_job_pool_id):
 
 @batch_task_group.command(name=cli_util.override('batch.get_batch_task.command_name', 'get'), help=u"""Gets a specific batch task associated with a batch job by its name. \n[Command Reference](getBatchTask)""")
 @cli_util.option('--batch-job-id', required=True, help=u"""The [OCID] of the batch job.""")
-@cli_util.option('--task-name', required=True, help=u"""The name of the batch task.""")
+@cli_util.option('--task-name', required=True, help=u"""The hierarchical name of the batch task. Mutually exclusive with the task id query parameter: you can't pass both.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1416,6 +1690,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--shape-type', type=custom_types.CliCaseInsensitiveChoice(["CPU", "GPU"]), help=u"""The type of a shape.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1423,7 +1698,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'batch', 'class': 'BatchContextShapeCollection'})
 @cli_util.wrap_exceptions
-def list_batch_context_shapes(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page):
+def list_batch_context_shapes(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, shape_type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1435,6 +1710,8 @@ def list_batch_context_shapes(ctx, from_json, all_pages, page_size, compartment_
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if shape_type is not None:
+        kwargs['shape_type'] = shape_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('batch', 'batch_computing', ctx)
     if all_pages:
@@ -1592,7 +1869,11 @@ def list_batch_job_pools(ctx, from_json, all_pages, page_size, compartment_id, l
 @batch_task_collection_group.command(name=cli_util.override('batch.list_batch_job_tasks.command_name', 'list-batch-job-tasks'), help=u"""Lists the batch tasks by batch job [OCID]. You can filter and sort them by various properties like lifecycle state, name and also ocid. All properties require an exact match. List operation only provides a summary information, use GetBatchTask to get the full details on a specific context List is incomplete until jobs lifecycle is in_progress \n[Command Reference](listBatchJobTasks)""")
 @cli_util.option('--batch-job-id', required=True, help=u"""The [OCID] of the batch job.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
-@cli_util.option('--name', help=u"""The name of the task.""")
+@cli_util.option('--name', help=u"""The hierarchical name of the batch task. Mutually exclusive with the task id query parameter: you can't pass both.""")
+@cli_util.option('--task-id', help=u"""The UUID of the batch task. Mutually exclusive with the task name and group task name query parameters: you can't pass both.""")
+@cli_util.option('--group-task-name', help=u"""Hierarchical name of the group task. A filter to return only tasks contained within the selected group task. Omit to return top-level tasks only. Can be combined with task name query parameter, in which case task name becomes a hierarchical name relative to the selected group task, e.g. ?groupTaskName=A.B&taskName=C.D is equal to ?taskName=A.B.C.D. Mutually exclusive with the task id query parameter: you can't pass both.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["COMPUTE", "GROUP"]), help=u"""Filter tasks by type. Valid values are: COMPUTE, GROUP.""")
+@cli_util.option('--hierarchy-view', type=custom_types.CliCaseInsensitiveChoice(["SHALLOW", "DEEP"]), help=u"""Defines the hierarchical scope of the tasks to be returned. When set to SHALLOW, which is default, only tasks contained directly (non-recursively) within current hierarchy entry are returned. When set to DEEP, tasks contained within current hierarchy entry and all its descendants recursively are returned. The default hierarchy entry is root, i.e. batch job itself. To use a different hierarchy entry, provide the group task name as a query parameter.  The specified group task becomes the entry point instead of the batch job.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -1604,7 +1885,7 @@ def list_batch_job_pools(ctx, from_json, all_pages, page_size, compartment_id, l
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'batch', 'class': 'BatchTaskCollection'})
 @cli_util.wrap_exceptions
-def list_batch_job_tasks(ctx, from_json, all_pages, page_size, batch_job_id, lifecycle_state, name, limit, page, sort_order, sort_by):
+def list_batch_job_tasks(ctx, from_json, all_pages, page_size, batch_job_id, lifecycle_state, name, task_id, group_task_name, type, hierarchy_view, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1617,6 +1898,14 @@ def list_batch_job_tasks(ctx, from_json, all_pages, page_size, batch_job_id, lif
         kwargs['lifecycle_state'] = lifecycle_state
     if name is not None:
         kwargs['name'] = name
+    if task_id is not None:
+        kwargs['task_id'] = task_id
+    if group_task_name is not None:
+        kwargs['group_task_name'] = group_task_name
+    if type is not None:
+        kwargs['type'] = type
+    if hierarchy_view is not None:
+        kwargs['hierarchy_view'] = hierarchy_view
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -1652,7 +1941,7 @@ def list_batch_job_tasks(ctx, from_json, all_pages, page_size, batch_job_id, lif
     cli_util.render_response(result, ctx)
 
 
-@batch_job_collection_group.command(name=cli_util.override('batch.list_batch_jobs.command_name', 'list-batch-jobs'), help=u"""Lists the batch jobs by compartment or job [OCID]. You can filter and sort them by various properties like lifecycle state, display name and also ocid. All properties require an exact match.  List operation only provides a summary information, use GetBatchJob to get the full details on a specific context \n[Command Reference](listBatchJobs)""")
+@batch_job_collection_group.command(name=cli_util.override('batch.list_batch_jobs.command_name', 'list-batch-jobs'), help=u"""Lists the batch jobs by compartment or job [OCID]. You can filter and sort them by various properties like lifecycle state, display name and also ocid. All properties require an exact match. List operation only provides a summary information, use GetBatchJob to get the full details on a specific context \n[Command Reference](listBatchJobs)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "SUCCEEDED", "NEEDS_ATTENTION", "FAILED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -1845,7 +2134,8 @@ def list_batch_task_profiles(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--batch-job-id', help=u"""The [OCID] of the batch job.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
-@cli_util.option('--name', help=u"""The name of the task.""")
+@cli_util.option('--name', help=u"""The hierarchical name of the batch task. Mutually exclusive with the task id query parameter: you can't pass both.""")
+@cli_util.option('--task-id', help=u"""The UUID of the batch task. Mutually exclusive with the task name and group task name query parameters: you can't pass both.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -1857,7 +2147,7 @@ def list_batch_task_profiles(ctx, from_json, all_pages, page_size, compartment_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'batch', 'class': 'BatchTaskCollection'})
 @cli_util.wrap_exceptions
-def list_batch_tasks(ctx, from_json, all_pages, page_size, compartment_id, batch_job_id, lifecycle_state, name, limit, page, sort_order, sort_by):
+def list_batch_tasks(ctx, from_json, all_pages, page_size, compartment_id, batch_job_id, lifecycle_state, name, task_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1871,6 +2161,8 @@ def list_batch_tasks(ctx, from_json, all_pages, page_size, compartment_id, batch
         kwargs['lifecycle_state'] = lifecycle_state
     if name is not None:
         kwargs['name'] = name
+    if task_id is not None:
+        kwargs['task_id'] = task_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -2447,23 +2739,24 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 This option is a JSON list with items of type JobPriorityConfiguration.  For documentation on JobPriorityConfiguration please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/batchcomputing/20251031/datatypes/JobPriorityConfiguration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entitlements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Mapping of concurrent/shared resources used in job tasks to their limits.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--logging-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'job-priority-configurations': {'module': 'batch', 'class': 'list[JobPriorityConfiguration]'}, 'entitlements': {'module': 'batch', 'class': 'dict(str, integer)'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'job-priority-configurations': {'module': 'batch', 'class': 'list[JobPriorityConfiguration]'}, 'entitlements': {'module': 'batch', 'class': 'dict(str, integer)'}, 'logging-configuration': {'module': 'batch', 'class': 'UpdateLoggingConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'job-priority-configurations': {'module': 'batch', 'class': 'list[JobPriorityConfiguration]'}, 'entitlements': {'module': 'batch', 'class': 'dict(str, integer)'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'job-priority-configurations': {'module': 'batch', 'class': 'list[JobPriorityConfiguration]'}, 'entitlements': {'module': 'batch', 'class': 'dict(str, integer)'}, 'logging-configuration': {'module': 'batch', 'class': 'UpdateLoggingConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def update_batch_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_context_id, display_name, description, freeform_tags, defined_tags, job_priority_configurations, entitlements, if_match):
+def update_batch_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_context_id, display_name, description, freeform_tags, defined_tags, job_priority_configurations, entitlements, logging_configuration, if_match):
 
     if isinstance(batch_context_id, six.string_types) and len(batch_context_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-context-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or job_priority_configurations or entitlements:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and job-priority-configurations and entitlements will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or job_priority_configurations or entitlements or logging_configuration:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and job-priority-configurations and entitlements and logging-configuration will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2490,6 +2783,108 @@ def update_batch_context(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if entitlements is not None:
         _details['entitlements'] = cli_util.parse_json_parameter("entitlements", entitlements)
+
+    if logging_configuration is not None:
+        _details['loggingConfiguration'] = cli_util.parse_json_parameter("logging_configuration", logging_configuration)
+
+    client = cli_util.build_client('batch', 'batch_computing', ctx)
+    result = client.update_batch_context(
+        batch_context_id=batch_context_id,
+        update_batch_context_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@batch_context_group.command(name=cli_util.override('batch.update_batch_context_update_oci_logging_configuration.command_name', 'update-batch-context-update-oci-logging-configuration'), help=u"""Updates a batch context. \n[Command Reference](updateBatchContext)""")
+@cli_util.option('--batch-context-id', required=True, help=u"""The [OCID] of the batch context.""")
+@cli_util.option('--logging-configuration-is-job-task-events-propagation-enabled', required=True, type=click.BOOL, help=u"""A switch to enable or disable propagation of job and task events to the customer's logs in OCI logging service.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Can't be set to null.""")
+@cli_util.option('--description', help=u"""Summarized information about the batch context.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-priority-configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of job priority configurations related to the batch context.
+
+This option is a JSON list with items of type JobPriorityConfiguration.  For documentation on JobPriorityConfiguration please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/batchcomputing/20251031/datatypes/JobPriorityConfiguration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--entitlements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Mapping of concurrent/shared resources used in job tasks to their limits.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'job-priority-configurations': {'module': 'batch', 'class': 'list[JobPriorityConfiguration]'}, 'entitlements': {'module': 'batch', 'class': 'dict(str, integer)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'batch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'batch', 'class': 'dict(str, dict(str, object))'}, 'job-priority-configurations': {'module': 'batch', 'class': 'list[JobPriorityConfiguration]'}, 'entitlements': {'module': 'batch', 'class': 'dict(str, integer)'}})
+@cli_util.wrap_exceptions
+def update_batch_context_update_oci_logging_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_context_id, logging_configuration_is_job_task_events_propagation_enabled, display_name, description, freeform_tags, defined_tags, job_priority_configurations, entitlements, if_match):
+
+    if isinstance(batch_context_id, six.string_types) and len(batch_context_id.strip()) == 0:
+        raise click.UsageError('Parameter --batch-context-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or job_priority_configurations or entitlements:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and job-priority-configurations and entitlements will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['loggingConfiguration'] = {}
+    _details['loggingConfiguration']['isJobTaskEventsPropagationEnabled'] = logging_configuration_is_job_task_events_propagation_enabled
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_priority_configurations is not None:
+        _details['jobPriorityConfigurations'] = cli_util.parse_json_parameter("job_priority_configurations", job_priority_configurations)
+
+    if entitlements is not None:
+        _details['entitlements'] = cli_util.parse_json_parameter("entitlements", entitlements)
+
+    _details['loggingConfiguration']['type'] = 'OCI_LOGGING'
 
     client = cli_util.build_client('batch', 'batch_computing', ctx)
     result = client.update_batch_context(

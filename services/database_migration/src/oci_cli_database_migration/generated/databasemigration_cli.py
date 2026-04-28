@@ -1257,6 +1257,7 @@ def create_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--ddl-expectation', required=True, type=custom_types.CliCaseInsensitiveChoice(["DDL_EXPECTED", "DDL_NOT_EXPECTED"]), help=u"""DDL expectation values.""")
 @cli_util.option('--source-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--migration-scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCHEMA", "FULL"]), help=u"""Assessment migration scope.""")
 @cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_ONLY", "CREATE_AND_RUN_ASSESSORS"]), help=u"""The type of assessment creation.""")
@@ -1277,7 +1278,7 @@ This option is a JSON list with items of type OracleDatabaseObject.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}}, output_type={'module': 'database_migration', 'class': 'Assessment'})
 @cli_util.wrap_exceptions
-def create_assessment_create_oracle_assessment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, source_database_connection, target_database_connection, description, display_name, creation_type, freeform_tags, defined_tags, exclude_objects, include_objects, bulk_include_exclude_data):
+def create_assessment_create_oracle_assessment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, source_database_connection, target_database_connection, migration_scope, description, display_name, creation_type, freeform_tags, defined_tags, exclude_objects, include_objects, bulk_include_exclude_data):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1290,6 +1291,7 @@ def create_assessment_create_oracle_assessment_details(ctx, from_json, wait_for_
     _details['ddlExpectation'] = ddl_expectation
     _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
     _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+    _details['migrationScope'] = migration_scope
 
     if description is not None:
         _details['description'] = description
@@ -1360,6 +1362,7 @@ def create_assessment_create_oracle_assessment_details(ctx, from_json, wait_for_
 @cli_util.option('--ddl-expectation', required=True, type=custom_types.CliCaseInsensitiveChoice(["DDL_EXPECTED", "DDL_NOT_EXPECTED"]), help=u"""DDL expectation values.""")
 @cli_util.option('--source-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--migration-scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCHEMA", "FULL"]), help=u"""Assessment migration scope.""")
 @cli_util.option('--description', help=u"""A user-friendly description. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_ONLY", "CREATE_AND_RUN_ASSESSORS"]), help=u"""The type of assessment creation.""")
@@ -1380,7 +1383,7 @@ This option is a JSON list with items of type MySqlDatabaseObject.  For document
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[MySqlDatabaseObject]'}}, output_type={'module': 'database_migration', 'class': 'Assessment'})
 @cli_util.wrap_exceptions
-def create_assessment_create_my_sql_assessment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, source_database_connection, target_database_connection, description, display_name, creation_type, freeform_tags, defined_tags, exclude_objects, include_objects, bulk_include_exclude_data):
+def create_assessment_create_my_sql_assessment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, source_database_connection, target_database_connection, migration_scope, description, display_name, creation_type, freeform_tags, defined_tags, exclude_objects, include_objects, bulk_include_exclude_data):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1393,6 +1396,7 @@ def create_assessment_create_my_sql_assessment_details(ctx, from_json, wait_for_
     _details['ddlExpectation'] = ddl_expectation
     _details['sourceDatabaseConnection'] = cli_util.parse_json_parameter("source_database_connection", source_database_connection)
     _details['targetDatabaseConnection'] = cli_util.parse_json_parameter("target_database_connection", target_database_connection)
+    _details['migrationScope'] = migration_scope
 
     if description is not None:
         _details['description'] = description
@@ -5118,6 +5122,7 @@ def update_assessment(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.option('--target-database-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--migration-scope', type=custom_types.CliCaseInsensitiveChoice(["SCHEMA", "FULL"]), help=u"""Assessment migration scope.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5128,7 +5133,7 @@ def update_assessment(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_assessment_update_my_sql_assessment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, description, display_name, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, creation_type, source_database_connection, target_database_connection, freeform_tags, defined_tags, if_match):
+def update_assessment_update_my_sql_assessment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, description, display_name, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, creation_type, source_database_connection, target_database_connection, freeform_tags, defined_tags, migration_scope, if_match):
 
     if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
@@ -5176,6 +5181,9 @@ def update_assessment_update_my_sql_assessment_details(ctx, from_json, force, wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if migration_scope is not None:
+        _details['migrationScope'] = migration_scope
 
     _details['databaseCombination'] = 'MYSQL'
 
@@ -5228,6 +5236,7 @@ def update_assessment_update_my_sql_assessment_details(ctx, from_json, force, wa
 @cli_util.option('--target-database-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--migration-scope', type=custom_types.CliCaseInsensitiveChoice(["SCHEMA", "FULL"]), help=u"""Assessment migration scope.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5238,7 +5247,7 @@ def update_assessment_update_my_sql_assessment_details(ctx, from_json, force, wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-database-connection': {'module': 'database_migration', 'class': 'SourceAssessmentConnection'}, 'target-database-connection': {'module': 'database_migration', 'class': 'TargetAssessmentConnection'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_assessment_update_oracle_assessment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, description, display_name, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, creation_type, source_database_connection, target_database_connection, freeform_tags, defined_tags, if_match):
+def update_assessment_update_oracle_assessment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, assessment_id, description, display_name, network_speed_megabit_per_second, acceptable_downtime, database_data_size, ddl_expectation, creation_type, source_database_connection, target_database_connection, freeform_tags, defined_tags, migration_scope, if_match):
 
     if isinstance(assessment_id, six.string_types) and len(assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --assessment-id cannot be whitespace or empty string')
@@ -5286,6 +5295,9 @@ def update_assessment_update_oracle_assessment_details(ctx, from_json, force, wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if migration_scope is not None:
+        _details['migrationScope'] = migration_scope
 
     _details['databaseCombination'] = 'ORACLE'
 

@@ -643,28 +643,36 @@ def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_
 @embed_text_result_group.command(name=cli_util.override('generative_ai_inference.embed_text.command_name', 'embed-text'), help=u"""Produces embeddings for the inputs.
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
-@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
+@cli_util.option('--inputs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--embed-contents', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of text/image inputs to be embedded. Supported for Embed v4 models.
+
+This option is a JSON list with items of type EmbedContent.  For documentation on EmbedContent please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeaiinference/20231130/datatypes/EmbedContent.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
 @cli_util.option('--embedding-types', type=custom_types.CliCaseInsensitiveChoice(["float", "int8", "uint8", "binary", "ubinary", "base64"]), help=u"""Specifies the types of embeddings you want to get back. Supports list of enums. Supported values :float, int8, uint8, binary, ubinary, base64. If nothing is passed default will be considered as float.""")
 @cli_util.option('--output-dimensions', type=click.INT, help=u"""The number of dimensions of the output embedding. This is only available for embed-v4 and newer models. Possible values are 256, 512, 1024, and 1536.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
 @cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING", "IMAGE"]), help=u"""Specifies the input type.""")
-@json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}})
+@json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'embed-contents': {'module': 'generative_ai_inference', 'class': 'list[EmbedContent]'}, 'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}}, output_type={'module': 'generative_ai_inference', 'class': 'EmbedTextResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'embed-contents': {'module': 'generative_ai_inference', 'class': 'list[EmbedContent]'}, 'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}}, output_type={'module': 'generative_ai_inference', 'class': 'EmbedTextResult'})
 @cli_util.wrap_exceptions
-def embed_text(ctx, from_json, inputs, serving_mode, compartment_id, is_echo, embedding_types, output_dimensions, truncate, input_type):
+def embed_text(ctx, from_json, serving_mode, compartment_id, inputs, embed_contents, is_echo, embedding_types, output_dimensions, truncate, input_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['inputs'] = cli_util.parse_json_parameter("inputs", inputs)
     _details['servingMode'] = cli_util.parse_json_parameter("serving_mode", serving_mode)
     _details['compartmentId'] = compartment_id
+
+    if inputs is not None:
+        _details['inputs'] = cli_util.parse_json_parameter("inputs", inputs)
+
+    if embed_contents is not None:
+        _details['embedContents'] = cli_util.parse_json_parameter("embed_contents", embed_contents)
 
     if is_echo is not None:
         _details['isEcho'] = is_echo
@@ -692,29 +700,37 @@ def embed_text(ctx, from_json, inputs, serving_mode, compartment_id, is_echo, em
 @embed_text_result_group.command(name=cli_util.override('generative_ai_inference.embed_text_dedicated_serving_mode.command_name', 'embed-text-dedicated-serving-mode'), help=u"""Produces embeddings for the inputs.
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
-@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
+@cli_util.option('--inputs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--embed-contents', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of text/image inputs to be embedded. Supported for Embed v4 models.
+
+This option is a JSON list with items of type EmbedContent.  For documentation on EmbedContent please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeaiinference/20231130/datatypes/EmbedContent.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
 @cli_util.option('--embedding-types', type=custom_types.CliCaseInsensitiveChoice(["float", "int8", "uint8", "binary", "ubinary", "base64"]), help=u"""Specifies the types of embeddings you want to get back. Supports list of enums. Supported values :float, int8, uint8, binary, ubinary, base64. If nothing is passed default will be considered as float.""")
 @cli_util.option('--output-dimensions', type=click.INT, help=u"""The number of dimensions of the output embedding. This is only available for embed-v4 and newer models. Possible values are 256, 512, 1024, and 1536.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
 @cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING", "IMAGE"]), help=u"""Specifies the input type.""")
-@json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'embed-contents': {'module': 'generative_ai_inference', 'class': 'list[EmbedContent]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'EmbedTextResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'embed-contents': {'module': 'generative_ai_inference', 'class': 'list[EmbedContent]'}}, output_type={'module': 'generative_ai_inference', 'class': 'EmbedTextResult'})
 @cli_util.wrap_exceptions
-def embed_text_dedicated_serving_mode(ctx, from_json, inputs, compartment_id, serving_mode_endpoint_id, is_echo, embedding_types, output_dimensions, truncate, input_type):
+def embed_text_dedicated_serving_mode(ctx, from_json, compartment_id, serving_mode_endpoint_id, inputs, embed_contents, is_echo, embedding_types, output_dimensions, truncate, input_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['servingMode'] = {}
-    _details['inputs'] = cli_util.parse_json_parameter("inputs", inputs)
     _details['compartmentId'] = compartment_id
     _details['servingMode']['endpointId'] = serving_mode_endpoint_id
+
+    if inputs is not None:
+        _details['inputs'] = cli_util.parse_json_parameter("inputs", inputs)
+
+    if embed_contents is not None:
+        _details['embedContents'] = cli_util.parse_json_parameter("embed_contents", embed_contents)
 
     if is_echo is not None:
         _details['isEcho'] = is_echo
@@ -744,29 +760,37 @@ def embed_text_dedicated_serving_mode(ctx, from_json, inputs, compartment_id, se
 @embed_text_result_group.command(name=cli_util.override('generative_ai_inference.embed_text_on_demand_serving_mode.command_name', 'embed-text-on-demand-serving-mode'), help=u"""Produces embeddings for the inputs.
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
-@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. You can use the [ListModels] API to list the available models.""")
+@cli_util.option('--inputs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--embed-contents', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of text/image inputs to be embedded. Supported for Embed v4 models.
+
+This option is a JSON list with items of type EmbedContent.  For documentation on EmbedContent please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeaiinference/20231130/datatypes/EmbedContent.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
 @cli_util.option('--embedding-types', type=custom_types.CliCaseInsensitiveChoice(["float", "int8", "uint8", "binary", "ubinary", "base64"]), help=u"""Specifies the types of embeddings you want to get back. Supports list of enums. Supported values :float, int8, uint8, binary, ubinary, base64. If nothing is passed default will be considered as float.""")
 @cli_util.option('--output-dimensions', type=click.INT, help=u"""The number of dimensions of the output embedding. This is only available for embed-v4 and newer models. Possible values are 256, 512, 1024, and 1536.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
 @cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING", "IMAGE"]), help=u"""Specifies the input type.""")
-@json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'embed-contents': {'module': 'generative_ai_inference', 'class': 'list[EmbedContent]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'EmbedTextResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'embed-contents': {'module': 'generative_ai_inference', 'class': 'list[EmbedContent]'}}, output_type={'module': 'generative_ai_inference', 'class': 'EmbedTextResult'})
 @cli_util.wrap_exceptions
-def embed_text_on_demand_serving_mode(ctx, from_json, inputs, compartment_id, serving_mode_model_id, is_echo, embedding_types, output_dimensions, truncate, input_type):
+def embed_text_on_demand_serving_mode(ctx, from_json, compartment_id, serving_mode_model_id, inputs, embed_contents, is_echo, embedding_types, output_dimensions, truncate, input_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['servingMode'] = {}
-    _details['inputs'] = cli_util.parse_json_parameter("inputs", inputs)
     _details['compartmentId'] = compartment_id
     _details['servingMode']['modelId'] = serving_mode_model_id
+
+    if inputs is not None:
+        _details['inputs'] = cli_util.parse_json_parameter("inputs", inputs)
+
+    if embed_contents is not None:
+        _details['embedContents'] = cli_util.parse_json_parameter("embed_contents", embed_contents)
 
     if is_echo is not None:
         _details['isEcho'] = is_echo
