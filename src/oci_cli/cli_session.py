@@ -22,11 +22,35 @@ import sys
 import tempfile
 import zipfile
 import datetime
+import re
 
 CONFIG_KEY_FILE_SUFFIX = "_file"
 TOKEN_FILE_SUFFIX = "_token"
 
 ZIP_FILE_FORMAT = 'zip'
+
+PROFILE_NAME_PATTERN = re.compile(r'^[A-Za-z0-9._\-@]+$')
+
+
+def validate_profile_name(profile_name):
+    """
+    Validates that the profile name contains only allowed characters:
+    [A-Za-z0-9._-@]+ and does not include path traversal strings such as /, \\, .., or .
+    Raises a click.UsageError (prints a clear message and aborts) if invalid.
+    """
+    if profile_name is None or not isinstance(profile_name, str) or not profile_name:
+        raise click.UsageError("Profile name must be a non-empty string.")
+
+    if not PROFILE_NAME_PATTERN.match(profile_name):
+        raise click.UsageError(
+            "Invalid profile name '{}'. Profile names may only contain letters, numbers, '.', '_', '-', or '@'."
+            .format(profile_name)
+        )
+    # Protect against "." or ".." (these are still allowed by the pattern)
+    if profile_name in (".", ".."):
+        raise click.UsageError(
+            "Invalid profile name '{}': Profile name cannot be '.' or '..'.".format(profile_name)
+        )
 
 
 @cli.group('session', help="""Session commands for CLI""")
@@ -53,6 +77,11 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_p
     region = ctx.obj['region']
     if region is None:
         region = cli_setup.prompt_for_region()
+
+    # Validate profile name
+    if profile_name:
+        validate_profile_name(profile_name)
+
     persist_only_public_key = False
     if no_browser:
         if int(session_expiration_in_minutes) > int(cli_constants.OCI_CLI_UPST_TOKEN_MAX_TTL):
@@ -343,6 +372,9 @@ def import_session(ctx, session_archive, force):
             archived_profile_name = archived_profiles[profile_no]
             archived_profile = archived_config[archived_profile_name]
 
+            # Validate the profile name being imported
+            validate_profile_name(archived_profile_name)
+
             if 'security_token_file' not in archived_profile:
                 click.echo('ERROR: Cannot import non token based profile (profile must contain value for security_token_file).', file=sys.stderr)
                 sys.exit(1)
@@ -352,7 +384,7 @@ def import_session(ctx, session_archive, force):
 
             while archived_profile_name in current_profiles and not force:
                 archived_profile_name = click.prompt("Config already contains a profile with the same name as the archived profile: {}. Provide an alternative name for the imported profile".format(archived_profile_name))
-
+                validate_profile_name(archived_profile_name)
             imported_resources_dir = os.path.join(cli_setup.DEFAULT_TOKEN_DIRECTORY, archived_profile_name)
             # The session-archive could be a malicious file where a profile name like "../../<some_path>" can cause
             # arbitrary files to be written outside the expected location. Need to prevent it

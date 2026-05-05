@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.81.1 - 2026-05-05
+-------------------
+Added
+~~~~~
+* Support for large generic v4 and v5 unit shapes in the Generative AI service in Python SDK
+
+
+
 3.81.0 - 2026-04-28
 -------------------
 Added
@@ -106,6 +114,7 @@ Changed
 * ``--min-memory-in-gbs`` and ``--min-ocpus`` are now optional parameters in the Batch service
 
   * ``oci batch batch-task-profile create --min-memory-in-gbs --min-ocpus``
+
 
 
 3.80.0 - 2026-04-21

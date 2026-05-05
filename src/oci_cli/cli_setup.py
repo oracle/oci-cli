@@ -31,6 +31,8 @@ import platform
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
 
+PROFILE_NAME_PATTERN = re.compile(r'^[A-Za-z0-9._\-@]+$')
+
 generate_oci_config_instructions = """
     This command provides a walkthrough of creating a valid CLI config file.
 
@@ -776,6 +778,25 @@ def validate_region(region):
     return region
 
 
+def validate_profile_name(profile_name):
+    """
+    Validates that the profile name contains only allowed characters:
+    [A-Za-z0-9._-@]+ and does not include path traversal strings such as /, \\, .., or .
+    Raises a click.UsageError (prints a clear message and aborts) if invalid.
+    """
+    if profile_name is None or not isinstance(profile_name, str) or not profile_name:
+        raise click.UsageError("Profile name must be a non-empty string.")
+
+    if not PROFILE_NAME_PATTERN.match(profile_name):
+        raise click.UsageError(
+            "Invalid profile name '{}'. Profile names may only contain letters, numbers, '.', '_', '-', or '@'.".format(profile_name)
+        )
+    if profile_name in (".", ".."):
+        raise click.UsageError(
+            "Invalid profile name '{}': Profile name cannot be '.' or '..'.".format(profile_name)
+        )
+
+
 def is_valid_region_index(region):
 
     return region.isdigit() and len(REGIONS) >= int(region) >= 1
@@ -823,28 +844,6 @@ def validate_resource_name(name):
     return name
 
 
-def validate_profile_name(value, config_parser, overwrite=False, makeUpper=True):
-    if not value:
-        click.echo('Cannot specify blank profile name')
-        return None
-
-    sections = [section.upper() for section in config_parser.sections()]
-    if config_parser['DEFAULT']:
-        sections.append('DEFAULT')
-
-    if makeUpper:
-        value = value.upper()
-
-    if value in sections and not overwrite:
-        click.echo('Profile {section} already exists in config. Cannot specify a profile that conflicts with any existing profile(s): {sections}'.format(
-            section=value,
-            sections=', '.join(sections)
-        ))
-        value = None
-
-    return value
-
-
 def prompt_for_config_location():
     config_location = os.path.abspath(click.prompt('Enter a location for your config', default=os.path.join(DEFAULT_DIRECTORY, 'config'), value_proc=process_config_filename))
     if os.path.exists(config_location):
@@ -854,7 +853,22 @@ def prompt_for_config_location():
             if click.confirm('Config file: {} already exists. Do you want add a profile here? (If no, you will be prompted to overwrite the file)'.format(config_location), default=True):
                 profile_name = None
                 while not profile_name:
-                    profile_name = click.prompt('Enter the name of the profile you would like to create', value_proc=lambda value: validate_profile_name(value, config_parser))
+                    entered_name = click.prompt('Enter the name of the profile you would like to create')
+                    # Validates for allowed characters/etc
+                    validate_profile_name(entered_name)
+                    # Now check for collision
+                    sections = [section.upper() for section in config_parser.sections()]
+                    if config_parser['DEFAULT']:
+                        sections.append('DEFAULT')
+                    entered_upper = entered_name.upper()
+                    if entered_upper in sections:
+                        click.echo('Profile {section} already exists in config. Cannot specify a profile that conflicts with any existing profile(s): {sections}'.format(
+                            section=entered_upper,
+                            sections=', '.join(sections)
+                        ))
+                        profile_name = None
+                    else:
+                        profile_name = entered_name
 
                 return (config_location, profile_name)
         except configparser.Error as e:
@@ -881,8 +895,20 @@ def prompt_session_for_profile():
         if not os.path.exists(DEFAULT_CONFIG_LOCATION):
             return (DEFAULT_CONFIG_LOCATION, DEFAULT_PROFILE_NAME)
         config_parser.read(DEFAULT_CONFIG_LOCATION)
-        profile_name = click.prompt('Enter the name of the profile you would like to create',
-                                    value_proc=lambda value: validate_profile_name(value, config_parser, True, False))
+        entered_name = click.prompt('Enter the name of the profile you would like to create')
+        # Validate format
+        validate_profile_name(entered_name)
+        sections = [section.upper() for section in config_parser.sections()]
+        if config_parser['DEFAULT']:
+            sections.append('DEFAULT')
+        entered_upper = entered_name.upper()
+        if entered_upper in sections:
+            click.echo(
+                'Profile {section} already exists in config. Cannot specify a profile that conflicts with any existing profile(s): {sections}'.format(
+                    section=entered_upper,
+                    sections=', '.join(sections)
+                ))
+        profile_name = entered_name
     except configparser.Error as e:
         pass
 
