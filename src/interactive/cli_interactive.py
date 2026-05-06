@@ -17,6 +17,7 @@ from interactive.utils import (
 
 from interactive.key_bindings import override_key_binding
 from interactive.prompt_session import create_oci_prompt_session
+from interactive.enable_enhanced_completions import enable_enhanced_completions
 import os
 import sys
 
@@ -24,6 +25,9 @@ PROFILE_PARAM = '--profile'
 
 
 def start_interactive_shell(ctx, top_level_invoke_name, service_mapping, dynamic_loader):
+    # Enable enhanced completions with caching
+    enable_enhanced_completions()
+
     # print help message like you tube vedios for first time
     print_suggestion_message()
     # Getting the commands before --cli-auto-prompt, for example if the user execute oci --profile X compute instance --cli-auto-prompt,
