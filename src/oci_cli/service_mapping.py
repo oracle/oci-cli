@@ -263,6 +263,11 @@ service_mapping = {
         "Database Tools",
         "Developer Services"
     ],
+    "dbtools-runtime": [
+        "database_tools_runtime",
+        "Database Tools Service Runtime",
+        "Others"
+    ],
     "delegate-access-control": [
         "delegate_access_control",
         "Oracle Delegate Access Control",

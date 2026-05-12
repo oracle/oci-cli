@@ -671,6 +671,7 @@ def create_digital_twin_adapter(ctx, from_json, wait_for_state, max_wait_seconds
 
 @digital_twin_instance_group.command(name=cli_util.override('iot.create_digital_twin_instance.command_name', 'create'), help=u"""Creates a new digital twin instance. \n[Command Reference](createDigitalTwinInstance)""")
 @cli_util.option('--iot-domain-id', required=True, help=u"""The [OCID] of the IoT domain.""")
+@cli_util.option('--connectivity-type', type=custom_types.CliCaseInsensitiveChoice(["DIRECT", "INDIRECT", "GATEWAY", "NONE"]), help=u"""Connectivity type of the digital twin instance""")
 @cli_util.option('--auth-id', help=u"""The [OCID] of the resource (like VaultSecret, ClientCertificate etc.,) used to authenticate the digital twin instance.""")
 @cli_util.option('--external-key', help=u"""A unique identifier for the physical entity (typically an IoT device) represented by the digital twin instance. This could be a Bluetooth address, Ethernet MAC address, or serial number, depending on the use case. If not provided, the system will automatically generate one.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -678,6 +679,7 @@ def create_digital_twin_adapter(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.option('--digital-twin-adapter-id', help=u"""The [OCID] of the digital twin adapter.""")
 @cli_util.option('--digital-twin-model-id', help=u"""The [OCID] of the digital twin model.""")
 @cli_util.option('--digital-twin-model-spec-uri', help=u"""The URI of the digital twin model specification.""")
+@cli_util.option('--gateways', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique ids ([OCIDs]) of the IoT digital twin instances with connectivityType equals to GATEWAY.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -687,18 +689,21 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'iot', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'iot', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'gateways': {'module': 'iot', 'class': 'list[string]'}, 'freeform-tags': {'module': 'iot', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'iot', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'iot', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'iot', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'iot', 'class': 'DigitalTwinInstance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'gateways': {'module': 'iot', 'class': 'list[string]'}, 'freeform-tags': {'module': 'iot', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'iot', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'iot', 'class': 'DigitalTwinInstance'})
 @cli_util.wrap_exceptions
-def create_digital_twin_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_id, auth_id, external_key, display_name, description, digital_twin_adapter_id, digital_twin_model_id, digital_twin_model_spec_uri, freeform_tags, defined_tags):
+def create_digital_twin_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_id, connectivity_type, auth_id, external_key, display_name, description, digital_twin_adapter_id, digital_twin_model_id, digital_twin_model_spec_uri, gateways, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['iotDomainId'] = iot_domain_id
+
+    if connectivity_type is not None:
+        _details['connectivityType'] = connectivity_type
 
     if auth_id is not None:
         _details['authId'] = auth_id
@@ -720,6 +725,9 @@ def create_digital_twin_instance(ctx, from_json, wait_for_state, max_wait_second
 
     if digital_twin_model_spec_uri is not None:
         _details['digitalTwinModelSpecUri'] = digital_twin_model_spec_uri
+
+    if gateways is not None:
+        _details['gateways'] = cli_util.parse_json_parameter("gateways", gateways)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1900,6 +1908,7 @@ def list_digital_twin_adapters(ctx, from_json, all_pages, page_size, iot_domain_
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
 @cli_util.option('--digital-twin-model-id', help=u"""Filter resources that match the specified [OCID] of the digital twin model.""")
 @cli_util.option('--digital-twin-model-spec-uri', help=u"""Filter resources that match the specified URI (DTMI) of the digital twin model.""")
+@cli_util.option('--connectivity-type', type=custom_types.CliCaseInsensitiveChoice(["DIRECT", "INDIRECT", "GATEWAY", "NONE"]), help=u"""Filter resources whose connectivityType matches the specified value.""")
 @cli_util.option('--id', help=u"""Filter resources by [OCID]. Must be a valid OCID of the resource type.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1908,7 +1917,7 @@ def list_digital_twin_adapters(ctx, from_json, all_pages, page_size, iot_domain_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'iot', 'class': 'DigitalTwinInstanceCollection'})
 @cli_util.wrap_exceptions
-def list_digital_twin_instances(ctx, from_json, all_pages, page_size, iot_domain_id, display_name, limit, page, lifecycle_state, sort_order, sort_by, digital_twin_model_id, digital_twin_model_spec_uri, id):
+def list_digital_twin_instances(ctx, from_json, all_pages, page_size, iot_domain_id, display_name, limit, page, lifecycle_state, sort_order, sort_by, digital_twin_model_id, digital_twin_model_spec_uri, connectivity_type, id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1930,6 +1939,8 @@ def list_digital_twin_instances(ctx, from_json, all_pages, page_size, iot_domain
         kwargs['digital_twin_model_id'] = digital_twin_model_id
     if digital_twin_model_spec_uri is not None:
         kwargs['digital_twin_model_spec_uri'] = digital_twin_model_spec_uri
+    if connectivity_type is not None:
+        kwargs['connectivity_type'] = connectivity_type
     if id is not None:
         kwargs['id'] = id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2505,6 +2516,7 @@ def update_digital_twin_adapter(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.option('--digital-twin-adapter-id', help=u"""The [OCID] of the digital twin adapter.""")
 @cli_util.option('--digital-twin-model-id', help=u"""The [OCID] of the digital twin model.""")
 @cli_util.option('--digital-twin-model-spec-uri', help=u"""The URI of the digital twin model specification.""")
+@cli_util.option('--gateways', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique ids ([OCIDs]) of the IoT digital twin instances with connectivityType equals to GATEWAY.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2516,18 +2528,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'iot', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'iot', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'gateways': {'module': 'iot', 'class': 'list[string]'}, 'freeform-tags': {'module': 'iot', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'iot', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'iot', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'iot', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'iot', 'class': 'DigitalTwinInstance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'gateways': {'module': 'iot', 'class': 'list[string]'}, 'freeform-tags': {'module': 'iot', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'iot', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'iot', 'class': 'DigitalTwinInstance'})
 @cli_util.wrap_exceptions
-def update_digital_twin_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_instance_id, auth_id, external_key, display_name, description, digital_twin_adapter_id, digital_twin_model_id, digital_twin_model_spec_uri, freeform_tags, defined_tags, if_match):
+def update_digital_twin_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_instance_id, auth_id, external_key, display_name, description, digital_twin_adapter_id, digital_twin_model_id, digital_twin_model_spec_uri, gateways, freeform_tags, defined_tags, if_match):
 
     if isinstance(digital_twin_instance_id, six.string_types) and len(digital_twin_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if gateways or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to gateways and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2557,6 +2569,9 @@ def update_digital_twin_instance(ctx, from_json, force, wait_for_state, max_wait
 
     if digital_twin_model_spec_uri is not None:
         _details['digitalTwinModelSpecUri'] = digital_twin_model_spec_uri
+
+    if gateways is not None:
+        _details['gateways'] = cli_util.parse_json_parameter("gateways", gateways)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

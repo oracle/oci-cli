@@ -30,7 +30,7 @@ class TestObjectStorage(unittest.TestCase):
         assert time_delta(1, 0) == '1 day 0 hours 0 mins'
         assert time_delta(2, 12840) == '2 days 3 hours 34 mins'
 
-    @mock.patch('click.termui.get_terminal_size')
+    @mock.patch('shutil.get_terminal_size')
     def test_get_progress_bar_label(self, mock_click):
         mock_click.return_value = (40, 80)
         str_long_slash = '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0' \

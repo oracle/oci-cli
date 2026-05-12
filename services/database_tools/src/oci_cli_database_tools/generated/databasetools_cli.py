@@ -16,15 +16,33 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('dbtools.dbtools_root_group.command_name', 'dbtools'), cls=CommandGroupWithAlias, help=cli_util.override('dbtools.dbtools_root_group.help', """Use the Database Tools API to manage connections, private endpoints, and work requests in the Database Tools service."""), short_help=cli_util.override('dbtools.dbtools_root_group.short_help', """Database Tools"""))
+@cli.command(cli_util.override('dbtools.dbtools_root_group.command_name', 'dbtools'), cls=CommandGroupWithAlias, help=cli_util.override('dbtools.dbtools_root_group.help', """Use the Database Tools API to manage connections, private endpoints, and work requests in the Database Tools service."""), short_help=cli_util.override('dbtools.dbtools_root_group.short_help', """Database Tools API"""))
 @cli_util.help_option_group
 def dbtools_root_group():
+    pass
+
+
+@click.command(cli_util.override('dbtools.database_tools_database_api_gateway_config_group.command_name', 'database-tools-database-api-gateway-config'), cls=CommandGroupWithAlias, help="""Manage configuration related to database API gateway config resources.""")
+@cli_util.help_option_group
+def database_tools_database_api_gateway_config_group():
+    pass
+
+
+@click.command(cli_util.override('dbtools.database_tools_mcp_toolset_group.command_name', 'database-tools-mcp-toolset'), cls=CommandGroupWithAlias, help="""Allows the creation, configuration and management of an MCP Toolset.""")
+@cli_util.help_option_group
+def database_tools_mcp_toolset_group():
     pass
 
 
 @click.command(cli_util.override('dbtools.database_tools_endpoint_service_group.command_name', 'database-tools-endpoint-service'), cls=CommandGroupWithAlias, help="""Description of Database Tools Endpoint Service.""")
 @cli_util.help_option_group
 def database_tools_endpoint_service_group():
+    pass
+
+
+@click.command(cli_util.override('dbtools.database_tools_mcp_server_group.command_name', 'database-tools-mcp-server'), cls=CommandGroupWithAlias, help="""Allows the creation, configuration and management of an MCP server.""")
+@cli_util.help_option_group
+def database_tools_mcp_server_group():
     pass
 
 
@@ -58,19 +76,36 @@ def work_request_group():
     pass
 
 
+@click.command(cli_util.override('dbtools.database_tools_mcp_toolset_version_collection_group.command_name', 'database-tools-mcp-toolset-version-collection'), cls=CommandGroupWithAlias, help="""List of MCP toolset type version summary items.""")
+@cli_util.help_option_group
+def database_tools_mcp_toolset_version_collection_group():
+    pass
+
+
 @click.command(cli_util.override('dbtools.database_tools_connection_group.command_name', 'database-tools-connection'), cls=CommandGroupWithAlias, help="""Provides connectivity details required to establish a connection to a database.""")
 @cli_util.help_option_group
 def database_tools_connection_group():
     pass
 
 
+@click.command(cli_util.override('dbtools.database_tools_sql_report_group.command_name', 'database-tools-sql-report'), cls=CommandGroupWithAlias, help="""Allows generating a summary of SQL query execution details for database operations.""")
+@cli_util.help_option_group
+def database_tools_sql_report_group():
+    pass
+
+
+dbtools_root_group.add_command(database_tools_database_api_gateway_config_group)
+dbtools_root_group.add_command(database_tools_mcp_toolset_group)
 dbtools_root_group.add_command(database_tools_endpoint_service_group)
+dbtools_root_group.add_command(database_tools_mcp_server_group)
 dbtools_root_group.add_command(database_tools_private_endpoint_group)
 dbtools_root_group.add_command(database_tools_identity_group)
 dbtools_root_group.add_command(work_request_error_group)
 dbtools_root_group.add_command(work_request_log_entry_group)
 dbtools_root_group.add_command(work_request_group)
+dbtools_root_group.add_command(database_tools_mcp_toolset_version_collection_group)
 dbtools_root_group.add_command(database_tools_connection_group)
+dbtools_root_group.add_command(database_tools_sql_report_group)
 
 
 @database_tools_connection_group.command(name=cli_util.override('dbtools.add_database_tools_connection_lock.command_name', 'add'), help=u"""Adds a lock to a DatabaseToolsConnection resource. \n[Command Reference](addDatabaseToolsConnectionLock)""")
@@ -128,6 +163,75 @@ def add_database_tools_connection_lock(ctx, from_json, wait_for_state, max_wait_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_database_tools_connection(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_database_api_gateway_config_group.command(name=cli_util.override('dbtools.add_database_tools_database_api_gateway_config_lock.command_name', 'add'), help=u"""Adds a lock to a DatabaseToolsDatabaseApiGatewayConfig resource. \n[Command Reference](addDatabaseToolsDatabaseApiGatewayConfigLock)""")
+@cli_util.option('--database-api-gateway-config-id', required=True, help=u"""The [OCID] of a Database Tools database API gateway config.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The id of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsDatabaseApiGatewayConfig'})
+@cli_util.wrap_exceptions
+def add_database_tools_database_api_gateway_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_api_gateway_config_id, type, related_resource_id, message, time_created, if_match):
+
+    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.add_database_tools_database_api_gateway_config_lock(
+        database_tools_database_api_gateway_config_id=database_api_gateway_config_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_database_api_gateway_config') and callable(getattr(client, 'get_database_tools_database_api_gateway_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_database_api_gateway_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -211,6 +315,144 @@ def add_database_tools_identity_lock(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.add_database_tools_mcp_server_lock.command_name', 'add'), help=u"""Adds a lock to a DatabaseToolsMcpServer resource. \n[Command Reference](addDatabaseToolsMcpServerLock)""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The [OCID] of a Database Tools MCP server.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The id of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpServer'})
+@cli_util.wrap_exceptions
+def add_database_tools_mcp_server_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, type, related_resource_id, message, time_created, if_match):
+
+    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.add_database_tools_mcp_server_lock(
+        database_tools_mcp_server_id=mcp_server_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_mcp_server') and callable(getattr(client, 'get_database_tools_mcp_server')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_mcp_server(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.add_database_tools_mcp_toolset_lock.command_name', 'add'), help=u"""Adds a lock to a DatabaseToolsMcpToolset resource. \n[Command Reference](addDatabaseToolsMcpToolsetLock)""")
+@cli_util.option('--mcp-toolset-id', required=True, help=u"""The [OCID] of a Database Tools MCP Toolset.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The id of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpToolset'})
+@cli_util.wrap_exceptions
+def add_database_tools_mcp_toolset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, type, related_resource_id, message, time_created, if_match):
+
+    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.add_database_tools_mcp_toolset_lock(
+        database_tools_mcp_toolset_id=mcp_toolset_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_mcp_toolset') and callable(getattr(client, 'get_database_tools_mcp_toolset')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_mcp_toolset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_private_endpoint_group.command(name=cli_util.override('dbtools.add_database_tools_private_endpoint_lock.command_name', 'add'), help=u"""Adds a lock to a DatabaseToolsPrivateEndpoint resource. \n[Command Reference](addDatabaseToolsPrivateEndpointLock)""")
 @cli_util.option('--database-tools-private-endpoint-id', required=True, help=u"""The [OCID] of a Database Tools private endpoint.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
@@ -280,6 +522,130 @@ def add_database_tools_private_endpoint_lock(ctx, from_json, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
+@database_tools_sql_report_group.command(name=cli_util.override('dbtools.add_database_tools_sql_report_lock.command_name', 'add'), help=u"""Adds a lock to a DatabaseToolsSqlReport resource. \n[Command Reference](addDatabaseToolsSqlReportLock)""")
+@cli_util.option('--sql-report-id', required=True, help=u"""The [OCID] of a Database Tools SQL Report.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The id of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsSqlReport'})
+@cli_util.wrap_exceptions
+def add_database_tools_sql_report_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_report_id, type, related_resource_id, message, time_created, if_match):
+
+    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.add_database_tools_sql_report_lock(
+        database_tools_sql_report_id=sql_report_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_sql_report') and callable(getattr(client, 'get_database_tools_sql_report')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_sql_report(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.cascading_delete_database_tools_mcp_server.command_name', 'cascading-delete'), help=u"""Deletes Database Tools McpServer resource. \n[Command Reference](cascadingDeleteDatabaseToolsMcpServer)""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The [OCID] of a Database Tools MCP server.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def cascading_delete_database_tools_mcp_server(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, if_match):
+
+    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.cascading_delete_database_tools_mcp_server(
+        database_tools_mcp_server_id=mcp_server_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_connection_group.command(name=cli_util.override('dbtools.change_database_tools_connection_compartment.command_name', 'change-compartment'), help=u"""Moves the specified Database Tools connection to a different compartment in the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDatabaseToolsConnectionCompartment)""")
 @cli_util.option('--database-tools-connection-id', required=True, help=u"""The [OCID] of a Database Tools connection.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Database Tools connection to.""")
@@ -341,6 +707,40 @@ def change_database_tools_connection_compartment(ctx, from_json, wait_for_state,
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_database_api_gateway_config_group.command(name=cli_util.override('dbtools.change_database_tools_database_api_gateway_config_compartment.command_name', 'change-compartment'), help=u"""Moves the specified Database Tools database API gateway config to a different compartment in the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDatabaseToolsDatabaseApiGatewayConfigCompartment)""")
+@cli_util.option('--database-api-gateway-config-id', required=True, help=u"""The [OCID] of a Database Tools database API gateway config.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Database Tools database API gateway config to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_database_tools_database_api_gateway_config_compartment(ctx, from_json, database_api_gateway_config_id, compartment_id, if_match, is_lock_override):
+
+    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.change_database_tools_database_api_gateway_config_compartment(
+        database_tools_database_api_gateway_config_id=database_api_gateway_config_id,
+        change_database_tools_database_api_gateway_config_compartment_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -408,6 +808,104 @@ def change_database_tools_identity_compartment(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.change_database_tools_mcp_server_compartment.command_name', 'change-compartment'), help=u"""Moves the specified Database Tools mcpserver to a different compartment in the same tenancy. \n[Command Reference](changeDatabaseToolsMcpServerCompartment)""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The [OCID] of a Database Tools MCP server.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Database Tools MCP server to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_database_tools_mcp_server_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, compartment_id, if_match, is_lock_override):
+
+    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.change_database_tools_mcp_server_compartment(
+        database_tools_mcp_server_id=mcp_server_id,
+        change_database_tools_mcp_server_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.change_database_tools_mcp_toolset_compartment.command_name', 'change-compartment'), help=u"""Moves the specified Database Tools MCP Toolset to a different compartment in the same tenancy. \n[Command Reference](changeDatabaseToolsMcpToolsetCompartment)""")
+@cli_util.option('--mcp-toolset-id', required=True, help=u"""The [OCID] of a Database Tools MCP Toolset.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Database Tools MCP Toolset to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_database_tools_mcp_toolset_compartment(ctx, from_json, mcp_toolset_id, compartment_id, if_match, is_lock_override):
+
+    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.change_database_tools_mcp_toolset_compartment(
+        database_tools_mcp_toolset_id=mcp_toolset_id,
+        change_database_tools_mcp_toolset_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_private_endpoint_group.command(name=cli_util.override('dbtools.change_database_tools_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a Database Tools private endpoint into a different compartment in the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDatabaseToolsPrivateEndpointCompartment)""")
 @cli_util.option('--database-tools-private-endpoint-id', required=True, help=u"""The [OCID] of a Database Tools private endpoint.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the `DatabaseConnectionProfile` to.""")
@@ -472,6 +970,40 @@ def change_database_tools_private_endpoint_compartment(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
+@database_tools_sql_report_group.command(name=cli_util.override('dbtools.change_database_tools_sql_report_compartment.command_name', 'change-compartment'), help=u"""Moves the specified Database Tools SQL Report to a different compartment in the same tenancy. \n[Command Reference](changeDatabaseToolsSqlReportCompartment)""")
+@cli_util.option('--sql-report-id', required=True, help=u"""The [OCID] of a Database Tools SQL Report.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Database Tools SQL Report to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_database_tools_sql_report_compartment(ctx, from_json, sql_report_id, compartment_id, if_match, is_lock_override):
+
+    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.change_database_tools_sql_report_compartment(
+        database_tools_sql_report_id=sql_report_id,
+        change_database_tools_sql_report_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_connection_group.command(name=cli_util.override('dbtools.create_database_tools_connection.command_name', 'create'), help=u"""Creates a new Database Tools connection. \n[Command Reference](createDatabaseToolsConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools connection.""")
@@ -482,7 +1014,7 @@ def change_database_tools_private_endpoint_compartment(ctx, from_json, wait_for_
 
 This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--runtime-support', type=custom_types.CliCaseInsensitiveChoice(["SUPPORTED", "UNSUPPORTED"]), help=u"""Specifies whether this connection is supported by the Database Tools Runtime.""")
-@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used by the Database Tools service to issue requests to other OCI services (e.g., Secrets in Vault).""")
+@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used when accessing OCI resources at runtime. AUTHENTICATED_PRINCIPAL to use the caller\u2019s identity (On-Behalf-Of token), or RESOURCE_PRINCIPAL to use the connection\u2019s resource principal (RPST).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -563,7 +1095,7 @@ def create_database_tools_connection(ctx, from_json, wait_for_state, max_wait_se
 
 This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--runtime-support', type=custom_types.CliCaseInsensitiveChoice(["SUPPORTED", "UNSUPPORTED"]), help=u"""Specifies whether this connection is supported by the Database Tools Runtime.""")
-@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used by the Database Tools service to issue requests to other OCI services (e.g., Secrets in Vault).""")
+@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used when accessing OCI resources at runtime. AUTHENTICATED_PRINCIPAL to use the caller\u2019s identity (On-Behalf-Of token), or RESOURCE_PRINCIPAL to use the connection\u2019s resource principal (RPST).""")
 @cli_util.option('--advanced-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The advanced connection properties key-value pair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--key-stores', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The CA certificate to verify the server's certificate and the client private key and associated certificate required for client authentication.
 
@@ -658,7 +1190,7 @@ def create_database_tools_connection_create_database_tools_connection_generic_jd
 
 This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--runtime-support', type=custom_types.CliCaseInsensitiveChoice(["SUPPORTED", "UNSUPPORTED"]), help=u"""Specifies whether this connection is supported by the Database Tools Runtime.""")
-@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used by the Database Tools service to issue requests to other OCI services (e.g., Secrets in Vault).""")
+@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used when accessing OCI resources at runtime. AUTHENTICATED_PRINCIPAL to use the caller\u2019s identity (On-Behalf-Of token), or RESOURCE_PRINCIPAL to use the connection\u2019s resource principal (RPST).""")
 @cli_util.option('--related-resource', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--advanced-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The advanced connection properties key-value pair (e.g., `sslMode`).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--key-stores', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The CA certificate to verify the server's certificate and the client private key and associated certificate required for client authentication.
@@ -761,7 +1293,7 @@ def create_database_tools_connection_create_database_tools_connection_postgresql
 
 This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--runtime-support', type=custom_types.CliCaseInsensitiveChoice(["SUPPORTED", "UNSUPPORTED"]), help=u"""Specifies whether this connection is supported by the Database Tools Runtime.""")
-@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used by the Database Tools service to issue requests to other OCI services (e.g., Secrets in Vault).""")
+@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used when accessing OCI resources at runtime. AUTHENTICATED_PRINCIPAL to use the caller\u2019s identity (On-Behalf-Of token), or RESOURCE_PRINCIPAL to use the connection\u2019s resource principal (RPST).""")
 @cli_util.option('--related-resource', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--advanced-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The advanced connection properties key-value pair (e.g., `sslMode`).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--key-stores', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The CA certificate to verify the server's certificate and the client private key and associated certificate required for client authentication.
@@ -856,22 +1388,23 @@ def create_database_tools_connection_create_database_tools_connection_my_sql_det
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools connection.""")
 @cli_util.option('--connection-string', required=True, help=u"""The connect descriptor or Easy Connect Naming method use to connect to the database.""")
-@cli_util.option('--user-name', required=True, help=u"""The database user name.""")
-@cli_util.option('--user-password', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--runtime-support', type=custom_types.CliCaseInsensitiveChoice(["SUPPORTED", "UNSUPPORTED"]), help=u"""Specifies whether this connection is supported by the Database Tools Runtime.""")
-@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used by the Database Tools service to issue requests to other OCI services (e.g., Secrets in Vault).""")
+@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used when accessing OCI resources at runtime. AUTHENTICATED_PRINCIPAL to use the caller\u2019s identity (On-Behalf-Of token), or RESOURCE_PRINCIPAL to use the connection\u2019s resource principal (RPST).""")
 @cli_util.option('--related-resource', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--user-name', help=u"""The database user name.""")
+@cli_util.option('--user-password', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--advanced-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The advanced connection properties key-value pair (e.g., `oracle.net.ssl_server_dn_match`).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--key-stores', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Oracle wallet or Java Keystores containing trusted certificates for authenticating the server's public certificate and the client private key and associated certificates required for client authentication.
 
 This option is a JSON list with items of type DatabaseToolsKeyStoreDetails.  For documentation on DatabaseToolsKeyStoreDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsKeyStoreDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-id', help=u"""The [OCID] of the Database Tools private endpoint used to access the database in the customer VCN.""")
 @cli_util.option('--proxy-client', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authentication-type', type=custom_types.CliCaseInsensitiveChoice(["TOKEN", "PASSWORD"]), help=u"""Specifies the authentication type used by the Database Tools service to authenticate with the database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -880,7 +1413,7 @@ This option is a JSON list with items of type DatabaseToolsKeyStoreDetails.  For
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'related-resource': {'module': 'database_tools', 'class': 'CreateDatabaseToolsRelatedResourceDetails'}, 'user-password': {'module': 'database_tools', 'class': 'DatabaseToolsUserPasswordDetails'}, 'advanced-properties': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'key-stores': {'module': 'database_tools', 'class': 'list[DatabaseToolsKeyStoreDetails]'}, 'proxy-client': {'module': 'database_tools', 'class': 'DatabaseToolsConnectionOracleDatabaseProxyClientDetails'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsConnection'})
 @cli_util.wrap_exceptions
-def create_database_tools_connection_create_database_tools_connection_oracle_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, connection_string, user_name, user_password, defined_tags, freeform_tags, locks, runtime_support, runtime_identity, related_resource, advanced_properties, key_stores, private_endpoint_id, proxy_client):
+def create_database_tools_connection_create_database_tools_connection_oracle_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, connection_string, defined_tags, freeform_tags, locks, runtime_support, runtime_identity, related_resource, user_name, user_password, advanced_properties, key_stores, private_endpoint_id, proxy_client, authentication_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -889,8 +1422,6 @@ def create_database_tools_connection_create_database_tools_connection_oracle_dat
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
     _details['connectionString'] = connection_string
-    _details['userName'] = user_name
-    _details['userPassword'] = cli_util.parse_json_parameter("user_password", user_password)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -910,6 +1441,12 @@ def create_database_tools_connection_create_database_tools_connection_oracle_dat
     if related_resource is not None:
         _details['relatedResource'] = cli_util.parse_json_parameter("related_resource", related_resource)
 
+    if user_name is not None:
+        _details['userName'] = user_name
+
+    if user_password is not None:
+        _details['userPassword'] = cli_util.parse_json_parameter("user_password", user_password)
+
     if advanced_properties is not None:
         _details['advancedProperties'] = cli_util.parse_json_parameter("advanced_properties", advanced_properties)
 
@@ -921,6 +1458,9 @@ def create_database_tools_connection_create_database_tools_connection_oracle_dat
 
     if proxy_client is not None:
         _details['proxyClient'] = cli_util.parse_json_parameter("proxy_client", proxy_client)
+
+    if authentication_type is not None:
+        _details['authenticationType'] = authentication_type
 
     _details['type'] = 'ORACLE_DATABASE'
 
@@ -959,10 +1499,148 @@ def create_database_tools_connection_create_database_tools_connection_oracle_dat
     cli_util.render_response(result, ctx)
 
 
+@database_tools_database_api_gateway_config_group.command(name=cli_util.override('dbtools.create_database_tools_database_api_gateway_config.command_name', 'create'), help=u"""Creates a new Database Tools database API gateway config. \n[Command Reference](createDatabaseToolsDatabaseApiGatewayConfig)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The Database Tools DP API gateway config type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools database API gateway config.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--metadata-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATABASE", "CLOUD"]), help=u"""The RESTful service definition location.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsDatabaseApiGatewayConfig'})
+@cli_util.wrap_exceptions
+def create_database_tools_database_api_gateway_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, display_name, metadata_source, defined_tags, freeform_tags, locks):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['metadataSource'] = metadata_source
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_database_api_gateway_config(
+        create_database_tools_database_api_gateway_config_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_database_api_gateway_config') and callable(getattr(client, 'get_database_tools_database_api_gateway_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_database_api_gateway_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_database_api_gateway_config_group.command(name=cli_util.override('dbtools.create_database_tools_database_api_gateway_config_create_database_tools_database_api_gateway_config_default_details.command_name', 'create-database-tools-database-api-gateway-config-create-database-tools-database-api-gateway-config-default-details'), help=u"""Creates a new Database Tools database API gateway config. \n[Command Reference](createDatabaseToolsDatabaseApiGatewayConfig)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools database API gateway config.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--metadata-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATABASE", "CLOUD"]), help=u"""The RESTful service definition location.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsDatabaseApiGatewayConfig'})
+@cli_util.wrap_exceptions
+def create_database_tools_database_api_gateway_config_create_database_tools_database_api_gateway_config_default_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, metadata_source, defined_tags, freeform_tags, locks):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['metadataSource'] = metadata_source
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_database_api_gateway_config(
+        create_database_tools_database_api_gateway_config_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_database_api_gateway_config') and callable(getattr(client, 'get_database_tools_database_api_gateway_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_database_api_gateway_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_identity_group.command(name=cli_util.override('dbtools.create_database_tools_identity.command_name', 'create'), help=u"""Creates a new Database Tools identity. \n[Command Reference](createDatabaseToolsIdentity)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATABASE_RESOURCE_PRINCIPAL"]), help=u"""The Database Tools identity type.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools identity.""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
 @cli_util.option('--database-tools-connection-id', required=True, help=u"""The [OCID] of the related Database Tools connection.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1034,7 +1712,7 @@ def create_database_tools_identity(ctx, from_json, wait_for_state, max_wait_seco
 
 @database_tools_identity_group.command(name=cli_util.override('dbtools.create_database_tools_identity_create_database_tools_identity_oracle_database_resource_principal_details.command_name', 'create-database-tools-identity-create-database-tools-identity-oracle-database-resource-principal-details'), help=u"""Creates a new Database Tools identity. \n[Command Reference](createDatabaseToolsIdentity)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools identity.""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
 @cli_util.option('--database-tools-connection-id', required=True, help=u"""The [OCID] of the related Database Tools connection.""")
 @cli_util.option('--credential-key', required=True, help=u"""The name of the credential object created in the Oracle Database.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1075,6 +1753,659 @@ def create_database_tools_identity_create_database_tools_identity_oracle_databas
     client = cli_util.build_client('database_tools', 'database_tools', ctx)
     result = client.create_database_tools_identity(
         create_database_tools_identity_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.create_database_tools_mcp_server.command_name', 'create'), help=u"""Creates a new Database Tools MCP server. \n[Command Reference](createDatabaseToolsMcpServer)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The Database Tools MCP server type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools MCP server.""")
+@cli_util.option('--display-name', required=True, help=u"""A meaningful, human-readable label displayed to end users. Not required to be unique and can be changed after creation. Do not include confidential information.""")
+@cli_util.option('--connection-id', required=True, help=u"""The [OCID] of the related Database Tools connection.""")
+@cli_util.option('--custom-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom Roles associated with the MCP Server.
+
+This option is a JSON list with items of type DatabaseToolsMcpServerCustomRole.  For documentation on DatabaseToolsMcpServerCustomRole please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsMcpServerCustomRole.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A human-readable description of the Database Tools MCP server.""")
+@cli_util.option('--access-token-expiry-in-seconds', type=click.INT, help=u"""Access token expiry in seconds""")
+@cli_util.option('--refresh-token-expiry-in-seconds', type=click.INT, help=u"""Refresh token expiry in seconds""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used when accessing OCI resources at runtime. AUTHENTICATED_PRINCIPAL to use the caller\u2019s identity (On-Behalf-Of token), or RESOURCE_PRINCIPAL to use the MCP Server\u2019s resource principal (RPST).""")
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'custom-roles': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpServerCustomRole]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-roles': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpServerCustomRole]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpServer'})
+@cli_util.wrap_exceptions
+def create_database_tools_mcp_server(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, display_name, connection_id, custom_roles, description, access_token_expiry_in_seconds, refresh_token_expiry_in_seconds, defined_tags, freeform_tags, runtime_identity, locks):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['databaseToolsConnectionId'] = connection_id
+
+    if custom_roles is not None:
+        _details['customRoles'] = cli_util.parse_json_parameter("custom_roles", custom_roles)
+
+    if description is not None:
+        _details['description'] = description
+
+    if access_token_expiry_in_seconds is not None:
+        _details['accessTokenExpiryInSeconds'] = access_token_expiry_in_seconds
+
+    if refresh_token_expiry_in_seconds is not None:
+        _details['refreshTokenExpiryInSeconds'] = refresh_token_expiry_in_seconds
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if runtime_identity is not None:
+        _details['runtimeIdentity'] = runtime_identity
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_mcp_server(
+        create_database_tools_mcp_server_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.create_database_tools_mcp_server_create_database_tools_mcp_server_default_details.command_name', 'create-database-tools-mcp-server-create-database-tools-mcp-server-default-details'), help=u"""Creates a new Database Tools MCP server. \n[Command Reference](createDatabaseToolsMcpServer)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools MCP server.""")
+@cli_util.option('--display-name', required=True, help=u"""A meaningful, human-readable label displayed to end users. Not required to be unique and can be changed after creation. Do not include confidential information.""")
+@cli_util.option('--connection-id', required=True, help=u"""The [OCID] of the related Database Tools connection.""")
+@cli_util.option('--domain-id', required=True, help=u"""The [OCID] of the associated identity domain.""")
+@cli_util.option('--storage', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--custom-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom Roles associated with the MCP Server.
+
+This option is a JSON list with items of type DatabaseToolsMcpServerCustomRole.  For documentation on DatabaseToolsMcpServerCustomRole please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsMcpServerCustomRole.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A human-readable description of the Database Tools MCP server.""")
+@cli_util.option('--access-token-expiry-in-seconds', type=click.INT, help=u"""Access token expiry in seconds""")
+@cli_util.option('--refresh-token-expiry-in-seconds', type=click.INT, help=u"""Refresh token expiry in seconds""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--runtime-identity', type=custom_types.CliCaseInsensitiveChoice(["AUTHENTICATED_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""Specifies the identity used when accessing OCI resources at runtime. AUTHENTICATED_PRINCIPAL to use the caller\u2019s identity (On-Behalf-Of token), or RESOURCE_PRINCIPAL to use the MCP Server\u2019s resource principal (RPST).""")
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'custom-roles': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpServerCustomRole]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'storage': {'module': 'database_tools', 'class': 'DatabaseToolsMcpServerStorage'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-roles': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpServerCustomRole]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'storage': {'module': 'database_tools', 'class': 'DatabaseToolsMcpServerStorage'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpServer'})
+@cli_util.wrap_exceptions
+def create_database_tools_mcp_server_create_database_tools_mcp_server_default_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, connection_id, domain_id, storage, custom_roles, description, access_token_expiry_in_seconds, refresh_token_expiry_in_seconds, defined_tags, freeform_tags, runtime_identity, locks):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['databaseToolsConnectionId'] = connection_id
+    _details['domainId'] = domain_id
+    _details['storage'] = cli_util.parse_json_parameter("storage", storage)
+
+    if custom_roles is not None:
+        _details['customRoles'] = cli_util.parse_json_parameter("custom_roles", custom_roles)
+
+    if description is not None:
+        _details['description'] = description
+
+    if access_token_expiry_in_seconds is not None:
+        _details['accessTokenExpiryInSeconds'] = access_token_expiry_in_seconds
+
+    if refresh_token_expiry_in_seconds is not None:
+        _details['refreshTokenExpiryInSeconds'] = refresh_token_expiry_in_seconds
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if runtime_identity is not None:
+        _details['runtimeIdentity'] = runtime_identity
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_mcp_server(
+        create_database_tools_mcp_server_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.create_database_tools_mcp_toolset.command_name', 'create'), help=u"""Creates a new Database Tools MCP Toolset. \n[Command Reference](createDatabaseToolsMcpToolset)""")
+@cli_util.option('--toolset-version', required=True, type=click.INT, help=u"""The MCP toolset version""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools MCP server.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The OCID of the Database Tools MCP Server""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CUSTOM_SQL_TOOL", "BUILT_IN_SQL_TOOLS", "CUSTOMIZABLE_REPORTING_TOOLS", "GENAI_SQL_ASSISTANT"]), help=u"""The Database Tools MCP Toolset type.""")
+@cli_util.option('--description', help=u"""A human readable description of the Database Tools MCP toolset.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpToolset'})
+@cli_util.wrap_exceptions
+def create_database_tools_mcp_toolset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, toolset_version, compartment_id, display_name, mcp_server_id, type, description, defined_tags, freeform_tags, locks):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['version'] = toolset_version
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['databaseToolsMcpServerId'] = mcp_server_id
+    _details['type'] = type
+
+    if description is not None:
+        _details['description'] = description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_mcp_toolset(
+        create_database_tools_mcp_toolset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_built_in_sql_tools_details.command_name', 'create-database-tools-mcp-toolset-create-database-tools-mcp-toolset-built-in-sql-tools-details'), help=u"""Creates a new Database Tools MCP Toolset. \n[Command Reference](createDatabaseToolsMcpToolset)""")
+@cli_util.option('--toolset-version', required=True, type=click.INT, help=u"""The MCP toolset version""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools MCP server.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The OCID of the Database Tools MCP Server""")
+@cli_util.option('--description', help=u"""A human readable description of the Database Tools MCP toolset.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Database Tools BUILT_IN_SQL_TOOLS toolset tool configurations
+
+This option is a JSON list with items of type CreateDatabaseToolsMcpToolsetToolDetails.  For documentation on CreateDatabaseToolsMcpToolsetToolDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/CreateDatabaseToolsMcpToolsetToolDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNCHRONOUS"]), help=u"""The default execution type for the toolset. The default value is SYNCHRONOUS.
+
+To use ASYNCHRONOUS execution, the MCP Server must have the storage property configured.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'tools': {'module': 'database_tools', 'class': 'list[CreateDatabaseToolsMcpToolsetToolDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'tools': {'module': 'database_tools', 'class': 'list[CreateDatabaseToolsMcpToolsetToolDetails]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpToolset'})
+@cli_util.wrap_exceptions
+def create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_built_in_sql_tools_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, toolset_version, compartment_id, display_name, mcp_server_id, description, defined_tags, freeform_tags, locks, tools, default_execution_type):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['version'] = toolset_version
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['databaseToolsMcpServerId'] = mcp_server_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    if tools is not None:
+        _details['tools'] = cli_util.parse_json_parameter("tools", tools)
+
+    if default_execution_type is not None:
+        _details['defaultExecutionType'] = default_execution_type
+
+    _details['type'] = 'BUILT_IN_SQL_TOOLS'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_mcp_toolset(
+        create_database_tools_mcp_toolset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_custom_sql_tool_details.command_name', 'create-database-tools-mcp-toolset-create-database-tools-mcp-toolset-custom-sql-tool-details'), help=u"""Creates a new Database Tools MCP Toolset. \n[Command Reference](createDatabaseToolsMcpToolset)""")
+@cli_util.option('--toolset-version', required=True, type=click.INT, help=u"""The MCP toolset version""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools MCP server.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The OCID of the Database Tools MCP Server""")
+@cli_util.option('--tool-name', required=True, help=u"""Name of the tool returned by the MCP Server""")
+@cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A human readable description of the Database Tools MCP toolset.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tool-description', help=u"""Instructions describing how to use the MCP toolset and its features. This can be used to improve the LLM's understanding of the tool.""")
+@cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The variables to use with the query
+
+This option is a JSON list with items of type DatabaseToolsMcpToolsetCustomSqlToolVariable.  For documentation on DatabaseToolsMcpToolsetCustomSqlToolVariable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsMcpToolsetCustomSqlToolVariable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--allowed-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The roles granted access to the MCP tool generated by this toolset""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNCHRONOUS"]), help=u"""The default execution type for the toolset. The default value is SYNCHRONOUS.
+
+To use ASYNCHRONOUS execution, the MCP Server must have the storage property configured.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'source': {'module': 'database_tools', 'class': 'DatabaseToolsCustomSqlToolToolsetSource'}, 'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpToolsetCustomSqlToolVariable]'}, 'allowed-roles': {'module': 'database_tools', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'source': {'module': 'database_tools', 'class': 'DatabaseToolsCustomSqlToolToolsetSource'}, 'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpToolsetCustomSqlToolVariable]'}, 'allowed-roles': {'module': 'database_tools', 'class': 'list[string]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpToolset'})
+@cli_util.wrap_exceptions
+def create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_custom_sql_tool_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, toolset_version, compartment_id, display_name, mcp_server_id, tool_name, source, description, defined_tags, freeform_tags, locks, tool_description, variables, allowed_roles, default_execution_type):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['version'] = toolset_version
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['databaseToolsMcpServerId'] = mcp_server_id
+    _details['toolName'] = tool_name
+    _details['source'] = cli_util.parse_json_parameter("source", source)
+
+    if description is not None:
+        _details['description'] = description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    if tool_description is not None:
+        _details['toolDescription'] = tool_description
+
+    if variables is not None:
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
+
+    if allowed_roles is not None:
+        _details['allowedRoles'] = cli_util.parse_json_parameter("allowed_roles", allowed_roles)
+
+    if default_execution_type is not None:
+        _details['defaultExecutionType'] = default_execution_type
+
+    _details['type'] = 'CUSTOM_SQL_TOOL'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_mcp_toolset(
+        create_database_tools_mcp_toolset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_gen_ai_sql_assistant_details.command_name', 'create-database-tools-mcp-toolset-create-database-tools-mcp-toolset-gen-ai-sql-assistant-details'), help=u"""Creates a new Database Tools MCP Toolset. \n[Command Reference](createDatabaseToolsMcpToolset)""")
+@cli_util.option('--toolset-version', required=True, type=click.INT, help=u"""The MCP toolset version""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools MCP server.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The OCID of the Database Tools MCP Server""")
+@cli_util.option('--generative-ai-semantic-store-id', required=True, help=u"""The [OCID] of the related Generative AI Semantic Store.""")
+@cli_util.option('--description', help=u"""A human readable description of the Database Tools MCP toolset.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Database Tools GENAI_SQL_ASSISTANT toolset tool configurations
+
+This option is a JSON list with items of type CreateDatabaseToolsMcpToolsetToolDetails.  For documentation on CreateDatabaseToolsMcpToolsetToolDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/CreateDatabaseToolsMcpToolsetToolDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNCHRONOUS"]), help=u"""The default execution type for the toolset. The default value is SYNCHRONOUS.
+
+To use ASYNCHRONOUS execution, the MCP Server must have the storage property configured.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'tools': {'module': 'database_tools', 'class': 'list[CreateDatabaseToolsMcpToolsetToolDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'tools': {'module': 'database_tools', 'class': 'list[CreateDatabaseToolsMcpToolsetToolDetails]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpToolset'})
+@cli_util.wrap_exceptions
+def create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_gen_ai_sql_assistant_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, toolset_version, compartment_id, display_name, mcp_server_id, generative_ai_semantic_store_id, description, defined_tags, freeform_tags, locks, tools, default_execution_type):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['version'] = toolset_version
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['databaseToolsMcpServerId'] = mcp_server_id
+    _details['generativeAiSemanticStoreId'] = generative_ai_semantic_store_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    if tools is not None:
+        _details['tools'] = cli_util.parse_json_parameter("tools", tools)
+
+    if default_execution_type is not None:
+        _details['defaultExecutionType'] = default_execution_type
+
+    _details['type'] = 'GENAI_SQL_ASSISTANT'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_mcp_toolset(
+        create_database_tools_mcp_toolset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_customizable_reporting_tools_details.command_name', 'create-database-tools-mcp-toolset-create-database-tools-mcp-toolset-customizable-reporting-tools-details'), help=u"""Creates a new Database Tools MCP Toolset. \n[Command Reference](createDatabaseToolsMcpToolset)""")
+@cli_util.option('--toolset-version', required=True, type=click.INT, help=u"""The MCP toolset version""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools MCP server.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The OCID of the Database Tools MCP Server""")
+@cli_util.option('--reports', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Database Tools SQL Reports""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A human readable description of the Database Tools MCP toolset.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Database Tools CUSTOMIZABLE_REPORTING_TOOLS toolset tool configurations
+
+This option is a JSON list with items of type CreateDatabaseToolsMcpToolsetToolDetails.  For documentation on CreateDatabaseToolsMcpToolsetToolDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/CreateDatabaseToolsMcpToolsetToolDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNCHRONOUS"]), help=u"""The default execution type for the toolset. The default value is SYNCHRONOUS.
+
+To use ASYNCHRONOUS execution, the MCP Server must have the storage property configured.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'reports': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpToolsetCustomizableReportingToolsReport]'}, 'tools': {'module': 'database_tools', 'class': 'list[CreateDatabaseToolsMcpToolsetToolDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}, 'reports': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpToolsetCustomizableReportingToolsReport]'}, 'tools': {'module': 'database_tools', 'class': 'list[CreateDatabaseToolsMcpToolsetToolDetails]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpToolset'})
+@cli_util.wrap_exceptions
+def create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_customizable_reporting_tools_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, toolset_version, compartment_id, display_name, mcp_server_id, reports, description, defined_tags, freeform_tags, locks, tools, default_execution_type):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['version'] = toolset_version
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['databaseToolsMcpServerId'] = mcp_server_id
+    _details['reports'] = cli_util.parse_json_parameter("reports", reports)
+
+    if description is not None:
+        _details['description'] = description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    if tools is not None:
+        _details['tools'] = cli_util.parse_json_parameter("tools", tools)
+
+    if default_execution_type is not None:
+        _details['defaultExecutionType'] = default_execution_type
+
+    _details['type'] = 'CUSTOMIZABLE_REPORTING_TOOLS'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_mcp_toolset(
+        create_database_tools_mcp_toolset_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -1192,6 +2523,200 @@ def create_database_tools_private_endpoint(ctx, from_json, wait_for_state, max_w
     cli_util.render_response(result, ctx)
 
 
+@database_tools_sql_report_group.command(name=cli_util.override('dbtools.create_database_tools_sql_report.command_name', 'create'), help=u"""Creates a new Database Tools  Sql Report. \n[Command Reference](createDatabaseToolsSqlReport)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATABASE"]), help=u"""The Database Tools SQL report type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools SQL report.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--source', required=True, help=u"""SQL query executed to generate the report.""")
+@cli_util.option('--description', help=u"""A description of the SQL report.""")
+@cli_util.option('--purpose', help=u"""Purpose of the Database Tools SQL report. Scenario or conditions describing when or why this report should be used. Provides selection criteria to AI agents to improve report selection accuracy.""")
+@cli_util.option('--instructions', help=u"""Instructions on how to use the SQL report. Step-by-step guidance for an AI agent on how to execute or fill in parameters for the report.""")
+@cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Variables referenced in the Database Tools SQL Report source.
+
+This option is a JSON list with items of type DatabaseToolsSqlReportVariable.  For documentation on DatabaseToolsSqlReportVariable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsSqlReportVariable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--columns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Descriptive information on columns referenced in the Database Tools SQL Report source.
+
+This option is a JSON list with items of type DatabaseToolsSqlReportColumn.  For documentation on DatabaseToolsSqlReportColumn please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsSqlReportColumn.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportVariable]'}, 'columns': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportColumn]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportVariable]'}, 'columns': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportColumn]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsSqlReport'})
+@cli_util.wrap_exceptions
+def create_database_tools_sql_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, display_name, source, description, purpose, instructions, variables, columns, defined_tags, freeform_tags, locks):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['source'] = source
+
+    if description is not None:
+        _details['description'] = description
+
+    if purpose is not None:
+        _details['purpose'] = purpose
+
+    if instructions is not None:
+        _details['instructions'] = instructions
+
+    if variables is not None:
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
+
+    if columns is not None:
+        _details['columns'] = cli_util.parse_json_parameter("columns", columns)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_sql_report(
+        create_database_tools_sql_report_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_sql_report_group.command(name=cli_util.override('dbtools.create_database_tools_sql_report_create_database_tools_sql_report_oracle_database_details.command_name', 'create-database-tools-sql-report-create-database-tools-sql-report-oracle-database-details'), help=u"""Creates a new Database Tools  Sql Report. \n[Command Reference](createDatabaseToolsSqlReport)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Database Tools SQL report.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--source', required=True, help=u"""SQL query executed to generate the report.""")
+@cli_util.option('--description', help=u"""A description of the SQL report.""")
+@cli_util.option('--purpose', help=u"""Purpose of the Database Tools SQL report. Scenario or conditions describing when or why this report should be used. Provides selection criteria to AI agents to improve report selection accuracy.""")
+@cli_util.option('--instructions', help=u"""Instructions on how to use the SQL report. Step-by-step guidance for an AI agent on how to execute or fill in parameters for the report.""")
+@cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Variables referenced in the Database Tools SQL Report source.
+
+This option is a JSON list with items of type DatabaseToolsSqlReportVariable.  For documentation on DatabaseToolsSqlReportVariable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsSqlReportVariable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--columns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Descriptive information on columns referenced in the Database Tools SQL Report source.
+
+This option is a JSON list with items of type DatabaseToolsSqlReportColumn.  For documentation on DatabaseToolsSqlReportColumn please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsSqlReportColumn.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportVariable]'}, 'columns': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportColumn]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportVariable]'}, 'columns': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportColumn]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsSqlReport'})
+@cli_util.wrap_exceptions
+def create_database_tools_sql_report_create_database_tools_sql_report_oracle_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, source, description, purpose, instructions, variables, columns, defined_tags, freeform_tags, locks):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['source'] = source
+
+    if description is not None:
+        _details['description'] = description
+
+    if purpose is not None:
+        _details['purpose'] = purpose
+
+    if instructions is not None:
+        _details['instructions'] = instructions
+
+    if variables is not None:
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
+
+    if columns is not None:
+        _details['columns'] = cli_util.parse_json_parameter("columns", columns)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    _details['type'] = 'ORACLE_DATABASE'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.create_database_tools_sql_report(
+        create_database_tools_sql_report_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_connection_group.command(name=cli_util.override('dbtools.delete_database_tools_connection.command_name', 'delete'), help=u"""Deletes the specified Database Tools connection resource. \n[Command Reference](deleteDatabaseToolsConnection)""")
 @cli_util.option('--database-tools-connection-id', required=True, help=u"""The [OCID] of a Database Tools connection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1251,6 +2776,73 @@ def delete_database_tools_connection(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
+@database_tools_database_api_gateway_config_group.command(name=cli_util.override('dbtools.delete_database_tools_database_api_gateway_config.command_name', 'delete'), help=u"""Deletes the specified Database Tools database API gateway config resource. \n[Command Reference](deleteDatabaseToolsDatabaseApiGatewayConfig)""")
+@cli_util.option('--database-api-gateway-config-id', required=True, help=u"""The [OCID] of a Database Tools database API gateway config.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_database_tools_database_api_gateway_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_api_gateway_config_id, if_match, is_lock_override):
+
+    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.delete_database_tools_database_api_gateway_config(
+        database_tools_database_api_gateway_config_id=database_api_gateway_config_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_database_api_gateway_config') and callable(getattr(client, 'get_database_tools_database_api_gateway_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_database_tools_database_api_gateway_config(database_api_gateway_config_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_identity_group.command(name=cli_util.override('dbtools.delete_database_tools_identity.command_name', 'delete'), help=u"""Deletes the specified Database Tools identity resource. \n[Command Reference](deleteDatabaseToolsIdentity)""")
 @cli_util.option('--database-tools-identity-id', required=True, help=u"""The [OCID] of a Database Tools identity.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1278,6 +2870,124 @@ def delete_database_tools_identity(ctx, from_json, wait_for_state, max_wait_seco
     client = cli_util.build_client('database_tools', 'database_tools', ctx)
     result = client.delete_database_tools_identity(
         database_tools_identity_id=database_tools_identity_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.delete_database_tools_mcp_server.command_name', 'delete'), help=u"""Deletes the specified Database Tools MCP server resource. \n[Command Reference](deleteDatabaseToolsMcpServer)""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The [OCID] of a Database Tools MCP server.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_database_tools_mcp_server(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, if_match, is_lock_override):
+
+    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.delete_database_tools_mcp_server(
+        database_tools_mcp_server_id=mcp_server_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.delete_database_tools_mcp_toolset.command_name', 'delete'), help=u"""Deletes the specified Database Tools MCP Toolset resource. \n[Command Reference](deleteDatabaseToolsMcpToolset)""")
+@cli_util.option('--mcp-toolset-id', required=True, help=u"""The [OCID] of a Database Tools MCP Toolset.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_database_tools_mcp_toolset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, if_match, is_lock_override):
+
+    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.delete_database_tools_mcp_toolset(
+        database_tools_mcp_toolset_id=mcp_toolset_id,
         **kwargs
     )
     if wait_for_state:
@@ -1369,6 +3079,73 @@ def delete_database_tools_private_endpoint(ctx, from_json, wait_for_state, max_w
     cli_util.render_response(result, ctx)
 
 
+@database_tools_sql_report_group.command(name=cli_util.override('dbtools.delete_database_tools_sql_report.command_name', 'delete'), help=u"""Deletes the specified Database Tools SQL Report resource. \n[Command Reference](deleteDatabaseToolsSqlReport)""")
+@cli_util.option('--sql-report-id', required=True, help=u"""The [OCID] of a Database Tools SQL Report.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_database_tools_sql_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_report_id, if_match, is_lock_override):
+
+    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.delete_database_tools_sql_report(
+        database_tools_sql_report_id=sql_report_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_sql_report') and callable(getattr(client, 'get_database_tools_sql_report')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_database_tools_sql_report(sql_report_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_connection_group.command(name=cli_util.override('dbtools.get_database_tools_connection.command_name', 'get'), help=u"""Gets details of the specified Database Tools connection. \n[Command Reference](getDatabaseToolsConnection)""")
 @cli_util.option('--database-tools-connection-id', required=True, help=u"""The [OCID] of a Database Tools connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1386,6 +3163,28 @@ def get_database_tools_connection(ctx, from_json, database_tools_connection_id):
     client = cli_util.build_client('database_tools', 'database_tools', ctx)
     result = client.get_database_tools_connection(
         database_tools_connection_id=database_tools_connection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_database_api_gateway_config_group.command(name=cli_util.override('dbtools.get_database_tools_database_api_gateway_config.command_name', 'get'), help=u"""Gets details of the specified Database Tools database API gateway config. \n[Command Reference](getDatabaseToolsDatabaseApiGatewayConfig)""")
+@cli_util.option('--database-api-gateway-config-id', required=True, help=u"""The [OCID] of a Database Tools database API gateway config.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsDatabaseApiGatewayConfig'})
+@cli_util.wrap_exceptions
+def get_database_tools_database_api_gateway_config(ctx, from_json, database_api_gateway_config_id):
+
+    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.get_database_tools_database_api_gateway_config(
+        database_tools_database_api_gateway_config_id=database_api_gateway_config_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1435,6 +3234,50 @@ def get_database_tools_identity(ctx, from_json, database_tools_identity_id):
     cli_util.render_response(result, ctx)
 
 
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.get_database_tools_mcp_server.command_name', 'get'), help=u"""Gets details of the specified Database Tools MCP server. \n[Command Reference](getDatabaseToolsMcpServer)""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The [OCID] of a Database Tools MCP server.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpServer'})
+@cli_util.wrap_exceptions
+def get_database_tools_mcp_server(ctx, from_json, mcp_server_id):
+
+    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.get_database_tools_mcp_server(
+        database_tools_mcp_server_id=mcp_server_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.get_database_tools_mcp_toolset.command_name', 'get'), help=u"""Gets details of the specified Database Tools MCP Toolset. \n[Command Reference](getDatabaseToolsMcpToolset)""")
+@cli_util.option('--mcp-toolset-id', required=True, help=u"""The [OCID] of a Database Tools MCP Toolset.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpToolset'})
+@cli_util.wrap_exceptions
+def get_database_tools_mcp_toolset(ctx, from_json, mcp_toolset_id):
+
+    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.get_database_tools_mcp_toolset(
+        database_tools_mcp_toolset_id=mcp_toolset_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_private_endpoint_group.command(name=cli_util.override('dbtools.get_database_tools_private_endpoint.command_name', 'get'), help=u"""Gets details of a specified Database Tools private endpoint. \n[Command Reference](getDatabaseToolsPrivateEndpoint)""")
 @cli_util.option('--database-tools-private-endpoint-id', required=True, help=u"""The [OCID] of a Database Tools private endpoint.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1452,6 +3295,28 @@ def get_database_tools_private_endpoint(ctx, from_json, database_tools_private_e
     client = cli_util.build_client('database_tools', 'database_tools', ctx)
     result = client.get_database_tools_private_endpoint(
         database_tools_private_endpoint_id=database_tools_private_endpoint_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_sql_report_group.command(name=cli_util.override('dbtools.get_database_tools_sql_report.command_name', 'get'), help=u"""Gets details of the specified Database Tools SQL report. \n[Command Reference](getDatabaseToolsSqlReport)""")
+@cli_util.option('--sql-report-id', required=True, help=u"""The [OCID] of a Database Tools SQL Report.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsSqlReport'})
+@cli_util.wrap_exceptions
+def get_database_tools_sql_report(ctx, from_json, sql_report_id):
+
+    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.get_database_tools_sql_report(
+        database_tools_sql_report_id=sql_report_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1545,6 +3410,69 @@ def list_database_tools_connections(ctx, from_json, all_pages, page_size, compar
         )
     else:
         result = client.list_database_tools_connections(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_database_api_gateway_config_group.command(name=cli_util.override('dbtools.list_database_tools_database_api_gateway_configs.command_name', 'list'), help=u"""Returns a list of Database Tools database API gateway configs. \n[Command Reference](listDatabaseToolsDatabaseApiGatewayConfigs)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return resources only when their `lifecycleState` matches the specified `lifecycleState`.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire specified display name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), multiple=True, help=u"""A filter to return only resources with one of the specified type values.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsDatabaseApiGatewayConfigCollection'})
+@cli_util.wrap_exceptions
+def list_database_tools_database_api_gateway_configs(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, limit, page, sort_order, sort_by, type):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if type is not None and len(type) > 0:
+        kwargs['type'] = type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_database_tools_database_api_gateway_configs,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_database_tools_database_api_gateway_configs,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_database_tools_database_api_gateway_configs(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -1680,6 +3608,167 @@ def list_database_tools_identities(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.list_database_tools_mcp_servers.command_name', 'list'), help=u"""Returns a list of Database Tools MCP servers. \n[Command Reference](listDatabaseToolsMcpServers)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return resources only when their `databaseToolsMcpServerLifecycleState` matches the specified `databaseToolsMcpServerLifecycleState`.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire specified display name.""")
+@cli_util.option('--database-tools-connection-id', help=u"""A filter to return only resources when their `databaseToolsConnectionId` matches the specified `databaseToolsConnectionId`.""")
+@cli_util.option('--related-resource-identifier', help=u"""The [OCID] of the related resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), multiple=True, help=u"""A filter to return only resources with one of the specified type values.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpServerCollection'})
+@cli_util.wrap_exceptions
+def list_database_tools_mcp_servers(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, database_tools_connection_id, related_resource_identifier, limit, page, sort_order, sort_by, type):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if database_tools_connection_id is not None:
+        kwargs['database_tools_connection_id'] = database_tools_connection_id
+    if related_resource_identifier is not None:
+        kwargs['related_resource_identifier'] = related_resource_identifier
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if type is not None and len(type) > 0:
+        kwargs['type'] = type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_database_tools_mcp_servers,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_database_tools_mcp_servers,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_database_tools_mcp_servers(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_version_collection_group.command(name=cli_util.override('dbtools.list_database_tools_mcp_toolset_versions.command_name', 'list-database-tools-mcp-toolset-versions'), help=u"""Returns a list of Database Tools Toolset versions \n[Command Reference](listDatabaseToolsMcpToolsetVersions)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--mcp-server-id', help=u"""A filter to return only resources matching the specified `databaseToolsMcpServerId`.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire specified display name.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpToolsetVersionCollection'})
+@cli_util.wrap_exceptions
+def list_database_tools_mcp_toolset_versions(ctx, from_json, all_pages, compartment_id, mcp_server_id, display_name):
+
+    kwargs = {}
+    if mcp_server_id is not None:
+        kwargs['database_tools_mcp_server_id'] = mcp_server_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.list_database_tools_mcp_toolset_versions(
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.list_database_tools_mcp_toolsets.command_name', 'list'), help=u"""Returns a list of Database Tools Toolsets. \n[Command Reference](listDatabaseToolsMcpToolsets)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return resources only when their `databaseToolsMcpToolsetLifecycleState` matches the specified `databaseToolsMcpToolsetLifecycleState`.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire specified display name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["CUSTOM_SQL_TOOL", "BUILT_IN_SQL_TOOLS", "CUSTOMIZABLE_REPORTING_TOOLS", "GENAI_SQL_ASSISTANT"]), multiple=True, help=u"""A filter to return only resources with one of the specified type values.""")
+@cli_util.option('--mcp-server-id', help=u"""A filter to return only resources matching the specified `databaseToolsMcpServerId`.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpToolsetCollection'})
+@cli_util.wrap_exceptions
+def list_database_tools_mcp_toolsets(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, limit, page, sort_order, sort_by, type, mcp_server_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if type is not None and len(type) > 0:
+        kwargs['type'] = type
+    if mcp_server_id is not None:
+        kwargs['database_tools_mcp_server_id'] = mcp_server_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_database_tools_mcp_toolsets,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_database_tools_mcp_toolsets,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_database_tools_mcp_toolsets(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_private_endpoint_group.command(name=cli_util.override('dbtools.list_database_tools_private_endpoints.command_name', 'list'), help=u"""Returns a list of Database Tools private endpoints. \n[Command Reference](listDatabaseToolsPrivateEndpoints)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--subnet-id', help=u"""A filter to return only resources their `subnetId` matches the specified `subnetId`.""")
@@ -1740,6 +3829,69 @@ def list_database_tools_private_endpoints(ctx, from_json, all_pages, page_size, 
         )
     else:
         result = client.list_database_tools_private_endpoints(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_sql_report_group.command(name=cli_util.override('dbtools.list_database_tools_sql_reports.command_name', 'list'), help=u"""Returns a list of Database Tools SQL reports. \n[Command Reference](listDatabaseToolsSqlReports)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return resources only when their `databaseToolsSqlReportLifecycleState` matches the specified `databaseToolsSqlReportLifecycleState`.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire specified display name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATABASE"]), multiple=True, help=u"""A filter to return only resources with one of the specified type values.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsSqlReportCollection'})
+@cli_util.wrap_exceptions
+def list_database_tools_sql_reports(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, limit, page, sort_order, sort_by, type):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if type is not None and len(type) > 0:
+        kwargs['type'] = type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_database_tools_sql_reports,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_database_tools_sql_reports,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_database_tools_sql_reports(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -2108,6 +4260,75 @@ def remove_database_tools_connection_lock(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
+@database_tools_database_api_gateway_config_group.command(name=cli_util.override('dbtools.remove_database_tools_database_api_gateway_config_lock.command_name', 'remove'), help=u"""Removes a lock from a DatabaseToolsDatabaseApiGatewayConfig resource. \n[Command Reference](removeDatabaseToolsDatabaseApiGatewayConfigLock)""")
+@cli_util.option('--database-api-gateway-config-id', required=True, help=u"""The [OCID] of a Database Tools database API gateway config.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The id of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsDatabaseApiGatewayConfig'})
+@cli_util.wrap_exceptions
+def remove_database_tools_database_api_gateway_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_api_gateway_config_id, type, related_resource_id, message, time_created, if_match):
+
+    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.remove_database_tools_database_api_gateway_config_lock(
+        database_tools_database_api_gateway_config_id=database_api_gateway_config_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_database_api_gateway_config') and callable(getattr(client, 'get_database_tools_database_api_gateway_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_database_api_gateway_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_identity_group.command(name=cli_util.override('dbtools.remove_database_tools_identity_lock.command_name', 'remove'), help=u"""Removes a lock from a DatabaseToolsIdentity resource. \n[Command Reference](removeDatabaseToolsIdentityLock)""")
 @cli_util.option('--database-tools-identity-id', required=True, help=u"""The [OCID] of a Database Tools identity.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
@@ -2177,6 +4398,144 @@ def remove_database_tools_identity_lock(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.remove_database_tools_mcp_server_lock.command_name', 'remove'), help=u"""Removes a lock from a DatabaseToolsMcpServer resource. \n[Command Reference](removeDatabaseToolsMcpServerLock)""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The [OCID] of a Database Tools MCP server.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The id of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpServer'})
+@cli_util.wrap_exceptions
+def remove_database_tools_mcp_server_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, type, related_resource_id, message, time_created, if_match):
+
+    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.remove_database_tools_mcp_server_lock(
+        database_tools_mcp_server_id=mcp_server_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_mcp_server') and callable(getattr(client, 'get_database_tools_mcp_server')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_mcp_server(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.remove_database_tools_mcp_toolset_lock.command_name', 'remove'), help=u"""Removes a lock from a DatabaseToolsMcpToolset resource. \n[Command Reference](removeDatabaseToolsMcpToolsetLock)""")
+@cli_util.option('--mcp-toolset-id', required=True, help=u"""The [OCID] of a Database Tools MCP Toolset.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The id of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsMcpToolset'})
+@cli_util.wrap_exceptions
+def remove_database_tools_mcp_toolset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, type, related_resource_id, message, time_created, if_match):
+
+    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.remove_database_tools_mcp_toolset_lock(
+        database_tools_mcp_toolset_id=mcp_toolset_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_mcp_toolset') and callable(getattr(client, 'get_database_tools_mcp_toolset')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_mcp_toolset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_private_endpoint_group.command(name=cli_util.override('dbtools.remove_database_tools_private_endpoint_lock.command_name', 'remove'), help=u"""Removes a lock from a DatabaseToolsPrivateEndpoint resource. \n[Command Reference](removeDatabaseToolsPrivateEndpointLock)""")
 @cli_util.option('--database-tools-private-endpoint-id', required=True, help=u"""The [OCID] of a Database Tools private endpoint.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
@@ -2232,6 +4591,75 @@ def remove_database_tools_private_endpoint_lock(ctx, from_json, wait_for_state, 
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_database_tools_private_endpoint(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_sql_report_group.command(name=cli_util.override('dbtools.remove_database_tools_sql_report_lock.command_name', 'remove'), help=u"""Removes a lock from a DatabaseToolsSqlReport resource. \n[Command Reference](removeDatabaseToolsSqlReportLock)""")
+@cli_util.option('--sql-report-id', required=True, help=u"""The [OCID] of a Database Tools SQL Report.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The id of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsSqlReport'})
+@cli_util.wrap_exceptions
+def remove_database_tools_sql_report_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_report_id, type, related_resource_id, message, time_created, if_match):
+
+    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.remove_database_tools_sql_report_lock(
+        database_tools_sql_report_id=sql_report_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_sql_report') and callable(getattr(client, 'get_database_tools_sql_report')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_sql_report(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2767,10 +5195,164 @@ def update_database_tools_connection_update_database_tools_connection_oracle_dat
     cli_util.render_response(result, ctx)
 
 
+@database_tools_database_api_gateway_config_group.command(name=cli_util.override('dbtools.update_database_tools_database_api_gateway_config.command_name', 'update'), help=u"""Updates the specified Database Tools database API gateway config. \n[Command Reference](updateDatabaseToolsDatabaseApiGatewayConfig)""")
+@cli_util.option('--database-api-gateway-config-id', required=True, help=u"""The [OCID] of a Database Tools database API gateway config.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The Database Tools database API gateway config type.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsDatabaseApiGatewayConfig'})
+@cli_util.wrap_exceptions
+def update_database_tools_database_api_gateway_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_api_gateway_config_id, type, display_name, defined_tags, freeform_tags, if_match, is_lock_override):
+
+    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_database_api_gateway_config(
+        database_tools_database_api_gateway_config_id=database_api_gateway_config_id,
+        update_database_tools_database_api_gateway_config_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_database_api_gateway_config') and callable(getattr(client, 'get_database_tools_database_api_gateway_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_database_api_gateway_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_database_api_gateway_config_group.command(name=cli_util.override('dbtools.update_database_tools_database_api_gateway_config_update_database_tools_database_api_gateway_config_default_details.command_name', 'update-database-tools-database-api-gateway-config-update-database-tools-database-api-gateway-config-default-details'), help=u"""Updates the specified Database Tools database API gateway config. \n[Command Reference](updateDatabaseToolsDatabaseApiGatewayConfig)""")
+@cli_util.option('--database-api-gateway-config-id', required=True, help=u"""The [OCID] of a Database Tools database API gateway config.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsDatabaseApiGatewayConfig'})
+@cli_util.wrap_exceptions
+def update_database_tools_database_api_gateway_config_update_database_tools_database_api_gateway_config_default_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_api_gateway_config_id, display_name, defined_tags, freeform_tags, if_match, is_lock_override):
+
+    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_database_api_gateway_config(
+        database_tools_database_api_gateway_config_id=database_api_gateway_config_id,
+        update_database_tools_database_api_gateway_config_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_database_api_gateway_config') and callable(getattr(client, 'get_database_tools_database_api_gateway_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_database_api_gateway_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_tools_identity_group.command(name=cli_util.override('dbtools.update_database_tools_identity.command_name', 'update'), help=u"""Updates the specified Database Tools identity. \n[Command Reference](updateDatabaseToolsIdentity)""")
 @cli_util.option('--database-tools-identity-id', required=True, help=u"""The [OCID] of a Database Tools identity.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATABASE_RESOURCE_PRINCIPAL"]), help=u"""The Database Tools identity type.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2850,7 +5432,7 @@ def update_database_tools_identity(ctx, from_json, force, wait_for_state, max_wa
 
 @database_tools_identity_group.command(name=cli_util.override('dbtools.update_database_tools_identity_update_database_tools_identity_oracle_database_resource_principal_details.command_name', 'update-database-tools-identity-update-database-tools-identity-oracle-database-resource-principal-details'), help=u"""Updates the specified Database Tools identity. \n[Command Reference](updateDatabaseToolsIdentity)""")
 @cli_util.option('--database-tools-identity-id', required=True, help=u"""The [OCID] of a Database Tools identity.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2897,6 +5479,727 @@ def update_database_tools_identity_update_database_tools_identity_oracle_databas
     result = client.update_database_tools_identity(
         database_tools_identity_id=database_tools_identity_id,
         update_database_tools_identity_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.update_database_tools_mcp_server.command_name', 'update'), help=u"""Updates the specified Database Tools MCP server. \n[Command Reference](updateDatabaseToolsMcpServer)""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The [OCID] of a Database Tools MCP server.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The Database Tools MCP server type.""")
+@cli_util.option('--display-name', help=u"""A meaningful, human-readable label displayed to end users. Not required to be unique and can be changed after creation. Do not include confidential information.""")
+@cli_util.option('--description', help=u"""A human-readable description of the Database Tools MCP server.""")
+@cli_util.option('--custom-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom roles associated with the MCP Server.
+
+This option is a JSON list with items of type DatabaseToolsMcpServerCustomRole.  For documentation on DatabaseToolsMcpServerCustomRole please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsMcpServerCustomRole.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--access-token-expiry-in-seconds', type=click.INT, help=u"""Access token expiry in seconds""")
+@cli_util.option('--refresh-token-expiry-in-seconds', type=click.INT, help=u"""Refresh token expiry in seconds""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'custom-roles': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpServerCustomRole]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-roles': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpServerCustomRole]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_database_tools_mcp_server(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, type, display_name, description, custom_roles, access_token_expiry_in_seconds, refresh_token_expiry_in_seconds, defined_tags, freeform_tags, if_match, is_lock_override):
+
+    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
+    if not force:
+        if custom_roles or defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to custom-roles and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if custom_roles is not None:
+        _details['customRoles'] = cli_util.parse_json_parameter("custom_roles", custom_roles)
+
+    if access_token_expiry_in_seconds is not None:
+        _details['accessTokenExpiryInSeconds'] = access_token_expiry_in_seconds
+
+    if refresh_token_expiry_in_seconds is not None:
+        _details['refreshTokenExpiryInSeconds'] = refresh_token_expiry_in_seconds
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_mcp_server(
+        database_tools_mcp_server_id=mcp_server_id,
+        update_database_tools_mcp_server_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_server_group.command(name=cli_util.override('dbtools.update_database_tools_mcp_server_update_database_tools_mcp_server_details_default.command_name', 'update-database-tools-mcp-server-update-database-tools-mcp-server-details-default'), help=u"""Updates the specified Database Tools MCP server. \n[Command Reference](updateDatabaseToolsMcpServer)""")
+@cli_util.option('--mcp-server-id', required=True, help=u"""The [OCID] of a Database Tools MCP server.""")
+@cli_util.option('--display-name', help=u"""A meaningful, human-readable label displayed to end users. Not required to be unique and can be changed after creation. Do not include confidential information.""")
+@cli_util.option('--description', help=u"""A human-readable description of the Database Tools MCP server.""")
+@cli_util.option('--custom-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom roles associated with the MCP Server.
+
+This option is a JSON list with items of type DatabaseToolsMcpServerCustomRole.  For documentation on DatabaseToolsMcpServerCustomRole please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsMcpServerCustomRole.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--access-token-expiry-in-seconds', type=click.INT, help=u"""Access token expiry in seconds""")
+@cli_util.option('--refresh-token-expiry-in-seconds', type=click.INT, help=u"""Refresh token expiry in seconds""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--storage', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'custom-roles': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpServerCustomRole]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'storage': {'module': 'database_tools', 'class': 'DatabaseToolsMcpServerStorage'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-roles': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpServerCustomRole]'}, 'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'storage': {'module': 'database_tools', 'class': 'DatabaseToolsMcpServerStorage'}})
+@cli_util.wrap_exceptions
+def update_database_tools_mcp_server_update_database_tools_mcp_server_details_default(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, display_name, description, custom_roles, access_token_expiry_in_seconds, refresh_token_expiry_in_seconds, defined_tags, freeform_tags, storage, if_match, is_lock_override):
+
+    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
+    if not force:
+        if custom_roles or defined_tags or freeform_tags or storage:
+            if not click.confirm("WARNING: Updates to custom-roles and defined-tags and freeform-tags and storage will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if custom_roles is not None:
+        _details['customRoles'] = cli_util.parse_json_parameter("custom_roles", custom_roles)
+
+    if access_token_expiry_in_seconds is not None:
+        _details['accessTokenExpiryInSeconds'] = access_token_expiry_in_seconds
+
+    if refresh_token_expiry_in_seconds is not None:
+        _details['refreshTokenExpiryInSeconds'] = refresh_token_expiry_in_seconds
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if storage is not None:
+        _details['storage'] = cli_util.parse_json_parameter("storage", storage)
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_mcp_server(
+        database_tools_mcp_server_id=mcp_server_id,
+        update_database_tools_mcp_server_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.update_database_tools_mcp_toolset.command_name', 'update'), help=u"""Updates the specified Database Tools MCP Toolset. \n[Command Reference](updateDatabaseToolsMcpToolset)""")
+@cli_util.option('--mcp-toolset-id', required=True, help=u"""The [OCID] of a Database Tools MCP Toolset.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CUSTOM_SQL_TOOL", "BUILT_IN_SQL_TOOLS", "CUSTOMIZABLE_REPORTING_TOOLS", "GENAI_SQL_ASSISTANT"]), help=u"""The Database Tools MCP Toolset type.""")
+@cli_util.option('--toolset-version', type=click.INT, help=u"""The MCP toolset version""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A human readable description of the Database Tools MCP toolset.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_database_tools_mcp_toolset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, type, toolset_version, display_name, description, defined_tags, freeform_tags, if_match, is_lock_override):
+
+    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if toolset_version is not None:
+        _details['version'] = toolset_version
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_mcp_toolset(
+        database_tools_mcp_toolset_id=mcp_toolset_id,
+        update_database_tools_mcp_toolset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_customizable_reporting_tools_details.command_name', 'update-database-tools-mcp-toolset-update-database-tools-mcp-toolset-customizable-reporting-tools-details'), help=u"""Updates the specified Database Tools MCP Toolset. \n[Command Reference](updateDatabaseToolsMcpToolset)""")
+@cli_util.option('--mcp-toolset-id', required=True, help=u"""The [OCID] of a Database Tools MCP Toolset.""")
+@cli_util.option('--toolset-version', type=click.INT, help=u"""The MCP toolset version""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A human readable description of the Database Tools MCP toolset.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--reports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Database Tools SQL Reports
+
+This option is a JSON list with items of type DatabaseToolsMcpToolsetCustomizableReportingToolsReport.  For documentation on DatabaseToolsMcpToolsetCustomizableReportingToolsReport please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsMcpToolsetCustomizableReportingToolsReport.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Database Tools CUSTOMIZABLE_REPORTING_TOOLS toolset tool configurations
+
+This option is a JSON list with items of type UpdateDatabaseToolsMcpToolsetToolDetails.  For documentation on UpdateDatabaseToolsMcpToolsetToolDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/UpdateDatabaseToolsMcpToolsetToolDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNCHRONOUS"]), help=u"""The default execution type for the toolset. The default value is SYNCHRONOUS.
+
+To use ASYNCHRONOUS execution, the MCP Server must have the storage property configured.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'reports': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpToolsetCustomizableReportingToolsReport]'}, 'tools': {'module': 'database_tools', 'class': 'list[UpdateDatabaseToolsMcpToolsetToolDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'reports': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpToolsetCustomizableReportingToolsReport]'}, 'tools': {'module': 'database_tools', 'class': 'list[UpdateDatabaseToolsMcpToolsetToolDetails]'}})
+@cli_util.wrap_exceptions
+def update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_customizable_reporting_tools_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, toolset_version, display_name, description, defined_tags, freeform_tags, reports, tools, default_execution_type, if_match, is_lock_override):
+
+    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags or reports or tools:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and reports and tools will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if toolset_version is not None:
+        _details['version'] = toolset_version
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if reports is not None:
+        _details['reports'] = cli_util.parse_json_parameter("reports", reports)
+
+    if tools is not None:
+        _details['tools'] = cli_util.parse_json_parameter("tools", tools)
+
+    if default_execution_type is not None:
+        _details['defaultExecutionType'] = default_execution_type
+
+    _details['type'] = 'CUSTOMIZABLE_REPORTING_TOOLS'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_mcp_toolset(
+        database_tools_mcp_toolset_id=mcp_toolset_id,
+        update_database_tools_mcp_toolset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_built_in_sql_tools_details.command_name', 'update-database-tools-mcp-toolset-update-database-tools-mcp-toolset-built-in-sql-tools-details'), help=u"""Updates the specified Database Tools MCP Toolset. \n[Command Reference](updateDatabaseToolsMcpToolset)""")
+@cli_util.option('--mcp-toolset-id', required=True, help=u"""The [OCID] of a Database Tools MCP Toolset.""")
+@cli_util.option('--toolset-version', type=click.INT, help=u"""The MCP toolset version""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A human readable description of the Database Tools MCP toolset.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Database Tools BUILT_IN_SQL_TOOLS toolset tool configurations
+
+This option is a JSON list with items of type UpdateDatabaseToolsMcpToolsetToolDetails.  For documentation on UpdateDatabaseToolsMcpToolsetToolDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/UpdateDatabaseToolsMcpToolsetToolDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNCHRONOUS"]), help=u"""The default execution type for the toolset. The default value is SYNCHRONOUS.
+
+To use ASYNCHRONOUS execution, the MCP Server must have the storage property configured.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'tools': {'module': 'database_tools', 'class': 'list[UpdateDatabaseToolsMcpToolsetToolDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'tools': {'module': 'database_tools', 'class': 'list[UpdateDatabaseToolsMcpToolsetToolDetails]'}})
+@cli_util.wrap_exceptions
+def update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_built_in_sql_tools_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, toolset_version, display_name, description, defined_tags, freeform_tags, tools, default_execution_type, if_match, is_lock_override):
+
+    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags or tools:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and tools will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if toolset_version is not None:
+        _details['version'] = toolset_version
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if tools is not None:
+        _details['tools'] = cli_util.parse_json_parameter("tools", tools)
+
+    if default_execution_type is not None:
+        _details['defaultExecutionType'] = default_execution_type
+
+    _details['type'] = 'BUILT_IN_SQL_TOOLS'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_mcp_toolset(
+        database_tools_mcp_toolset_id=mcp_toolset_id,
+        update_database_tools_mcp_toolset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_custom_sql_tool_details.command_name', 'update-database-tools-mcp-toolset-update-database-tools-mcp-toolset-custom-sql-tool-details'), help=u"""Updates the specified Database Tools MCP Toolset. \n[Command Reference](updateDatabaseToolsMcpToolset)""")
+@cli_util.option('--mcp-toolset-id', required=True, help=u"""The [OCID] of a Database Tools MCP Toolset.""")
+@cli_util.option('--toolset-version', type=click.INT, help=u"""The MCP toolset version""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A human readable description of the Database Tools MCP toolset.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tool-description', help=u"""Instructions describing how to use the MCP toolset and its features. This can be used to improve the LLM's understanding of the tool.""")
+@cli_util.option('--tool-name', help=u"""Name of the tool returned by the MCP Server""")
+@cli_util.option('--source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The variables to use with the query
+
+This option is a JSON list with items of type DatabaseToolsMcpToolsetCustomSqlToolVariable.  For documentation on DatabaseToolsMcpToolsetCustomSqlToolVariable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsMcpToolsetCustomSqlToolVariable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--allowed-roles', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The roles granted access to the MCP tool generated by this toolset""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNCHRONOUS"]), help=u"""The default execution type for the toolset. The default value is SYNCHRONOUS.
+
+To use ASYNCHRONOUS execution, the MCP Server must have the storage property configured.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'source': {'module': 'database_tools', 'class': 'DatabaseToolsCustomSqlToolToolsetSource'}, 'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpToolsetCustomSqlToolVariable]'}, 'allowed-roles': {'module': 'database_tools', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'source': {'module': 'database_tools', 'class': 'DatabaseToolsCustomSqlToolToolsetSource'}, 'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsMcpToolsetCustomSqlToolVariable]'}, 'allowed-roles': {'module': 'database_tools', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_custom_sql_tool_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, toolset_version, display_name, description, defined_tags, freeform_tags, tool_description, tool_name, source, variables, allowed_roles, default_execution_type, if_match, is_lock_override):
+
+    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags or source or variables or allowed_roles:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and source and variables and allowed-roles will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if toolset_version is not None:
+        _details['version'] = toolset_version
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if tool_description is not None:
+        _details['toolDescription'] = tool_description
+
+    if tool_name is not None:
+        _details['toolName'] = tool_name
+
+    if source is not None:
+        _details['source'] = cli_util.parse_json_parameter("source", source)
+
+    if variables is not None:
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
+
+    if allowed_roles is not None:
+        _details['allowedRoles'] = cli_util.parse_json_parameter("allowed_roles", allowed_roles)
+
+    if default_execution_type is not None:
+        _details['defaultExecutionType'] = default_execution_type
+
+    _details['type'] = 'CUSTOM_SQL_TOOL'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_mcp_toolset(
+        database_tools_mcp_toolset_id=mcp_toolset_id,
+        update_database_tools_mcp_toolset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_mcp_toolset_group.command(name=cli_util.override('dbtools.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_gen_ai_sql_assistant_details.command_name', 'update-database-tools-mcp-toolset-update-database-tools-mcp-toolset-gen-ai-sql-assistant-details'), help=u"""Updates the specified Database Tools MCP Toolset. \n[Command Reference](updateDatabaseToolsMcpToolset)""")
+@cli_util.option('--mcp-toolset-id', required=True, help=u"""The [OCID] of a Database Tools MCP Toolset.""")
+@cli_util.option('--toolset-version', type=click.INT, help=u"""The MCP toolset version""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A human readable description of the Database Tools MCP toolset.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--generative-ai-semantic-store-id', help=u"""The [OCID] of the related Generative AI Semantic Store.""")
+@cli_util.option('--tools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Database Tools GENAI_SQL_ASSISTANT toolset tool configurations
+
+This option is a JSON list with items of type UpdateDatabaseToolsMcpToolsetToolDetails.  For documentation on UpdateDatabaseToolsMcpToolsetToolDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/UpdateDatabaseToolsMcpToolsetToolDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNCHRONOUS"]), help=u"""The default execution type for the toolset. The default value is SYNCHRONOUS.
+
+To use ASYNCHRONOUS execution, the MCP Server must have the storage property configured.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'tools': {'module': 'database_tools', 'class': 'list[UpdateDatabaseToolsMcpToolsetToolDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'tools': {'module': 'database_tools', 'class': 'list[UpdateDatabaseToolsMcpToolsetToolDetails]'}})
+@cli_util.wrap_exceptions
+def update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_gen_ai_sql_assistant_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, toolset_version, display_name, description, defined_tags, freeform_tags, generative_ai_semantic_store_id, tools, default_execution_type, if_match, is_lock_override):
+
+    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+        raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags or tools:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and tools will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if toolset_version is not None:
+        _details['version'] = toolset_version
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if generative_ai_semantic_store_id is not None:
+        _details['generativeAiSemanticStoreId'] = generative_ai_semantic_store_id
+
+    if tools is not None:
+        _details['tools'] = cli_util.parse_json_parameter("tools", tools)
+
+    if default_execution_type is not None:
+        _details['defaultExecutionType'] = default_execution_type
+
+    _details['type'] = 'GENAI_SQL_ASSISTANT'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_mcp_toolset(
+        database_tools_mcp_toolset_id=mcp_toolset_id,
+        update_database_tools_mcp_toolset_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -3013,6 +6316,216 @@ def update_database_tools_private_endpoint(ctx, from_json, force, wait_for_state
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_sql_report_group.command(name=cli_util.override('dbtools.update_database_tools_sql_report.command_name', 'update'), help=u"""Updates the specified Database Tools SQL Report. \n[Command Reference](updateDatabaseToolsSqlReport)""")
+@cli_util.option('--sql-report-id', required=True, help=u"""The [OCID] of a Database Tools SQL Report.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATABASE"]), help=u"""The Database Tools SQL report type.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source', help=u"""SQL query executed to generate the report.""")
+@cli_util.option('--description', help=u"""A description of the SQL report.""")
+@cli_util.option('--purpose', help=u"""Purpose of the Database Tools SQL report. Scenario or conditions describing when or why this report should be used. Provides selection criteria to AI agents to improve report selection accuracy.""")
+@cli_util.option('--instructions', help=u"""Instructions on how to use the SQL report. Step-by-step guidance for an AI agent on how to execute or fill in parameters for the report.""")
+@cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Variables referenced in the Database Tools SQL Report source.
+
+This option is a JSON list with items of type DatabaseToolsSqlReportVariable.  For documentation on DatabaseToolsSqlReportVariable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsSqlReportVariable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--columns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Descriptive information on columns referenced in the Database Tools SQL Report source.
+
+This option is a JSON list with items of type DatabaseToolsSqlReportColumn.  For documentation on DatabaseToolsSqlReportColumn please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsSqlReportColumn.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportVariable]'}, 'columns': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportColumn]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportVariable]'}, 'columns': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportColumn]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsSqlReport'})
+@cli_util.wrap_exceptions
+def update_database_tools_sql_report(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_report_id, type, display_name, defined_tags, freeform_tags, source, description, purpose, instructions, variables, columns, if_match, is_lock_override):
+
+    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags or variables or columns:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and variables and columns will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if source is not None:
+        _details['source'] = source
+
+    if description is not None:
+        _details['description'] = description
+
+    if purpose is not None:
+        _details['purpose'] = purpose
+
+    if instructions is not None:
+        _details['instructions'] = instructions
+
+    if variables is not None:
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
+
+    if columns is not None:
+        _details['columns'] = cli_util.parse_json_parameter("columns", columns)
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_sql_report(
+        database_tools_sql_report_id=sql_report_id,
+        update_database_tools_sql_report_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_sql_report') and callable(getattr(client, 'get_database_tools_sql_report')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_sql_report(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_tools_sql_report_group.command(name=cli_util.override('dbtools.update_database_tools_sql_report_update_database_tools_sql_report_details_oracle_database.command_name', 'update-database-tools-sql-report-update-database-tools-sql-report-details-oracle-database'), help=u"""Updates the specified Database Tools SQL Report. \n[Command Reference](updateDatabaseToolsSqlReport)""")
+@cli_util.option('--sql-report-id', required=True, help=u"""The [OCID] of a Database Tools SQL Report.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique and can be updated. Avoid entering confidential information.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source', help=u"""SQL query executed to generate the report.""")
+@cli_util.option('--description', help=u"""A description of the SQL report.""")
+@cli_util.option('--purpose', help=u"""Purpose of the Database Tools SQL report. Scenario or conditions describing when or why this report should be used. Provides selection criteria to AI agents to improve report selection accuracy.""")
+@cli_util.option('--instructions', help=u"""Instructions on how to use the SQL report. Step-by-step guidance for an AI agent on how to execute or fill in parameters for the report.""")
+@cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Variables referenced in the Database Tools SQL Report source.
+
+This option is a JSON list with items of type DatabaseToolsSqlReportVariable.  For documentation on DatabaseToolsSqlReportVariable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsSqlReportVariable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--columns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Descriptive information on columns referenced in the Database Tools SQL Report source.
+
+This option is a JSON list with items of type DatabaseToolsSqlReportColumn.  For documentation on DatabaseToolsSqlReportColumn please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/databasetools/20201005/datatypes/DatabaseToolsSqlReportColumn.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportVariable]'}, 'columns': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportColumn]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'variables': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportVariable]'}, 'columns': {'module': 'database_tools', 'class': 'list[DatabaseToolsSqlReportColumn]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsSqlReport'})
+@cli_util.wrap_exceptions
+def update_database_tools_sql_report_update_database_tools_sql_report_details_oracle_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_report_id, display_name, defined_tags, freeform_tags, source, description, purpose, instructions, variables, columns, if_match, is_lock_override):
+
+    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags or variables or columns:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and variables and columns will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if source is not None:
+        _details['source'] = source
+
+    if description is not None:
+        _details['description'] = description
+
+    if purpose is not None:
+        _details['purpose'] = purpose
+
+    if instructions is not None:
+        _details['instructions'] = instructions
+
+    if variables is not None:
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
+
+    if columns is not None:
+        _details['columns'] = cli_util.parse_json_parameter("columns", columns)
+
+    _details['type'] = 'ORACLE_DATABASE'
+
+    client = cli_util.build_client('database_tools', 'database_tools', ctx)
+    result = client.update_database_tools_sql_report(
+        database_tools_sql_report_id=sql_report_id,
+        update_database_tools_sql_report_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_tools_sql_report') and callable(getattr(client, 'get_database_tools_sql_report')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_tools_sql_report(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

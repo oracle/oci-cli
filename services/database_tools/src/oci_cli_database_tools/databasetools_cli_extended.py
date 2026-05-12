@@ -118,9 +118,27 @@ def update_database_tools_connection_update_database_tools_connection_oracle_dat
     ctx.invoke(databasetools_cli.update_database_tools_connection_update_database_tools_connection_oracle_database_details, **kwargs)
 
 
+databasetools_cli.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_built_in_sql_tools_details.help = """Creates a new Database Tools MCP Toolset for built-in SQL tools. \n[Command Reference](createDatabaseToolsMcpToolset)"""
+databasetools_cli.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_custom_sql_tool_details.help = """Creates a new Database Tools MCP Toolset for a custom SQL tool. \n[Command Reference](createDatabaseToolsMcpToolset)"""
+databasetools_cli.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_customizable_reporting_tools_details.help = """Creates a new Database Tools MCP Toolset for customizable reporting tools. \n[Command Reference](createDatabaseToolsMcpToolset)"""
+databasetools_cli.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_gen_ai_sql_assistant_details.help = """Creates a new Database Tools MCP Toolset for a GenAI SQL assistant. \n[Command Reference](createDatabaseToolsMcpToolset)"""
+databasetools_cli.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_built_in_sql_tools_details.help = """Updates the specified Database Tools MCP Toolset for built-in SQL tools. \n[Command Reference](updateDatabaseToolsMcpToolset)"""
+databasetools_cli.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_custom_sql_tool_details.help = """Updates the specified Database Tools MCP Toolset for a custom SQL tool. \n[Command Reference](updateDatabaseToolsMcpToolset)"""
+databasetools_cli.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_customizable_reporting_tools_details.help = """Updates the specified Database Tools MCP Toolset for customizable reporting tools. \n[Command Reference](updateDatabaseToolsMcpToolset)"""
+databasetools_cli.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_gen_ai_sql_assistant_details.help = """Updates the specified Database Tools MCP Toolset for a GenAI SQL assistant. \n[Command Reference](updateDatabaseToolsMcpToolset)"""
+databasetools_cli.database_tools_endpoint_service_group.help = """Provides information about Database Tools endpoint services."""
+databasetools_cli.cascading_delete_database_tools_mcp_server.help = """Deletes the Database Tools MCP server resource and its associated assets. \n[Command Reference](cascadingDeleteDatabaseToolsMcpServer)"""
+databasetools_cli.change_database_tools_mcp_server_compartment.help = """Moves the specified Database Tools MCP server to a different compartment in the same tenancy. \n[Command Reference](changeDatabaseToolsMcpServerCompartment)"""
+databasetools_cli.get_database_tools_mcp_server.help = """Gets details of the specified Database Tools MCP server. \n[Command Reference](getDatabaseToolsMcpServer)"""
+databasetools_cli.create_database_tools_database_api_gateway_config.help = """Creates a new Database Tools database API gateway config. \n[Command Reference](createDatabaseToolsDatabaseApiGatewayConfig)"""
+databasetools_cli.create_database_tools_database_api_gateway_config_create_database_tools_database_api_gateway_config_default_details.help = """Creates a new default Database Tools database API gateway config. \n[Command Reference](createDatabaseToolsDatabaseApiGatewayConfig)"""
+databasetools_cli.create_database_tools_sql_report.help = """Creates a new Database Tools SQL report. \n[Command Reference](createDatabaseToolsSqlReport)"""
+databasetools_cli.create_database_tools_sql_report_create_database_tools_sql_report_oracle_database_details.help = """Creates a new Database Tools SQL report for Oracle Database. \n[Command Reference](createDatabaseToolsSqlReport)"""
+
+
 @cli_util.copy_params_from_generated_command(databasetools_cli.create_database_tools_connection_create_database_tools_connection_oracle_database_details, params_to_exclude=['user_password'])
 @databasetools_cli.database_tools_connection_group.command(name=databasetools_cli.create_database_tools_connection_create_database_tools_connection_oracle_database_details.name, help=databasetools_cli.create_database_tools_connection_create_database_tools_connection_oracle_database_details.help)
-@cli_util.option('--user-password-secret-id', required=True, help="""The [OCID] of the secret containing the user password.""")
+@cli_util.option('--user-password-secret-id', help="""The [OCID] of the secret containing the user password. Required when ``--authentication-type`` is ``PASSWORD``. Not required when ``--authentication-type`` is ``TOKEN``.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'related-resource': {'module': 'database_tools', 'class': 'CreateDatabaseToolsRelatedResourceDetails'}, 'advanced-properties': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'key-stores': {'module': 'database_tools', 'class': 'list[DatabaseToolsKeyStoreDetails]'}, 'proxy-client': {'module': 'database_tools', 'class': 'DatabaseToolsConnectionOracleDatabaseProxyClient'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}})
 @cli_util.wrap_exceptions
@@ -693,3 +711,147 @@ def validate_database_tools_identity_credential_validate_database_tools_identity
         kwargs.pop('identity_id')
 
     ctx.invoke(databasetools_cli.validate_database_tools_identity_credential_validate_database_tools_identity_credential_oracle_database_resource_principal_details, **kwargs)
+
+
+# oci dbtools database-tools-database-api-gateway-config -> oci dbtools database-api-gateway-config
+cli_util.rename_command(databasetools_cli, databasetools_cli.dbtools_root_group, databasetools_cli.database_tools_database_api_gateway_config_group, "database-api-gateway-config")
+
+
+# oci dbtools database-tools-mcp-server -> oci dbtools mcp-server
+cli_util.rename_command(databasetools_cli, databasetools_cli.dbtools_root_group, databasetools_cli.database_tools_mcp_server_group, "mcp-server")
+
+
+# oci dbtools database-tools-mcp-toolset -> oci dbtools mcp-toolset
+cli_util.rename_command(databasetools_cli, databasetools_cli.dbtools_root_group, databasetools_cli.database_tools_mcp_toolset_group, "mcp-toolset")
+
+
+# oci dbtools database-tools-sql-report -> oci dbtools sql-report
+cli_util.rename_command(databasetools_cli, databasetools_cli.dbtools_root_group, databasetools_cli.database_tools_sql_report_group, "sql-report")
+
+
+# oci dbtools database-tools-mcp-toolset-version-collection -> oci dbtools mcp-toolset-version-collection
+cli_util.rename_command(databasetools_cli, databasetools_cli.dbtools_root_group, databasetools_cli.database_tools_mcp_toolset_version_collection_group, "mcp-toolset-version-collection")
+
+
+# oci dbtools mcp-toolset-version-collection list-database-tools-mcp-toolset-versions -> oci dbtools mcp-toolset-version-collection list-mcp-toolset-version
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_version_collection_group, databasetools_cli.list_database_tools_mcp_toolset_versions, "list-mcp-toolset-version")
+
+
+# oci dbtools database-tools-database-api-gateway-config create-database-tools-database-api-gateway-config-create-database-tools-database-api-gateway-config-default-details -> oci dbtools database-tools-database-api-gateway-config create-database-api-gateway-config-default
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_database_api_gateway_config_group, databasetools_cli.create_database_tools_database_api_gateway_config_create_database_tools_database_api_gateway_config_default_details, "create-database-api-gateway-config-default")
+
+
+# oci dbtools database-tools-database-api-gateway-config update-database-tools-database-api-gateway-config-update-database-tools-database-api-gateway-config-default-details -> oci dbtools database-tools-database-api-gateway-config update-database-api-gateway-config-default
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_database_api_gateway_config_group, databasetools_cli.update_database_tools_database_api_gateway_config_update_database_tools_database_api_gateway_config_default_details, "update-database-api-gateway-config-default")
+
+
+# oci dbtools database-tools-database-api-gateway-config add -> oci dbtools database-tools-database-api-gateway-config add-lock
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_database_api_gateway_config_group, databasetools_cli.add_database_tools_database_api_gateway_config_lock, "add-lock")
+
+
+# oci dbtools database-tools-database-api-gateway-config remove -> oci dbtools database-tools-database-api-gateway-config remove-lock
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_database_api_gateway_config_group, databasetools_cli.remove_database_tools_database_api_gateway_config_lock, "remove-lock")
+
+
+# oci dbtools database-tools-mcp-server create-database-tools-mcp-server-create-database-tools-mcp-server-default-details -> oci dbtools database-tools-mcp-server create-mcp-server-default
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_server_group, databasetools_cli.create_database_tools_mcp_server_create_database_tools_mcp_server_default_details, "create-mcp-server-default")
+
+
+# oci dbtools database-tools-mcp-server update-database-tools-mcp-server-update-database-tools-mcp-server-details-default -> oci dbtools database-tools-mcp-server update-mcp-server-default
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_server_group, databasetools_cli.update_database_tools_mcp_server_update_database_tools_mcp_server_details_default, "update-mcp-server-default")
+
+
+# oci dbtools database-tools-mcp-server add -> oci dbtools database-tools-mcp-server add-lock
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_server_group, databasetools_cli.add_database_tools_mcp_server_lock, "add-lock")
+
+
+# oci dbtools database-tools-mcp-server remove -> oci dbtools database-tools-mcp-server remove-lock
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_server_group, databasetools_cli.remove_database_tools_mcp_server_lock, "remove-lock")
+
+
+# oci dbtools database-tools-mcp-toolset create-database-tools-mcp-toolset-create-database-tools-mcp-toolset-built-in-sql-tools-details -> oci dbtools database-tools-mcp-toolset create-mcp-toolset-built-in-sql-tools
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_group, databasetools_cli.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_built_in_sql_tools_details, "create-mcp-toolset-built-in-sql-tools")
+
+
+# oci dbtools database-tools-mcp-toolset create-database-tools-mcp-toolset-create-database-tools-mcp-toolset-custom-sql-tool-details -> oci dbtools database-tools-mcp-toolset create-mcp-toolset-custom-sql-tool
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_group, databasetools_cli.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_custom_sql_tool_details, "create-mcp-toolset-custom-sql-tool")
+
+
+# oci dbtools database-tools-mcp-toolset create-database-tools-mcp-toolset-create-database-tools-mcp-toolset-customizable-reporting-tools-details -> oci dbtools database-tools-mcp-toolset create-mcp-toolset-customizable-reporting-tools
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_group, databasetools_cli.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_customizable_reporting_tools_details, "create-mcp-toolset-customizable-reporting-tools")
+
+
+# oci dbtools database-tools-mcp-toolset create-database-tools-mcp-toolset-create-database-tools-mcp-toolset-gen-ai-sql-assistant-details -> oci dbtools database-tools-mcp-toolset create-mcp-toolset-gen-ai-sql-assistant
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_group, databasetools_cli.create_database_tools_mcp_toolset_create_database_tools_mcp_toolset_gen_ai_sql_assistant_details, "create-mcp-toolset-gen-ai-sql-assistant")
+
+
+# oci dbtools database-tools-mcp-toolset update-database-tools-mcp-toolset-update-database-tools-mcp-toolset-built-in-sql-tools-details -> oci dbtools database-tools-mcp-toolset update-mcp-toolset-built-in-sql-tools
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_group, databasetools_cli.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_built_in_sql_tools_details, "update-mcp-toolset-built-in-sql-tools")
+
+
+# oci dbtools database-tools-mcp-toolset update-database-tools-mcp-toolset-update-database-tools-mcp-toolset-custom-sql-tool-details -> oci dbtools database-tools-mcp-toolset update-mcp-toolset-custom-sql-tool
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_group, databasetools_cli.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_custom_sql_tool_details, "update-mcp-toolset-custom-sql-tool")
+
+
+# oci dbtools database-tools-mcp-toolset update-database-tools-mcp-toolset-update-database-tools-mcp-toolset-customizable-reporting-tools-details -> oci dbtools database-tools-mcp-toolset update-mcp-toolset-customizable-reporting-tools
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_group, databasetools_cli.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_customizable_reporting_tools_details, "update-mcp-toolset-customizable-reporting-tools")
+
+
+# oci dbtools database-tools-mcp-toolset update-database-tools-mcp-toolset-update-database-tools-mcp-toolset-gen-ai-sql-assistant-details -> oci dbtools database-tools-mcp-toolset update-mcp-toolset-gen-ai-sql-assistant
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_group, databasetools_cli.update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_gen_ai_sql_assistant_details, "update-mcp-toolset-gen-ai-sql-assistant")
+
+
+# oci dbtools database-tools-mcp-toolset add -> oci dbtools database-tools-mcp-toolset add-lock
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_group, databasetools_cli.add_database_tools_mcp_toolset_lock, "add-lock")
+
+
+# oci dbtools database-tools-mcp-toolset remove -> oci dbtools database-tools-mcp-toolset remove-lock
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_mcp_toolset_group, databasetools_cli.remove_database_tools_mcp_toolset_lock, "remove-lock")
+
+
+# oci dbtools database-tools-sql-report create-database-tools-sql-report-create-database-tools-sql-report-oracle-database-details -> oci dbtools database-tools-sql-report create-sql-report-oracle-database
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_sql_report_group, databasetools_cli.create_database_tools_sql_report_create_database_tools_sql_report_oracle_database_details, "create-sql-report-oracle-database")
+
+
+# oci dbtools database-tools-sql-report update-database-tools-sql-report-update-database-tools-sql-report-details-oracle-database -> oci dbtools database-tools-sql-report update-sql-report-oracle-database
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_sql_report_group, databasetools_cli.update_database_tools_sql_report_update_database_tools_sql_report_details_oracle_database, "update-sql-report-oracle-database")
+
+
+# oci dbtools database-tools-sql-report add -> oci dbtools database-tools-sql-report add-lock
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_sql_report_group, databasetools_cli.add_database_tools_sql_report_lock, "add-lock")
+
+
+# oci dbtools database-tools-sql-report remove -> oci dbtools database-tools-sql-report remove-lock
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_sql_report_group, databasetools_cli.remove_database_tools_sql_report_lock, "remove-lock")
+
+
+# Remove create from oci dbtools database-tools-database-api-gateway-config
+databasetools_cli.database_tools_database_api_gateway_config_group.commands.pop(databasetools_cli.create_database_tools_database_api_gateway_config.name)
+
+
+# Remove update from oci dbtools database-tools-database-api-gateway-config
+databasetools_cli.database_tools_database_api_gateway_config_group.commands.pop(databasetools_cli.update_database_tools_database_api_gateway_config.name)
+
+
+# Remove create from oci dbtools database-tools-mcp-server
+databasetools_cli.database_tools_mcp_server_group.commands.pop(databasetools_cli.create_database_tools_mcp_server.name)
+
+
+# Remove update from oci dbtools database-tools-mcp-server
+databasetools_cli.database_tools_mcp_server_group.commands.pop(databasetools_cli.update_database_tools_mcp_server.name)
+
+
+# Remove create from oci dbtools database-tools-mcp-toolset
+databasetools_cli.database_tools_mcp_toolset_group.commands.pop(databasetools_cli.create_database_tools_mcp_toolset.name)
+
+
+# Remove update from oci dbtools database-tools-mcp-toolset
+databasetools_cli.database_tools_mcp_toolset_group.commands.pop(databasetools_cli.update_database_tools_mcp_toolset.name)
+
+
+# Remove create from oci dbtools database-tools-sql-report
+databasetools_cli.database_tools_sql_report_group.commands.pop(databasetools_cli.create_database_tools_sql_report.name)
+
+
+# Remove update from oci dbtools database-tools-sql-report
+databasetools_cli.database_tools_sql_report_group.commands.pop(databasetools_cli.update_database_tools_sql_report.name)
