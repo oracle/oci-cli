@@ -236,13 +236,13 @@ def compute_capacity_topology_group():
     pass
 
 
-@click.command(cli_util.override('compute.compute_cluster_group.command_name', 'compute-cluster'), cls=CommandGroupWithAlias, help="""A remote direct memory access (RDMA) network group.
+@click.command(cli_util.override('compute.compute_cluster_group.command_name', 'compute-cluster'), cls=CommandGroupWithAlias, help="""The data for creating a [compute cluster]. A compute cluster is an empty remote direct memory access (RDMA) network group
 
-A cluster network on a [compute cluster] is a group of high performance computing (HPC), GPU, or optimized instances that are connected with an ultra low-latency network.
+After the compute cluster is created, you can use the compute cluster's OCID with the [LaunchInstance] operation to create instances in the compute cluster. The instances must be created in the same compartment and availability domain as the cluster.
 
 Use compute clusters when you want to manage instances in the cluster individually in the RDMA network group.
 
-For details about cluster networks that use instance pools to manage groups of identical instances, see [ClusterNetwork].""")
+For details about creating a cluster network that uses instance pools to manage groups of identical instances, see [CreateClusterNetworkDetails].""")
 @cli_util.help_option_group
 def compute_cluster_group():
     pass

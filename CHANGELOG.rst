@@ -6,6 +6,104 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.82.0 - 2026-05-12
+-------------------
+Added
+~~~~~
+* Database Tools Runtime service
+
+  * ``oci dbtools-runtime``
+
+  * Support for executing SQL on connections
+
+    * ``oci dbtools-runtime connection execute-sql async``
+    * ``oci dbtools-runtime connection execute-sql sync``
+
+  * Support for Database API Gateway Configuration resources
+
+    * ``oci dbtools-runtime database-api-gateway-config get content``
+    * ``oci dbtools-runtime database-api-gateway-config-pool create default``
+    * ``oci dbtools-runtime database-api-gateway-config-pool list``
+    * ``oci dbtools-runtime database-api-gateway-config-pool-api-spec list``
+    * ``oci dbtools-runtime database-api-gateway-config-pool-auto-api-spec list``
+
+  * Support for Oracle Database External Authentication
+
+    * ``oci dbtools-runtime connection validate oracle-database``
+    * ``oci dbtools-runtime property-set update oracle-database-external-authentication-details``
+
+* Database Tools service
+
+  * Support for Model Context Protocol (MCP) Servers
+    * ``oci dbtools mcp-server create-mcp-server-default``
+    * ``oci dbtools mcp-server get``
+    * ``oci dbtools mcp-server list``
+    * ``oci dbtools mcp-server update-mcp-server-default``
+    * ``oci dbtools mcp-server delete``
+    * ``oci dbtools mcp-server cascading-delete``
+    * ``oci dbtools mcp-server change-compartment``
+    * ``oci dbtools mcp-server add-lock``
+    * ``oci dbtools mcp-server remove-lock``
+
+  * Support for MCP Toolsets for customizable reporting tools
+
+    * ``oci dbtools mcp-toolset create-mcp-toolset-customizable-reporting-tools``
+    * ``oci dbtools mcp-toolset get``
+    * ``oci dbtools mcp-toolset list``
+    * ``oci dbtools mcp-toolset update-mcp-toolset-customizable-reporting-tools``
+    * ``oci dbtools mcp-toolset delete``
+    * ``oci dbtools mcp-toolset change-compartment``
+    * ``oci dbtools mcp-toolset add-lock``
+    * ``oci dbtools mcp-toolset remove-lock``
+
+  * Support for SQL Reports
+
+    * ``oci dbtools sql-report create-sql-report-oracle-database``
+    * ``oci dbtools sql-report get``
+    * ``oci dbtools sql-report list``
+    * ``oci dbtools sql-report update-sql-report-oracle-database``
+    * ``oci dbtools sql-report delete``
+    * ``oci dbtools sql-report change-compartment``
+    * ``oci dbtools sql-report add-lock``
+    * ``oci dbtools sql-report remove-lock``
+
+  * Support for Database API Gateway Configurations
+    * ``oci dbtools database-api-gateway-config create-database-api-gateway-config-default``
+    * ``oci dbtools database-api-gateway-config get``
+    * ``oci dbtools database-api-gateway-config list``
+    * ``oci dbtools database-api-gateway-config update-database-api-gateway-config-default``
+    * ``oci dbtools database-api-gateway-config delete``
+    * ``oci dbtools database-api-gateway-config change-compartment``
+    * ``oci dbtools database-api-gateway-config add-lock``
+    * ``oci dbtools database-api-gateway-config remove-lock``
+
+* Support for PATCH APIs to add or delete multiple IPv6 prefixes in the Virtual Cloud Network service
+
+  * ``oci network vcn patch``
+  * ``oci network subnet patch``
+
+* Support for new optional parameters ``--connectivity-type`` and ``--gateways`` in the IoT service Digital Twin Instance operations
+
+  * ``oci iot digital-twin-instance create --connectivity-type --gateways``
+  * ``oci iot digital-twin-instance list --connectivity-type``
+  * ``oci iot digital-twin-instance update --gateways``
+
+* Support for additional Generative AI model capability values by Generative AI service
+
+  * ``oci generative-ai imported-model create-from-huggingface --capabilities``
+  * ``oci generative-ai imported-model create-from-objectstorage --capabilities``
+  * ``oci generative-ai imported-model update --capabilities``
+  * ``oci generative-ai hosted-deployment-collection list-hosted-deployments --capability``
+  * ``oci generative-ai imported-model-collection list-imported-models --capability``
+
+Changed
+~~~~~~~
+  - [BREAKING] Added validation to restrict allowed profile name characters in OCI CLI session and config commands.
+
+Security
+~~~~~~~~
+* Updated pytz dependency upper bound to `<=2026.2` for python version.
+
 3.81.1 - 2026-05-05
 -------------------
 Added

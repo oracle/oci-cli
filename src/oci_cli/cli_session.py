@@ -66,7 +66,13 @@ def session_group():
 @click.option('--no-browser', is_flag=True, help="""Triggers user authentication without requiring interactive browser login""")
 @cli_util.option('--public-key-file-path', type=click.Path(), help="""Full path of the public key PEM file that corresponds to the RSA key pair used for signing requests""")
 @click.option('--session-expiration-in-minutes', default=cli_constants.OCI_CLI_UPST_TOKEN_MAX_TTL, help="""User session expiration in minutes to which the requested user principal session token (UPST) is bounded. Valid values are from 5 to 60 for all realms. If not provided, a default value of 60 minutes if set.""")
-@cli_util.option('--token-location', default=cli_setup.DEFAULT_TOKEN_DIRECTORY, help=u"""Provide the directory where you would like to store token and private/public key. Default is ~/.oci/sessions""")
+# If we set a Click default for --token-location (e.g. default=cli_setup.DEFAULT_TOKEN_DIRECTORY),
+# that value is evaluated once at import/decorator time. At that point, it is typically ~/.oci/sessions.
+# Several unit tests modify cli_setup.DEFAULT_TOKEN_DIRECTORY at runtime, but those changes are not
+# reflected in Click's already-evaluated default.
+# To ensure tests can override the default directory, we omit the Click default and instead assign
+# the default inside the function body when token_location is None.
+@cli_util.option('--token-location', help=u"""Provide the directory where you would like to store token and private/public key. Default is ~/.oci/sessions""")
 @click.option('--profile-name', help='Name of the profile you are creating')
 @click.option('--config-location', help='Path to the config for the new session')
 @click.option('--use-passphrase', is_flag=True, help='Provide a passphrase to be used to encrypt the private key from the generated key pair')
@@ -83,6 +89,10 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_p
         validate_profile_name(profile_name)
 
     persist_only_public_key = False
+
+    if token_location is None:
+        token_location = cli_setup.DEFAULT_TOKEN_DIRECTORY
+
     if no_browser:
         if int(session_expiration_in_minutes) > int(cli_constants.OCI_CLI_UPST_TOKEN_MAX_TTL):
             click.echo("""Session expiration cannot be longer than 60 minutes""")
@@ -137,7 +147,7 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_p
         user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name, identity_provider_name)
 
     # persist the session to a config (including the token value)
-    profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, use_passphrase=use_passphrase, persist_token=True, session_auth=True, persist_only_public_key=persist_only_public_key)
+    profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, token_location=token_location, use_passphrase=use_passphrase, persist_token=True, session_auth=True, persist_only_public_key=persist_only_public_key)
 
     click.echo('Config written to: {}'.format(config))
 

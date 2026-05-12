@@ -218,6 +218,8 @@ SDK_client_map = {
     "virtual_network.list_vtaps": "oci.core.VirtualNetworkClient.list_vtaps",
     "virtual_network.modify_ipv4_subnet_cidr": "oci.core.VirtualNetworkClient.modify_ipv4_subnet_cidr",
     "virtual_network.modify_vcn_cidr": "oci.core.VirtualNetworkClient.modify_vcn_cidr",
+    "virtual_network.patch_subnet": "oci.core.VirtualNetworkClient.patch_subnet",
+    "virtual_network.patch_vcn": "oci.core.VirtualNetworkClient.patch_vcn",
     "virtual_network.private_ip_vnic_detach": "oci.core.VirtualNetworkClient.private_ip_vnic_detach",
     "virtual_network.remove_drg_route_distribution_statements": "oci.core.VirtualNetworkClient.remove_drg_route_distribution_statements",
     "virtual_network.remove_drg_route_rules": "oci.core.VirtualNetworkClient.remove_drg_route_rules",

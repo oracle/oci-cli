@@ -201,7 +201,7 @@ def create_user_session(region='', tenancy_name=None, identity_provider_name=Non
     return UserSession(user_ocid, tenancy_ocid, region, token, public_key, private_key, fingerprint)
 
 
-def persist_user_session(user_session, profile_name=None, config=None, use_passphrase=False, persist_token=False, bootstrap=False, session_auth=False, persist_only_public_key=False):
+def persist_user_session(user_session, profile_name=None, config=None, token_location=None, use_passphrase=False, persist_token=False, bootstrap=False, session_auth=False, persist_only_public_key=False):
     if not profile_name:
         # prompt for location of user config
         config_location, profile_name = cli_setup.prompt_session_for_profile()
@@ -209,13 +209,14 @@ def persist_user_session(user_session, profile_name=None, config=None, use_passp
         config_location = config
     else:
         config_location = cli_setup.DEFAULT_CONFIG_LOCATION
-
+    if token_location is None:
+        token_location = cli_setup.DEFAULT_TOKEN_DIRECTORY
     if not config_location:
         click.echo(BOOTSTRAP_PROCESS_CANCELED_MESSAGE)
         sys.exit(0)
 
     # prompt for directory to place keys
-    session_auth_location = os.path.abspath(os.path.join(cli_setup.DEFAULT_TOKEN_DIRECTORY, profile_name))
+    session_auth_location = os.path.abspath(os.path.join(token_location, profile_name))
     if not os.path.exists(session_auth_location):
         cli_util.create_directory(session_auth_location)
 
