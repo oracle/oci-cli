@@ -54,7 +54,7 @@ def set_recorded_variable(test_id_recorded):
 
 @pytest.fixture(scope='module', autouse=True)
 def generate_files_in_remote(object_storage_client, test_id):
-    global sync_download_bucket_name, sync_download_test_dir, sync_upload_bucket_name, sync_upload_test_dir
+    global sync_download_bucket_name, sync_download_test_dir, sync_upload_test_dir
 
     print('Setting up the test bucket for sync download..')
     sync_download_bucket_name = 'ObjectStorageSyncDownloadTest_{}'.format(test_id)
@@ -920,7 +920,7 @@ def create_new_files_local(path, no_of_files_to_create, with_content=False, exte
                 fh.write(bulk_operation.generate_random_string(bulk_operation.CONTENT_STRING_LENGTH))
         new_local_file_set.add(new_file_path.replace(os.sep, '/'))
     if is_delete_set:
-        new_local_file_set.add(f'{os.path.join(path,"dir")}/')
+        new_local_file_set.add(f'{os.path.join(path, "dir")}/')
     return new_local_file_set
 
 

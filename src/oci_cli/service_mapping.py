@@ -188,6 +188,11 @@ service_mapping = {
         "Container Registry",
         "Others"
     ],
+    "costad": [
+        "costad",
+        "CostAd",
+        "Others"
+    ],
     "cpg": [
         "cluster_placement_groups",
         "Cluster Placement Groups",
@@ -265,7 +270,7 @@ service_mapping = {
     ],
     "dbtools-runtime": [
         "database_tools_runtime",
-        "Database Tools Service Runtime",
+        "Database Tools Runtime",
         "Others"
     ],
     "delegate-access-control": [

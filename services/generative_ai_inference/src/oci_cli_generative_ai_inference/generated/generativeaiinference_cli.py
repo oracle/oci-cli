@@ -46,6 +46,12 @@ def embed_text_result_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai_inference.guardrail_version_collection_group.command_name', 'guardrail-version-collection'), cls=CommandGroupWithAlias, help="""The response containing a list of guardrail system versions.""")
+@cli_util.help_option_group
+def guardrail_version_collection_group():
+    pass
+
+
 @click.command(cli_util.override('generative_ai_inference.summarize_text_result_group.command_name', 'summarize-text-result'), cls=CommandGroupWithAlias, help="""Summarize text result to return to caller.""")
 @cli_util.help_option_group
 def summarize_text_result_group():
@@ -67,6 +73,7 @@ def chat_result_group():
 generative_ai_inference_root_group.add_command(generate_text_result_group)
 generative_ai_inference_root_group.add_command(apply_guardrails_result_group)
 generative_ai_inference_root_group.add_command(embed_text_result_group)
+generative_ai_inference_root_group.add_command(guardrail_version_collection_group)
 generative_ai_inference_root_group.add_command(summarize_text_result_group)
 generative_ai_inference_root_group.add_command(rerank_text_result_group)
 generative_ai_inference_root_group.add_command(chat_result_group)
@@ -76,12 +83,13 @@ generative_ai_inference_root_group.add_command(chat_result_group)
 @cli_util.option('--input', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--guardrail-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to apply guardrails.""")
-@json_skeleton_utils.get_cli_json_input_option({'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}})
+@cli_util.option('--guardrail-version-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
 @cli_util.wrap_exceptions
-def apply_guardrails(ctx, from_json, input, guardrail_configs, compartment_id):
+def apply_guardrails(ctx, from_json, input, guardrail_configs, compartment_id, guardrail_version_config):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -90,6 +98,9 @@ def apply_guardrails(ctx, from_json, input, guardrail_configs, compartment_id):
     _details['input'] = cli_util.parse_json_parameter("input", input)
     _details['guardrailConfigs'] = cli_util.parse_json_parameter("guardrail_configs", guardrail_configs)
     _details['compartmentId'] = compartment_id
+
+    if guardrail_version_config is not None:
+        _details['guardrailVersionConfig'] = cli_util.parse_json_parameter("guardrail_version_config", guardrail_version_config)
 
     client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
     result = client.apply_guardrails(
@@ -102,14 +113,15 @@ def apply_guardrails(ctx, from_json, input, guardrail_configs, compartment_id):
 @apply_guardrails_result_group.command(name=cli_util.override('generative_ai_inference.apply_guardrails_guardrails_text_input.command_name', 'apply-guardrails-guardrails-text-input'), help=u"""Applies guardrails to the input text, including content moderation, PII detection, and prompt injection protection. \n[Command Reference](applyGuardrails)""")
 @cli_util.option('--guardrail-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to apply guardrails.""")
+@cli_util.option('--guardrail-version-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-content', help=u"""The actual input data.""")
 @cli_util.option('--input-language-code', help=u"""The language code of the input text. example - en | es | en-US | zh-CN""")
-@json_skeleton_utils.get_cli_json_input_option({'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}})
+@json_skeleton_utils.get_cli_json_input_option({'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
 @cli_util.wrap_exceptions
-def apply_guardrails_guardrails_text_input(ctx, from_json, guardrail_configs, compartment_id, input_content, input_language_code):
+def apply_guardrails_guardrails_text_input(ctx, from_json, guardrail_configs, compartment_id, guardrail_version_config, input_content, input_language_code):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -118,6 +130,9 @@ def apply_guardrails_guardrails_text_input(ctx, from_json, guardrail_configs, co
     _details['input'] = {}
     _details['guardrailConfigs'] = cli_util.parse_json_parameter("guardrail_configs", guardrail_configs)
     _details['compartmentId'] = compartment_id
+
+    if guardrail_version_config is not None:
+        _details['guardrailVersionConfig'] = cli_util.parse_json_parameter("guardrail_version_config", guardrail_version_config)
 
     if input_content is not None:
         _details['input']['content'] = input_content
@@ -1073,6 +1088,57 @@ def generate_text_cohere_llm_inference_request(ctx, from_json, compartment_id, s
         generate_text_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@guardrail_version_collection_group.command(name=cli_util.override('generative_ai_inference.list_guardrail_versions.command_name', 'list-guardrail-versions'), help=u"""List the available guardrail system versions. \n[Command Reference](listGuardrailVersions)""")
+@cli_util.option('--opc-compartment-id', required=True, help=u"""The client compartment ID.""")
+@cli_util.option('--state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "PREVIEW", "DEPRECATED", "RETIRED"]), help=u"""A filter to return only the guardrail versions whose state matches the given value.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai_inference', 'class': 'GuardrailVersionCollection'})
+@cli_util.wrap_exceptions
+def list_guardrail_versions(ctx, from_json, all_pages, page_size, opc_compartment_id, state, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if state is not None:
+        kwargs['state'] = state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_guardrail_versions,
+            opc_compartment_id=opc_compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_guardrail_versions,
+            limit,
+            page_size,
+            opc_compartment_id=opc_compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_guardrail_versions(
+            opc_compartment_id=opc_compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 

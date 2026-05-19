@@ -452,7 +452,7 @@ def create_config_and_signer_based_on_click_context(ctx):
     try:
         config.validate_config(client_config, **kwargs)
     except exceptions.InvalidConfig as bad_config:
-        if type(bad_config.errors) != str:
+        if type(bad_config.errors) is not str:
             table = render_config_errors(bad_config)
         else:
             table = bad_config.errors
