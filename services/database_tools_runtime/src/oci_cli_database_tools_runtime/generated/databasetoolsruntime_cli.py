@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('dbtools_runtime.dbtools_runtime_root_group.command_name', 'dbtools-runtime'), cls=CommandGroupWithAlias, help=cli_util.override('dbtools_runtime.dbtools_runtime_root_group.help', """Use the Database Tools Runtime API to connect to databases through Database Tools Connections."""), short_help=cli_util.override('dbtools_runtime.dbtools_runtime_root_group.short_help', """Database Tools Service Runtime"""))
+@cli.command(cli_util.override('dbtools_runtime.dbtools_runtime_root_group.command_name', 'dbtools-runtime'), cls=CommandGroupWithAlias, help=cli_util.override('dbtools_runtime.dbtools_runtime_root_group.help', """Use the Database Tools Runtime API to connect to databases through Database Tools Connections."""), short_help=cli_util.override('dbtools_runtime.dbtools_runtime_root_group.short_help', """Database Tools Runtime API"""))
 @cli_util.help_option_group
 def dbtools_runtime_root_group():
     pass
@@ -2113,7 +2113,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted", "timeUpdated", "timeFinished"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending. If no value is specified timeAccepted is default.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["EXECUTE_SQL"]), multiple=True, help=u"""The work request operation type.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["EXECUTE_SQL", "EXECUTE_SQL_SCHEDULED_DELETION"]), multiple=True, help=u"""The work request operation type.""")
 @cli_util.option('--created-by-principal-id', help=u"""A filter to return only work requests initiated by the specified principal OCID.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING"]), multiple=True, help=u"""A filter to return only work requests with one of the specified status values.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
