@@ -373,12 +373,12 @@ def test_create_kubeconfig_1(config_file, config_profile, oce_cluster, request):
         util.validate_response(result, json_response_expected=False)
 
         # Check that a file got created at default kubeconfig location
-        assert(os.path.isfile(config_file_path))
+        assert (os.path.isfile(config_file_path))
         # Check if it is a valid yaml. yaml load will raise an exception in case of invalid yaml
         with open(config_file_path, 'r') as f:
             kubeconfig = yaml.safe_load(f)
         # Check there is only ONE cluster, user and context in the downloaded kubeconfig for this test.
-        assert(len(kubeconfig['clusters']) == 1)
+        assert (len(kubeconfig['clusters']) == 1)
         assert (len(kubeconfig['contexts']) == 1)
         assert (len(kubeconfig['users']) == 1)
 
@@ -437,9 +437,9 @@ def test_create_kubeconfig_2(config_file, config_profile, oce_cluster, request):
         with open(config_file_path, 'r') as f:
             kubeconfig = yaml.safe_load(f)
         # Check there is ONE more cluster, user and context added in the merged kubeconnfig file.
-        assert(len(kubeconfig['clusters']) == len(sample_kubeconfig_yaml['clusters']) + 1)
-        assert(len(kubeconfig['contexts']) == len(sample_kubeconfig_yaml['contexts']) + 1)
-        assert(len(kubeconfig['users']) == len(sample_kubeconfig_yaml['users']) + 1)
+        assert (len(kubeconfig['clusters']) == len(sample_kubeconfig_yaml['clusters']) + 1)
+        assert (len(kubeconfig['contexts']) == len(sample_kubeconfig_yaml['contexts']) + 1)
+        assert (len(kubeconfig['users']) == len(sample_kubeconfig_yaml['users']) + 1)
 
         # TEST 2B
         # For this test, execute the command again
@@ -450,9 +450,9 @@ def test_create_kubeconfig_2(config_file, config_profile, oce_cluster, request):
         with open(config_file_path, 'r') as f:
             kubeconfig2 = yaml.safe_load(f)
         # Check the number of clusters, users and contexts remained the same after the merge
-        assert(len(kubeconfig['clusters']) == len(kubeconfig2['clusters']))
-        assert(len(kubeconfig['contexts']) == len(kubeconfig2['contexts']))
-        assert(len(kubeconfig['users']) == len(kubeconfig2['users']))
+        assert (len(kubeconfig['clusters']) == len(kubeconfig2['clusters']))
+        assert (len(kubeconfig['contexts']) == len(kubeconfig2['contexts']))
+        assert (len(kubeconfig['users']) == len(kubeconfig2['users']))
 
 
 # INPUT:
@@ -479,12 +479,12 @@ def test_create_kubeconfig_3(config_file, config_profile, oce_cluster, request):
         util.validate_response(result, json_response_expected=False)
 
         # Check that a file got created at user provided kubeconfig location
-        assert(os.path.isfile(config_file_path))
+        assert (os.path.isfile(config_file_path))
         # Check if it is a valid yaml. yaml load will raise an exception in case of invalid yaml
         with open(config_file_path, 'r') as f:
             kubeconfig = yaml.safe_load(f)
         # Check there is only ONE cluster, user and context in the downloaded kubeconfig for this test.
-        assert(len(kubeconfig['clusters']) == 1)
+        assert (len(kubeconfig['clusters']) == 1)
         assert (len(kubeconfig['contexts']) == 1)
         assert (len(kubeconfig['users']) == 1)
 
@@ -522,7 +522,7 @@ def test_create_kubeconfig_4(config_file, config_profile, oce_cluster, request):
         with open(config_file_path, 'r') as f:
             kubeconfig = yaml.safe_load(f)
         # Check there is only ONE cluster, user and context in the downloaded kubeconfig for this test.
-        assert(len(kubeconfig['clusters']) == 1)
+        assert (len(kubeconfig['clusters']) == 1)
         assert (len(kubeconfig['contexts']) == 1)
         assert (len(kubeconfig['users']) == 1)
 
@@ -566,11 +566,11 @@ def test_create_kubeconfig_5(config_file, config_profile, oce_cluster, request):
         with open(config_file_path, 'r') as f:
             kubeconfig = yaml.safe_load(f)
         # Check there is only ONE cluster, user and context in the downloaded kubeconfig for this test.
-        assert(len(kubeconfig['clusters']) == 1)
+        assert (len(kubeconfig['clusters']) == 1)
         assert (len(kubeconfig['contexts']) == 1)
         assert (len(kubeconfig['users']) == 1)
         # Check that the cluster key has changed indicating we did overwrite old cluster content with new cluster content
-        assert(kubeconfig['clusters'] != sample_kubeconfig_yaml['clusters'])
+        assert (kubeconfig['clusters'] != sample_kubeconfig_yaml['clusters'])
 
 
 # INPUT:
@@ -597,12 +597,12 @@ def test_create_kubeconfig_6(config_file, config_profile, oce_cluster, request):
         util.validate_response(result, json_response_expected=False)
 
         # Check that a file got created at default kubeconfig location
-        assert(os.path.isfile(config_file_path))
+        assert (os.path.isfile(config_file_path))
         # Check if it is a valid yaml. yaml load will raise an exception in case of invalid yaml
         with open(config_file_path, 'r') as f:
             kubeconfig = yaml.safe_load(f)
         # Check there is only ONE cluster, user and context in the downloaded kubeconfig for this test.
-        assert(len(kubeconfig['clusters']) == 1)
+        assert (len(kubeconfig['clusters']) == 1)
         assert (len(kubeconfig['contexts']) == 1)
         assert (len(kubeconfig['users']) == 1)
 

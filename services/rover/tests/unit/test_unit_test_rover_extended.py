@@ -241,7 +241,7 @@ class UnitTestRover(unittest.TestCase):
                         # The key is the mock object name and the value is a dict of the side effects
                         for key, value in sub_command_def['methods_to_side_effect'].items():
                             # k is the method to side effect and v is the tuple of {status, headers, data}
-                            if type(value) == dict:
+                            if type(value) is dict:
                                 for k, v in value.items():
                                     def method_side_effect(*args, **kwargs):
                                         return Response(v[0], v[1], v[2], Request("mock.method", "mock.url"))

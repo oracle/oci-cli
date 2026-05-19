@@ -56,17 +56,16 @@ sync_remote_prefixes = ['a/b/c/', 'a/b/', 'a/', '']
 
 @pytest.fixture(scope='function')
 def generate_content_in_remote(object_storage_client):
-    global sync_upload_bucket_name, sync_download_test_dir, sync_upload_bucket_name, sync_upload_test_dir
 
     print('Setting up the content in remote')
     bulk_operation.clear_and_create_new_bucket(object_storage_client, sync_upload_bucket_name, False)
 
     for i in range(OBJECTS_TO_CREATE_IN_REMOTE_FOR_SYNC):
-        object_name = f'{sync_remote_prefixes[i%4]}Object{i}'
+        object_name = f'{sync_remote_prefixes[i % 4]}Object{i}'
         object_content = bulk_operation.generate_random_string(bulk_operation.CONTENT_STRING_LENGTH)
         object_storage_client.put_object(util.NAMESPACE, sync_upload_bucket_name, object_name, object_content)
 
-        empty_dir = f'{sync_remote_prefixes[i%4]}Empty{i}/'
+        empty_dir = f'{sync_remote_prefixes[i % 4]}Empty{i}/'
         object_storage_client.put_object(util.NAMESPACE, sync_upload_bucket_name, empty_dir, None)
     yield
     print("Tearing down remote content..")
