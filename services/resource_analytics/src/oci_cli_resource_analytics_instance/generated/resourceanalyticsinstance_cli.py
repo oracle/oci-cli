@@ -159,6 +159,7 @@ def change_resource_analytics_instance_compartment(ctx, from_json, wait_for_stat
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Network Security Group [OCID]'s.
 
 Example: `[\"ocid...\", \"ocid...\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-count', type=click.INT, help=u"""The compute amount (CPUs) available to the Autonomous Database.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the ADW instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -174,7 +175,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adw-admin-password': {'module': 'resource_analytics', 'class': 'AdwAdminPasswordDetails'}, 'nsg-ids': {'module': 'resource_analytics', 'class': 'list[string]'}, 'freeform-tags': {'module': 'resource_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_analytics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_analytics', 'class': 'ResourceAnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_resource_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, adw_admin_password, subnet_id, display_name, description, is_mutual_tls_required, nsg_ids, license_model, freeform_tags, defined_tags):
+def create_resource_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, adw_admin_password, subnet_id, display_name, description, is_mutual_tls_required, nsg_ids, compute_count, license_model, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -195,6 +196,9 @@ def create_resource_analytics_instance(ctx, from_json, wait_for_state, max_wait_
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if compute_count is not None:
+        _details['computeCount'] = compute_count
 
     if license_model is not None:
         _details['licenseModel'] = license_model
@@ -250,6 +254,7 @@ def create_resource_analytics_instance(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Network Security Group [OCID]'s.
 
 Example: `[\"ocid...\", \"ocid...\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-count', type=click.INT, help=u"""The compute amount (CPUs) available to the Autonomous Database.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the ADW instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -265,7 +270,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'resource_analytics', 'class': 'list[string]'}, 'freeform-tags': {'module': 'resource_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_analytics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_analytics', 'class': 'ResourceAnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_resource_analytics_instance_plain_text_password_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, adw_admin_password_password, display_name, description, is_mutual_tls_required, nsg_ids, license_model, freeform_tags, defined_tags):
+def create_resource_analytics_instance_plain_text_password_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, adw_admin_password_password, display_name, description, is_mutual_tls_required, nsg_ids, compute_count, license_model, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -287,6 +292,9 @@ def create_resource_analytics_instance_plain_text_password_details(ctx, from_jso
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if compute_count is not None:
+        _details['computeCount'] = compute_count
 
     if license_model is not None:
         _details['licenseModel'] = license_model
@@ -344,6 +352,7 @@ def create_resource_analytics_instance_plain_text_password_details(ctx, from_jso
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Network Security Group [OCID]'s.
 
 Example: `[\"ocid...\", \"ocid...\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-count', type=click.INT, help=u"""The compute amount (CPUs) available to the Autonomous Database.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the ADW instance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -359,7 +368,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'resource_analytics', 'class': 'list[string]'}, 'freeform-tags': {'module': 'resource_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_analytics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_analytics', 'class': 'ResourceAnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_resource_analytics_instance_vault_secret_password_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, adw_admin_password_secret_id, display_name, description, is_mutual_tls_required, nsg_ids, license_model, freeform_tags, defined_tags):
+def create_resource_analytics_instance_vault_secret_password_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, adw_admin_password_secret_id, display_name, description, is_mutual_tls_required, nsg_ids, compute_count, license_model, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -381,6 +390,9 @@ def create_resource_analytics_instance_vault_secret_password_details(ctx, from_j
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if compute_count is not None:
+        _details['computeCount'] = compute_count
 
     if license_model is not None:
         _details['licenseModel'] = license_model

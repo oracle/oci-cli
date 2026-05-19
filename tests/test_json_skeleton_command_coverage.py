@@ -146,7 +146,7 @@ def append_failed_commands_to_file(failed_commands):
 def process_json_input(input, tmpdir):
     modified_input = json.loads(input)
     # if the command accepts list of objects, we will process the first element in the list and pass it to the test.
-    if type(input) == list:
+    if type(input) is list:
         modified_input = modified_input[0]
     # Remove waiter and listing options
     modified_input.pop('waitForState', None)
