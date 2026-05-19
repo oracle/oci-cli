@@ -118,7 +118,7 @@ def create_empty_dir_at_path(path):
 
 @pytest.fixture(scope='module', autouse=True)
 def generate_test_data(object_storage_client, test_id):
-    global bulk_get_object_to_content, bulk_get_bucket_name, root_bulk_put_folder, bulk_put_large_files, bulk_put_mid_sized_files, bulk_put_bucket_name
+    global bulk_get_bucket_name, root_bulk_put_folder, bulk_put_bucket_name
 
     # Create a test bucket
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()

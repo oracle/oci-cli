@@ -6,6 +6,61 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.83.0 - 2026-05-19
+-------------------
+Added
+~~~~~
+* Generative AI Inference service
+
+  * Support for new optional parameter ``--guardrail-version-config`` to support applying guardrails with guardrail version
+
+    * ``oci generative-ai-inference apply-guardrails-result apply-guardrails --guardrail-version-config``
+    * ``oci generative-ai-inference apply-guardrails-result apply-guardrails-guardrails-text-input --guardrail-version-config``
+
+  * Support to list all the OCI GenAI Guardrails version with their accuracy and performance
+
+    * ``oci generative-ai-inference guardrail-version-collection list-guardrail-versions``
+
+* Support for new optional parameter ``--compute-count`` for compute count options in Resource Analytics service
+
+  * ``oci resource-analytics resource-analytics-instance create --compute-count``
+
+* Support for the Cost Anomaly Detection service
+
+  * ``oci costad``
+
+* Support for new optional parameter ``--heterogeneous-shapes`` to provide a heterogeneous shape to replace a cluster node in Big Data Service
+
+  * ``oci bds instance replace-node --heterogeneous-shapes``
+
+* Streaming service
+
+  * Support for new optional parameters ``--max-wait-seconds``, ``--wait-for-state`` and ``--wait-interval-seconds`` for commands to change compartments
+
+    * ``oci streaming admin connect-harness change-compartment --max-wait-seconds, --wait-for-state, --wait-interval-seconds``
+    * ``oci streaming admin stream change-compartment --max-wait-seconds, --wait-for-state, --wait-interval-seconds``
+    * ``oci streaming admin stream-pool change-compartment --max-wait-seconds, --wait-for-state, --wait-interval-seconds``
+
+  * Support for WorkRequest APIs to track progress of create/update/delete operations of Stream, Stream Pool and Kafka Connect Configuration resources.
+
+    * ``oci streaming admin work-request get``
+    * ``oci streaming admin work-request-error-collection list-work-request-errors``
+    * ``oci streaming admin work-request-log-entry list-work-request-logs``
+    * ``oci streaming admin work-request-summary-collection list-work-requests``
+
+Changed
+~~~~~~~
+* Big Data service
+
+  * [BREAKING] Removed optional parameters ``--cluster-admin-password`` and ``--secret-id`` to create a BDS certificate configuration
+
+    * ``oci bds instance create-bds-certificate-configuration``
+
+  * ``--node-backup-id`` is now an optional parameter to repace a node of a BDS cluster from backup
+
+    * ``oci bds instance replace-node``
+
+
 3.82.0 - 2026-05-12
 -------------------
 Added
