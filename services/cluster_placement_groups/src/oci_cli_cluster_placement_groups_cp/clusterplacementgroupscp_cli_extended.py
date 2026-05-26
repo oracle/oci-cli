@@ -8,6 +8,68 @@ from services.cluster_placement_groups.src.oci_cli_cluster_placement_groups_cp.g
 from oci_cli import cli_util  # noqa: F401
 from oci_cli import custom_types  # noqa: F401
 from oci_cli import json_skeleton_utils  # noqa: F401
+# Fix the JSON skeleton generation for capabilities
+_original_get_example_object_for_tags = json_skeleton_utils.get_example_object_for_tags
+
+
+def _get_example_object_for_tags_patched(targeted_complex_param):
+    """Patched to return custom capabilities example with additionalDetails as object"""
+    result = _original_get_example_object_for_tags(targeted_complex_param)
+    if result is not None:
+        return result
+    if targeted_complex_param == "capabilities":
+        return {
+            "items": [
+                {
+                    "name": "string",
+                    "service": "string",
+                    "additionalDetails": {"count": 0, "memoryInGBs": 0.0, "nvmes": 0, "ocpus": 0.0, "serviceType": "COMPUTE"}
+                },
+                {"name": "string", "service": "string", "additionalDetails": None}
+            ]
+        }
+    return None
+
+
+json_skeleton_utils.get_example_object_for_tags = _get_example_object_for_tags_patched
+
+
+def _convert_additional_details_to_object(capabilities):
+    """
+    Convert additionalDetails from array to JSON object in capabilities structure.
+    If additionalDetails is an array, extract the first JSON object from it.
+    The function always returns a JSON string since the generated code expects to parse it.
+    """
+    if not capabilities:
+        return capabilities
+    try:
+        # Parse capabilities if it's a string
+        if isinstance(capabilities, str):
+            capabilities_data = json.loads(capabilities)
+        else:
+            capabilities_data = capabilities
+        # Process capabilities items
+        if isinstance(capabilities_data, dict) and 'items' in capabilities_data:
+            items = capabilities_data['items']
+            if isinstance(items, list):
+                for item in items:
+                    if isinstance(item, dict) and 'additionalDetails' in item:
+                        additional_details = item['additionalDetails']
+                        # If additionalDetails is an array, extract the first object
+                        if isinstance(additional_details, list):
+                            # Find the first dictionary object in the array
+                            for element in additional_details:
+                                if isinstance(element, dict):
+                                    item['additionalDetails'] = element
+                                    break
+                            else:
+                                # If no object found, set to None
+                                item['additionalDetails'] = None
+        # Always return as JSON string since generated code will parse it
+        return json.dumps(capabilities_data)
+    except (json.JSONDecodeError, TypeError, AttributeError):
+        # If parsing fails, return original
+        return capabilities
 
 
 # oci cluster-placement-groups work-request-log-entry list-work-request-logs -> oci cluster-placement-groups work-request-log-entry list
@@ -30,7 +92,9 @@ def create_cluster_placement_group_extended(ctx, **kwargs):
     if 'type' in kwargs:
         kwargs['cluster_placement_group_type'] = kwargs['type']
         kwargs.pop('type')
-
+    # Convert additionalDetails from array to JSON object in capabilities
+    if 'capabilities' in kwargs and kwargs['capabilities'] is not None:
+        kwargs['capabilities'] = _convert_additional_details_to_object(kwargs['capabilities'])
     ctx.invoke(clusterplacementgroupscp_cli.create_cluster_placement_group, **kwargs)
 
 

@@ -2094,6 +2094,7 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
     aggregated_results = []
     aggregated_results_dict = {}
     wrapped_array_pagination = False
+    final_response = None
 
     page_index = 1
     has_stream_data = False
@@ -2153,7 +2154,8 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
                 headers = call_result.headers
                 request = call_result.request
             final_response = Response(status, headers, post_processed_results, request)
-            return final_response
+    if final_response is not None:
+        return final_response
     if ctx and ctx.obj['debug']:
         print("", file=sys.stderr)
 
@@ -2273,6 +2275,7 @@ def list_call_get_all_results_multiple_keys(list_func_ref, ctx=None, is_json=Fal
     aggregated_results = []
     aggregated_results_dict = {}
     wrapped_array_pagination = False
+    final_response = None
 
     page_index = 1
     has_stream_data = False
@@ -2337,7 +2340,8 @@ def list_call_get_all_results_multiple_keys(list_func_ref, ctx=None, is_json=Fal
                 headers = call_result.headers
                 request = call_result.request
             final_response = Response(status, headers, post_processed_results, request)
-            return final_response
+    if final_response is not None:
+        return final_response
     if ctx and ctx.obj['debug']:
         print("", file=sys.stderr)
 

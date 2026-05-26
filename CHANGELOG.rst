@@ -6,6 +6,141 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.84.0 - 2026-05-26
+-------------------
+Added
+~~~~~
+
+* Database service
+
+  * Support for optional parameter ``--plan-intent``
+
+    * ``oci db action-param-values-summary list-params-for-action-type --plan-intent``
+    * ``oci db scheduling-plan create --plan-intent``
+    * ``oci db scheduling-plan list --plan-intent``
+
+  * Supports for following optional parameters ``--db-split-threshold``, ``--distribution-affinity``, ``--net-services-architecture`` and ``--vm-failover-reservation``
+
+    * ``oci db autonomous-container-database update --db-split-threshold --distribution-affinity --net-services-architecture --vm-failover-reservation``
+
+  * Support for optional parameters ``--distribution-algorithm`` and ``--sga-percentage``
+
+    * ``oci db autonomous-vm-cluster create --distribution-algorithm --sga-percentage``
+    * ``oci db autonomous-vm-cluster update --distribution-algorithm --sga-percentage``
+    * ``oci db cloud-autonomous-vm-cluster create --distribution-algorithm --sga-percentage``
+    * ``oci db cloud-autonomous-vm-cluster update --distribution-algorithm --sga-percentage``
+
+  * Support for optional parameters ``--is-mtls-enabled``, ``--scan-listener-port-non-tls``, ``--scan-listener-port-tls`` and ``--time-zone``
+
+    * ``oci db autonomous-vm-cluster update --is-mtls-enabled --scan-listener-port-non-tls --scan-listener-port-tls --time-zone``
+
+  * Support for optional parameters ``--cluster-time-zone``, ``--is-mtls-enabled-vm-cluster``, ``--scan-listener-port-non-tls`` and ``--scan-listener-port-tls``
+
+    * ``oci db cloud-autonomous-vm-cluster update --cluster-time-zone --is-mtls-enabled-vm-cluster --scan-listener-port-non-tls --scan-listener-port-tls``
+
+  * Support for optional parameter ``--maintenance-version-preferences``
+
+    * ``oci db cloud-exa-infra create --maintenance-version-preferences``
+    * ``oci db cloud-exa-infra update --maintenance-version-preferences``
+    * ``oci db exadata-infrastructure create --maintenance-version-preferences``
+    * ``oci db exadata-infrastructure update --maintenance-version-preferences``
+
+  * Support for optional parameter ``--cadence``
+
+    * ``oci db scheduling-policy list --cadence``
+
+* Cluster Placement Groups service
+
+  * Support for selecting compute shape configuration during Cluster Placement Group creation
+
+    * ``oci cpg cluster-placement-group create``
+
+* Data Science service
+
+  * Support for Compute Target, to create and manage reusable managed compute capacity for Data Science workloads
+
+    * ``oci data-science compute-target create``
+    * ``oci data-science compute-target get``
+    * ``oci data-science compute-target list``
+    * ``oci data-science compute-target update``
+    * ``oci data-science compute-target delete``
+    * ``oci data-science compute-target change-compartment``
+    * ``oci data-science compute-target-shape list``
+
+  * Support for Managed Compute Cluster as a Compute Target type
+
+    * ``oci data-science compute-target create-compute-target-managed-compute-cluster-compute-configuration-details``
+    * ``oci data-science compute-target update-compute-target-update-managed-compute-cluster-configuration-details``
+
+  * Support for creating and updating Jobs using Managed Compute Cluster infrastructure
+
+    * ``oci data-science job create-job-managed-compute-cluster-job-infrastructure-configuration-details``
+    * ``oci data-science job update-job-managed-compute-cluster-job-infrastructure-configuration-details``
+    * ``oci data-science job-run create-job-run-managed-compute-cluster-job-infrastructure-configuration-details``
+
+  * Support for creating and updating Model Deployments using flex configuration details
+
+    * ``oci data-science model-deployment create-model-deployment-single-model-deployment-flex-configuration-details``
+    * ``oci data-science model-deployment update-model-deployment-update-single-model-deployment-flex-configuration-details``
+
+* Container Engine for Kubernetes service
+
+  * Support for Zero Trust Packet Routing
+
+    * ``oci ce node-pool create --primary-vnic``
+    * ``oci ce cluster create --endpoint-security-attributes``
+
+* Support for new optional parameter ``--remaining-local-volume-in-gbs-greater-than-or-equal-to`` in Compute Service
+
+  * ``oci compute dedicated-vm-host list --remaining-local-volume-in-gbs-greater-than-or-equal-to``
+
+* Network Firewall service
+
+  * Support for Network Firewall Health Status APIs
+
+    * ``oci network-firewall network-firewall-health-status``
+
+  * Support for new optional parameter ``--securityattributes``
+
+    * ``oci network-firewall create --securityattributes``
+
+  * Support for new optional parameter ``--secrets``
+
+    * ``oci network-firewall decryption-rule create --secrets``
+
+* GoldenGate service
+
+  * Support for Veridata deployment type
+
+    * ``oci goldengate deployment create --deployment-type``
+
+  * Support for clone operation for ZeroETL pipelines
+
+    * ``oci goldengate pipeline clone``
+
+  * Support for ``cpuCoreCount`` and ``autoScaling`` for ZeroETL pipelines
+
+    * ``oci goldengate pipeline create-zero-etl-pipeline --cpu-core-count --is-auto-scaling-enabled``
+    * ``oci goldengate pipeline update-zero-etl-pipeline --cpu-core-count --is-auto-scaling-enabled``
+
+  * Support for Disaster Recovery (DR) deployment operations
+
+    * ``oci goldengate deployment create --disaster-recovery-status``
+    * ``oci goldengate deployment switchover-deployment-peer --mode``
+    * ``oci goldengate deployment generate-disaster-recovery-precheck-report``
+    * ``oci goldengate deployment get-disaster-recovery-precheck-report``
+
+Changed
+~~~~~~~
+
+* Data Science service
+
+  * [BREAKING] Removed support for IDCS authentication modes from ML Applications resources
+
+    * ``oci data-science ml-app-instance create-ml-application-instance-create-idcs-auth-configuration-details``
+    * ``oci data-science ml-app-instance create-ml-application-instance-create-idcs-custom-service-auth-configuration-details``
+
+
 3.83.0 - 2026-05-19
 -------------------
 Added

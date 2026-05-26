@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('network_firewall.network_firewall_root_group.command_name', 'network-firewall'), cls=CommandGroupWithAlias, help=cli_util.override('network_firewall.network_firewall_root_group.help', """Use the Network Firewall API to create network firewalls and configure policies that regulates network traffic in and across VCNs."""), short_help=cli_util.override('network_firewall.network_firewall_root_group.short_help', """Network Firewall API"""))
+@cli.command(cli_util.override('network_firewall.network_firewall_root_group.command_name', 'network-firewall'), cls=CommandGroupWithAlias, help=cli_util.override('network_firewall.network_firewall_root_group.help', """Use the Network Firewall API to create network firewalls and configure policies that regulates network traffic in and across VCNs. For more information, see [Overview of Network Firewall]."""), short_help=cli_util.override('network_firewall.network_firewall_root_group.short_help', """Network Firewall API"""))
 @cli_util.help_option_group
 def network_firewall_root_group():
     pass
@@ -118,6 +118,12 @@ def service_list_group():
     pass
 
 
+@click.command(cli_util.override('network_firewall.network_firewall_health_status_group.command_name', 'network-firewall-health-status'), cls=CommandGroupWithAlias, help="""Response for network firewall health status.""")
+@cli_util.help_option_group
+def network_firewall_health_status_group():
+    pass
+
+
 @click.command(cli_util.override('network_firewall.security_rule_group.command_name', 'security-rule'), cls=CommandGroupWithAlias, help="""Security Rule used in the firewall policy rules. Security Rules determine whether to block or allow a session based on traffic attributes, such as  the source and destination IP address, protocol/port, and the HTTP(S) target URL.""")
 @cli_util.help_option_group
 def security_rule_group():
@@ -140,6 +146,7 @@ network_firewall_root_group.add_command(service_group)
 network_firewall_root_group.add_command(work_request_error_group)
 network_firewall_root_group.add_command(nat_rule_group)
 network_firewall_root_group.add_command(service_list_group)
+network_firewall_root_group.add_command(network_firewall_health_status_group)
 network_firewall_root_group.add_command(security_rule_group)
 
 
@@ -1290,7 +1297,7 @@ def create_application_create_icmp6_application_details(ctx, from_json, network_
 @application_group_group.command(name=cli_util.override('network_firewall.create_application_group.command_name', 'create'), help=u"""Creates a new ApplicationGroup for the Network Firewall Policy. \n[Command Reference](createApplicationGroup)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--name', required=True, help=u"""Name of the application Group.""")
-@cli_util.option('--apps', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of application names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apps', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of application names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the application list. This field can be used to add additional info.""")
 @json_skeleton_utils.get_cli_json_input_option({'apps': {'module': 'network_firewall', 'class': 'list[string]'}})
 @cli_util.help_option
@@ -1307,7 +1314,9 @@ def create_application_group(ctx, from_json, network_firewall_policy_id, name, a
 
     _details = {}
     _details['name'] = name
-    _details['apps'] = cli_util.parse_json_parameter("apps", apps)
+
+    if apps is not None:
+        _details['apps'] = cli_util.parse_json_parameter("apps", apps)
 
     if description is not None:
         _details['description'] = description
@@ -1481,13 +1490,14 @@ def create_decryption_profile_create_ssl_forward_proxy_profile_details(ctx, from
 @cli_util.option('--description', help=u"""The description of the decryption rule. This field can be used to add additional info.""")
 @cli_util.option('--decryption-profile', help=u"""The name of the decryption profile to use.""")
 @cli_util.option('--secret', help=u"""The name of a mapped secret. Its `type` must match that of the specified decryption profile.""")
+@cli_util.option('--secrets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of mapped secrets.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'condition': {'module': 'network_firewall', 'class': 'DecryptionRuleMatchCriteria'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}})
+@json_skeleton_utils.get_cli_json_input_option({'condition': {'module': 'network_firewall', 'class': 'DecryptionRuleMatchCriteria'}, 'secrets': {'module': 'network_firewall', 'class': 'list[string]'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'condition': {'module': 'network_firewall', 'class': 'DecryptionRuleMatchCriteria'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'DecryptionRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'condition': {'module': 'network_firewall', 'class': 'DecryptionRuleMatchCriteria'}, 'secrets': {'module': 'network_firewall', 'class': 'list[string]'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'DecryptionRule'})
 @cli_util.wrap_exceptions
-def create_decryption_rule(ctx, from_json, network_firewall_policy_id, name, condition, action, description, decryption_profile, secret, position):
+def create_decryption_rule(ctx, from_json, network_firewall_policy_id, name, condition, action, description, decryption_profile, secret, secrets, position):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -1508,6 +1518,9 @@ def create_decryption_rule(ctx, from_json, network_firewall_policy_id, name, con
 
     if secret is not None:
         _details['secret'] = secret
+
+    if secrets is not None:
+        _details['secrets'] = cli_util.parse_json_parameter("secrets", secrets)
 
     if position is not None:
         _details['position'] = cli_util.parse_json_parameter("position", position)
@@ -1698,15 +1711,18 @@ def create_nat_rule_create_nat_v4_rule_details(ctx, from_json, network_firewall_
 @cli_util.option('--shape', help=u"""The shape of a firewall to determine the bandwidth that the firewall allows.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: {\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "NEEDS_ATTENTION", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'network_firewall', 'class': 'NetworkFirewall'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'network_firewall', 'class': 'NetworkFirewall'})
 @cli_util.wrap_exceptions
-def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, network_firewall_policy_id, display_name, availability_domain, ipv4_address, ipv6_address, network_security_group_ids, nat_configuration, shape, freeform_tags, defined_tags):
+def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, network_firewall_policy_id, display_name, availability_domain, ipv4_address, ipv6_address, network_security_group_ids, nat_configuration, shape, freeform_tags, defined_tags, security_attributes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1742,6 +1758,9 @@ def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.create_network_firewall(
@@ -2874,6 +2893,28 @@ def get_network_firewall(ctx, from_json, network_firewall_id):
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.get_network_firewall(
+        network_firewall_id=network_firewall_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@network_firewall_health_status_group.command(name=cli_util.override('network_firewall.get_network_firewall_health_status.command_name', 'get'), help=u"""Get Overall health status of Network Firewall \n[Command Reference](getNetworkFirewallHealthStatus)""")
+@cli_util.option('--network-firewall-id', required=True, help=u"""The [OCID] of the Network Firewall resource.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'NetworkFirewallHealthStatus'})
+@cli_util.wrap_exceptions
+def get_network_firewall_health_status(ctx, from_json, network_firewall_id):
+
+    if isinstance(network_firewall_id, six.string_types) and len(network_firewall_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-firewall-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
+    result = client.get_network_firewall_health_status(
         network_firewall_id=network_firewall_id,
         **kwargs
     )
@@ -4432,7 +4473,7 @@ def update_application_update_icmp_application_details(ctx, from_json, network_f
 @application_group_group.command(name=cli_util.override('network_firewall.update_application_group.command_name', 'update'), help=u"""Updates the ApplicationGroup with the given name in the network firewall policy. \n[Command Reference](updateApplicationGroup)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--application-group-name', required=True, help=u"""Unique name identifier for Application Lists in the scope of Network Firewall Policy.""")
-@cli_util.option('--apps', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of application names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apps', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of application names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the application list. This field can be used to add additional info.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -4459,7 +4500,9 @@ def update_application_group(ctx, from_json, force, network_firewall_policy_id, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['apps'] = cli_util.parse_json_parameter("apps", apps)
+
+    if apps is not None:
+        _details['apps'] = cli_util.parse_json_parameter("apps", apps)
 
     if description is not None:
         _details['description'] = description
@@ -4652,15 +4695,16 @@ def update_decryption_profile_update_ssl_forward_proxy_profile_details(ctx, from
 @cli_util.option('--description', help=u"""The description of the decryption rule. This field can be used to add additional info.""")
 @cli_util.option('--decryption-profile', help=u"""The name of the decryption profile to use.""")
 @cli_util.option('--secret', help=u"""The name of a mapped secret. Its `type` must match that of the specified decryption profile.""")
+@cli_util.option('--secrets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of mapped secrets.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'condition': {'module': 'network_firewall', 'class': 'DecryptionRuleMatchCriteria'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}})
+@json_skeleton_utils.get_cli_json_input_option({'condition': {'module': 'network_firewall', 'class': 'DecryptionRuleMatchCriteria'}, 'secrets': {'module': 'network_firewall', 'class': 'list[string]'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'condition': {'module': 'network_firewall', 'class': 'DecryptionRuleMatchCriteria'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'DecryptionRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'condition': {'module': 'network_firewall', 'class': 'DecryptionRuleMatchCriteria'}, 'secrets': {'module': 'network_firewall', 'class': 'list[string]'}, 'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'DecryptionRule'})
 @cli_util.wrap_exceptions
-def update_decryption_rule(ctx, from_json, force, network_firewall_policy_id, decryption_rule_name, condition, action, description, decryption_profile, secret, position, if_match):
+def update_decryption_rule(ctx, from_json, force, network_firewall_policy_id, decryption_rule_name, condition, action, description, decryption_profile, secret, secrets, position, if_match):
 
     if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
@@ -4668,8 +4712,8 @@ def update_decryption_rule(ctx, from_json, force, network_firewall_policy_id, de
     if isinstance(decryption_rule_name, six.string_types) and len(decryption_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --decryption-rule-name cannot be whitespace or empty string')
     if not force:
-        if condition or position:
-            if not click.confirm("WARNING: Updates to condition and position will replace any existing values. Are you sure you want to continue?"):
+        if condition or secrets or position:
+            if not click.confirm("WARNING: Updates to condition and secrets and position will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4689,6 +4733,9 @@ def update_decryption_rule(ctx, from_json, force, network_firewall_policy_id, de
 
     if secret is not None:
         _details['secret'] = secret
+
+    if secrets is not None:
+        _details['secrets'] = cli_util.parse_json_parameter("secrets", secrets)
 
     if position is not None:
         _details['position'] = cli_util.parse_json_parameter("position", position)
@@ -4910,23 +4957,26 @@ def update_nat_rule_update_nat_v4_rule_details(ctx, from_json, force, network_fi
 @cli_util.option('--shape', help=u"""The shape of a firewall to determine the bandwidth that the firewall allows.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: {\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "NEEDS_ATTENTION", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_id, display_name, network_firewall_policy_id, network_security_group_ids, nat_configuration, shape, freeform_tags, defined_tags, if_match):
+def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_id, display_name, network_firewall_policy_id, network_security_group_ids, nat_configuration, shape, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(network_firewall_id, six.string_types) and len(network_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-id cannot be whitespace or empty string')
     if not force:
-        if network_security_group_ids or nat_configuration or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to network-security-group-ids and nat-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if network_security_group_ids or nat_configuration or freeform_tags or defined_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to network-security-group-ids and nat-configuration and freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4956,6 +5006,9 @@ def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
     result = client.update_network_firewall(

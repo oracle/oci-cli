@@ -6,6 +6,7 @@ import click
 import oci
 import tempfile
 import unittest
+import unittest.mock as mock
 from oci_cli import cli_util
 
 
@@ -31,6 +32,25 @@ class Mock():
 
 
 class TestCliUtil(unittest.TestCase):
+
+    @staticmethod
+    def _build_ctx():
+        ctx = Obj()
+        ctx.obj = Obj()
+        ctx.obj['query'] = None
+        ctx.obj['debug'] = False
+        return ctx
+
+    @staticmethod
+    def _build_paginated_response(data, has_next_page=False, next_page=None):
+        response = Obj()
+        response.status = 200
+        response.headers = {'opc-request-id': 'test'}
+        response.data = data
+        response.request = 'request'
+        response.has_next_page = has_next_page
+        response.next_page = next_page
+        return response
 
     def test_iam_coalesce_provided_and_default_value(self):
         ctx = Obj()
@@ -142,3 +162,67 @@ class TestCliUtil(unittest.TestCase):
 
         subtype = cli_util.get_possible_subtype_based_on_payload(oci.core.models.InstanceConfigurationInstanceDetails, 'core', payload)
         assert subtype.__class__.__name__ == 'ComputeInstanceDetails'
+
+    def test_list_call_get_all_results_stream_output_returns_response(self):
+        ctx = self._build_ctx()
+
+        with mock.patch('oci_cli.cli_util.stream_header') as mock_stream_header:
+            with mock.patch('oci_cli.cli_util.stream_page', return_value=True) as mock_stream_page:
+                with mock.patch('oci_cli.cli_util.stream_footer') as mock_stream_footer:
+                    response = cli_util.list_call_get_all_results(
+                        lambda **kwargs: self._build_paginated_response(['item']),
+                        ctx=ctx,
+                        stream_output=True
+                    )
+
+        assert response.status == 200
+        assert response.headers == {'opc-request-id': 'test'}
+        assert response.data == []
+        assert response.request == 'request'
+        mock_stream_header.assert_called_once()
+        mock_stream_page.assert_called_once()
+        mock_stream_footer.assert_called_once()
+
+    def test_list_call_get_all_results_stream_output_does_not_swallow_exceptions(self):
+        ctx = self._build_ctx()
+
+        with mock.patch('oci_cli.cli_util.stream_header'):
+            with mock.patch('oci_cli.cli_util.stream_footer'):
+                with self.assertRaises(RuntimeError):
+                    cli_util.list_call_get_all_results(
+                        lambda **kwargs: (_ for _ in ()).throw(RuntimeError('boom')),
+                        ctx=ctx,
+                        stream_output=True
+                    )
+
+    def test_list_call_get_all_results_multiple_keys_stream_output_returns_response(self):
+        ctx = self._build_ctx()
+
+        with mock.patch('oci_cli.cli_util.stream_header') as mock_stream_header:
+            with mock.patch('oci_cli.cli_util.stream_page', return_value=True) as mock_stream_page:
+                with mock.patch('oci_cli.cli_util.stream_footer') as mock_stream_footer:
+                    response = cli_util.list_call_get_all_results_multiple_keys(
+                        lambda **kwargs: self._build_paginated_response(['item']),
+                        ctx=ctx,
+                        stream_output=True
+                    )
+
+        assert response.status == 200
+        assert response.headers == {'opc-request-id': 'test'}
+        assert response.data == []
+        assert response.request == 'request'
+        mock_stream_header.assert_called_once()
+        mock_stream_page.assert_called_once()
+        mock_stream_footer.assert_called_once()
+
+    def test_list_call_get_all_results_multiple_keys_stream_output_does_not_swallow_exceptions(self):
+        ctx = self._build_ctx()
+
+        with mock.patch('oci_cli.cli_util.stream_header'):
+            with mock.patch('oci_cli.cli_util.stream_footer'):
+                with self.assertRaises(RuntimeError):
+                    cli_util.list_call_get_all_results_multiple_keys(
+                        lambda **kwargs: (_ for _ in ()).throw(RuntimeError('boom')),
+                        ctx=ctx,
+                        stream_output=True
+                    )

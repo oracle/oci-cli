@@ -440,7 +440,7 @@ def db_system_os_patch_history_entry_group():
     pass
 
 
-@click.command(cli_util.override('db.exadata_infrastructure_un_allocated_resources_group.command_name', 'exadata-infrastructure-un-allocated-resources'), cls=CommandGroupWithAlias, help="""Un allocated resources details of the Exadata Cloud@Customer infrastructure. Applies to Exadata Cloud@Customer instances only.""")
+@click.command(cli_util.override('db.exadata_infrastructure_un_allocated_resources_group.command_name', 'exadata-infrastructure-un-allocated-resources'), cls=CommandGroupWithAlias, help="""Displays details of unallocated resources for the Exadata Cloud@Customer infrastructure. Applies to Exadata Cloud@Customer instances only.""")
 @cli_util.help_option_group
 def exadata_infrastructure_un_allocated_resources_group():
     pass
@@ -4957,9 +4957,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
 @cli_util.option('--encryption-key-location-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
-@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, and 50%, with 50% being the default option.""")
+@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.""")
 @cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""Determines whether an Autonomous AI Database must be opened across a minimum or maximum of nodes. By default, Minimum nodes is selected.""")
-@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
+@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED", "DRCP"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5162,9 +5162,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
 @cli_util.option('--encryption-key-location-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
-@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, and 50%, with 50% being the default option.""")
+@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.""")
 @cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""Determines whether an Autonomous AI Database must be opened across a minimum or maximum of nodes. By default, Minimum nodes is selected.""")
-@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
+@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED", "DRCP"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5367,9 +5367,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
 @cli_util.option('--encryption-key-location-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
-@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, and 50%, with 50% being the default option.""")
+@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.""")
 @cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""Determines whether an Autonomous AI Database must be opened across a minimum or maximum of nodes. By default, Minimum nodes is selected.""")
-@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
+@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED", "DRCP"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5572,9 +5572,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
 @cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
-@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, and 50%, with 50% being the default option.""")
+@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.""")
 @cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""Determines whether an Autonomous AI Database must be opened across a minimum or maximum of nodes. By default, Minimum nodes is selected.""")
-@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
+@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED", "DRCP"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5775,9 +5775,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
 @cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
-@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, and 50%, with 50% being the default option.""")
+@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.""")
 @cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""Determines whether an Autonomous AI Database must be opened across a minimum or maximum of nodes. By default, Minimum nodes is selected.""")
-@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
+@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED", "DRCP"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5978,9 +5978,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
 @cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
-@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, and 50%, with 50% being the default option.""")
+@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.""")
 @cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""Determines whether an Autonomous AI Database must be opened across a minimum or maximum of nodes. By default, Minimum nodes is selected.""")
-@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
+@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED", "DRCP"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -6181,9 +6181,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
 @cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
-@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, and 50%, with 50% being the default option.""")
+@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.""")
 @cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""Determines whether an Autonomous AI Database must be opened across a minimum or maximum of nodes. By default, Minimum nodes is selected.""")
-@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
+@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED", "DRCP"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -6455,7 +6455,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -6796,7 +6796,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -7135,7 +7135,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -7474,7 +7474,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -7839,7 +7839,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -8183,7 +8183,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -8527,7 +8527,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -8879,7 +8879,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -9222,7 +9222,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -9559,7 +9559,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -9899,7 +9899,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -10242,7 +10242,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -10579,7 +10579,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -10924,7 +10924,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -11263,7 +11263,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -11604,7 +11604,7 @@ For Autonomous AI Databases on Dedicated Exadata infrastructure, the maximum num
 **Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous AI Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details. A full Exadata service is allocated when the Autonomous AI Database size is set to the upper limit (384 TB).
@@ -12067,6 +12067,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--scan-listener-port-tls', type=click.INT, help=u"""The SCAN Listener TLS port number. Default value is 2484.""")
 @cli_util.option('--scan-listener-port-non-tls', type=click.INT, help=u"""The SCAN Listener Non TLS port number. Default value is 1521.""")
 @cli_util.option('--is-mtls-enabled', type=click.BOOL, help=u"""Enable mutual TLS(mTLS) authentication for database while provisioning a VMCluster. Default is TLS.""")
+@cli_util.option('--distribution-algorithm', type=custom_types.CliCaseInsensitiveChoice(["RESOURCE_OPTIMIZED", "DISTRIBUTION_OPTIMIZED"]), help=u"""The distribution algorithm used for the Autonomous VM cluster.""")
+@cli_util.option('--sga-percentage', type=click.FLOAT, help=u"""Percentage of ECPU memory allocated for SGA(System Global Area).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state MAINTENANCE_IN_PROGRESS would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -12075,7 +12077,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousVmCluster'})
 @cli_util.wrap_exceptions
-def create_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, vm_cluster_network_id, time_zone, is_local_backup_enabled, license_model, total_container_databases, cpu_core_count_per_node, compute_model, memory_per_oracle_compute_unit_in_gbs, autonomous_data_storage_size_in_tbs, maintenance_window_details, db_servers, freeform_tags, defined_tags, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled):
+def create_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, vm_cluster_network_id, time_zone, is_local_backup_enabled, license_model, total_container_databases, cpu_core_count_per_node, compute_model, memory_per_oracle_compute_unit_in_gbs, autonomous_data_storage_size_in_tbs, maintenance_window_details, db_servers, freeform_tags, defined_tags, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled, distribution_algorithm, sga_percentage):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -12130,6 +12132,12 @@ def create_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_second
 
     if is_mtls_enabled is not None:
         _details['isMtlsEnabled'] = is_mtls_enabled
+
+    if distribution_algorithm is not None:
+        _details['distributionAlgorithm'] = distribution_algorithm
+
+    if sga_percentage is not None:
+        _details['sgaPercentage'] = sga_percentage
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_vm_cluster(
@@ -12434,6 +12442,8 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
 @cli_util.option('--cluster-time-zone', help=u"""The time zone to use for the Cloud Autonomous VM cluster. For details, see [DB System Time Zones].""")
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model of the Cloud Autonomous VM Cluster. ECPU compute model is the recommended model and OCPU compute model is legacy.""")
 @cli_util.option('--is-mtls-enabled-vm-cluster', type=click.BOOL, help=u"""Enable mutual TLS(mTLS) authentication for database at time of provisioning a VMCluster. This is applicable to database TLS Certificates only. Default is TLS""")
+@cli_util.option('--distribution-algorithm', type=custom_types.CliCaseInsensitiveChoice(["RESOURCE_OPTIMIZED", "DISTRIBUTION_OPTIMIZED"]), help=u"""The distribution algorithm used for the Autonomous VM cluster.""")
+@cli_util.option('--sga-percentage', type=click.FLOAT, help=u"""Percentage of ECPU memory allocated for SGA(System Global Area).""")
 @cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database servers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scan-listener-port-tls', type=click.INT, help=u"""The SCAN Listener TLS port. Default is 2484.""")
@@ -12457,7 +12467,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-servers': {'module': 'database', 'class': 'list[string]'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudAutonomousVmCluster'})
 @cli_util.wrap_exceptions
-def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, display_name, cloud_exadata_infrastructure_id, description, total_container_databases, cpu_core_count_per_node, memory_per_oracle_compute_unit_in_gbs, autonomous_data_storage_size_in_tbs, cluster_time_zone, compute_model, is_mtls_enabled_vm_cluster, db_servers, maintenance_window_details, scan_listener_port_tls, scan_listener_port_non_tls, license_model, nsg_ids, freeform_tags, defined_tags, security_attributes, subscription_id, opc_dry_run):
+def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, display_name, cloud_exadata_infrastructure_id, description, total_container_databases, cpu_core_count_per_node, memory_per_oracle_compute_unit_in_gbs, autonomous_data_storage_size_in_tbs, cluster_time_zone, compute_model, is_mtls_enabled_vm_cluster, distribution_algorithm, sga_percentage, db_servers, maintenance_window_details, scan_listener_port_tls, scan_listener_port_non_tls, license_model, nsg_ids, freeform_tags, defined_tags, security_attributes, subscription_id, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -12493,6 +12503,12 @@ def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_
 
     if is_mtls_enabled_vm_cluster is not None:
         _details['isMtlsEnabledVmCluster'] = is_mtls_enabled_vm_cluster
+
+    if distribution_algorithm is not None:
+        _details['distributionAlgorithm'] = distribution_algorithm
+
+    if sga_percentage is not None:
+        _details['sgaPercentage'] = sga_percentage
 
     if db_servers is not None:
         _details['dbServers'] = cli_util.parse_json_parameter("db_servers", db_servers)
@@ -12563,6 +12579,7 @@ def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the cloud Exadata infrastructure.""")
 @cli_util.option('--storage-count', type=click.INT, help=u"""The number of storage servers for the cloud Exadata infrastructure.""")
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--maintenance-version-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12578,12 +12595,12 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state MAINTENANCE_IN_PROGRESS would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'maintenance-version-preferences': {'module': 'database', 'class': 'MaintenanceVersionPreferenceDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructure'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'maintenance-version-preferences': {'module': 'database', 'class': 'MaintenanceVersionPreferenceDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def create_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, shape, compute_count, storage_count, maintenance_window, freeform_tags, defined_tags, cluster_placement_group_id, subscription_id, customer_contacts, database_server_type, storage_server_type, opc_dry_run):
+def create_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, shape, compute_count, storage_count, maintenance_window, maintenance_version_preferences, freeform_tags, defined_tags, cluster_placement_group_id, subscription_id, customer_contacts, database_server_type, storage_server_type, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -12604,6 +12621,9 @@ def create_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait
 
     if maintenance_window is not None:
         _details['maintenanceWindow'] = cli_util.parse_json_parameter("maintenance_window", maintenance_window)
+
+    if maintenance_version_preferences is not None:
+        _details['maintenanceVersionPreferences'] = cli_util.parse_json_parameter("maintenance_version_preferences", maintenance_version_preferences)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -15008,6 +15028,7 @@ def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wai
 
 This option is a JSON list with items of type ExadataInfrastructureContact.  For documentation on ExadataInfrastructureContact please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/ExadataInfrastructureContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--maintenance-version-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--storage-count', type=click.INT, help=u"""The number of storage servers for the Exadata infrastructure.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the Exadata infrastructure.""")
 @cli_util.option('--is-multi-rack-deployment', type=click.BOOL, help=u"""Indicates if deployment is Multi-Rack or not.""")
@@ -15023,12 +15044,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_ACTIVATION", "ACTIVATING", "ACTIVE", "ACTIVATION_FAILED", "FAILED", "UPDATING", "DELETING", "DELETED", "DISCONNECTED", "MAINTENANCE_IN_PROGRESS", "WAITING_FOR_CONNECTIVITY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING_FOR_CONNECTIVITY would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'contacts': {'module': 'database', 'class': 'list[ExadataInfrastructureContact]'}, 'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'network-bonding-mode-details': {'module': 'database', 'class': 'NetworkBondingModeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'contacts': {'module': 'database', 'class': 'list[ExadataInfrastructureContact]'}, 'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'maintenance-version-preferences': {'module': 'database', 'class': 'MaintenanceVersionPreferenceDetails'}, 'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'network-bonding-mode-details': {'module': 'database', 'class': 'NetworkBondingModeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'contacts': {'module': 'database', 'class': 'list[ExadataInfrastructureContact]'}, 'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'network-bonding-mode-details': {'module': 'database', 'class': 'NetworkBondingModeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'contacts': {'module': 'database', 'class': 'list[ExadataInfrastructureContact]'}, 'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'maintenance-version-preferences': {'module': 'database', 'class': 'MaintenanceVersionPreferenceDetails'}, 'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'network-bonding-mode-details': {'module': 'database', 'class': 'NetworkBondingModeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape, time_zone, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, dns_server, ntp_server, corporate_proxy, contacts, maintenance_window, storage_count, compute_count, is_multi_rack_deployment, multi_rack_configuration_file, is_cps_offline_report_enabled, network_bonding_mode_details, database_server_type, storage_server_type, freeform_tags, defined_tags):
+def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape, time_zone, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, dns_server, ntp_server, corporate_proxy, contacts, maintenance_window, maintenance_version_preferences, storage_count, compute_count, is_multi_rack_deployment, multi_rack_configuration_file, is_cps_offline_report_enabled, network_bonding_mode_details, database_server_type, storage_server_type, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -15055,6 +15076,9 @@ def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_secon
 
     if maintenance_window is not None:
         _details['maintenanceWindow'] = cli_util.parse_json_parameter("maintenance_window", maintenance_window)
+
+    if maintenance_version_preferences is not None:
+        _details['maintenanceVersionPreferences'] = cli_util.parse_json_parameter("maintenance_version_preferences", maintenance_version_preferences)
 
     if storage_count is not None:
         _details['storageCount'] = storage_count
@@ -15363,7 +15387,7 @@ def create_exascale_db_storage_vault(ctx, from_json, wait_for_state, max_wait_se
 
 @execution_action_group.command(name=cli_util.override('db.create_execution_action.command_name', 'create'), help=u"""Creates an execution action resource. \n[Command Reference](createExecutionAction)""")
 @cli_util.option('--execution-window-id', required=True, help=u"""The [OCID] of the execution window resource the execution action belongs to.""")
-@cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE"]), help=u"""The action type of the execution action being performed""")
+@cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE", "DB_SERVER_ONLINE_SOFTWARE_UPDATE"]), help=u"""The action type of the execution action being performed""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--action-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<ParamName, ParamValue> where a key value pair describes the specific action parameter. Example: `{\"count\": \"3\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--action-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of action members of this execution action.
@@ -16600,7 +16624,7 @@ def create_pluggable_database_snapshot(ctx, from_json, wait_for_state, max_wait_
 
 
 @scheduled_action_group.command(name=cli_util.override('db.create_scheduled_action.command_name', 'create'), help=u"""Creates a Scheduled Action resource. \n[Command Reference](createScheduledAction)""")
-@cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_OS_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_GI_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_GI_OS_SOFTWARE_UPDATE"]), help=u"""The type of the scheduled action being performed""")
+@cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_OS_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_GI_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_GI_OS_SOFTWARE_UPDATE", "DB_SERVER_ONLINE_SOFTWARE_UPDATE"]), help=u"""The type of the scheduled action being performed""")
 @cli_util.option('--scheduling-plan-id', required=True, help=u"""The [OCID] of the Scheduling Plan.""")
 @cli_util.option('--scheduling-window-id', required=True, help=u"""The [OCID] of the Scheduling Window.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
@@ -16684,6 +16708,7 @@ def create_scheduled_action(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--plan-intent', type=custom_types.CliCaseInsensitiveChoice(["EXADATA_INFRASTRUCTURE_FULL_SOFTWARE_UPDATE", "EXADATA_INFRASTRUCTURE_SECURITY_UPDATE"]), help=u"""The current intent of the Scheduling Plan. Valid states are EXADATA_INFRASTRUCTURE_FULL_SOFTWARE_UPDATE and EXADATA_INFRASTRUCTURE_SECURITY_UPDATE.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -16692,7 +16717,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'SchedulingPlan'})
 @cli_util.wrap_exceptions
-def create_scheduling_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scheduling_policy_id, resource_id, service_type, is_using_recommended_scheduled_actions, freeform_tags, defined_tags):
+def create_scheduling_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scheduling_policy_id, resource_id, service_type, is_using_recommended_scheduled_actions, freeform_tags, defined_tags, plan_intent):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -16711,6 +16736,9 @@ def create_scheduling_plan(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if plan_intent is not None:
+        _details['planIntent'] = plan_intent
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_scheduling_plan(
@@ -27500,19 +27528,22 @@ def list_db_servers(ctx, from_json, all_pages, page_size, compartment_id, exadat
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('db.list_db_system_compute_performances.command_name', 'list-db-system-compute-performances'), help=u"""Gets a list of expected compute performance parameters for a virtual machine DB system based on system configuration. \n[Command Reference](listDbSystemComputePerformances)""")
+@db_system_group.command(name=cli_util.override('db.list_db_system_compute_performances.command_name', 'list-db-system-compute-performances'), help=u"""Gets a list of expected compute performance parameters for a virtual machine DB system based on system configuration. Adding compartmentId does not affect results. \n[Command Reference](listDbSystemComputePerformances)""")
 @cli_util.option('--db-system-shape', help=u"""If provided, filters the results to the set of database versions which are supported for the given shape.""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbSystemComputePerformanceSummary]'})
 @cli_util.wrap_exceptions
-def list_db_system_compute_performances(ctx, from_json, all_pages, db_system_shape):
+def list_db_system_compute_performances(ctx, from_json, all_pages, db_system_shape, compartment_id):
 
     kwargs = {}
     if db_system_shape is not None:
         kwargs['db_system_shape'] = db_system_shape
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     result = client.list_db_system_compute_performances(
@@ -29286,7 +29317,8 @@ def list_oneoff_patches(ctx, from_json, all_pages, page_size, compartment_id, li
 
 
 @action_param_values_summary_group.command(name=cli_util.override('db.list_params_for_action_type.command_name', 'list-params-for-action-type'), help=u"""List all the action params and their possible values for a given action type \n[Command Reference](listParamsForActionType)""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_OS_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_GI_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_GI_OS_SOFTWARE_UPDATE"]), help=u"""The type of the scheduled action""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_OS_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_GI_SOFTWARE_UPDATE", "FSU_VM_CLUSTER_GI_OS_SOFTWARE_UPDATE", "DB_SERVER_ONLINE_SOFTWARE_UPDATE"]), help=u"""The type of the scheduled action""")
+@cli_util.option('--plan-intent', type=custom_types.CliCaseInsensitiveChoice(["EXADATA_INFRASTRUCTURE_FULL_SOFTWARE_UPDATE", "EXADATA_INFRASTRUCTURE_SECURITY_UPDATE"]), help=u"""The plan intent the action will be used for. Relevant to action type that can be used in multiple plans""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -29296,12 +29328,14 @@ def list_oneoff_patches(ctx, from_json, all_pages, page_size, compartment_id, li
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ActionParamValuesCollection'})
 @cli_util.wrap_exceptions
-def list_params_for_action_type(ctx, from_json, all_pages, page_size, type, limit, page):
+def list_params_for_action_type(ctx, from_json, all_pages, page_size, type, plan_intent, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if plan_intent is not None:
+        kwargs['plan_intent'] = plan_intent
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -29525,7 +29559,7 @@ def list_pluggable_databases(ctx, from_json, all_pages, page_size, compartment_i
 @recommended_scheduled_action_summary_group.command(name=cli_util.override('db.list_recommended_scheduled_actions.command_name', 'list-recommended-scheduled-actions'), help=u"""Returns a recommended Scheduled Actions configuration for a given resource, plan intent and scheduling policy. \n[Command Reference](listRecommendedScheduledActions)""")
 @cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
 @cli_util.option('--scheduling-policy-target-resource-id', required=True, help=u"""The target resource [OCID] the scheduled actions will be for.""")
-@cli_util.option('--plan-intent', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXADATA_INFRASTRUCTURE_FULL_SOFTWARE_UPDATE"]), help=u"""The scheduling plan intent the scheduled actions will be for.""")
+@cli_util.option('--plan-intent', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXADATA_INFRASTRUCTURE_FULL_SOFTWARE_UPDATE", "EXADATA_INFRASTRUCTURE_SECURITY_UPDATE"]), help=u"""The scheduling plan intent the scheduled actions will be for.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -29712,6 +29746,7 @@ def list_scheduled_actions(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--resource-id', help=u"""A filter to return only resources that match the given resource id exactly.""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the given Schedule Plan id exactly.""")
+@cli_util.option('--plan-intent', type=custom_types.CliCaseInsensitiveChoice(["EXADATA_INFRASTRUCTURE_FULL_SOFTWARE_UPDATE", "EXADATA_INFRASTRUCTURE_SECURITY_UPDATE"]), help=u"""A filter to return only resources that match the given plan intent exactly.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -29719,7 +29754,7 @@ def list_scheduled_actions(ctx, from_json, all_pages, page_size, compartment_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'SchedulingPlanCollection'})
 @cli_util.wrap_exceptions
-def list_scheduling_plans(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, scheduling_policy_id, display_name, resource_id, id):
+def list_scheduling_plans(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, scheduling_policy_id, display_name, resource_id, id, plan_intent):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -29743,6 +29778,8 @@ def list_scheduling_plans(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['resource_id'] = resource_id
     if id is not None:
         kwargs['id'] = id
+    if plan_intent is not None:
+        kwargs['plan_intent'] = plan_intent
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
@@ -29778,6 +29815,7 @@ def list_scheduling_plans(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--cadence', type=custom_types.CliCaseInsensitiveChoice(["HALFYEARLY", "QUARTERLY", "MONTHLY"]), help=u"""A filter to return only resources that match the given cadence period exactly.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -29785,7 +29823,7 @@ def list_scheduling_plans(ctx, from_json, all_pages, page_size, compartment_id, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[SchedulingPolicySummary]'})
 @cli_util.wrap_exceptions
-def list_scheduling_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+def list_scheduling_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, cadence):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -29803,6 +29841,8 @@ def list_scheduling_policies(ctx, from_json, all_pages, page_size, compartment_i
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if cadence is not None:
+        kwargs['cadence'] = cadence
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
@@ -34394,6 +34434,10 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous AI Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
+@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.""")
+@cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""Determines whether an Autonomous AI Database must be opened across a minimum or maximum of nodes. By default, Minimum nodes is selected.""")
+@cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED", "DRCP"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -34404,7 +34448,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, customer_contacts, okv_end_point_group_name, patch_model, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, if_match):
+def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, customer_contacts, okv_end_point_group_name, patch_model, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture, if_match):
 
     if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
@@ -34451,6 +34495,18 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
 
     if backup_config is not None:
         _details['backupConfig'] = cli_util.parse_json_parameter("backup_config", backup_config)
+
+    if db_split_threshold is not None:
+        _details['dbSplitThreshold'] = db_split_threshold
+
+    if vm_failover_reservation is not None:
+        _details['vmFailoverReservation'] = vm_failover_reservation
+
+    if distribution_affinity is not None:
+        _details['distributionAffinity'] = distribution_affinity
+
+    if net_services_architecture is not None:
+        _details['netServicesArchitecture'] = net_services_architecture
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_container_database(
@@ -34608,7 +34664,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous AI Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle services in the cloud. License Included allows you to subscribe to new Oracle AI Database software licenses and the Oracle AI Database service. Note that when provisioning an [Autonomous AI Database on dedicated Exadata infrastructure], this attribute must be null. It is already set at the Autonomous Exadata Infrastructure level. When provisioning an [Autonomous AI Database Serverless]  database, if a value is not specified, the system defaults the value to `BRING_YOUR_OWN_LICENSE`. Bring your own license (BYOL) also allows you to select the DB edition using the optional parameter.
@@ -34654,7 +34710,9 @@ To enable cross-region Autonomous Data Guard on an Autonomous AI Database Server
 To delete a cross-region standby database, provide the `peerDbId` for the standby database in a remote region, and set `isDataGuardEnabled` to `FALSE`.""")
 @cli_util.option('--peer-db-id', help=u"""The database OCID(/Content/General/Concepts/identifiers.htm) of the Disaster Recovery peer (source Primary) database, which is located in a different (remote) region from the current peer database.
 
-To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.""")
+To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.
+
+When disconnecting a cross-region standby, specify the standby database OCID in this parameter together with `isDisconnectPeer=true`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
@@ -34714,9 +34772,11 @@ This option is a JSON list with items of type DatabaseTool.  For documentation o
 @cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
 @cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
+@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this disconnects the Autonomous AI Database from its peer. After the disconnect completes, the Autonomous AI Database works permanently as a standalone database.
 
-To disconnect a cross region standby, please also provide the OCID of the standby database in the `peerDbId` parameter.""")
+**Warning:** A disconnected standby is no longer part of the disaster recovery configuration. Operations and restrictions that apply to a connected standby do not apply in the same way after the database has been disconnected.
+
+To disconnect a cross region standby, also provide the OCID of the standby database in the `peerDbId` parameter.""")
 @cli_util.option('--local-adg-resource-pool-leader-id', help=u"""The [OCID] of a dedicated resource pool leader Autonomous AI Database in the same region, that is required when local Autonomous Data Guard is enabled for a dedicated resource pool member using the parameter `isLocalDataGuardEnabled`. This field applies only to dedicated resource pool members, and the specified leader must be different from the primary\u2019s leader. Local Autonomous Data Guard can be enabled only if more than one dedicated resource pool exists in the region.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -35021,7 +35081,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous AI Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle services in the cloud. License Included allows you to subscribe to new Oracle AI Database software licenses and the Oracle AI Database service. Note that when provisioning an [Autonomous AI Database on dedicated Exadata infrastructure], this attribute must be null. It is already set at the Autonomous Exadata Infrastructure level. When provisioning an [Autonomous AI Database Serverless]  database, if a value is not specified, the system defaults the value to `BRING_YOUR_OWN_LICENSE`. Bring your own license (BYOL) also allows you to select the DB edition using the optional parameter.
@@ -35067,7 +35127,9 @@ To enable cross-region Autonomous Data Guard on an Autonomous AI Database Server
 To delete a cross-region standby database, provide the `peerDbId` for the standby database in a remote region, and set `isDataGuardEnabled` to `FALSE`.""")
 @cli_util.option('--peer-db-id', help=u"""The database OCID(/Content/General/Concepts/identifiers.htm) of the Disaster Recovery peer (source Primary) database, which is located in a different (remote) region from the current peer database.
 
-To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.""")
+To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.
+
+When disconnecting a cross-region standby, specify the standby database OCID in this parameter together with `isDisconnectPeer=true`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
@@ -35126,9 +35188,11 @@ This option is a JSON list with items of type DatabaseTool.  For documentation o
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
-@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
+@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this disconnects the Autonomous AI Database from its peer. After the disconnect completes, the Autonomous AI Database works permanently as a standalone database.
 
-To disconnect a cross region standby, please also provide the OCID of the standby database in the `peerDbId` parameter.""")
+**Warning:** A disconnected standby is no longer part of the disaster recovery configuration. Operations and restrictions that apply to a connected standby do not apply in the same way after the database has been disconnected.
+
+To disconnect a cross region standby, also provide the OCID of the standby database in the `peerDbId` parameter.""")
 @cli_util.option('--local-adg-resource-pool-leader-id', help=u"""The [OCID] of a dedicated resource pool leader Autonomous AI Database in the same region, that is required when local Autonomous Data Guard is enabled for a dedicated resource pool member using the parameter `isLocalDataGuardEnabled`. This field applies only to dedicated resource pool members, and the specified leader must be different from the primary\u2019s leader. Local Autonomous Data Guard can be enabled only if more than one dedicated resource pool exists in the region.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -35439,7 +35503,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous AI Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle services in the cloud. License Included allows you to subscribe to new Oracle AI Database software licenses and the Oracle AI Database service. Note that when provisioning an [Autonomous AI Database on dedicated Exadata infrastructure], this attribute must be null. It is already set at the Autonomous Exadata Infrastructure level. When provisioning an [Autonomous AI Database Serverless]  database, if a value is not specified, the system defaults the value to `BRING_YOUR_OWN_LICENSE`. Bring your own license (BYOL) also allows you to select the DB edition using the optional parameter.
@@ -35485,7 +35549,9 @@ To enable cross-region Autonomous Data Guard on an Autonomous AI Database Server
 To delete a cross-region standby database, provide the `peerDbId` for the standby database in a remote region, and set `isDataGuardEnabled` to `FALSE`.""")
 @cli_util.option('--peer-db-id', help=u"""The database OCID(/Content/General/Concepts/identifiers.htm) of the Disaster Recovery peer (source Primary) database, which is located in a different (remote) region from the current peer database.
 
-To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.""")
+To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.
+
+When disconnecting a cross-region standby, specify the standby database OCID in this parameter together with `isDisconnectPeer=true`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
@@ -35544,9 +35610,11 @@ This option is a JSON list with items of type DatabaseTool.  For documentation o
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
-@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
+@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this disconnects the Autonomous AI Database from its peer. After the disconnect completes, the Autonomous AI Database works permanently as a standalone database.
 
-To disconnect a cross region standby, please also provide the OCID of the standby database in the `peerDbId` parameter.""")
+**Warning:** A disconnected standby is no longer part of the disaster recovery configuration. Operations and restrictions that apply to a connected standby do not apply in the same way after the database has been disconnected.
+
+To disconnect a cross region standby, also provide the OCID of the standby database in the `peerDbId` parameter.""")
 @cli_util.option('--local-adg-resource-pool-leader-id', help=u"""The [OCID] of a dedicated resource pool leader Autonomous AI Database in the same region, that is required when local Autonomous Data Guard is enabled for a dedicated resource pool member using the parameter `isLocalDataGuardEnabled`. This field applies only to dedicated resource pool members, and the specified leader must be different from the primary\u2019s leader. Local Autonomous Data Guard can be enabled only if more than one dedicated resource pool exists in the region.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -35851,7 +35919,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous AI Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle services in the cloud. License Included allows you to subscribe to new Oracle AI Database software licenses and the Oracle AI Database service. Note that when provisioning an [Autonomous AI Database on dedicated Exadata infrastructure], this attribute must be null. It is already set at the Autonomous Exadata Infrastructure level. When provisioning an [Autonomous AI Database Serverless]  database, if a value is not specified, the system defaults the value to `BRING_YOUR_OWN_LICENSE`. Bring your own license (BYOL) also allows you to select the DB edition using the optional parameter.
@@ -35897,7 +35965,9 @@ To enable cross-region Autonomous Data Guard on an Autonomous AI Database Server
 To delete a cross-region standby database, provide the `peerDbId` for the standby database in a remote region, and set `isDataGuardEnabled` to `FALSE`.""")
 @cli_util.option('--peer-db-id', help=u"""The database OCID(/Content/General/Concepts/identifiers.htm) of the Disaster Recovery peer (source Primary) database, which is located in a different (remote) region from the current peer database.
 
-To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.""")
+To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.
+
+When disconnecting a cross-region standby, specify the standby database OCID in this parameter together with `isDisconnectPeer=true`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
@@ -35956,9 +36026,11 @@ This option is a JSON list with items of type DatabaseTool.  For documentation o
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
-@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
+@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this disconnects the Autonomous AI Database from its peer. After the disconnect completes, the Autonomous AI Database works permanently as a standalone database.
 
-To disconnect a cross region standby, please also provide the OCID of the standby database in the `peerDbId` parameter.""")
+**Warning:** A disconnected standby is no longer part of the disaster recovery configuration. Operations and restrictions that apply to a connected standby do not apply in the same way after the database has been disconnected.
+
+To disconnect a cross region standby, also provide the OCID of the standby database in the `peerDbId` parameter.""")
 @cli_util.option('--local-adg-resource-pool-leader-id', help=u"""The [OCID] of a dedicated resource pool leader Autonomous AI Database in the same region, that is required when local Autonomous Data Guard is enabled for a dedicated resource pool member using the parameter `isLocalDataGuardEnabled`. This field applies only to dedicated resource pool members, and the specified leader must be different from the primary\u2019s leader. Local Autonomous Data Guard can be enabled only if more than one dedicated resource pool exists in the region.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -36271,7 +36343,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous AI Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle services in the cloud. License Included allows you to subscribe to new Oracle AI Database software licenses and the Oracle AI Database service. Note that when provisioning an [Autonomous AI Database on dedicated Exadata infrastructure], this attribute must be null. It is already set at the Autonomous Exadata Infrastructure level. When provisioning an [Autonomous AI Database Serverless]  database, if a value is not specified, the system defaults the value to `BRING_YOUR_OWN_LICENSE`. Bring your own license (BYOL) also allows you to select the DB edition using the optional parameter.
@@ -36317,7 +36389,9 @@ To enable cross-region Autonomous Data Guard on an Autonomous AI Database Server
 To delete a cross-region standby database, provide the `peerDbId` for the standby database in a remote region, and set `isDataGuardEnabled` to `FALSE`.""")
 @cli_util.option('--peer-db-id', help=u"""The database OCID(/Content/General/Concepts/identifiers.htm) of the Disaster Recovery peer (source Primary) database, which is located in a different (remote) region from the current peer database.
 
-To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.""")
+To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.
+
+When disconnecting a cross-region standby, specify the standby database OCID in this parameter together with `isDisconnectPeer=true`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
@@ -36376,9 +36450,11 @@ This option is a JSON list with items of type DatabaseTool.  For documentation o
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
-@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
+@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this disconnects the Autonomous AI Database from its peer. After the disconnect completes, the Autonomous AI Database works permanently as a standalone database.
 
-To disconnect a cross region standby, please also provide the OCID of the standby database in the `peerDbId` parameter.""")
+**Warning:** A disconnected standby is no longer part of the disaster recovery configuration. Operations and restrictions that apply to a connected standby do not apply in the same way after the database has been disconnected.
+
+To disconnect a cross region standby, also provide the OCID of the standby database in the `peerDbId` parameter.""")
 @cli_util.option('--local-adg-resource-pool-leader-id', help=u"""The [OCID] of a dedicated resource pool leader Autonomous AI Database in the same region, that is required when local Autonomous Data Guard is enabled for a dedicated resource pool member using the parameter `isLocalDataGuardEnabled`. This field applies only to dedicated resource pool members, and the specified leader must be different from the primary\u2019s leader. Local Autonomous Data Guard can be enabled only if more than one dedicated resource pool exists in the region.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -36685,7 +36761,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous AI Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle services in the cloud. License Included allows you to subscribe to new Oracle AI Database software licenses and the Oracle AI Database service. Note that when provisioning an [Autonomous AI Database on dedicated Exadata infrastructure], this attribute must be null. It is already set at the Autonomous Exadata Infrastructure level. When provisioning an [Autonomous AI Database Serverless]  database, if a value is not specified, the system defaults the value to `BRING_YOUR_OWN_LICENSE`. Bring your own license (BYOL) also allows you to select the DB edition using the optional parameter.
@@ -36731,7 +36807,9 @@ To enable cross-region Autonomous Data Guard on an Autonomous AI Database Server
 To delete a cross-region standby database, provide the `peerDbId` for the standby database in a remote region, and set `isDataGuardEnabled` to `FALSE`.""")
 @cli_util.option('--peer-db-id', help=u"""The database OCID(/Content/General/Concepts/identifiers.htm) of the Disaster Recovery peer (source Primary) database, which is located in a different (remote) region from the current peer database.
 
-To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.""")
+To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.
+
+When disconnecting a cross-region standby, specify the standby database OCID in this parameter together with `isDisconnectPeer=true`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
@@ -36790,9 +36868,11 @@ This option is a JSON list with items of type DatabaseTool.  For documentation o
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
-@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
+@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this disconnects the Autonomous AI Database from its peer. After the disconnect completes, the Autonomous AI Database works permanently as a standalone database.
 
-To disconnect a cross region standby, please also provide the OCID of the standby database in the `peerDbId` parameter.""")
+**Warning:** A disconnected standby is no longer part of the disaster recovery configuration. Operations and restrictions that apply to a connected standby do not apply in the same way after the database has been disconnected.
+
+To disconnect a cross region standby, also provide the OCID of the standby database in the `peerDbId` parameter.""")
 @cli_util.option('--local-adg-resource-pool-leader-id', help=u"""The [OCID] of a dedicated resource pool leader Autonomous AI Database in the same region, that is required when local Autonomous Data Guard is enabled for a dedicated resource pool member using the parameter `isLocalDataGuardEnabled`. This field applies only to dedicated resource pool members, and the specified leader must be different from the primary\u2019s leader. Local Autonomous Data Guard can be enabled only if more than one dedicated resource pool exists in the region.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -37101,7 +37181,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX", "LH"]), help=u"""The Autonomous AI Database workload type. The following values are valid: - OLTP - indicates an Autonomous AI Transaction Processing database - DW - indicates an Autonomous AI Lakehouse database - AJD - indicates an Autonomous AI JSON Database - APEX - indicates an Autonomous AI Database with the Oracle APEX AI Application Development workload type. - LH - indicates an Oracle Autonomous AI Lakehouse database
 
-**Note** Starting December 2026, DW will not be supported as a valid value for this parameter.
+**Note** Starting December 2026, DW will not be supported as a valid value for this parameter. When creating an Autonomous AI Database, if this parameter is not specified, the default value is `OLTP`.
 
  This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous AI Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle services in the cloud. License Included allows you to subscribe to new Oracle AI Database software licenses and the Oracle AI Database service. Note that when provisioning an [Autonomous AI Database on dedicated Exadata infrastructure], this attribute must be null. It is already set at the Autonomous Exadata Infrastructure level. When provisioning an [Autonomous AI Database Serverless]  database, if a value is not specified, the system defaults the value to `BRING_YOUR_OWN_LICENSE`. Bring your own license (BYOL) also allows you to select the DB edition using the optional parameter.
@@ -37147,7 +37227,9 @@ To enable cross-region Autonomous Data Guard on an Autonomous AI Database Server
 To delete a cross-region standby database, provide the `peerDbId` for the standby database in a remote region, and set `isDataGuardEnabled` to `FALSE`.""")
 @cli_util.option('--peer-db-id', help=u"""The database OCID(/Content/General/Concepts/identifiers.htm) of the Disaster Recovery peer (source Primary) database, which is located in a different (remote) region from the current peer database.
 
-To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.""")
+To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.
+
+When disconnecting a cross-region standby, specify the standby database OCID in this parameter together with `isDisconnectPeer=true`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
@@ -37206,9 +37288,11 @@ This option is a JSON list with items of type DatabaseTool.  For documentation o
 @cli_util.option('--vanity-url-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
-@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this will disconnect the Autonomous AI Database from its peer and the Autonomous AI Database can work permanently as a standalone database.
+@cli_util.option('--is-disconnect-peer', type=click.BOOL, help=u"""If true, this disconnects the Autonomous AI Database from its peer. After the disconnect completes, the Autonomous AI Database works permanently as a standalone database.
 
-To disconnect a cross region standby, please also provide the OCID of the standby database in the `peerDbId` parameter.""")
+**Warning:** A disconnected standby is no longer part of the disaster recovery configuration. Operations and restrictions that apply to a connected standby do not apply in the same way after the database has been disconnected.
+
+To disconnect a cross region standby, also provide the OCID of the standby database in the `peerDbId` parameter.""")
 @cli_util.option('--local-adg-resource-pool-leader-id', help=u"""The [OCID] of a dedicated resource pool leader Autonomous AI Database in the same region, that is required when local Autonomous Data Guard is enabled for a dedicated resource pool member using the parameter `isLocalDataGuardEnabled`. This field applies only to dedicated resource pool members, and the specified leader must be different from the primary\u2019s leader. Local Autonomous Data Guard can be enabled only if more than one dedicated resource pool exists in the region.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -37826,6 +37910,11 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The new value of autonomous data storage (in TBs) for the Autonomous VM cluster.""")
 @cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The new value of cpus per Autonomous VM cluster per node for the Autonomous VM cluster.""")
 @cli_util.option('--total-container-databases', type=click.INT, help=u"""The new value of maximum number of ACDs for the Autonomous VM cluster.""")
+@cli_util.option('--time-zone', help=u"""The time zone to use for the Autonomous VM cluster. For details, see [DB System Time Zones].""")
+@cli_util.option('--scan-listener-port-tls', type=click.INT, help=u"""The SCAN Listener TLS port number. Default value is 2484.""")
+@cli_util.option('--scan-listener-port-non-tls', type=click.INT, help=u"""The SCAN Listener Non TLS port number. Default value is 1521.""")
+@cli_util.option('--is-mtls-enabled', type=click.BOOL, help=u"""Enable mutual TLS(mTLS) authentication for database. Default is TLS.""")
+@cli_util.option('--distribution-algorithm', type=custom_types.CliCaseInsensitiveChoice(["RESOURCE_OPTIMIZED", "DISTRIBUTION_OPTIMIZED"]), help=u"""The distribution algorithm used for the Autonomous VM cluster.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state MAINTENANCE_IN_PROGRESS would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -37836,7 +37925,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousVmCluster'})
 @cli_util.wrap_exceptions
-def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_vm_cluster_id, maintenance_window_details, license_model, freeform_tags, defined_tags, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, if_match):
+def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_vm_cluster_id, maintenance_window_details, license_model, freeform_tags, defined_tags, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, time_zone, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled, distribution_algorithm, if_match):
 
     if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
@@ -37872,6 +37961,21 @@ def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait
 
     if total_container_databases is not None:
         _details['totalContainerDatabases'] = total_container_databases
+
+    if time_zone is not None:
+        _details['timeZone'] = time_zone
+
+    if scan_listener_port_tls is not None:
+        _details['scanListenerPortTls'] = scan_listener_port_tls
+
+    if scan_listener_port_non_tls is not None:
+        _details['scanListenerPortNonTls'] = scan_listener_port_non_tls
+
+    if is_mtls_enabled is not None:
+        _details['isMtlsEnabled'] = is_mtls_enabled
+
+    if distribution_algorithm is not None:
+        _details['distributionAlgorithm'] = distribution_algorithm
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_vm_cluster(
@@ -38078,6 +38182,11 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-time-zone', help=u"""The time zone to use for the Autonomous VM cluster. For details, see [DB System Time Zones].""")
+@cli_util.option('--scan-listener-port-tls', type=click.INT, help=u"""The SCAN Listener TLS port. Default is 2484.""")
+@cli_util.option('--scan-listener-port-non-tls', type=click.INT, help=u"""The SCAN Listener Non TLS port. Default is 1521.""")
+@cli_util.option('--is-mtls-enabled-vm-cluster', type=click.BOOL, help=u"""Enable mutual TLS(mTLS) authentication for database at time of provisioning a VMCluster. This is applicable to database TLS Certificates only. Default is TLS""")
+@cli_util.option('--distribution-algorithm', type=custom_types.CliCaseInsensitiveChoice(["RESOURCE_OPTIMIZED", "DISTRIBUTION_OPTIMIZED"]), help=u"""The distribution algorithm used for the Autonomous VM cluster.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -38090,7 +38199,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudAutonomousVmCluster'})
 @cli_util.wrap_exceptions
-def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, description, display_name, maintenance_window_details, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, license_model, nsg_ids, freeform_tags, defined_tags, security_attributes, if_match, opc_dry_run):
+def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, description, display_name, maintenance_window_details, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, license_model, nsg_ids, freeform_tags, defined_tags, cluster_time_zone, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled_vm_cluster, distribution_algorithm, security_attributes, if_match, opc_dry_run):
 
     if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
@@ -38138,6 +38247,21 @@ def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, ma
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if cluster_time_zone is not None:
+        _details['clusterTimeZone'] = cluster_time_zone
+
+    if scan_listener_port_tls is not None:
+        _details['scanListenerPortTls'] = scan_listener_port_tls
+
+    if scan_listener_port_non_tls is not None:
+        _details['scanListenerPortNonTls'] = scan_listener_port_non_tls
+
+    if is_mtls_enabled_vm_cluster is not None:
+        _details['isMtlsEnabledVmCluster'] = is_mtls_enabled_vm_cluster
+
+    if distribution_algorithm is not None:
+        _details['distributionAlgorithm'] = distribution_algorithm
+
     if security_attributes is not None:
         _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
@@ -38177,6 +38301,7 @@ def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, ma
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the cloud Exadata infrastructure. The name does not need to be unique.""")
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--maintenance-version-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the cloud Exadata infrastructure.""")
 @cli_util.option('--storage-count', type=click.INT, help=u"""The number of storage servers for the cloud Exadata infrastructure.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -38191,18 +38316,18 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state MAINTENANCE_IN_PROGRESS would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'maintenance-version-preferences': {'module': 'database', 'class': 'MaintenanceVersionPreferenceDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructure'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'maintenance-version-preferences': {'module': 'database', 'class': 'MaintenanceVersionPreferenceDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def update_cloud_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, display_name, maintenance_window, compute_count, storage_count, freeform_tags, defined_tags, customer_contacts, if_match):
+def update_cloud_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, display_name, maintenance_window, maintenance_version_preferences, compute_count, storage_count, freeform_tags, defined_tags, customer_contacts, if_match):
 
     if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
     if not force:
-        if maintenance_window or freeform_tags or defined_tags or customer_contacts:
-            if not click.confirm("WARNING: Updates to maintenance-window and freeform-tags and defined-tags and customer-contacts will replace any existing values. Are you sure you want to continue?"):
+        if maintenance_window or maintenance_version_preferences or freeform_tags or defined_tags or customer_contacts:
+            if not click.confirm("WARNING: Updates to maintenance-window and maintenance-version-preferences and freeform-tags and defined-tags and customer-contacts will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -38217,6 +38342,9 @@ def update_cloud_exadata_infrastructure(ctx, from_json, force, wait_for_state, m
 
     if maintenance_window is not None:
         _details['maintenanceWindow'] = cli_util.parse_json_parameter("maintenance_window", maintenance_window)
+
+    if maintenance_version_preferences is not None:
+        _details['maintenanceVersionPreferences'] = cli_util.parse_json_parameter("maintenance_version_preferences", maintenance_version_preferences)
 
     if compute_count is not None:
         _details['computeCount'] = compute_count
@@ -39274,6 +39402,7 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
 This option is a JSON list with items of type ExadataInfrastructureContact.  For documentation on ExadataInfrastructureContact please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/ExadataInfrastructureContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--maintenance-version-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--additional-storage-count', type=click.INT, help=u"""The requested number of additional storage servers for the Exadata infrastructure.""")
 @cli_util.option('--is-multi-rack-deployment', type=click.BOOL, help=u"""Indicates if deployment is Multi-Rack or not.""")
 @cli_util.option('--multi-rack-configuration-file', help=u"""The base64 encoded Multi-Rack configuration json file.""")
@@ -39293,18 +39422,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_ACTIVATION", "ACTIVATING", "ACTIVE", "ACTIVATION_FAILED", "FAILED", "UPDATING", "DELETING", "DELETED", "DISCONNECTED", "MAINTENANCE_IN_PROGRESS", "WAITING_FOR_CONNECTIVITY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state WAITING_FOR_CONNECTIVITY would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'contacts': {'module': 'database', 'class': 'list[ExadataInfrastructureContact]'}, 'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'network-bonding-mode-details': {'module': 'database', 'class': 'NetworkBondingModeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'contacts': {'module': 'database', 'class': 'list[ExadataInfrastructureContact]'}, 'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'maintenance-version-preferences': {'module': 'database', 'class': 'MaintenanceVersionPreferenceDetails'}, 'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'network-bonding-mode-details': {'module': 'database', 'class': 'NetworkBondingModeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'contacts': {'module': 'database', 'class': 'list[ExadataInfrastructureContact]'}, 'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'network-bonding-mode-details': {'module': 'database', 'class': 'NetworkBondingModeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'contacts': {'module': 'database', 'class': 'list[ExadataInfrastructureContact]'}, 'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'maintenance-version-preferences': {'module': 'database', 'class': 'MaintenanceVersionPreferenceDetails'}, 'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'network-bonding-mode-details': {'module': 'database', 'class': 'NetworkBondingModeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, corporate_proxy, contacts, maintenance_window, additional_storage_count, is_multi_rack_deployment, multi_rack_configuration_file, additional_compute_count, additional_compute_system_model, dns_server, ntp_server, time_zone, is_cps_offline_report_enabled, network_bonding_mode_details, freeform_tags, defined_tags, if_match):
+def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, corporate_proxy, contacts, maintenance_window, maintenance_version_preferences, additional_storage_count, is_multi_rack_deployment, multi_rack_configuration_file, additional_compute_count, additional_compute_system_model, dns_server, ntp_server, time_zone, is_cps_offline_report_enabled, network_bonding_mode_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
     if not force:
-        if contacts or maintenance_window or dns_server or ntp_server or network_bonding_mode_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to contacts and maintenance-window and dns-server and ntp-server and network-bonding-mode-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if contacts or maintenance_window or maintenance_version_preferences or dns_server or ntp_server or network_bonding_mode_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to contacts and maintenance-window and maintenance-version-preferences and dns-server and ntp-server and network-bonding-mode-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -39340,6 +39469,9 @@ def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wai
 
     if maintenance_window is not None:
         _details['maintenanceWindow'] = cli_util.parse_json_parameter("maintenance_window", maintenance_window)
+
+    if maintenance_version_preferences is not None:
+        _details['maintenanceVersionPreferences'] = cli_util.parse_json_parameter("maintenance_version_preferences", maintenance_version_preferences)
 
     if additional_storage_count is not None:
         _details['additionalStorageCount'] = additional_storage_count

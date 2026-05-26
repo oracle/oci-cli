@@ -10594,6 +10594,7 @@ Example: `50`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--remaining-memory-in-gbs-greater-than-or-equal-to', type=click.FLOAT, help=u"""The remaining memory of the dedicated VM host, in GBs.""")
 @cli_util.option('--remaining-ocpus-greater-than-or-equal-to', type=click.FLOAT, help=u"""The available OCPUs of the dedicated VM host.""")
+@cli_util.option('--remaining-local-volume-in-gbs-greater-than-or-equal-to', type=click.FLOAT, help=u"""The remaining local volume of the dedicated VM host, in GBs.""")
 @cli_util.option('--is-memory-encryption-enabled', type=click.BOOL, help=u"""A filter to return only confidential Dedicated VM hosts (DVMH) or confidential VM instances on DVMH.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -10602,7 +10603,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DedicatedVmHostSummary]'})
 @cli_util.wrap_exceptions
-def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, lifecycle_state, display_name, instance_shape_name, limit, page, sort_by, sort_order, remaining_memory_in_gbs_greater_than_or_equal_to, remaining_ocpus_greater_than_or_equal_to, is_memory_encryption_enabled):
+def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, lifecycle_state, display_name, instance_shape_name, limit, page, sort_by, sort_order, remaining_memory_in_gbs_greater_than_or_equal_to, remaining_ocpus_greater_than_or_equal_to, remaining_local_volume_in_gbs_greater_than_or_equal_to, is_memory_encryption_enabled):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -10630,6 +10631,8 @@ def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id
         kwargs['remaining_memory_in_gbs_greater_than_or_equal_to'] = remaining_memory_in_gbs_greater_than_or_equal_to
     if remaining_ocpus_greater_than_or_equal_to is not None:
         kwargs['remaining_ocpus_greater_than_or_equal_to'] = remaining_ocpus_greater_than_or_equal_to
+    if remaining_local_volume_in_gbs_greater_than_or_equal_to is not None:
+        kwargs['remaining_local_volume_in_gbs_greater_than_or_equal_to'] = remaining_local_volume_in_gbs_greater_than_or_equal_to
     if is_memory_encryption_enabled is not None:
         kwargs['is_memory_encryption_enabled'] = is_memory_encryption_enabled
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
