@@ -137,12 +137,14 @@ containerengine_cli.cluster_group.add_command(generate_token)
  security groups (NSGs) to apply to the cluster endpoint. You must also specify --endpoint-subnet-id.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-public-ip-enabled', type=click.BOOL, help="""Whether the cluster should be assigned a public\
  IP address. Defaults to false. If set to true on a private subnet, the cluster provisioning will fail. You must also specify --endpoint-subnet-id.""")
+@cli_util.option('--endpoint-security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""[Security attributes] are labels         for a resource that can be referenced in a [Zero Trust Packet Routing]         (ZPR) policy to control access to ZPR-supported resources.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ip-families', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of IP families for the cluster. Example: '[\"IPv4\", \"IPv6\"]'""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option(
     {'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
      'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
      'endpoint-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'endpoint-security-attributes': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'service-lb-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'service-lb-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
      'persistent-volume-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
@@ -159,6 +161,7 @@ containerengine_cli.cluster_group.add_command(generate_token)
                                    'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
                                    'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
                                    'endpoint-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'endpoint-security-attributes': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
                                    'service-lb-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
                                    'service-lb-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
                                    'persistent-volume-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
@@ -303,6 +306,10 @@ def create_cluster(ctx, **kwargs):
         raise click.UsageError(
             'Cannot specify --endpoint-public-ip-enabled without --endpoint-subnet-id'
         )
+    if kwargs.get('endpoint_security_attributes') and not kwargs.get('endpoint_subnet_id'):
+        raise click.UsageError(
+            'Cannot specify --endpoint-security-attributes without --endpoint-subnet-id'
+        )
 
     if 'endpoint_subnet_id' in kwargs and kwargs['endpoint_subnet_id'] is not None:
         kwargs['endpoint_config'] = {}
@@ -311,9 +318,12 @@ def create_cluster(ctx, **kwargs):
             kwargs['endpoint_config']['nsgIds'] = cli_util.parse_json_parameter("endpoint_nsg_ids", kwargs['endpoint_nsg_ids'])
         if 'endpoint_public_ip_enabled' in kwargs and kwargs['endpoint_public_ip_enabled'] is not None:
             kwargs['endpoint_config']['isPublicIpEnabled'] = kwargs['endpoint_public_ip_enabled']
+        if 'endpoint_security_attributes' in kwargs and kwargs['endpoint_security_attributes'] is not None:
+            kwargs['endpoint_config']['securityAttributes'] = cli_util.parse_json_parameter("endpoint_security_attributes", kwargs['endpoint_security_attributes'])
     kwargs.pop('endpoint_subnet_id', None)
     kwargs.pop('endpoint_nsg_ids', None)
     kwargs.pop('endpoint_public_ip_enabled', None)
+    kwargs.pop('endpoint_security_attributes', None)
 
     # It seems like the service needs options param even if it is empty so leave it when invoking the create command
 

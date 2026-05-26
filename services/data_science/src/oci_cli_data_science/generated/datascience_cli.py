@@ -46,6 +46,12 @@ def model_group_group():
     pass
 
 
+@click.command(cli_util.override('data_science.compute_target_group.command_name', 'compute-target'), cls=CommandGroupWithAlias, help="""A compute target.""")
+@cli_util.help_option_group
+def compute_target_group():
+    pass
+
+
 @click.command(cli_util.override('data_science.ml_application_instance_group.command_name', 'ml-application-instance'), cls=CommandGroupWithAlias, help="""Resource representing instance of ML Application.""")
 @cli_util.help_option_group
 def ml_application_instance_group():
@@ -148,6 +154,12 @@ def pipeline_group():
     pass
 
 
+@click.command(cli_util.override('data_science.compute_target_shape_group.command_name', 'compute-target-shape'), cls=CommandGroupWithAlias, help="""The compute shape used to launch a compute target.""")
+@cli_util.help_option_group
+def compute_target_shape_group():
+    pass
+
+
 @click.command(cli_util.override('data_science.schedule_group.command_name', 'schedule'), cls=CommandGroupWithAlias, help="""A repeating action. Examples: * Invoke a ML Pipeline Run once an hour. * Call ML Job Run every night at midnight.""")
 @cli_util.help_option_group
 def schedule_group():
@@ -182,6 +194,7 @@ data_science_root_group.add_command(container_group)
 data_science_root_group.add_command(register_model_artifact_reference_details_group)
 data_science_root_group.add_command(model_deployment_shape_group)
 data_science_root_group.add_command(model_group_group)
+data_science_root_group.add_command(compute_target_group)
 data_science_root_group.add_command(ml_application_instance_group)
 data_science_root_group.add_command(ml_application_instance_view_group)
 data_science_root_group.add_command(project_group)
@@ -199,6 +212,7 @@ data_science_root_group.add_command(model_deployment_group)
 data_science_root_group.add_command(pipeline_run_group)
 data_science_root_group.add_command(ml_application_implementation_group)
 data_science_root_group.add_command(pipeline_group)
+data_science_root_group.add_command(compute_target_shape_group)
 data_science_root_group.add_command(schedule_group)
 data_science_root_group.add_command(ml_application_group)
 data_science_root_group.add_command(model_version_set_group)
@@ -547,6 +561,37 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.cancel_work_request(
         work_request_id=work_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_target_group.command(name=cli_util.override('data_science.change_compute_target_compartment.command_name', 'change-compartment'), help=u"""Moves a compute target into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeComputeTargetCompartment)""")
+@cli_util.option('--compute-target-id', required=True, help=u"""The [OCID] of the compute target.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_compute_target_compartment(ctx, from_json, compute_target_id, compartment_id, if_match):
+
+    if isinstance(compute_target_id, six.string_types) and len(compute_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.change_compute_target_compartment(
+        compute_target_id=compute_target_id,
+        change_compute_target_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1259,6 +1304,163 @@ def change_schedule_compartment(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
+@compute_target_group.command(name=cli_util.override('data_science.create_compute_target.command_name', 'create'), help=u"""Creates a new compute target resource. \n[Command Reference](createComputeTarget)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the compute target.""")
+@cli_util.option('--compute-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description of the compute target.""")
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Metadata for the compute target. The size of metadata must be less than 2048 bytes. Key should be under 32 characters. Key should contain only letters, digits and underscore (_) Key should start with a letter. Key should have at least 2 characters. Key should not end with underscore eg. `TEST_` Key if added cannot be empty. Value can be empty. No specific size limits on individual Values. But overall metadata is limited to 2048 bytes. Key can't be reserved Compute Target metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'data_science', 'class': 'dict(str, string)'}, 'compute-configuration-details': {'module': 'data_science', 'class': 'ComputeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'data_science', 'class': 'dict(str, string)'}, 'compute-configuration-details': {'module': 'data_science', 'class': 'ComputeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'ComputeTarget'})
+@cli_util.wrap_exceptions
+def create_compute_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, compute_configuration_details, display_name, description, metadata, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['computeConfigurationDetails'] = cli_util.parse_json_parameter("compute_configuration_details", compute_configuration_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if metadata is not None:
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_compute_target(
+        create_compute_target_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_target_group.command(name=cli_util.override('data_science.create_compute_target_managed_compute_cluster_compute_configuration_details.command_name', 'create-compute-target-managed-compute-cluster-compute-configuration-details'), help=u"""Creates a new compute target resource. \n[Command Reference](createComputeTarget)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the compute target.""")
+@cli_util.option('--compute-configuration-details-instance-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description of the compute target.""")
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Metadata for the compute target. The size of metadata must be less than 2048 bytes. Key should be under 32 characters. Key should contain only letters, digits and underscore (_) Key should start with a letter. Key should have at least 2 characters. Key should not end with underscore eg. `TEST_` Key if added cannot be empty. Value can be empty. No specific size limits on individual Values. But overall metadata is limited to 2048 bytes. Key can't be reserved Compute Target metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-configuration-details-scaling-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'data_science', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'compute-configuration-details-instance-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterInstanceConfigurationDetails'}, 'compute-configuration-details-scaling-policy': {'module': 'data_science', 'class': 'ManagedComputeClusterScalingPolicy'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'data_science', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'compute-configuration-details-instance-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterInstanceConfigurationDetails'}, 'compute-configuration-details-scaling-policy': {'module': 'data_science', 'class': 'ManagedComputeClusterScalingPolicy'}}, output_type={'module': 'data_science', 'class': 'ComputeTarget'})
+@cli_util.wrap_exceptions
+def create_compute_target_managed_compute_cluster_compute_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, compute_configuration_details_instance_configuration, display_name, description, metadata, freeform_tags, defined_tags, compute_configuration_details_scaling_policy):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['computeConfigurationDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['computeConfigurationDetails']['instanceConfiguration'] = cli_util.parse_json_parameter("compute_configuration_details_instance_configuration", compute_configuration_details_instance_configuration)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if metadata is not None:
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if compute_configuration_details_scaling_policy is not None:
+        _details['computeConfigurationDetails']['scalingPolicy'] = cli_util.parse_json_parameter("compute_configuration_details_scaling_policy", compute_configuration_details_scaling_policy)
+
+    _details['computeConfigurationDetails']['computeType'] = 'MANAGED_COMPUTE_CLUSTER'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_compute_target(
+        create_compute_target_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @data_science_private_endpoint_group.command(name=cli_util.override('data_science.create_data_science_private_endpoint.command_name', 'create'), help=u"""Creates a Data Science private endpoint to be used by a Data Science resource. \n[Command Reference](createDataSciencePrivateEndpoint)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the private endpoint.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
@@ -1893,6 +2095,102 @@ def create_job_managed_egress_standalone_job_infrastructure_configuration_detail
         _details['jobInfrastructureConfigurationDetails']['jobShapeConfigDetails'] = cli_util.parse_json_parameter("job_infrastructure_configuration_details_job_shape_config_details", job_infrastructure_configuration_details_job_shape_config_details)
 
     _details['jobInfrastructureConfigurationDetails']['jobInfrastructureType'] = 'ME_STANDALONE'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_job(
+        create_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('data_science.create_job_managed_compute_cluster_job_infrastructure_configuration_details.command_name', 'create-job-managed-compute-cluster-job-infrastructure-configuration-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--job-infrastructure-configuration-details-compute-target-id', required=True, help=u"""The [OCID] of the compute target.""")
+@cli_util.option('--job-infrastructure-configuration-details-resource-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of JobStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-node-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job_managed_compute_cluster_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details_compute_target_id, job_infrastructure_configuration_details_resource_configuration, display_name, description, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['jobInfrastructureConfigurationDetails'] = {}
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['jobInfrastructureConfigurationDetails']['computeTargetId'] = job_infrastructure_configuration_details_compute_target_id
+    _details['jobInfrastructureConfigurationDetails']['resourceConfiguration'] = cli_util.parse_json_parameter("job_infrastructure_configuration_details_resource_configuration", job_infrastructure_configuration_details_resource_configuration)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if job_configuration_details is not None:
+        _details['jobConfigurationDetails'] = cli_util.parse_json_parameter("job_configuration_details", job_configuration_details)
+
+    if job_environment_configuration_details is not None:
+        _details['jobEnvironmentConfigurationDetails'] = cli_util.parse_json_parameter("job_environment_configuration_details", job_environment_configuration_details)
+
+    if job_log_configuration_details is not None:
+        _details['jobLogConfigurationDetails'] = cli_util.parse_json_parameter("job_log_configuration_details", job_log_configuration_details)
+
+    if job_storage_mount_configuration_details_list is not None:
+        _details['jobStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("job_storage_mount_configuration_details_list", job_storage_mount_configuration_details_list)
+
+    if job_node_configuration_details is not None:
+        _details['jobNodeConfigurationDetails'] = cli_util.parse_json_parameter("job_node_configuration_details", job_node_configuration_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['jobInfrastructureConfigurationDetails']['jobInfrastructureType'] = 'MANAGED_COMPUTE_CLUSTER'
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_job(
@@ -2983,6 +3281,103 @@ def create_job_run_managed_egress_standalone_job_infrastructure_configuration_de
     cli_util.render_response(result, ctx)
 
 
+@job_run_group.command(name=cli_util.override('data_science.create_job_run_managed_compute_cluster_job_infrastructure_configuration_details.command_name', 'create-job-run-managed-compute-cluster-job-infrastructure-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
+@cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
+@cli_util.option('--job-infrastructure-configuration-override-details-compute-target-id', required=True, help=u"""The [OCID] of the compute target.""")
+@cli_util.option('--job-infrastructure-configuration-override-details-resource-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-node-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-storage-mount-configuration-override-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of JobStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-override-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-override-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
+@cli_util.wrap_exceptions
+def create_job_run_managed_compute_cluster_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_infrastructure_configuration_override_details_compute_target_id, job_infrastructure_configuration_override_details_resource_configuration, display_name, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url):
+
+    kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['jobInfrastructureConfigurationOverrideDetails'] = {}
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['jobId'] = job_id
+    _details['jobInfrastructureConfigurationOverrideDetails']['computeTargetId'] = job_infrastructure_configuration_override_details_compute_target_id
+    _details['jobInfrastructureConfigurationOverrideDetails']['resourceConfiguration'] = cli_util.parse_json_parameter("job_infrastructure_configuration_override_details_resource_configuration", job_infrastructure_configuration_override_details_resource_configuration)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if job_configuration_override_details is not None:
+        _details['jobConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_configuration_override_details", job_configuration_override_details)
+
+    if job_log_configuration_override_details is not None:
+        _details['jobLogConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_log_configuration_override_details", job_log_configuration_override_details)
+
+    if job_environment_configuration_override_details is not None:
+        _details['jobEnvironmentConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_environment_configuration_override_details", job_environment_configuration_override_details)
+
+    if job_node_configuration_override_details is not None:
+        _details['jobNodeConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_node_configuration_override_details", job_node_configuration_override_details)
+
+    if job_storage_mount_configuration_override_details_list is not None:
+        _details['jobStorageMountConfigurationOverrideDetailsList'] = cli_util.parse_json_parameter("job_storage_mount_configuration_override_details_list", job_storage_mount_configuration_override_details_list)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['jobInfrastructureConfigurationOverrideDetails']['jobInfrastructureType'] = 'MANAGED_COMPUTE_CLUSTER'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_job_run(
+        create_job_run_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_job_run') and callable(getattr(client, 'get_job_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_standalone_job_infrastructure_configuration_details.command_name', 'create-job-run-standalone-job-infrastructure-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
@@ -3376,184 +3771,6 @@ def create_ml_application_instance(ctx, from_json, wait_for_state, max_wait_seco
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    client = cli_util.build_client('data_science', 'data_science', ctx)
-    result = client.create_ml_application_instance(
-        create_ml_application_instance_details=_details,
-        **kwargs
-    )
-    if wait_for_state:
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
-@ml_application_instance_group.command(name=cli_util.override('data_science.create_ml_application_instance_create_idcs_auth_configuration_details.command_name', 'create-ml-application-instance-create-idcs-auth-configuration-details'), help=u"""Creates a new MlApplicationInstance. \n[Command Reference](createMlApplicationInstance)""")
-@cli_util.option('--ml-application-id', required=True, help=u"""The OCID of ML Application. This resource is an instance of ML Application referenced by this OCID.""")
-@cli_util.option('--ml-application-implementation-id', required=True, help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the MlApplicationInstance is created.""")
-@cli_util.option('--auth-configuration-domain-id', required=True, help=u"""Identity Domain OCID""")
-@cli_util.option('--display-name', help=u"""The name of MlApplicationInstance. System will generate displayName when not provided.""")
-@cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Data that are used for provisioning of the given MlApplicationInstance. These are validated against configurationSchema defined in referenced MlApplicationImplementation.
-
-This option is a JSON list with items of type ConfigurationProperty.  For documentation on ConfigurationProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/datascience/20190101/datatypes/ConfigurationProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Defines whether the MlApplicationInstance will be created in ACTIVE (true value) or INACTIVE (false value) lifecycle state.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'configuration': {'module': 'data_science', 'class': 'list[ConfigurationProperty]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration': {'module': 'data_science', 'class': 'list[ConfigurationProperty]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'MlApplicationInstance'})
-@cli_util.wrap_exceptions
-def create_ml_application_instance_create_idcs_auth_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_id, ml_application_implementation_id, compartment_id, auth_configuration_domain_id, display_name, configuration, is_enabled, freeform_tags, defined_tags):
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['authConfiguration'] = {}
-    _details['mlApplicationId'] = ml_application_id
-    _details['mlApplicationImplementationId'] = ml_application_implementation_id
-    _details['compartmentId'] = compartment_id
-    _details['authConfiguration']['domainId'] = auth_configuration_domain_id
-
-    if display_name is not None:
-        _details['displayName'] = display_name
-
-    if configuration is not None:
-        _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
-
-    if is_enabled is not None:
-        _details['isEnabled'] = is_enabled
-
-    if freeform_tags is not None:
-        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if defined_tags is not None:
-        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    _details['authConfiguration']['type'] = 'IDCS'
-
-    client = cli_util.build_client('data_science', 'data_science', ctx)
-    result = client.create_ml_application_instance(
-        create_ml_application_instance_details=_details,
-        **kwargs
-    )
-    if wait_for_state:
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
-@ml_application_instance_group.command(name=cli_util.override('data_science.create_ml_application_instance_create_idcs_custom_service_auth_configuration_details.command_name', 'create-ml-application-instance-create-idcs-custom-service-auth-configuration-details'), help=u"""Creates a new MlApplicationInstance. \n[Command Reference](createMlApplicationInstance)""")
-@cli_util.option('--ml-application-id', required=True, help=u"""The OCID of ML Application. This resource is an instance of ML Application referenced by this OCID.""")
-@cli_util.option('--ml-application-implementation-id', required=True, help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the MlApplicationInstance is created.""")
-@cli_util.option('--auth-configuration-audience', required=True, help=u"""Audience of the IDCS application""")
-@cli_util.option('--auth-configuration-scope', required=True, help=u"""Scope of the IDCS application""")
-@cli_util.option('--auth-configuration-application-name', required=True, help=u"""Name of the IDCS application""")
-@cli_util.option('--auth-configuration-access-token', required=True, help=u"""Bearer token serving as Proof-of-Ownership for referenced IDCS stripe/application""")
-@cli_util.option('--display-name', help=u"""The name of MlApplicationInstance. System will generate displayName when not provided.""")
-@cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Data that are used for provisioning of the given MlApplicationInstance. These are validated against configurationSchema defined in referenced MlApplicationImplementation.
-
-This option is a JSON list with items of type ConfigurationProperty.  For documentation on ConfigurationProperty please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/datascience/20190101/datatypes/ConfigurationProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Defines whether the MlApplicationInstance will be created in ACTIVE (true value) or INACTIVE (false value) lifecycle state.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--auth-configuration-role-name', help=u"""Name of the IDCS application role""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'configuration': {'module': 'data_science', 'class': 'list[ConfigurationProperty]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration': {'module': 'data_science', 'class': 'list[ConfigurationProperty]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'MlApplicationInstance'})
-@cli_util.wrap_exceptions
-def create_ml_application_instance_create_idcs_custom_service_auth_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_id, ml_application_implementation_id, compartment_id, auth_configuration_audience, auth_configuration_scope, auth_configuration_application_name, auth_configuration_access_token, display_name, configuration, is_enabled, freeform_tags, defined_tags, auth_configuration_role_name):
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['authConfiguration'] = {}
-    _details['mlApplicationId'] = ml_application_id
-    _details['mlApplicationImplementationId'] = ml_application_implementation_id
-    _details['compartmentId'] = compartment_id
-    _details['authConfiguration']['audience'] = auth_configuration_audience
-    _details['authConfiguration']['scope'] = auth_configuration_scope
-    _details['authConfiguration']['applicationName'] = auth_configuration_application_name
-    _details['authConfiguration']['accessToken'] = auth_configuration_access_token
-
-    if display_name is not None:
-        _details['displayName'] = display_name
-
-    if configuration is not None:
-        _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
-
-    if is_enabled is not None:
-        _details['isEnabled'] = is_enabled
-
-    if freeform_tags is not None:
-        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if defined_tags is not None:
-        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if auth_configuration_role_name is not None:
-        _details['authConfiguration']['roleName'] = auth_configuration_role_name
-
-    _details['authConfiguration']['type'] = 'IDCS_CUSTOM_SERVICE'
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_ml_application_instance(
@@ -4116,6 +4333,95 @@ def create_model_deployment_model_group_deployment_configuration_details(ctx, fr
         _details['modelDeploymentConfigurationDetails']['environmentConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_environment_configuration_details", model_deployment_configuration_details_environment_configuration_details)
 
     _details['modelDeploymentConfigurationDetails']['deploymentType'] = 'MODEL_GROUP'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_deployment(
+        create_model_deployment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_deployment_group.command(name=cli_util.override('data_science.create_model_deployment_single_model_deployment_flex_configuration_details.command_name', 'create-model-deployment-single-model-deployment-flex-configuration-details'), help=u"""Creates a new model deployment. \n[Command Reference](createModelDeployment)""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model deployment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the model deployment.""")
+@cli_util.option('--model-deployment-configuration-details-model-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-deployment-configuration-details-infrastructure-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
+@cli_util.option('--description', help=u"""A short description of the model deployment.""")
+@cli_util.option('--category-log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
+@cli_util.option('--model-deployment-configuration-details-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'category-log-details': {'module': 'data_science', 'class': 'CategoryLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'model-deployment-configuration-details-model-configuration-details': {'module': 'data_science', 'class': 'SingleModelConfigurationDetails'}, 'model-deployment-configuration-details-infrastructure-configuration-details': {'module': 'data_science', 'class': 'ModelDeployInfrastructureConfigurationDetails'}, 'model-deployment-configuration-details-environment-configuration-details': {'module': 'data_science', 'class': 'ModelDeploymentEnvironmentConfigurationDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'category-log-details': {'module': 'data_science', 'class': 'CategoryLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'model-deployment-configuration-details-model-configuration-details': {'module': 'data_science', 'class': 'SingleModelConfigurationDetails'}, 'model-deployment-configuration-details-infrastructure-configuration-details': {'module': 'data_science', 'class': 'ModelDeployInfrastructureConfigurationDetails'}, 'model-deployment-configuration-details-environment-configuration-details': {'module': 'data_science', 'class': 'ModelDeploymentEnvironmentConfigurationDetails'}}, output_type={'module': 'data_science', 'class': 'ModelDeployment'})
+@cli_util.wrap_exceptions
+def create_model_deployment_single_model_deployment_flex_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, model_deployment_configuration_details_model_configuration_details, model_deployment_configuration_details_infrastructure_configuration_details, display_name, description, category_log_details, freeform_tags, defined_tags, opc_parent_rpt_url, model_deployment_configuration_details_environment_configuration_details):
+
+    kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelDeploymentConfigurationDetails'] = {}
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['modelDeploymentConfigurationDetails']['modelConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_model_configuration_details", model_deployment_configuration_details_model_configuration_details)
+    _details['modelDeploymentConfigurationDetails']['infrastructureConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_infrastructure_configuration_details", model_deployment_configuration_details_infrastructure_configuration_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if category_log_details is not None:
+        _details['categoryLogDetails'] = cli_util.parse_json_parameter("category_log_details", category_log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if model_deployment_configuration_details_environment_configuration_details is not None:
+        _details['modelDeploymentConfigurationDetails']['environmentConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_environment_configuration_details", model_deployment_configuration_details_environment_configuration_details)
+
+    _details['modelDeploymentConfigurationDetails']['deploymentType'] = 'SINGLE_MODEL_FLEX'
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_model_deployment(
@@ -5867,6 +6173,62 @@ def deactivate_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@compute_target_group.command(name=cli_util.override('data_science.delete_compute_target.command_name', 'delete'), help=u"""Deletes the specified compute target. \n[Command Reference](deleteComputeTarget)""")
+@cli_util.option('--compute-target-id', required=True, help=u"""The [OCID] of the compute target.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_compute_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_target_id, if_match):
+
+    if isinstance(compute_target_id, six.string_types) and len(compute_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_compute_target(
+        compute_target_id=compute_target_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @data_science_private_endpoint_group.command(name=cli_util.override('data_science.delete_data_science_private_endpoint.command_name', 'delete'), help=u"""Deletes a private endpoint using `privateEndpointId`. \n[Command Reference](deleteDataSciencePrivateEndpoint)""")
 @cli_util.option('--data-science-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -7125,6 +7487,28 @@ def export_model_artifact_artifact_export_details_object_storage(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
+@compute_target_group.command(name=cli_util.override('data_science.get_compute_target.command_name', 'get'), help=u"""Retrieves the compute target for the specified `computeTargetId`. \n[Command Reference](getComputeTarget)""")
+@cli_util.option('--compute-target-id', required=True, help=u"""The [OCID] of the compute target.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ComputeTarget'})
+@cli_util.wrap_exceptions
+def get_compute_target(ctx, from_json, compute_target_id):
+
+    if isinstance(compute_target_id, six.string_types) and len(compute_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_compute_target(
+        compute_target_id=compute_target_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @data_science_private_endpoint_group.command(name=cli_util.override('data_science.get_data_science_private_endpoint.command_name', 'get'), help=u"""Retrieves an private endpoint using a `privateEndpointId`. \n[Command Reference](getDataSciencePrivateEndpoint)""")
 @cli_util.option('--data-science-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -8241,6 +8625,125 @@ def import_model_artifact_artifact_import_details_object_storage(ctx, from_json,
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_target_shape_group.command(name=cli_util.override('data_science.list_compute_target_shapes.command_name', 'list'), help=u"""Lists the valid compute target shapes. \n[Command Reference](listComputeTargetShapes)""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ComputeTargetShapeSummary]'})
+@cli_util.wrap_exceptions
+def list_compute_target_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_target_shapes,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_target_shapes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_target_shapes(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_target_group.command(name=cli_util.override('data_science.list_compute_targets.command_name', 'list'), help=u"""List all compute targets in the specified compartment. Supports queries on various other parameters in the query alongside compartmentId (must be included). \n[Command Reference](listComputeTargets)""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid   state for the resource type.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeCreated`, the results are shown in descending order. When you sort by `displayName`, the results are shown in ascending order. Sort order for the `displayName` field is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ComputeTargetSummary]'})
+@cli_util.wrap_exceptions
+def list_compute_targets(ctx, from_json, all_pages, page_size, compartment_id, id, display_name, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_targets,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_targets,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_targets(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -10088,7 +10591,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--resource-id', help=u"""<b>Filter</b> results by the [OCID] of the resource associated with the work request.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "ML_APPLICATION_PACKAGE_UPLOAD", "ML_APPLICATION_TRIGGER_START", "ML_APPLICATION_IMPLEMENTATION_DELETE", "ML_APPLICATION_IMPLEMENTATION_UPDATE", "ML_APPLICATION_IMPLEMENTATION_MOVE", "ML_APPLICATION_INSTANCE_CREATE", "ML_APPLICATION_INSTANCE_UPDATE", "ML_APPLICATION_INSTANCE_DELETE", "ML_APPLICATION_INSTANCE_MOVE", "ML_APPLICATION_INSTANCE_VIEW_CREATE", "ML_APPLICATION_INSTANCE_VIEW_UPDATE", "ML_APPLICATION_INSTANCE_VIEW_DELETE", "ML_APPLICATION_INSTANCE_VIEW_UPGRADE", "ML_APPLICATION_INSTANCE_VIEW_MOVE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "SCHEDULE_CREATE", "SCHEDULE_UPDATE", "SCHEDULE_DELETE", "SCHEDULE_MOVE", "SCHEDULE_ACTIVATE", "SCHEDULE_DEACTIVATE", "REGISTER_MODEL_ARTIFACT", "RESTORE_ARCHIVED_MODEL", "MODEL_GROUP_CREATE", "MODEL_GROUP_UPDATE", "MODEL_GROUP_DELETE", "MODEL_GROUP_VERSION_HISTORY_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "ML_APPLICATION_PACKAGE_UPLOAD", "ML_APPLICATION_TRIGGER_START", "ML_APPLICATION_IMPLEMENTATION_DELETE", "ML_APPLICATION_IMPLEMENTATION_UPDATE", "ML_APPLICATION_IMPLEMENTATION_MOVE", "ML_APPLICATION_INSTANCE_CREATE", "ML_APPLICATION_INSTANCE_UPDATE", "ML_APPLICATION_INSTANCE_DELETE", "ML_APPLICATION_INSTANCE_MOVE", "ML_APPLICATION_INSTANCE_VIEW_CREATE", "ML_APPLICATION_INSTANCE_VIEW_UPDATE", "ML_APPLICATION_INSTANCE_VIEW_DELETE", "ML_APPLICATION_INSTANCE_VIEW_UPGRADE", "ML_APPLICATION_INSTANCE_VIEW_MOVE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "SCHEDULE_CREATE", "SCHEDULE_UPDATE", "SCHEDULE_DELETE", "SCHEDULE_MOVE", "SCHEDULE_ACTIVATE", "SCHEDULE_DEACTIVATE", "REGISTER_MODEL_ARTIFACT", "RESTORE_ARCHIVED_MODEL", "COMPUTE_TARGET_CREATE", "COMPUTE_TARGET_UPDATE", "COMPUTE_TARGET_DELETE", "MODEL_GROUP_CREATE", "MODEL_GROUP_UPDATE", "MODEL_GROUP_DELETE", "MODEL_GROUP_VERSION_HISTORY_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
@@ -10485,6 +10988,189 @@ def trigger_ml_application_instance_view_flow(ctx, from_json, wait_for_state, ma
     result = client.trigger_ml_application_instance_view_flow(
         ml_application_instance_view_id=ml_application_instance_view_id,
         trigger_ml_application_instance_view_flow_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_target_group.command(name=cli_util.override('data_science.update_compute_target.command_name', 'update'), help=u"""Updates the compute target. \n[Command Reference](updateComputeTarget)""")
+@cli_util.option('--compute-target-id', required=True, help=u"""The [OCID] of the compute target.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description of the compute target.""")
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Metadata for the compute target. The size of metadata must be less than 2048 bytes. Key should be under 32 characters. Key should contain only letters, digits and underscore (_) Key should start with a letter. Key should have at least 2 characters. Key should not end with underscore eg. `TEST_` Key if added cannot be empty. Value can be empty. No specific size limits on individual Values. But overall metadata is limited to 2048 bytes. Key can't be reserved Compute Target metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'data_science', 'class': 'dict(str, string)'}, 'compute-configuration-details': {'module': 'data_science', 'class': 'UpdateComputeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'data_science', 'class': 'dict(str, string)'}, 'compute-configuration-details': {'module': 'data_science', 'class': 'UpdateComputeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_compute_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_target_id, display_name, description, metadata, compute_configuration_details, freeform_tags, defined_tags, if_match):
+
+    if isinstance(compute_target_id, six.string_types) and len(compute_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-target-id cannot be whitespace or empty string')
+    if not force:
+        if metadata or compute_configuration_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to metadata and compute-configuration-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if metadata is not None:
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if compute_configuration_details is not None:
+        _details['computeConfigurationDetails'] = cli_util.parse_json_parameter("compute_configuration_details", compute_configuration_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_compute_target(
+        compute_target_id=compute_target_id,
+        update_compute_target_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_target_group.command(name=cli_util.override('data_science.update_compute_target_update_managed_compute_cluster_configuration_details.command_name', 'update-compute-target-update-managed-compute-cluster-configuration-details'), help=u"""Updates the compute target. \n[Command Reference](updateComputeTarget)""")
+@cli_util.option('--compute-target-id', required=True, help=u"""The [OCID] of the compute target.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description of the compute target.""")
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Metadata for the compute target. The size of metadata must be less than 2048 bytes. Key should be under 32 characters. Key should contain only letters, digits and underscore (_) Key should start with a letter. Key should have at least 2 characters. Key should not end with underscore eg. `TEST_` Key if added cannot be empty. Value can be empty. No specific size limits on individual Values. But overall metadata is limited to 2048 bytes. Key can't be reserved Compute Target metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--compute-configuration-details-instance-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-configuration-details-scaling-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'data_science', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'compute-configuration-details-instance-configuration': {'module': 'data_science', 'class': 'UpdateManagedComputeClusterInstanceConfigurationDetails'}, 'compute-configuration-details-scaling-policy': {'module': 'data_science', 'class': 'ManagedComputeClusterScalingPolicy'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'data_science', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'compute-configuration-details-instance-configuration': {'module': 'data_science', 'class': 'UpdateManagedComputeClusterInstanceConfigurationDetails'}, 'compute-configuration-details-scaling-policy': {'module': 'data_science', 'class': 'ManagedComputeClusterScalingPolicy'}})
+@cli_util.wrap_exceptions
+def update_compute_target_update_managed_compute_cluster_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_target_id, display_name, description, metadata, freeform_tags, defined_tags, if_match, compute_configuration_details_instance_configuration, compute_configuration_details_scaling_policy):
+
+    if isinstance(compute_target_id, six.string_types) and len(compute_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-target-id cannot be whitespace or empty string')
+    if not force:
+        if metadata or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to metadata and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['computeConfigurationDetails'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if metadata is not None:
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if compute_configuration_details_instance_configuration is not None:
+        _details['computeConfigurationDetails']['instanceConfiguration'] = cli_util.parse_json_parameter("compute_configuration_details_instance_configuration", compute_configuration_details_instance_configuration)
+
+    if compute_configuration_details_scaling_policy is not None:
+        _details['computeConfigurationDetails']['scalingPolicy'] = cli_util.parse_json_parameter("compute_configuration_details_scaling_policy", compute_configuration_details_scaling_policy)
+
+    _details['computeConfigurationDetails']['computeType'] = 'MANAGED_COMPUTE_CLUSTER'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_compute_target(
+        compute_target_id=compute_target_id,
+        update_compute_target_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -10925,6 +11611,95 @@ def update_job_managed_egress_standalone_job_infrastructure_configuration_detail
         _details['jobInfrastructureConfigurationDetails']['jobShapeConfigDetails'] = cli_util.parse_json_parameter("job_infrastructure_configuration_details_job_shape_config_details", job_infrastructure_configuration_details_job_shape_config_details)
 
     _details['jobInfrastructureConfigurationDetails']['jobInfrastructureType'] = 'ME_STANDALONE'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_job(
+        job_id=job_id,
+        update_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('data_science.update_job_managed_compute_cluster_job_infrastructure_configuration_details.command_name', 'update-job-managed-compute-cluster-job-infrastructure-configuration-details'), help=u"""Updates a job. \n[Command Reference](updateJob)""")
+@cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
+@cli_util.option('--job-infrastructure-configuration-details-compute-target-id', required=True, help=u"""The [OCID] of the compute target.""")
+@cli_util.option('--job-infrastructure-configuration-details-resource-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of JobStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def update_job_managed_compute_cluster_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, job_infrastructure_configuration_details_compute_target_id, job_infrastructure_configuration_details_resource_configuration, display_name, description, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+    if not force:
+        if job_storage_mount_configuration_details_list or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to job-storage-mount-configuration-details-list and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['jobInfrastructureConfigurationDetails'] = {}
+    _details['jobInfrastructureConfigurationDetails']['computeTargetId'] = job_infrastructure_configuration_details_compute_target_id
+    _details['jobInfrastructureConfigurationDetails']['resourceConfiguration'] = cli_util.parse_json_parameter("job_infrastructure_configuration_details_resource_configuration", job_infrastructure_configuration_details_resource_configuration)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if job_storage_mount_configuration_details_list is not None:
+        _details['jobStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("job_storage_mount_configuration_details_list", job_storage_mount_configuration_details_list)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['jobInfrastructureConfigurationDetails']['jobInfrastructureType'] = 'MANAGED_COMPUTE_CLUSTER'
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_job(
@@ -11936,6 +12711,105 @@ def update_model_deployment_update_single_model_deployment_configuration_details
         _details['modelDeploymentConfigurationDetails']['environmentConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_environment_configuration_details", model_deployment_configuration_details_environment_configuration_details)
 
     _details['modelDeploymentConfigurationDetails']['deploymentType'] = 'SINGLE_MODEL'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_model_deployment(
+        model_deployment_id=model_deployment_id,
+        update_model_deployment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment_update_single_model_deployment_flex_configuration_details.command_name', 'update-model-deployment-update-single-model-deployment-flex-configuration-details'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment's lifecycle state is ACTIVE or NEEDS_ATTENTION i.e `instanceShapeName`, `instanceCount` and `modelId`, separately `loadBalancerShape` or `CategoryLogDetails` can also be updated independently. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
+@cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
+@cli_util.option('--description', help=u"""A short description of the model deployment.""")
+@cli_util.option('--category-log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--model-deployment-configuration-details-model-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-deployment-configuration-details-infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-deployment-configuration-details-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'category-log-details': {'module': 'data_science', 'class': 'UpdateCategoryLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'model-deployment-configuration-details-model-configuration-details': {'module': 'data_science', 'class': 'UpdateSingleModelConfigurationDetails'}, 'model-deployment-configuration-details-infrastructure-configuration-details': {'module': 'data_science', 'class': 'UpdateModelDeployInfrastructureConfigurationDetails'}, 'model-deployment-configuration-details-environment-configuration-details': {'module': 'data_science', 'class': 'UpdateModelDeploymentEnvironmentConfigurationDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'category-log-details': {'module': 'data_science', 'class': 'UpdateCategoryLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'model-deployment-configuration-details-model-configuration-details': {'module': 'data_science', 'class': 'UpdateSingleModelConfigurationDetails'}, 'model-deployment-configuration-details-infrastructure-configuration-details': {'module': 'data_science', 'class': 'UpdateModelDeployInfrastructureConfigurationDetails'}, 'model-deployment-configuration-details-environment-configuration-details': {'module': 'data_science', 'class': 'UpdateModelDeploymentEnvironmentConfigurationDetails'}})
+@cli_util.wrap_exceptions
+def update_model_deployment_update_single_model_deployment_flex_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_deployment_id, display_name, description, category_log_details, freeform_tags, defined_tags, if_match, model_deployment_configuration_details_model_configuration_details, model_deployment_configuration_details_infrastructure_configuration_details, model_deployment_configuration_details_environment_configuration_details):
+
+    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
+    if not force:
+        if category_log_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to category-log-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelDeploymentConfigurationDetails'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if category_log_details is not None:
+        _details['categoryLogDetails'] = cli_util.parse_json_parameter("category_log_details", category_log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if model_deployment_configuration_details_model_configuration_details is not None:
+        _details['modelDeploymentConfigurationDetails']['modelConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_model_configuration_details", model_deployment_configuration_details_model_configuration_details)
+
+    if model_deployment_configuration_details_infrastructure_configuration_details is not None:
+        _details['modelDeploymentConfigurationDetails']['infrastructureConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_infrastructure_configuration_details", model_deployment_configuration_details_infrastructure_configuration_details)
+
+    if model_deployment_configuration_details_environment_configuration_details is not None:
+        _details['modelDeploymentConfigurationDetails']['environmentConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_environment_configuration_details", model_deployment_configuration_details_environment_configuration_details)
+
+    _details['modelDeploymentConfigurationDetails']['deploymentType'] = 'SINGLE_MODEL_FLEX'
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_model_deployment(

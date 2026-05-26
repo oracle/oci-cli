@@ -55,6 +55,7 @@ SDK_client_map = {
     "network_firewall.get_mapped_secret": "oci.network_firewall.NetworkFirewallClient.get_mapped_secret",
     "network_firewall.get_nat_rule": "oci.network_firewall.NetworkFirewallClient.get_nat_rule",
     "network_firewall.get_network_firewall": "oci.network_firewall.NetworkFirewallClient.get_network_firewall",
+    "network_firewall.get_network_firewall_health_status": "oci.network_firewall.NetworkFirewallClient.get_network_firewall_health_status",
     "network_firewall.get_network_firewall_policy": "oci.network_firewall.NetworkFirewallClient.get_network_firewall_policy",
     "network_firewall.get_security_rule": "oci.network_firewall.NetworkFirewallClient.get_security_rule",
     "network_firewall.get_service": "oci.network_firewall.NetworkFirewallClient.get_service",

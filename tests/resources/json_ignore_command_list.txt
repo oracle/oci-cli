@@ -608,3 +608,4 @@ database-tools-runtime, database-tools-database-api-gateway-config-pool-auto-api
 dbtools-runtime, connection, execute-sql, async
 dbtools-runtime, database-api-gateway-config-pool-auto-api-spec, create, default
 dbtools-runtime, database-api-gateway-config-pool-auto-api-spec, update, default
+db, cloud-exa-infra, update
