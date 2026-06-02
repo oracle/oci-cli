@@ -84,6 +84,7 @@ Use the [WorkRequest] operations to track the creation of the BYOL. \n[Command R
 @cli_util.option('--time-term-end', required=True, type=custom_types.CLI_DATETIME, help=u"""The date and time when the BYOL expires and becomes inactive. In the format defined by[RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--entitlement-key', required=True, help=u"""The Broadcom-supplied identifier of a BYOL license.""")
 @cli_util.option('--description', help=u"""A description of the BYOL.""")
+@cli_util.option('--site-id', help=u"""The hyperscaler identifier in Broadcom systems.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -98,7 +99,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_byol(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, software_type, total_units, time_term_start, time_term_end, entitlement_key, description, freeform_tags, defined_tags):
+def create_byol(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, software_type, total_units, time_term_start, time_term_end, entitlement_key, description, site_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -114,6 +115,9 @@ def create_byol(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if description is not None:
         _details['description'] = description
+
+    if site_id is not None:
+        _details['siteId'] = site_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -350,6 +354,7 @@ def retrieve_byol_realm_allocations(ctx, from_json, byol_id, limit, page, sort_o
 @cli_util.option('--time-term-start', type=custom_types.CLI_DATETIME, help=u"""The date and time when the BYOL becomes active. VMware software functionality cannot begin before this time. In the format defined by[RFC3339]. Example: `2016-08-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-term-end', type=custom_types.CLI_DATETIME, help=u"""The date and time when the BYOL expires and becomes inactive. In the format defined by[RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--entitlement-key', help=u"""The Broadcom-supplied identifier of a BYOL license.""")
+@cli_util.option('--site-id', help=u"""The hyperscaler identifier in Broadcom systems.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -366,7 +371,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_byol(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, byol_id, display_name, total_units, description, software_type, time_term_start, time_term_end, entitlement_key, freeform_tags, defined_tags, if_match):
+def update_byol(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, byol_id, display_name, total_units, description, software_type, time_term_start, time_term_end, entitlement_key, site_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(byol_id, six.string_types) and len(byol_id.strip()) == 0:
         raise click.UsageError('Parameter --byol-id cannot be whitespace or empty string')
@@ -402,6 +407,9 @@ def update_byol(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
     if entitlement_key is not None:
         _details['entitlementKey'] = entitlement_key
+
+    if site_id is not None:
+        _details['siteId'] = site_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

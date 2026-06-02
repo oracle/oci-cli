@@ -120,13 +120,13 @@ def cloud_exadata_infrastructure_group():
     pass
 
 
-@click.command(cli_util.override('db_management.my_sql_connector_collection_group.command_name', 'my-sql-connector-collection'), cls=CommandGroupWithAlias, help="""The collection of external MySQL Database connectors.""")
+@click.command(cli_util.override('db_management.my_sql_connector_collection_group.command_name', 'my-sql-connector-collection'), cls=CommandGroupWithAlias, help="""The collection of external MySQL Database connectors. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026.""")
 @cli_util.help_option_group
 def my_sql_connector_collection_group():
     pass
 
 
-@click.command(cli_util.override('db_management.cloud_db_node_group.command_name', 'cloud-db-node'), cls=CommandGroupWithAlias, help="""The details of a cloud database node.""")
+@click.command(cli_util.override('db_management.cloud_db_node_group.command_name', 'cloud-db-node'), cls=CommandGroupWithAlias, help="""The details of a cloud DB node.""")
 @cli_util.help_option_group
 def cloud_db_node_group():
     pass
@@ -222,7 +222,7 @@ def external_db_system_connector_group():
     pass
 
 
-@click.command(cli_util.override('db_management.external_my_sql_database_connector_group.command_name', 'external-my-sql-database-connector'), cls=CommandGroupWithAlias, help="""Details of external database connector.""")
+@click.command(cli_util.override('db_management.external_my_sql_database_connector_group.command_name', 'external-my-sql-database-connector'), cls=CommandGroupWithAlias, help="""Details of external database connector. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026.""")
 @cli_util.help_option_group
 def external_my_sql_database_connector_group():
     pass
@@ -264,7 +264,7 @@ def job_run_group():
     pass
 
 
-@click.command(cli_util.override('db_management.external_my_sql_database_group.command_name', 'external-my-sql-database'), cls=CommandGroupWithAlias, help="""External database.""")
+@click.command(cli_util.override('db_management.external_my_sql_database_group.command_name', 'external-my-sql-database'), cls=CommandGroupWithAlias, help="""External database. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026.""")
 @cli_util.help_option_group
 def external_my_sql_database_group():
     pass
@@ -276,7 +276,7 @@ def database_ha_backup_details_group():
     pass
 
 
-@click.command(cli_util.override('db_management.external_my_sql_database_collection_group.command_name', 'external-my-sql-database-collection'), cls=CommandGroupWithAlias, help="""The collection of external MySQL Databases.""")
+@click.command(cli_util.override('db_management.external_my_sql_database_collection_group.command_name', 'external-my-sql-database-collection'), cls=CommandGroupWithAlias, help="""The collection of external MySQL Databases. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026.""")
 @cli_util.help_option_group
 def external_my_sql_database_collection_group():
     pass
@@ -2114,7 +2114,7 @@ def check_external_exadata_storage_connector(ctx, from_json, external_exadata_st
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_connector_group.command(name=cli_util.override('db_management.check_external_my_sql_database_connector_connection_status.command_name', 'check-external-my-sql-database-connector-connection-status'), help=u"""Check the status of the external database connection specified in this connector. This operation will refresh the connectionStatus and timeConnectionStatusLastUpdated fields. \n[Command Reference](checkExternalMySqlDatabaseConnectorConnectionStatus)""")
+@external_my_sql_database_connector_group.command(name=cli_util.override('db_management.check_external_my_sql_database_connector_connection_status.command_name', 'check-external-my-sql-database-connector-connection-status'), help=u"""Check the status of the external database connection specified in this connector. This operation will refresh the connectionStatus and timeConnectionStatusLastUpdated fields. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](checkExternalMySqlDatabaseConnectorConnectionStatus)""")
 @cli_util.option('--external-my-sql-database-connector-id', required=True, help=u"""The OCID of the External MySQL Database Connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2861,8 +2861,8 @@ def create_cloud_db_system_connector_create_cloud_db_system_macs_connector_detai
 @cloud_db_system_discovery_group.command(name=cli_util.override('db_management.create_cloud_db_system_discovery.command_name', 'create'), help=u"""Creates a cloud DB system discovery resource and initiates the discovery process. \n[Command Reference](createCloudDbSystemDiscovery)""")
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the management agent used for the cloud DB system discovery.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the cloud DB system resides.""")
-@cli_util.option('--dbaas-parent-infrastructure-id', required=True, help=u"""The [OCID] of the parent cloud DB Infrastructure. For VM Dbsystems , it will be the DBSystem Id. For ExaCS and ExaCC,  it will be the cloudVmClusterId and vmClusterId respectively.""")
-@cli_util.option('--deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VM", "EXADATA", "EXADATA_CC", "EXADATA_XS"]), help=u"""The deployment type of cloud dbsystem.""")
+@cli_util.option('--dbaas-parent-infrastructure-id', required=True, help=u"""The [OCID] of the parent cloud DB Infrastructure. For VM DB systems, it will be the DBSystem ID. For ExaCS and ExaCC,  it will be the cloudVmClusterId and vmClusterId respectively.""")
+@cli_util.option('--deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VM", "EXADATA", "EXADATA_CC", "EXADATA_XS"]), help=u"""The deployment type of cloud DB system.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3081,15 +3081,18 @@ def create_cloud_exadata_storage_connector(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the Network Security Groups to which the Database Management private endpoint belongs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
 @cli_util.wrap_exceptions
-def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, subnet_id, is_cluster, is_dns_resolution_enabled, description, nsg_ids, freeform_tags, defined_tags):
+def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, subnet_id, is_cluster, is_dns_resolution_enabled, description, nsg_ids, freeform_tags, defined_tags, security_attributes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3116,6 +3119,9 @@ def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.create_db_management_private_endpoint(
@@ -3556,7 +3562,7 @@ def create_external_exadata_storage_connector(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_group.command(name=cli_util.override('db_management.create_external_my_sql_database.command_name', 'create'), help=u"""Creates an external MySQL database. \n[Command Reference](createExternalMySqlDatabase)""")
+@external_my_sql_database_group.command(name=cli_util.override('db_management.create_external_my_sql_database.command_name', 'create'), help=u"""Creates an external MySQL database. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](createExternalMySqlDatabase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of compartment for the External MySQL Database.""")
 @cli_util.option('--db-name', required=True, help=u"""Name of the External MySQL Database.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3581,7 +3587,7 @@ def create_external_my_sql_database(ctx, from_json, compartment_id, db_name):
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_connector_group.command(name=cli_util.override('db_management.create_external_my_sql_database_connector.command_name', 'create'), help=u"""Creates an external MySQL connector resource. \n[Command Reference](createExternalMySqlDatabaseConnector)""")
+@external_my_sql_database_connector_group.command(name=cli_util.override('db_management.create_external_my_sql_database_connector.command_name', 'create'), help=u"""Creates an external MySQL connector resource. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](createExternalMySqlDatabaseConnector)""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of compartment for the External MySQL Database.""")
 @cli_util.option('--connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-test-connection-param', required=True, type=click.BOOL, help=u"""Parameter indicating whether database connection needs to be tested.""")
@@ -4928,7 +4934,7 @@ def delete_external_exadata_storage_connector(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_group.command(name=cli_util.override('db_management.delete_external_my_sql_database.command_name', 'delete'), help=u"""Deletes the Oracle Cloud Infrastructure resource representing an external MySQL database. \n[Command Reference](deleteExternalMySqlDatabase)""")
+@external_my_sql_database_group.command(name=cli_util.override('db_management.delete_external_my_sql_database.command_name', 'delete'), help=u"""Deletes the Oracle Cloud Infrastructure resource representing an external MySQL database. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](deleteExternalMySqlDatabase)""")
 @cli_util.option('--external-my-sql-database-id', required=True, help=u"""The OCID of the External MySQL Database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4984,7 +4990,7 @@ def delete_external_my_sql_database(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_connector_group.command(name=cli_util.override('db_management.delete_external_my_sql_database_connector.command_name', 'delete'), help=u"""Deletes the Oracle Cloud Infrastructure resource representing an external MySQL database connector. \n[Command Reference](deleteExternalMySqlDatabaseConnector)""")
+@external_my_sql_database_connector_group.command(name=cli_util.override('db_management.delete_external_my_sql_database_connector.command_name', 'delete'), help=u"""Deletes the Oracle Cloud Infrastructure resource representing an external MySQL database connector. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](deleteExternalMySqlDatabaseConnector)""")
 @cli_util.option('--external-my-sql-database-connector-id', required=True, help=u"""The OCID of the External MySQL Database Connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -5234,7 +5240,7 @@ def delete_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @preferred_credential_group.command(name=cli_util.override('db_management.delete_preferred_credential.command_name', 'delete'), help=u"""Deletes the preferred credential based on the credentialName. \n[Command Reference](deletePreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential. There are 3 built-in preferred credentials with display names and names as below:   Basic Monitoring(MONITORING)   Advanced diagnostics(PC_READ)   Administrator(PC_WRITE)""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6267,7 +6273,7 @@ def disable_external_exadata_infrastructure_management(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_group.command(name=cli_util.override('db_management.disable_external_my_sql_database_management.command_name', 'disable-external-my-sql-database-management'), help=u"""Disables Database Management for an external MySQL Database. \n[Command Reference](disableExternalMySqlDatabaseManagement)""")
+@external_my_sql_database_group.command(name=cli_util.override('db_management.disable_external_my_sql_database_management.command_name', 'disable-external-my-sql-database-management'), help=u"""Disables Database Management for an external MySQL Database. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](disableExternalMySqlDatabaseManagement)""")
 @cli_util.option('--external-my-sql-database-id', required=True, help=u"""The OCID of the External MySQL Database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -9327,7 +9333,7 @@ def enable_external_exadata_infrastructure_management(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_group.command(name=cli_util.override('db_management.enable_external_my_sql_database_management.command_name', 'enable-external-my-sql-database-management'), help=u"""Enables Database Management for an external MySQL Database. \n[Command Reference](enableExternalMySqlDatabaseManagement)""")
+@external_my_sql_database_group.command(name=cli_util.override('db_management.enable_external_my_sql_database_management.command_name', 'enable-external-my-sql-database-management'), help=u"""Enables Database Management for an external MySQL Database. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](enableExternalMySqlDatabaseManagement)""")
 @cli_util.option('--external-my-sql-database-id', required=True, help=u"""The OCID of the External MySQL Database.""")
 @cli_util.option('--connector-id', required=True, help=u"""OCID of External MySQL Database connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -11918,7 +11924,7 @@ def get_external_listener(ctx, from_json, external_listener_id):
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_group.command(name=cli_util.override('db_management.get_external_my_sql_database.command_name', 'get'), help=u"""Retrieves the external MySQL database information. \n[Command Reference](getExternalMySqlDatabase)""")
+@external_my_sql_database_group.command(name=cli_util.override('db_management.get_external_my_sql_database.command_name', 'get'), help=u"""Retrieves the external MySQL database information. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](getExternalMySqlDatabase)""")
 @cli_util.option('--external-my-sql-database-id', required=True, help=u"""The OCID of the External MySQL Database.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -11940,7 +11946,7 @@ def get_external_my_sql_database(ctx, from_json, external_my_sql_database_id):
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_group.command(name=cli_util.override('db_management.get_external_my_sql_database_connector.command_name', 'get-external-my-sql-database-connector'), help=u"""Retrieves the MySQL database connector. \n[Command Reference](getExternalMySqlDatabaseConnector)""")
+@external_my_sql_database_group.command(name=cli_util.override('db_management.get_external_my_sql_database_connector.command_name', 'get-external-my-sql-database-connector'), help=u"""Retrieves the MySQL database connector. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](getExternalMySqlDatabaseConnector)""")
 @cli_util.option('--external-my-sql-database-connector-id', required=True, help=u"""The OCID of the External MySQL Database Connector.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -12304,7 +12310,7 @@ def get_peer_database_metrics(ctx, from_json, managed_database_id, start_time, e
 
 @preferred_credential_group.command(name=cli_util.override('db_management.get_preferred_credential.command_name', 'get'), help=u"""Gets the preferred credential details for a Managed Database based on credentialName. \n[Command Reference](getPreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential. There are 3 built-in preferred credentials with display names and names as below:   Basic Monitoring(MONITORING)   Advanced diagnostics(PC_READ)   Administrator(PC_WRITE)""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -15140,7 +15146,7 @@ def list_external_listeners(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_collection_group.command(name=cli_util.override('db_management.list_external_my_sql_databases.command_name', 'list-external-my-sql-databases'), help=u"""Gets the list of External MySQL Databases. \n[Command Reference](listExternalMySqlDatabases)""")
+@external_my_sql_database_collection_group.command(name=cli_util.override('db_management.list_external_my_sql_databases.command_name', 'list-external-my-sql-databases'), help=u"""Gets the list of External MySQL Databases. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](listExternalMySqlDatabases)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--name', help=u"""The parameter to filter by MySQL Database System type.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -15545,7 +15551,7 @@ def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@my_sql_connector_collection_group.command(name=cli_util.override('db_management.list_my_sql_database_connectors.command_name', 'list-my-sql-database-connectors'), help=u"""Gets the list of External MySQL Database connectors. \n[Command Reference](listMySqlDatabaseConnectors)""")
+@my_sql_connector_collection_group.command(name=cli_util.override('db_management.list_my_sql_database_connectors.command_name', 'list-my-sql-database-connectors'), help=u"""Gets the list of External MySQL Database connectors. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](listMySqlDatabaseConnectors)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--external-database-id', help=u"""The [OCID] of the external database.""")
 @cli_util.option('--name', help=u"""The parameter to filter by MySQL Database System type.""")
@@ -20302,7 +20308,7 @@ def test_named_credential(ctx, from_json, named_credential_id, managed_database_
 
 @preferred_credential_group.command(name=cli_util.override('db_management.test_preferred_credential.command_name', 'test'), help=u"""Tests the preferred credential. \n[Command Reference](testPreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential. There are 3 built-in preferred credentials with display names and names as below:   Basic Monitoring(MONITORING)   Advanced diagnostics(PC_READ)   Administrator(PC_WRITE)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "NAMED_CREDENTIAL"]), help=u"""The type of preferred credential. Only 'BASIC' is supported currently.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -20335,7 +20341,7 @@ def test_preferred_credential(ctx, from_json, managed_database_id, credential_na
 
 @preferred_credential_group.command(name=cli_util.override('db_management.test_preferred_credential_test_named_preferred_credential_details.command_name', 'test-preferred-credential-test-named-preferred-credential-details'), help=u"""Tests the preferred credential. \n[Command Reference](testPreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential. There are 3 built-in preferred credentials with display names and names as below:   Basic Monitoring(MONITORING)   Advanced diagnostics(PC_READ)   Administrator(PC_WRITE)""")
 @cli_util.option('--named-credential-id', help=u"""The [OCID] of the Named Credential that contains the database user password metadata.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -20372,7 +20378,7 @@ def test_preferred_credential_test_named_preferred_credential_details(ctx, from_
 
 @preferred_credential_group.command(name=cli_util.override('db_management.test_preferred_credential_test_basic_preferred_credential_details.command_name', 'test-preferred-credential-test-basic-preferred-credential-details'), help=u"""Tests the preferred credential. \n[Command Reference](testPreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential. There are 3 built-in preferred credentials with display names and names as below:   Basic Monitoring(MONITORING)   Advanced diagnostics(PC_READ)   Administrator(PC_WRITE)""")
 @cli_util.option('--user-name', help=u"""The user name used to connect to the database.""")
 @cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Vault service secret that contains the database user password.""")
@@ -21525,23 +21531,26 @@ def update_cloud_listener(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the Network Security Groups to which the Database Management private endpoint belongs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
 @cli_util.wrap_exceptions
-def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_management_private_endpoint_id, name, description, nsg_ids, freeform_tags, defined_tags, if_match):
+def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_management_private_endpoint_id, name, description, nsg_ids, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
     if not force:
-        if nsg_ids or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if nsg_ids or freeform_tags or defined_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -21565,6 +21574,9 @@ def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state,
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_db_management_private_endpoint(
@@ -22703,7 +22715,7 @@ def update_external_listener(ctx, from_json, force, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_group.command(name=cli_util.override('db_management.update_external_mysql_database.command_name', 'update-external-mysql-database'), help=u"""Updates the External Mysql Database. \n[Command Reference](updateExternalMysqlDatabase)""")
+@external_my_sql_database_group.command(name=cli_util.override('db_management.update_external_mysql_database.command_name', 'update-external-mysql-database'), help=u"""Updates the External Mysql Database. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](updateExternalMysqlDatabase)""")
 @cli_util.option('--external-my-sql-database-id', required=True, help=u"""The OCID of the External MySQL Database.""")
 @cli_util.option('--db-name', required=True, help=u"""Display Name of the External MySQL Database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -22734,7 +22746,7 @@ def update_external_mysql_database(ctx, from_json, external_my_sql_database_id, 
     cli_util.render_response(result, ctx)
 
 
-@external_my_sql_database_connector_group.command(name=cli_util.override('db_management.update_external_mysql_database_connector.command_name', 'update-external-mysql-database-connector'), help=u"""Updates the External Mysql Database Connector. \n[Command Reference](updateExternalMysqlDatabaseConnector)""")
+@external_my_sql_database_connector_group.command(name=cli_util.override('db_management.update_external_mysql_database_connector.command_name', 'update-external-mysql-database-connector'), help=u"""Updates the External Mysql Database Connector. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](updateExternalMysqlDatabaseConnector)""")
 @cli_util.option('--external-my-sql-database-connector-id', required=True, help=u"""The OCID of the External MySQL Database Connector.""")
 @cli_util.option('--connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help=u"""OCID of compartment for the External MySQL Database.""")
@@ -23380,7 +23392,7 @@ def update_named_credential_basic_named_credential_content(ctx, from_json, force
 
 @preferred_credential_group.command(name=cli_util.override('db_management.update_preferred_credential.command_name', 'update'), help=u"""Updates the preferred credential based on the credentialName. \n[Command Reference](updatePreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential. There are 3 built-in preferred credentials with display names and names as below:   Basic Monitoring(MONITORING)   Advanced diagnostics(PC_READ)   Administrator(PC_WRITE)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "NAMED_CREDENTIAL"]), help=u"""The type of preferred credential.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -23416,7 +23428,7 @@ def update_preferred_credential(ctx, from_json, managed_database_id, credential_
 
 @preferred_credential_group.command(name=cli_util.override('db_management.update_preferred_credential_update_named_preferred_credential_details.command_name', 'update-preferred-credential-update-named-preferred-credential-details'), help=u"""Updates the preferred credential based on the credentialName. \n[Command Reference](updatePreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential. There are 3 built-in preferred credentials with display names and names as below:   Basic Monitoring(MONITORING)   Advanced diagnostics(PC_READ)   Administrator(PC_WRITE)""")
 @cli_util.option('--named-credential-id', help=u"""The [OCID] of the Named Credential that contains the database user password.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -23456,7 +23468,7 @@ def update_preferred_credential_update_named_preferred_credential_details(ctx, f
 
 @preferred_credential_group.command(name=cli_util.override('db_management.update_preferred_credential_update_basic_preferred_credential_details.command_name', 'update-preferred-credential-update-basic-preferred-credential-details'), help=u"""Updates the preferred credential based on the credentialName. \n[Command Reference](updatePreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential. There are 3 built-in preferred credentials with display names and names as below:   Basic Monitoring(MONITORING)   Advanced diagnostics(PC_READ)   Administrator(PC_WRITE)""")
 @cli_util.option('--user-name', help=u"""The user name used to connect to the database.""")
 @cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Vault service secret that contains the database user password.""")

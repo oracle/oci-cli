@@ -29,10 +29,9 @@ cli_util.rename_command(incident_cli, incident_group, incident_cli.update_incide
 
 
 # modify csi parameter to be required for incident create, and flatten JSON parameter for ticket to be required params.
-@cli_util.copy_params_from_generated_command(incident_cli.create_incident, params_to_exclude=['csi', 'ticket'])
+@cli_util.copy_params_from_generated_command(incident_cli.create_incident, params_to_exclude=['ticket'])
 @incident_cli.incident_group.command(name=cli_util.override('support.create_incident.command_name', 'create'),
                                      help=u"""This API enables the customer to Create an Incident""")
-@cli_util.option('--csi', required=True, help=u'''Customer Support Identifier''')
 @cli_util.option('--severity', required=True,
                  type=custom_types.CliCaseInsensitiveChoice(["LOW", "MEDIUM", "HIGH", "HIGHEST"]),
                  help=u"""States severity level of incident. Acceptable values are LOW, MEDIUM, HIGH, HIGHEST.  Please note for HIGHEST: Oracle Support requires a 24x7 contact be provided so additional information can be requested as needed 24x7.)""")
@@ -64,6 +63,17 @@ def create_incident_extended(ctx, **kwargs):
         kwargs['ticket'] = json.dumps(ticket)
 
     ctx.invoke(incident_cli.create_incident, **kwargs)
+
+
+# modify list incidents to add new parameter time-updated-greater-than-or-equal-to to filter results and to remove auto generated help message for that parameter to add the correct one.
+@cli_util.copy_params_from_generated_command(incident_cli.list_incidents, params_to_exclude=['time_updated_greater_than_or_equal_to'])
+@incident_group.command(name=cli_util.override('support.list_incidents.command_name', 'list'), help=u"""Lists support requests for the specified tenancy. For more information, see [Listing Support Requests]. \n[Command Reference](listIncidents)""")
+@cli_util.option('--time-updated-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Filter to return results updated only after the specified timestamp. Must be an RFC 3339 timestamp (e.g. 2025-12-07T17:42:54Z).""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cims', 'class': 'list[IncidentSummary]'})
+@cli_util.wrap_exceptions
+def list_incidents_extended(ctx, **kwargs):
+    ctx.invoke(incident_cli.list_incidents, **kwargs)
 
 
 # modify update incident to flatten ticket parameter to required params.
