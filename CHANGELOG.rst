@@ -6,6 +6,72 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+
+3.85.0 - 2026-06-02
+-------------------
+Added
+~~~~~
+* Generative AI Interface service
+
+  * Support Multimodal Image input in apply-guardrails
+
+    * ``oci generative-ai-inference apply-guardrails-result apply-guardrails --multimodal-input``
+    * ``oci generative-ai-inference apply-guardrails-result apply-guardrails-guardrails-text-input --multimodal-input``
+
+  * Support for applying guardrails to input image
+
+    * ``oci generative-ai-inference apply-guardrails-result apply-guardrails-guardrails-image-input``
+  
+* Cloud Incident Management Service
+
+  * Support filtering incidents/support requests with a new optional query parameter for the List Incidents command
+  
+    * ``oci support incident list --time-updated-greater-than-or-equal-to``
+
+* VMware Solution service
+
+  * Support for new optional parameters
+
+    * ``oci ocvs byol create --site-id``
+    * ``oci ocvs byol update --site-id``
+    * ``oci ocvs esxi-host inplace-upgrade --vcf-byol-allocation-id``
+    * ``oci ocvs esxi-host replace-host --vcf-byol-allocation-id`` 
+
+* Database Management service
+
+  * Support for new optional parameters
+
+    * ``oci database-management private-endpoint create --security-attributes``
+    * ``oci database-management private-endpoint update --security-attributes`` 
+
+* Operation Insights service
+
+  * Support for new optional parameters
+
+    * ``oci opsi operations-insights-private-endpoint create --security-attributes``
+    * ``oci opsi operations-insights-private-endpoint update --security-attributes``
+
+Changed
+~~~~~~~
+
+* Cloud Incident Management Service
+
+  * [BREAKING] Removal of CSI parameter --csi from all commands
+
+    * ``oci support incident create``
+    * ``oci support incident get``
+    * ``oci support incident list``
+    * ``oci support incident put-attachment``
+    * ``oci support incident update``
+    * ``oci support incident-resource-type list``
+    * ``oci support validation-response validate-user``
+
+* Generative AI Inference service
+  
+  * ``--input`` is now an optional parameter in apply-guardrails command
+  
+    * ``oci generative-ai-inference apply-guardrails-result apply-guardrails --input``
+
 3.84.0 - 2026-05-26
 -------------------
 Added

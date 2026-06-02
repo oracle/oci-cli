@@ -24,25 +24,25 @@ def managed_my_sql_databases_root_group():
     pass
 
 
-@click.command(cli_util.override('managed_my_sql_databases.heat_wave_fleet_metrics_group.command_name', 'heat-wave-fleet-metrics'), cls=CommandGroupWithAlias, help="""The details of the HeatWave cluster fleet health metrics.""")
+@click.command(cli_util.override('managed_my_sql_databases.heat_wave_fleet_metrics_group.command_name', 'heat-wave-fleet-metrics'), cls=CommandGroupWithAlias, help="""The details of the HeatWave cluster fleet health metrics. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026.""")
 @cli_util.help_option_group
 def heat_wave_fleet_metrics_group():
     pass
 
 
-@click.command(cli_util.override('managed_my_sql_databases.my_sql_fleet_metrics_group.command_name', 'my-sql-fleet-metrics'), cls=CommandGroupWithAlias, help="""The details of the MySQL Database fleet health metrics.""")
+@click.command(cli_util.override('managed_my_sql_databases.my_sql_fleet_metrics_group.command_name', 'my-sql-fleet-metrics'), cls=CommandGroupWithAlias, help="""The details of the MySQL Database fleet health metrics. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026.""")
 @cli_util.help_option_group
 def my_sql_fleet_metrics_group():
     pass
 
 
-@click.command(cli_util.override('managed_my_sql_databases.managed_my_sql_database_group.command_name', 'managed-my-sql-database'), cls=CommandGroupWithAlias, help="""The details of the Managed MySQL Database.""")
+@click.command(cli_util.override('managed_my_sql_databases.managed_my_sql_database_group.command_name', 'managed-my-sql-database'), cls=CommandGroupWithAlias, help="""The details of the Managed MySQL Database. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026.""")
 @cli_util.help_option_group
 def managed_my_sql_database_group():
     pass
 
 
-@click.command(cli_util.override('managed_my_sql_databases.managed_my_sql_database_collection_group.command_name', 'managed-my-sql-database-collection'), cls=CommandGroupWithAlias, help="""A collection of Managed MySQL Database objects.""")
+@click.command(cli_util.override('managed_my_sql_databases.managed_my_sql_database_collection_group.command_name', 'managed-my-sql-database-collection'), cls=CommandGroupWithAlias, help="""A collection of Managed MySQL Database objects. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026.""")
 @cli_util.help_option_group
 def managed_my_sql_database_collection_group():
     pass
@@ -55,10 +55,10 @@ managed_my_sql_databases_root_group.add_command(managed_my_sql_database_group)
 managed_my_sql_databases_root_group.add_command(managed_my_sql_database_collection_group)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.change_mysql_database_management_type.command_name', 'change-mysql-database-management-type'), help=u"""Changes the management type for a HeatWave MySQL instance, from BASIC to FULL and vice versa. It can also be used to enable or disable database management. \n[Command Reference](changeMysqlDatabaseManagementType)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.change_mysql_database_management_type.command_name', 'change-mysql-database-management-type'), help=u"""Changes the management type for a HeatWave MySQL instance, from BASIC to FULL and vice versa. It can also be used to enable or disable Database Management. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](changeMysqlDatabaseManagementType)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--management-type', required=True, help=u"""The type of HeatWave management.""")
-@cli_util.option('--operation', type=custom_types.CliCaseInsensitiveChoice(["ENABLE_DBMGMT", "UPDATE_DBMGMT_TYPE", "DISABLE_DBMGMT"]), help=u"""The type of operation to perform: update managementType, enable or disable database management.""")
+@cli_util.option('--operation', type=custom_types.CliCaseInsensitiveChoice(["ENABLE_DBMGMT", "UPDATE_DBMGMT_TYPE", "DISABLE_DBMGMT"]), help=u"""The type of operation to perform: Update managementType, enable, or disable Database Management.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -120,7 +120,7 @@ def change_mysql_database_management_type(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_binary_log_information.command_name', 'get-binary-log-information'), help=u"""Retrieves information pertaining to the binary log of a specific MySQL server. \n[Command Reference](getBinaryLogInformation)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_binary_log_information.command_name', 'get-binary-log-information'), help=u"""Retrieves information pertaining to the binary log of a specific MySQL server. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](getBinaryLogInformation)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -142,7 +142,7 @@ def get_binary_log_information(ctx, from_json, managed_my_sql_database_id):
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_general_replication_information.command_name', 'get-general-replication-information'), help=u"""Retrieves general information regarding the replication of a specific MySQL server. \n[Command Reference](getGeneralReplicationInformation)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_general_replication_information.command_name', 'get-general-replication-information'), help=u"""Retrieves general information regarding the replication of a specific MySQL server. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](getGeneralReplicationInformation)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -164,7 +164,7 @@ def get_general_replication_information(ctx, from_json, managed_my_sql_database_
     cli_util.render_response(result, ctx)
 
 
-@heat_wave_fleet_metrics_group.command(name=cli_util.override('managed_my_sql_databases.get_heat_wave_fleet_metric.command_name', 'get'), help=u"""Gets the health metrics for a fleet of HeatWave clusters in a compartment. \n[Command Reference](getHeatWaveFleetMetric)""")
+@heat_wave_fleet_metrics_group.command(name=cli_util.override('managed_my_sql_databases.get_heat_wave_fleet_metric.command_name', 'get'), help=u"""Gets the health metrics for a fleet of HeatWave clusters in a compartment. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](getHeatWaveFleetMetric)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
@@ -199,7 +199,7 @@ def get_heat_wave_fleet_metric(ctx, from_json, compartment_id, start_time, end_t
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_managed_my_sql_database.command_name', 'get'), help=u"""Retrieves the general information for a specific MySQL Database. \n[Command Reference](getManagedMySqlDatabase)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_managed_my_sql_database.command_name', 'get'), help=u"""Retrieves the general information for a specific MySQL Database. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](getManagedMySqlDatabase)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -221,7 +221,7 @@ def get_managed_my_sql_database(ctx, from_json, managed_my_sql_database_id):
     cli_util.render_response(result, ctx)
 
 
-@my_sql_fleet_metrics_group.command(name=cli_util.override('managed_my_sql_databases.get_my_sql_fleet_metric.command_name', 'get'), help=u"""Gets the health metrics for a fleet of MySQL Databases in a compartment. \n[Command Reference](getMySqlFleetMetric)""")
+@my_sql_fleet_metrics_group.command(name=cli_util.override('managed_my_sql_databases.get_my_sql_fleet_metric.command_name', 'get'), help=u"""Gets the health metrics for a fleet of MySQL Databases in a compartment. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](getMySqlFleetMetric)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
@@ -265,7 +265,7 @@ def get_my_sql_fleet_metric(ctx, from_json, compartment_id, start_time, end_time
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_my_sql_query_details.command_name', 'get-my-sql-query-details'), help=u"""Retrieves query sample details, explain plan and potential warnings for a given digest. \n[Command Reference](getMySqlQueryDetails)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_my_sql_query_details.command_name', 'get-my-sql-query-details'), help=u"""Retrieves query sample details, explain plan, and potential warnings for a given digest. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](getMySqlQueryDetails)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--digest', required=True, help=u"""The digest of a MySQL normalized query.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -289,7 +289,7 @@ def get_my_sql_query_details(ctx, from_json, managed_my_sql_database_id, digest)
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_high_availability_members.command_name', 'list-high-availability-members'), help=u"""Retrieves information about the high availability members of a specific MySQL server's replication group. \n[Command Reference](listHighAvailabilityMembers)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_high_availability_members.command_name', 'list-high-availability-members'), help=u"""Retrieves information about the high availability members of a specific MySQL server's replication group. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](listHighAvailabilityMembers)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -346,7 +346,7 @@ def list_high_availability_members(ctx, from_json, all_pages, page_size, managed
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_inbound_replications.command_name', 'list-inbound-replications'), help=u"""Retrieves information about the inbound replications of a specific MySQL server. \n[Command Reference](listInboundReplications)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_inbound_replications.command_name', 'list-inbound-replications'), help=u"""Retrieves information about the inbound replications of a specific MySQL server. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](listInboundReplications)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -403,7 +403,7 @@ def list_inbound_replications(ctx, from_json, all_pages, page_size, managed_my_s
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_managed_my_sql_database_configuration_data.command_name', 'list-managed-my-sql-database-configuration-data'), help=u"""Retrieves configuration data for a specific MySQL database. \n[Command Reference](listManagedMySqlDatabaseConfigurationData)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_managed_my_sql_database_configuration_data.command_name', 'list-managed-my-sql-database-configuration-data'), help=u"""Retrieves configuration data for a specific MySQL database. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](listManagedMySqlDatabaseConfigurationData)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -460,7 +460,7 @@ def list_managed_my_sql_database_configuration_data(ctx, from_json, all_pages, p
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_managed_my_sql_database_sql_data.command_name', 'list-managed-my-sql-database-sql-data'), help=u"""Retrieves the SQL performance data for a specific MySQL database. \n[Command Reference](listManagedMySqlDatabaseSqlData)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_managed_my_sql_database_sql_data.command_name', 'list-managed-my-sql-database-sql-data'), help=u"""Retrieves the SQL performance data for a specific MySQL database. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](listManagedMySqlDatabaseSqlData)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
@@ -528,7 +528,7 @@ def list_managed_my_sql_database_sql_data(ctx, from_json, all_pages, page_size, 
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_collection_group.command(name=cli_util.override('managed_my_sql_databases.list_managed_my_sql_databases.command_name', 'list-managed-my-sql-databases'), help=u"""Gets the list of Managed MySQL Databases in a specific compartment. \n[Command Reference](listManagedMySqlDatabases)""")
+@managed_my_sql_database_collection_group.command(name=cli_util.override('managed_my_sql_databases.list_managed_my_sql_databases.command_name', 'list-managed-my-sql-databases'), help=u"""Gets the list of Managed MySQL Databases in a specific compartment. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](listManagedMySqlDatabases)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
@@ -585,7 +585,7 @@ def list_managed_my_sql_databases(ctx, from_json, all_pages, page_size, compartm
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_my_sql_digest_errors.command_name', 'list-my-sql-digest-errors'), help=u"""Retrieves any potential errors for a given digest. \n[Command Reference](listMySqlDigestErrors)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_my_sql_digest_errors.command_name', 'list-my-sql-digest-errors'), help=u"""Retrieves any potential errors for a given digest. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](listMySqlDigestErrors)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--digest', required=True, help=u"""The digest of a MySQL normalized query.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -646,7 +646,7 @@ def list_my_sql_digest_errors(ctx, from_json, all_pages, page_size, managed_my_s
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_outbound_replications.command_name', 'list-outbound-replications'), help=u"""Retrieves information pertaining to the outbound replications of a specific MySQL server. \n[Command Reference](listOutboundReplications)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_outbound_replications.command_name', 'list-outbound-replications'), help=u"""Retrieves information pertaining to the outbound replications of a specific MySQL server. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](listOutboundReplications)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -703,7 +703,7 @@ def list_outbound_replications(ctx, from_json, all_pages, page_size, managed_my_
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.summarize_managed_my_sql_database_availability_metrics.command_name', 'summarize-managed-my-sql-database-availability-metrics'), help=u"""Gets the availability metrics for the MySQL Database specified by managedMySqlDatabaseId. \n[Command Reference](summarizeManagedMySqlDatabaseAvailabilityMetrics)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.summarize_managed_my_sql_database_availability_metrics.command_name', 'summarize-managed-my-sql-database-availability-metrics'), help=u"""Gets the availability metrics for the MySQL Database specified by managedMySqlDatabaseId. MySQL support within OCI Database Management service has been deprecated as of January 29, 2026. \n[Command Reference](summarizeManagedMySqlDatabaseAvailabilityMetrics)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")

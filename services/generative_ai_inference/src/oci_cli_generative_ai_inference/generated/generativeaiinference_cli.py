@@ -22,7 +22,9 @@ Use the Generative AI service inference API to access your custom model endpoint
 
 To use a Generative AI custom model for inference, you must first create an endpoint for that model. Use the [Generative AI service management API] to [create a custom model] by fine-tuning an out-of-the-box model, or a previous version of a custom model, using your own data. Fine-tune the custom model on a [fine-tuning dedicated AI cluster]. Then, create a [hosting dedicated AI cluster] with an [endpoint] to host your custom model. For resource management in the Generative AI service, use the [Generative AI service management API].
 
-To learn more about the service, see the [Generative AI documentation]."""), short_help=cli_util.override('generative_ai_inference.generative_ai_inference_root_group.short_help', """Generative AI Service Inference API"""))
+To learn more about the service, see the [Generative AI documentation].
+
+**Important:** The IP addresses behind each DNS endpoint might change over time. Always use the DNS hostname listed under the following **API Endpoints** section and avoid using hard-coded fixed IP addresses."""), short_help=cli_util.override('generative_ai_inference.generative_ai_inference_root_group.short_help', """Generative AI Service Inference API"""))
 @cli_util.help_option_group
 def generative_ai_inference_root_group():
     pass
@@ -34,7 +36,7 @@ def generate_text_result_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai_inference.apply_guardrails_result_group.command_name', 'apply-guardrails-result'), cls=CommandGroupWithAlias, help="""The result of applying guardrails to the input text.""")
+@click.command(cli_util.override('generative_ai_inference.apply_guardrails_result_group.command_name', 'apply-guardrails-result'), cls=CommandGroupWithAlias, help="""The result of applying guardrails to the input content.""")
 @cli_util.help_option_group
 def apply_guardrails_result_group():
     pass
@@ -79,25 +81,33 @@ generative_ai_inference_root_group.add_command(rerank_text_result_group)
 generative_ai_inference_root_group.add_command(chat_result_group)
 
 
-@apply_guardrails_result_group.command(name=cli_util.override('generative_ai_inference.apply_guardrails.command_name', 'apply-guardrails'), help=u"""Applies guardrails to the input text, including content moderation, PII detection, and prompt injection protection. \n[Command Reference](applyGuardrails)""")
-@cli_util.option('--input', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@apply_guardrails_result_group.command(name=cli_util.override('generative_ai_inference.apply_guardrails.command_name', 'apply-guardrails'), help=u"""Applies guardrails to the input content, including content moderation, PII detection, and prompt injection protection. Case 1: Use `input` when the customer wants simple single-text moderation. Existing customers can continue to use this field without changing their current integration. Case 2: Use `multimodalInput` when the customer wants moderation over text, image, or a combination of both. `multimodalInput` supports a single text item, an array of text items only, an array of images only, or a mixed ordered combination of text and image items. Clients may provide `input`, `multimodalInput`, or both. At least one of these fields must be provided. If both `input` and `multimodalInput` are provided, the service will process `input` and discard `multimodalInput`. \n[Command Reference](applyGuardrails)""")
 @cli_util.option('--guardrail-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to apply guardrails.""")
+@cli_util.option('--input', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--multimodal-input', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An ordered list of text and image inputs for multimodal guardrail evaluation. This field supports a single text item, an array of text items only, an array of images only, or a mixed ordered combination of text and image items. If both `input` and `multimodalInput` are provided, this field is ignored.
+
+This option is a JSON list with items of type GuardrailsInput.  For documentation on GuardrailsInput please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeaiinference/20231130/datatypes/GuardrailsInput.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--guardrail-version-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'multimodal-input': {'module': 'generative_ai_inference', 'class': 'list[GuardrailsInput]'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'multimodal-input': {'module': 'generative_ai_inference', 'class': 'list[GuardrailsInput]'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
 @cli_util.wrap_exceptions
-def apply_guardrails(ctx, from_json, input, guardrail_configs, compartment_id, guardrail_version_config):
+def apply_guardrails(ctx, from_json, guardrail_configs, compartment_id, input, multimodal_input, guardrail_version_config):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['input'] = cli_util.parse_json_parameter("input", input)
     _details['guardrailConfigs'] = cli_util.parse_json_parameter("guardrail_configs", guardrail_configs)
     _details['compartmentId'] = compartment_id
+
+    if input is not None:
+        _details['input'] = cli_util.parse_json_parameter("input", input)
+
+    if multimodal_input is not None:
+        _details['multimodalInput'] = cli_util.parse_json_parameter("multimodal_input", multimodal_input)
 
     if guardrail_version_config is not None:
         _details['guardrailVersionConfig'] = cli_util.parse_json_parameter("guardrail_version_config", guardrail_version_config)
@@ -110,18 +120,21 @@ def apply_guardrails(ctx, from_json, input, guardrail_configs, compartment_id, g
     cli_util.render_response(result, ctx)
 
 
-@apply_guardrails_result_group.command(name=cli_util.override('generative_ai_inference.apply_guardrails_guardrails_text_input.command_name', 'apply-guardrails-guardrails-text-input'), help=u"""Applies guardrails to the input text, including content moderation, PII detection, and prompt injection protection. \n[Command Reference](applyGuardrails)""")
+@apply_guardrails_result_group.command(name=cli_util.override('generative_ai_inference.apply_guardrails_guardrails_text_input.command_name', 'apply-guardrails-guardrails-text-input'), help=u"""Applies guardrails to the input content, including content moderation, PII detection, and prompt injection protection. Case 1: Use `input` when the customer wants simple single-text moderation. Existing customers can continue to use this field without changing their current integration. Case 2: Use `multimodalInput` when the customer wants moderation over text, image, or a combination of both. `multimodalInput` supports a single text item, an array of text items only, an array of images only, or a mixed ordered combination of text and image items. Clients may provide `input`, `multimodalInput`, or both. At least one of these fields must be provided. If both `input` and `multimodalInput` are provided, the service will process `input` and discard `multimodalInput`. \n[Command Reference](applyGuardrails)""")
 @cli_util.option('--guardrail-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to apply guardrails.""")
+@cli_util.option('--multimodal-input', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An ordered list of text and image inputs for multimodal guardrail evaluation. This field supports a single text item, an array of text items only, an array of images only, or a mixed ordered combination of text and image items. If both `input` and `multimodalInput` are provided, this field is ignored.
+
+This option is a JSON list with items of type GuardrailsInput.  For documentation on GuardrailsInput please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeaiinference/20231130/datatypes/GuardrailsInput.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--guardrail-version-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-content', help=u"""The actual input data.""")
 @cli_util.option('--input-language-code', help=u"""The language code of the input text. example - en | es | en-US | zh-CN""")
-@json_skeleton_utils.get_cli_json_input_option({'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'multimodal-input': {'module': 'generative_ai_inference', 'class': 'list[GuardrailsInput]'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'multimodal-input': {'module': 'generative_ai_inference', 'class': 'list[GuardrailsInput]'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
 @cli_util.wrap_exceptions
-def apply_guardrails_guardrails_text_input(ctx, from_json, guardrail_configs, compartment_id, guardrail_version_config, input_content, input_language_code):
+def apply_guardrails_guardrails_text_input(ctx, from_json, guardrail_configs, compartment_id, multimodal_input, guardrail_version_config, input_content, input_language_code):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -130,6 +143,9 @@ def apply_guardrails_guardrails_text_input(ctx, from_json, guardrail_configs, co
     _details['input'] = {}
     _details['guardrailConfigs'] = cli_util.parse_json_parameter("guardrail_configs", guardrail_configs)
     _details['compartmentId'] = compartment_id
+
+    if multimodal_input is not None:
+        _details['multimodalInput'] = cli_util.parse_json_parameter("multimodal_input", multimodal_input)
 
     if guardrail_version_config is not None:
         _details['guardrailVersionConfig'] = cli_util.parse_json_parameter("guardrail_version_config", guardrail_version_config)
@@ -141,6 +157,48 @@ def apply_guardrails_guardrails_text_input(ctx, from_json, guardrail_configs, co
         _details['input']['languageCode'] = input_language_code
 
     _details['input']['type'] = 'TEXT'
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.apply_guardrails(
+        apply_guardrails_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@apply_guardrails_result_group.command(name=cli_util.override('generative_ai_inference.apply_guardrails_guardrails_image_input.command_name', 'apply-guardrails-guardrails-image-input'), help=u"""Applies guardrails to the input content, including content moderation, PII detection, and prompt injection protection. Case 1: Use `input` when the customer wants simple single-text moderation. Existing customers can continue to use this field without changing their current integration. Case 2: Use `multimodalInput` when the customer wants moderation over text, image, or a combination of both. `multimodalInput` supports a single text item, an array of text items only, an array of images only, or a mixed ordered combination of text and image items. Clients may provide `input`, `multimodalInput`, or both. At least one of these fields must be provided. If both `input` and `multimodalInput` are provided, the service will process `input` and discard `multimodalInput`. \n[Command Reference](applyGuardrails)""")
+@cli_util.option('--guardrail-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to apply guardrails.""")
+@cli_util.option('--multimodal-input', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An ordered list of text and image inputs for multimodal guardrail evaluation. This field supports a single text item, an array of text items only, an array of images only, or a mixed ordered combination of text and image items. If both `input` and `multimodalInput` are provided, this field is ignored.
+
+This option is a JSON list with items of type GuardrailsInput.  For documentation on GuardrailsInput please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeaiinference/20231130/datatypes/GuardrailsInput.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--guardrail-version-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-image-url', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'multimodal-input': {'module': 'generative_ai_inference', 'class': 'list[GuardrailsInput]'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}, 'input-image-url': {'module': 'generative_ai_inference', 'class': 'GuardrailsImageUrl'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'multimodal-input': {'module': 'generative_ai_inference', 'class': 'list[GuardrailsInput]'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}, 'guardrail-version-config': {'module': 'generative_ai_inference', 'class': 'GuardrailVersionConfig'}, 'input-image-url': {'module': 'generative_ai_inference', 'class': 'GuardrailsImageUrl'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
+@cli_util.wrap_exceptions
+def apply_guardrails_guardrails_image_input(ctx, from_json, guardrail_configs, compartment_id, multimodal_input, guardrail_version_config, input_image_url):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['input'] = {}
+    _details['guardrailConfigs'] = cli_util.parse_json_parameter("guardrail_configs", guardrail_configs)
+    _details['compartmentId'] = compartment_id
+
+    if multimodal_input is not None:
+        _details['multimodalInput'] = cli_util.parse_json_parameter("multimodal_input", multimodal_input)
+
+    if guardrail_version_config is not None:
+        _details['guardrailVersionConfig'] = cli_util.parse_json_parameter("guardrail_version_config", guardrail_version_config)
+
+    if input_image_url is not None:
+        _details['input']['imageUrl'] = cli_util.parse_json_parameter("input_image_url", input_image_url)
+
+    _details['input']['type'] = 'IMAGE'
 
     client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
     result = client.apply_guardrails(
