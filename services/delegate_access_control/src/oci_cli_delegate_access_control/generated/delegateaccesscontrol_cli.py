@@ -16,8 +16,8 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.delegate_access_control.src.oci_cli_delegate_access_control.generated import delegate_access_control_service_cli
 
 
-@click.command(cli_util.override('delegate_access_control.delegate_access_control_root_group.command_name', 'delegate-access-control'), cls=CommandGroupWithAlias, help=cli_util.override('delegate_access_control.delegate_access_control_root_group.help', """Oracle Delegate Access Control allows ExaCC and ExaCS customers to delegate management of their Exadata resources operators outside their tenancies.
-With Delegate Access Control, Support Providers can deliver managed services using comprehensive and robust tooling built on the OCI platform.
+@click.command(cli_util.override('delegate_access_control.delegate_access_control_root_group.command_name', 'delegate-access-control'), cls=CommandGroupWithAlias, help=cli_util.override('delegate_access_control.delegate_access_control_root_group.help', """Oracle Delegate Access Control allows customers of Oracle Exadata Database Service on Cloud@Customer (ExaDB-C@C), Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D), and Oracle Exadata Database Service on Exascale Infrastructure (ExaDB-XS) to delegate management of their Exadata resources operators outside their tenancies.
+With Delegate Access Control, Service Providers can deliver managed services using comprehensive and robust tooling built on the OCI platform.
 Customers maintain control over who has access to the delegated resources in their tenancy and what actions can be taken.
 Enterprises managing resources across multiple tenants can use Delegate Access Control to streamline management tasks.
 Using logging service, customers can view a near real-time audit report of all actions performed by a Service Provider operator."""), short_help=cli_util.override('delegate_access_control.delegate_access_control_root_group.short_help', """Oracle Delegate Access Control API"""))
@@ -283,15 +283,15 @@ def change_delegation_subscription_compartment(ctx, from_json, wait_for_state, m
 @cli_util.option('--display-name', required=True, help=u"""Name of the Delegation Control. The name does not need to be unique.""")
 @cli_util.option('--delegation-subscription-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Delegation Subscription OCID that are allowed for this Delegation Control. The allowed subscriptions will determine the available Service Provider Actions. Only support operators for the allowed subscriptions are allowed to create Delegated Resource Access Request.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCID of the selected resources that this Delegation Control is applicable to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER"]), help=u"""Resource type for which the Delegation Control is applicable to.""")
+@cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER", "EXADBVMCLUSTER"]), help=u"""Resource type for which the Delegation Control is applicable to.""")
 @cli_util.option('--notification-topic-id', required=True, help=u"""The OCID of the OCI Notification topic to publish messages related to this Delegation Control.""")
 @cli_util.option('--notification-message-format', required=True, help=u"""The format of the OCI Notification messages for this Delegation Control.""")
 @cli_util.option('--description', help=u"""Description of the Delegation Control.""")
 @cli_util.option('--num-approvals-required', type=click.INT, help=u"""number of approvals required.""")
 @cli_util.option('--pre-approved-service-provider-action-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of pre-approved Service Provider Action names. The list of pre-defined Service Provider Actions can be obtained from the ListServiceProviderActions API. Delegated Resource Access Requests associated with a resource governed by this Delegation Control will be automatically approved if the Delegated Resource Access Request only contain Service Provider Actions in the pre-approved list.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-approve-during-maintenance', type=click.BOOL, help=u"""Set to true to allow all Delegated Resource Access Request to be approved automatically during maintenance.""")
-@cli_util.option('--vault-id', help=u"""The OCID of the OCI Vault that will store the secrets containing the SSH keys to access the resource governed by this Delegation Control by Delegate Access Control Service. This property is required when resourceType is CLOUDVMCLUSTER. Delegate Access Control Service will generate the SSH keys and store them as secrets in the OCI Vault.""")
-@cli_util.option('--vault-key-id', help=u"""The OCID of the Master Encryption Key in the OCI Vault specified by vaultId. This key will be used to encrypt the SSH keys to access the resource governed by this Delegation Control by Delegate Access Control Service. This property is required when resourceType is CLOUDVMCLUSTER.""")
+@cli_util.option('--vault-id', help=u"""The OCID of the OCI Vault that will store the secrets containing the SSH keys to access the resource governed by this Delegation Control by Delegate Access Control Service. Delegate Access Control Service will generate the SSH keys and store them as secrets in the OCI Vault. This property is optional when the Delegation Control is created for Oracle Managed Software Updates. Otherwise, it is required when resourceType is CLOUDVMCLUSTER or EXADBVMCLUSTER.""")
+@cli_util.option('--vault-key-id', help=u"""The OCID of the Master Encryption Key in the OCI Vault specified by vaultId. This key will be used to encrypt the SSH keys to access the resource governed by this Delegation Control by Delegate Access Control Service. This property is optional when the Delegation Control is created for Oracle Managed Software Updates. Otherwise, it is required when resourceType is CLOUDVMCLUSTER or EXADBVMCLUSTER.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -380,9 +380,9 @@ def create_delegation_control(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @delegation_subscription_group.command(name=cli_util.override('delegate_access_control.create_delegation_subscription.command_name', 'create'), help=u"""Creates Delegation Subscription in Delegation Control. \n[Command Reference](createDelegationSubscription)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the Delegation Control.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the Delegation Subscription.""")
 @cli_util.option('--service-provider-id', required=True, help=u"""Unique identifier of the Service Provider.""")
-@cli_util.option('--subscribed-service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TROUBLESHOOTING", "ASSISTED_PATCHING"]), help=u"""Subscribed Service Provider Service Type.""")
+@cli_util.option('--subscribed-service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TROUBLESHOOTING", "ASSISTED_PATCHING", "MANAGED_SOFTWARE_UPDATES"]), help=u"""Subscribed Service Provider Service Type.""")
 @cli_util.option('--description', help=u"""Description of the Delegation Subscription.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -511,7 +511,7 @@ def delete_delegation_control(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@delegation_subscription_group.command(name=cli_util.override('delegate_access_control.delete_delegation_subscription.command_name', 'delete'), help=u"""eletes an Delegation Subscription in Delegation Control. \n[Command Reference](deleteDelegationSubscription)""")
+@delegation_subscription_group.command(name=cli_util.override('delegate_access_control.delete_delegation_subscription.command_name', 'delete'), help=u"""Deletes an Delegation Subscription in Delegation Control. \n[Command Reference](deleteDelegationSubscription)""")
 @cli_util.option('--delegation-subscription-id', required=True, help=u"""unique Delegation Subscription identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -886,7 +886,7 @@ def list_delegation_control_resources(ctx, from_json, all_pages, page_size, dele
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only Delegation Control resources whose lifecycleState matches the given Delegation Control lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return Delegation Control resources that match the given display name.""")
-@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER"]), help=u"""A filter to return only resources that match the given resource type.""")
+@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER", "EXADBVMCLUSTER"]), help=u"""A filter to return only resources that match the given resource type.""")
 @cli_util.option('--resource-id', help=u"""A filter to return Delegation Control resources that match the given resource ID.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1011,8 +1011,8 @@ def list_delegation_subscriptions(ctx, from_json, all_pages, page_size, compartm
 @service_provider_action_group.command(name=cli_util.override('delegate_access_control.list_service_provider_actions.command_name', 'list'), help=u"""Lists all the ServiceProviderActions available in the system. \n[Command Reference](listServiceProviderActions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
-@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER"]), help=u"""A filter to return only resources that match the given resource type.""")
-@cli_util.option('--service-provider-service-type', type=custom_types.CliCaseInsensitiveChoice(["TROUBLESHOOTING", "ASSISTED_PATCHING"]), multiple=True, help=u"""A filter to return only resources that match the given Service Provider service type.""")
+@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER", "EXADBVMCLUSTER"]), help=u"""A filter to return only resources that match the given resource type.""")
+@cli_util.option('--service-provider-service-type', type=custom_types.CliCaseInsensitiveChoice(["TROUBLESHOOTING", "ASSISTED_PATCHING", "MANAGED_SOFTWARE_UPDATES"]), multiple=True, help=u"""A filter to return only resources that match the given Service Provider service type.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""A filter to return only resources whose lifecycleState matches the given Service Provider Action lifecycleState.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1129,7 +1129,7 @@ def list_service_provider_interactions(ctx, from_json, all_pages, page_size, del
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only Service Provider resources whose lifecycleState matches the given Service Provider lifecycle state.""")
 @cli_util.option('--name', help=u"""A filter to return Service Provider resources that match the given name.""")
-@cli_util.option('--supported-resource-type', type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER"]), help=u"""A filter to return only Service Provider resources whose supported resource type matches the given resource type.""")
+@cli_util.option('--supported-resource-type', type=custom_types.CliCaseInsensitiveChoice(["VMCLUSTER", "CLOUDVMCLUSTER", "EXADBVMCLUSTER"]), help=u"""A filter to return only Service Provider resources whose supported resource type matches the given resource type.""")
 @cli_util.option('--service-provider-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_PROVIDED"]), help=u"""A filter to return only Service Provider resources whose provider type matches the given provider type.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")

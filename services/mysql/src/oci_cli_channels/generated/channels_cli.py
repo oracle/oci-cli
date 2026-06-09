@@ -135,6 +135,7 @@ def create_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--source-port', type=click.INT, help=u"""The port the source MySQL instance listens on.""")
 @cli_util.option('--source-ssl-ca-certificate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-anonymous-transactions-handling', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-must-use-ipv6-on-dual-stack', type=click.BOOL, help=u"""Whether the connection of the channel will be requested using the IPv6 address of the dual stack DB system or not. Default: False.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -143,7 +144,7 @@ def create_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target': {'module': 'mysql', 'class': 'CreateChannelTargetDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}}, output_type={'module': 'mysql', 'class': 'Channel'})
 @cli_util.wrap_exceptions
-def create_channel_create_channel_source_from_mysql_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target, source_hostname, source_username, source_password, source_ssl_mode, compartment_id, display_name, is_enabled, description, freeform_tags, defined_tags, source_port, source_ssl_ca_certificate, source_anonymous_transactions_handling):
+def create_channel_create_channel_source_from_mysql_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target, source_hostname, source_username, source_password, source_ssl_mode, compartment_id, display_name, is_enabled, description, freeform_tags, defined_tags, source_port, source_ssl_ca_certificate, source_anonymous_transactions_handling, source_must_use_ipv6_on_dual_stack):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -182,6 +183,9 @@ def create_channel_create_channel_source_from_mysql_details(ctx, from_json, wait
 
     if source_anonymous_transactions_handling is not None:
         _details['source']['anonymousTransactionsHandling'] = cli_util.parse_json_parameter("source_anonymous_transactions_handling", source_anonymous_transactions_handling)
+
+    if source_must_use_ipv6_on_dual_stack is not None:
+        _details['source']['mustUseIpv6OnDualStack'] = source_must_use_ipv6_on_dual_stack
 
     _details['source']['sourceType'] = 'MYSQL'
 
@@ -780,6 +784,7 @@ def update_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--source-ssl-mode', help=u"""The SSL mode of the Channel.""")
 @cli_util.option('--source-ssl-ca-certificate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-anonymous-transactions-handling', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-must-use-ipv6-on-dual-stack', type=click.BOOL, help=u"""Whether the connection of the channel will be requested using the IPv6 address of the dual stack DB system or not. Default: False.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -789,7 +794,7 @@ def update_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target': {'module': 'mysql', 'class': 'UpdateChannelTargetDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}})
 @cli_util.wrap_exceptions
-def update_channel_update_channel_source_from_mysql_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, target, display_name, is_enabled, description, freeform_tags, defined_tags, if_match, source_hostname, source_port, source_username, source_password, source_ssl_mode, source_ssl_ca_certificate, source_anonymous_transactions_handling):
+def update_channel_update_channel_source_from_mysql_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, target, display_name, is_enabled, description, freeform_tags, defined_tags, if_match, source_hostname, source_port, source_username, source_password, source_ssl_mode, source_ssl_ca_certificate, source_anonymous_transactions_handling, source_must_use_ipv6_on_dual_stack):
 
     if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
@@ -844,6 +849,9 @@ def update_channel_update_channel_source_from_mysql_details(ctx, from_json, forc
 
     if source_anonymous_transactions_handling is not None:
         _details['source']['anonymousTransactionsHandling'] = cli_util.parse_json_parameter("source_anonymous_transactions_handling", source_anonymous_transactions_handling)
+
+    if source_must_use_ipv6_on_dual_stack is not None:
+        _details['source']['mustUseIpv6OnDualStack'] = source_must_use_ipv6_on_dual_stack
 
     _details['source']['sourceType'] = 'MYSQL'
 

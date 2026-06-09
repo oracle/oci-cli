@@ -163,14 +163,24 @@ def stop_db_system_extended(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(dbsystem_cli.create_db_system, params_to_exclude=['data_storage'])
+@cli_util.copy_params_from_generated_command(dbsystem_cli.create_db_system, params_to_exclude=['data_storage', 'ipv6_address_ipv6_subnet_cidr_pair_details'])
 @dbsystem_cli.db_system_root_group.command(name=dbsystem_cli.create_db_system.name, help=dbsystem_cli.create_db_system.help)
+@cli_util.option('--ipv6-address-subnet-cidr-pair', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--is-auto-expand-storage-enabled', type=click.BOOL, help="""Checks whether Automatic Storage Expansion should be enabled for the dbsystem.""")
 @cli_util.option('--max-storage-size-in-gbs', type=click.INT, help="""Sets the maximum storage size a db system can automatically be expanded to.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}, 'rest': {'module': 'mysql', 'class': 'CreateRestDetails'}, 'database-console': {'module': 'mysql', 'class': 'CreateDatabaseConsoleDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ipv6-address-subnet-cidr-pair': {'module': 'mysql', 'class': 'Ipv6AddressIpv6SubnetCidrPairDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}, 'rest': {'module': 'mysql', 'class': 'CreateRestDetails'}, 'database-console': {'module': 'mysql', 'class': 'CreateDatabaseConsoleDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
 def create_db_system_extended(ctx, **kwargs):
+
+    if 'ipv6_address_subnet_cidr_pair' in kwargs:
+        kwargs['ipv6_address_ipv6_subnet_cidr_pair_details'] = kwargs['ipv6_address_subnet_cidr_pair']
+        kwargs.pop('ipv6_address_subnet_cidr_pair')
+
     data_storage = {}
     if 'is_auto_expand_storage_enabled' in kwargs and kwargs['is_auto_expand_storage_enabled'] is not None:
         data_storage['isAutoExpandStorageEnabled'] = kwargs['is_auto_expand_storage_enabled']
@@ -186,14 +196,24 @@ def create_db_system_extended(ctx, **kwargs):
     ctx.invoke(dbsystem_cli.create_db_system, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(dbsystem_cli.update_db_system, params_to_exclude=['data_storage'])
+@cli_util.copy_params_from_generated_command(dbsystem_cli.update_db_system, params_to_exclude=['data_storage', 'ipv6_address_ipv6_subnet_cidr_pair_details'])
 @dbsystem_cli.db_system_root_group.command(name=dbsystem_cli.update_db_system.name, help=dbsystem_cli.update_db_system.help)
 @cli_util.option('--is-auto-expand-storage-enabled', type=click.BOOL, help="""Checks whether Automatic Storage Expansion should be enabled for the dbsystem.""")
 @cli_util.option('--max-storage-size-in-gbs', type=click.INT, help="""Sets the maximum storage size a db system can automatically be expanded to.""")
+@cli_util.option('--ipv6-address-subnet-cidr-pair', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'UpdateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'UpdateReadEndpointDetails'}, 'rest': {'module': 'mysql', 'class': 'UpdateRestDetails'}, 'database-console': {'module': 'mysql', 'class': 'UpdateDatabaseConsoleDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ipv6-address-subnet-cidr-pair': {'module': 'mysql', 'class': 'Ipv6AddressIpv6SubnetCidrPairDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'UpdateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'UpdateReadEndpointDetails'}, 'rest': {'module': 'mysql', 'class': 'UpdateRestDetails'}, 'database-console': {'module': 'mysql', 'class': 'UpdateDatabaseConsoleDetails'}})
 @cli_util.wrap_exceptions
 def update_db_system_extended(ctx, **kwargs):
+
+    if 'ipv6_address_subnet_cidr_pair' in kwargs:
+        kwargs['ipv6_address_ipv6_subnet_cidr_pair_details'] = kwargs['ipv6_address_subnet_cidr_pair']
+        kwargs.pop('ipv6_address_subnet_cidr_pair')
+
     data_storage = {}
     if 'is_auto_expand_storage_enabled' in kwargs and kwargs['is_auto_expand_storage_enabled'] is not None:
         data_storage['isAutoExpandStorageEnabled'] = kwargs['is_auto_expand_storage_enabled']
@@ -210,14 +230,24 @@ def update_db_system_extended(ctx, **kwargs):
 
 
 # clone
-@cli_util.copy_params_from_generated_command(dbsystem_cli.create_db_system_create_db_system_source_from_backup_details, params_to_exclude=['data_storage'])
+@cli_util.copy_params_from_generated_command(dbsystem_cli.create_db_system_create_db_system_source_from_backup_details, params_to_exclude=['data_storage', 'ipv6_address_ipv6_subnet_cidr_pair_details'])
 @dbsystem_cli.db_system_root_group.command(name="clone", help=dbsystem_cli.create_db_system_create_db_system_source_from_backup_details.help)
 @cli_util.option('--is-auto-expand-storage-enabled', type=click.BOOL, help="""Checks whether Automatic Storage Expansion should be enabled for the dbsystem.""")
 @cli_util.option('--max-storage-size-in-gbs', type=click.INT, help="""Sets the maximum storage size a db system can automatically be expanded to.""")
+@cli_util.option('--ipv6-address-subnet-cidr-pair', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}, 'rest': {'module': 'mysql', 'class': 'CreateRestDetails'}, 'database-console': {'module': 'mysql', 'class': 'CreateDatabaseConsoleDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ipv6-address-subnet-cidr-pair': {'module': 'mysql', 'class': 'Ipv6AddressIpv6SubnetCidrPairDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}, 'rest': {'module': 'mysql', 'class': 'CreateRestDetails'}, 'database-console': {'module': 'mysql', 'class': 'CreateDatabaseConsoleDetails'}})
 @cli_util.wrap_exceptions
 def clone_db_system_extended(ctx, **kwargs):
+
+    if 'ipv6_address_subnet_cidr_pair' in kwargs:
+        kwargs['ipv6_address_ipv6_subnet_cidr_pair_details'] = kwargs['ipv6_address_subnet_cidr_pair']
+        kwargs.pop('ipv6_address_subnet_cidr_pair')
+
     data_storage = {}
     if 'is_auto_expand_storage_enabled' in kwargs and kwargs['is_auto_expand_storage_enabled'] is not None:
         data_storage['isAutoExpandStorageEnabled'] = kwargs['is_auto_expand_storage_enabled']
@@ -235,15 +265,25 @@ def clone_db_system_extended(ctx, **kwargs):
 
 # import
 # rename --source-source-url argument
-@cli_util.copy_params_from_generated_command(dbsystem_cli.create_db_system_create_db_system_source_import_from_url_details, params_to_exclude=['data_storage', 'source_source_url'])
+@cli_util.copy_params_from_generated_command(dbsystem_cli.create_db_system_create_db_system_source_import_from_url_details, params_to_exclude=['data_storage', 'source_source_url', 'ipv6_address_ipv6_subnet_cidr_pair_details'])
 @dbsystem_cli.db_system_root_group.command(name="import", help=dbsystem_cli.create_db_system_create_db_system_source_import_from_url_details.help)
 @cli_util.option('--source-url', required=True, help="""The Pre-Authenticated Request (PAR) URL of the file you want to import from Object Storage.""")
 @cli_util.option('--is-auto-expand-storage-enabled', type=click.BOOL, help="""Checks whether Automatic Storage Expansion should be enabled for the dbsystem.""")
 @cli_util.option('--max-storage-size-in-gbs', type=click.INT, help="""Sets the maximum storage size a db system can automatically be expanded to.""")
+@cli_util.option('--ipv6-address-subnet-cidr-pair', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}, 'rest': {'module': 'mysql', 'class': 'CreateRestDetails'}, 'database-console': {'module': 'mysql', 'class': 'CreateDatabaseConsoleDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ipv6-address-subnet-cidr-pair': {'module': 'mysql', 'class': 'Ipv6AddressIpv6SubnetCidrPairDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}, 'rest': {'module': 'mysql', 'class': 'CreateRestDetails'}, 'database-console': {'module': 'mysql', 'class': 'CreateDatabaseConsoleDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
 def import_extended(ctx, **kwargs):
+
+    if 'ipv6_address_subnet_cidr_pair' in kwargs:
+        kwargs['ipv6_address_ipv6_subnet_cidr_pair_details'] = kwargs['ipv6_address_subnet_cidr_pair']
+        kwargs.pop('ipv6_address_subnet_cidr_pair')
+
     data_storage = {}
     if 'is_auto_expand_storage_enabled' in kwargs and kwargs['is_auto_expand_storage_enabled'] is not None:
         data_storage['isAutoExpandStorageEnabled'] = kwargs['is_auto_expand_storage_enabled']

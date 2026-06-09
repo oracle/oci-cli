@@ -293,9 +293,12 @@ class TestComputeCliExtended(unittest.TestCase):
         invoke_command([
             'compute', 'instance', 'terminate',
             '--force',
-            '--instance-id', self.instance['id'],
-            '--wait-for-state', 'TERMINATED'
+            '--instance-id', self.instance['id']
         ], response_expected=False)
+        util.wait_until([
+            'compute', 'instance', 'get',
+            '--instance-id', self.instance['id']
+        ], 'TERMINATED', max_wait_seconds=1200, succeed_if_not_found=True)
 
     def validate_network_security_group(self):
         vnics = invoke_command([

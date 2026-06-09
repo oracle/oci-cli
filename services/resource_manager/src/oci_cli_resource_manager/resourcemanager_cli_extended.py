@@ -807,16 +807,8 @@ def create_job_create_plan_rollback_job_operation_details_extended(ctx, **kwargs
     ctx.invoke(resourcemanager_cli.update_stack_update_dev_ops_config_source_details, **kwargs)
 
 
-# oci resource-manager configuration-source-provider create-configuration-source-provider-create-bitbucket-cloud-username-app-password-configuration-source-provider-details -> oci resource-manager configuration-source-provider create-bitbucket-cloud-username-app-password-provider
-cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.create_configuration_source_provider_create_bitbucket_cloud_username_app_password_configuration_source_provider_details, "create-bitbucket-cloud-username-app-password-provider")
-
-
 # oci resource-manager configuration-source-provider create-configuration-source-provider-create-bitbucket-server-access-token-configuration-source-provider-details -> oci resource-manager configuration-source-provider create-bitbucket-server-access-token-provider
 cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.create_configuration_source_provider_create_bitbucket_server_access_token_configuration_source_provider_details, "create-bitbucket-server-access-token-provider")
-
-
-# oci resource-manager configuration-source-provider update-configuration-source-provider-update-bitbucket-cloud-username-app-password-configuration-source-provider-details -> oci resource-manager configuration-source-provider update-bitbucket-cloud-username-app-password-provider
-cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.update_configuration_source_provider_update_bitbucket_cloud_username_app_password_configuration_source_provider_details, "update-bitbucket-cloud-username-app-password-provider")
 
 
 # oci resource-manager configuration-source-provider update-configuration-source-provider-update-bitbucket-server-access-token-configuration-source-provider-details -> oci resource-manager configuration-source-provider update-bitbucket-server-access-token-provider
