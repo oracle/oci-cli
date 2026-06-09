@@ -13959,8 +13959,8 @@ def create_data_guard_association_aws_encryption_key_details(ctx, from_json, wai
 
 
 @database_group.command(name=cli_util.override('db.create_database.command_name', 'create'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--source', required=True, type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATABASE", "DATAGUARD"]), help=u"""The source of the database: Use `NONE` for creating a new database. Use `DB_BACKUP` for creating a new database by restoring from a backup. Use `DATAGUARD` for creating a new STANDBY database for a Data Guard setup.. The default is `NONE`.""")
+@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -13975,7 +13975,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, source, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
+def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, source, db_home_id, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -13983,8 +13983,10 @@ def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['dbHomeId'] = db_home_id
     _details['source'] = source
+
+    if db_home_id is not None:
+        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -14027,8 +14029,8 @@ def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_new_database_details.command_name', 'create-database-create-new-database-details'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -14043,7 +14045,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_new_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
+def create_database_create_new_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database, db_home_id, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -14051,8 +14053,10 @@ def create_database_create_new_database_details(ctx, from_json, wait_for_state, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['dbHomeId'] = db_home_id
     _details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if db_home_id is not None:
+        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -14097,8 +14101,8 @@ def create_database_create_new_database_details(ctx, from_json, wait_for_state, 
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_stand_by_database_details.command_name', 'create-database-create-stand-by-database-details'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -14113,7 +14117,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateStandbyDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_stand_by_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
+def create_database_create_stand_by_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database, db_home_id, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -14121,8 +14125,10 @@ def create_database_create_stand_by_database_details(ctx, from_json, wait_for_st
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['dbHomeId'] = db_home_id
     _details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if db_home_id is not None:
+        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -14167,8 +14173,8 @@ def create_database_create_stand_by_database_details(ctx, from_json, wait_for_st
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_database_from_database.command_name', 'create-database-create-database-from-database'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -14183,7 +14189,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseFromAnotherDatabaseDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_database_from_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
+def create_database_create_database_from_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database, db_home_id, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -14191,8 +14197,10 @@ def create_database_create_database_from_database(ctx, from_json, wait_for_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['dbHomeId'] = db_home_id
     _details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if db_home_id is not None:
+        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -14237,8 +14245,8 @@ def create_database_create_database_from_database(ctx, from_json, wait_for_state
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_database_from_backup.command_name', 'create-database-create-database-from-backup'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -14253,7 +14261,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_database_from_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
+def create_database_create_database_from_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database, db_home_id, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -14261,8 +14269,10 @@ def create_database_create_database_from_backup(ctx, from_json, wait_for_state, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['dbHomeId'] = db_home_id
     _details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if db_home_id is not None:
+        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -31967,6 +31977,57 @@ def reorder_scheduled_actions(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@database_group.command(name=cli_util.override('db.reschedule_managed_db_software_update.command_name', 'reschedule-managed-db-software-update'), help=u"""Reschedule the Managed Database Software Update \n[Command Reference](rescheduleManagedDbSoftwareUpdate)""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def reschedule_managed_db_software_update(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.reschedule_managed_db_software_update(
+        database_id=database_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @vm_cluster_network_group.command(name=cli_util.override('db.resize_vm_cluster_network.command_name', 'resize'), help=u"""Adds or removes Db server network nodes to extend or shrink the existing VM cluster network. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](resizeVmClusterNetwork)""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
@@ -38950,24 +39011,25 @@ def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--managed-software-update-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--patch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'storage-size-details': {'module': 'database', 'class': 'DatabaseStorageSizeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'patch-options': {'module': 'database', 'class': 'PatchOptions'}})
+@json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'storage-size-details': {'module': 'database', 'class': 'DatabaseStorageSizeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'managed-software-update-details': {'module': 'database', 'class': 'ManagedSoftwareUpdateInputDetails'}, 'patch-options': {'module': 'database', 'class': 'PatchOptions'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'storage-size-details': {'module': 'database', 'class': 'DatabaseStorageSizeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'patch-options': {'module': 'database', 'class': 'PatchOptions'}}, output_type={'module': 'database', 'class': 'Database'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'storage-size-details': {'module': 'database', 'class': 'DatabaseStorageSizeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'managed-software-update-details': {'module': 'database', 'class': 'ManagedSoftwareUpdateInputDetails'}, 'patch-options': {'module': 'database', 'class': 'PatchOptions'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, db_home_id, new_admin_password, old_tde_wallet_password, new_tde_wallet_password, storage_size_details, freeform_tags, defined_tags, patch_options, if_match):
+def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, db_home_id, new_admin_password, old_tde_wallet_password, new_tde_wallet_password, storage_size_details, freeform_tags, defined_tags, managed_software_update_details, patch_options, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
     if not force:
-        if db_backup_config or storage_size_details or freeform_tags or defined_tags or patch_options:
-            if not click.confirm("WARNING: Updates to db-backup-config and storage-size-details and freeform-tags and defined-tags and patch-options will replace any existing values. Are you sure you want to continue?"):
+        if db_backup_config or storage_size_details or freeform_tags or defined_tags or managed_software_update_details or patch_options:
+            if not click.confirm("WARNING: Updates to db-backup-config and storage-size-details and freeform-tags and defined-tags and managed-software-update-details and patch-options will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -38999,6 +39061,9 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if managed_software_update_details is not None:
+        _details['managedSoftwareUpdateDetails'] = cli_util.parse_json_parameter("managed_software_update_details", managed_software_update_details)
 
     if patch_options is not None:
         _details['patchOptions'] = cli_util.parse_json_parameter("patch_options", patch_options)

@@ -370,6 +370,7 @@ SDK_client_map = {
     "db.remove_virtual_machine_from_vm_cluster": "oci.database.DatabaseClient.remove_virtual_machine_from_vm_cluster",
     "db.reorder_execution_actions": "oci.database.DatabaseClient.reorder_execution_actions",
     "db.reorder_scheduled_actions": "oci.database.DatabaseClient.reorder_scheduled_actions",
+    "db.reschedule_managed_db_software_update": "oci.database.DatabaseClient.reschedule_managed_db_software_update",
     "db.resize_vm_cluster_network": "oci.database.DatabaseClient.resize_vm_cluster_network",
     "db.resource_pool_shapes": "oci.database.DatabaseClient.resource_pool_shapes",
     "db.restart_autonomous_container_database": "oci.database.DatabaseClient.restart_autonomous_container_database",

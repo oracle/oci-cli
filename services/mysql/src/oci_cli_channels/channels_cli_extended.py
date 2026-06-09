@@ -19,8 +19,9 @@ cli_util.rename_command(channels_cli, channels_cli.channels_root_group, channels
 # flatten the single --target parameter into multiple individual --target* params
 
 
-@cli_util.copy_params_from_generated_command(channels_cli.create_channel_create_channel_source_from_mysql_details, params_to_exclude=['target'])
+@cli_util.copy_params_from_generated_command(channels_cli.create_channel_create_channel_source_from_mysql_details, params_to_exclude=['target', 'source_must_use_ipv6_on_dual_stack'])
 @channels_cli.channel_group.command(name='create-from-mysql', help=channels_cli.create_channel_create_channel_source_from_mysql_details.help)
+@cli_util.option('--use-ipv6-on-dual-stack', type=click.BOOL, help="""Whether the connection of the channel will be requested using the IPv6 address of the dual stack DB system or not. Default: False.""")
 @cli_util.option('--target-db-system-id', required=True, help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_db_system_id", remove_required=False))
 @cli_util.option('--target-applier-username', help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_applier_username", remove_required=False))
 @cli_util.option('--target-channel-name', help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_channel_name", remove_required=False))
@@ -31,6 +32,10 @@ cli_util.rename_command(channels_cli, channels_cli.channels_root_group, channels
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}})
 @cli_util.wrap_exceptions
 def create_channel_create_channel_source_from_mysql_details_extended(ctx, **kwargs):
+
+    if 'use_ipv6_on_dual_stack' in kwargs:
+        kwargs['source_must_use_ipv6_on_dual_stack'] = kwargs['use_ipv6_on_dual_stack']
+        kwargs.pop('use_ipv6_on_dual_stack')
     target_details = {}
 
     target_details['dbSystemId'] = kwargs['target_db_system_id']
@@ -69,8 +74,9 @@ cli_util.rename_command(channels_cli, channels_cli.channel_group, channels_cli.u
 
 
 # flatten the single --target parameter into multiple individual --target* params
-@cli_util.copy_params_from_generated_command(channels_cli.update_channel_update_channel_source_from_mysql_details, params_to_exclude=['target'])
+@cli_util.copy_params_from_generated_command(channels_cli.update_channel_update_channel_source_from_mysql_details, params_to_exclude=['target', 'source_must_use_ipv6_on_dual_stack'])
 @channels_cli.channel_group.command(name='update-from-mysql', help=channels_cli.update_channel_update_channel_source_from_mysql_details.help)
+@cli_util.option('--use-ipv6-on-dual-stack', type=click.BOOL, help="""Whether the connection of the channel will be requested using the IPv6 address of the dual stack DB system or not. Default: False.""")
 @cli_util.option('--target-applier-username', help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_applier_username", remove_required=False))
 @cli_util.option('--target-channel-name', help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_channel_name", remove_required=False))
 @cli_util.option('--target-filters', type=custom_types.CLI_COMPLEX_TYPE, help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_filters", remove_required=False))
@@ -80,6 +86,10 @@ cli_util.rename_command(channels_cli, channels_cli.channel_group, channels_cli.u
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}})
 @cli_util.wrap_exceptions
 def update_channel_update_channel_source_from_mysql_details_extended(ctx, **kwargs):
+
+    if 'use_ipv6_on_dual_stack' in kwargs:
+        kwargs['source_must_use_ipv6_on_dual_stack'] = kwargs['use_ipv6_on_dual_stack']
+        kwargs.pop('use_ipv6_on_dual_stack')
     target_details = {}
 
     if 'target_applier_username' in kwargs and kwargs['target_applier_username'] is not None:

@@ -36,12 +36,6 @@ def my_user_db_credential_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.identity_propagation_trusts_group.command_name', 'identity-propagation-trusts'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def identity_propagation_trusts_group():
-    pass
-
-
 @click.command(cli_util.override('identity_domains.dynamic_resource_groups_group.command_name', 'dynamic-resource-groups'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
 def dynamic_resource_groups_group():
@@ -758,7 +752,6 @@ def identity_setting_group():
 
 identity_domains_root_group.add_command(my_pending_approval_group)
 identity_domains_root_group.add_command(my_user_db_credential_group)
-identity_domains_root_group.add_command(identity_propagation_trusts_group)
 identity_domains_root_group.add_command(dynamic_resource_groups_group)
 identity_domains_root_group.add_command(my_api_keys_group)
 identity_domains_root_group.add_command(my_authentication_factors_remover_group)
@@ -4147,7 +4140,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--name', required=True, help=u"""The name of the the Identity Propagation Trust.
 
 **SCIM++ Properties:**  - type: string  - caseExact: false  - idcsSearchable: true  - multiValued: false  - required: true  - mutability: immutable  - returned: default  - uniqueness: none""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["JWT", "SAML", "SPNEGO", "AWS"]), help=u"""The type of the inbound token from the Identity cloud provider.
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["JWT", "SAML", "SPNEGO", "AWS", "X509"]), help=u"""The type of the inbound token from the Identity cloud provider.
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - required: true  - mutability: readWrite  - returned: default  - type: string  - multiValued: false  - uniqueness: none""")
 @cli_util.option('--issuer', required=True, help=u"""The issuer claim of the Identity provider.
@@ -4201,7 +4194,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.option('--subject-mapping-attribute', help=u"""Subject Mapping Attribute to which the value from subject claim name value would be used for identity lookup.
 
 **SCIM++ Properties:**  - type: string  - multiValued: false  - idcsSearchable: false  - required: false  - mutability: readWrite  - returned: default  - uniqueness: none""")
-@cli_util.option('--subject-type', type=custom_types.CliCaseInsensitiveChoice(["User", "App"]), help=u"""The type of the resource against which lookup will be made in the identity domain in IAM for the incoming subject claim value.
+@cli_util.option('--subject-type', type=custom_types.CliCaseInsensitiveChoice(["User", "App", "Resource"]), help=u"""The type of the resource against which lookup will be made in the identity domain in IAM for the incoming subject claim value.
 
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
 @cli_util.option('--client-claim-name', help=u"""The claim name that identifies to whom the JWT/SAML token is issued. If AWS, then \\\"aud\\\" or \\\"client_id\\\". If Azure, then \\\"appid\\\". If GCP, then \\\"aud\\\".
@@ -4230,18 +4223,36 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 **Added In:** 2308181911
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--impersonating-resource', help=u"""Defines the external workload that acts as impersonating resource principal.
+
+**Added In:** 2509172316
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - mutability: readWrite  - returned: default  - uniqueness: none  - caseExact: true  - idcsSearchable: false""")
+@cli_util.option('--claim-validations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of claim validations
+
+**Added In:** 2509172316
+
+**SCIM++ Properties:**  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type IdentityPropagationTrustClaimValidations.  For documentation on IdentityPropagationTrustClaimValidations please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/IdentityPropagationTrustClaimValidations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--claim-propagations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of claims to propagate in RPST
+
+**Added In:** 2509172316
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ca-cert-chain', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--impersonation-service-users', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Impersonating Principal.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [rule, value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
 This option is a JSON list with items of type IdentityPropagationTrustImpersonationServiceUsers.  For documentation on IdentityPropagationTrustImpersonationServiceUsers please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/IdentityPropagationTrustImpersonationServiceUsers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--keytab', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'client-claim-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'oauth-clients': {'module': 'identity_domains', 'class': 'list[string]'}, 'impersonation-service-users': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustImpersonationServiceUsers]'}, 'keytab': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustKeytab'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'client-claim-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'oauth-clients': {'module': 'identity_domains', 'class': 'list[string]'}, 'claim-validations': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustClaimValidations]'}, 'claim-propagations': {'module': 'identity_domains', 'class': 'list[string]'}, 'ca-cert-chain': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustCaCertChain'}, 'impersonation-service-users': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustImpersonationServiceUsers]'}, 'keytab': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustKeytab'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'client-claim-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'oauth-clients': {'module': 'identity_domains', 'class': 'list[string]'}, 'impersonation-service-users': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustImpersonationServiceUsers]'}, 'keytab': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustKeytab'}}, output_type={'module': 'identity_domains', 'class': 'IdentityPropagationTrust'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'client-claim-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'oauth-clients': {'module': 'identity_domains', 'class': 'list[string]'}, 'claim-validations': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustClaimValidations]'}, 'claim-propagations': {'module': 'identity_domains', 'class': 'list[string]'}, 'ca-cert-chain': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustCaCertChain'}, 'impersonation-service-users': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustImpersonationServiceUsers]'}, 'keytab': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustKeytab'}}, output_type={'module': 'identity_domains', 'class': 'IdentityPropagationTrust'})
 @cli_util.wrap_exceptions
-def create_identity_propagation_trust(ctx, from_json, schemas, name, type, issuer, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, account_id, subject_claim_name, subject_mapping_attribute, subject_type, client_claim_name, client_claim_values, active, public_key_endpoint, public_certificate, oauth_clients, allow_impersonation, clock_skew_seconds, impersonation_service_users, keytab):
+def create_identity_propagation_trust(ctx, from_json, schemas, name, type, issuer, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, account_id, subject_claim_name, subject_mapping_attribute, subject_type, client_claim_name, client_claim_values, active, public_key_endpoint, public_certificate, oauth_clients, allow_impersonation, clock_skew_seconds, impersonating_resource, claim_validations, claim_propagations, ca_cert_chain, impersonation_service_users, keytab):
 
     kwargs = {}
     if authorization is not None:
@@ -4333,6 +4344,18 @@ def create_identity_propagation_trust(ctx, from_json, schemas, name, type, issue
 
     if clock_skew_seconds is not None:
         _details['clockSkewSeconds'] = clock_skew_seconds
+
+    if impersonating_resource is not None:
+        _details['impersonatingResource'] = impersonating_resource
+
+    if claim_validations is not None:
+        _details['claimValidations'] = cli_util.parse_json_parameter("claim_validations", claim_validations)
+
+    if claim_propagations is not None:
+        _details['claimPropagations'] = cli_util.parse_json_parameter("claim_propagations", claim_propagations)
+
+    if ca_cert_chain is not None:
+        _details['CACertChain'] = cli_util.parse_json_parameter("ca_cert_chain", ca_cert_chain)
 
     if impersonation_service_users is not None:
         _details['impersonationServiceUsers'] = cli_util.parse_json_parameter("impersonation_service_users", impersonation_service_users)
@@ -14370,7 +14393,7 @@ def list_identity_proofing_providers(ctx, from_json, all_pages, page_size, filte
     cli_util.render_response(result, ctx)
 
 
-@identity_propagation_trusts_group.command(name=cli_util.override('identity_domains.list_identity_propagation_trusts.command_name', 'list'), help=u"""List the Identity Propagation Trust configurations.
+@identity_propagation_trust_group.command(name=cli_util.override('identity_domains.list_identity_propagation_trusts.command_name', 'list'), help=u"""List the Identity Propagation Trust configurations.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listIdentityPropagationTrusts)""")
 @cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
@@ -21855,7 +21878,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--name', required=True, help=u"""The name of the the Identity Propagation Trust.
 
 **SCIM++ Properties:**  - type: string  - caseExact: false  - idcsSearchable: true  - multiValued: false  - required: true  - mutability: immutable  - returned: default  - uniqueness: none""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["JWT", "SAML", "SPNEGO", "AWS"]), help=u"""The type of the inbound token from the Identity cloud provider.
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["JWT", "SAML", "SPNEGO", "AWS", "X509"]), help=u"""The type of the inbound token from the Identity cloud provider.
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - required: true  - mutability: readWrite  - returned: default  - type: string  - multiValued: false  - uniqueness: none""")
 @cli_util.option('--issuer', required=True, help=u"""The issuer claim of the Identity provider.
@@ -21909,7 +21932,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.option('--subject-mapping-attribute', help=u"""Subject Mapping Attribute to which the value from subject claim name value would be used for identity lookup.
 
 **SCIM++ Properties:**  - type: string  - multiValued: false  - idcsSearchable: false  - required: false  - mutability: readWrite  - returned: default  - uniqueness: none""")
-@cli_util.option('--subject-type', type=custom_types.CliCaseInsensitiveChoice(["User", "App"]), help=u"""The type of the resource against which lookup will be made in the identity domain in IAM for the incoming subject claim value.
+@cli_util.option('--subject-type', type=custom_types.CliCaseInsensitiveChoice(["User", "App", "Resource"]), help=u"""The type of the resource against which lookup will be made in the identity domain in IAM for the incoming subject claim value.
 
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
 @cli_util.option('--client-claim-name', help=u"""The claim name that identifies to whom the JWT/SAML token is issued. If AWS, then \\\"aud\\\" or \\\"client_id\\\". If Azure, then \\\"appid\\\". If GCP, then \\\"aud\\\".
@@ -21938,6 +21961,24 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 **Added In:** 2308181911
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--impersonating-resource', help=u"""Defines the external workload that acts as impersonating resource principal.
+
+**Added In:** 2509172316
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - mutability: readWrite  - returned: default  - uniqueness: none  - caseExact: true  - idcsSearchable: false""")
+@cli_util.option('--claim-validations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of claim validations
+
+**Added In:** 2509172316
+
+**SCIM++ Properties:**  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type IdentityPropagationTrustClaimValidations.  For documentation on IdentityPropagationTrustClaimValidations please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/identitydomains/v1/datatypes/IdentityPropagationTrustClaimValidations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--claim-propagations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of claims to propagate in RPST
+
+**Added In:** 2509172316
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ca-cert-chain', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--impersonation-service-users', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Impersonating Principal.
 
 **SCIM++ Properties:**  - idcsCompositeKey: [rule, value]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
@@ -21946,18 +21987,18 @@ This option is a JSON list with items of type IdentityPropagationTrustImpersonat
 @cli_util.option('--keytab', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'client-claim-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'oauth-clients': {'module': 'identity_domains', 'class': 'list[string]'}, 'impersonation-service-users': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustImpersonationServiceUsers]'}, 'keytab': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustKeytab'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'client-claim-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'oauth-clients': {'module': 'identity_domains', 'class': 'list[string]'}, 'claim-validations': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustClaimValidations]'}, 'claim-propagations': {'module': 'identity_domains', 'class': 'list[string]'}, 'ca-cert-chain': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustCaCertChain'}, 'impersonation-service-users': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustImpersonationServiceUsers]'}, 'keytab': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustKeytab'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'client-claim-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'oauth-clients': {'module': 'identity_domains', 'class': 'list[string]'}, 'impersonation-service-users': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustImpersonationServiceUsers]'}, 'keytab': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustKeytab'}}, output_type={'module': 'identity_domains', 'class': 'IdentityPropagationTrust'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'client-claim-values': {'module': 'identity_domains', 'class': 'list[string]'}, 'oauth-clients': {'module': 'identity_domains', 'class': 'list[string]'}, 'claim-validations': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustClaimValidations]'}, 'claim-propagations': {'module': 'identity_domains', 'class': 'list[string]'}, 'ca-cert-chain': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustCaCertChain'}, 'impersonation-service-users': {'module': 'identity_domains', 'class': 'list[IdentityPropagationTrustImpersonationServiceUsers]'}, 'keytab': {'module': 'identity_domains', 'class': 'IdentityPropagationTrustKeytab'}}, output_type={'module': 'identity_domains', 'class': 'IdentityPropagationTrust'})
 @cli_util.wrap_exceptions
-def put_identity_propagation_trust(ctx, from_json, force, identity_propagation_trust_id, schemas, name, type, issuer, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, account_id, subject_claim_name, subject_mapping_attribute, subject_type, client_claim_name, client_claim_values, active, public_key_endpoint, public_certificate, oauth_clients, allow_impersonation, clock_skew_seconds, impersonation_service_users, keytab, if_match):
+def put_identity_propagation_trust(ctx, from_json, force, identity_propagation_trust_id, schemas, name, type, issuer, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, account_id, subject_claim_name, subject_mapping_attribute, subject_type, client_claim_name, client_claim_values, active, public_key_endpoint, public_certificate, oauth_clients, allow_impersonation, clock_skew_seconds, impersonating_resource, claim_validations, claim_propagations, ca_cert_chain, impersonation_service_users, keytab, if_match):
 
     if isinstance(identity_propagation_trust_id, six.string_types) and len(identity_propagation_trust_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-propagation-trust-id cannot be whitespace or empty string')
     if not force:
-        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or client_claim_values or oauth_clients or impersonation_service_users or keytab:
-            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and client-claim-values and oauth-clients and impersonation-service-users and keytab will replace any existing values. Are you sure you want to continue?"):
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or client_claim_values or oauth_clients or claim_validations or claim_propagations or ca_cert_chain or impersonation_service_users or keytab:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and client-claim-values and oauth-clients and claim-validations and claim-propagations and ca-cert-chain and impersonation-service-users and keytab will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -22052,6 +22093,18 @@ def put_identity_propagation_trust(ctx, from_json, force, identity_propagation_t
 
     if clock_skew_seconds is not None:
         _details['clockSkewSeconds'] = clock_skew_seconds
+
+    if impersonating_resource is not None:
+        _details['impersonatingResource'] = impersonating_resource
+
+    if claim_validations is not None:
+        _details['claimValidations'] = cli_util.parse_json_parameter("claim_validations", claim_validations)
+
+    if claim_propagations is not None:
+        _details['claimPropagations'] = cli_util.parse_json_parameter("claim_propagations", claim_propagations)
+
+    if ca_cert_chain is not None:
+        _details['CACertChain'] = cli_util.parse_json_parameter("ca_cert_chain", ca_cert_chain)
 
     if impersonation_service_users is not None:
         _details['impersonationServiceUsers'] = cli_util.parse_json_parameter("impersonation_service_users", impersonation_service_users)

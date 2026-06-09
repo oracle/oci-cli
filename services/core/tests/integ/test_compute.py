@@ -406,7 +406,7 @@ class TestCompute(unittest.TestCase):
             'compute', 'volume-attachment', 'detach',
             '--volume-attachment-id', self.va_ocid,
             '--force',
-            '--wait-for-state', 'DETACHED',
+            '--wait-for-state', 'SUCCEEDED',
             '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS
         ])
         util.validate_response(result, json_response_expected=False)

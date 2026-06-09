@@ -119,7 +119,7 @@ def test_boot_volume_clone_backup(network_resources):
             result = invoke([
                 'compute', 'instance', 'terminate',
                 '--instance-id', instance_ocid,
-                '--wait-for-state', 'TERMINATED',
+                '--wait-for-state', 'SUCCEEDED',
                 '--preserve-boot-volume', 'true',
                 '--force'
             ])
@@ -330,7 +330,7 @@ def get_backup_policy_ids():
 def clean_up_instances(instance_ocid):
     if instance_ocid:
         result = invoke(['compute', 'instance', 'terminate', '--instance-id', instance_ocid, '--wait-for-state',
-                        'TERMINATED', '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS, '--force'])
+                        'SUCCEEDED', '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS, '--force'])
         util.validate_response(result, json_response_expected=False)
 
 

@@ -667,14 +667,28 @@ def launch_db_system_from_database_extended(ctx, **kwargs):
 @cli_util.option('--hsm-password', required=False, help=u"""Provide the HSM password as you would in RDBMS for External HSM.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Provide the DATA storage size, in gigabytes, that is applicable for the database.""")
 @cli_util.option('--reco-storage-size-in-gbs', type=click.INT, help=u"""Provide the RECO storage size, in gigabytes, that is applicable for the database.""")
+@cli_util.option('--msu-details', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--zero-data-loss-enabled', required=False, type=click.BOOL, help=u"""Enable Zero Data loss feature""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
-    if kwargs['db_home_id'] is None and kwargs['db_version'] is None:
-        click.echo(message="Missing a required parameter. Either --db-home-id or --db-version must be specified.", file=sys.stderr)
-        sys.exit(1)
+    create_database_details = oci.database.models.CreateDatabaseDetails()
+    if 'msu_details' in kwargs and kwargs['msu_details']:
+        create_database_details.managed_software_update_details = kwargs['msu_details']
+        kwargs.pop('msu_details')
+        if 'vm_cluster_id' in kwargs and kwargs['vm_cluster_id']:
+            create_database_details.vm_cluster_id = kwargs['vm_cluster_id']
+        else:
+            click.echo(message="Missing a required parameter. --vm-cluster-id must be specified for managed software updates", file=sys.stderr)
+            sys.exit(1)
+    else:
+        if kwargs['db_home_id'] is None and kwargs['db_version'] is None:
+            click.echo(message="Missing a required parameter. Either --db-home-id or --db-version must be specified.", file=sys.stderr)
+            sys.exit(1)
 
     if 'db_system_id' in kwargs and kwargs['db_system_id']:
         create_db_home_details = oci.database.models.CreateDbHomeWithDbSystemIdDetails()
@@ -696,7 +710,6 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
 
     db_backup_config = oci.database.models.DbBackupConfig()
 
-    create_database_details = oci.database.models.CreateDatabaseDetails()
     if 'admin_password' in kwargs and kwargs['admin_password']:
         create_database_details.admin_password = kwargs['admin_password']
 
@@ -867,6 +880,10 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
 @cli_util.option('--sid-prefix', required=False, help="""Specifies a prefix for the `Oracle SID` of the database to be created.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Provide the DATA storage size, in gigabytes, that is applicable for the database.""")
 @cli_util.option('--reco-storage-size-in-gbs', type=click.INT, help=u"""Provide the RECO storage size, in gigabytes, that is applicable for the database.""")
+@cli_util.option('--msu-details', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -932,6 +949,12 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
     if include_storage_details:
         create_database_details.storage_size_details = database_storage_size_details
 
+    if 'msu_details' in kwargs and kwargs['msu_details']:
+        create_database_details.managed_software_update_details = kwargs['msu_details']
+        kwargs.pop('msu_details')
+    if 'vm_cluster_id' in kwargs and kwargs['vm_cluster_id']:
+        create_database_details.vm_cluster_id = kwargs['vm_cluster_id']
+
     create_db_home_with_system_details.database = create_database_details
 
     client = cli_util.build_client('database', 'database', ctx)
@@ -979,8 +1002,12 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render(database, None, ctx)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.update_database, params_to_exclude=['db_backup_config'])
+@cli_util.copy_params_from_generated_command(database_cli.update_database, params_to_exclude=['db_backup_config', 'managed_software_update_details'])
 @database_cli.database_group.command(name='update', help="""Update a Database based on the request parameters you provide.""")
+@cli_util.option('--msu-details', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
@@ -992,6 +1019,9 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
 def update_database_extended(ctx, **kwargs):
+    if 'msu_details' in kwargs:
+        kwargs['managed_software_update_details'] = kwargs['msu_details']
+        kwargs.pop('msu_details')
     if kwargs['auto_backup_enabled'] is not None or kwargs['recovery_window_in_days'] is not None:
         db_backup_config = {}
         if 'auto_backup_window' in kwargs and kwargs['auto_backup_window'] and kwargs['auto_backup_enabled'] is not None:
@@ -4302,6 +4332,9 @@ cli_util.rename_command(database_cli, database_cli.database_group, database_cli.
 
 # oci db autonomous-database list-estimate-cost-savings -> oci db autonomous-database list-elastic-pool-cost-savings
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.list_estimate_cost_savings, "list-elastic-pool-cost-savings")
+
+# oci db database reschedule-managed-db-software-update -> oci db database reschedule-msu
+cli_util.rename_command(database_cli, database_cli.database_group, database_cli.reschedule_managed_db_software_update, "reschedule-msu")
 
 # oci db db-system-os-patch-history-entry-collection list-db-system-os-patch-history-entries -> oci db db-system-os-patch-history-entry-collection list
 cli_util.rename_command(database_cli, database_cli.db_system_os_patch_history_entry_collection_group, database_cli.list_db_system_os_patch_history_entries, "list")

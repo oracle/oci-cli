@@ -44,3 +44,28 @@ def list_kafka_cluster_config_versions_extended(ctx, **kwargs):
         kwargs.pop('config_id')
 
     ctx.invoke(kafkacluster_cli.list_kafka_cluster_config_versions, **kwargs)
+
+
+# oci kafka addon-option-collection -> oci kafka addon-options
+cli_util.rename_command(kafkacluster_cli, kafkacluster_cli.kafka_root_group, kafkacluster_cli.addon_option_collection_group, "addon-options")
+
+
+# oci kafka cluster install-addon-install-public-connectivity-addon-details -> oci kafka cluster install-public-connectivity-addon
+cli_util.rename_command(kafkacluster_cli, kafkacluster_cli.kafka_cluster_group, kafkacluster_cli.install_addon_install_public_connectivity_addon_details, "install-public-connectivity-addon")
+
+
+# oci kafka cluster update-addon-update-public-connectivity-addon-details -> oci kafka cluster update-public-connectivity-addon
+cli_util.rename_command(kafkacluster_cli, kafkacluster_cli.kafka_cluster_group, kafkacluster_cli.update_addon_update_public_connectivity_addon_details, "update-public-connectivity-addon")
+
+
+# Remove install-addon from oci kafka cluster
+kafkacluster_cli.kafka_cluster_group.commands.pop(kafkacluster_cli.install_addon.name)
+
+
+# Remove update-addon from oci kafka cluster
+kafkacluster_cli.kafka_cluster_group.commands.pop(kafkacluster_cli.update_addon.name)
+
+
+# Move commands under 'oci kafka kafka-cluster-addon' -> 'oci kafka cluster'
+kafkacluster_cli.kafka_root_group.commands.pop(kafkacluster_cli.kafka_cluster_addon_group.name)
+kafkacluster_cli.kafka_cluster_group.add_command(kafkacluster_cli.get_addon)

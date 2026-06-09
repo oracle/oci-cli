@@ -48,7 +48,7 @@ def instance_group():
     pass
 
 
-@click.command(cli_util.override('compute_management.instance_configuration_group.command_name', 'instance-configuration'), cls=CommandGroupWithAlias, help="""An instance configuration is a template that defines the settings to use when creating Compute instances. For more information about instance configurations, see [Managing Compute Instances].""")
+@click.command(cli_util.override('compute_management.instance_configuration_group.command_name', 'instance-configuration'), cls=CommandGroupWithAlias, help="""An instance configuration is a template that defines the settings to use when creating Compute instances.""")
 @cli_util.help_option_group
 def instance_configuration_group():
     pass

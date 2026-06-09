@@ -22,6 +22,12 @@ def kafka_root_group():
     pass
 
 
+@click.command(cli_util.override('kafka.kafka_cluster_addon_group.command_name', 'kafka-cluster-addon'), cls=CommandGroupWithAlias, help="""The base data object to represent a KafkaClusterAddon.""")
+@cli_util.help_option_group
+def kafka_cluster_addon_group():
+    pass
+
+
 @click.command(cli_util.override('kafka.kafka_cluster_config_version_collection_group.command_name', 'kafka-cluster-config-version-collection'), cls=CommandGroupWithAlias, help="""Results of a kafkaClusterConfigVersion search. Contains both KafkaClusterConfigVersionSummary items.""")
 @cli_util.help_option_group
 def kafka_cluster_config_version_collection_group():
@@ -31,6 +37,12 @@ def kafka_cluster_config_version_collection_group():
 @click.command(cli_util.override('kafka.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while performing an operation that is tracked by a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
+    pass
+
+
+@click.command(cli_util.override('kafka.addon_option_collection_group.command_name', 'addon-option-collection'), cls=CommandGroupWithAlias, help="""Results of a AddonOptions search. Contains AddonOptionSummary items""")
+@cli_util.help_option_group
+def addon_option_collection_group():
     pass
 
 
@@ -68,8 +80,10 @@ def kafka_cluster_group():
     pass
 
 
+kafka_root_group.add_command(kafka_cluster_addon_group)
 kafka_root_group.add_command(kafka_cluster_config_version_collection_group)
 kafka_root_group.add_command(work_request_error_group)
+kafka_root_group.add_command(addon_option_collection_group)
 kafka_root_group.add_command(kafka_cluster_config_version_group)
 kafka_root_group.add_command(kafka_cluster_config_group)
 kafka_root_group.add_command(work_request_log_entry_group)
@@ -618,6 +632,33 @@ def enable_superuser(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
+@kafka_cluster_addon_group.command(name=cli_util.override('kafka.get_addon.command_name', 'get-addon'), help=u"""Gets information about a KafkaClusterAddon. \n[Command Reference](getAddon)""")
+@cli_util.option('--kafka-cluster-id', required=True, help=u"""The [OCID] of the KafkaCluster.""")
+@cli_util.option('--addon-name', required=True, help=u"""The unique name of the KafkaClusterAddon.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'managed_kafka', 'class': 'KafkaClusterAddon'})
+@cli_util.wrap_exceptions
+def get_addon(ctx, from_json, kafka_cluster_id, addon_name):
+
+    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
+
+    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+        raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('managed_kafka', 'kafka_cluster', ctx)
+    result = client.get_addon(
+        kafka_cluster_id=kafka_cluster_id,
+        addon_name=addon_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @kafka_cluster_group.command(name=cli_util.override('kafka.get_kafka_cluster.command_name', 'get'), help=u"""Gets information about a KafkaCluster. \n[Command Reference](getKafkaCluster)""")
 @cli_util.option('--kafka-cluster-id', required=True, help=u"""The [OCID] of the KafkaCluster.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -708,6 +749,263 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@kafka_cluster_group.command(name=cli_util.override('kafka.install_addon.command_name', 'install-addon'), help=u"""Installs a KafkaClusterAddon. \n[Command Reference](installAddon)""")
+@cli_util.option('--name', required=True, help=u"""A unique user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--addon-type', required=True, help=u"""This is Addon Type of OCI kafka cluster""")
+@cli_util.option('--kafka-cluster-id', required=True, help=u"""The [OCID] of the KafkaCluster.""")
+@cli_util.option('--description', help=u"""A brief description of the add on being installed.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'managed_kafka', 'class': 'KafkaClusterAddon'})
+@cli_util.wrap_exceptions
+def install_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, addon_type, kafka_cluster_id, description, if_match):
+
+    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['addonType'] = addon_type
+
+    if description is not None:
+        _details['description'] = description
+
+    client = cli_util.build_client('managed_kafka', 'kafka_cluster', ctx)
+    result = client.install_addon(
+        kafka_cluster_id=kafka_cluster_id,
+        install_addon_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@kafka_cluster_group.command(name=cli_util.override('kafka.install_addon_install_public_connectivity_addon_details.command_name', 'install-addon-install-public-connectivity-addon-details'), help=u"""Installs a KafkaClusterAddon. \n[Command Reference](installAddon)""")
+@cli_util.option('--name', required=True, help=u"""A unique user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--authentication-mechanism', required=True, help=u"""Authentication mechanism.""")
+@cli_util.option('--network-cidrs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of CIDR's for ingress/egress traffic.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kafka-cluster-id', required=True, help=u"""The [OCID] of the KafkaCluster.""")
+@cli_util.option('--description', help=u"""A brief description of the add on being installed.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'network-cidrs': {'module': 'managed_kafka', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-cidrs': {'module': 'managed_kafka', 'class': 'list[string]'}}, output_type={'module': 'managed_kafka', 'class': 'KafkaClusterAddon'})
+@cli_util.wrap_exceptions
+def install_addon_install_public_connectivity_addon_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, authentication_mechanism, network_cidrs, kafka_cluster_id, description, if_match):
+
+    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['authenticationMechanism'] = authentication_mechanism
+    _details['networkCidrs'] = cli_util.parse_json_parameter("network_cidrs", network_cidrs)
+
+    if description is not None:
+        _details['description'] = description
+
+    _details['addonType'] = 'PUBLICCONNECTIVITY'
+
+    client = cli_util.build_client('managed_kafka', 'kafka_cluster', ctx)
+    result = client.install_addon(
+        kafka_cluster_id=kafka_cluster_id,
+        install_addon_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@addon_option_collection_group.command(name=cli_util.override('kafka.list_addon_options.command_name', 'list-addon-options'), help=u"""Gets a list of supported KafkaClusterAddons. \n[Command Reference](listAddonOptions)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--name', help=u"""The name to filter on.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'managed_kafka', 'class': 'AddonOptionCollection'})
+@cli_util.wrap_exceptions
+def list_addon_options(ctx, from_json, all_pages, page_size, compartment_id, limit, page, name, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if name is not None:
+        kwargs['name'] = name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('managed_kafka', 'kafka_cluster', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_addon_options,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_addon_options,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_addon_options(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@kafka_cluster_group.command(name=cli_util.override('kafka.list_addons.command_name', 'list-addons'), help=u"""Gets a list of KafkaClusterAddons. \n[Command Reference](listAddons)""")
+@cli_util.option('--kafka-cluster-id', required=True, help=u"""The [OCID] of the KafkaCluster.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--name', help=u"""The name to filter on.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'managed_kafka', 'class': 'AddonCollection'})
+@cli_util.wrap_exceptions
+def list_addons(ctx, from_json, all_pages, page_size, kafka_cluster_id, lifecycle_state, limit, page, name, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if name is not None:
+        kwargs['name'] = name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('managed_kafka', 'kafka_cluster', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_addons,
+            kafka_cluster_id=kafka_cluster_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_addons,
+            limit,
+            page_size,
+            kafka_cluster_id=kafka_cluster_id,
+            **kwargs
+        )
+    else:
+        result = client.list_addons(
+            kafka_cluster_id=kafka_cluster_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1121,6 +1419,186 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
         result = client.list_work_requests(
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@kafka_cluster_group.command(name=cli_util.override('kafka.uninstall_addon.command_name', 'uninstall-addon'), help=u"""Uninstalls a KafkaClusterAddon in a provisioned cluster. \n[Command Reference](uninstallAddon)""")
+@cli_util.option('--kafka-cluster-id', required=True, help=u"""The [OCID] of the KafkaCluster.""")
+@cli_util.option('--addon-name', required=True, help=u"""The unique name of the KafkaClusterAddon.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def uninstall_addon(ctx, from_json, kafka_cluster_id, addon_name, if_match):
+
+    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
+
+    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+        raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('managed_kafka', 'kafka_cluster', ctx)
+    result = client.uninstall_addon(
+        kafka_cluster_id=kafka_cluster_id,
+        addon_name=addon_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@kafka_cluster_group.command(name=cli_util.override('kafka.update_addon.command_name', 'update-addon'), help=u"""Installs updates on the existing KafkaClusterAddon. \n[Command Reference](updateAddon)""")
+@cli_util.option('--kafka-cluster-id', required=True, help=u"""The [OCID] of the KafkaCluster.""")
+@cli_util.option('--addon-name', required=True, help=u"""The unique name of the KafkaClusterAddon.""")
+@cli_util.option('--addon-type', help=u"""This is Addon Type of OCI kafka cluster""")
+@cli_util.option('--description', help=u"""A unique user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'managed_kafka', 'class': 'KafkaClusterAddon'})
+@cli_util.wrap_exceptions
+def update_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, kafka_cluster_id, addon_name, addon_type, description, if_match):
+
+    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
+
+    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+        raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if addon_type is not None:
+        _details['addonType'] = addon_type
+
+    if description is not None:
+        _details['description'] = description
+
+    client = cli_util.build_client('managed_kafka', 'kafka_cluster', ctx)
+    result = client.update_addon(
+        kafka_cluster_id=kafka_cluster_id,
+        addon_name=addon_name,
+        update_addon_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@kafka_cluster_group.command(name=cli_util.override('kafka.update_addon_update_public_connectivity_addon_details.command_name', 'update-addon-update-public-connectivity-addon-details'), help=u"""Installs updates on the existing KafkaClusterAddon. \n[Command Reference](updateAddon)""")
+@cli_util.option('--network-cidrs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of CIDR ranges for ingress/egress traffic.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kafka-cluster-id', required=True, help=u"""The [OCID] of the KafkaCluster.""")
+@cli_util.option('--addon-name', required=True, help=u"""The unique name of the KafkaClusterAddon.""")
+@cli_util.option('--description', help=u"""A unique user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'network-cidrs': {'module': 'managed_kafka', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-cidrs': {'module': 'managed_kafka', 'class': 'list[string]'}}, output_type={'module': 'managed_kafka', 'class': 'KafkaClusterAddon'})
+@cli_util.wrap_exceptions
+def update_addon_update_public_connectivity_addon_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_cidrs, kafka_cluster_id, addon_name, description, if_match):
+
+    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
+
+    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+        raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
+    if not force:
+        if network_cidrs:
+            if not click.confirm("WARNING: Updates to network-cidrs will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['networkCidrs'] = cli_util.parse_json_parameter("network_cidrs", network_cidrs)
+
+    if description is not None:
+        _details['description'] = description
+
+    _details['addonType'] = 'PUBLICCONNECTIVITY'
+
+    client = cli_util.build_client('managed_kafka', 'kafka_cluster', ctx)
+    result = client.update_addon(
+        kafka_cluster_id=kafka_cluster_id,
+        addon_name=addon_name,
+        update_addon_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

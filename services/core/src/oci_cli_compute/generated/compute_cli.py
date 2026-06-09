@@ -3793,9 +3793,9 @@ This is an asynchronous operation. The attachment's `lifecycleState` will change
 @cli_util.option('--volume-attachment-id', required=True, help=u"""The OCID of the volume attachment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ATTACHING --wait-for-state DETACHED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3814,41 +3814,34 @@ def detach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
         volume_attachment_id=volume_attachment_id,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
     if wait_for_state:
 
-        if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
                 if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
 
-                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, client.get_volume_attachment(volume_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
-            except oci.exceptions.ServiceError as e:
-                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
-                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
-                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
-                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
-                # succeed_on_not_found=True to the waiter).
-                #
-                # Any non-404 should still result in the exception being thrown.
-                if e.status == 404:
-                    pass
-                else:
-                    raise
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 sys.exit(2)
             except Exception:
-                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 raise
         else:
-            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -9964,6 +9957,7 @@ def list_compute_gpu_memory_cluster_instances(ctx, from_json, all_pages, page_si
 @compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.list_compute_gpu_memory_clusters.command_name', 'list'), help=u"""List all of the compute GPU memory clusters. \n[Command Reference](listComputeGpuMemoryClusters)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compute-gpu-memory-cluster-id', help=u"""A filter to return only the listings that matches the given GPU memory cluster id.""")
+@cli_util.option('--compute-gpu-memory-fabric-id', help=u"""A filter to return only the listings that matches the given GPU memory fabric id.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -9984,7 +9978,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryClusterCollection'})
 @cli_util.wrap_exceptions
-def list_compute_gpu_memory_clusters(ctx, from_json, all_pages, page_size, compartment_id, compute_gpu_memory_cluster_id, availability_domain, display_name, compute_cluster_id, page, sort_by, sort_order, limit):
+def list_compute_gpu_memory_clusters(ctx, from_json, all_pages, page_size, compartment_id, compute_gpu_memory_cluster_id, compute_gpu_memory_fabric_id, availability_domain, display_name, compute_cluster_id, page, sort_by, sort_order, limit):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -9994,6 +9988,8 @@ def list_compute_gpu_memory_clusters(ctx, from_json, all_pages, page_size, compa
     kwargs = {}
     if compute_gpu_memory_cluster_id is not None:
         kwargs['compute_gpu_memory_cluster_id'] = compute_gpu_memory_cluster_id
+    if compute_gpu_memory_fabric_id is not None:
+        kwargs['compute_gpu_memory_fabric_id'] = compute_gpu_memory_fabric_id
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
     if display_name is not None:
@@ -11351,9 +11347,9 @@ This is an asynchronous operation. The instance's `lifecycleState` changes to TE
 @cli_util.option('--preserve-data-volumes-created-at-launch', type=click.BOOL, help=u"""Specifies whether to delete or preserve the data volumes created during launch when terminating an instance. When set to `true`, the data volumes are preserved. The default value is `true`.""")
 @cli_util.option('--recycle-level', type=custom_types.CliCaseInsensitiveChoice(["FULL_RECYCLE"]), help=u"""This optional parameter overrides recycle level for hosts. The parameter can be used when hosts are associated with a Capacity Reservation. * `FULL_RECYCLE` - Does not skip host wipe. This is the default behavior.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state MOVING --wait-for-state TERMINATED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -11378,6 +11374,7 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         instance_id=instance_id,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
     if wait_for_state:
 
         if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
