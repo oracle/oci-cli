@@ -6,6 +6,187 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.87.0 - 2026-06-16
+-------------------
+Added
+~~~~~
+* Kubernetes Engine service
+
+  * Support for new optional `hostGroupId` field in placement configurations
+
+    * ``oci ce node-pool create``
+    * ``oci ce node-pool update``
+
+* Database service
+
+  * Support for restarting Oracle REST Data Services (ORDS) on Autonomous Exadata VM Clusters
+
+    * ``oci db autonomous-vm-cluster restart-autonomous-vm-cluster-ords``
+    * ``oci db cloud-autonomous-vm-cluster restart-cloud-autonomous-vm-cluster-ords``
+
+  * Support for new optional parameters ``--is-force-restart`` and ``--is-force-stop``
+
+    * ``oci db autonomous-container-database restart --is-force-restart``
+    * ``oci db autonomous-database restart --is-force-restart``
+    * ``oci db autonomous-database stop --is-force-stop``
+
+  * Support for triggering forced reboot and stop of DB nodes
+
+    * ``oci db node force-reset``
+    * ``oci db node force-stop``
+
+* OpenSearch Service
+
+  * Support for coordinator nodes
+
+    * ``oci opensearch cluster create --coordinator-node-count --coordinator-node-host-memory-gb --coordinator-node-host-ocpu-count --coordinator-node-host-shape --coordinator-node-host-type``
+    * ``oci opensearch cluster resizehorizontal --coordinator-node-count``
+    * ``oci opensearch cluster resizevertical --coordinator-node-host-memory-gb --coordinator-node-host-ocpu-count --coordinator-node-host-shape``
+
+* Organizations service
+
+  * Support for new optional parameter ``--features``
+
+    * ``oci organizations child-tenancy create --features``
+    * ``oci organizations sender-invitation create --features``
+
+  * Support for new optional parameter ``--feature``
+
+    * ``oci organizations link list --feature``
+
+  * Support for additional ``status`` value ``NOT_APPLICABLE``
+
+    * ``oci organizations sender-invitation list --status NOT_APPLICABLE``
+
+  * Support for the following new commands
+
+    * ``oci organizations link link-with-tenancy-names get``
+    * ``oci organizations link-features link-features-collection list-link-features``
+
+* Oracle Cloud Migrations service
+
+  * Support for new optional parameter ``--security-attributes``
+
+    * ``oci cloud-migrations migration create --security-attributes``
+    * ``oci cloud-migrations migration update --security-attributes``
+
+* Object Storage service
+
+  * Support for new optional parameter ``--security-attributes``
+
+    * ``oci os private-endpoint create --security-attributes``
+    * ``oci os private-endpoint update --security-attributes``
+
+* PSQL service
+
+  * Support for ODSP Insights configuration in Database System operations
+
+    * ``oci psql db-system create --odsp-insight-details``
+    * ``oci psql db-system update --odsp-insight-details``
+    * ``oci psql db-system create-db-system-backup-source-details --odsp-insight-details``
+    * ``oci psql db-system create-db-system-none-source-details --odsp-insight-details``
+    * ``oci psql db-system create-db-system-oci-optimized-storage-details --odsp-insight-details``
+    * ``oci psql db-system create-db-system-disabled-insight-details``
+    * ``oci psql db-system create-db-system-enabled-insight-details``
+    * ``oci psql db-system update-db-system-disabled-insight-details``
+    * ``oci psql db-system update-db-system-enabled-insight-details`
+    * ``oci psql insight-capability-summary list-insight-capabilities``
+
+  * Support for replica configuration in Database System operations
+
+    * ``oci psql db-system create --replication-config``
+    * ``oci psql db-system update --replication-config``
+    * ``oci psql db-system create-db-system-backup-source-details --replication-config``
+    * ``oci psql db-system create-db-system-none-source-details --replication-config``
+    * ``oci psql db-system create-db-system-oci-optimized-storage-details --replication-config``
+
+  * Support for replica database systems
+
+    * ``oci psql db-system change-role-to-replica --db-system-id --primary-db-system-id``
+    * ``oci psql db-system change-role-to-standalone --db-system-id --change-mode``
+    * ``oci psql db-system-replica-collection list-db-system-replicas --db-system-id``
+    * ``oci psql db-system create-db-system-primary-db-system-source-details --source-primary-db-system-id``
+
+  * Support for starting, stopping and switching DB Systems
+
+    * ``oci psql db-system start``
+    * ``oci psql db-system stop``
+    * ``oci psql db-system switch-over``
+
+  * Support for Kerberos authentication details in DB system update operations
+
+    * ``oci psql db-system update --kerberos-auth-details``
+    * ``oci psql db-system update-db-system-disabled-kerberos-auth-details``
+    * ``oci psql db-system update-db-system-enabled-kerberos-auth-details``
+
+  * Support for new system-role enum values on list db-systems
+
+    * ``oci psql db-system-collection list-db-systems --system-role``
+
+* Operator Access Control service
+
+  * Support for new optional parameter `--num-days`
+
+    * ``oci opctl access-request list --num-days``
+
+  * Support for OCI Notification topic integration
+
+    * ``oci opctl operator-control create --notification-topic-id``
+    * ``oci opctl operator-control update --notification-topic-id``
+
+  * Support for Cloud Exadata Infrastructure (`CLOUDEXADATAINFRASTRUCTURE`) resource type
+
+    * ``oci opctl operator-control create --resource-type CLOUDEXADATAINFRASTRUCTURE``
+    * ``oci opctl operator-control update --resource-type CLOUDEXADATAINFRASTRUCTURE``
+    * ``oci opctl operator-control-assignment create --resource-type CLOUDEXADATAINFRASTRUCTURE``
+
+  * Support for new lifecycle state and waiter state `CUSTOMERASSIGNED`
+
+    * ``oci opctl operator-control-assignment list --lifecycle-state CUSTOMERASSIGNED``
+    * ``oci opctl operator-control-assignment create --wait-for-state CUSTOMERASSIGNED``
+    * ``oci opctl operator-control-assignment delete --wait-for-state CUSTOMERASSIGNED``
+    * ``oci opctl operator-control-assignment update --wait-for-state CUSTOMERASSIGNED``
+
+* Secure Desktops service
+
+  * Support for new optional parameter ``--security-attributes``
+
+    * ``oci desktops desktop-pool create --security-attributes``
+    * ``oci desktops desktop-pool update --security-attributes``
+
+  * Support for new optional parameters ``--network-configuration`` and ``--private-access-details``
+
+    * ``oci desktops desktop-pool update --network-configuration --private-access-details``
+
+* Application Performance Monitoring Control Plane service
+
+  * Support for new optional parameter ``--log-group-id``
+
+    * ``oci apm-control-plane apm-domain create --log-group-id``
+    * ``oci apm-control-plane apm-domain update --log-group-id``
+
+* Application Performance Monitoring Configuration service
+
+  * Support for Data File operations
+
+    * ``oci apm-config data-file delete``
+    * ``oci apm-config data-file get``
+    * ``oci apm-config data-file head``
+    * ``oci apm-config data-file put``
+    * ``oci apm-config data-file-summary-collection list-data-files``
+
+Changed
+~~~~~~~
+
+* Organizations Service
+
+  * [BREAKING] Renamed the oci organizations work-request-error list command
+
+    * ``oci organizations work-request-error list-errors``
+
+  * [BREAKING] Renamed the oci organizations work-request-log-entry list command
+
+    * ``oci organizations work-request-log list``
 
 3.86.0 - 2026-06-09
 -------------------
@@ -458,7 +639,6 @@ Added
 * Support for large generic v4 and v5 unit shapes in the Generative AI service in Python SDK
 
 
-
 3.81.0 - 2026-04-28
 -------------------
 Added
@@ -559,7 +739,6 @@ Changed
 * ``--min-memory-in-gbs`` and ``--min-ocpus`` are now optional parameters in the Batch service
 
   * ``oci batch batch-task-profile create --min-memory-in-gbs --min-ocpus``
-
 
 
 3.80.0 - 2026-04-21
@@ -2585,7 +2764,6 @@ Modified
   * [BREAKING] Addition of required parameter --compartment-id in shape-details list command
 
     * ``oci opensearch cluster shapes-details list``
-
 
 
 3.67.0 - 2025-09-30
@@ -10291,7 +10469,6 @@ Added
  * ``oci resource-manager stack code``
 
 
-
 * Support for new optional parameters for Devops Deployments in Devops service
 
  * ``oci devops deployment create-pipeline-deployment --stage-override-arguments``
@@ -15571,8 +15748,6 @@ Changed
   * ``lifecycle_state, wait-for-state, job_type, harvest_status, workflow_status, schedule_type``
 
 
-
-
 2.11.1 - 2020-06-16
 -------------------
 Added
@@ -16539,7 +16714,6 @@ Added
 * Support for GetStackTfState API as part of Resource Manager service.
 
   * ``oci resource-manager stack get-stack-tf-state --file, --stack-id``
-
 
 
 2.6.10 - 2019-10-29

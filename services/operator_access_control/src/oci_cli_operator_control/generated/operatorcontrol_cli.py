@@ -17,9 +17,7 @@ from services.operator_access_control.src.oci_cli_operator_access_control.genera
 
 
 @click.command(cli_util.override('operator_control.operator_control_root_group.command_name', 'operator-control'), cls=CommandGroupWithAlias, help=cli_util.override('operator_control.operator_control_root_group.help', """Operator Access Control enables you to control the time duration and the actions an Oracle operator can perform on your Exadata Cloud@Customer infrastructure.
-Using logging service, you can view a near real-time audit report of all actions performed by an Oracle operator.
-
-Use the table of contents and search tool to explore the OperatorAccessControl API."""), short_help=cli_util.override('operator_control.operator_control_root_group.short_help', """OperatorAccessControl API"""))
+Using logging service, you can view a near real-time audit report of all actions performed by an Oracle operator."""), short_help=cli_util.override('operator_control.operator_control_root_group.short_help', """Operator Access Control API"""))
 @cli_util.help_option_group
 def operator_control_root_group():
     pass
@@ -72,12 +70,13 @@ def change_operator_control_compartment(ctx, from_json, operator_control_id, com
 @cli_util.option('--operator-control-name', required=True, help=u"""Name of the operator control.""")
 @cli_util.option('--approver-groups-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of user groups who can approve an access request associated with a resource governed by this operator control.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-fully-pre-approved', required=True, type=click.BOOL, help=u"""Whether all the operator actions have been pre-approved. If yes, all access requests associated with a resource governed by this operator control will be auto-approved.""")
-@cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC", "EXADATAINFRASTRUCTURE", "AUTONOMOUSVMCLUSTER", "CLOUDAUTONOMOUSVMCLUSTER", "CCCINFRASTRUCTURE"]), help=u"""resourceType for which the OperatorControl is applicable""")
+@cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC", "EXADATAINFRASTRUCTURE", "AUTONOMOUSVMCLUSTER", "CLOUDAUTONOMOUSVMCLUSTER", "CCCINFRASTRUCTURE", "CLOUDEXADATAINFRASTRUCTURE"]), help=u"""resourceType for which the OperatorControl is applicable""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this operator control.""")
 @cli_util.option('--description', help=u"""Description of the operator control.""")
 @cli_util.option('--approvers-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of users who can approve an access request associated with a resource governed by this operator control.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--pre-approved-op-action-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of pre-approved operator actions. Access requests associated with a resource governed by this operator control will be auto-approved if the access request only contain operator actions in the pre-approved list.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--number-of-approvers', type=click.INT, help=u"""Number of approvers required to approve an access request.""")
+@cli_util.option('--notification-topic-id', help=u"""The OCID of the OCI Notification topic to publish messages related to this operator control.""")
 @cli_util.option('--email-id-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of emailId.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-message', help=u"""This is the message that will be displayed to the operator users while accessing the system.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -90,7 +89,7 @@ def change_operator_control_compartment(ctx, from_json, operator_control_id, com
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'approvers-list': {'module': 'operator_access_control', 'class': 'list[string]'}, 'approver-groups-list': {'module': 'operator_access_control', 'class': 'list[string]'}, 'pre-approved-op-action-list': {'module': 'operator_access_control', 'class': 'list[string]'}, 'email-id-list': {'module': 'operator_access_control', 'class': 'list[string]'}, 'freeform-tags': {'module': 'operator_access_control', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'operator_access_control', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'operator_access_control', 'class': 'OperatorControl'})
 @cli_util.wrap_exceptions
-def create_operator_control(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_name, approver_groups_list, is_fully_pre_approved, resource_type, compartment_id, description, approvers_list, pre_approved_op_action_list, number_of_approvers, email_id_list, system_message, freeform_tags, defined_tags):
+def create_operator_control(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_name, approver_groups_list, is_fully_pre_approved, resource_type, compartment_id, description, approvers_list, pre_approved_op_action_list, number_of_approvers, notification_topic_id, email_id_list, system_message, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -113,6 +112,9 @@ def create_operator_control(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if number_of_approvers is not None:
         _details['numberOfApprovers'] = number_of_approvers
+
+    if notification_topic_id is not None:
+        _details['notificationTopicId'] = notification_topic_id
 
     if email_id_list is not None:
         _details['emailIdList'] = cli_util.parse_json_parameter("email_id_list", email_id_list)
@@ -317,6 +319,7 @@ def list_operator_controls(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--description', help=u"""Description of the operator control.""")
 @cli_util.option('--approvers-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of users who can approve an access request associated with a target resource under the governance of this operator control.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--pre-approved-op-action-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of pre-approved operator actions. Access requests associated with a resource governed by this operator control will be automatically approved if the access request only contain operator actions in the pre-approved list.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--notification-topic-id', help=u"""The OCID of the OCI Notification topic to publish messages related to this operator control.""")
 @cli_util.option('--email-id-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of emailId.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--number-of-approvers', type=click.INT, help=u"""Number of approvers required to approve an access request.""")
 @cli_util.option('--system-message', help=u"""System message that would be displayed to the operator users on accessing the target resource under the governance of this operator control.""")
@@ -332,7 +335,7 @@ def list_operator_controls(ctx, from_json, all_pages, page_size, compartment_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'approvers-list': {'module': 'operator_access_control', 'class': 'list[string]'}, 'approver-groups-list': {'module': 'operator_access_control', 'class': 'list[string]'}, 'pre-approved-op-action-list': {'module': 'operator_access_control', 'class': 'list[string]'}, 'email-id-list': {'module': 'operator_access_control', 'class': 'list[string]'}, 'freeform-tags': {'module': 'operator_access_control', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'operator_access_control', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'operator_access_control', 'class': 'OperatorControl'})
 @cli_util.wrap_exceptions
-def update_operator_control(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_id, operator_control_name, approver_groups_list, is_fully_pre_approved, description, approvers_list, pre_approved_op_action_list, email_id_list, number_of_approvers, system_message, freeform_tags, defined_tags, if_match):
+def update_operator_control(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_id, operator_control_name, approver_groups_list, is_fully_pre_approved, description, approvers_list, pre_approved_op_action_list, notification_topic_id, email_id_list, number_of_approvers, system_message, freeform_tags, defined_tags, if_match):
 
     if isinstance(operator_control_id, six.string_types) and len(operator_control_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-id cannot be whitespace or empty string')
@@ -359,6 +362,9 @@ def update_operator_control(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if pre_approved_op_action_list is not None:
         _details['preApprovedOpActionList'] = cli_util.parse_json_parameter("pre_approved_op_action_list", pre_approved_op_action_list)
+
+    if notification_topic_id is not None:
+        _details['notificationTopicId'] = notification_topic_id
 
     if email_id_list is not None:
         _details['emailIdList'] = cli_util.parse_json_parameter("email_id_list", email_id_list)

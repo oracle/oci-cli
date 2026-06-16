@@ -13,6 +13,7 @@ import logging
 import oci
 import os
 import six
+import urllib.parse
 import vcr
 
 from vcr.persisters.filesystem import FilesystemPersister
@@ -38,11 +39,15 @@ def using_vcr_with_mock_responses():
 
 def create_vcr(**kwargs):
     location = kwargs.get('cassette_library_dir', 'tests/fixtures/cassettes')
+    custom_patches = tuple(kwargs.get('custom_patches') or ())
+    custom_patches += vcr_mods.get_object_storage_work_pool_vcr_patches()
+
     vcr_to_use = vcr.VCR(
         serializer='yaml',
         cassette_library_dir=location,
         record_mode=vcr_mode,
-        decode_compressed_response=True
+        decode_compressed_response=True,
+        custom_patches=custom_patches
     )
 
     # by default, only match keys in JSON request bodies
@@ -164,7 +169,40 @@ def vcr_query_matcher(r1, r2):
 # Note: 'path' is one of the properties in vcr.Request object. It contains the path of the http request.
 #       For example “/” or “/home.html”
 # OUTPUT: boolean value indicating if the paths in requests r1 and r2 match.
+def _fully_unquote(value, rounds=5):
+    if value is None:
+        return ''
+    current = value
+    for _ in range(rounds):
+        decoded = urllib.parse.unquote(current)
+        if decoded == current:
+            break
+        current = decoded
+    return current
+
+
 def vcr_path_matcher(r1, r2):
+    def split_path(path):
+        return [seg for seg in (path or '').rstrip('/').split('/') if seg]
+
+    def find_object_storage_object_marker(segments):
+        for index, segment in enumerate(segments):
+            if segment != 'o':
+                continue
+            if index >= 4 and segments[index - 4] == 'n' and segments[index - 2] == 'b':
+                return index
+        return None
+
+    def normalize_object_storage_object_name(segments):
+        # Keep route segment boundaries intact. Only Object Storage object names can
+        # contain `/` as data, so `%2F` normalization is limited to the tail after `/o/`.
+        object_marker_index = find_object_storage_object_marker(segments)
+        if object_marker_index is None or object_marker_index == len(segments) - 1:
+            return segments
+
+        object_name = _fully_unquote('/'.join(segments[object_marker_index + 1:]))
+        return segments[:object_marker_index + 1] + [object_name]
+
     path_ignore_strings = [
         'ocid1.compartment',
         'ocid1.tenancy',
@@ -172,29 +210,19 @@ def vcr_path_matcher(r1, r2):
         'ocid1.tagnamespace'
     ]
 
-    r1_path = r1.path.split('/')
-    r2_path = r2.path.split('/')
-    if r2_path[-1] == '':
-        r2_path.pop()
-
-    r1_updated_path = list(r1_path)
-    r2_updated_path = list(r2_path)
-    if r2_updated_path[-1] == '':
-        r2_updated_path.pop()
+    r1_path = normalize_object_storage_object_name(split_path(r1.path))
+    r2_path = normalize_object_storage_object_name(split_path(r2.path))
 
     if len(r1_path) != len(r2_path):
         return False
 
+    r1_updated_path = []
+    r2_updated_path = []
     for s1, s2 in zip(r1_path, r2_path):
-        for s in path_ignore_strings:
-            if s in s1 and s in s2:
-                r1_updated_path.remove(s1)
-                r2_updated_path.remove(s2)
-
-    while '' in r1_updated_path:
-        r1_updated_path.remove('')
-    while '' in r2_updated_path:
-        r2_updated_path.remove('')
+        if any(ignored in s1 and ignored in s2 for ignored in path_ignore_strings):
+            continue
+        r1_updated_path.append(s1)
+        r2_updated_path.append(s2)
 
     return r1_updated_path == r2_updated_path
 

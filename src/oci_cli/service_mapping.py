@@ -615,7 +615,7 @@ service_mapping = {
     ],
     "opctl": [
         "operator_access_control",
-        "OperatorAccessControl",
+        "Operator Access Control",
         "Oracle Database"
     ],
     "opensearch": [

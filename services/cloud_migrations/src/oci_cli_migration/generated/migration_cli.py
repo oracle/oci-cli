@@ -340,15 +340,18 @@ def change_replication_schedule_compartment(ctx, from_json, wait_for_state, max_
 @cli_util.option('--migration-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. It exists only for cross-compatibility. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "NEEDS_ATTENTION", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_migrations', 'class': 'Migration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_migrations', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, migration_type, replication_schedule_id, is_completed, migration_config, freeform_tags, defined_tags):
+def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, migration_type, replication_schedule_id, is_completed, migration_config, freeform_tags, defined_tags, security_attributes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -374,6 +377,9 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('cloud_migrations', 'migration', ctx)
     result = client.create_migration(
@@ -2258,23 +2264,26 @@ def start_migration_replication(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.option('--migration-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. It exists only for cross-compatibility. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "NEEDS_ATTENTION", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_migrations', 'class': 'Migration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'migration-config': {'module': 'cloud_migrations', 'class': 'MigrationConfig'}, 'freeform-tags': {'module': 'cloud_migrations', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'cloud_migrations', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_migrations', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, display_name, replication_schedule_id, is_completed, migration_type, migration_config, freeform_tags, defined_tags, if_match):
+def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, display_name, replication_schedule_id, is_completed, migration_type, migration_config, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
     if not force:
-        if migration_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to migration-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if migration_config or freeform_tags or defined_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to migration-config and freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2304,6 +2313,9 @@ def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('cloud_migrations', 'migration', ctx)
     result = client.update_migration(

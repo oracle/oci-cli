@@ -93,7 +93,7 @@ This field will be deprecated and replaced by 'password-secret-id'.""")
 @cli_util.option('--maintenance-window-start-hour', help="""Start hour for maintenance period. Hour is in UTC.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'ogg-data': {'module': 'golden_gate', 'class': 'CreateOggDeploymentDetails'}, 'placements': {'module': 'golden_gate', 'class': 'list[DeploymentPlacementDetails]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'CreateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'CreateBackupScheduleDetails'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
 def create_deployment_extended(ctx, **kwargs):
     if kwargs.get('ogg_data') is None:
@@ -189,7 +189,7 @@ This field will be deprecated and replaced by 'password-secret-id'.""")
 @cli_util.option('--maintenance-window-start-hour', help="""Start hour for maintenance period. Hour is in UTC.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'ogg-data': {'module': 'golden_gate', 'class': 'UpdateOggDeploymentDetails'}, 'placements': {'module': 'golden_gate', 'class': 'list[DeploymentPlacementDetails]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'UpdateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'UpdateBackupScheduleDetails'}})
 @cli_util.wrap_exceptions
 def update_deployment_extended(ctx, **kwargs):
     if kwargs.get('ogg_data') is None:
@@ -316,9 +316,9 @@ goldengate_cli.connection_group.commands.pop(goldengate_cli.update_connection.na
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_oci_object_storage_connection_details, params_to_exclude=['region_parameterconflict'])
 @goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_oci_object_storage_connection_details.name, help=goldengate_cli.create_connection_create_oci_object_storage_connection_details.help)
-@cli_util.option('--os-region', help=u"""The name of the region. e.g.: us-ashburn-1""")
+@cli_util.option('--os-region', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
 def create_connection_create_oci_object_storage_connection_details_extended(ctx, **kwargs):
 
@@ -331,7 +331,7 @@ def create_connection_create_oci_object_storage_connection_details_extended(ctx,
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_oci_object_storage_connection_details, params_to_exclude=['region_parameterconflict'])
 @goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_oci_object_storage_connection_details.name, help=goldengate_cli.update_connection_update_oci_object_storage_connection_details.help)
-@cli_util.option('--os-region', help=u"""The name of the region. e.g.: us-ashburn-1""")
+@cli_util.option('--os-region', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
@@ -475,7 +475,7 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldeng
 @goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_azure_data_lake_storage_connection_details.name, help=goldengate_cli.create_connection_create_azure_data_lake_storage_connection_details.help)
 @cli_util.option('--connection-endpoint', help=u"""Azure Storage service endpoint. e.g: https://test.blob.core.windows.net""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
 def create_connection_create_azure_data_lake_storage_connection_details_extended(ctx, **kwargs):
 
@@ -503,9 +503,9 @@ def update_connection_update_azure_data_lake_storage_connection_details_extended
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_oracle_nosql_connection_details, params_to_exclude=['region_parameterconflict'])
 @goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_oracle_nosql_connection_details.name, help=goldengate_cli.create_connection_create_oracle_nosql_connection_details.help)
-@cli_util.option('--connection-region', help=u"""The name of the region. e.g.: us-ashburn-1""")
+@cli_util.option('--connection-region', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
 def create_connection_create_oracle_nosql_connection_details_extended(ctx, **kwargs):
 
@@ -518,7 +518,7 @@ def create_connection_create_oracle_nosql_connection_details_extended(ctx, **kwa
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_oracle_nosql_connection_details, params_to_exclude=['region_parameterconflict'])
 @goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_oracle_nosql_connection_details.name, help=goldengate_cli.update_connection_update_oracle_nosql_connection_details.help)
-@cli_util.option('--connection-region', help=u"""The name of the region. e.g.: us-ashburn-1""")
+@cli_util.option('--connection-region', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
@@ -533,9 +533,9 @@ def update_connection_update_oracle_nosql_connection_details_extended(ctx, **kwa
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_oracle_ai_data_platform_connection_details, params_to_exclude=['region_parameterconflict'])
 @goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_oracle_ai_data_platform_connection_details.name, help=goldengate_cli.create_connection_create_oracle_ai_data_platform_connection_details.help)
-@cli_util.option('--connection-region', help=u"""The name of the region. e.g.: us-ashburn-1""")
+@cli_util.option('--connection-region', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
 def create_connection_create_oracle_ai_data_platform_connection_details_extended(ctx, **kwargs):
 
@@ -548,7 +548,7 @@ def create_connection_create_oracle_ai_data_platform_connection_details_extended
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_oracle_ai_data_platform_connection_details, params_to_exclude=['region_parameterconflict'])
 @goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_oracle_ai_data_platform_connection_details.name, help=goldengate_cli.update_connection_update_oracle_ai_data_platform_connection_details.help)
-@cli_util.option('--connection-region', help=u"""The name of the region. e.g.: us-ashburn-1""")
+@cli_util.option('--connection-region', help=u"""The name of the region. e.g.: us-ashburn-1 If the region is not provided, backend will default to the default region.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
@@ -870,8 +870,8 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldeng
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_amazon_s3_connection_details, params_to_exclude=['endpoint_parameterconflict', 'region_parameterconflict'])
 @goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_amazon_s3_connection_details.name, help=goldengate_cli.create_connection_create_amazon_s3_connection_details.help)
-@cli_util.option('--connection-endpoint', help=u"""Optional Amazon S3 service endpoint. Default value: https://my-bucket.s3.<region>.amazonaws.com""")
-@cli_util.option('--connection-region', help=u"""The name of the region where the bucket is created. Default value: us-west-2""")
+@cli_util.option('--connection-endpoint', help=u"""The Amazon Endpoint for S3. e.g.: https://my-bucket.s3.us-east-1.amazonaws.com If not provided, GoldenGate will default to https://s3.<region>.amazonaws.com""")
+@cli_util.option('--connection-region', help=u"""The name of the AWS region where the bucket is created. If not provided, GoldenGate will default to 'us-west-2'. Note: this property will become mandatory after May 20, 2026.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
@@ -889,8 +889,8 @@ def create_connection_create_amazon_s3_connection_details_extended(ctx, **kwargs
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_amazon_s3_connection_details, params_to_exclude=['endpoint_parameterconflict', 'region_parameterconflict'])
 @goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_amazon_s3_connection_details.name, help=goldengate_cli.update_connection_update_amazon_s3_connection_details.help)
-@cli_util.option('--connection-endpoint', help=u"""Optional Amazon S3 service endpoint. Default value: https://my-bucket.s3.<region>.amazonaws.com""")
-@cli_util.option('--connection-region', help=u"""The name of the region where the bucket is created. Default value: us-west-2""")
+@cli_util.option('--connection-endpoint', help=u"""The Amazon Endpoint for S3. e.g.: https://my-bucket.s3.us-east-1.amazonaws.com If not provided, GoldenGate will default to https://s3.<region>.amazonaws.com""")
+@cli_util.option('--connection-region', help=u"""The name of the AWS region where the bucket is created. If not provided, GoldenGate will default to 'us-west-2'. Note: this property will become mandatory after May 20, 2026.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
@@ -908,8 +908,8 @@ def update_connection_update_amazon_s3_connection_details_extended(ctx, **kwargs
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_amazon_kinesis_connection_details, params_to_exclude=['endpoint_parameterconflict', 'region_parameterconflict'])
 @goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_amazon_kinesis_connection_details.name, help=goldengate_cli.create_connection_create_amazon_kinesis_connection_details.help)
-@cli_util.option('--connection-endpoint', help=u"""Optional Amazon Kinesis service endpoint. Default value: https://kinesis.<region>.amazonaws.com""")
-@cli_util.option('--connection-region', help=u"""The name of the AWS region. Default value: us-west-1""")
+@cli_util.option('--connection-endpoint', help=u"""The endpoint URL of the Amazon Kinesis service. e.g.: https://kinesis.us-east-1.amazonaws.com If not provided, GoldenGate will default to https://kinesis.<region>.amazonaws.com""")
+@cli_util.option('--connection-region', help=u"""The name of the AWS region. If not provided, GoldenGate will default to 'us-west-1'. Note: this property will become mandatory after July 30, 2026.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
@@ -925,8 +925,8 @@ def create_connection_create_amazon_kinesis_connection_details_extended(ctx, **k
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_amazon_kinesis_connection_details, params_to_exclude=['endpoint_parameterconflict', 'region_parameterconflict'])
 @goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_amazon_kinesis_connection_details.name, help=goldengate_cli.update_connection_update_amazon_kinesis_connection_details.help)
-@cli_util.option('--connection-endpoint', help=u"""Optional Amazon Kinesis service endpoint. Default value: https://kinesis.<region>.amazonaws.com""")
-@cli_util.option('--connection-region', help=u"""The name of the AWS region. Default value: us-west-1""")
+@cli_util.option('--connection-endpoint', help=u"""The endpoint URL of the Amazon Kinesis service. e.g.: https://kinesis.us-east-1.amazonaws.com If not provided, GoldenGate will default to https://kinesis.<region>.amazonaws.com""")
+@cli_util.option('--connection-region', help=u"""The name of the AWS region. If not provided, GoldenGate will default to 'us-west-1'. Note: this property will become mandatory after July 30, 2026.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
@@ -938,3 +938,59 @@ def update_connection_update_amazon_kinesis_connection_details_extended(ctx, **k
         kwargs['region_parameterconflict'] = kwargs['connection_region']
         kwargs.pop('connection_region')
     ctx.invoke(goldengate_cli.update_connection_update_amazon_kinesis_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_google_big_query_connection_details, params_to_exclude=['endpoint_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_google_big_query_connection_details.name, help=goldengate_cli.create_connection_create_google_big_query_connection_details.help)
+@cli_util.option('--connection-endpoint', help=u"""A legal URL to connect to BigQuery including scheme, server name and port (if not the default port). Default: https://bigquery.googleapis.com""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_google_big_query_connection_details_extended(ctx, **kwargs):
+    if 'connection_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['connection_endpoint']
+        kwargs.pop('connection_endpoint')
+    ctx.invoke(goldengate_cli.create_connection_create_google_big_query_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_google_big_query_connection_details, params_to_exclude=['endpoint_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_google_big_query_connection_details.name, help=goldengate_cli.update_connection_update_google_big_query_connection_details.help)
+@cli_util.option('--connection-endpoint', help=u"""A legal URL to connect to BigQuery including scheme, server name and port (if not the default port). Default: https://bigquery.googleapis.com""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_connection_update_google_big_query_connection_details_extended(ctx, **kwargs):
+    if 'connection_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['connection_endpoint']
+        kwargs.pop('connection_endpoint')
+    ctx.invoke(goldengate_cli.update_connection_update_google_big_query_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_google_cloud_storage_connection_details, params_to_exclude=['endpoint_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_google_cloud_storage_connection_details.name, help=goldengate_cli.create_connection_create_google_cloud_storage_connection_details.help)
+@cli_util.option('--connection-endpoint', help=u"""A legal URL to connect to Google Cloud Storage including scheme, server name and port (if not the default port). Default: https://storage.googleapis.com""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_google_cloud_storage_connection_details_extended(ctx, **kwargs):
+    if 'connection_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['connection_endpoint']
+        kwargs.pop('connection_endpoint')
+    ctx.invoke(goldengate_cli.create_connection_create_google_cloud_storage_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_google_cloud_storage_connection_details, params_to_exclude=['endpoint_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_google_cloud_storage_connection_details.name, help=goldengate_cli.update_connection_update_google_cloud_storage_connection_details.help)
+@cli_util.option('--connection-endpoint', help=u"""A legal URL to connect to Google Cloud Storage including scheme, server name and port (if not the default port). Default: https://storage.googleapis.com""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_connection_update_google_cloud_storage_connection_details_extended(ctx, **kwargs):
+    if 'connection_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['connection_endpoint']
+        kwargs.pop('connection_endpoint')
+    ctx.invoke(goldengate_cli.update_connection_update_google_cloud_storage_connection_details, **kwargs)
+
+
+# oci goldengate connection migrate-connection-secret-migrate-connection-details -> oci goldengate connection migrate-secret
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.migrate_connection_secret_migrate_connection_details, "migrate-secret")

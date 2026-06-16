@@ -28,8 +28,15 @@ def link_group():
     pass
 
 
+@click.command(cli_util.override('link.link_with_tenancy_names_group.command_name', 'link-with-tenancy-names'), cls=CommandGroupWithAlias, help="""A link between a parent tenancy and a child tenancy, including the parent and child tenancy names.""")
+@cli_util.help_option_group
+def link_with_tenancy_names_group():
+    pass
+
+
 organizations_service_cli.organizations_service_group.add_command(link_root_group)
 link_root_group.add_command(link_group)
+link_root_group.add_command(link_with_tenancy_names_group)
 
 
 @link_group.command(name=cli_util.override('link.delete_link.command_name', 'delete'), help=u"""Starts the link termination workflow. \n[Command Reference](deleteLink)""")
@@ -110,9 +117,32 @@ def get_link(ctx, from_json, link_id):
     cli_util.render_response(result, ctx)
 
 
+@link_with_tenancy_names_group.command(name=cli_util.override('link.get_link_with_tenancy_names.command_name', 'get'), help=u"""Gets information about the link along with the parent and child tenancy names. \n[Command Reference](getLinkWithTenancyNames)""")
+@cli_util.option('--link-id', required=True, help=u"""OCID of the link to retrieve.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'tenant_manager_control_plane', 'class': 'LinkWithTenancyNames'})
+@cli_util.wrap_exceptions
+def get_link_with_tenancy_names(ctx, from_json, link_id):
+
+    if isinstance(link_id, six.string_types) and len(link_id.strip()) == 0:
+        raise click.UsageError('Parameter --link-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('tenant_manager_control_plane', 'link', ctx)
+    result = client.get_link_with_tenancy_names(
+        link_id=link_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @link_group.command(name=cli_util.override('link.list_links.command_name', 'list'), help=u"""Return a (paginated) list of links. \n[Command Reference](listLinks)""")
 @cli_util.option('--parent-tenancy-id', help=u"""The ID of the parent tenancy this link is associated with.""")
 @cli_util.option('--child-tenancy-id', help=u"""The ID of the child tenancy this link is associated with.""")
+@cli_util.option('--feature', help=u"""The feature associated with this link.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "FAILED", "TERMINATED"]), help=u"""The lifecycle state of the resource.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -124,7 +154,7 @@ def get_link(ctx, from_json, link_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'tenant_manager_control_plane', 'class': 'LinkCollection'})
 @cli_util.wrap_exceptions
-def list_links(ctx, from_json, all_pages, page_size, parent_tenancy_id, child_tenancy_id, lifecycle_state, page, limit, sort_order):
+def list_links(ctx, from_json, all_pages, page_size, parent_tenancy_id, child_tenancy_id, feature, lifecycle_state, page, limit, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -134,6 +164,8 @@ def list_links(ctx, from_json, all_pages, page_size, parent_tenancy_id, child_te
         kwargs['parent_tenancy_id'] = parent_tenancy_id
     if child_tenancy_id is not None:
         kwargs['child_tenancy_id'] = child_tenancy_id
+    if feature is not None:
+        kwargs['feature'] = feature
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if page is not None:
