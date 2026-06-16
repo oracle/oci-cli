@@ -1333,6 +1333,16 @@ def db_node_stop(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(database_cli.db_node_action, params_to_exclude=['action'])
+@database_cli.db_node_group.command(name='force-stop', help="""Powers off the specified DB node forcefully.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbNode'})
+@cli_util.wrap_exceptions
+def db_node_forcestop(ctx, **kwargs):
+    kwargs['action'] = 'forcestop'
+    ctx.invoke(database_cli.db_node_action, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.db_node_action, params_to_exclude=['action'])
 @database_cli.db_node_group.command(name='soft-reset', help="""Performs an ACPI shutdown and powers on the specified DB node.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbNode'})
@@ -1349,6 +1359,16 @@ def db_node_softreset(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def db_node_reset(ctx, **kwargs):
     kwargs['action'] = 'reset'
+    ctx.invoke(database_cli.db_node_action, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.db_node_action, params_to_exclude=['action'])
+@database_cli.db_node_group.command(name='force-reset', help="""Powers off and powers on the specified DB node forcefully.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbNode'})
+@cli_util.wrap_exceptions
+def db_node_forcereset(ctx, **kwargs):
+    kwargs['action'] = 'forcereset'
     ctx.invoke(database_cli.db_node_action, **kwargs)
 
 
