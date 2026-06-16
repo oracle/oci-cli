@@ -9,6 +9,7 @@
 from . import stubs
 
 import itertools
+import logging
 import vcr
 
 from urllib3 import connectionpool
@@ -22,6 +23,8 @@ except ImportError:
     from importlib_metadata import version as pkg_version
 
 from packaging import version
+
+logger = logging.getLogger(__name__)
 
 try:
     # Modern urllib3 (2.0+)
@@ -42,6 +45,64 @@ _cpoolOCIVendoredHTTPConnection = connectionpool.HTTPConnection
 # Save the base VCR function references from VCR so that we can call them from inside our modified functions
 original_vcr_reset_patchers_ref = vcr.patch.reset_patchers
 original_cassette_patcher_builder_build_ref = vcr.patch.CassettePatcherBuilder.build
+
+
+def get_object_storage_work_pool_vcr_patches():
+    """
+    When using mocked VCR responses, Object Storage bulk operations submit work to a thread pool.
+    In some environments VCR patching does not reliably intercept requests made from those worker
+    threads, which can cause real network calls in record_mode=none and lead to failures like
+    BucketNotFound (because bucket creation is replayed, but PUTs hit the real service).
+
+    To keep tests deterministic, execute work pool tasks synchronously while a VCR cassette is active
+    and VCR is mocking.
+    """
+    try:
+        from tests import test_config_container
+        from oci_cli_object_storage.object_storage_transfer_manager import work_pool as os_work_pool
+    except ImportError as exc:
+        missing_module = getattr(exc, 'name', '')
+        if missing_module and missing_module.startswith('oci_cli_object_storage'):
+            return ()
+        logger.exception("Unable to import Object Storage work pool for VCR patching.")
+        raise
+    except Exception:
+        logger.exception("Unable to prepare Object Storage work pool VCR patch.")
+        raise
+
+    if not hasattr(os_work_pool, 'WorkPool') or not hasattr(os_work_pool, 'WorkPoolFuture'):
+        message = "Object Storage work pool module does not expose WorkPool and WorkPoolFuture."
+        logger.error(message)
+        raise AttributeError(message)
+
+    original_submit = os_work_pool.WorkPool.submit
+
+    class _ImmediateAsyncResult:
+        def __init__(self, thunk):
+            self._success = True
+            try:
+                self._value = thunk()
+            except Exception as exc:
+                self._success = False
+                self._value = exc
+
+        def get(self):
+            if self._success:
+                return self._value
+            raise self._value
+
+        def ready(self):
+            return True
+
+        def successful(self):
+            return self._success
+
+    def submit(self, work_pool_task, blocking=True):
+        if test_config_container.using_vcr_with_mock_responses():
+            return os_work_pool.WorkPoolFuture(_ImmediateAsyncResult(work_pool_task.do_work))
+        return original_submit(self, work_pool_task, blocking=blocking)
+
+    return ((os_work_pool.WorkPool, 'submit', submit),)
 
 
 def _revised_vcr_reset_patchers():

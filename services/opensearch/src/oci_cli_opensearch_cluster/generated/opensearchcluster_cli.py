@@ -236,6 +236,11 @@ def configure_outbound_cluster(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--search-node-host-ocpu-count', type=click.INT, help=u"""The number of OCPUs configured for the cluster's search nodes.""")
 @cli_util.option('--search-node-host-memory-gb', type=click.INT, help=u"""The amount of memory in GB, for the cluster's search nodes.""")
 @cli_util.option('--search-node-storage-gb', type=click.INT, help=u"""The amount of storage in GB, to configure per node for the cluster's search nodes.""")
+@cli_util.option('--coordinator-node-count', type=click.INT, help=u"""The number of coordinator nodes configured for the cluster.""")
+@cli_util.option('--coordinator-node-host-type', type=custom_types.CliCaseInsensitiveChoice(["FLEX"]), help=u"""The instance type for the cluster's coordinator nodes.""")
+@cli_util.option('--coordinator-node-host-shape', help=u"""The node shape for the cluster's coordinator nodes.""")
+@cli_util.option('--coordinator-node-host-ocpu-count', type=click.INT, help=u"""The number of OCPUs configured for the cluster's coordinator nodes.""")
+@cli_util.option('--coordinator-node-host-memory-gb', type=click.INT, help=u"""The amount of memory in GB, for the cluster's coordinator nodes.""")
 @cli_util.option('--ml-node-count', type=click.INT, help=u"""The number of ML nodes configured for the cluster.""")
 @cli_util.option('--ml-node-host-type', type=custom_types.CliCaseInsensitiveChoice(["FLEX"]), help=u"""The instance type for the cluster's ML nodes.""")
 @cli_util.option('--ml-node-host-shape', help=u"""The node shape for the cluster's ML nodes.""")
@@ -268,7 +273,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'inbound-cluster-ids': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'CreateMaintenanceDetails'}, 'load-balancer-config': {'module': 'opensearch', 'class': 'LoadBalancerConfig'}, 'certificate-config': {'module': 'opensearch', 'class': 'CertificateConfig'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, software_version, master_node_count, master_node_host_type, master_node_host_ocpu_count, master_node_host_memory_gb, data_node_count, data_node_host_type, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, opendashboard_node_count, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, master_node_host_bare_metal_shape, master_node_host_shape, data_node_host_bare_metal_shape, data_node_host_shape, opendashboard_node_host_shape, search_node_count, search_node_host_type, search_node_host_shape, search_node_host_ocpu_count, search_node_host_memory_gb, search_node_storage_gb, ml_node_count, ml_node_host_type, ml_node_host_shape, ml_node_host_ocpu_count, ml_node_host_memory_gb, ml_node_storage_gb, security_mode, security_master_user_name, security_master_user_password_hash, security_saml_config, backup_policy, nsg_id, reverse_connection_endpoint_customer_ips, inbound_cluster_ids, outbound_cluster_config, maintenance_details, load_balancer_config, certificate_config, freeform_tags, defined_tags, system_tags, security_attributes):
+def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, software_version, master_node_count, master_node_host_type, master_node_host_ocpu_count, master_node_host_memory_gb, data_node_count, data_node_host_type, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, opendashboard_node_count, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, master_node_host_bare_metal_shape, master_node_host_shape, data_node_host_bare_metal_shape, data_node_host_shape, opendashboard_node_host_shape, search_node_count, search_node_host_type, search_node_host_shape, search_node_host_ocpu_count, search_node_host_memory_gb, search_node_storage_gb, coordinator_node_count, coordinator_node_host_type, coordinator_node_host_shape, coordinator_node_host_ocpu_count, coordinator_node_host_memory_gb, ml_node_count, ml_node_host_type, ml_node_host_shape, ml_node_host_ocpu_count, ml_node_host_memory_gb, ml_node_storage_gb, security_mode, security_master_user_name, security_master_user_password_hash, security_saml_config, backup_policy, nsg_id, reverse_connection_endpoint_customer_ips, inbound_cluster_ids, outbound_cluster_config, maintenance_details, load_balancer_config, certificate_config, freeform_tags, defined_tags, system_tags, security_attributes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -326,6 +331,21 @@ def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if search_node_storage_gb is not None:
         _details['searchNodeStorageGB'] = search_node_storage_gb
+
+    if coordinator_node_count is not None:
+        _details['coordinatorNodeCount'] = coordinator_node_count
+
+    if coordinator_node_host_type is not None:
+        _details['coordinatorNodeHostType'] = coordinator_node_host_type
+
+    if coordinator_node_host_shape is not None:
+        _details['coordinatorNodeHostShape'] = coordinator_node_host_shape
+
+    if coordinator_node_host_ocpu_count is not None:
+        _details['coordinatorNodeHostOcpuCount'] = coordinator_node_host_ocpu_count
+
+    if coordinator_node_host_memory_gb is not None:
+        _details['coordinatorNodeHostMemoryGB'] = coordinator_node_host_memory_gb
 
     if ml_node_count is not None:
         _details['mlNodeCount'] = ml_node_count
@@ -886,6 +906,7 @@ def opensearch_cluster_restore(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--data-node-count', type=click.INT, help=u"""The number of data nodes to configure for the cluster.""")
 @cli_util.option('--opendashboard-node-count', type=click.INT, help=u"""The number of OpenSearch Dashboard nodes to configure for the cluster.""")
 @cli_util.option('--search-node-count', type=click.INT, help=u"""The number of search nodes configured for the cluster.""")
+@cli_util.option('--coordinator-node-count', type=click.INT, help=u"""The number of coordinator nodes configured for the cluster.""")
 @cli_util.option('--ml-node-count', type=click.INT, help=u"""The number of ML nodes configured for the cluster.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -898,7 +919,7 @@ def opensearch_cluster_restore(ctx, from_json, wait_for_state, max_wait_seconds,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def resize_opensearch_cluster_horizontal(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, master_node_count, data_node_count, opendashboard_node_count, search_node_count, ml_node_count, freeform_tags, defined_tags, if_match):
+def resize_opensearch_cluster_horizontal(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, master_node_count, data_node_count, opendashboard_node_count, search_node_count, coordinator_node_count, ml_node_count, freeform_tags, defined_tags, if_match):
 
     if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
@@ -921,6 +942,9 @@ def resize_opensearch_cluster_horizontal(ctx, from_json, wait_for_state, max_wai
 
     if search_node_count is not None:
         _details['searchNodeCount'] = search_node_count
+
+    if coordinator_node_count is not None:
+        _details['coordinatorNodeCount'] = coordinator_node_count
 
     if ml_node_count is not None:
         _details['mlNodeCount'] = ml_node_count
@@ -983,6 +1007,9 @@ def resize_opensearch_cluster_horizontal(ctx, from_json, wait_for_state, max_wai
 @cli_util.option('--search-node-host-ocpu-count', type=click.INT, help=u"""The number of OCPUs configured for the cluster's search nodes.""")
 @cli_util.option('--search-node-host-memory-gb', type=click.INT, help=u"""The amount of memory in GB, for the cluster's search nodes.""")
 @cli_util.option('--search-node-storage-gb', type=click.INT, help=u"""The amount of storage in GB, to configure per node for the cluster's search nodes.""")
+@cli_util.option('--coordinator-node-host-shape', help=u"""The node shape for the cluster's coordinator nodes.""")
+@cli_util.option('--coordinator-node-host-ocpu-count', type=click.INT, help=u"""The number of OCPUs configured for the cluster's coordinator nodes.""")
+@cli_util.option('--coordinator-node-host-memory-gb', type=click.INT, help=u"""The amount of memory in GB, for the cluster's coordinator nodes.""")
 @cli_util.option('--ml-node-host-shape', help=u"""The node shape for the cluster's ML nodes.""")
 @cli_util.option('--ml-node-host-ocpu-count', type=click.INT, help=u"""The number of OCPUs configured for the cluster's ML nodes.""")
 @cli_util.option('--ml-node-host-memory-gb', type=click.INT, help=u"""The amount of memory in GB, for the cluster's ML nodes.""")
@@ -998,7 +1025,7 @@ def resize_opensearch_cluster_horizontal(ctx, from_json, wait_for_state, max_wai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def resize_opensearch_cluster_vertical(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, master_node_host_ocpu_count, master_node_host_memory_gb, master_node_host_shape, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, data_node_host_shape, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, opendashboard_node_host_shape, search_node_host_shape, search_node_host_ocpu_count, search_node_host_memory_gb, search_node_storage_gb, ml_node_host_shape, ml_node_host_ocpu_count, ml_node_host_memory_gb, ml_node_storage_gb, freeform_tags, defined_tags, if_match):
+def resize_opensearch_cluster_vertical(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, master_node_host_ocpu_count, master_node_host_memory_gb, master_node_host_shape, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, data_node_host_shape, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, opendashboard_node_host_shape, search_node_host_shape, search_node_host_ocpu_count, search_node_host_memory_gb, search_node_storage_gb, coordinator_node_host_shape, coordinator_node_host_ocpu_count, coordinator_node_host_memory_gb, ml_node_host_shape, ml_node_host_ocpu_count, ml_node_host_memory_gb, ml_node_storage_gb, freeform_tags, defined_tags, if_match):
 
     if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
@@ -1051,6 +1078,15 @@ def resize_opensearch_cluster_vertical(ctx, from_json, wait_for_state, max_wait_
 
     if search_node_storage_gb is not None:
         _details['searchNodeStorageGB'] = search_node_storage_gb
+
+    if coordinator_node_host_shape is not None:
+        _details['coordinatorNodeHostShape'] = coordinator_node_host_shape
+
+    if coordinator_node_host_ocpu_count is not None:
+        _details['coordinatorNodeHostOcpuCount'] = coordinator_node_host_ocpu_count
+
+    if coordinator_node_host_memory_gb is not None:
+        _details['coordinatorNodeHostMemoryGB'] = coordinator_node_host_memory_gb
 
     if ml_node_host_shape is not None:
         _details['mlNodeHostShape'] = ml_node_host_shape

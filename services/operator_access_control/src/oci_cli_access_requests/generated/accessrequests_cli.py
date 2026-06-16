@@ -17,9 +17,7 @@ from services.operator_access_control.src.oci_cli_operator_access_control.genera
 
 
 @click.command(cli_util.override('access_requests.access_requests_root_group.command_name', 'access-requests'), cls=CommandGroupWithAlias, help=cli_util.override('access_requests.access_requests_root_group.help', """Operator Access Control enables you to control the time duration and the actions an Oracle operator can perform on your Exadata Cloud@Customer infrastructure.
-Using logging service, you can view a near real-time audit report of all actions performed by an Oracle operator.
-
-Use the table of contents and search tool to explore the OperatorAccessControl API."""), short_help=cli_util.override('access_requests.access_requests_root_group.short_help', """OperatorAccessControl API"""))
+Using logging service, you can view a near real-time audit report of all actions performed by an Oracle operator."""), short_help=cli_util.override('access_requests.access_requests_root_group.short_help', """Operator Access Control API"""))
 @cli_util.help_option_group
 def access_requests_root_group():
     pass
@@ -251,6 +249,7 @@ def list_access_request_histories(ctx, from_json, all_pages, page_size, access_r
 @cli_util.option('--resource-name', help=u"""A filter to return only resources that match the given ResourceName.""")
 @cli_util.option('--resource-type', help=u"""A filter to return only lists of resources that match the entire given service type.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "APPROVALWAITING", "PREAPPROVED", "APPROVED", "MOREINFO", "REJECTED", "DEPLOYED", "DEPLOYFAILED", "UNDEPLOYED", "UNDEPLOYFAILED", "CLOSEFAILED", "REVOKEFAILED", "EXPIRYFAILED", "REVOKING", "REVOKED", "EXTENDING", "EXTENDED", "EXTENSIONREJECTED", "COMPLETING", "COMPLETED", "EXPIRED", "APPROVEDFORFUTURE", "INREVIEW"]), help=u"""A filter to return only resources whose lifecycleState matches the given AccessRequest lifecycleState.""")
+@cli_util.option('--num-days', type=click.INT, help=u"""The number of days since when the user wants to search .""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""Query start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd parameters are used together.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""Query start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd parameters are used together.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -264,7 +263,7 @@ def list_access_request_histories(ctx, from_json, all_pages, page_size, access_r
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'operator_access_control', 'class': 'AccessRequestCollection'})
 @cli_util.wrap_exceptions
-def list_access_requests(ctx, from_json, all_pages, page_size, compartment_id, resource_name, resource_type, lifecycle_state, time_start, time_end, limit, page, sort_order, sort_by):
+def list_access_requests(ctx, from_json, all_pages, page_size, compartment_id, resource_name, resource_type, lifecycle_state, num_days, time_start, time_end, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -276,6 +275,8 @@ def list_access_requests(ctx, from_json, all_pages, page_size, compartment_id, r
         kwargs['resource_type'] = resource_type
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if num_days is not None:
+        kwargs['num_days'] = num_days
     if time_start is not None:
         kwargs['time_start'] = time_start
     if time_end is not None:

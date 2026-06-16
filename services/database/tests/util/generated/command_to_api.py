@@ -375,6 +375,8 @@ SDK_client_map = {
     "db.resource_pool_shapes": "oci.database.DatabaseClient.resource_pool_shapes",
     "db.restart_autonomous_container_database": "oci.database.DatabaseClient.restart_autonomous_container_database",
     "db.restart_autonomous_database": "oci.database.DatabaseClient.restart_autonomous_database",
+    "db.restart_autonomous_vm_cluster_ords": "oci.database.DatabaseClient.restart_autonomous_vm_cluster_ords",
+    "db.restart_cloud_autonomous_vm_cluster_ords": "oci.database.DatabaseClient.restart_cloud_autonomous_vm_cluster_ords",
     "db.restore_autonomous_database": "oci.database.DatabaseClient.restore_autonomous_database",
     "db.restore_database": "oci.database.DatabaseClient.restore_database",
     "db.rotate_autonomous_container_database_encryption_key": "oci.database.DatabaseClient.rotate_autonomous_container_database_encryption_key",

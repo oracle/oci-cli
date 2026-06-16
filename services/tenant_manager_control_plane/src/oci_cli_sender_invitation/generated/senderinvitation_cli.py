@@ -95,17 +95,18 @@ def cancel_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--subjects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of subjects this invitation contains.
 
 This option is a JSON list with items of type InvitationSubject.  For documentation on InvitationSubject please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/senderinvitation/20230401/datatypes/InvitationSubject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--features', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of features that the invitation is being sent for. Each feature would create one link, of that type.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'subjects': {'module': 'tenant_manager_control_plane', 'class': 'list[InvitationSubject]'}, 'freeform-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'subjects': {'module': 'tenant_manager_control_plane', 'class': 'list[InvitationSubject]'}, 'features': {'module': 'tenant_manager_control_plane', 'class': 'list[string]'}, 'freeform-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'subjects': {'module': 'tenant_manager_control_plane', 'class': 'list[InvitationSubject]'}, 'freeform-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'tenant_manager_control_plane', 'class': 'SenderInvitation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'subjects': {'module': 'tenant_manager_control_plane', 'class': 'list[InvitationSubject]'}, 'features': {'module': 'tenant_manager_control_plane', 'class': 'list[string]'}, 'freeform-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'tenant_manager_control_plane', 'class': 'SenderInvitation'})
 @cli_util.wrap_exceptions
-def create_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, recipient_tenancy_id, recipient_email_address, display_name, subjects, freeform_tags, defined_tags):
+def create_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, recipient_tenancy_id, recipient_email_address, display_name, subjects, features, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -122,6 +123,9 @@ def create_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if subjects is not None:
         _details['subjects'] = cli_util.parse_json_parameter("subjects", subjects)
+
+    if features is not None:
+        _details['features'] = cli_util.parse_json_parameter("features", features)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -190,7 +194,7 @@ def get_sender_invitation(ctx, from_json, sender_invitation_id):
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--recipient-tenancy-id', help=u"""The tenancy that the invitation is addressed to.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "FAILED", "TERMINATED"]), help=u"""The lifecycle state of the resource.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "CANCELED", "ACCEPTED", "EXPIRED", "FAILED"]), help=u"""The status of the sender invitation.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "CANCELED", "ACCEPTED", "EXPIRED", "FAILED", "NOT_APPLICABLE"]), help=u"""The status of the sender invitation.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

@@ -125,6 +125,7 @@ def change_apm_domain_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--display-name', required=True, help=u"""Display name of the APM domain.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment corresponding to the APM domain.""")
 @cli_util.option('--description', help=u"""Description of the APM domain.""")
+@cli_util.option('--log-group-id', help=u"""The OCID of the Log Analytics log group to which the data uploaded to this APM domain will be mapped to.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates whether this is an \"Always Free\" resource. The default value is false.""")
@@ -136,7 +137,7 @@ def change_apm_domain_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_control_plane', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_control_plane', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_apm_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, description, freeform_tags, defined_tags, is_free_tier):
+def create_apm_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, description, log_group_id, freeform_tags, defined_tags, is_free_tier):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -147,6 +148,9 @@ def create_apm_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if description is not None:
         _details['description'] = description
+
+    if log_group_id is not None:
+        _details['logGroupId'] = log_group_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -697,6 +701,7 @@ def remove_data_keys(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--apm-domain-id', required=True, help=u"""The OCID of the APM domain.""")
 @cli_util.option('--display-name', help=u"""Display name of the APM domain.""")
 @cli_util.option('--description', help=u"""Description of the APM domain.""")
+@cli_util.option('--log-group-id', help=u"""The OCID of the Log Analytics log group to which the data uploaded to this APM domain will be mapped to.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. Set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -709,7 +714,7 @@ def remove_data_keys(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_control_plane', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_control_plane', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_apm_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, apm_domain_id, display_name, description, freeform_tags, defined_tags, if_match):
+def update_apm_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, apm_domain_id, display_name, description, log_group_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(apm_domain_id, six.string_types) and len(apm_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --apm-domain-id cannot be whitespace or empty string')
@@ -730,6 +735,9 @@ def update_apm_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if description is not None:
         _details['description'] = description
+
+    if log_group_id is not None:
+        _details['logGroupId'] = log_group_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

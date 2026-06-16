@@ -29,9 +29,21 @@ def metric_group_group():
     pass
 
 
+@click.command(cli_util.override('apm_config.data_file_group.command_name', 'data-file'), cls=CommandGroupWithAlias, help="""The data file to be uploaded.""")
+@cli_util.help_option_group
+def data_file_group():
+    pass
+
+
 @click.command(cli_util.override('apm_config.import_configuration_details_group.command_name', 'import-configuration-details'), cls=CommandGroupWithAlias, help="""Array of configuration items with dependencies to import.""")
 @cli_util.help_option_group
 def import_configuration_details_group():
+    pass
+
+
+@click.command(cli_util.override('apm_config.data_file_summary_collection_group.command_name', 'data-file-summary-collection'), cls=CommandGroupWithAlias, help="""A collection of Data File summaries.""")
+@cli_util.help_option_group
+def data_file_summary_collection_group():
     pass
 
 
@@ -72,7 +84,9 @@ def test_output_group():
 
 
 apm_config_root_group.add_command(metric_group_group)
+apm_config_root_group.add_command(data_file_group)
 apm_config_root_group.add_command(import_configuration_details_group)
+apm_config_root_group.add_command(data_file_summary_collection_group)
 apm_config_root_group.add_command(span_filter_group)
 apm_config_root_group.add_command(config_collection_group)
 apm_config_root_group.add_command(export_configuration_details_group)
@@ -458,6 +472,36 @@ def delete_config(ctx, from_json, apm_domain_id, config_id, if_match):
     cli_util.render_response(result, ctx)
 
 
+@data_file_group.command(name=cli_util.override('apm_config.delete_data_file.command_name', 'delete'), help=u"""Removes the data file. \n[Command Reference](deleteDataFile)""")
+@cli_util.option('--data-file-name', required=True, help=u"""The name of the data file.""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-type', required=True, help=u"""The type of the data file.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_data_file(ctx, from_json, data_file_name, apm_domain_id, apm_type, if_match):
+
+    if isinstance(data_file_name, six.string_types) and len(data_file_name.strip()) == 0:
+        raise click.UsageError('Parameter --data-file-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.delete_data_file(
+        data_file_name=data_file_name,
+        apm_domain_id=apm_domain_id,
+        apm_type=apm_type,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @export_configuration_details_group.command(name=cli_util.override('apm_config.export_configuration.command_name', 'export-configuration'), help=u"""Exports configurations for the whole domain by domainId. \n[Command Reference](exportConfiguration)""")
 @cli_util.option('--configuration-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that has parameters related to the export process (ConfigurationId, Skip, \u2026) and more. Example: `{\"parameter-key\": \"parameter-value\"}` Supported parameters: \u2014 List of the Configuration Type or Groups to Export to a destination domain.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
@@ -507,6 +551,55 @@ def get_config(ctx, from_json, apm_domain_id, config_id):
     cli_util.render_response(result, ctx)
 
 
+@data_file_group.command(name=cli_util.override('apm_config.get_data_file.command_name', 'get'), help=u"""Retrieves the Data file with the specified name and type. \n[Command Reference](getDataFile)""")
+@cli_util.option('--data-file-name', required=True, help=u"""The name of the data file.""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-type', required=True, help=u"""The type of the data file.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_data_file(ctx, from_json, file, data_file_name, apm_domain_id, apm_type):
+
+    if isinstance(data_file_name, six.string_types) and len(data_file_name.strip()) == 0:
+        raise click.UsageError('Parameter --data-file-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.get_data_file(
+        data_file_name=data_file_name,
+        apm_domain_id=apm_domain_id,
+        apm_type=apm_type,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @match_agents_with_attribute_key_group.command(name=cli_util.override('apm_config.get_match_agents_with_attribute_key.command_name', 'get'), help=u"""The domain-wide agents matching attribute key. \n[Command Reference](getMatchAgentsWithAttributeKey)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -521,6 +614,32 @@ def get_match_agents_with_attribute_key(ctx, from_json, apm_domain_id):
     client = cli_util.build_client('apm_config', 'config', ctx)
     result = client.get_match_agents_with_attribute_key(
         apm_domain_id=apm_domain_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_file_group.command(name=cli_util.override('apm_config.head_data_file.command_name', 'head'), help=u"""Returns metadata about the datafile. \n[Command Reference](headDataFile)""")
+@cli_util.option('--data-file-name', required=True, help=u"""The name of the data file.""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-type', required=True, help=u"""The type of the data file.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def head_data_file(ctx, from_json, data_file_name, apm_domain_id, apm_type):
+
+    if isinstance(data_file_name, six.string_types) and len(data_file_name.strip()) == 0:
+        raise click.UsageError('Parameter --data-file-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.head_data_file(
+        data_file_name=data_file_name,
+        apm_domain_id=apm_domain_id,
+        apm_type=apm_type,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -625,6 +744,133 @@ def list_configs(ctx, from_json, all_pages, page_size, apm_domain_id, config_typ
             apm_domain_id=apm_domain_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@data_file_summary_collection_group.command(name=cli_util.override('apm_config.list_data_files.command_name', 'list-data-files'), help=u"""Fetches a list of Data files using some parameters. \n[Command Reference](listDataFiles)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-type', help=u"""The type of the data file.""")
+@cli_util.option('--name', help=u"""A filter to return resources that match the specified name. Supports regular expressions to filter data files.""")
+@cli_util.option('--time-last-modified-before', type=custom_types.CLI_DATETIME, help=u"""Return data files with time 'timeLastModified' before the specified time, expressed in [RFC 3339] timestamp format. Example: `2020-02-19T22:47:12.613Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-last-modified-after', type=custom_types.CLI_DATETIME, help=u"""Return data files with the 'timeLastModified' after the specified time, expressed in [RFC 3339] timestamp format. Example: `2020-02-19T22:47:12.613Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The maximum number of results per page, or items to return in a paginated \"List\" call. For information on how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The displayName sort order is case-sensitive.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "timeUpdated"]), help=u"""The field to sort by. You can provide one \"sortBy\" value. The default order for displayName, timeCreated and timeUpdated is ascending. The displayName sort by is case-sensitive.""")
+@cli_util.option('--metadata', help=u"""A string containing a JSON-encoded object with metadata related to the uploaded file or resource. Example:   {\"fileName\":\"report.pdf\",\"uploader\":\"jane.doe\",\"category\":\"financial\"}""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apm_config', 'class': 'DataFileSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_data_files(ctx, from_json, all_pages, page_size, apm_domain_id, apm_type, name, time_last_modified_before, time_last_modified_after, limit, page, sort_order, sort_by, metadata):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if apm_type is not None:
+        kwargs['apm_type'] = apm_type
+    if name is not None:
+        kwargs['name'] = name
+    if time_last_modified_before is not None:
+        kwargs['time_last_modified_before'] = time_last_modified_before
+    if time_last_modified_after is not None:
+        kwargs['time_last_modified_after'] = time_last_modified_after
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if metadata is not None:
+        kwargs['metadata'] = metadata
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_data_files,
+            apm_domain_id=apm_domain_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_data_files,
+            limit,
+            page_size,
+            apm_domain_id=apm_domain_id,
+            **kwargs
+        )
+    else:
+        result = client.list_data_files(
+            apm_domain_id=apm_domain_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@data_file_group.command(name=cli_util.override('apm_config.put_data_file.command_name', 'put'), help=u"""Creates a new data file or replaces an existing one with the same name and type. \n[Command Reference](putDataFile)""")
+@cli_util.option('--put-data-file-body', required=True, help=u"""The data file to be uploaded.""")
+@cli_util.option('--data-file-name', required=True, help=u"""The name of the data file.""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-type', required=True, help=u"""The type of the data file.""")
+@cli_util.option('--content-md5', help=u"""Optional base64-encoded MD5 hash of the request body. If provided, the server will perform a data integrity check by computing the MD5 of the received content and comparing it to the supplied value.
+
+If the values do not match, the request will be rejected with an HTTP 400 error and a message such as:
+
+\"The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)\"""")
+@cli_util.option('--content-type', help=u"""Optional parameter specifying the media type (MIME type) of the request or response body. If not specified, the default is `application/octet-stream`.
+
+This value can be used by recipients to determine how to interpret or render the content.""")
+@cli_util.option('--content-language', help=u"""Optional parameter that indicates the natural language of the content. This value can be used by clients or intermediaries to select or display content based on language preferences.""")
+@cli_util.option('--content-encoding', help=u"""Optional parameter indicating the content encodings applied to the request body (e.g., gzip, deflate). This value can be used by recipients to determine how to decode the content.""")
+@cli_util.option('--content-disposition', help=u"""Optional parameter that provides presentation information for how the content should be displayed or handled by the recipient.
+
+For example, to prompt a file download with a custom filename: `attachment; filename=\"example.txt\"`""")
+@cli_util.option('--metadata', help=u"""A string containing a JSON-encoded object with metadata related to the uploaded file or resource. Example:   {\"fileName\":\"report.pdf\",\"uploader\":\"jane.doe\",\"category\":\"financial\"}""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def put_data_file(ctx, from_json, put_data_file_body, data_file_name, apm_domain_id, apm_type, content_md5, content_type, content_language, content_encoding, content_disposition, metadata):
+
+    if isinstance(data_file_name, six.string_types) and len(data_file_name.strip()) == 0:
+        raise click.UsageError('Parameter --data-file-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if content_md5 is not None:
+        kwargs['content_md5'] = content_md5
+    if content_type is not None:
+        kwargs['content_type'] = content_type
+    if content_language is not None:
+        kwargs['content_language'] = content_language
+    if content_encoding is not None:
+        kwargs['content_encoding'] = content_encoding
+    if content_disposition is not None:
+        kwargs['content_disposition'] = content_disposition
+    if metadata is not None:
+        kwargs['metadata'] = metadata
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.put_data_file(
+        put_data_file_body=put_data_file_body,
+        data_file_name=data_file_name,
+        apm_domain_id=apm_domain_id,
+        apm_type=apm_type,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

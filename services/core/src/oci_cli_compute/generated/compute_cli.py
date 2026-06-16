@@ -11377,39 +11377,31 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
     if wait_for_state:
 
-        if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
                 if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
 
-                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, client.get_instance(instance_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
-            except oci.exceptions.ServiceError as e:
-                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
-                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
-                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
-                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
-                # succeed_on_not_found=True to the waiter).
-                #
-                # Any non-404 should still result in the exception being thrown.
-                if e.status == 404:
-                    pass
-                else:
-                    raise
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 sys.exit(2)
             except Exception:
-                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 raise
         else:
-            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

@@ -112,3 +112,26 @@ cli_util.rename_command(config_cli, config_cli.config_group, config_cli.update_c
 
 # oci apm-config config update-config-update-macs-apm-extension-details -> oci apm-config config update-macs-extension
 cli_util.rename_command(config_cli, config_cli.config_group, config_cli.update_config_update_macs_apm_extension_details, "update-macs-extension")
+
+
+# oci apm-config data-file-summary-collection list-data-files -> oci apm-config data-file-summary-collection list
+cli_util.rename_command(config_cli, config_cli.data_file_summary_collection_group, config_cli.list_data_files, "list")
+
+
+# oci apm-config data-file-summary-collection -> oci apm-config data-file-collection
+cli_util.rename_command(config_cli, config_cli.apm_config_root_group, config_cli.data_file_summary_collection_group, "data-file-collection")
+
+
+@cli_util.copy_params_from_generated_command(config_cli.put_data_file, params_to_exclude=['put_data_file_body'])
+@config_cli.data_file_group.command(name=config_cli.put_data_file.name, help=config_cli.put_data_file.help)
+@cli_util.option('--data-file-body', required=True, help=u"""The data file to be uploaded. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def put_data_file_extended(ctx, **kwargs):
+
+    if 'data_file_body' in kwargs:
+        kwargs['put_data_file_body'] = kwargs['data_file_body']
+        kwargs.pop('data_file_body')
+
+    ctx.invoke(config_cli.put_data_file, **kwargs)
