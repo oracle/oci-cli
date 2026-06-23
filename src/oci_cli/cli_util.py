@@ -275,6 +275,13 @@ def get_instance_principal_signer(ctx, client_config):
         signer_kwargs = {}
         if ctx.obj['cert_bundle']:
             signer_kwargs['federation_client_cert_bundle_verify'] = ctx.obj['cert_bundle']
+
+        federation_endpoint = ctx.obj.get('federation_endpoint')
+        if isinstance(federation_endpoint, str):
+            federation_endpoint = federation_endpoint.strip()
+        if federation_endpoint:
+            signer_kwargs['federation_endpoint'] = federation_endpoint
+
         if ctx.obj['region']:
             # If we don't set this then constructed clients will try and pluck the region from the instance principals signer, which may
             # conflict with the caller intent (since they *DID* explicitly pass a region)
@@ -512,6 +519,7 @@ def build_raw_requests_session(ctx):
                 signer = oci.Signer.from_config(client_config)
 
         session = requests.Session()
+        session.trust_env = False
         session.auth = signer
         session.headers['opc-request-id'] = ctx.obj['request_id']
         session.headers['user-agent'] = oci.base_client.build_user_agent(extra=client_config[ADDITIONAL_USER_AGENT])
@@ -1484,7 +1492,7 @@ def load_context_obj_values_from_defaults(ctx):
         if not ctx.obj['enable_dual_stack']:
             # False for enable-dual-stack means not provided, so just load it if there is a default value. If there's nothing there, then this'll be
             # None, which is still false-y
-            ctx.obj['realm_specific_endpoint'] = get_default_value_from_defaults_file(ctx, 'enable-dual-stack', click.BOOL, False)
+            ctx.obj['enable_dual_stack'] = get_default_value_from_defaults_file(ctx, 'enable-dual-stack', click.BOOL, False)
     else:
         populate_dict_key_with_default_value(ctx, 'enable_dual_stack', click.BOOL, param_name='enable-dual-stack')
 

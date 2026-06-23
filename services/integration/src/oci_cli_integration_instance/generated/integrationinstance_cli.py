@@ -55,6 +55,7 @@ integration_root_group.add_command(work_request_group)
 @integration_instance_group.command(name=cli_util.override('integration.add_log_analytics_log_group.command_name', 'add'), help=u"""Add LogGroup with specified ocid for Integration Instance to enable sending OIC Activity Stream to OCI Logging Analytics. \n[Command Reference](addLogAnalyticsLogGroup)""")
 @cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
 @cli_util.option('--log-group-id', required=True, help=u"""Log Group ocid.""")
+@cli_util.option('--attachment-type', type=custom_types.CliCaseInsensitiveChoice(["PROCESS_AUTOMATION"]), help=u"""Type of attachment. Supported at this include PROCESS_AUTOMATION""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -64,7 +65,7 @@ integration_root_group.add_command(work_request_group)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def add_log_analytics_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, log_group_id, if_match):
+def add_log_analytics_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, log_group_id, attachment_type, if_match):
 
     if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
@@ -76,6 +77,9 @@ def add_log_analytics_log_group(ctx, from_json, wait_for_state, max_wait_seconds
 
     _details = {}
     _details['logGroupId'] = log_group_id
+
+    if attachment_type is not None:
+        _details['attachmentType'] = attachment_type
 
     client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.add_log_analytics_log_group(
@@ -1458,8 +1462,9 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     cli_util.render_response(result, ctx)
 
 
-@integration_instance_group.command(name=cli_util.override('integration.remove_log_analytics_log_group.command_name', 'remove'), help=u"""Removes Log Analytics logGroup, if enabled for given integrationInstance. Since only single LogGroup can be enabled for integration instance, no additional details are required to be includes in the request. \n[Command Reference](removeLogAnalyticsLogGroup)""")
+@integration_instance_group.command(name=cli_util.override('integration.remove_log_analytics_log_group.command_name', 'remove'), help=u"""Removes Log Analytics logGroup, if enabled for given integrationInstance. Also used for removing Log Analytics log Group for attached OPA instance. \n[Command Reference](removeLogAnalyticsLogGroup)""")
 @cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
+@cli_util.option('--attachment-type', type=custom_types.CliCaseInsensitiveChoice(["PROCESS_AUTOMATION"]), help=u"""Type of attachment. Supported at this include PROCESS_AUTOMATION""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1469,7 +1474,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def remove_log_analytics_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
+def remove_log_analytics_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, attachment_type, if_match):
 
     if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
@@ -1478,9 +1483,16 @@ def remove_log_analytics_log_group(ctx, from_json, wait_for_state, max_wait_seco
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if attachment_type is not None:
+        _details['attachmentType'] = attachment_type
+
     client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.remove_log_analytics_log_group(
         integration_instance_id=integration_instance_id,
+        remove_log_analytics_log_group_details=_details,
         **kwargs
     )
     if wait_for_state:

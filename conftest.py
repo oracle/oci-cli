@@ -43,8 +43,14 @@ vcr_log.setLevel(logging.INFO)
 if not os.path.exists(os.path.join('tests', 'temp')):
     os.makedirs(os.path.join('tests', 'temp'))
 
-dynamic_loader.load_all_services()
-final_command_processor.process()
+
+def _load_services_for_pytest(service_name):
+    if service_name == "all":
+        dynamic_loader.load_all_services()
+    elif service_name not in dynamic_loader.NON_SERVICE_TOP_LEVEL_COMMANDS:
+        dynamic_loader.load_service(service_name)
+
+    final_command_processor.process()
 
 
 def pytest_addoption(parser):
@@ -70,6 +76,7 @@ def add_test_option(parser, option, action, default, help):
 
 def pytest_configure(config):
     test_config_container.vcr_mode = config.getoption("--vcr-record-mode")
+    _load_services_for_pytest(config.getoption("service"))
 
 
 @pytest.fixture(scope="session", autouse=True)

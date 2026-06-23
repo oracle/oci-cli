@@ -445,16 +445,18 @@ def change_zone_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--endpoint-type', type=custom_types.CliCaseInsensitiveChoice(["VNIC"]), help=u"""The type of resolver endpoint. VNIC is currently the only supported type.""")
 @cli_util.option('--forwarding-address', help=u"""An IP address from which forwarded queries may be sent. For VNIC endpoints, this IP address must be part of the subnet and will be assigned by the system if unspecified when isForwarding is true.""")
 @cli_util.option('--listening-address', help=u"""An IP address to listen to queries on. For VNIC endpoints this IP address must be part of the subnet and will be assigned by the system if unspecified when isListening is true.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state UPDATING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
 @cli_util.wrap_exceptions
-def create_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, name, is_forwarding, is_listening, endpoint_type, forwarding_address, listening_address, scope):
+def create_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, name, is_forwarding, is_listening, endpoint_type, forwarding_address, listening_address, freeform_tags, defined_tags, scope):
 
     if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
@@ -477,6 +479,12 @@ def create_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if listening_address is not None:
         _details['listeningAddress'] = listening_address
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('dns', 'dns', ctx)
     result = client.create_resolver_endpoint(
@@ -518,17 +526,20 @@ def create_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of a subnet. Must be part of the VCN that the resolver is attached to.""")
 @cli_util.option('--forwarding-address', help=u"""An IP address from which forwarded queries may be sent. For VNIC endpoints, this IP address must be part of the subnet and will be assigned by the system if unspecified when isForwarding is true.""")
 @cli_util.option('--listening-address', help=u"""An IP address to listen to queries on. For VNIC endpoints this IP address must be part of the subnet and will be assigned by the system if unspecified when isListening is true.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security group OCIDs for the resolver endpoint. These must be part of the VCN that the resolver endpoint is a part of.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state UPDATING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'dns', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'dns', 'class': 'list[string]'}, 'security-attributes': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'dns', 'class': 'list[string]'}}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'dns', 'class': 'list[string]'}, 'security-attributes': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
 @cli_util.wrap_exceptions
-def create_resolver_endpoint_create_resolver_vnic_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, name, is_forwarding, is_listening, subnet_id, forwarding_address, listening_address, nsg_ids, scope):
+def create_resolver_endpoint_create_resolver_vnic_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, name, is_forwarding, is_listening, subnet_id, forwarding_address, listening_address, freeform_tags, defined_tags, nsg_ids, security_attributes, scope):
 
     if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
@@ -550,8 +561,17 @@ def create_resolver_endpoint_create_resolver_vnic_endpoint_details(ctx, from_jso
     if listening_address is not None:
         _details['listeningAddress'] = listening_address
 
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     _details['endpointType'] = 'VNIC'
 
@@ -630,7 +650,7 @@ This option is a JSON list with items of type SteeringPolicyAnswer.  For documen
 
 This option is a JSON list with items of type SteeringPolicyRule.  For documentation on SteeringPolicyRule please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dns/20180115/datatypes/SteeringPolicyRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'answers': {'module': 'dns', 'class': 'list[SteeringPolicyAnswer]'}, 'rules': {'module': 'dns', 'class': 'list[SteeringPolicyRule]'}})
@@ -1005,7 +1025,7 @@ This option is a JSON list with items of type ExternalMaster.  For documentation
 @cli_util.option('--external-downstreams', type=custom_types.CLI_COMPLEX_TYPE, help=u"""External secondary servers for the zone. This field is currently not supported when `zoneType` is `SECONDARY` or `scope` is `PRIVATE`.
 
 This option is a JSON list with items of type ExternalDownstream.  For documentation on ExternalDownstream please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/dns/20180115/datatypes/ExternalDownstream.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--resolution-mode', type=custom_types.CliCaseInsensitiveChoice(["STATIC", "TRANSPARENT", "RTYPE_TRANSPARENT"]), help=u"""The resolution mode of a zone defines behavior related to how query responses can be handled.""")
+@cli_util.option('--resolution-mode', type=custom_types.CliCaseInsensitiveChoice(["STATIC", "TRANSPARENT", "RTYPE_TRANSPARENT"]), help=u"""The resolution mode of a zone defines behavior related to how query responses can be handled. See [Private DNS Zone Transparency] for more information.""")
 @cli_util.option('--dnssec-state', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The state of DNSSEC on the zone.
 
 For DNSSEC to function, every parent zone in the DNS tree up to the top-level domain (or an independent trust anchor) must also have DNSSEC correctly set up. After enabling DNSSEC, you must add a DS record to the zone's parent zone containing the `KskDnssecKeyVersion` data. You can find the DS data in the `dsData` attribute of the `KskDnssecKeyVersion`. Then, use the `PromoteZoneDnssecKeyVersion` operation to promote the `KskDnssecKeyVersion`.
@@ -2425,7 +2445,7 @@ def list_resolvers(ctx, from_json, all_pages, page_size, compartment_id, display
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""An [RFC 3339] timestamp that states all returned resources were created on or after the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""An [RFC 3339] timestamp that states all returned resources were created before the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--template', help=u"""Search by steering template type. Will match any resource whose template type matches the provided value.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), help=u"""The state of a resource.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETED", "DELETING"]), help=u"""The state of a resource.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "template"]), help=u"""The field by which to sort steering policies. If unspecified, defaults to `timeCreated`.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
@@ -3317,24 +3337,31 @@ def update_resolver(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--resolver-endpoint-name', required=True, help=u"""The name of the target resolver endpoint.""")
 @cli_util.option('--endpoint-type', type=custom_types.CliCaseInsensitiveChoice(["VNIC"]), help=u"""The type of resolver endpoint. VNIC is currently the only supported type.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state UPDATING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
 @cli_util.wrap_exceptions
-def update_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, resolver_endpoint_name, endpoint_type, if_match, if_unmodified_since, scope):
+def update_resolver_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, resolver_endpoint_name, endpoint_type, freeform_tags, defined_tags, if_match, if_unmodified_since, scope):
 
     if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
 
     if isinstance(resolver_endpoint_name, six.string_types) and len(resolver_endpoint_name.strip()) == 0:
         raise click.UsageError('Parameter --resolver-endpoint-name cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -3349,6 +3376,12 @@ def update_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if endpoint_type is not None:
         _details['endpointType'] = endpoint_type
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('dns', 'dns', ctx)
     result = client.update_resolver_endpoint(
@@ -3386,7 +3419,10 @@ def update_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, w
 @resolver_endpoint_group.command(name=cli_util.override('dns.update_resolver_endpoint_update_resolver_vnic_endpoint_details.command_name', 'update-resolver-endpoint-update-resolver-vnic-endpoint-details'), help=u"""Updates the specified resolver endpoint with your new information. \n[Command Reference](updateResolverEndpoint)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--resolver-endpoint-name', required=True, help=u"""The name of the target resolver endpoint.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security group OCIDs for the resolver endpoint. These must be part of the VCN that the resolver endpoint is a part of.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
@@ -3394,12 +3430,12 @@ def update_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state UPDATING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'dns', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'dns', 'class': 'list[string]'}, 'security-attributes': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'dns', 'class': 'list[string]'}}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'dns', 'class': 'list[string]'}, 'security-attributes': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
 @cli_util.wrap_exceptions
-def update_resolver_endpoint_update_resolver_vnic_endpoint_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, resolver_endpoint_name, nsg_ids, if_match, if_unmodified_since, scope):
+def update_resolver_endpoint_update_resolver_vnic_endpoint_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, resolver_endpoint_name, freeform_tags, defined_tags, nsg_ids, security_attributes, if_match, if_unmodified_since, scope):
 
     if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
@@ -3407,8 +3443,8 @@ def update_resolver_endpoint_update_resolver_vnic_endpoint_details(ctx, from_jso
     if isinstance(resolver_endpoint_name, six.string_types) and len(resolver_endpoint_name.strip()) == 0:
         raise click.UsageError('Parameter --resolver-endpoint-name cannot be whitespace or empty string')
     if not force:
-        if nsg_ids:
-            if not click.confirm("WARNING: Updates to nsg-ids will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or nsg_ids or security_attributes:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3422,8 +3458,17 @@ def update_resolver_endpoint_update_resolver_vnic_endpoint_details(ctx, from_jso
 
     _details = {}
 
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     _details['endpointType'] = 'VNIC'
 
@@ -3572,7 +3617,7 @@ This option is a JSON list with items of type SteeringPolicyRule.  For documenta
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'answers': {'module': 'dns', 'class': 'list[SteeringPolicyAnswer]'}, 'rules': {'module': 'dns', 'class': 'list[SteeringPolicyRule]'}})
@@ -3891,7 +3936,7 @@ Global secondary zones may have their external masters updated. For more informa
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
  **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--resolution-mode', type=custom_types.CliCaseInsensitiveChoice(["STATIC", "TRANSPARENT", "RTYPE_TRANSPARENT"]), help=u"""The resolution mode of a zone defines behavior related to how query responses can be handled.""")
+@cli_util.option('--resolution-mode', type=custom_types.CliCaseInsensitiveChoice(["STATIC", "TRANSPARENT", "RTYPE_TRANSPARENT"]), help=u"""The resolution mode of a zone defines behavior related to how query responses can be handled. See [Private DNS Zone Transparency] for more information.""")
 @cli_util.option('--dnssec-state', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The state of DNSSEC on the zone.
 
 For DNSSEC to function, every parent zone in the DNS tree up to the top-level domain (or an independent trust anchor) must also have DNSSEC correctly set up. After enabling DNSSEC, you must add a DS record to the zone's parent zone containing the `KskDnssecKeyVersion` data. You can find the DS data in the `dsData` attribute of the `KskDnssecKeyVersion`. Then, use the `PromoteZoneDnssecKeyVersion` operation to promote the `KskDnssecKeyVersion`.
