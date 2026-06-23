@@ -50,11 +50,13 @@ def _make_raw_request(ctx, target_uri, http_method, request_body, request_header
 
     jmespath_expression = cli_util.get_jmespath_expression_from_context(ctx)
 
-    # Deliberately a bit open as we can permit an empty string through as an empty request body
-    parsed_request_body = ''
-    if request_body is not None and request_body.strip() != '':
-        request_body_as_dict = cli_util.parse_json_parameter('request_body', request_body, 'camelize_keys', False)
-        parsed_request_body = json.dumps(request_body_as_dict)
+    parsed_request_body = None
+    if request_body is not None:
+        # Deliberately a bit open as we can permit an empty string through as an empty request body
+        parsed_request_body = ''
+        if request_body.strip() != '':
+            request_body_as_dict = cli_util.parse_json_parameter('request_body', request_body, 'camelize_keys', False)
+            parsed_request_body = json.dumps(request_body_as_dict)
 
     additional_headers = {}
     if request_headers:

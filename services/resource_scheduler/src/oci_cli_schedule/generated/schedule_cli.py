@@ -138,7 +138,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@schedule_group.command(name=cli_util.override('resource_scheduler.change_schedule_compartment.command_name', 'change-compartment'), help=u"""This API) moves a schedule into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeScheduleCompartment)""")
+@schedule_group.command(name=cli_util.override('resource_scheduler.change_schedule_compartment.command_name', 'change-compartment'), help=u"""This API moves a schedule into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeScheduleCompartment)""")
 @cli_util.option('--schedule-id', required=True, help=u"""This is the [OCID] of the schedule.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the schedule to.""")
 @cli_util.option('--if-match', help=u"""This is used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -201,7 +201,7 @@ def change_schedule_compartment(ctx, from_json, wait_for_state, max_wait_seconds
 
 @schedule_group.command(name=cli_util.override('resource_scheduler.create_schedule.command_name', 'create'), help=u"""This API creates a schedule. You must provide either resources or resourceFilters. \n[Command Reference](createSchedule)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the schedule is created""")
-@cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["START_RESOURCE", "STOP_RESOURCE"]), help=u"""This is the action that will be executed by the schedule.""")
+@cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["START_RESOURCE", "STOP_RESOURCE", "BACKUP_RESOURCE"]), help=u"""This is the action that will be executed by the schedule.""")
 @cli_util.option('--recurrence-details', required=True, help=u"""This is the frequency of recurrence of a schedule. The frequency field can either conform to RFC-5545 formatting or UNIX cron formatting for recurrences, based on the value specified by the recurrenceType field.""")
 @cli_util.option('--recurrence-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CRON", "ICAL"]), help=u"""Type of recurrence of a schedule""")
 @cli_util.option('--display-name', help=u"""This is a user-friendly name for the schedule. It does not have to be unique, and it's changeable.""")
@@ -463,6 +463,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @resource_type_collection_group.command(name=cli_util.override('resource_scheduler.list_resource_types.command_name', 'list-resource-types'), help=u"""This API gets a list of schedule resource types. \n[Command Reference](listResourceTypes)""")
 @cli_util.option('--compartment-id', help=u"""This is the [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--action-type', help=u"""This describes the Action Type""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""This used for list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -472,7 +473,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_scheduler', 'class': 'ResourceTypeCollection'})
 @cli_util.wrap_exceptions
-def list_resource_types(ctx, from_json, all_pages, page_size, compartment_id, limit, page):
+def list_resource_types(ctx, from_json, all_pages, page_size, compartment_id, action_type, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -480,6 +481,8 @@ def list_resource_types(ctx, from_json, all_pages, page_size, compartment_id, li
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if action_type is not None:
+        kwargs['action_type'] = action_type
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -756,7 +759,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.option('--schedule-id', required=True, help=u"""This is the [OCID] of the schedule.""")
 @cli_util.option('--display-name', help=u"""This is a user-friendly name for the schedule. It does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""This is the description of the schedule.""")
-@cli_util.option('--action', type=custom_types.CliCaseInsensitiveChoice(["START_RESOURCE", "STOP_RESOURCE"]), help=u"""This is the action that will be executed by the schedule.""")
+@cli_util.option('--action', type=custom_types.CliCaseInsensitiveChoice(["START_RESOURCE", "STOP_RESOURCE", "BACKUP_RESOURCE"]), help=u"""This is the action that will be executed by the schedule.""")
 @cli_util.option('--recurrence-details', help=u"""This is the frequency of recurrence of a schedule. The frequency field can either conform to RFC-5545 formatting or UNIX cron formatting for recurrences, based on the value specified by the recurrenceType field.""")
 @cli_util.option('--recurrence-type', type=custom_types.CliCaseInsensitiveChoice(["CRON", "ICAL"]), help=u"""Type of recurrence of a schedule""")
 @cli_util.option('--resource-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a list of resources filters.  The schedule will be applied to resources matching all of them.

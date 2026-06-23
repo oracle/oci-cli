@@ -6,6 +6,55 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.88.0 - 2026-06-23
+-------------------
+Added
+~~~~~
+* Support for global parameter federation-endpoint to override the auth service federation endpoint used with instance principal authentication
+
+  * ``oci <commands> --auth instance_principal --federation-endpoint``
+
+* Resource Scheduler service
+
+  * Support for ADBD Backup support
+
+    * ``oci resource-scheduler schedule create --action BACKUP_RESOURCE``
+    * ``oci resource-scheduler resource-type-collection list-resource-types --action-type BACKUP_RESOURCE``
+    * ``oci resource-scheduler schedule update --action BACKUP_RESOURCE``
+
+* API Gateway service
+
+  * Support for static redirect URLs in authentication policy plugins for deployments in create and update commands
+
+    * ``oci api-gateway deployment create --specification``
+    * ``oci api-gateway deployment update --specification``
+
+  * Support for 3 optional parameters in sdk update command
+
+    * ``oci api-gateway sdk update --max-wait-seconds --wait-for-state --wait-interval-seconds``
+
+* Container Engine service
+
+  * Support for virtual node pool cycling
+
+    * ``oci ce virtual-node-pool create --virtual-node-pool-cycling-details ``
+    * ``oci ce virtual-node-pool update --virtual-node-pool-cycling-details``
+
+* DNS service
+
+  * Support for Zero Trust Packet Routing (ZPR) security attributes, defined tags, and free-form tags for DNS resolver endpoint
+
+    * ``oci dns resolver-endpoint create --defined-tags --freeform-tags --security-attributes``
+    * ``oci dns resolver-endpoint update --defined-tags --freeform-tags --security-attributes``
+
+Changed
+~~~~~~~
+* API Gateway service
+
+  * [BREAKING] SDK update command now returns an `Sdk` payload instead of `None`
+
+    * ``oci api-gateway sdk update``
+
 3.87.0 - 2026-06-16
 -------------------
 Added

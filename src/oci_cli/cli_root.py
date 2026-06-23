@@ -106,6 +106,18 @@ To use this flag by default, set this flag to true in your OCI CLI-specific conf
 If the flag is used for a service that does not support such feature, the default endpoint will be used.
 """
 
+FEDERATION_ENDPOINT_HELP = """The full federation endpoint to use with --auth instance_principal.
+
+Example::
+    oci iam region list --auth instance_principal --federation-endpoint https://auth.us-ashburn-1.ds.oraclecloud.com/v1/x509
+
+Set this option only when you want to explicitly choose the federation endpoint.
+
+If you set both the command-line option (``--federation-endpoint``) and the environment variable (``OCI_CLI_FEDERATION_ENDPOINT``), the value passed with ``--federation-endpoint`` is used.
+
+If you do not set either one, the default federation endpoint behavior is used.
+"""
+
 GENERATE_PARAM_JSON_HELP = """Complex input, such as arrays and objects, are passed in JSON format.
 
 When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.
@@ -428,6 +440,7 @@ For more information about the cli configuration file, see {cli_constants.CLI_CO
 @click.option('--realm-specific-endpoint', is_flag=True, help=REALM_SPECIFIC_ENDPOINT_HELP)
 @click.option('--connection-timeout', 'connection_timeout', type=click.INT, callback=read_values_from_env, help='The value of the connection timeout in seconds to make establish connection from sdk to services. This will override the default connection timeout value of 10 secs. ')
 @click.option('--enable-dual-stack', is_flag=True, help=ENABLE_DUAL_STACK_HELP)
+@click.option('--federation-endpoint', callback=read_values_from_env, help=FEDERATION_ENDPOINT_HELP)
 @click.option('--read-timeout', 'read_timeout', type=click.INT, callback=read_values_from_env, help='The value of the read timeout in seconds to wait for service calls to send response to sdk. This will override the default read timeout value of 60 secs. ')
 @click.option('--cert-bundle', callback=read_values_from_env, help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
 @click.option('--output', type=click.Choice(choices=['json', 'table']), help='The output format. [Default is json]')
@@ -456,7 +469,7 @@ For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCU
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.option('--enable-propagation', is_flag=False, type=click.Choice(choices=['True', 'False']), help='Enable propagation of opc-request-id')
 @click.pass_context
-def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, enable_dual_stack, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, proxy, debug, cli_auto_prompt, connection_timeout, read_timeout, enable_propagation, help):
+def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, enable_dual_stack, federation_endpoint, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, proxy, debug, cli_auto_prompt, connection_timeout, read_timeout, enable_propagation, help):
 
     click.exceptions.UsageError.show = cli_util.update_click_help_message
     if max_retries and no_retry:
@@ -496,6 +509,7 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
         'realm_specific_endpoint': realm_specific_endpoint,
         'connection_timeout': connection_timeout,
         'enable_dual_stack': enable_dual_stack,
+        'federation_endpoint': federation_endpoint,
         'read_timeout': read_timeout,
         'cert_bundle': cert_bundle,
         'output': output,

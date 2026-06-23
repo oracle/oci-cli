@@ -7,7 +7,7 @@ import oci
 import os
 import six.moves
 import traceback
-from mock import patch
+from mock import mock_open, patch
 from oci_cli.cli_constants import OCI_CONFIG_REQUIRED_VARS as config_required_vars
 from conftest import runner
 
@@ -185,10 +185,170 @@ def test_root_level_options_overrides_environment_variable(config_file):
     os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = original_value
 
 
-def test_auth_instance_principal_param(config_file):
+def test_instance_principal_auth_uses_default_signer_without_federation_endpoint(config_file):
     with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
         result = invoke_example_operation(runner, ['--auth', 'instance_principal'], 'non-existent-config')
     assert mock_init.called
+    assert 'federation_endpoint' not in mock_init.call_args[1]
+
+
+def test_federation_endpoint_option_is_passed_to_instance_principal_signer(config_file):
+    expected_federation_endpoint = 'https://auth.us-ashburn-1.ds.oraclecloud.com/v1/x509'
+
+    with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
+        invoke_example_operation(
+            runner,
+            [
+                '--auth', 'instance_principal',
+                '--federation-endpoint', expected_federation_endpoint
+            ],
+            'non-existent-config'
+        )
+
+    assert mock_init.called
+    assert mock_init.call_args[1]['federation_endpoint'] == expected_federation_endpoint
+
+
+def test_federation_endpoint_env_var_is_passed_to_instance_principal_signer(config_file):
+    expected_federation_endpoint = 'https://auth.us-phoenix-1.ds.oraclecloud.com/v1/x509'
+
+    with patch.dict(os.environ, {oci_cli.cli_constants.OCI_CLI_FEDERATION_ENDPOINT_ENV_VAR: expected_federation_endpoint}, clear=False):
+        with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
+            invoke_example_operation(runner, ['--auth', 'instance_principal'], 'non-existent-config')
+
+    assert mock_init.called
+    assert mock_init.call_args[1]['federation_endpoint'] == expected_federation_endpoint
+
+
+def test_federation_endpoint_option_overrides_env_var_for_instance_principal_signer(config_file):
+    env_federation_endpoint = 'https://auth.us-phoenix-1.ds.oraclecloud.com/v1/x509'
+    option_federation_endpoint = 'https://auth.us-ashburn-1.ds.oraclecloud.com/v1/x509'
+
+    with patch.dict(os.environ, {oci_cli.cli_constants.OCI_CLI_FEDERATION_ENDPOINT_ENV_VAR: env_federation_endpoint}, clear=False):
+        with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
+            invoke_example_operation(
+                runner,
+                [
+                    '--auth', 'instance_principal',
+                    '--federation-endpoint', option_federation_endpoint
+                ],
+                'non-existent-config'
+            )
+
+    assert mock_init.called
+    assert mock_init.call_args[1]['federation_endpoint'] == option_federation_endpoint
+
+
+def test_empty_federation_endpoint_env_var_is_ignored_for_instance_principal_signer(config_file):
+    with patch.dict(
+        os.environ,
+        {oci_cli.cli_constants.OCI_CLI_FEDERATION_ENDPOINT_ENV_VAR: ''},
+        clear=False
+    ):
+        with patch.object(
+            oci.auth.signers.InstancePrincipalsSecurityTokenSigner,
+            '__init__',
+            return_value=None
+        ) as mock_init:
+            invoke_example_operation(
+                runner,
+                ['--auth', 'instance_principal'],
+                'non-existent-config'
+            )
+
+    assert mock_init.called
+    assert 'federation_endpoint' not in mock_init.call_args[1]
+
+
+def test_whitespace_only_federation_endpoint_env_var_is_ignored_for_instance_principal_signer(config_file):
+    with patch.dict(
+        os.environ,
+        {oci_cli.cli_constants.OCI_CLI_FEDERATION_ENDPOINT_ENV_VAR: '   '},
+        clear=False
+    ):
+        with patch.object(
+            oci.auth.signers.InstancePrincipalsSecurityTokenSigner,
+            '__init__',
+            return_value=None
+        ) as mock_init:
+            invoke_example_operation(
+                runner,
+                ['--auth', 'instance_principal'],
+                'non-existent-config'
+            )
+
+    assert mock_init.called
+    assert 'federation_endpoint' not in mock_init.call_args[1]
+
+
+def test_whitespace_only_federation_endpoint_option_is_ignored_for_instance_principal_signer(config_file):
+    with patch.object(
+        oci.auth.signers.InstancePrincipalsSecurityTokenSigner,
+        '__init__',
+        return_value=None
+    ) as mock_init:
+        invoke_example_operation(
+            runner,
+            [
+                '--auth', 'instance_principal',
+                '--federation-endpoint', '   '
+            ],
+            'non-existent-config'
+        )
+
+    assert mock_init.called
+    assert 'federation_endpoint' not in mock_init.call_args[1]
+
+
+def test_federation_endpoint_option_passes_through_non_ds_value_for_instance_principal_signer(config_file):
+    expected_federation_endpoint = 'https://auth.us-phoenix-1.oraclecloud.com/v1/x509'
+
+    with patch.object(
+        oci.auth.signers.InstancePrincipalsSecurityTokenSigner,
+        '__init__',
+        return_value=None
+    ) as mock_init:
+        invoke_example_operation(
+            runner,
+            [
+                '--auth', 'instance_principal',
+                '--federation-endpoint', expected_federation_endpoint
+            ],
+            'non-existent-config'
+        )
+
+    assert mock_init.called
+    assert mock_init.call_args[1]['federation_endpoint'] == expected_federation_endpoint
+
+
+def test_federation_endpoint_option_is_passed_to_instance_obo_user_signer(config_file):
+    expected_federation_endpoint = 'https://auth.us-ashburn-1.ds.oraclecloud.com/v1/x509'
+    delegation_token_file = '/tmp/delegation_token_file'
+
+    mocked_config = {
+        'delegation_token_file': delegation_token_file,
+        'region': 'us-phoenix-1'
+    }
+
+    with patch.object(oci_cli.cli_util, 'build_config', return_value=mocked_config):
+        with patch('os.path.exists', return_value=True):
+            with patch('builtins.open', mock_open(read_data='delegation-token')):
+                with patch.object(
+                    oci.auth.signers.InstancePrincipalsDelegationTokenSigner,
+                    '__init__',
+                    return_value=None
+                ) as mock_init:
+                    invoke_example_operation(
+                        runner,
+                        [
+                            '--auth', 'instance_obo_user',
+                            '--federation-endpoint', expected_federation_endpoint
+                        ],
+                        'internal_resources/config'
+                    )
+
+    assert mock_init.called
+    assert mock_init.call_args[1]['federation_endpoint'] == expected_federation_endpoint
 
 
 def test_auth_instance_principal_env_var(config_file):
