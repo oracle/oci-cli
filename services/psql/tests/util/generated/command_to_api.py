@@ -20,6 +20,7 @@ SDK_client_map = {
     "psql.get_connection_details": "oci.psql.PostgresqlClient.get_connection_details",
     "psql.get_db_system": "oci.psql.PostgresqlClient.get_db_system",
     "psql.get_default_configuration": "oci.psql.PostgresqlClient.get_default_configuration",
+    "psql.get_pitr_details": "oci.psql.PostgresqlClient.get_pitr_details",
     "psql.get_primary_db_instance": "oci.psql.PostgresqlClient.get_primary_db_instance",
     "psql.get_work_request": "oci.psql.PostgresqlClient.get_work_request",
     "psql.list_backups": "oci.psql.PostgresqlClient.list_backups",

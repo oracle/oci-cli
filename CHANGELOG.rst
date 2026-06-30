@@ -6,6 +6,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.89.0 - 2026-06-30
+-------------------
+Added
+~~~~~
+* Data Science service
+
+  * Support for configurable randomization windows for schedules
+
+    * ``oci data-science schedule create --trigger-initial-jitter-in-minutes``
+    * ``oci data-science schedule update --trigger-initial-jitter-in-minutes``
+
+* Object Storage Service
+
+  * Support for KMS Bucket Key in Object Storage
+
+    * ``oci os bucket create --is-bucket-key-enabled``
+    * ``oci os bucket update --is-bucket-key-enabled``
+    * ``oci os bucket reencrypt --is-reencrypt-bucket-key-only``
+
+* PGSQL Control Plane service
+
+  * Support for Point-in-Time Recovery (PITR) in PostgreSQL database systems
+
+    * ``oci psql db-system create-db-system-point-in-time-db-system-source-details``
+    * ``oci psql pitr-details get``
+    * ``oci psql backup-collection list-backups --backup-source-type``
+    * ``oci psql db-system restore --time-to-restore``
+
+* Resource Manager service
+
+  * Support for Bitbucket Cloud email/API token configuration source providers
+
+    * ``oci resource-manager configuration-source-provider create-configuration-source-provider-create-bitbucket-cloud-email-api-token-configuration-source-provider-details --api-endpoint --email --secret-id``
+    * ``oci resource-manager configuration-source-provider update-configuration-source-provider-update-bitbucket-cloud-email-api-token-configuration-source-provider-details --api-endpoint --email --secret-id``
+
+Changed
+~~~~~~~
+* Resource Manager service
+
+  * [BREAKING] Removal of deprecated Bitbucket Cloud username/app-password configuration source provider commands
+
+    * ``oci resource-manager configuration-source-provider create-configuration-source-provider-create-bitbucket-cloud-username-app-password-configuration-source-provider-details``
+    * ``oci resource-manager configuration-source-provider update-configuration-source-provider-update-bitbucket-cloud-username-app-password-configuration-source-provider-details``
+
 3.88.0 - 2026-06-23
 -------------------
 Added
