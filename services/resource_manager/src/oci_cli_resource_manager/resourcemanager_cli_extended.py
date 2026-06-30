@@ -829,3 +829,11 @@ cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, re
 
 # oci resource-manager stack update-stack-update-bitbucket-server-config-source-details -> oci resource-manager stack code
 cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.update_stack_update_bitbucket_server_config_source_details, "code")
+
+
+# oci resource-manager configuration-source-provider create-configuration-source-provider-create-bitbucket-cloud-email-api-token-configuration-source-provider-details -> oci resource-manager configuration-source-provider create-bitbucket-cloud-email-api-token-provider
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.create_configuration_source_provider_create_bitbucket_cloud_email_api_token_configuration_source_provider_details, "create-bitbucket-cloud-email-api-token-provider")
+
+
+# oci resource-manager configuration-source-provider update-configuration-source-provider-update-bitbucket-cloud-email-api-token-configuration-source-provider-details -> oci resource-manager configuration-source-provider update-bitbucket-cloud-email-api-token-provider
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.update_configuration_source_provider_update_bitbucket_cloud_email_api_token_configuration_source_provider_details, "update-bitbucket-cloud-email-api-token-provider")

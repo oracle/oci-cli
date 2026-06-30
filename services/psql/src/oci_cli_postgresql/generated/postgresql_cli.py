@@ -101,6 +101,12 @@ def db_system_replica_collection_group():
     pass
 
 
+@click.command(cli_util.override('psql.pitr_details_group.command_name', 'pitr-details'), cls=CommandGroupWithAlias, help="""Point-in-time recovery details""")
+@cli_util.help_option_group
+def pitr_details_group():
+    pass
+
+
 @click.command(cli_util.override('psql.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
@@ -126,6 +132,7 @@ psql_root_group.add_command(work_request_group)
 psql_root_group.add_command(default_configuration_collection_group)
 psql_root_group.add_command(shape_summary_group)
 psql_root_group.add_command(db_system_replica_collection_group)
+psql_root_group.add_command(pitr_details_group)
 psql_root_group.add_command(work_request_error_group)
 psql_root_group.add_command(backup_collection_group)
 
@@ -1263,6 +1270,132 @@ def create_db_system_none_source_details(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
+@db_system_group.command(name=cli_util.override('psql.create_db_system_point_in_time_db_system_source_details.command_name', 'create-db-system-point-in-time-db-system-source-details'), help=u"""Creates a new database system. \n[Command Reference](createDbSystem)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the database system. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the database system.""")
+@cli_util.option('--db-version', required=True, help=u"""Version of database system software.""")
+@cli_util.option('--storage-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', required=True, help=u"""The name of the shape for the database instance node. Use the /shapes API for accepted shapes. Example: `VM.Standard.E4.Flex`""")
+@cli_util.option('--network-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-db-system-id', required=True, help=u"""The [OCID] of the source database system which will be used to perform point-in-time recovery.""")
+@cli_util.option('--source-time-to-restore', required=True, type=custom_types.CLI_DATETIME, help=u"""The target point-in-time of the source database system that will be restored, expressed in [RFC 3339] timestamp format.
+
+Point-in-time recovery can only performed in granularity of seconds. Example: `2016-08-25T21:10:29Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--description', help=u"""A user-provided description of a database system.""")
+@cli_util.option('--system-type', help=u"""Type of the database system.""")
+@cli_util.option('--config-id', help=u"""The [OCID] of the configuration associated with the database system.""")
+@cli_util.option('--instance-ocpu-count', type=click.INT, help=u"""The total number of OCPUs available to each database instance node.""")
+@cli_util.option('--instance-memory-size-in-gbs', type=click.INT, help=u"""The total amount of memory available to each database instance node, in gigabytes.""")
+@cli_util.option('--instance-count', type=click.INT, help=u"""Count of database instances nodes to be created in the database system.""")
+@cli_util.option('--instances-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of database instances nodes to be created. This parameter is optional. If specified, its size must match `instanceCount`.
+
+This option is a JSON list with items of type CreateDbInstanceDetails.  For documentation on CreateDbInstanceDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/postgresql/20220915/datatypes/CreateDbInstanceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--management-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--odsp-insight-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'storage-details': {'module': 'psql', 'class': 'StorageDetails'}, 'instances-details': {'module': 'psql', 'class': 'list[CreateDbInstanceDetails]'}, 'credentials': {'module': 'psql', 'class': 'Credentials'}, 'network-details': {'module': 'psql', 'class': 'NetworkDetails'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'replication-config': {'module': 'psql', 'class': 'CreateReplicationConfigDetails'}, 'odsp-insight-details': {'module': 'psql', 'class': 'OdspInsightDetails'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'storage-details': {'module': 'psql', 'class': 'StorageDetails'}, 'instances-details': {'module': 'psql', 'class': 'list[CreateDbInstanceDetails]'}, 'credentials': {'module': 'psql', 'class': 'Credentials'}, 'network-details': {'module': 'psql', 'class': 'NetworkDetails'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'replication-config': {'module': 'psql', 'class': 'CreateReplicationConfigDetails'}, 'odsp-insight-details': {'module': 'psql', 'class': 'OdspInsightDetails'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'psql', 'class': 'DbSystem'})
+@cli_util.wrap_exceptions
+def create_db_system_point_in_time_db_system_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, storage_details, shape, network_details, source_db_system_id, source_time_to_restore, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, credentials, management_policy, replication_config, odsp_insight_details, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['source'] = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['dbVersion'] = db_version
+    _details['storageDetails'] = cli_util.parse_json_parameter("storage_details", storage_details)
+    _details['shape'] = shape
+    _details['networkDetails'] = cli_util.parse_json_parameter("network_details", network_details)
+    _details['source']['dbSystemId'] = source_db_system_id
+    _details['source']['timeToRestore'] = source_time_to_restore
+
+    if description is not None:
+        _details['description'] = description
+
+    if system_type is not None:
+        _details['systemType'] = system_type
+
+    if config_id is not None:
+        _details['configId'] = config_id
+
+    if instance_ocpu_count is not None:
+        _details['instanceOcpuCount'] = instance_ocpu_count
+
+    if instance_memory_size_in_gbs is not None:
+        _details['instanceMemorySizeInGBs'] = instance_memory_size_in_gbs
+
+    if instance_count is not None:
+        _details['instanceCount'] = instance_count
+
+    if instances_details is not None:
+        _details['instancesDetails'] = cli_util.parse_json_parameter("instances_details", instances_details)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if management_policy is not None:
+        _details['managementPolicy'] = cli_util.parse_json_parameter("management_policy", management_policy)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
+
+    if odsp_insight_details is not None:
+        _details['odspInsightDetails'] = cli_util.parse_json_parameter("odsp_insight_details", odsp_insight_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['source']['sourceType'] = 'POINT_IN_TIME_DB_SYSTEM'
+
+    client = cli_util.build_client('psql', 'postgresql', ctx)
+    result = client.create_db_system(
+        create_db_system_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @db_system_group.command(name=cli_util.override('psql.create_db_system_disabled_insight_details.command_name', 'create-db-system-disabled-insight-details'), help=u"""Creates a new database system. \n[Command Reference](createDbSystem)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the database system. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the database system.""")
@@ -1861,6 +1994,28 @@ def get_default_configuration(ctx, from_json, default_configuration_id):
     cli_util.render_response(result, ctx)
 
 
+@pitr_details_group.command(name=cli_util.override('psql.get_pitr_details.command_name', 'get'), help=u"""Gets the database system PITR details. \n[Command Reference](getPitrDetails)""")
+@cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'psql', 'class': 'PitrDetails'})
+@cli_util.wrap_exceptions
+def get_pitr_details(ctx, from_json, db_system_id):
+
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('psql', 'postgresql', ctx)
+    result = client.get_pitr_details(
+        db_system_id=db_system_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @db_system_group.command(name=cli_util.override('psql.get_primary_db_instance.command_name', 'get-primary-db-instance'), help=u"""Gets the primary database instance node details. \n[Command Reference](getPrimaryDbInstance)""")
 @cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1917,6 +2072,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--backup-source-type', help=u"""A filter to return only backups whose backupSourceType matches the given backupSourceType""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1924,7 +2080,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'psql', 'class': 'BackupCollection'})
 @cli_util.wrap_exceptions
-def list_backups(ctx, from_json, all_pages, page_size, compartment_id, time_started, time_ended, lifecycle_state, display_name, backup_id, id, limit, page, sort_order, sort_by):
+def list_backups(ctx, from_json, all_pages, page_size, compartment_id, time_started, time_ended, lifecycle_state, display_name, backup_id, id, limit, page, sort_order, sort_by, backup_source_type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1952,6 +2108,8 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, time_star
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if backup_source_type is not None:
+        kwargs['backup_source_type'] = backup_source_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('psql', 'postgresql', ctx)
     if all_pages:
@@ -2837,8 +2995,11 @@ def restart_db_instance_in_db_system(ctx, from_json, wait_for_state, max_wait_se
 
 @db_system_group.command(name=cli_util.override('psql.restore_db_system.command_name', 'restore'), help=u"""Restore the database system. \n[Command Reference](restoreDbSystem)""")
 @cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
-@cli_util.option('--backup-id', required=True, help=u"""The [OCID] of the database system backup.""")
+@cli_util.option('--backup-id', help=u"""The [OCID] of the database system backup.""")
 @cli_util.option('--ad', help=u"""The desired AD for regions with three ADs. This parameter is optional. If not set, the AD is chosen based on the database system's current AD.""")
+@cli_util.option('--time-to-restore', type=custom_types.CLI_DATETIME, help=u"""The target point-in-time that the database system restore can get started from, expressed in [RFC 3339] timestamp format.
+
+Example: `2016-08-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2848,7 +3009,7 @@ def restart_db_instance_in_db_system(ctx, from_json, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def restore_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, backup_id, ad, if_match):
+def restore_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, backup_id, ad, time_to_restore, if_match):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
@@ -2859,10 +3020,15 @@ def restore_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['backupId'] = backup_id
+
+    if backup_id is not None:
+        _details['backupId'] = backup_id
 
     if ad is not None:
         _details['ad'] = ad
+
+    if time_to_restore is not None:
+        _details['timeToRestore'] = time_to_restore
 
     client = cli_util.build_client('psql', 'postgresql', ctx)
     result = client.restore_db_system(

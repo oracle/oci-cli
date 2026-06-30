@@ -85,7 +85,7 @@ function VersionMeetsMinimumRequirements($Version, $MinVersion) {
     $VersionArray = @($Version.split('.'))
     $MinVersionArray = @($MinVersion.split('.'))
 
-    For ($i=0; $i -le $VersionArray.Length; $i++) {
+    For ($i=0; $i -lt $VersionArray.Length; $i++) {
         # if we have reached the end of the MinVersion and we still have digits on the system version then the version is sufficient
         if ($i -ge $MinVersionArray.Length) {
             return $true
@@ -124,27 +124,18 @@ function VerifyPythonExecutableMeetsMinimumRequirements {
         return $false
     }
 
-    # need to escape spaces in the path for Invoke-Expression
-    $EscapedExecutable = $PythonExecutable
-    $PythonVersion = Invoke-Expression "& `"$EscapedExecutable`" -c 'import platform;print(platform.python_version())'"
     $MinVersionToCheck = $MinValidPython3Version
+    Try {
+        $PythonVersion = & $PythonExecutable -c 'import platform;print(platform.python_version())'
+        if ($LastExitCode -ne 0) {
+            throw "Python version check failed with exit code $LastExitCode"
+        }
+    } Catch {
+        LogOutput "Ignoring Python registry entry because the Python executable could not be run: $PythonExecutable. Uninstall or repair this Python installation manually. If re-installing, please check that you install a python version above $MinVersionToCheck"
+        return $false
+    }
 
     if (VersionMeetsMinimumRequirements $PythonVersion $MinVersionToCheck) {
-        # If there is a valid python and it is not python 3
-        if ( (-Not $AcceptAllDefaults) -And $PythonVersion.StartsWith("2") -And ($MinVersionToCheck -ne $MinValidPython3Version)){
-            $message  = 'OCI-CLI requires python 3. Do you want to install Python 3?'
-            $question = 'Install Python 3 now? (Entering "n" will install OCI CLI using existing Python)'
-
-            $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-            $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-            $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-
-            $decision = $Host.UI.PromptForChoice($message, $question, $choices, 0)
-            if ($decision -eq 0) {
-                LogOutput 'Upgrading Python to Python 3...'
-                return $false
-            }
-        }
         return $true
     }
 
@@ -152,32 +143,51 @@ function VerifyPythonExecutableMeetsMinimumRequirements {
     return $false
 }
 
-#  Finds the most recent version of Python installed in the registry and returns
-#  the path for python.exe for that install (or $null if no install exists).
-#  Documentation on the registry structure: https://www.python.org/dev/peps/pep-0514/
-function FindLatestPythonExecutableInRegistry {
+# Finds the most recent usable version of Python installed in the registry and returns
+# the path for python.exe for that install, or $null if no usable install exists.
+# Documentation on the registry structure: https://www.python.org/dev/peps/pep-0514/
+function FindLatestUsablePythonExecutableInRegistry {
     Param(
         [Parameter(Mandatory=$true)]
         [string]$RootRegistryLocation
     )
 
-    $PythonExecutable = $null
     $PythonCoreRegistryLocation = "${RootRegistryLocation}:\Software\Python\PythonCore"
     if (Test-Path $PythonCoreRegistryLocation) {
-        LogOutput "Python found in registry: $PythonCoreRegistryLocation"
-        $PythonInstallations = (Get-ChildItem -recurse $PythonCoreRegistryLocation) | Sort-Object -Descending
-        if ($PythonInstallations) {
-           ForEach ($Installation in $PythonInstallations) {
-               # we are sorting by descending so this will grab the greatest installed version of python
-               If ($installation.Name.EndsWith("\InstallPath")) {
-                   $PythonInstallLocation = (Get-ItemProperty -LiteralPath $Installation.PSPath).'(default)'
-                   return Join-Path $PythonInstallLocation "python.exe"
-               }
-           }
-        }
-    }
+    	LogOutput "Python found in registry: $PythonCoreRegistryLocation"
+    	$PythonInstallations = (Get-ChildItem -recurse $PythonCoreRegistryLocation) | Sort-Object -Descending
+    	if ($PythonInstallations) {
+            ForEach ($PythonInstallation in $PythonInstallations) {
+                $Installation = $PythonInstallation
+                Try {
+                    $InstallPathProperties = Get-ItemProperty -LiteralPath $Installation.PSPath -ErrorAction Stop
+                } Catch {
+                    LogOutput "Ignoring Python registry entry because it could not be read: $($Installation.Name). Error: $($_.Exception.Message)"
+                    Continue
+                }
 
-    return $PythonExecutable
+                $PythonInstallLocation = $InstallPathProperties.'(default)'
+                if (-Not $PythonInstallLocation) {
+                    LogOutput "Ignoring Python registry entry with missing InstallPath default value: $($Installation.Name)"
+                    Continue
+                }
+				$PythonExecutable = $InstallPathProperties.ExecutablePath
+				if (-Not $PythonExecutable) {
+					$PythonExecutable = Join-Path $PythonInstallLocation "python.exe"
+				}
+				if (-Not (Test-Path -LiteralPath $PythonExecutable -PathType Leaf)) {
+					LogOutput "Ignoring stale Python registry entry. Executable does not exist: $PythonExecutable. Uninstall or repair this Python installation manually."
+					Continue
+				}
+                # Runtime validation of the executable is done by checking if the minimum requirements from the
+                # python executable is satisfied.
+				if (VerifyPythonExecutableMeetsMinimumRequirements -PythonExecutable $PythonExecutable) {
+					return $PythonExecutable
+				}
+			}
+    	}
+    }
+    return $null
 }
 
 function DownloadFile($Uri, $OutFile) {
@@ -307,24 +317,15 @@ Try {
 
     # check if Python is installed, and is greater than MinValidPythonVersion
     $PythonExecutable = $null
-    $CurrentUserPythonExecutable = FindLatestPythonExecutableInRegistry "HKCU"
-    $LocalMachinePythonExecutable = FindLatestPythonExecutableInRegistry "HKLM"
+    $CurrentUserPythonExecutable = FindLatestUsablePythonExecutableInRegistry "HKCU"
+    $LocalMachinePythonExecutable = FindLatestUsablePythonExecutableInRegistry "HKLM"
 
-    # if python is installed in the registry but the corresponding python.exe doesn't exist
-    # then the user will need to repair or uninstall python and re-run the script
-    $PythonInstallationCorruptErrorMessage = "Error: Python executable referenced in registry does not exist. Uninstall or repair your Python installation manually and then re-run this script."
-    $CurrentUserPythonInstallationExeMissing = $LocalMachinePythonExecutable -And (-Not (Test-Path $LocalMachinePythonExecutable))
-    $LocalMachinePythonInstallationExeMissing = $CurrentUserPythonExecutable -And (-Not (Test-Path $CurrentUserPythonExecutable))
-    If ($CurrentUserPythonInstallationExeMissing -Or $LocalMachinePythonInstallationExeMissing) {
-        Write-Error $PythonInstallationCorruptErrorMessage
-    }
-
-    If (VerifyPythonExecutableMeetsMinimumRequirements -PythonExecutable $LocalMachinePythonExecutable) {
-        $PythonExecutable = $LocalMachinePythonExecutable
-    }
-    ElseIf (VerifyPythonExecutableMeetsMinimumRequirements -PythonExecutable $CurrentUserPythonExecutable) {
-        $PythonExecutable = $CurrentUserPythonExecutable
-    }
+    If ($LocalMachinePythonExecutable) {
+		$PythonExecutable = $LocalMachinePythonExecutable
+	}
+	ElseIf ($CurrentUserPythonExecutable) {
+		$PythonExecutable = $CurrentUserPythonExecutable
+	}
     Else {
         LogOutput "No valid Python installation found."
 

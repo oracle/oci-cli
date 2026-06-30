@@ -5618,7 +5618,8 @@ def create_schedule_schedule_i_cal_trigger(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trigger-time-start', type=custom_types.CLI_DATETIME, help=u"""The schedule starting date time, if null, System set the time when schedule is created. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--trigger-time-end', type=custom_types.CLI_DATETIME, help=u"""The schedule end date time, if null, the schedule will never expire. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--trigger-is-random-start-time', type=click.BOOL, help=u"""when true and timeStart is null, system generate a random start time between now and now + interval; isRandomStartTime can be true if timeStart is null.""")
+@cli_util.option('--trigger-initial-jitter-in-minutes', type=click.INT, help=u"""Maximum number of minutes after timeStart that the scheduler may use to randomly select the first execution time. This value is considered only when isRandomStartTime is true. This value applies only to the initial execution; subsequent executions remain deterministic based on the resolved first trigger time. If timeStart is null, the service resolves the effective start time using the current time. The initial jitter window is then applied once to that resolved start time to determine the first execution time. If not provided and isRandomStartTime is true, the service defaults the jitter window to half of the configured interval duration. The value must not exceed the configured interval duration.""")
+@cli_util.option('--trigger-is-random-start-time', type=click.BOOL, help=u"""when true, system generates a randomized first start time between timeStart and timeStart + initialJitterInMinutes. if timeStart is null, the current time is used as the base start time.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5627,7 +5628,7 @@ def create_schedule_schedule_i_cal_trigger(ctx, from_json, wait_for_state, max_w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Schedule'})
 @cli_util.wrap_exceptions
-def create_schedule_schedule_interval_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, project_id, compartment_id, action, trigger_frequency, trigger_interval, description, log_details, freeform_tags, defined_tags, trigger_time_start, trigger_time_end, trigger_is_random_start_time):
+def create_schedule_schedule_interval_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, project_id, compartment_id, action, trigger_frequency, trigger_interval, description, log_details, freeform_tags, defined_tags, trigger_time_start, trigger_time_end, trigger_initial_jitter_in_minutes, trigger_is_random_start_time):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -5658,6 +5659,9 @@ def create_schedule_schedule_interval_trigger(ctx, from_json, wait_for_state, ma
 
     if trigger_time_end is not None:
         _details['trigger']['timeEnd'] = trigger_time_end
+
+    if trigger_initial_jitter_in_minutes is not None:
+        _details['trigger']['initialJitterInMinutes'] = trigger_initial_jitter_in_minutes
 
     if trigger_is_random_start_time is not None:
         _details['trigger']['isRandomStartTime'] = trigger_is_random_start_time
@@ -13795,7 +13799,8 @@ def update_schedule_schedule_i_cal_trigger(ctx, from_json, force, wait_for_state
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--trigger-time-start', type=custom_types.CLI_DATETIME, help=u"""The schedule starting date time, if null, System set the time when schedule is created. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--trigger-time-end', type=custom_types.CLI_DATETIME, help=u"""The schedule end date time, if null, the schedule will never expire. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--trigger-is-random-start-time', type=click.BOOL, help=u"""when true and timeStart is null, system generate a random start time between now and now + interval; isRandomStartTime can be true if timeStart is null.""")
+@cli_util.option('--trigger-initial-jitter-in-minutes', type=click.INT, help=u"""Maximum number of minutes after timeStart that the scheduler may use to randomly select the first execution time. This value is considered only when isRandomStartTime is true. This value applies only to the initial execution; subsequent executions remain deterministic based on the resolved first trigger time. If timeStart is null, the service resolves the effective start time using the current time. The initial jitter window is then applied once to that resolved start time to determine the first execution time. If not provided and isRandomStartTime is true, the service defaults the jitter window to half of the configured interval duration. The value must not exceed the configured interval duration.""")
+@cli_util.option('--trigger-is-random-start-time', type=click.BOOL, help=u"""when true, system generates a randomized first start time between timeStart and timeStart + initialJitterInMinutes. if timeStart is null, the current time is used as the base start time.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -13805,7 +13810,7 @@ def update_schedule_schedule_i_cal_trigger(ctx, from_json, force, wait_for_state
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_schedule_schedule_interval_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, trigger_frequency, trigger_interval, display_name, description, action, log_details, freeform_tags, defined_tags, if_match, trigger_time_start, trigger_time_end, trigger_is_random_start_time):
+def update_schedule_schedule_interval_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, trigger_frequency, trigger_interval, display_name, description, action, log_details, freeform_tags, defined_tags, if_match, trigger_time_start, trigger_time_end, trigger_initial_jitter_in_minutes, trigger_is_random_start_time):
 
     if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
@@ -13847,6 +13852,9 @@ def update_schedule_schedule_interval_trigger(ctx, from_json, force, wait_for_st
 
     if trigger_time_end is not None:
         _details['trigger']['timeEnd'] = trigger_time_end
+
+    if trigger_initial_jitter_in_minutes is not None:
+        _details['trigger']['initialJitterInMinutes'] = trigger_initial_jitter_in_minutes
 
     if trigger_is_random_start_time is not None:
         _details['trigger']['isRandomStartTime'] = trigger_is_random_start_time
