@@ -25,3 +25,4 @@ tests/temp
 .cache/
 .project
 .wercker/
+*.backup
