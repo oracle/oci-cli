@@ -17,16 +17,16 @@ CASSETTE_LIBRARY_DIR = 'services/devops/tests/cassettes'
 runner = runner()
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(autouse=True, scope='function')
 def vcr_fixture(request):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('devops_build_{name}.yml'.format(name=request.function.__name__)):
         yield
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def project_and_pipeline(config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('devops_build_project_and_pipeline_fixture.yml'):
         # create project
         notification_topic_id = 'ocid1.onstopic.oc1.iad.aaaaaaaatklfw3733kbwc2dzus633rb553dt52fdewujfea5tunntmqykmoq'
@@ -105,9 +105,9 @@ def test_build_pipeline_update(project_and_pipeline, config_file, config_profile
         "Update API should return updated build pipeline description"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def wait_stage(project_and_pipeline, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_wait_stage_fixture.yml'):
         # create wait stage
@@ -195,9 +195,9 @@ def test_wait_stage_update(project_and_pipeline, wait_stage, config_file, config
         "Update API should return updated build pipeline stage description"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def build_stage(project_and_pipeline, github_connection, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_build_stage_fixture.yml'):
         # create build stage
@@ -310,9 +310,9 @@ def test_build_stage_update(project_and_pipeline, build_stage, github_connection
         "Update API should return updated build pipeline stage description"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def deliver_artifact_stage(project_and_pipeline, build_stage, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_deliver_artifact_stage_fixture.yml'):
         # create deliver artifact stage
@@ -411,9 +411,9 @@ def test_deliver_artifact_stage_update(
         "Update API should return updated build pipeline stage description"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def trigger_deployment_stage(project_and_pipeline, build_stage, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_trigger_deployment_stage_fixture.yml'):
         project_id = project_and_pipeline[0]
@@ -516,9 +516,9 @@ def test_trigger_deployment_stage_update(
         "Update API should return updated build pipeline stage description"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def build_run(project_and_pipeline, wait_stage, build_stage, github_connection, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_build_run_fixture.yml'):
         # start build run
@@ -579,9 +579,9 @@ def test_build_run_list(project_and_pipeline, build_run, config_file, config_pro
     assert len(build_runs) > 0, "List API should return at least one build run"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def github_connection(project_and_pipeline, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_github_connection_fixture.yml'):
         # create connection
@@ -643,9 +643,9 @@ def test_github_connection_update(project_and_pipeline, github_connection, confi
         "Update API should return updated connection description"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def gitlab_connection(project_and_pipeline, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_gitlab_connection_fixture.yml'):
         # create connection
@@ -706,9 +706,9 @@ def test_gitlab_connection_update(project_and_pipeline, gitlab_connection, confi
         "Update API should return updated connection description"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def github_trigger(project_and_pipeline, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_github_trigger_fixture.yml'):
         # create trigger
@@ -790,9 +790,9 @@ def test_github_trigger_update(project_and_pipeline, github_trigger, config_file
         "Update API should return updated trigger description"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def gitlab_trigger(project_and_pipeline, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_gitlab_trigger_fixture.yml'):
         # create trigger

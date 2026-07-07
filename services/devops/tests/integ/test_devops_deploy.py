@@ -14,16 +14,16 @@ CASSETTE_LIBRARY_DIR = 'services/devops/tests/cassettes/devops_deploy'
 runner = runner()
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(autouse=True, scope='function')
 def vcr_fixture(request):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('devops_deploy_{name}.yml'.format(name=request.function.__name__)):
         yield
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def project_and_pipeline(config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('devops_deploy_test_project_and_pipeline_fixture.yml'):
         # create project
         notification_topic_id = 'ocid1.onstopic.oc1.phx.aaaaaaaa3kvkxuoaqazlomtuu4xdfdsjtlph3uyopf4y6zmv72wilmw6egsq'
@@ -64,9 +64,9 @@ def project_and_pipeline(config_file, config_profile):
         util.validate_response(result)
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def deploy_helm_repository_artifact(project_and_pipeline, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_deploy_artifact_helm_repository_artifact_fixture.yml'):
         # create deploy artifact
@@ -103,9 +103,9 @@ def test_get_helm_repository_artifact(deploy_helm_repository_artifact, config_fi
         "Get Deploy Artifact API should return correct deploy artifact id"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def deploy_helm_repository_artifact_verification_key_source(project_and_pipeline, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_deploy_artifact_helm_repository_artifact_verification_key_source_fixture.yml'):
         # create deploy artifact
@@ -182,9 +182,9 @@ def test_get_helm_repository_artifact_verification_source(deploy_helm_repository
         "Get Deploy Artifact API should return correct vault secret OCID"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def deploy_oke_cluster_environment(project_and_pipeline, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_deploy_environment_oke_cluster_environment_fixture.yml'):
         # create deploy environment
@@ -217,9 +217,9 @@ def test_get_oke_cluster_environment(deploy_oke_cluster_environment, config_file
         "Get Deploy Environment API should return correct deploy environment id"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def deploy_oke_helm_chart_stage(project_and_pipeline, deploy_helm_repository_artifact, deploy_oke_cluster_environment, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_deploy_stage_oke_helm_chart_stage_fixture.yml'):
         # create deploy stage
@@ -292,9 +292,9 @@ def test_get_deploy_oke_helm_chart_stage(deploy_oke_helm_chart_stage, config_fil
         "Get Deploy Stage API should return correct should-cleanup-on-fail value"
 
 
-@pytest.mark.skip('failed in validation')
 @pytest.fixture(scope='module')
 def dry_run_pipeline_deployment(project_and_pipeline, config_file, config_profile):
+    pytest.skip('failed in validation')
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_deploy_deployment_dry_run_fixture.yml'):
         pipeline_id = project_and_pipeline[1]

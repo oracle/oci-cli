@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.89.1 - 2026-07-07
+-------------------
+Security
+~~~~~~~~
+- Updated urllib3 dependency to `2.7.0` for python versions `>= 3.10` per: https://www.cve.org/CVERecord?id=CVE-2026-44432 and https://www.cve.org/CVERecord?id=CVE-2026-44431
+- Updated pyasn1 dependency to `0.5.0` for python versions `< 3.8` and `0.6.3` for `>= 3.8` per: https://www.cve.org/CVERecord?id=CVE-2026-30922
+- Updated pytest dependency to `7.0.1` for python versions `<= 3.10` and `9.0.3` for `>= 3.11` per: https://www.cve.org/CVERecord?id=CVE-2025-71176
+
+
 3.89.0 - 2026-06-30
 -------------------
 Added
@@ -307,14 +316,14 @@ Added
     * ``oci network vnic assign-ipv6 --hostname``
 
 * Database service
-  
+
   * Support for Oracle Database Managed Software Updates on Oracle Exadata Database Service on Exascale Infrastructure (ExaDB-XS)
 
     * Support for creating database using managed software updates
 
       * ``oci db database create --msu-details``
       * ``oci db database create-from-backup --msu-details``
-    
+
     * Support for updating existing database to register managed software updates
 
       * ``oci db database update --msu-details``
@@ -325,7 +334,7 @@ Added
 
 * Managed Kafka service
 
-  * Support for public connectivity addons in Oracle Streaming with Apache Kafka(OSAK) Service 
+  * Support for public connectivity addons in Oracle Streaming with Apache Kafka(OSAK) Service
 
     * ``oci kafka addon-options list-addon-options``
     * ``oci kafka cluster get-addon``
@@ -362,11 +371,11 @@ Changed
 
   * ``--cidrblock`` is now an optional parameter for creating subnet
 
-    * ``oci network subnet create --cidrblock``  
+    * ``oci network subnet create --cidrblock``
 
   * [BREAKING] Support for workrequestid additions in AttachVolume, DetachVolume and TerminateInstance
 
-    * Allowed values for the parameter ``--wait-for-state`` are ACCEPTED, FAILED, IN_PROGRESS, SUCCEEDED in the following commands as it waits until the work request reaches a certain state 
+    * Allowed values for the parameter ``--wait-for-state`` are ACCEPTED, FAILED, IN_PROGRESS, SUCCEEDED in the following commands as it waits until the work request reaches a certain state
 
       * ``oci compute volume-attachment detach --wait-for-state``
       * ``oci compute instance terminate --wait-for-state``

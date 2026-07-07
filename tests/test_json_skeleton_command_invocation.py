@@ -93,9 +93,9 @@ def prepare_input_file_folder():
     shutil.rmtree(INPUT_FILE_FOLDER)
 
 
-@pytest.mark.skip('Skipped to allow DEX-14528')
 @pytest.fixture(scope='module')
 def network_resources():
+    pytest.skip("Skipped to allow DEX-14528")
     with test_config_container.create_vcr().use_cassette('json_skeleton_command_invoke_fixture_network_resources.yml'):
         vcn_name = util.random_name('cli_test_json_skeleton')
         cidr_block = "10.0.0.0/16"
