@@ -9,8 +9,8 @@ If you think you've found a security vulnerability, do not open a GitHub issue.
 Instead, follow the instructions in our [security policy](./SECURITY.md).
 
 To report a bug or request an enhancement that is not related to a security
-vulnerabiliity, open a GitHub issue. When filing a bug, remember that the better
-written the bug is, the more easier and more likely it is to be reproduced and
+vulnerability, open a GitHub issue. When filing a bug, remember that the better
+written the bug is, the easier and more likely it is to be reproduced and
 fixed.
 
 ## Pre-requisites for code or documentation submissions
