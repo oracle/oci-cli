@@ -174,15 +174,16 @@ This option is a JSON list with items of type CreateImagePullSecretDetails.  For
 @cli_util.option('--container-restart-policy', help=u"""Container restart policy""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-context', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'shape-config': {'module': 'container_instances', 'class': 'CreateContainerInstanceShapeConfigDetails'}, 'volumes': {'module': 'container_instances', 'class': 'list[CreateContainerVolumeDetails]'}, 'containers': {'module': 'container_instances', 'class': 'list[CreateContainerDetails]'}, 'vnics': {'module': 'container_instances', 'class': 'list[CreateContainerVnicDetails]'}, 'dns-config': {'module': 'container_instances', 'class': 'CreateContainerDnsConfigDetails'}, 'image-pull-secrets': {'module': 'container_instances', 'class': 'list[CreateImagePullSecretDetails]'}, 'freeform-tags': {'module': 'container_instances', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_instances', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'shape-config': {'module': 'container_instances', 'class': 'CreateContainerInstanceShapeConfigDetails'}, 'volumes': {'module': 'container_instances', 'class': 'list[CreateContainerVolumeDetails]'}, 'containers': {'module': 'container_instances', 'class': 'list[CreateContainerDetails]'}, 'vnics': {'module': 'container_instances', 'class': 'list[CreateContainerVnicDetails]'}, 'dns-config': {'module': 'container_instances', 'class': 'CreateContainerDnsConfigDetails'}, 'image-pull-secrets': {'module': 'container_instances', 'class': 'list[CreateImagePullSecretDetails]'}, 'freeform-tags': {'module': 'container_instances', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_instances', 'class': 'dict(str, dict(str, object))'}, 'security-context': {'module': 'container_instances', 'class': 'CreateContainerInstanceSecurityContextDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'container_instances', 'class': 'CreateContainerInstanceShapeConfigDetails'}, 'volumes': {'module': 'container_instances', 'class': 'list[CreateContainerVolumeDetails]'}, 'containers': {'module': 'container_instances', 'class': 'list[CreateContainerDetails]'}, 'vnics': {'module': 'container_instances', 'class': 'list[CreateContainerVnicDetails]'}, 'dns-config': {'module': 'container_instances', 'class': 'CreateContainerDnsConfigDetails'}, 'image-pull-secrets': {'module': 'container_instances', 'class': 'list[CreateImagePullSecretDetails]'}, 'freeform-tags': {'module': 'container_instances', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_instances', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'container_instances', 'class': 'ContainerInstance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'container_instances', 'class': 'CreateContainerInstanceShapeConfigDetails'}, 'volumes': {'module': 'container_instances', 'class': 'list[CreateContainerVolumeDetails]'}, 'containers': {'module': 'container_instances', 'class': 'list[CreateContainerDetails]'}, 'vnics': {'module': 'container_instances', 'class': 'list[CreateContainerVnicDetails]'}, 'dns-config': {'module': 'container_instances', 'class': 'CreateContainerDnsConfigDetails'}, 'image-pull-secrets': {'module': 'container_instances', 'class': 'list[CreateImagePullSecretDetails]'}, 'freeform-tags': {'module': 'container_instances', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_instances', 'class': 'dict(str, dict(str, object))'}, 'security-context': {'module': 'container_instances', 'class': 'CreateContainerInstanceSecurityContextDetails'}}, output_type={'module': 'container_instances', 'class': 'ContainerInstance'})
 @cli_util.wrap_exceptions
-def create_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, shape, shape_config, containers, vnics, display_name, fault_domain, volumes, dns_config, graceful_shutdown_timeout_in_seconds, image_pull_secrets, container_restart_policy, freeform_tags, defined_tags):
+def create_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, shape, shape_config, containers, vnics, display_name, fault_domain, volumes, dns_config, graceful_shutdown_timeout_in_seconds, image_pull_secrets, container_restart_policy, freeform_tags, defined_tags, security_context):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -221,6 +222,125 @@ def create_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_context is not None:
+        _details['securityContext'] = cli_util.parse_json_parameter("security_context", security_context)
+
+    client = cli_util.build_client('container_instances', 'container_instance', ctx)
+    result = client.create_container_instance(
+        create_container_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@container_instance_group.command(name=cli_util.override('container_instances.create_container_instance_create_linux_container_instance_security_context_details.command_name', 'create-container-instance-create-linux-container-instance-security-context-details'), help=u"""Creates a container instance and deploys the containers on it. \n[Command Reference](createContainerInstance)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the container instance runs.""")
+@cli_util.option('--shape', required=True, help=u"""The shape of the container instance. The shape determines the resources available to the container instance.""")
+@cli_util.option('--shape-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--containers', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The containers to create on this container instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vnics', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The networks available to containers on this container instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information. If you don't provide a name, a name is generated automatically.""")
+@cli_util.option('--fault-domain', help=u"""The fault domain where the container instance runs.""")
+@cli_util.option('--volumes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A volume is a directory with data that is accessible across multiple containers in a container instance.
+
+You can attach up to 32 volumes to single container instance.
+
+This option is a JSON list with items of type CreateContainerVolumeDetails.  For documentation on CreateContainerVolumeDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/containerinstance/20210415/datatypes/CreateContainerVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dns-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--graceful-shutdown-timeout-in-seconds', type=click.INT, help=u"""The amount of time that processes in a container have to gracefully end when the container must be stopped. For example, when you delete a container instance. After the timeout is reached, the processes are sent a signal to be deleted.""")
+@cli_util.option('--image-pull-secrets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The image pulls secrets so you can access private registry to pull container images.
+
+This option is a JSON list with items of type CreateImagePullSecretDetails.  For documentation on CreateImagePullSecretDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/containerinstance/20210415/datatypes/CreateImagePullSecretDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--container-restart-policy', help=u"""Container restart policy""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-context-fs-group', type=click.INT, help=u"""A special supplemental group that applies to all containers in the container instance. Some volume types allow the container instance to change ownership of the volume. The owning GID will be the fsGroup, the setgid bit will be set (new files will be owned by the fsGroup), and the permission bits are OR'd with rw-rw----. If unset, the container instance will not modify the ownership and permissions of volumes.""")
+@cli_util.option('--security-context-fs-group-change-policy', type=custom_types.CliCaseInsensitiveChoice(["ALWAYS", "ON_ROOT_MISMATCH"]), help=u"""Defines behavior of changing ownership and permission of the volume before being exposed inside the containers. This only applies to volumes which support fsGroup ownership and permissions, and will have no effect on ephemeral volumes. ON_ROOT_MISMATCH only changes permissions and ownership if the permission and ownership of the root directory does not match the expected permissions and ownership of the volume. This can improve container instance start times. ALWAYS  changes permission and ownership of the volume when it is mounted. If unset, ALWAYS is used.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'shape-config': {'module': 'container_instances', 'class': 'CreateContainerInstanceShapeConfigDetails'}, 'volumes': {'module': 'container_instances', 'class': 'list[CreateContainerVolumeDetails]'}, 'containers': {'module': 'container_instances', 'class': 'list[CreateContainerDetails]'}, 'vnics': {'module': 'container_instances', 'class': 'list[CreateContainerVnicDetails]'}, 'dns-config': {'module': 'container_instances', 'class': 'CreateContainerDnsConfigDetails'}, 'image-pull-secrets': {'module': 'container_instances', 'class': 'list[CreateImagePullSecretDetails]'}, 'freeform-tags': {'module': 'container_instances', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_instances', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'container_instances', 'class': 'CreateContainerInstanceShapeConfigDetails'}, 'volumes': {'module': 'container_instances', 'class': 'list[CreateContainerVolumeDetails]'}, 'containers': {'module': 'container_instances', 'class': 'list[CreateContainerDetails]'}, 'vnics': {'module': 'container_instances', 'class': 'list[CreateContainerVnicDetails]'}, 'dns-config': {'module': 'container_instances', 'class': 'CreateContainerDnsConfigDetails'}, 'image-pull-secrets': {'module': 'container_instances', 'class': 'list[CreateImagePullSecretDetails]'}, 'freeform-tags': {'module': 'container_instances', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_instances', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'container_instances', 'class': 'ContainerInstance'})
+@cli_util.wrap_exceptions
+def create_container_instance_create_linux_container_instance_security_context_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, shape, shape_config, containers, vnics, display_name, fault_domain, volumes, dns_config, graceful_shutdown_timeout_in_seconds, image_pull_secrets, container_restart_policy, freeform_tags, defined_tags, security_context_fs_group, security_context_fs_group_change_policy):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['securityContext'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['availabilityDomain'] = availability_domain
+    _details['shape'] = shape
+    _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
+    _details['containers'] = cli_util.parse_json_parameter("containers", containers)
+    _details['vnics'] = cli_util.parse_json_parameter("vnics", vnics)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if fault_domain is not None:
+        _details['faultDomain'] = fault_domain
+
+    if volumes is not None:
+        _details['volumes'] = cli_util.parse_json_parameter("volumes", volumes)
+
+    if dns_config is not None:
+        _details['dnsConfig'] = cli_util.parse_json_parameter("dns_config", dns_config)
+
+    if graceful_shutdown_timeout_in_seconds is not None:
+        _details['gracefulShutdownTimeoutInSeconds'] = graceful_shutdown_timeout_in_seconds
+
+    if image_pull_secrets is not None:
+        _details['imagePullSecrets'] = cli_util.parse_json_parameter("image_pull_secrets", image_pull_secrets)
+
+    if container_restart_policy is not None:
+        _details['containerRestartPolicy'] = container_restart_policy
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_context_fs_group is not None:
+        _details['securityContext']['fsGroup'] = security_context_fs_group
+
+    if security_context_fs_group_change_policy is not None:
+        _details['securityContext']['fsGroupChangePolicy'] = security_context_fs_group_change_policy
+
+    _details['securityContext']['securityContextType'] = 'LINUX'
 
     client = cli_util.build_client('container_instances', 'container_instance', ctx)
     result = client.create_container_instance(

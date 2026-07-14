@@ -157,3 +157,35 @@ cli_util.rename_command(compute_cli, compute_cli.firmware_bundles_collection_gro
 # Move commands under 'oci compute firmware-bundles-collection' -> 'oci compute firmware-bundle'
 compute_cli.compute_root_group.commands.pop(compute_cli.firmware_bundles_collection_group.name)
 compute_cli.firmware_bundle_group.add_command(compute_cli.list_firmware_bundles)
+
+
+# Remove create-compute-cluster-compute-bare-metal-host-placement-constraint-details from oci compute compute-cluster
+compute_cli.compute_cluster_group.commands.pop(compute_cli.create_compute_cluster_compute_bare_metal_host_placement_constraint_details.name)
+
+
+# Remove create-compute-cluster-compute-cluster-placement-constraint-details from oci compute compute-cluster
+compute_cli.compute_cluster_group.commands.pop(compute_cli.create_compute_cluster_compute_cluster_placement_constraint_details.name)
+
+
+# Remove create-compute-cluster-host-group-placement-constraint-details from oci compute compute-cluster
+compute_cli.compute_cluster_group.commands.pop(compute_cli.create_compute_cluster_host_group_placement_constraint_details.name)
+
+
+# Remove update-compute-cluster-compute-bare-metal-host-placement-constraint-details from oci compute compute-cluster
+compute_cli.compute_cluster_group.commands.pop(compute_cli.update_compute_cluster_compute_bare_metal_host_placement_constraint_details.name)
+
+
+# Remove update-compute-cluster-compute-cluster-placement-constraint-details from oci compute compute-cluster
+compute_cli.compute_cluster_group.commands.pop(compute_cli.update_compute_cluster_compute_cluster_placement_constraint_details.name)
+
+
+# Remove update-compute-cluster-host-group-placement-constraint-details from oci compute compute-cluster
+compute_cli.compute_cluster_group.commands.pop(compute_cli.update_compute_cluster_host_group_placement_constraint_details.name)
+
+
+# Remove create-dedicated-vm-host-compute-cluster-placement-constraint-details from oci compute dedicated-vm-host
+compute_cli.dedicated_vm_host_group.commands.pop(compute_cli.create_dedicated_vm_host_compute_cluster_placement_constraint_details.name)
+
+
+# Remove launch-instance-compute-cluster-placement-constraint-details from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_compute_cluster_placement_constraint_details.name)

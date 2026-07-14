@@ -248,6 +248,11 @@ service_mapping = {
         "Database Migration",
         "Migration"
     ],
+    "datacc": [
+        "datacc",
+        "Database Infrastructure Cloud@Customer Service",
+        "Others"
+    ],
     "db": [
         "database",
         "Database Service",

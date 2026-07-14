@@ -610,4 +610,6 @@ dbtools-runtime, database-api-gateway-config-pool-auto-api-spec, create, default
 dbtools-runtime, database-api-gateway-config-pool-auto-api-spec, update, default
 db, cloud-exa-infra, update
 opsi, opsi-private-endpoint, update
+db, database, create-from-backupdata-safe, private-endpoint, update
 db, database, create-from-backup
+data-safe, private-endpoint, update

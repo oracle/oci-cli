@@ -6,6 +6,84 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.89.2 - 2026-07-14
+-------------------
+Added
+~~~~~
+* Container Instance
+
+  * Support for FSS volumes (volumeType OCI_FSS_FILE_SYSTEM) and Linux security context when creating container instances
+
+    * ``oci container-instances container-instance create``
+    * ``oci container-instances container-instance create-container-instance-create-linux-container-instance-security-context-details``
+
+* Digital Assistant Service Instance
+
+  * Support for new optional parameter ``--security-attributes``
+
+    * ``oci oda management oda-private-endpoint create --security-attributes``
+    * ``oci oda management oda-private-endpoint update --security-attributes``
+
+* Compute Service
+
+  * Support for new optional parameter ``--placement-constraint-details`` (and related subcommands) for Compute Cluster, Dedicated VM Host, and Instance resources
+
+    * ``oci compute compute-cluster create --placement-constraint-details``
+    * ``oci compute compute-cluster update --placement-constraint-details``
+    * ``oci compute dedicated-vm-host create --placement-constraint-details``
+    * ``oci compute instance launch --placement-constraint-details``
+
+* Compute Management Service
+
+  * Support for GPU Memory Cluster (GMC) in instance configurations and instance pools
+
+    * ``oci compute-management instance-configuration create-instance-configuration-create-gmc-configuration-details --gmc-configs --source``
+    * ``oci compute-management instance-pool create --source``
+    * ``oci compute-management instance-pool update --source``
+
+* Generative AI Service Management
+
+  * Support for Hosted Application IAM operations
+
+    * ``oci generative-ai hosted-application-iam create``
+    * ``oci generative-ai hosted-application-iam delete``
+    * ``oci generative-ai hosted-application-iam get``
+    * ``oci generative-ai hosted-application-iam update``
+    * ``oci generative-ai hosted-application-iam change-compartment``
+    * ``oci generative-ai hosted-application-collection list-hosted-applications-iam``
+
+  * Support for new required parameter ``--inbound-auth-config`` on hosted application create and new optional parameters on hosted deployment artifact commands
+
+    * ``oci generative-ai hosted-application create --inbound-auth-config``
+    * ``oci generative-ai hosted-deployment create --artifact-is-vulnerability-scan-required``
+    * ``oci generative-ai hosted-deployment update --active-artifact-is-vulnerability-scan-required``
+
+* AiDataPlatform Control Plane
+
+  * Support for AI Agents features, including new command to enable AI feature and new optional parameters on create
+
+    * ``oci ai-data-platform ai-data-platform enable-ai-feature``
+    * ``oci ai-data-platform ai-data-platform create --is-enable-ai-feature --vector-db-id --vector-db-admin-cred --vector-db-admin-secret-id``
+
+* DataCC
+
+  * Support for the service
+
+    * ``oci datacc``
+
+Changed
+~~~~~~~
+* OS Management Hub
+
+  * ``--software-source-ids`` is now an optional parameter
+
+    * ``oci os-management-hub profile create-software-source-profile --software-source-ids``
+
+Security
+~~~~~~~~
+- Updated cryptography dependency to `>=3.2.1,<50.0.0` for all python versions per: https://advisories.gitlab.com/pypi/cryptography/GHSA-537c-gmf6-5ccf/
+
+
 3.89.1 - 2026-07-07
 -------------------
 Security

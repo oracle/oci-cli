@@ -5,18 +5,18 @@
 appdirs==1.4.3
 arrow>=1.0.0,<2.0.0
 certifi>=2025.1.31,<2026.0.0
-cffi>=1.9.1,<2.0.0
+cffi>=1.9.1,<=2.0.0
 click<=8.1.2
 coverage==6.2; python_version < '3.9'
 coverage==7.10.7; python_version >= '3.9'
-cryptography>=3.2.1,<47.0.0
+cryptography>=3.2.1,<50.0.0
 httpsig-cffi==15.0.0
 Jinja2<3.0.0; python_version == '3.6'
 Jinja2>=3.1.5,<4.0.0; python_version >= '3.7'
 jmespath>=0.10.0,<=1.0.1
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.181.1
+oci==2.182.0
 packaging>=22.0,<25.0; python_version > '3.8'
 packaging==20.2; python_version <= '3.8'
 pluggy==0.13.0; python_version < '3.9'

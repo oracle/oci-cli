@@ -186,6 +186,14 @@ def work_request_log_entry_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai.hosted_application_iam_group.command_name', 'hosted-application-iam'), cls=CommandGroupWithAlias, help="""Hosted Application IAM, defines shared configurations that apply across multiple deployments of the Agent or MCP application.
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resources].""")
+@cli_util.help_option_group
+def hosted_application_iam_group():
+    pass
+
+
 @click.command(cli_util.override('generative_ai.generative_ai_project_group.command_name', 'generative-ai-project'), cls=CommandGroupWithAlias, help="""A GenerativeAiProject is a logical container that stores conversation, file and containers.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resources].""")
@@ -264,6 +272,7 @@ generative_ai_root_group.add_command(hosted_application_collection_group)
 generative_ai_root_group.add_command(imported_model_group)
 generative_ai_root_group.add_command(hosted_deployment_collection_group)
 generative_ai_root_group.add_command(work_request_log_entry_group)
+generative_ai_root_group.add_command(hosted_application_iam_group)
 generative_ai_root_group.add_command(generative_ai_project_group)
 generative_ai_root_group.add_command(model_collection_group)
 generative_ai_root_group.add_command(generative_ai_private_endpoint_group)
@@ -356,6 +365,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--artifact-is-vulnerability-scan-required', type=click.BOOL, help=u"""Optional flag that requires an OCI Vulnerability Scanning Service compliance report for this artifact before it can become active. When omitted, the value defaults to false.""")
 @cli_util.option('--artifact-container-uri', help=u"""image url.""")
 @cli_util.option('--artifact-tag', help=u"""image tag.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -366,7 +376,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def add_artifact_create_single_docker_artifact_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_deployment_id, freeform_tags, defined_tags, if_match, artifact_container_uri, artifact_tag):
+def add_artifact_create_single_docker_artifact_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_deployment_id, freeform_tags, defined_tags, if_match, artifact_is_vulnerability_scan_required, artifact_container_uri, artifact_tag):
 
     if isinstance(hosted_deployment_id, six.string_types) and len(hosted_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-deployment-id cannot be whitespace or empty string')
@@ -384,6 +394,9 @@ def add_artifact_create_single_docker_artifact_details(ctx, from_json, wait_for_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if artifact_is_vulnerability_scan_required is not None:
+        _details['artifact']['isVulnerabilityScanRequired'] = artifact_is_vulnerability_scan_required
 
     if artifact_container_uri is not None:
         _details['artifact']['containerUri'] = artifact_container_uri
@@ -695,6 +708,37 @@ def change_hosted_application_compartment(ctx, from_json, hosted_application_id,
     client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
     result = client.change_hosted_application_compartment(
         hosted_application_id=hosted_application_id,
+        change_hosted_application_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@hosted_application_iam_group.command(name=cli_util.override('generative_ai.change_hosted_application_iam_compartment.command_name', 'change-compartment'), help=u"""Moves a hosted application into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeHostedApplicationIamCompartment)""")
+@cli_util.option('--hosted-application-iam-id', required=True, help=u"""The [OCID] of the hosted application.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the hosted application to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_hosted_application_iam_compartment(ctx, from_json, hosted_application_iam_id, compartment_id, if_match):
+
+    if isinstance(hosted_application_iam_id, six.string_types) and len(hosted_application_iam_id.strip()) == 0:
+        raise click.UsageError('Parameter --hosted-application-iam-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.change_hosted_application_iam_compartment(
+        hosted_application_iam_id=hosted_application_iam_id,
         change_hosted_application_compartment_details=_details,
         **kwargs
     )
@@ -1283,11 +1327,11 @@ def create_generative_ai_project(ctx, from_json, wait_for_state, max_wait_second
 
 
 @hosted_application_group.command(name=cli_util.override('generative_ai.create_hosted_application.command_name', 'create'), help=u"""Creates a hosted application. \n[Command Reference](createHostedApplication)""")
+@cli_util.option('--inbound-auth-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly display name for the Hosted Application. Does not need to be unique and can be updated after creation.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID for the Hosted Application.""")
 @cli_util.option('--description', help=u"""The description for the Hosted Application.""")
 @cli_util.option('--scaling-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--inbound-auth-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--networking-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--storage-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of storage configuration for the Hosted Application. Defines a list of service-managed storage back-ends.
 
@@ -1304,17 +1348,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'inbound-auth-config': {'module': 'generative_ai', 'class': 'InboundAuthConfig'}, 'networking-config': {'module': 'generative_ai', 'class': 'NetworkingConfig'}, 'storage-configs': {'module': 'generative_ai', 'class': 'list[StorageConfig]'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'inbound-auth-config': {'module': 'generative_ai', 'class': 'InboundAuthConfig'}, 'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'networking-config': {'module': 'generative_ai', 'class': 'NetworkingConfig'}, 'storage-configs': {'module': 'generative_ai', 'class': 'list[StorageConfig]'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'inbound-auth-config': {'module': 'generative_ai', 'class': 'InboundAuthConfig'}, 'networking-config': {'module': 'generative_ai', 'class': 'NetworkingConfig'}, 'storage-configs': {'module': 'generative_ai', 'class': 'list[StorageConfig]'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'HostedApplication'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inbound-auth-config': {'module': 'generative_ai', 'class': 'InboundAuthConfig'}, 'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'networking-config': {'module': 'generative_ai', 'class': 'NetworkingConfig'}, 'storage-configs': {'module': 'generative_ai', 'class': 'list[StorageConfig]'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'HostedApplication'})
 @cli_util.wrap_exceptions
-def create_hosted_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, description, scaling_config, inbound_auth_config, networking_config, storage_configs, environment_variables, freeform_tags, defined_tags):
+def create_hosted_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inbound_auth_config, display_name, compartment_id, description, scaling_config, networking_config, storage_configs, environment_variables, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['inboundAuthConfig'] = cli_util.parse_json_parameter("inbound_auth_config", inbound_auth_config)
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
 
@@ -1323,9 +1368,6 @@ def create_hosted_application(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if scaling_config is not None:
         _details['scalingConfig'] = cli_util.parse_json_parameter("scaling_config", scaling_config)
-
-    if inbound_auth_config is not None:
-        _details['inboundAuthConfig'] = cli_util.parse_json_parameter("inbound_auth_config", inbound_auth_config)
 
     if networking_config is not None:
         _details['networkingConfig'] = cli_util.parse_json_parameter("networking_config", networking_config)
@@ -1345,6 +1387,97 @@ def create_hosted_application(ctx, from_json, wait_for_state, max_wait_seconds, 
     client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
     result = client.create_hosted_application(
         create_hosted_application_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@hosted_application_iam_group.command(name=cli_util.override('generative_ai.create_hosted_application_iam.command_name', 'create'), help=u"""Creates a hosted application. \n[Command Reference](createHostedApplicationIam)""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly display name for the Hosted Application. Does not need to be unique and can be updated after creation.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID for the Hosted Application.""")
+@cli_util.option('--description', help=u"""The description for the Hosted Application.""")
+@cli_util.option('--scaling-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--networking-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--storage-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of storage configuration for the Hosted Application. Defines a list of service-managed storage back-ends.
+
+This option is a JSON list with items of type StorageConfig.  For documentation on StorageConfig please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeai/20231130/datatypes/StorageConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--environment-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of environment variables for the Hosted Application. Defines a list of environment variables injected at runtime.
+
+This option is a JSON list with items of type EnvironmentVariable.  For documentation on EnvironmentVariable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeai/20231130/datatypes/EnvironmentVariable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'networking-config': {'module': 'generative_ai', 'class': 'NetworkingConfig'}, 'storage-configs': {'module': 'generative_ai', 'class': 'list[StorageConfig]'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'networking-config': {'module': 'generative_ai', 'class': 'NetworkingConfig'}, 'storage-configs': {'module': 'generative_ai', 'class': 'list[StorageConfig]'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'HostedApplicationIam'})
+@cli_util.wrap_exceptions
+def create_hosted_application_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, description, scaling_config, networking_config, storage_configs, environment_variables, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if scaling_config is not None:
+        _details['scalingConfig'] = cli_util.parse_json_parameter("scaling_config", scaling_config)
+
+    if networking_config is not None:
+        _details['networkingConfig'] = cli_util.parse_json_parameter("networking_config", networking_config)
+
+    if storage_configs is not None:
+        _details['storageConfigs'] = cli_util.parse_json_parameter("storage_configs", storage_configs)
+
+    if environment_variables is not None:
+        _details['environmentVariables'] = cli_util.parse_json_parameter("environment_variables", environment_variables)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.create_hosted_application_iam(
+        create_hosted_application_iam_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -1451,10 +1584,10 @@ def create_hosted_application_storage(ctx, from_json, wait_for_state, max_wait_s
 
 
 @hosted_deployment_group.command(name=cli_util.override('generative_ai.create_hosted_deployment.command_name', 'create'), help=u"""Creates a hosted deployment. \n[Command Reference](createHostedDeployment)""")
-@cli_util.option('--hosted-application-id', required=True, help=u"""The [OCID] of the application.""")
 @cli_util.option('--active-artifact', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--compartment-id', help=u"""The compartment OCID to create the hosted deployment in.""")
+@cli_util.option('--hosted-application-id', help=u"""The [OCID] of the HostedApplication parent.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1469,13 +1602,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'active-artifact': {'module': 'generative_ai', 'class': 'Artifact'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'HostedDeployment'})
 @cli_util.wrap_exceptions
-def create_hosted_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_id, active_artifact, display_name, compartment_id, freeform_tags, defined_tags):
+def create_hosted_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, active_artifact, display_name, compartment_id, hosted_application_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['hostedApplicationId'] = hosted_application_id
     _details['activeArtifact'] = cli_util.parse_json_parameter("active_artifact", active_artifact)
 
     if display_name is not None:
@@ -1483,6 +1615,9 @@ def create_hosted_deployment(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
+
+    if hosted_application_id is not None:
+        _details['hostedApplicationId'] = hosted_application_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1526,9 +1661,9 @@ def create_hosted_deployment(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @hosted_deployment_group.command(name=cli_util.override('generative_ai.create_hosted_deployment_single_docker_artifact.command_name', 'create-hosted-deployment-single-docker-artifact'), help=u"""Creates a hosted deployment. \n[Command Reference](createHostedDeployment)""")
-@cli_util.option('--hosted-application-id', required=True, help=u"""The [OCID] of the application.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--compartment-id', help=u"""The compartment OCID to create the hosted deployment in.""")
+@cli_util.option('--hosted-application-id', help=u"""The [OCID] of the HostedApplication parent.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1538,7 +1673,8 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--active-artifact-id', help=u"""if put artifact to a table, the id is needed""")
 @cli_util.option('--active-artifact-time-created', type=custom_types.CLI_DATETIME, help=u"""The date and time the artifact was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--active-artifact-hosted-deployment-id', help=u"""The [OCID] of the application.""")
-@cli_util.option('--active-artifact-status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "UPDATING"]), help=u"""The current status of the artifact.""")
+@cli_util.option('--active-artifact-is-vulnerability-scan-required', type=click.BOOL, help=u"""Optional flag that requires an OCI Vulnerability Scanning Service compliance report for this artifact before it can become active. When not provided, the value defaults to false and the artifact is not blocked on a scan result.""")
+@cli_util.option('--active-artifact-status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "UPDATING", "FAILED"]), help=u"""The current status of the artifact.""")
 @cli_util.option('--active-artifact-container-uri', help=u"""image url.""")
 @cli_util.option('--active-artifact-tag', help=u"""image tag.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1549,20 +1685,22 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'HostedDeployment'})
 @cli_util.wrap_exceptions
-def create_hosted_deployment_single_docker_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_id, display_name, compartment_id, freeform_tags, defined_tags, active_artifact_id, active_artifact_time_created, active_artifact_hosted_deployment_id, active_artifact_status, active_artifact_container_uri, active_artifact_tag):
+def create_hosted_deployment_single_docker_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, hosted_application_id, freeform_tags, defined_tags, active_artifact_id, active_artifact_time_created, active_artifact_hosted_deployment_id, active_artifact_is_vulnerability_scan_required, active_artifact_status, active_artifact_container_uri, active_artifact_tag):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['activeArtifact'] = {}
-    _details['hostedApplicationId'] = hosted_application_id
 
     if display_name is not None:
         _details['displayName'] = display_name
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
+
+    if hosted_application_id is not None:
+        _details['hostedApplicationId'] = hosted_application_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1578,6 +1716,9 @@ def create_hosted_deployment_single_docker_artifact(ctx, from_json, wait_for_sta
 
     if active_artifact_hosted_deployment_id is not None:
         _details['activeArtifact']['hostedDeploymentId'] = active_artifact_hosted_deployment_id
+
+    if active_artifact_is_vulnerability_scan_required is not None:
+        _details['activeArtifact']['isVulnerabilityScanRequired'] = active_artifact_is_vulnerability_scan_required
 
     if active_artifact_status is not None:
         _details['activeArtifact']['status'] = active_artifact_status
@@ -3264,6 +3405,62 @@ def delete_hosted_application(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@hosted_application_iam_group.command(name=cli_util.override('generative_ai.delete_hosted_application_iam.command_name', 'delete'), help=u"""Deletes a hosted application. You can only delete hosted application without attached resources. Before you delete a hosting hosted application, you must delete the endpoints associated to that application. Before you delete a fine-tuning hosted application, you must delete the custom model on that application. The delete action permanently deletes the cluster. This action can't be undone. \n[Command Reference](deleteHostedApplicationIam)""")
+@cli_util.option('--hosted-application-iam-id', required=True, help=u"""The [OCID] of the hosted application.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_hosted_application_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_iam_id, if_match):
+
+    if isinstance(hosted_application_iam_id, six.string_types) and len(hosted_application_iam_id.strip()) == 0:
+        raise click.UsageError('Parameter --hosted-application-iam-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.delete_hosted_application_iam(
+        hosted_application_iam_id=hosted_application_iam_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @hosted_application_storage_group.command(name=cli_util.override('generative_ai.delete_hosted_application_storage.command_name', 'delete'), help=u"""Deletes a hosted application. You can only delete hosted application without attached resources. Before you delete a hosting hosted application, you must delete the endpoints associated to that application. Before you delete a fine-tuning hosted application, you must delete the custom model on that application. The delete action permanently deletes the cluster. This action can't be undone. \n[Command Reference](deleteHostedApplicationStorage)""")
 @cli_util.option('--hosted-application-storage-id', required=True, help=u"""The [OCID] of the hosted application storage.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3788,6 +3985,28 @@ def get_hosted_application(ctx, from_json, hosted_application_id):
     client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
     result = client.get_hosted_application(
         hosted_application_id=hosted_application_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@hosted_application_iam_group.command(name=cli_util.override('generative_ai.get_hosted_application_iam.command_name', 'get'), help=u"""Gets information about a hosted application. \n[Command Reference](getHostedApplicationIam)""")
+@cli_util.option('--hosted-application-iam-id', required=True, help=u"""The [OCID] of the hosted application.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'HostedApplicationIam'})
+@cli_util.wrap_exceptions
+def get_hosted_application_iam(ctx, from_json, hosted_application_iam_id):
+
+    if isinstance(hosted_application_iam_id, six.string_types) and len(hosted_application_iam_id.strip()) == 0:
+        raise click.UsageError('Parameter --hosted-application-iam-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.get_hosted_application_iam(
+        hosted_application_iam_id=hosted_application_iam_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4441,10 +4660,73 @@ def list_hosted_applications(ctx, from_json, all_pages, page_size, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@hosted_deployment_collection_group.command(name=cli_util.override('generative_ai.list_hosted_deployments.command_name', 'list-hosted-deployments'), help=u"""Lists the hosted applications in a specific compartment. \n[Command Reference](listHostedDeployments)""")
+@hosted_application_collection_group.command(name=cli_util.override('generative_ai.list_hosted_applications_iam.command_name', 'list-hosted-applications-iam'), help=u"""Lists the hosted applications in a specific compartment. \n[Command Reference](listHostedApplicationsIam)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
-@cli_util.option('--application-id', help=u"""The [OCID] of the hosted application.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the hosted deployments that their lifecycle state matches the given lifecycle state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the hosted applications that their lifecycle state matches the given lifecycle state.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--id', help=u"""The [OCID] of the hosted application.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "lifecycleState"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'HostedApplicationCollection'})
+@cli_util.wrap_exceptions
+def list_hosted_applications_iam(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_hosted_applications_iam,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_hosted_applications_iam,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_hosted_applications_iam(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@hosted_deployment_collection_group.command(name=cli_util.override('generative_ai.list_hosted_deployments.command_name', 'list-hosted-deployments'), help=u"""Lists the hosted applications in a specific compartment. Provide either applicationId or applicationIamId to filter by parent. \n[Command Reference](listHostedDeployments)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--application-id', help=u"""The [OCID] of the HostedApplication parent.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the hosted deployments that their lifecycle state matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the hosted deployment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -5745,10 +6027,10 @@ def update_generative_ai_project(ctx, from_json, force, wait_for_state, max_wait
 
 @hosted_application_group.command(name=cli_util.override('generative_ai.update_hosted_application.command_name', 'update'), help=u"""Updates a hosted application. \n[Command Reference](updateHostedApplication)""")
 @cli_util.option('--hosted-application-id', required=True, help=u"""The [OCID] of the hosted application.""")
+@cli_util.option('--inbound-auth-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""An optional description of the hosted application.""")
 @cli_util.option('--scaling-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--inbound-auth-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--environment-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of environment variables for the Hosted Application. Defines a list of environment variables injected at runtime.
 
 This option is a JSON list with items of type EnvironmentVariable.  For documentation on EnvironmentVariable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeai/20231130/datatypes/EnvironmentVariable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5763,18 +6045,115 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'inbound-auth-config': {'module': 'generative_ai', 'class': 'InboundAuthConfig'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'inbound-auth-config': {'module': 'generative_ai', 'class': 'InboundAuthConfig'}, 'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'inbound-auth-config': {'module': 'generative_ai', 'class': 'InboundAuthConfig'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inbound-auth-config': {'module': 'generative_ai', 'class': 'InboundAuthConfig'}, 'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_hosted_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_id, display_name, description, scaling_config, inbound_auth_config, environment_variables, freeform_tags, defined_tags, if_match):
+def update_hosted_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_id, inbound_auth_config, display_name, description, scaling_config, environment_variables, freeform_tags, defined_tags, if_match):
 
     if isinstance(hosted_application_id, six.string_types) and len(hosted_application_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-id cannot be whitespace or empty string')
     if not force:
-        if scaling_config or inbound_auth_config or environment_variables or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to scaling-config and inbound-auth-config and environment-variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if inbound_auth_config or scaling_config or environment_variables or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to inbound-auth-config and scaling-config and environment-variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if inbound_auth_config is not None:
+        _details['inboundAuthConfig'] = cli_util.parse_json_parameter("inbound_auth_config", inbound_auth_config)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if scaling_config is not None:
+        _details['scalingConfig'] = cli_util.parse_json_parameter("scaling_config", scaling_config)
+
+    if environment_variables is not None:
+        _details['environmentVariables'] = cli_util.parse_json_parameter("environment_variables", environment_variables)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.update_hosted_application(
+        hosted_application_id=hosted_application_id,
+        update_hosted_application_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@hosted_application_iam_group.command(name=cli_util.override('generative_ai.update_hosted_application_iam.command_name', 'update'), help=u"""Updates a hosted application. \n[Command Reference](updateHostedApplicationIam)""")
+@cli_util.option('--hosted-application-iam-id', required=True, help=u"""The [OCID] of the hosted application.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', help=u"""An optional description of the hosted application.""")
+@cli_util.option('--scaling-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--environment-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of environment variables for the Hosted Application. Defines a list of environment variables injected at runtime.
+
+This option is a JSON list with items of type EnvironmentVariable.  For documentation on EnvironmentVariable please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/generativeai/20231130/datatypes/EnvironmentVariable.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scaling-config': {'module': 'generative_ai', 'class': 'ScalingConfig'}, 'environment-variables': {'module': 'generative_ai', 'class': 'list[EnvironmentVariable]'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_hosted_application_iam(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_iam_id, display_name, description, scaling_config, environment_variables, freeform_tags, defined_tags, if_match):
+
+    if isinstance(hosted_application_iam_id, six.string_types) and len(hosted_application_iam_id.strip()) == 0:
+        raise click.UsageError('Parameter --hosted-application-iam-id cannot be whitespace or empty string')
+    if not force:
+        if scaling_config or environment_variables or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to scaling-config and environment-variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -5793,9 +6172,6 @@ def update_hosted_application(ctx, from_json, force, wait_for_state, max_wait_se
     if scaling_config is not None:
         _details['scalingConfig'] = cli_util.parse_json_parameter("scaling_config", scaling_config)
 
-    if inbound_auth_config is not None:
-        _details['inboundAuthConfig'] = cli_util.parse_json_parameter("inbound_auth_config", inbound_auth_config)
-
     if environment_variables is not None:
         _details['environmentVariables'] = cli_util.parse_json_parameter("environment_variables", environment_variables)
 
@@ -5806,9 +6182,9 @@ def update_hosted_application(ctx, from_json, force, wait_for_state, max_wait_se
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
-    result = client.update_hosted_application(
-        hosted_application_id=hosted_application_id,
-        update_hosted_application_details=_details,
+    result = client.update_hosted_application_iam(
+        hosted_application_iam_id=hosted_application_iam_id,
+        update_hosted_application_iam_details=_details,
         **kwargs
     )
     if wait_for_state:
