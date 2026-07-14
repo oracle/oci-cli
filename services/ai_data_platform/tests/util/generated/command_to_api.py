@@ -6,6 +6,7 @@ SDK_client_map = {
     "ai_data_platform.change_ai_data_platform_compartment": "oci.ai_data_platform.AiDataPlatformClient.change_ai_data_platform_compartment",
     "ai_data_platform.create_ai_data_platform": "oci.ai_data_platform.AiDataPlatformClient.create_ai_data_platform",
     "ai_data_platform.delete_ai_data_platform": "oci.ai_data_platform.AiDataPlatformClient.delete_ai_data_platform",
+    "ai_data_platform.enable_ai_feature": "oci.ai_data_platform.AiDataPlatformClient.enable_ai_feature",
     "ai_data_platform.get_ai_data_platform": "oci.ai_data_platform.AiDataPlatformClient.get_ai_data_platform",
     "ai_data_platform.get_work_request": "oci.ai_data_platform.AiDataPlatformClient.get_work_request",
     "ai_data_platform.list_ai_data_platforms": "oci.ai_data_platform.AiDataPlatformClient.list_ai_data_platforms",

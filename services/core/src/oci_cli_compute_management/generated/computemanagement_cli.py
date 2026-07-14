@@ -48,7 +48,7 @@ def instance_group():
     pass
 
 
-@click.command(cli_util.override('compute_management.instance_configuration_group.command_name', 'instance-configuration'), cls=CommandGroupWithAlias, help="""An instance configuration is a template that defines the settings to use when creating Compute instances.""")
+@click.command(cli_util.override('compute_management.instance_configuration_group.command_name', 'instance-configuration'), cls=CommandGroupWithAlias, help="""An instance configuration is a template that defines the settings to use when creating Compute instances. An instance configuration is a template that defines the settings to use when creating Compute instances or GPU Memory Clusters. For more information about instance configurations, see [Managing Compute Instances].""")
 @cli_util.help_option_group
 def instance_configuration_group():
     pass
@@ -381,7 +381,7 @@ def create_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration.command_name', 'create'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances. \n[Command Reference](createInstanceConfiguration)""")
+@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration.command_name', 'create'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances or GPU Memory Clusters. \n[Command Reference](createInstanceConfiguration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -390,7 +390,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "INSTANCE"]), help=u"""The source of the instance configuration. An instance configuration defines the settings to use when creating Compute instances, including details such as the base image, shape, and metadata. You can also specify the associated resources for the instance, such as block volume attachments and network configuration.
+@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "INSTANCE", "GMC"]), help=u"""The source of the instance configuration. An instance configuration defines the settings to use when creating Compute instances, including details such as the base image, shape, and metadata. You can also specify the associated resources for the instance, such as block volume attachments and network configuration.
 
 When you create an instance configuration using an existing instance as a template, the instance configuration does not include any information from the source instance's boot volume, such as installed applications, binaries, and files on the instance. It also does not include the contents of any block volumes that are attached to the instance.
 
@@ -400,7 +400,7 @@ To include block volume contents with an instance configuration, first create a 
 
 The following values are supported:
 
-* `NONE`: Creates an instance configuration using the list of settings that you specify. * `INSTANCE`: Creates an instance configuration using an existing instance as a template.""")
+* `NONE`: Creates an instance configuration using the list of settings that you specify. * `INSTANCE`: Creates an instance configuration using an existing instance as a template. * `GMC`: Creates an instance configuration which can be used to create GMC backed pools.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -433,7 +433,49 @@ def create_instance_configuration(ctx, from_json, compartment_id, defined_tags, 
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration_create_instance_configuration_details.command_name', 'create-instance-configuration-create-instance-configuration-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances. \n[Command Reference](createInstanceConfiguration)""")
+@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration_create_gmc_configuration_details.command_name', 'create-instance-configuration-create-gmc-configuration-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances or GPU Memory Clusters. \n[Command Reference](createInstanceConfiguration)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance configuration.""")
+@cli_util.option('--gmc-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The GPU Memory Cluster configuration entries for.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'gmc-configs': {'module': 'core', 'class': 'list[InstanceConfigurationGmcConfigDetail]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'gmc-configs': {'module': 'core', 'class': 'list[InstanceConfigurationGmcConfigDetail]'}}, output_type={'module': 'core', 'class': 'InstanceConfiguration'})
+@cli_util.wrap_exceptions
+def create_instance_configuration_create_gmc_configuration_details(ctx, from_json, compartment_id, gmc_configs, defined_tags, display_name, freeform_tags):
+
+    kwargs = {}
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['gmcConfigs'] = cli_util.parse_json_parameter("gmc_configs", gmc_configs)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    _details['source'] = 'GMC'
+
+    client = cli_util.build_client('core', 'compute_management', ctx)
+    result = client.create_instance_configuration(
+        create_instance_configuration=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration_create_instance_configuration_details.command_name', 'create-instance-configuration-create-instance-configuration-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances or GPU Memory Clusters. \n[Command Reference](createInstanceConfiguration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance configuration.""")
 @cli_util.option('--instance-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -475,7 +517,7 @@ def create_instance_configuration_create_instance_configuration_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration_create_instance_configuration_from_instance_details.command_name', 'create-instance-configuration-create-instance-configuration-from-instance-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances. \n[Command Reference](createInstanceConfiguration)""")
+@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration_create_instance_configuration_from_instance_details.command_name', 'create-instance-configuration-create-instance-configuration-from-instance-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances or GPU Memory Clusters. \n[Command Reference](createInstanceConfiguration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance configuration.""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance to use to create the instance configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -525,7 +567,7 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. Provide one placement configuration for each availability domain.
 
 To use the instance pool with a regional subnet, provide a placement configuration for each availability domain, and include the regional subnet in each placement configuration. To use compute cluster with instance pool, provide a single placement configuration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--size', required=True, type=click.INT, help=u"""The number of instances that should be in the instance pool.""")
+@cli_util.option('--size', required=True, type=click.INT, help=u"""The number of instances that should be in the instance pool. For a GMC-enabled resource pool, this is the number of GMC resources that should be in the pool.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1874,7 +1916,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 To use the instance pool with a regional subnet, provide a placement configuration for each availability domain, and include the regional subnet in each placement configuration.
 
 This option is a JSON list with items of type UpdateInstancePoolPlacementConfigurationDetails.  For documentation on UpdateInstancePoolPlacementConfigurationDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/iaas/20160918/datatypes/UpdateInstancePoolPlacementConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--size', type=click.INT, help=u"""The number of instances that should be in the instance pool.
+@cli_util.option('--size', type=click.INT, help=u"""The number of instances that should be in the instance pool. For a GMC-enabled resource pool, this is the number of GMC resources that should be in the pool.
 
 To determine whether capacity is available for a specific shape before you resize an instance pool, use the [CreateComputeCapacityReport] operation.""")
 @cli_util.option('--instance-display-name-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance displaynames follow the format. The formatter does not retroactively change instance's displaynames, only instance displaynames in the future follow the format""")

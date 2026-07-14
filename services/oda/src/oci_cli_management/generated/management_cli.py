@@ -1766,15 +1766,16 @@ To monitor the status of the job, take the `opc-work-request-id` response header
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of [OCIDs] of [network security groups]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'oda', 'class': 'list[string]'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'oda', 'class': 'list[string]'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'oda', 'class': 'list[string]'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'oda', 'class': 'OdaPrivateEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'oda', 'class': 'list[string]'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'oda', 'class': 'OdaPrivateEndpoint'})
 @cli_util.wrap_exceptions
-def create_oda_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, display_name, description, nsg_ids, freeform_tags, defined_tags):
+def create_oda_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, display_name, description, nsg_ids, freeform_tags, defined_tags, security_attributes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1797,6 +1798,9 @@ def create_oda_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('oda', 'management', ctx)
     result = client.create_oda_private_endpoint(
@@ -6362,23 +6366,24 @@ def update_digital_assistant_parameter(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of [OCIDs] of [network security groups]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control in a PUT or DELETE call for a Digital Assistant instance, set the `if-match` query parameter to the value of the `ETAG` header from a previous GET or POST response for that instance. The service updates or deletes the instance only if the etag that you provide matches the instance's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'oda', 'class': 'list[string]'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'oda', 'class': 'list[string]'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'oda', 'class': 'list[string]'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'oda', 'class': 'list[string]'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_oda_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_private_endpoint_id, display_name, description, nsg_ids, freeform_tags, defined_tags, if_match):
+def update_oda_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_private_endpoint_id, display_name, description, nsg_ids, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(oda_private_endpoint_id, six.string_types) and len(oda_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-id cannot be whitespace or empty string')
     if not force:
-        if nsg_ids or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if nsg_ids or freeform_tags or defined_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6402,6 +6407,9 @@ def update_oda_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('oda', 'management', ctx)
     result = client.update_oda_private_endpoint(

@@ -281,6 +281,7 @@ SDK_client_map = {
     "data_safe.list_sql_firewall_violations": "oci.data_safe.DataSafeClient.list_sql_firewall_violations",
     "data_safe.list_tables": "oci.data_safe.DataSafeClient.list_tables",
     "data_safe.list_target_alert_policy_associations": "oci.data_safe.DataSafeClient.list_target_alert_policy_associations",
+    "data_safe.list_target_alert_policy_unassociated_members": "oci.data_safe.DataSafeClient.list_target_alert_policy_unassociated_members",
     "data_safe.list_target_database_groups": "oci.data_safe.DataSafeClient.list_target_database_groups",
     "data_safe.list_target_databases": "oci.data_safe.DataSafeClient.list_target_databases",
     "data_safe.list_target_overrides": "oci.data_safe.DataSafeClient.list_target_overrides",

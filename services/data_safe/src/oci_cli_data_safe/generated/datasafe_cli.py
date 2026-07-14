@@ -3832,15 +3832,16 @@ def create_audit_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'DataSafePrivateEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'DataSafePrivateEndpoint'})
 @cli_util.wrap_exceptions
-def create_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, vcn_id, subnet_id, private_endpoint_ip, description, nsg_ids, freeform_tags, defined_tags):
+def create_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, vcn_id, subnet_id, private_endpoint_ip, description, nsg_ids, freeform_tags, defined_tags, security_attributes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3865,6 +3866,9 @@ def create_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_s
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.create_data_safe_private_endpoint(
@@ -5140,7 +5144,7 @@ def create_sdm_masking_policy_difference(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@security_assessment_group.command(name=cli_util.override('data_safe.create_security_assessment.command_name', 'create'), help=u"""Creates a new saved security assessment for one or multiple targets in a compartment. When this operation is performed, it will save the latest assessments in the specified compartment. If a schedule is passed, it will persist the latest assessments, at the defined date and time, in the format defined by [RFC3339]. \n[Command Reference](createSecurityAssessment)""")
+@security_assessment_group.command(name=cli_util.override('data_safe.create_security_assessment.command_name', 'create'), help=u"""Creates a new saved security assessment for a target database or target database group in a compartment. When this operation is performed, it will save the latest assessment in the specified compartment. If a schedule is passed, it will persist the latest assessment, at the defined date and time, in the format defined by [RFC3339]. \n[Command Reference](createSecurityAssessment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the security assessment.""")
 @cli_util.option('--display-name', help=u"""The display name of the security assessment.""")
 @cli_util.option('--description', help=u"""Description of the security assessment.""")
@@ -6177,11 +6181,12 @@ def create_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @target_alert_policy_association_group.command(name=cli_util.override('data_safe.create_target_alert_policy_association.command_name', 'create'), help=u"""Creates a new target-alert policy association to track a alert policy applied on target. \n[Command Reference](createTargetAlertPolicyAssociation)""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the alert policy.""")
-@cli_util.option('--target-id', required=True, help=u"""The OCID of the target.""")
+@cli_util.option('--target-id', required=True, help=u"""The OCID of the target or target database group.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the target-alert policy association is created.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Indicates if the target-alert policy association is enabled or disabled by user.""")
 @cli_util.option('--display-name', help=u"""The display name of the target-alert policy association.""")
 @cli_util.option('--description', help=u"""Describes the target-alert policy association.""")
+@cli_util.option('--target-type', help=u"""The resource type that is represented by the alert policy association. Default is considered as TARGET_DATABASE.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6194,7 +6199,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetAlertPolicyAssociation'})
 @cli_util.wrap_exceptions
-def create_target_alert_policy_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, policy_id, target_id, compartment_id, is_enabled, display_name, description, freeform_tags, defined_tags):
+def create_target_alert_policy_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, policy_id, target_id, compartment_id, is_enabled, display_name, description, target_type, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -6210,6 +6215,9 @@ def create_target_alert_policy_association(ctx, from_json, wait_for_state, max_w
 
     if description is not None:
         _details['description'] = description
+
+    if target_type is not None:
+        _details['targetType'] = target_type
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -6993,7 +7001,7 @@ def create_unified_audit_policy(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@user_assessment_group.command(name=cli_util.override('data_safe.create_user_assessment.command_name', 'create'), help=u"""Creates a new saved user assessment for one or multiple targets in a compartment. It saves the latest assessments in the specified compartment. If a scheduled is passed in, this operation persists the latest assessments that exist at the defined date and time, in the format defined by [RFC3339]. \n[Command Reference](createUserAssessment)""")
+@user_assessment_group.command(name=cli_util.override('data_safe.create_user_assessment.command_name', 'create'), help=u"""Creates a new saved user assessment for a target database or target database group in a compartment. It saves the latest assessment in the specified compartment. If a schedule is passed in, this operation persists the latest assessment that exists at the defined date and time, in the format defined by [RFC3339]. \n[Command Reference](createUserAssessment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the user assessment.""")
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the target database or target database group on which user assessment is to be run.""")
 @cli_util.option('--description', help=u"""The description of the user assessment.""")
@@ -9518,13 +9526,16 @@ def download_privilege_script(ctx, from_json, file, if_match):
 @cli_util.option('--security-assessment-id', required=True, help=u"""The OCID of the security assessment.""")
 @cli_util.option('--format', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS", "STIGXLS"]), help=u"""Format of the Security Assessment report.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--is-single-report', type=click.BOOL, help=u"""Optional flag controlling the output format of a target group report: - true: Return a single consolidated report file for the entire target group. - false/null (default): Return a ZIP archive containing one file per target in the group.
+
+Important: - This flag is only applicable when the security assessment OCID refers to a target group assessment (targetType TARGET_DATABASE_GROUP). - If `isSingleReport` is set to true for an individual target (targetType TARGET_DATABASE), the request will return an error. - If `isSingleReport` is null or false for an individual target, the value is ignored and the selected output format for the assessment type is returned.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def download_security_assessment_report(ctx, from_json, file, security_assessment_id, format, if_match):
+def download_security_assessment_report(ctx, from_json, file, security_assessment_id, format, is_single_report, if_match):
 
     if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
@@ -9536,6 +9547,9 @@ def download_security_assessment_report(ctx, from_json, file, security_assessmen
 
     _details = {}
     _details['format'] = format
+
+    if is_single_report is not None:
+        _details['isSingleReport'] = is_single_report
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.download_security_assessment_report(
@@ -10120,6 +10134,7 @@ def generate_on_prem_connector_configuration(ctx, from_json, file, password, on_
 @cli_util.option('--time-less-than', type=custom_types.CLI_DATETIME, help=u"""Specifies the time until which the data needs to be reported.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-greater-than', type=custom_types.CLI_DATETIME, help=u"""Specifies the time after which the data needs to be reported.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--row-limit', type=click.INT, help=u"""Specifies the limit on the number of rows in the report.""")
+@cli_util.option('--is-pagination-enabled', type=click.BOOL, help=u"""Indicates if the reports being generated should be pagination enabled. If set to true, multiple reports can be generated and the details of next and previous report are present in Report. Values can either be 'true' or 'false'.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--scim-query', help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
 
@@ -10132,7 +10147,7 @@ def generate_on_prem_connector_configuration(ctx, from_json, file, password, on_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'target-group-ids': {'module': 'data_safe', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def generate_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, display_name, compartment_id, mime_type, target_ids, target_group_ids, description, time_less_than, time_greater_than, row_limit, if_match, scim_query):
+def generate_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, display_name, compartment_id, mime_type, target_ids, target_group_ids, description, time_less_than, time_greater_than, row_limit, is_pagination_enabled, if_match, scim_query):
 
     if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
@@ -10166,6 +10181,9 @@ def generate_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if row_limit is not None:
         _details['rowLimit'] = row_limit
+
+    if is_pagination_enabled is not None:
+        _details['isPaginationEnabled'] = is_pagination_enabled
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.generate_report(
@@ -10206,6 +10224,9 @@ def generate_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @security_assessment_group.command(name=cli_util.override('data_safe.generate_security_assessment_report.command_name', 'generate-security-assessment-report'), help=u"""Generates the report of the specified security assessment. You can get the report in PDF or XLS format. After generating the report, use DownloadSecurityAssessmentReport to download it in the preferred format. \n[Command Reference](generateSecurityAssessmentReport)""")
 @cli_util.option('--security-assessment-id', required=True, help=u"""The OCID of the security assessment.""")
 @cli_util.option('--format', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS", "STIGXLS"]), help=u"""Format of the Security Assessment report.""")
+@cli_util.option('--is-single-report', type=click.BOOL, help=u"""Optional flag controlling the output format of a target group report: - true: Generate a single consolidated report file for the entire target group. - false: Generate a ZIP archive containing one file per target in the group.
+
+Important: - This flag is only applicable when the security assessment OCID refers to a target group assessment (targetType TARGET_DATABASE_GROUP). - If `isSingleReport` is set to true for an individual target (targetType TARGET_DATABASE), the request will return an error. - If `isSingleReport` is null or false for an individual target, the value is ignored and the selected output format for the assessment type is generated.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -10215,7 +10236,7 @@ def generate_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def generate_security_assessment_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, format, if_match):
+def generate_security_assessment_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, format, is_single_report, if_match):
 
     if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
@@ -10227,6 +10248,9 @@ def generate_security_assessment_report(ctx, from_json, wait_for_state, max_wait
 
     _details = {}
     _details['format'] = format
+
+    if is_single_report is not None:
+        _details['isSingleReport'] = is_single_report
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.generate_security_assessment_report(
@@ -12094,7 +12118,7 @@ def list_alerts(ctx, from_json, all_pages, page_size, compartment_id, id, compar
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
-@cli_util.option('--associated-resource-type', type=custom_types.CliCaseInsensitiveChoice(["AUDIT_POLICY"]), help=u"""A filter to return attribute set associated resources that matches the specified resource type query param.""")
+@cli_util.option('--associated-resource-type', type=custom_types.CliCaseInsensitiveChoice(["AUDIT_POLICY", "AUDIT_REPORT"]), help=u"""A filter to return attribute set associated resources that matches the specified resource type query param.""")
 @cli_util.option('--associated-resource-id', help=u"""A filter to return attribute set associated resource that matches the specified associated resource id query param.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -13022,7 +13046,7 @@ def list_available_audit_volumes(ctx, from_json, all_pages, page_size, audit_pro
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["title", "category"]), help=u"""The field to sort by. You can specify only one sort order(sortOrder). The default order for title is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["title", "category", "key"]), help=u"""The field to sort by. You can specify only one sort order(sortOrder). The default order for title is ascending.""")
 @cli_util.option('--suggested-severity', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "MEDIUM", "LOW", "EVALUATE", "ADVISORY", "PASS", "DEFERRED"]), help=u"""A filter to return only checks of a particular risk level.""")
 @cli_util.option('--contains-severity', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "MEDIUM", "LOW", "EVALUATE", "ADVISORY", "PASS", "DEFERRED"]), multiple=True, help=u"""A filter to return only findings that match the specified risk level(s). Use containsSeverity parameter if need to filter by multiple risk levels.""")
 @cli_util.option('--contains-references', type=custom_types.CliCaseInsensitiveChoice(["STIG", "CIS", "GDPR"]), multiple=True, help=u"""An optional filter to return only findings that match the specified references. Use containsReferences param if need to filter by multiple references.""")
@@ -13467,7 +13491,7 @@ def list_database_table_access_entries(ctx, from_json, all_pages, page_size, sec
 
 @database_view_access_entry_collection_group.command(name=cli_util.override('data_safe.list_database_view_access_entries.command_name', 'list-database-view-access-entries'), help=u"""Retrieves a list of all database view access entries in Data Safe.
 
-The ListDatabaseViewAccessEntries operation returns only the database view access objects for the specified security policy report. \n[Command Reference](listDatabaseViewAccessEntries)""")
+The ListDatabaseViewAccessEntries operation returns only the database view access objects for the specified security policy report. If targetId is specified, it must match the target associated with the securityPolicyReportId path parameter; otherwise, the request is rejected. \n[Command Reference](listDatabaseViewAccessEntries)""")
 @cli_util.option('--security-policy-report-id', required=True, help=u"""The OCID of the security policy report resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -13937,6 +13961,7 @@ def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "MEDIUM", "LOW", "EVALUATE", "ADVISORY", "PASS", "DEFERRED"]), help=u"""A filter to return only findings of a particular risk level.""")
 @cli_util.option('--contains-severity', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "MEDIUM", "LOW", "EVALUATE", "ADVISORY", "PASS", "DEFERRED"]), multiple=True, help=u"""A filter to return only findings that match the specified risk level(s). Use containsSeverity parameter if need to filter by multiple risk levels.""")
 @cli_util.option('--category', help=u"""The category of the finding.""")
+@cli_util.option('--contains-oracle-defined-severity', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "MEDIUM", "LOW", "EVALUATE", "ADVISORY", "PASS", "DEFERRED"]), multiple=True, help=u"""A filter to return only findings that match the specified risk level(s). Use containsOracleDefinedSeverity parameter if need to filter by one or multiple risk levels.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "UPDATING", "NEEDS_ATTENTION", "FAILED"]), help=u"""A filter to return only the findings that match the specified lifecycle states.""")
 @cli_util.option('--references', type=custom_types.CliCaseInsensitiveChoice(["STIG", "CIS", "GDPR"]), help=u"""An optional filter to return only findings that match the specified reference.""")
 @cli_util.option('--contains-references', type=custom_types.CliCaseInsensitiveChoice(["STIG", "CIS", "GDPR"]), multiple=True, help=u"""An optional filter to return only findings that match the specified references. Use containsReferences param if need to filter by multiple references.""")
@@ -13963,7 +13988,7 @@ Supported fields: severity findingKey reference targetId isTopFinding title cate
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'list[FindingSummary]'})
 @cli_util.wrap_exceptions
-def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, contains_severity, category, lifecycle_state, references, contains_references, limit, page, compartment_id, compartment_id_in_subtree, access_level, target_id, target_ids, scim_query, field, sort_by, sort_order, finding_key):
+def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, contains_severity, category, contains_oracle_defined_severity, lifecycle_state, references, contains_references, limit, page, compartment_id, compartment_id_in_subtree, access_level, target_id, target_ids, scim_query, field, sort_by, sort_order, finding_key):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -13980,6 +14005,8 @@ def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, 
         kwargs['contains_severity'] = contains_severity
     if category is not None:
         kwargs['category'] = category
+    if contains_oracle_defined_severity is not None and len(contains_oracle_defined_severity) > 0:
+        kwargs['contains_oracle_defined_severity'] = contains_oracle_defined_severity
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if references is not None:
@@ -18112,6 +18139,7 @@ def list_tables(ctx, from_json, all_pages, page_size, target_database_id, limit,
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DISPLAYNAME", "TIMECREATED", "TIMEUPDATED"]), help=u"""The field to sort by. Only one sort parameter may be provided.""")
+@cli_util.option('--target-type', type=custom_types.CliCaseInsensitiveChoice(["TARGET_DATABASE", "TARGET_DATABASE_GROUP"]), help=u"""A optional filter to return only resources that belong to the specified alert policy association type.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only the resources that were created after the specified date and time, as defined by [RFC3339]. Using TimeCreatedGreaterThanOrEqualToQueryParam parameter retrieves all resources created after that date.
 
 **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -18127,7 +18155,7 @@ def list_tables(ctx, from_json, all_pages, page_size, target_database_id, limit,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'TargetAlertPolicyAssociationCollection'})
 @cli_util.wrap_exceptions
-def list_target_alert_policy_associations(ctx, from_json, all_pages, page_size, compartment_id, target_alert_policy_association_id, alert_policy_id, target_id, lifecycle_state, limit, page, sort_order, sort_by, time_created_greater_than_or_equal_to, time_created_less_than, compartment_id_in_subtree, access_level):
+def list_target_alert_policy_associations(ctx, from_json, all_pages, page_size, compartment_id, target_alert_policy_association_id, alert_policy_id, target_id, lifecycle_state, limit, page, sort_order, sort_by, target_type, time_created_greater_than_or_equal_to, time_created_less_than, compartment_id_in_subtree, access_level):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -18149,6 +18177,8 @@ def list_target_alert_policy_associations(ctx, from_json, all_pages, page_size, 
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if target_type is not None:
+        kwargs['target_type'] = target_type
     if time_created_greater_than_or_equal_to is not None:
         kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
     if time_created_less_than is not None:
@@ -18179,6 +18209,63 @@ def list_target_alert_policy_associations(ctx, from_json, all_pages, page_size, 
     else:
         result = client.list_target_alert_policy_associations(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@target_alert_policy_association_group.command(name=cli_util.override('data_safe.list_target_alert_policy_unassociated_members.command_name', 'list-target-alert-policy-unassociated-members'), help=u"""Gets the details of target-alert policy association and its unassociated members by its ID. \n[Command Reference](listTargetAlertPolicyUnassociatedMembers)""")
+@cli_util.option('--target-alert-policy-association-id', required=True, help=u"""The OCID of the target-alert policy association.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["targetId", "notAppliedReason"]), help=u"""The field to sort by. Only one sort parameter may be provided.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'TargetAlertPolicyUnassociatedCollection'})
+@cli_util.wrap_exceptions
+def list_target_alert_policy_unassociated_members(ctx, from_json, all_pages, page_size, target_alert_policy_association_id, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(target_alert_policy_association_id, six.string_types) and len(target_alert_policy_association_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-alert-policy-association-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_target_alert_policy_unassociated_members,
+            target_alert_policy_association_id=target_alert_policy_association_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_target_alert_policy_unassociated_members,
+            limit,
+            page_size,
+            target_alert_policy_association_id=target_alert_policy_association_id,
+            **kwargs
+        )
+    else:
+        result = client.list_target_alert_policy_unassociated_members(
+            target_alert_policy_association_id=target_alert_policy_association_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -19040,6 +19127,7 @@ def list_user_assessments(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.option('--time-password-expiry-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return users whose password expiry date in the database is greater than or equal to the date and time specified, in the format defined by [RFC3339]. **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-password-expiry-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter to return users whose password expiry date in the database is less than the date and time specified, in the format defined by [RFC3339]. **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["userName", "userCategory", "accountStatus", "timeLastLogin", "targetId", "timeUserCreated", "authenticationType", "timePasswordChanged"]), help=u"""The field to sort by. You can specify only one sort order (sortOrder). The default order for userName is ascending.""")
 @cli_util.option('--schema-list', multiple=True, help=u"""A filter to return items that contain the specified schema list.""")
@@ -19051,7 +19139,7 @@ def list_user_assessments(ctx, from_json, all_pages, page_size, compartment_id, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-list': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'list[UserSummary]'})
 @cli_util.wrap_exceptions
-def list_users(ctx, from_json, all_pages, page_size, user_assessment_id, limit, compartment_id_in_subtree, access_level, user_category, user_role, user_profile, user_type, user_key, account_status, authentication_type, user_name, target_id, time_last_login_greater_than_or_equal_to, time_last_login_less_than, time_user_created_greater_than_or_equal_to, time_user_created_less_than, time_password_last_changed_greater_than_or_equal_to, time_password_last_changed_less_than, time_password_expiry_greater_than_or_equal_to, time_password_expiry_less_than, page, sort_order, sort_by, schema_list, are_all_schemas_accessible):
+def list_users(ctx, from_json, all_pages, page_size, user_assessment_id, limit, compartment_id_in_subtree, access_level, user_category, user_role, user_profile, user_type, user_key, account_status, authentication_type, user_name, target_id, time_last_login_greater_than_or_equal_to, time_last_login_less_than, time_user_created_greater_than_or_equal_to, time_user_created_less_than, time_password_last_changed_greater_than_or_equal_to, time_password_last_changed_less_than, time_password_expiry_greater_than_or_equal_to, time_password_expiry_less_than, page, compartment_id, sort_order, sort_by, schema_list, are_all_schemas_accessible):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -19102,6 +19190,8 @@ def list_users(ctx, from_json, all_pages, page_size, user_assessment_id, limit, 
         kwargs['time_password_expiry_less_than'] = time_password_expiry_less_than
     if page is not None:
         kwargs['page'] = page
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
@@ -20886,6 +20976,7 @@ Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> 
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the resource should be created.""")
 @cli_util.option('--report-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
+@cli_util.option('--is-pagination-enabled', type=click.BOOL, help=u"""Indicates if the reports being generated should be paginated. If set to true, multiple reports can be generated and the details of next and previous report are present in Report. Values can either be 'true' or 'false'.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -20895,7 +20986,7 @@ Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'report-details': {'module': 'data_safe', 'class': 'ReportDetails'}})
 @cli_util.wrap_exceptions
-def schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, schedule, mime_type, compartment_id, report_details, display_name, if_match):
+def schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, schedule, mime_type, compartment_id, report_details, display_name, is_pagination_enabled, if_match):
 
     if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
@@ -20913,6 +21004,9 @@ def schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if is_pagination_enabled is not None:
+        _details['isPaginationEnabled'] = is_pagination_enabled
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.schedule_report(
@@ -20959,6 +21053,7 @@ Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> 
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the resource should be created.""")
 @cli_util.option('--report-details-record-time-span', required=True, help=u"""The time span of records in report to be scheduled. <period-value><period> Allowed period strings - \"H\",\"D\",\"M\",\"Y\" Each of the above fields potentially introduce constraints. A workRequest is created only when period-value satisfies all the constraints. Constraints introduced: 1. period = H (The allowed range for period-value is [1, 23]) 2. period = D (The allowed range for period-value is [1, 30]) 3. period = M (The allowed range for period-value is [1, 11]) 4. period = Y (The minimum period-value is 1)""")
 @cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
+@cli_util.option('--is-pagination-enabled', type=click.BOOL, help=u"""Indicates if the reports being generated should be paginated. If set to true, multiple reports can be generated and the details of next and previous report are present in Report. Values can either be 'true' or 'false'.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--report-details-row-limit', type=click.INT, help=u"""Specifies the limit on the number of rows in the report.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -20969,7 +21064,7 @@ Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def schedule_report_schedule_audit_report_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, schedule, mime_type, compartment_id, report_details_record_time_span, display_name, if_match, report_details_row_limit):
+def schedule_report_schedule_audit_report_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, schedule, mime_type, compartment_id, report_details_record_time_span, display_name, is_pagination_enabled, if_match, report_details_row_limit):
 
     if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
@@ -20988,6 +21083,9 @@ def schedule_report_schedule_audit_report_details(ctx, from_json, wait_for_state
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if is_pagination_enabled is not None:
+        _details['isPaginationEnabled'] = is_pagination_enabled
 
     if report_details_row_limit is not None:
         _details['reportDetails']['rowLimit'] = report_details_row_limit
@@ -22220,23 +22318,24 @@ def update_audit_trail(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_data_safe_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_safe_private_endpoint_id, display_name, description, nsg_ids, freeform_tags, defined_tags, if_match):
+def update_data_safe_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_safe_private_endpoint_id, display_name, description, nsg_ids, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(data_safe_private_endpoint_id, six.string_types) and len(data_safe_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --data-safe-private-endpoint-id cannot be whitespace or empty string')
     if not force:
-        if nsg_ids or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if nsg_ids or freeform_tags or defined_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -22260,6 +22359,9 @@ def update_data_safe_private_endpoint(ctx, from_json, force, wait_for_state, max
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.update_data_safe_private_endpoint(

@@ -160,6 +160,10 @@ def change_ai_data_platform_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the AiDataPlatform in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--ai-data-platform-type', help=u"""The AiDataPlatform type.""")
+@cli_util.option('--is-enable-ai-feature', type=click.BOOL, help=u"""The flag to enable/disable AiFeatures for the instance.""")
+@cli_util.option('--vector-db-id', help=u"""The [OCID] of the vector db Lakehouse 26ai.""")
+@cli_util.option('--vector-db-admin-cred', help=u"""The Vector DB Lakehouse 26ai ADMIN user password.""")
+@cli_util.option('--vector-db-admin-secret-id', help=u"""The [OCID] of the OCI Vault secret holding the vector db Lakehouse 26ai Admin user password.""")
 @cli_util.option('--default-workspace-name', help=u"""The name for the default workspace for the AiDataPlatform""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -178,7 +182,7 @@ Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_type
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_data_platform', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_data_platform', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'ai_data_platform', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_data_platform', 'class': 'AiDataPlatform'})
 @cli_util.wrap_exceptions
-def create_ai_data_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, ai_data_platform_type, default_workspace_name, freeform_tags, defined_tags, system_tags):
+def create_ai_data_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, ai_data_platform_type, is_enable_ai_feature, vector_db_id, vector_db_admin_cred, vector_db_admin_secret_id, default_workspace_name, freeform_tags, defined_tags, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -191,6 +195,18 @@ def create_ai_data_platform(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if ai_data_platform_type is not None:
         _details['aiDataPlatformType'] = ai_data_platform_type
+
+    if is_enable_ai_feature is not None:
+        _details['isEnableAiFeature'] = is_enable_ai_feature
+
+    if vector_db_id is not None:
+        _details['vectorDbId'] = vector_db_id
+
+    if vector_db_admin_cred is not None:
+        _details['vectorDbAdminCred'] = vector_db_admin_cred
+
+    if vector_db_admin_secret_id is not None:
+        _details['vectorDbAdminSecretId'] = vector_db_admin_secret_id
 
     if default_workspace_name is not None:
         _details['defaultWorkspaceName'] = default_workspace_name
@@ -287,6 +303,77 @@ def delete_ai_data_platform(ctx, from_json, wait_for_state, max_wait_seconds, wa
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@ai_data_platform_group.command(name=cli_util.override('ai_data_platform.enable_ai_feature.command_name', 'enable-ai-feature'), help=u"""The AiDataPlatform will be enabled with AI features \n[Command Reference](enableAiFeature)""")
+@cli_util.option('--ai-data-platform-id', required=True, help=u"""The [OCID] of the AiDataPlatform.""")
+@cli_util.option('--vector-db-id', help=u"""The [OCID] of the vector db Lakehouse 26ai.""")
+@cli_util.option('--vector-db-admin-cred', help=u"""The Vector DB Lakehouse 26ai ADMIN user password.""")
+@cli_util.option('--vector-db-admin-secret-id', help=u"""The [OCID] of the OCI Vault secret holding the vector db Lakehouse 26ai Admin user password.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_ai_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ai_data_platform_id, vector_db_id, vector_db_admin_cred, vector_db_admin_secret_id, if_match):
+
+    if isinstance(ai_data_platform_id, six.string_types) and len(ai_data_platform_id.strip()) == 0:
+        raise click.UsageError('Parameter --ai-data-platform-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if vector_db_id is not None:
+        _details['vectorDbId'] = vector_db_id
+
+    if vector_db_admin_cred is not None:
+        _details['vectorDbAdminCred'] = vector_db_admin_cred
+
+    if vector_db_admin_secret_id is not None:
+        _details['vectorDbAdminSecretId'] = vector_db_admin_secret_id
+
+    client = cli_util.build_client('ai_data_platform', 'ai_data_platform', ctx)
+    result = client.enable_ai_feature(
+        ai_data_platform_id=ai_data_platform_id,
+        enable_ai_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 sys.exit(2)
             except Exception:

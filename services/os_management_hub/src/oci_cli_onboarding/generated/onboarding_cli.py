@@ -614,13 +614,13 @@ def create_profile_create_station_profile_details(ctx, from_json, wait_for_state
 @cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT", "CANONICAL"]), help=u"""The vendor of the operating system for the instance.""")
 @cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_10", "ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "WINDOWS_SERVER_2025", "WINDOWS_11", "ALL", "UBUNTU_20_04", "UBUNTU_22_04", "UBUNTU_24_04"]), help=u"""The operating system family.""")
 @cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386", "AMD64", "ARM64", "ALL"]), help=u"""The architecture type.""")
-@cli_util.option('--software-source-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of software source [OCIDs] that the registration profile will use.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""User-specified description of the registration profile.""")
 @cli_util.option('--management-station-id', help=u"""description: The [OCID] of the management station to associate with an instance once registered. This is used when creating a profile for non-OCI instances.""")
 @cli_util.option('--registration-type', help=u"""The type of instance to register.""")
 @cli_util.option('--is-default-profile', type=click.BOOL, help=u"""Indicates if the profile is set as the default. There is exactly one default profile for a specified architecture, OS family, registration type, and vendor. When registering an instance with the corresonding characteristics, the default profile is used, unless another profile is specified.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--software-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of software source [OCIDs] that the registration profile will use.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -629,7 +629,7 @@ def create_profile_create_station_profile_details(ctx, from_json, wait_for_state
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'software-source-ids': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'Profile'})
 @cli_util.wrap_exceptions
-def create_profile_create_software_source_profile_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, vendor_name, os_family, arch_type, software_source_ids, description, management_station_id, registration_type, is_default_profile, freeform_tags, defined_tags):
+def create_profile_create_software_source_profile_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, vendor_name, os_family, arch_type, description, management_station_id, registration_type, is_default_profile, freeform_tags, defined_tags, software_source_ids):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -640,7 +640,6 @@ def create_profile_create_software_source_profile_details(ctx, from_json, wait_f
     _details['vendorName'] = vendor_name
     _details['osFamily'] = os_family
     _details['archType'] = arch_type
-    _details['softwareSourceIds'] = cli_util.parse_json_parameter("software_source_ids", software_source_ids)
 
     if description is not None:
         _details['description'] = description
@@ -659,6 +658,9 @@ def create_profile_create_software_source_profile_details(ctx, from_json, wait_f
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if software_source_ids is not None:
+        _details['softwareSourceIds'] = cli_util.parse_json_parameter("software_source_ids", software_source_ids)
 
     _details['profileType'] = 'SOFTWARESOURCE'
 
