@@ -6,6 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.89.3 - 2026-07-21
+-------------------
+Added
+~~~~~
+* Analytics service
+
+  * Support for Analytics Instance Resource Groups for Oracle Analytics Cloud (OAC)
+
+    * ``oci analytics analytics-instance create-resource-group``
+    * ``oci analytics analytics-instance delete-resource-group``
+    * ``oci analytics analytics-instance get-resource-group``
+    * ``oci analytics analytics-instance list-resource-groups``
+    * ``oci analytics analytics-instance update-resource-group``
+
+* Networking service
+
+  * Support for new optional parameter for multiple FastConnect enhancements
+
+    * ``oci network cross-connect create --interface-down-timer-value-in-milliseconds --is-interface-hold-timer-enabled --is-qos-enabled``
+    * ``oci network cross-connect update --interface-down-timer-value-in-milliseconds --is-interface-hold-timer-enabled``
+    * ``oci network cross-connect-group create --interface-down-timer-value-in-milliseconds --is-interface-hold-timer-enabled --is-qos-enabled --minimum-links``
+    * ``oci network cross-connect-group update --interface-down-timer-value-in-milliseconds --is-interface-hold-timer-enabled --minimum-links``
+    * ``oci network virtual-circuit create --traffic-mode``
+    * ``oci network virtual-circuit update --traffic-mode``
+
+  * Support for getting and updating a Letter of Authority for a cross-connect
+
+    * ``oci network letter-of-authority update-cross-connect``
+    * ``oci network letter-of-authority get-cross-connect``
+
 3.89.2 - 2026-07-14
 -------------------
 Added

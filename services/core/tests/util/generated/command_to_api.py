@@ -239,6 +239,7 @@ SDK_client_map = {
     "virtual_network.update_cpe": "oci.core.VirtualNetworkClient.update_cpe",
     "virtual_network.update_cross_connect": "oci.core.VirtualNetworkClient.update_cross_connect",
     "virtual_network.update_cross_connect_group": "oci.core.VirtualNetworkClient.update_cross_connect_group",
+    "virtual_network.update_cross_connect_letter_of_authority": "oci.core.VirtualNetworkClient.update_cross_connect_letter_of_authority",
     "virtual_network.update_dhcp_options": "oci.core.VirtualNetworkClient.update_dhcp_options",
     "virtual_network.update_drg": "oci.core.VirtualNetworkClient.update_drg",
     "virtual_network.update_drg_attachment": "oci.core.VirtualNetworkClient.update_drg_attachment",

@@ -3041,6 +3041,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--near-cross-connect-or-cross-connect-group-id', help=u"""If you already have an existing cross-connect or cross-connect group at this FastConnect location, and you want this new cross-connect to be on the same router, provide the [OCID] of that existing cross-connect or cross-connect group.""")
 @cli_util.option('--customer-reference-name', help=u"""A reference name or identifier for the physical fiber connection that this cross-connect uses.""")
 @cli_util.option('--macsec-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-interface-hold-timer-enabled', type=click.BOOL, help=u"""The flag to enable or disable the down timer for the interface.""")
+@cli_util.option('--interface-down-timer-value-in-milliseconds', type=click.INT, help=u"""The duration of the interface down timer in milliseconds between 0 and 3000 in multiples of 500.""")
+@cli_util.option('--is-qos-enabled', type=click.BOOL, help=u"""When true, restricts placement so cross-connects lands only on QoS-capable devices. When false (default), placement may use any supported device. If no QoS-capable devices are available in the selected location, the request fails.""")
 @cli_util.option('--oci-physical-device-name', help=u"""The name of the FastConnect device where this cross-connect is installed.""")
 @cli_util.option('--interface-name', help=u"""The name of the FastConnect interface where this cross-connect is installed.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_CUSTOMER", "PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PENDING_CUSTOMER --wait-for-state TERMINATED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3051,7 +3054,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'macsec-properties': {'module': 'core', 'class': 'CreateMacsecProperties'}}, output_type={'module': 'core', 'class': 'CrossConnect'})
 @cli_util.wrap_exceptions
-def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, location_name, port_speed_shape_name, cross_connect_group_id, defined_tags, display_name, far_cross_connect_or_cross_connect_group_id, freeform_tags, near_cross_connect_or_cross_connect_group_id, customer_reference_name, macsec_properties, oci_physical_device_name, interface_name):
+def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, location_name, port_speed_shape_name, cross_connect_group_id, defined_tags, display_name, far_cross_connect_or_cross_connect_group_id, freeform_tags, near_cross_connect_or_cross_connect_group_id, customer_reference_name, macsec_properties, is_interface_hold_timer_enabled, interface_down_timer_value_in_milliseconds, is_qos_enabled, oci_physical_device_name, interface_name):
 
     kwargs = {}
 
@@ -3083,6 +3086,15 @@ def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if macsec_properties is not None:
         _details['macsecProperties'] = cli_util.parse_json_parameter("macsec_properties", macsec_properties)
+
+    if is_interface_hold_timer_enabled is not None:
+        _details['isInterfaceHoldTimerEnabled'] = is_interface_hold_timer_enabled
+
+    if interface_down_timer_value_in_milliseconds is not None:
+        _details['interfaceDownTimerValueInMilliseconds'] = interface_down_timer_value_in_milliseconds
+
+    if is_qos_enabled is not None:
+        _details['isQosEnabled'] = is_qos_enabled
 
     if oci_physical_device_name is not None:
         _details['ociPhysicalDeviceName'] = oci_physical_device_name
@@ -3136,6 +3148,10 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--macsec-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--minimum-links', type=click.INT, help=u"""(Optional) Minimum number of active cross-connects required for the cross-connect group to be considered operational. During create cross-connect-group operation this value can only be set to 1 (If not specified, this value defaults to 1) and can be edited using the update cross-connect group operation. Value must not exceed the total number of cross-connects in the cross-connect group.""")
+@cli_util.option('--is-interface-hold-timer-enabled', type=click.BOOL, help=u"""The flag to enable or disable the down timer for the interface.""")
+@cli_util.option('--interface-down-timer-value-in-milliseconds', type=click.INT, help=u"""The duration of the interface down timer in milliseconds between 0 and 3000 in multiples of 500.""")
+@cli_util.option('--is-qos-enabled', type=click.BOOL, help=u"""(Optional) When true, restricts placement so cross-connects lands only on QoS-capable devices. When false (default), placement may use any supported device. If no QoS-capable devices are available in the selected location, the request fails.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state TERMINATED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3144,7 +3160,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'macsec-properties': {'module': 'core', 'class': 'CreateMacsecProperties'}}, output_type={'module': 'core', 'class': 'CrossConnectGroup'})
 @cli_util.wrap_exceptions
-def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, defined_tags, display_name, customer_reference_name, freeform_tags, macsec_properties):
+def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, defined_tags, display_name, customer_reference_name, freeform_tags, macsec_properties, minimum_links, is_interface_hold_timer_enabled, interface_down_timer_value_in_milliseconds, is_qos_enabled):
 
     kwargs = {}
 
@@ -3165,6 +3181,18 @@ def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if macsec_properties is not None:
         _details['macsecProperties'] = cli_util.parse_json_parameter("macsec_properties", macsec_properties)
+
+    if minimum_links is not None:
+        _details['minimumLinks'] = minimum_links
+
+    if is_interface_hold_timer_enabled is not None:
+        _details['isInterfaceHoldTimerEnabled'] = is_interface_hold_timer_enabled
+
+    if interface_down_timer_value_in_milliseconds is not None:
+        _details['interfaceDownTimerValueInMilliseconds'] = interface_down_timer_value_in_milliseconds
+
+    if is_qos_enabled is not None:
+        _details['isQosEnabled'] = is_qos_enabled
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_cross_connect_group(
@@ -5050,6 +5078,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 This option is a JSON list with items of type CreateVirtualCircuitPublicPrefixDetails.  For documentation on CreateVirtualCircuitPublicPrefixDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/iaas/20160918/datatypes/CreateVirtualCircuitPublicPrefixDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--region-parameterconflict', help=u"""The Oracle Cloud Infrastructure region where this virtual circuit is located. Example: `phx`""")
 @cli_util.option('--ip-mtu', type=custom_types.CliCaseInsensitiveChoice(["MTU_1500", "MTU_9000"]), help=u"""The layer 3 IP MTU to use with this virtual circuit.""")
+@cli_util.option('--traffic-mode', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "DRAIN"]), help=u"""The traffic mode to be set with this Virtual Circuit. This controls whether the traffic is to be drained for the associated Virtual Circuit or not.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_PROVIDER", "VERIFYING", "PROVISIONING", "PROVISIONED", "FAILED", "INACTIVE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PENDING_PROVIDER --wait-for-state TERMINATED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5058,7 +5087,7 @@ This option is a JSON list with items of type CreateVirtualCircuitPublicPrefixDe
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, is_transport_mode, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region_parameterconflict, ip_mtu):
+def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, is_transport_mode, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region_parameterconflict, ip_mtu, traffic_mode):
 
     kwargs = {}
 
@@ -5122,6 +5151,9 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if ip_mtu is not None:
         _details['ipMtu'] = ip_mtu
+
+    if traffic_mode is not None:
+        _details['trafficMode'] = traffic_mode
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_virtual_circuit(
@@ -7476,6 +7508,7 @@ def get_cross_connect_letter_of_authority(ctx, from_json, cross_connect_id):
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_cross_connect_letter_of_authority(
         cross_connect_id=cross_connect_id,
@@ -12825,6 +12858,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `true`""")
 @cli_util.option('--customer-reference-name', help=u"""A reference name or identifier for the physical fiber connection this cross-connect uses.""")
 @cli_util.option('--macsec-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-interface-hold-timer-enabled', type=click.BOOL, help=u"""The flag to enable or disable the down timer for the interface.""")
+@cli_util.option('--interface-down-timer-value-in-milliseconds', type=click.INT, help=u"""The duration of the interface down timer in milliseconds between 0 and 3000 in multiples of 500.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_CUSTOMER", "PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PENDING_CUSTOMER --wait-for-state TERMINATED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -12835,7 +12870,7 @@ Example: `true`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'macsec-properties': {'module': 'core', 'class': 'UpdateMacsecProperties'}}, output_type={'module': 'core', 'class': 'CrossConnect'})
 @cli_util.wrap_exceptions
-def update_cross_connect(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_id, defined_tags, display_name, freeform_tags, is_active, customer_reference_name, macsec_properties, if_match):
+def update_cross_connect(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_id, defined_tags, display_name, freeform_tags, is_active, customer_reference_name, macsec_properties, is_interface_hold_timer_enabled, interface_down_timer_value_in_milliseconds, if_match):
 
     if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
@@ -12867,6 +12902,12 @@ def update_cross_connect(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if macsec_properties is not None:
         _details['macsecProperties'] = cli_util.parse_json_parameter("macsec_properties", macsec_properties)
+
+    if is_interface_hold_timer_enabled is not None:
+        _details['isInterfaceHoldTimerEnabled'] = is_interface_hold_timer_enabled
+
+    if interface_down_timer_value_in_milliseconds is not None:
+        _details['interfaceDownTimerValueInMilliseconds'] = interface_down_timer_value_in_milliseconds
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_cross_connect(
@@ -12911,6 +12952,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--macsec-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--minimum-links', type=click.INT, help=u"""(Optional) Minimum number of active cross-connects required for the cross-connect group to be considered operational. If not specified, this value defaults to 1. Value must not exceed the total number of cross-connects in the cross-connect group.""")
+@cli_util.option('--is-interface-hold-timer-enabled', type=click.BOOL, help=u"""The flag to enable or disable the down timer for the interface.""")
+@cli_util.option('--interface-down-timer-value-in-milliseconds', type=click.INT, help=u"""The duration of the interface down timer in milliseconds between 0 and 3000 in multiples of 500.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state TERMINATED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -12921,7 +12965,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'macsec-properties': {'module': 'core', 'class': 'UpdateMacsecProperties'}}, output_type={'module': 'core', 'class': 'CrossConnectGroup'})
 @cli_util.wrap_exceptions
-def update_cross_connect_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_group_id, defined_tags, display_name, customer_reference_name, freeform_tags, macsec_properties, if_match):
+def update_cross_connect_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_group_id, defined_tags, display_name, customer_reference_name, freeform_tags, macsec_properties, minimum_links, is_interface_hold_timer_enabled, interface_down_timer_value_in_milliseconds, if_match):
 
     if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
@@ -12950,6 +12994,15 @@ def update_cross_connect_group(ctx, from_json, force, wait_for_state, max_wait_s
 
     if macsec_properties is not None:
         _details['macsecProperties'] = cli_util.parse_json_parameter("macsec_properties", macsec_properties)
+
+    if minimum_links is not None:
+        _details['minimumLinks'] = minimum_links
+
+    if is_interface_hold_timer_enabled is not None:
+        _details['isInterfaceHoldTimerEnabled'] = is_interface_hold_timer_enabled
+
+    if interface_down_timer_value_in_milliseconds is not None:
+        _details['interfaceDownTimerValueInMilliseconds'] = interface_down_timer_value_in_milliseconds
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_cross_connect_group(
@@ -12980,6 +13033,47 @@ def update_cross_connect_group(ctx, from_json, force, wait_for_state, max_wait_s
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@letter_of_authority_group.command(name=cli_util.override('virtual_network.update_cross_connect_letter_of_authority.command_name', 'update-cross-connect'), help=u"""Updates the Letter of Authority for the specified cross-connect. \n[Command Reference](updateCrossConnectLetterOfAuthority)""")
+@cli_util.option('--cross-connect-id', required=True, help=u"""The [OCID] of the cross-connect.""")
+@cli_util.option('--should-extend', type=click.BOOL, help=u"""A boolean flag to indicate whether to extend the expiry of the associated LOA with the provided cross-connect. If un-set or set to false, it does not alter the existing expiry of the LOA. On extension an updated copy of the LOA will be provided with the new expiry date. An LOA cannot be extended more than 3 times.""")
+@cli_util.option('--should-remove-authorized-agent', type=click.BOOL, help=u"""A boolean flag to indicate whether to remove an attached Authorized Agent to the LOA. If this boolean flag is set, an attempt will be made to remove the attached authorized agent to the LOA, if any, and any value given in the field 'authorizedAgent' will be ignored. In case, of updating an existing Authorized Agent, keep this flag unset and set the expected value in 'authorizedAgent'.""")
+@cli_util.option('--authorized-agent', help=u"""Name of a customer authorized agent which will be appended to the LOA as the field 'Authorized Agent'. If the field is left un-set in the request body, no changes will be done on the LOA for Authorized Agent.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'LetterOfAuthority'})
+@cli_util.wrap_exceptions
+def update_cross_connect_letter_of_authority(ctx, from_json, cross_connect_id, should_extend, should_remove_authorized_agent, authorized_agent, if_match):
+
+    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if should_extend is not None:
+        _details['shouldExtend'] = should_extend
+
+    if should_remove_authorized_agent is not None:
+        _details['shouldRemoveAuthorizedAgent'] = should_remove_authorized_agent
+
+    if authorized_agent is not None:
+        _details['authorizedAgent'] = authorized_agent
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.update_cross_connect_letter_of_authority(
+        cross_connect_id=cross_connect_id,
+        update_cross_connect_letter_of_authority_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -15148,6 +15242,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--traffic-mode', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "DRAIN"]), help=u"""The traffic mode to be set with this Virtual Circuit. This controls whether the traffic is to be drained for the associated Virtual Circuit or not.""")
 @cli_util.option('--gateway-id', help=u"""The [OCID] of the [dynamic routing gateway (DRG)] that this private virtual circuit uses.
 
 To be updated only by the customer who owns the virtual circuit.""")
@@ -15169,7 +15264,7 @@ To be updated only by the provider.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, is_transport_mode, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_state, provider_service_key_name, reference_comment, ip_mtu, if_match):
+def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, is_transport_mode, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, traffic_mode, gateway_id, provider_state, provider_service_key_name, reference_comment, ip_mtu, if_match):
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
@@ -15216,6 +15311,9 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if traffic_mode is not None:
+        _details['trafficMode'] = traffic_mode
 
     if gateway_id is not None:
         _details['gatewayId'] = gateway_id

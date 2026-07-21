@@ -18,7 +18,8 @@ cli_util.rename_command(virtualnetwork_cli, cli, virtualnetwork_cli.virtual_netw
 
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_sec_connection_device_config_group.name)
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_sec_connection_device_status_group.name)
-virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.letter_of_authority_group.name)
+# to expose GET/UPDATE operations on LOA through oci-cli
+# virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.letter_of_authority_group.name)
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.virtual_circuit_bandwidth_shape_group.name)
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.peer_region_for_remote_peering_group.name)
 
