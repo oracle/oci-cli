@@ -31,6 +31,19 @@ class Mock():
         return Mock.expected_result
 
 
+class MockSseEvent(object):
+    def __init__(self, data):
+        self.data = data
+
+
+class MockSseStream(object):
+    def __init__(self, events):
+        self._events = events
+
+    def events(self):
+        return iter(self._events)
+
+
 class TestCliUtil(unittest.TestCase):
 
     @staticmethod
@@ -50,6 +63,14 @@ class TestCliUtil(unittest.TestCase):
         response.request = 'request'
         response.has_next_page = has_next_page
         response.next_page = next_page
+        return response
+
+    @staticmethod
+    def _build_sse_response(event_payloads):
+        response = Obj()
+        response.status = 200
+        response.headers = {'content-type': 'text/event-stream'}
+        response.data = MockSseStream([MockSseEvent(payload) for payload in event_payloads])
         return response
 
     def test_iam_coalesce_provided_and_default_value(self):
@@ -226,3 +247,41 @@ class TestCliUtil(unittest.TestCase):
                         ctx=ctx,
                         stream_output=True
                     )
+
+    def test_render_response_outputs_non_json_sse_event_without_crashing(self):
+        ctx = self._build_ctx()
+        ctx.obj['output'] = 'json'
+        ctx.obj['raw_output'] = None
+        response = self._build_sse_response([
+            '{"index": 0, "message": {"role": "ASSISTANT"}}',
+            '{"usage": {"completionTokens": 8, "promptTokens": 4, "totalTokens": 12}}',
+            '[DONE]'
+        ])
+
+        with mock.patch('oci_cli.cli_util.render') as mock_render:
+            with mock.patch('oci_cli.cli_util.print') as mock_print:
+                cli_util.render_response(response, ctx)
+
+        self.assertEqual(2, mock_render.call_count)
+        self.assertEqual(1, mock_print.call_count)
+        mock_print.assert_called_once_with('"[DONE]"')
+
+    def test_render_response_skips_empty_or_whitespace_only_sse_events(self):
+        ctx = self._build_ctx()
+        ctx.obj['output'] = 'json'
+        ctx.obj['raw_output'] = None
+        response = self._build_sse_response([
+            '{"index": 0, "message": {"role": "ASSISTANT"}}',
+            '{"usage": {"completionTokens": 8, "promptTokens": 4, "totalTokens": 12}}',
+            '    ',
+            '\n\t\t',
+            '  [DONE]  \t'
+        ])
+
+        with mock.patch('oci_cli.cli_util.render') as mock_render:
+            with mock.patch('oci_cli.cli_util.print') as mock_print:
+                cli_util.render_response(response, ctx)
+
+        self.assertEqual(2, mock_render.call_count)
+        self.assertEqual(1, mock_print.call_count)
+        mock_print.assert_called_once_with('"[DONE]"')

@@ -730,7 +730,17 @@ def render_response(response, ctx):
         last_event_time = time.time()
         try:
             for event in response.data.events():
-                render(json.loads(event.data), response.headers, ctx)
+                event_data = event.data.strip()
+                if not event_data:
+                    # event.data is not expected to be None, however, if the data is only whitespace characters, then,
+                    # event.data.strip() can be None. For such cases we simply skip printing/rendering it.
+                    continue
+                try:
+                    render(json.loads(event_data), response.headers, ctx)
+                except json.decoder.JSONDecodeError:
+                    # If text/event-stream is set, it doesn't guarantee the payload in event.data is JSON, it could be
+                    # arbitrary text.
+                    print(pretty_print_format(event_data))
                 elapsed_time = time.time() - last_event_time
                 if elapsed_time > event_read_timeout:
                     raise TimeoutError
