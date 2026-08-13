@@ -4,7 +4,6 @@
 
 # EASY-INSTALL-ENTRY-SCRIPT: 'oci-cli','console_scripts','oci'
 # This is used be setup.py to create the oci command.
-__requires__ = 'oci-cli'
 import re
 import sys
 
@@ -13,21 +12,21 @@ import sys
 # setuptools.command.easy_install.ScriptWriter.
 
 # Loading a fips_libcrypto_file must be executed prior to
-# importing load_entry_point, otherwise overrides from libcrypto will not work.
+# importing the CLI entry point, otherwise overrides from libcrypto will not work.
 # It is normal that hashlib.md5 will be disabled from this change.
 
 # This will invoke __init__ which will configure fips by using
 # the environment variable, OCI_CLI_FIPS_LIBCRYPTO_FILE.
-# Note that we could import anything fromn oci_cli to invoke __init__.
+# Note that we could import anything from oci_cli to invoke __init__.
 # There is nothing special about this import.
 from oci_cli import fips  # noqa F401
 
 ####################################################################
 
-from pkg_resources import load_entry_point
+# Import the CLI directly instead of using pkg_resources.load_entry_point
+# which was removed in setuptools 82 (PEP 740, Feb 2026)
+from oci_cli import cli
 
 if __name__ == '__main__':
     sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
-    sys.exit(
-        load_entry_point('oci-cli', 'console_scripts', 'oci')()
-    )
+    sys.exit(cli())
