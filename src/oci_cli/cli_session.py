@@ -84,6 +84,9 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_p
     if region is None:
         region = cli_setup.prompt_for_region()
 
+    if profile_name is None and cli_constants.OCI_CLI_PROFILE_ENV_VAR in os.environ:
+        profile_name = os.environ[cli_constants.OCI_CLI_PROFILE_ENV_VAR]
+
     # Validate profile name
     if profile_name:
         validate_profile_name(profile_name)
